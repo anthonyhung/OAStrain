@@ -12,6 +12,12 @@
 #SBATCH --ntasks=1                   # Run a single task
 #SBATCH --cpus-per-task=20            # Number of CPU cores per task
 
-cd /project2/gilad/anthonyhung/scPilot/
+cd /project2/gilad/anthonyhung/Projects/OAStrain_project/
 
-cellranger count --id=ANT1 --transcriptome=/project2/gilad/anthonyhung/refdata-cellranger-GRCh38-3.0.0/ --fastqs=fastq/ --sample=YG-AH-2S-ANT-1_S1_L008_R1_001 --localcores=20 --expect-cells=5000 --localmem=50
+cellranger count --id=ANT1 \
+                 --transcriptome=/project2/gilad/anthonyhung/cellrangerReferences/refdata-cellranger-GRCh38-3.0.0/ \
+                 --fastqs=/project2/gilad/anthonyhung/Projects/OAStrain_project/rawdata/scPilot/191119_K00242_0640_AHCLHNBBXY_YG-AH-ANT-2S-ln1/HCLHNBBXY_8/YG-AH-2S-ANT-1/ \
+                 --sample=YG-AH-2S-ANT-1 \
+                 --localcores=20 \
+                 --expect-cells=5000 \
+                 --localmem=50
