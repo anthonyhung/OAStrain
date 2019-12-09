@@ -9,9 +9,13 @@ editor_options:
 
 # Analysis of processed sc pilot data ANT1/ANT2
 
-ANT1 contains multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection and sequenced using the 10x chromium technology.
+ANT1_ANT2 contain multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection and sequenced using the 10x chromium technology.
 
-Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns reads to hg38 using STAR solo and runs demuxlet on the output. 
+ANT1: (19160 unstrained; 18856 unstrained; 18855 strained)
+
+ANT2: (19160 strained; 18856 strained; 18855 unstrained)
+
+Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns reads to hg38 using STAR solo and runs demuxlet on the output.
 
 ## Load libraries
 
@@ -29,24 +33,33 @@ library(DropletUtils)
 
 ```{r}
 ## read in the output from demuxlet and the count matrices
-proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
-ANT1_dir <- paste0("YriMultiplex/YG-AH-2S-ANT-1_S1_L008/Gene/raw/")
-ANT1_dir <- paste0("YriMultiplex/YG-AH-2S-ANT-2_S2_L008/Gene/raw/")
+proj_dir <- "~/Desktop/scPilot/"
+ANT1_dir <- paste0(proj_dir, "YG-AH-2S-ANT-1_S1_L008/")
+ANT1_dir <- paste0(proj_dir, "YG-AH-2S-ANT-2_S2_L008/")
 
 #read in data
 
-
-
 #ANT1
-demuxlet1 <- fread(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-1_S1_L008/demuxlet.best", sep = ""))
-count_data1 <- readMM(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-1_S1_L008/Gene/raw/matrix.mtx"))
-genes1 <- read_tsv(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-1_S1_L008/Gene/raw/genes.tsv"), col_names = F)
-barcodes1 <- as.data.frame(read_tsv(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-1_S1_L008/Gene/raw/barcodes.tsv"), col_names = F))
+demuxlet1 <- fread(paste0(ANT1_dir, "demuxlet.best", sep = ""))
+count_data1 <- readMM(paste0(ANT1_dir, "Gene/raw/matrix.mtx"))
+genes1 <- read_tsv(paste0(ANT1_dir, "Gene/raw/genes.tsv"), col_names = F)
+barcodes1 <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/raw/barcodes.tsv"), col_names = F))
 #ANT2
-demuxlet2 <- fread(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-2_S2_L008/demuxlet.best", sep = ""))
-count_data2 <- readMM(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-2_S2_L008/Gene/raw/matrix.mtx"))
-genes2 <- read_tsv(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-2_S2_L008/Gene/raw/genes.tsv"), col_names = F)
-barcodes2 <- as.data.frame(read_tsv(paste0(proj_dir, "YriMultiplex/YG-AH-2S-ANT-2_S2_L008/Gene/raw/barcodes.tsv"), col_names = F))
+demuxlet2 <- fread(paste0(ANT2_dir, "demuxlet.best", sep = ""))
+count_data2 <- readMM(paste0(ANT2_dir, "Gene/raw/matrix.mtx"))
+genes2 <- read_tsv(paste0(ANT2_dir, "Gene/raw/genes.tsv"), col_names = F)
+barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/raw/barcodes.tsv"), col_names = F))
+
+
+
+
+
+
+
+
+
+
+
 
 ## filter for droplets that are singlets
 #ANT1
