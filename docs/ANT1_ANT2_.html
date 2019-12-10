@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2019-12-10
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,24 +495,18 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedf3d36c226d39f8ba977ba0ad980c8705f7e6643targetblankdf3d36ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/df3d36c226d39f8ba977ba0ad980c8705f7e6643" target="_blank">df3d36c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree0a2b4b00520e6e0a8cd39bd85c1a25b5fcd68edatargetblank0a2b4b0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/0a2b4b00520e6e0a8cd39bd85c1a25b5fcd68eda" target="_blank">0a2b4b0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedf3d36c226d39f8ba977ba0ad980c8705f7e6643targetblankdf3d36ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree0a2b4b00520e6e0a8cd39bd85c1a25b5fcd68edatargetblank0a2b4b0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .DS_Store
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  output/ANT2_seurat.rds
-
-Unstaged changes:
-    Modified:   analysis/ANT1_ANT2_.Rmd
 
 </code></pre>
 <p>
@@ -551,6 +545,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/analysis/ANT1_ANT2_.Rmd" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+<td>
+Lower stringency of QC for ANT1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/ANT1_ANT2_.html" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+<td>
+Lower stringency of QC for ANT1
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -713,8 +741,82 @@ ANT2_seurat[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(ANT2_seurat, pa
 # Visualize QC metrics as a violin plot
 VlnPlot(ANT1_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-1">
+Past versions of QC-1.png
+</button>
+</p>
+<div id="fig-QC-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/QC-1.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-2">
+Past versions of QC-2.png
+</button>
+</p>
+<div id="fig-QC-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/QC-2.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># FeatureScatter is typically used to visualize feature-feature relationships, but can be used
 # for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
 
@@ -722,12 +824,86 @@ plot1 &lt;- FeatureScatter(ANT1_seurat, feature1 = &quot;nCount_RNA&quot;, featu
 plot2 &lt;- FeatureScatter(ANT1_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
 CombinePlots(plots = list(plot1, plot2))</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-3">
+Past versions of QC-3.png
+</button>
+</p>
+<div id="fig-QC-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/QC-3.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot1 &lt;- FeatureScatter(ANT2_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)
 plot2 &lt;- FeatureScatter(ANT2_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
 CombinePlots(plots = list(plot1, plot2))</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#Filter barcodes based on nFeatures and %MT
-#ANT1_seurat &lt;- subset(ANT1_seurat, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-4">
+Past versions of QC-4.png
+</button>
+</p>
+<div id="fig-QC-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/QC-4.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Filter barcodes based on nFeatures and %MT (lowered stringency for the ANT1 in order to have cells for downstream analysis; will try using SoupX to hopefully reduce nFeatures in cells)
+ANT1_seurat &lt;- subset(ANT1_seurat, subset = nFeature_RNA &gt; 200 &amp; percent.mt &lt; 5)
 ANT2_seurat &lt;- subset(ANT2_seurat, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)</code></pre>
 </div>
 <div id="normalizing-data" class="section level1">
@@ -763,12 +939,86 @@ This warning is displayed once per session.</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/feature%20selection-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-selection-1">
+Past versions of “feature selection-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-feature-selection-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/feature selection-1.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot_variable_features(ANT2_seurat)</code></pre>
 <pre><code>When using repel, set xnudge and ynudge to 0 for optimal results</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis
 
 Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/feature%20selection-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-selection-2">
+Past versions of “feature selection-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-feature-selection-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/feature selection-2.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="scaling-data" class="section level1">
 <h1>Scaling Data</h1>
@@ -787,40 +1037,40 @@ ANT1_seurat &lt;- scale_data(ANT1_seurat)</code></pre>
 <p>Using the highly variable features selected above, perform PCA</p>
 <pre class="r"><code>ANT1_seurat &lt;- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat))</code></pre>
 <pre><code>PC_ 1 
-Positive:  TIMP3, INHBA, TPM1, VIM, CCND2, PMEPA1, LZTS1, SPINT2, RAI14, CDKN2B 
-       SOX4, LMO7, RDH10, PDLIM3, C12orf75, MAP3K7CL, TCAF1, CPE, TUBA1A, PAG1 
-       STK17B, UCHL1, XRCC4, NT5E, NUAK1, KCTD16, JPT1, IGFL2, CCND1, RAB3B 
-Negative:  SAA1, IFITM3, PRLR, OTULINL, PTGDS, CDKN1C, CRISPLD2, DPP7, SPON2, FKBP5 
-       TMEM141, PDPN, TSPO, DCN, GGT5, PNMT, PLIN2, MMP23B, FAM213A, FMO5 
-       APOD, IQGAP2, ADAMTS2, SCUBE2, GMPR, C16orf74, ANGPTL1, ABI3BP, SERPINF1, BCO2 
+Positive:  IFITM3, CRISPLD2, TMEM141, DCN, SAA1, PDPN, PRLR, OTULINL, PTGDS, SCUBE2 
+       CDKN1C, FKBP5, DPP7, SPON2, PLIN2, TSPO, FAM89A, SERPINF1, MMP23B, LUM 
+       IQGAP2, NPC2, GGT5, PNMT, TGFBI, ADAMTS2, B2M, TXNDC16, COPZ2, GYPC 
+Negative:  TIMP3, INHBA, RAI14, CCND2, TPM1, VIM, PMEPA1, FSCN1, LZTS1, RDH10 
+       C12orf75, SOX4, CDKN2B, LMO7, MAP3K7CL, SPINT2, CPE, TCAF1, PDLIM3, AQP1 
+       TUBA1A, ENTPD4, JPT1, SH3BGRL3, NUAK1, FRMD6, PLEC, ADAM10, PAG1, RAB3B 
 PC_ 2 
-Positive:  FTH1, TRIB3, DDIT3, MGST1, TXNRD1, ZFAS1, MT1E, SLC7A11, FAM129A, PTGR1 
-       SLC3A2, SQSTM1, BTG1, KCNG1, NQO1, NFIL3, CEBPB, PSAT1, TCEA1, EIF5 
-       HSPA9, GCLM, GDF15, EIF1B, EZR, FADS3, TALDO1, UCHL1, RPS4Y1, LARP6 
-Negative:  MEST, SPON1, PLAC9, MDK, FLT1, OGN, COL15A1, MFAP4, PLS3, KCTD12 
-       RSPO2, CHCHD2, PITX1, PRSS35, IL6ST, MXRA5, SLC40A1, RIMS2, STARD4, TNNT2 
-       SCUBE3, NETO2, LIX1, FST, FIBIN, COL6A1, HOPX, TSPAN15, IGFBP3, GNG11 
+Positive:  MEST, PLAC9, MDK, LIX1, SPON1, FLT1, PCDH10, OGN, PITX1, MFAP4 
+       NRP2, TSPAN15, LMO4, CDH11, PLS3, PDZRN3, TNNT2, FST, ARL4A, RSPO2 
+       COL15A1, ITGA11, PRSS35, UGP2, HOPX, TMEM59, STARD4, KCTD12, RIMS2, SLC40A1 
+Negative:  TRIB3, FTH1, DDIT3, SLC7A11, ZFAS1, SQSTM1, HSPA9, TXNRD1, MGST1, FAM129A 
+       PTGR1, MT1E, PCK2, SLFN5, NQO1, TCEA1, FADS3, GCLM, NFIL3, KCNG1 
+       SLC12A8, PSAT1, GPR1, SLC3A2, TALDO1, UCHL1, GDF15, GARS, ASNS, BTG1 
 PC_ 3 
-Positive:  CHCHD2, HLA-B, COL6A3, HLA-A, B2M, RPS4X, TGFBI, PRDX4, LGALS1, MFAP4 
-       CRABP2, EMILIN1, RPL22L1, HSD17B2, S100A4, SERPINF1, TYW3, NREP, GBP1, PDGFRL 
-       COL6A1, DDIT4, TXNRD2, PLAGL1, CILP2, CTSF, ANOS1, ADAMTS16, DNM3OS, ZFAS1 
-Negative:  SMOC2, TMEM88, SELENOP, OGFRL1, PLA2G16, ATRNL1, GPC3, AQP1, SLIT3, SORBS2 
-       PDZRN4, SLITRK4, SLC7A8, TPD52L1, PROCR, COL4A4, COBLL1, CLTB, NSG1, NEDD9 
-       IGFBP2, GGT5, EMP2, EIF1AY, SRPX, FMO5, RPS4Y1, TCAF1, ABI3BP, PLA2G4A 
+Positive:  CHCHD2, RPS4X, RPL22L1, PRDX4, TXNRD2, PDGFRL, NREP, HLA-A, CADM1, COL6A3 
+       CRABP2, B2M, ICAM3, CTSF, HLA-B, HSD17B2, CALM2, ANOS1, P4HA2, IDH1 
+       MDK, PELO, TYMS, EPB41L4A-AS1, CEMIP, S100A4, MAD2L1, PLS3, SNHG8, FRMD4A 
+Negative:  SLC7A8, TMEM88, SORBS2, SPON2, RPS4Y1, EIF1AY, CKB, SMOC2, TSPO, SLC16A3 
+       SLITRK4, ALCAM, ADAMTS2, PLXDC2, PLTP, NR2F1, F2R, FMO5, PRDX6, GREM1 
+       DPP7, GGT5, PMP22, COBLL1, GPC3, APOD, COL11A1, RERE, C3orf70, ATRNL1 
 PC_ 4 
-Positive:  FN1, FBLN2, SLC22A3, COL11A1, NEAT1, COL27A1, FLNB, COL6A2, UACA, KCNQ1OT1 
-       PAG1, STRA6, AHR, FAP, SERPINE1, EXTL1, LTBP2, GUCY1A1, UNC5B, DRP2 
-       SLC20A1, COMP, LIFR, MGAT5, ALDH1L2, SORBS2, LOX, LIF, RDH10, F2RL1 
-Negative:  DYNLL1, CSRP2, RPS4X, CALM2, BEX3, H2AFZ, NDUFA12, TMSB4X, PRDX1, MYL12A 
-       CYCS, TXN, JPT1, TAGLN, CLTB, PRDX4, FTH1, C12orf75, ODC1, DCUN1D5 
-       ARL4A, CHIC2, LURAP1L, SLC25A4, ERG28, SH3BGRL3, STXBP6, GLRX, PITX1, S100A10 
+Positive:  KRT8, IL6ST, LTBP2, TIMP1, KRT18, PFKP, EGFLAM, MT2A, VCL, MYL10 
+       ITGA1, COL6A3, NR2F1, PDGFRA, UBASH3B, TGFBR1, SLC22A3, PLAGL1, MYADM, CDK1 
+       FGF1, CDH11, LRRC32, CENPM, RAI14, TUBA1B, CTPS1, MYL9, EGR2, UNC5B 
+Negative:  PLXDC1, MFAP5, MAF, AL356056.1, ITM2B, NKAIN4, ELAVL2, NRG1, ODAPH, CTSV 
+       ANGPTL7, HIST1H2AC, PROCR, DPP10-AS1, RCAN2, HIST1H1C, CRYGS, DHRS2, DPP10, SPINT1 
+       SMOC2, SPINT2, KCNN2, TNNC1, DNAJC15, DYNC1I1, CDKN2A, TMEM59, COBLL1, HTRA1 
 PC_ 5 
-Positive:  PLXDC1, ANOS1, SDC1, ODAPH, MFAP5, PDZRN4, ANGPTL7, NRG1, NKAIN4, BCAT1 
-       COL4A4, SMOC2, MAF, GATM, CADM1, PROCR, SPINT1, GPR155, CTSV, MAMDC2 
-       HMCN1, DYNC1I1, RASSF2, LEFTY2, CAPN6, AL121827.2, SESN3, HS6ST2, LAMC2, AL356056.1 
-Negative:  NR2F1, TIMP1, TGM2, MT2A, IL6ST, PMP22, HOPX, KRT8, FAM89A, MYL10 
-       KRT18, HSPB1, PDGFRA, GSTO1, LTBP1, COL6A2, TGFBR1, EBPL, MME, TPM2 
-       MFAP4, PTGER2, SOD3, HGF, COL6A1, DKK1, RSPO2, ATP1B1, LUM, FGF7 </code></pre>
+Positive:  COL1A2, FN1, COL6A2, LTBP1, KDELR3, WNT2, FBLN2, LGALS1, COL6A1, EGFL6 
+       TIMP1, VCAN, CXCL14, PTGER2, ALDH1L2, COPZ2, LUM, NR2F1, CLEC3A, RPRML 
+       COMP, RAMP1, PCOLCE, COL11A1, LOX, MFAP4, FST, THBS2, HGF, C1S 
+Negative:  EMP2, HSP90AA1, PLA2G16, CENPM, HMMR, TYMS, MGARP, CDK1, PBK, SLC29A1 
+       SHCBP1, GADD45A, SPC25, PCLAF, LEFTY2, UBE2C, FOXM1, GINS2, HMGB2, RRM2 
+       CENPW, JUN, NUSAP1, CLU, COL4A4, RGS4, NCAPG, ODC1, PTTG1, COL8A1 </code></pre>
 <pre class="r"><code>ANT2_seurat &lt;- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat))</code></pre>
 <pre><code>PC_ 1 
 Positive:  SPON2, TSPO, RPS4Y1, FTH1, FTL, DPP7, PLIN2, PTGDS, LUM, FDPS 
@@ -857,8 +1107,190 @@ Positive:  SAT1, SAA1, SBF2-AS1, OTULINL, IGF2.1, RBP1, B2M, SLC40A1, IL1RL1, SY
 Negative:  FN1, RAMP1, MMP2, VIM, SPOCK1, FDPS, ACTG2, TIMP1, SOX4, IGFBP7 
        TAGLN, DKK2, COMP, TPM2, TMSB4X, RCN3, WFDC1, HTRA1, THBS2, TSPO 
        SH3BGRL3, FDFT1, STMN1, MARCKSL1, TPM1, KCTD12, S100A4, COL1A2, CDKN2A, CXCL14 </code></pre>
-<pre class="r"><code># Only ANT2 works here, since only 17 cells passed QC in ANT1
-# Examine and visualize PCA results a few different ways
+<pre class="r"><code># Examine and visualize PCA results a few different ways
+print(ANT2_seurat[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
+<pre><code>PC_ 1 
+Positive:  SPON2, TSPO, RPS4Y1, FTH1, FTL 
+Negative:  CHCHD2, TPM1, ACTA2, VIM, TAGLN 
+PC_ 2 
+Positive:  COL5A2, MFAP4, MDK, VCAN, SLC40A1 
+Negative:  S100A11, MT2A, AREG, IL1RL1, GDF15 
+PC_ 3 
+Positive:  SH3BP5-AS1, ATAD2B, GK, OSGIN1, FRAS1 
+Negative:  RPS27, FTL, HSPB1, RPS4X, LUM 
+PC_ 4 
+Positive:  COL6A1, SERPINF1, COL14A1, EGFL6, DLK1 
+Negative:  PLAC9, PROCR, IGFBP7, SMOC2, ADAM28 
+PC_ 5 
+Positive:  SAT1, SAA1, SBF2-AS1, OTULINL, IGF2.1 
+Negative:  FN1, RAMP1, MMP2, VIM, SPOCK1 </code></pre>
+<pre class="r"><code>VizDimLoadings(ANT1_seurat, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-1">
+Past versions of PCA-1.png
+</button>
+</p>
+<div id="fig-PCA-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/PCA-1.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>DimPlot(ANT1_seurat, reduction = &quot;pca&quot;, group.by = &quot;labels&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-2">
+Past versions of PCA-2.png
+</button>
+</p>
+<div id="fig-PCA-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/PCA-2.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Get the total variance:
+pca &lt;- ANT1_seurat[[&quot;pca&quot;]]
+mat &lt;- Seurat::GetAssayData(ANT1_seurat, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
+total_variance &lt;- sum(matrixStats::rowVars(mat))
+
+
+eigValues &lt;- (pca@stdev)^2  ## EigenValues
+varExplained &lt;- eigValues / total_variance
+head(varExplained) #var explained by first 10 PCs</code></pre>
+<pre><code>[1] 0.007276886 0.004214385 0.002795383 0.002015915 0.001851249 0.001703016</code></pre>
+<pre class="r"><code>DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-3">
+Past versions of PCA-3.png
+</button>
+</p>
+<div id="fig-PCA-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/PCA-3.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ElbowPlot(ANT1_seurat, ndims = 30) #22 PCs?</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-4">
+Past versions of PCA-4.png
+</button>
+</p>
+<div id="fig-PCA-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/PCA-4.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Examine and visualize PCA results a few different ways
 print(ANT2_seurat[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
 <pre><code>PC_ 1 
 Positive:  SPON2, TSPO, RPS4Y1, FTH1, FTL 
@@ -876,9 +1308,9 @@ PC_ 5
 Positive:  SAT1, SAA1, SBF2-AS1, OTULINL, IGF2.1 
 Negative:  FN1, RAMP1, MMP2, VIM, SPOCK1 </code></pre>
 <pre class="r"><code>VizDimLoadings(ANT2_seurat, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>DimPlot(ANT2_seurat, reduction = &quot;pca&quot;, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-6.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Get the total variance:
 pca &lt;- ANT2_seurat[[&quot;pca&quot;]]
 mat &lt;- Seurat::GetAssayData(ANT2_seurat, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
@@ -891,17 +1323,136 @@ head(varExplained) #var explained by first 10 PCs</code></pre>
 <pre><code>[1] 0.0026737521 0.0015867984 0.0013628098 0.0011624101 0.0010868393
 [6] 0.0009956408</code></pre>
 <pre class="r"><code>DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-7.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ElbowPlot(ANT2_seurat, ndims = 30) #20 PCs?</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/PCA-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clustering" class="section level1">
 <h1>Clustering</h1>
-<pre class="r"><code>num_PCs &lt;- 20
+<pre class="r"><code>num_PCs &lt;- 22
 
-ANT2_seurat &lt;- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)</code></pre>
+ANT1_seurat &lt;- FindNeighbors(ANT1_seurat, dims = 1:num_PCs)</code></pre>
 <pre><code>Computing nearest neighbor graph</code></pre>
 <pre><code>Computing SNN</code></pre>
+<pre class="r"><code>ANT1_seurat &lt;- FindClusters(ANT1_seurat, resolution = 0.5)</code></pre>
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 688
+Number of edges: 25494
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.8215
+Number of communities: 4
+Elapsed time: 0 seconds</code></pre>
+<pre class="r"><code>#Run UMAP
+ANT1_seurat &lt;- RunUMAP(ANT1_seurat, dims = 1:num_PCs)</code></pre>
+<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
+This message will be shown once per session</code></pre>
+<pre><code>16:21:23 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>16:21:23 Read 688 rows and found 22 numeric columns</code></pre>
+<pre><code>16:21:23 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>16:21:23 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
+<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
+<pre><code>**************************************************|
+16:21:23 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpfInVhx/file684c58da6db
+16:21:23 Searching Annoy index using 1 thread, search_k = 3000
+16:21:23 Annoy recall = 100%
+16:21:25 Commencing smooth kNN distance calibration using 1 thread
+16:21:26 Initializing from normalized Laplacian + noise
+16:21:26 Commencing optimization for 500 epochs, with 26736 positive edges
+16:21:29 Optimization finished</code></pre>
+<pre class="r"><code>DimPlot(ANT1_seurat, reduction = &quot;umap&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-1">
+Past versions of clustering-1.png
+</button>
+</p>
+<div id="fig-clustering-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/clustering-1.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>DimPlot(ANT1_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/clustering-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-2">
+Past versions of clustering-2.png
+</button>
+</p>
+<div id="fig-clustering-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/clustering-2.png" target="_blank">e2ea662</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>saveRDS(ANT1_seurat, file = &quot;output/ANT1_seurat.rds&quot;)
+
+
+
+
+
+
+num_PCs &lt;- 20
+
+ANT2_seurat &lt;- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)</code></pre>
+<pre><code>Computing nearest neighbor graph
+Computing SNN</code></pre>
 <pre class="r"><code>ANT2_seurat &lt;- FindClusters(ANT2_seurat, resolution = 0.5)</code></pre>
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 
@@ -912,36 +1463,26 @@ Running Louvain algorithm...
 Maximum modularity in 10 random starts: 0.6943
 Number of communities: 3
 Elapsed time: 0 seconds</code></pre>
-<pre class="r"><code># Look at cluster IDs of the first 5 cells
-head(Idents(ANT2_seurat), 5)</code></pre>
-<pre><code>AAACCCACATCAACCA AAACGCTCAAGGCTTT AAAGGATGTGATACAA AAAGTGACAATAGAGT 
-               2                2                2                1 
-AAATGGAAGCTCTGTA 
-               2 
-Levels: 0 1 2</code></pre>
 <pre class="r"><code>#Run UMAP
 ANT2_seurat &lt;- RunUMAP(ANT2_seurat, dims = 1:num_PCs)</code></pre>
-<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
-To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
-This message will be shown once per session</code></pre>
-<pre><code>16:04:17 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>16:04:17 Read 579 rows and found 20 numeric columns</code></pre>
-<pre><code>16:04:17 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>16:04:17 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
-<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
-<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
-<pre><code>**************************************************|
-16:04:17 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpJVLR7Y/file65811c26f531
-16:04:17 Searching Annoy index using 1 thread, search_k = 3000
-16:04:17 Annoy recall = 100%
-16:04:21 Commencing smooth kNN distance calibration using 1 thread
-16:04:22 Initializing from normalized Laplacian + noise
-16:04:22 Commencing optimization for 500 epochs, with 21870 positive edges
-16:04:24 Optimization finished</code></pre>
+<pre><code>16:21:47 UMAP embedding parameters a = 0.9922 b = 1.112
+16:21:47 Read 579 rows and found 20 numeric columns
+16:21:47 Using Annoy for neighbor search, n_neighbors = 30
+16:21:47 Building Annoy index with metric = cosine, n_trees = 50
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+16:21:48 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpfInVhx/file684c16c576b6
+16:21:48 Searching Annoy index using 1 thread, search_k = 3000
+16:21:48 Annoy recall = 100%
+16:21:48 Commencing smooth kNN distance calibration using 1 thread
+16:21:50 Initializing from normalized Laplacian + noise
+16:21:50 Commencing optimization for 500 epochs, with 21870 positive edges
+16:21:53 Optimization finished</code></pre>
 <pre class="r"><code>DimPlot(ANT2_seurat, reduction = &quot;umap&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/clustering-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>DimPlot(ANT2_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/clustering-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ANT1_ANT2_.Rmd/clustering-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>saveRDS(ANT2_seurat, file = &quot;output/ANT2_seurat.rds&quot;)</code></pre>
 <br>
 <p>
