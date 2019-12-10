@@ -1,0 +1,232 @@
+---
+title: "ANT1/ANT2_Pilot"
+author: "Anthony Hung"
+date: "2019-12-02"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Analysis of processed sc pilot data ANT1/ANT2
+
+ANT1_ANT2 contain multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection and sequenced using the 10x chromium technology.
+
+ANT1: (19160 unstrained; 18856 unstrained; 18855 strained)
+
+ANT2: (19160 strained; 18856 strained; 18855 unstrained)
+
+Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns reads to hg38 using STAR solo and runs demuxlet on the output.
+
+Analysis using emptyDrops adapted from: http://research.fhcrc.org/content/dam/stripe/sun/software/scRNAseq/scRNAseq.html#312_identify_low_quallity_cells
+
+## Load libraries
+
+```{r load libraries}
+library(data.table)
+library(tidyverse)
+library(dplyr)
+library(stringr)
+library(readr)
+library(Matrix)
+library(biomaRt)
+library(Seurat)
+```
+
+## Load in data
+
+```{r specify directory structure}
+## link to directories containing data files (count matrices)
+proj_dir <- "~/Desktop/scPilot/"
+ANT1_dir <- paste0(proj_dir, "YG-AH-2S-ANT-1_S1_L008/")
+ANT2_dir <- paste0(proj_dir, "YG-AH-2S-ANT-2_S2_L008/")
+
+#read in data
+
+#ANT1
+demuxlet1 <- fread(paste0(ANT1_dir, "demuxlet.best", sep = ""))
+count_data1 <- readMM(paste0(ANT1_dir, "Gene/filtered/matrix.mtx"))
+genes1 <- read_tsv(paste0(ANT1_dir, "Gene/filtered/genes.tsv"), col_names = F)
+barcodes1 <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+#ANT2
+demuxlet2 <- fread(paste0(ANT2_dir, "demuxlet.best", sep = ""))
+count_data2 <- readMM(paste0(ANT2_dir, "Gene/filtered/matrix.mtx"))
+genes2 <- read_tsv(paste0(ANT2_dir, "Gene/filtered/genes.tsv"), col_names = F)
+barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+```
+
+# Based on the demuxlet output, assign label for barcodes based on "BEST" output and filter for "SNG-" barcodes
+
+```{r Filter droplets for singlets}
+#returns a dataframe with two columns, one corresponding to the barcodes and one corresponding to the label given by demuxlet
+return_singlet_label <- function(barcodes, demuxlet.out){
+  labels <- demuxlet.out$BEST[match(unlist(barcodes), demuxlet.out$BARCODE)]
+  return(cbind(barcodes, labels))
+}
+
+barcodes1_labeled <- return_singlet_label(barcodes1, demuxlet1)
+barcodes2_labeled <- return_singlet_label(barcodes2, demuxlet2)
+
+#table of singlets/multiplets in the filtered data based on demuxlet
+table(barcodes1_labeled$labels)
+table(barcodes2_labeled$labels)
+
+## filter for droplets that are singlets
+#ANT1
+demuxlet_single1 <- demuxlet1 %>%
+     dplyr::filter(grepl("SNG-", BEST))
+singlets_index1 <- unlist(lapply(barcodes1_labeled$X1,"%in%", table = demuxlet_single1$BARCODE), use.names = F) #get index of barcodes that are singlets
+barcodes_singlets1 <- barcodes1_labeled[singlets_index1,] #use index to subset matrix + barcode names
+count_data_singlets1 <- count_data1[,singlets_index1]
+
+#ANT2
+demuxlet_single2 <- demuxlet2 %>%
+     dplyr::filter(grepl("SNG-", BEST))
+singlets_index2 <- unlist(lapply(barcodes2_labeled$X1,"%in%", table = demuxlet_single2$BARCODE), use.names = F) #get index of barcodes that are singlets
+barcodes_singlets2 <- barcodes2_labeled[singlets_index2,] #use index to subset matrix + barcode names
+count_data_singlets2 <- count_data2[,singlets_index2]
+```
+
+
+
+# Create Seurat object for each dataset (for singlet barcodes) and add metadata in the form of singlet identity for each barcode. Rest of analysis adapted from: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
+
+```{r seurat}
+rownames(count_data_singlets1) <- genes1$X2
+colnames(count_data_singlets1) <- barcodes_singlets1$X1
+
+ANT1_seurat <- CreateSeuratObject(counts = count_data_singlets1, project = "ANT1") %>% 
+  AddMetaData(barcodes_singlets1$labels, col.name = "labels")
+
+
+rownames(count_data_singlets2) <- genes2$X2
+colnames(count_data_singlets2) <- barcodes_singlets2$X1
+
+ANT2_seurat <- CreateSeuratObject(counts = count_data_singlets2, project = "ANT2") %>% 
+  AddMetaData(barcodes_singlets2$labels, col.name = "labels")
+```
+
+Now we can perform some QC on cells in Seurat
+
+```{r QC}
+ANT1_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT1_seurat, pattern = "^MT-")
+ANT2_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT2_seurat, pattern = "^MT-")
+
+# Visualize QC metrics as a violin plot
+VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+
+
+# FeatureScatter is typically used to visualize feature-feature relationships, but can be used
+# for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
+
+plot1 <- FeatureScatter(ANT1_seurat, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(ANT1_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+CombinePlots(plots = list(plot1, plot2))
+
+
+plot1 <- FeatureScatter(ANT2_seurat, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(ANT2_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+CombinePlots(plots = list(plot1, plot2))
+
+
+
+#Filter barcodes based on nFeatures and %MT
+ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+```
+
+
+# Normalizing Data
+
+```{r Norm}
+ANT1_seurat <- NormalizeData(ANT1_seurat, normalization.method = "LogNormalize", scale.factor = 10000)
+ANT2_seurat <- NormalizeData(ANT2_seurat, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+
+# Feature selection
+
+```{r feature selection}
+ANT1_seurat <- FindVariableFeatures(ANT1_seurat, selection.method = "vst", nfeatures = 2000)
+ANT2_seurat <- FindVariableFeatures(ANT2_seurat, selection.method = "vst", nfeatures = 2000)
+
+
+plot_variable_features <- function(seurat.obj){
+  # Identify the 10 most highly variable genes
+  top10 <- head(VariableFeatures(seurat.obj), 10)
+  
+  # plot variable features with and without labels
+  plot1 <- VariableFeaturePlot(seurat.obj) + 
+    ggtitle(paste0(unname(seurat.obj$orig.ident[1])))
+  plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE) +
+    ggtitle(paste0(unname(seurat.obj$orig.ident[1])))
+  return(CombinePlots(plots = list(plot1, plot2)))
+}
+
+plot_variable_features(ANT1_seurat)
+plot_variable_features(ANT2_seurat)
+```
+
+# Scaling Data
+
+```{r scaling}
+scale_data <- function(seurat.obj){
+  all.genes <- rownames(seurat.obj)
+  return(ScaleData(seurat.obj, features = all.genes))
+}
+
+ANT1_seurat <- scale_data(ANT1_seurat)
+ANT2_seurat <- scale_data(ANT2_seurat)
+```
+
+# Dimensionality Reduction
+
+Using the highly variable features selected above, perform PCA
+
+```{r PCA}
+#ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat))
+ANT2_seurat <- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat))
+
+
+
+# Only ANT2 works here, since only 17 cells passed QC in ANT1
+# Examine and visualize PCA results a few different ways
+print(ANT2_seurat[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(ANT2_seurat, dims = 1:2, reduction = "pca")
+
+DimPlot(ANT2_seurat, reduction = "pca", group.by = "labels")
+
+# Get the total variance:
+pca <- ANT2_seurat[["pca"]]
+mat <- Seurat::GetAssayData(ANT2_seurat, assay = "RNA", slot = "scale.data")
+total_variance <- sum(matrixStats::rowVars(mat))
+
+
+eigValues <- (pca@stdev)^2  ## EigenValues
+varExplained <- eigValues / total_variance
+head(varExplained) #var explained by first 10 PCs
+
+DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)
+
+ElbowPlot(ANT2_seurat, ndims = 30) #20 PCs?
+```
+
+# Clustering
+
+```{r clustering}
+num_PCs <- 20
+
+ANT2_seurat <- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)
+ANT2_seurat <- FindClusters(ANT2_seurat, resolution = 0.5)
+
+# Look at cluster IDs of the first 5 cells
+head(Idents(pbmc), 5)
+
+
+#Run UMAP
+ANT2_seurat <- RunUMAP(ANT2_seurat, dims = 1:num_PCs)
+DimPlot(ANT2_seurat, reduction = "umap")
+DimPlot(ANT2_seurat, reduction = "umap", group.by = "labels")
+saveRDS(ANT2_seurat, file = "output/ANT2_seurat.rds")
+```
