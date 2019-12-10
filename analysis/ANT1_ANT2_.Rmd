@@ -131,8 +131,8 @@ CombinePlots(plots = list(plot1, plot2))
 
 
 
-#Filter barcodes based on nFeatures and %MT
-ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+#Filter barcodes based on nFeatures and %MT (lowered stringency for the ANT1 in order to have cells for downstream analysis; will try using SoupX to hopefully reduce nFeatures in cells)
+ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 200 & percent.mt < 5)
 ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 ```
 
@@ -158,9 +158,11 @@ plot_variable_features <- function(seurat.obj){
   
   # plot variable features with and without labels
   plot1 <- VariableFeaturePlot(seurat.obj) + 
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1])))
+    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
+       theme(legend.position="bottom")
   plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE) +
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1])))
+    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
+       theme(legend.position="bottom")
   return(CombinePlots(plots = list(plot1, plot2)))
 }
 
@@ -185,12 +187,39 @@ ANT2_seurat <- scale_data(ANT2_seurat)
 Using the highly variable features selected above, perform PCA
 
 ```{r PCA}
-#ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat))
+ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat))
 ANT2_seurat <- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat))
 
 
+# Examine and visualize PCA results a few different ways
+print(ANT2_seurat[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(ANT1_seurat, dims = 1:2, reduction = "pca")
 
-# Only ANT2 works here, since only 17 cells passed QC in ANT1
+DimPlot(ANT1_seurat, reduction = "pca", group.by = "labels")
+
+# Get the total variance:
+pca <- ANT1_seurat[["pca"]]
+mat <- Seurat::GetAssayData(ANT1_seurat, assay = "RNA", slot = "scale.data")
+total_variance <- sum(matrixStats::rowVars(mat))
+
+
+eigValues <- (pca@stdev)^2  ## EigenValues
+varExplained <- eigValues / total_variance
+head(varExplained) #var explained by first 10 PCs
+
+DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)
+
+ElbowPlot(ANT1_seurat, ndims = 30) #22 PCs?
+
+
+
+
+
+
+
+
+
+
 # Examine and visualize PCA results a few different ways
 print(ANT2_seurat[["pca"]], dims = 1:5, nfeatures = 5)
 VizDimLoadings(ANT2_seurat, dims = 1:2, reduction = "pca")
@@ -215,14 +244,27 @@ ElbowPlot(ANT2_seurat, ndims = 30) #20 PCs?
 # Clustering
 
 ```{r clustering}
+num_PCs <- 22
+
+ANT1_seurat <- FindNeighbors(ANT1_seurat, dims = 1:num_PCs)
+ANT1_seurat <- FindClusters(ANT1_seurat, resolution = 0.5)
+
+
+#Run UMAP
+ANT1_seurat <- RunUMAP(ANT1_seurat, dims = 1:num_PCs)
+DimPlot(ANT1_seurat, reduction = "umap")
+DimPlot(ANT1_seurat, reduction = "umap", group.by = "labels")
+saveRDS(ANT1_seurat, file = "output/ANT1_seurat.rds")
+
+
+
+
+
+
 num_PCs <- 20
 
 ANT2_seurat <- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)
 ANT2_seurat <- FindClusters(ANT2_seurat, resolution = 0.5)
-
-# Look at cluster IDs of the first 5 cells
-head(Idents(pbmc), 5)
-
 
 #Run UMAP
 ANT2_seurat <- RunUMAP(ANT2_seurat, dims = 1:num_PCs)
