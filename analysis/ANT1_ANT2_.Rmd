@@ -12,9 +12,15 @@ editor_options:
 ANT1_ANT2 contain multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection and sequenced using the 10x chromium technology.
 
 ANT1: (19160 unstrained; 18856 unstrained; 18855 strained)
+  estimated saturation statistics from Kenneth's Pipeline:
+n.reads n.unique        total.size      saturation
+192546655       101667280       2.15403e+08     0.471986
 
 ANT2: (19160 strained; 18856 strained; 18855 unstrained)
-
+  estimated saturation statistics from Kenneth's Pipeline:
+n.reads n.unique        total.size      saturation
+180694884       120674466       3.63297e+08     0.332164
+  
 Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns reads to hg38 using STAR solo and runs demuxlet on the output.
 
 Analysis using emptyDrops adapted from: http://research.fhcrc.org/content/dam/stripe/sun/software/scRNAseq/scRNAseq.html#312_identify_low_quallity_cells
@@ -30,6 +36,7 @@ library(readr)
 library(Matrix)
 library(biomaRt)
 library(Seurat)
+library(gridExtra)
 ```
 
 ## Load in data
@@ -53,6 +60,27 @@ count_data2 <- readMM(paste0(ANT2_dir, "Gene/filtered/matrix.mtx"))
 genes2 <- read_tsv(paste0(ANT2_dir, "Gene/filtered/genes.tsv"), col_names = F)
 barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
 ```
+
+# DecontX to remove data from ambient RNA in droplets
+
+```{r decontX}
+library(celda)
+#read in data
+
+#ANT1
+count_data1_raw <- readMM(paste0(ANT1_dir, "Gene/raw/matrix.mtx"))
+genes1_raw <- read_tsv(paste0(ANT1_dir, "Gene/raw/genes.tsv"), col_names = F)
+barcodes1_raw <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/raw/barcodes.tsv"), col_names = F))
+#ANT2
+count_data2_raw <- readMM(paste0(ANT2_dir, "Gene/raw/matrix.mtx"))
+genes2_raw <- read_tsv(paste0(ANT2_dir, "Gene/raw/genes.tsv"), col_names = F)
+barcodes2_raw <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/raw/barcodes.tsv"), col_names = F))
+
+
+#decontxModel <- decontX(counts = count_data1_raw@x)
+```
+
+
 
 # Based on the demuxlet output, assign label for barcodes based on "BEST" output and filter for "SNG-" barcodes
 
@@ -115,6 +143,14 @@ ANT2_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT2_seurat, pattern = "^MT-
 VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
+# break down nFeature_RNA histograms by individual
+hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA19160"], main = "ANT1 SNG-NA19160 nFeatures", xlab = "nFeatures")
+hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18855"], main = "ANT1 SNG-NA18855 nFeatures", xlab = "nFeatures")
+hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18856"], main = "ANT1 SNG-NA18856 nFeatures", xlab = "nFeatures")
+
+
+hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA19160"], main = "ANT2 SNG-NA19160 nFeatures", xlab = "nFeatures")
+hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18855"], main = "ANT2 SNG-NA18855 nFeatures", xlab = "nFeatures")
 
 
 # FeatureScatter is typically used to visualize feature-feature relationships, but can be used
@@ -133,7 +169,7 @@ CombinePlots(plots = list(plot1, plot2))
 
 #Filter barcodes based on nFeatures and %MT (lowered stringency for the ANT1 in order to have cells for downstream analysis; will try using SoupX to hopefully reduce nFeatures in cells)
 ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 200 & percent.mt < 5)
-ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2000 & percent.mt < 5)
 ```
 
 
@@ -209,7 +245,7 @@ head(varExplained) #var explained by first 10 PCs
 
 DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)
 
-ElbowPlot(ANT1_seurat, ndims = 30) #22 PCs?
+ElbowPlot(ANT1_seurat, ndims = 50) #42 PCs?
 
 
 
@@ -238,13 +274,13 @@ head(varExplained) #var explained by first 10 PCs
 
 DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)
 
-ElbowPlot(ANT2_seurat, ndims = 30) #20 PCs?
+ElbowPlot(ANT2_seurat, ndims = 50) #40 PCs?
 ```
 
 # Clustering
 
 ```{r clustering}
-num_PCs <- 22
+num_PCs <- 42
 
 ANT1_seurat <- FindNeighbors(ANT1_seurat, dims = 1:num_PCs)
 ANT1_seurat <- FindClusters(ANT1_seurat, resolution = 0.5)
@@ -252,23 +288,44 @@ ANT1_seurat <- FindClusters(ANT1_seurat, resolution = 0.5)
 
 #Run UMAP
 ANT1_seurat <- RunUMAP(ANT1_seurat, dims = 1:num_PCs)
-DimPlot(ANT1_seurat, reduction = "umap")
-DimPlot(ANT1_seurat, reduction = "umap", group.by = "labels")
+p1 <- DimPlot(ANT1_seurat, reduction = "umap")
+p2 <- DimPlot(ANT1_seurat, reduction = "umap", group.by = "labels")
+p3 <- FeaturePlot(ANT1_seurat, features = "COL10A1")
+p4 <- FeaturePlot(ANT1_seurat, features = "COL11A1")
+p5 <- FeaturePlot(ANT1_seurat, features = "SOX5")
+p6 <- FeaturePlot(ANT1_seurat, features = "SOX6")
+p7 <- FeaturePlot(ANT1_seurat, features = "SOX9")
+p8 <- FeaturePlot(ANT1_seurat, features = "MMP2")
+p9 <- FeaturePlot(ANT1_seurat, features = "MMP1")
+p10 <- FeaturePlot(ANT1_seurat, features = "MMP13")
+grid.arrange(p1, p2, nrow = 2)
+grid.arrange(p3, p4, p5, p6, p7, nrow = 2)
+grid.arrange(p8, p9, p10, nrow = 2)
 saveRDS(ANT1_seurat, file = "output/ANT1_seurat.rds")
 
 
 
 
 
-
-num_PCs <- 20
+num_PCs <- 40
 
 ANT2_seurat <- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)
 ANT2_seurat <- FindClusters(ANT2_seurat, resolution = 0.5)
 
 #Run UMAP
 ANT2_seurat <- RunUMAP(ANT2_seurat, dims = 1:num_PCs)
-DimPlot(ANT2_seurat, reduction = "umap")
-DimPlot(ANT2_seurat, reduction = "umap", group.by = "labels")
+p1_ <- DimPlot(ANT2_seurat, reduction = "umap")
+p2_ <- DimPlot(ANT2_seurat, reduction = "umap", group.by = "labels")
+p3_ <- FeaturePlot(ANT2_seurat, features = "COL10A1")
+p4_ <- FeaturePlot(ANT2_seurat, features = "COL11A1")
+p5_ <- FeaturePlot(ANT2_seurat, features = "SOX5")
+p6_ <- FeaturePlot(ANT2_seurat, features = "SOX6")
+p7_ <- FeaturePlot(ANT2_seurat, features = "SOX9")
+p8_ <- FeaturePlot(ANT2_seurat, features = "MMP2")
+p9_ <- FeaturePlot(ANT2_seurat, features = "MMP1")
+p10_ <- FeaturePlot(ANT2_seurat, features = "MMP13")
+grid.arrange(p1_, p2_, nrow = 2)
+grid.arrange(p3_, p4_, p5_, p6_, p7_, nrow = 2)
+grid.arrange(p8_, p9_, p10_, nrow = 2)
 saveRDS(ANT2_seurat, file = "output/ANT2_seurat.rds")
 ```
