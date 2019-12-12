@@ -1,0 +1,311 @@
+---
+title: "ANT1_QC"
+output: html_document
+params:
+  sample: "/project2/gilad/anthonyhung/Projects/OAStrain_project/YriMultiplex/YG-AH-2S-ANT-1_S1_L008/"
+---
+^ run on one sample at a time, define at the top
+
+This markdown will do initial QC on an individual sample
+
+load libraries
+```{r}
+library(Seurat)
+library(Matrix)
+library(DropletUtils)
+library(ggplot2)
+options(future.globals.maxSize= 4000*1024^2) # allow global exceeding 4Gb
+```
+
+A function for reading in star-solo output
+reads in raw data matrix, renames columns as barcodes and rows as genes. outputs a dgTMatrix
+
+```{r}
+read.solo <- function(folder)
+{
+  raw.data <- readMM(paste0(folder, '/matrix.mtx'))
+  colnames(raw.data) <- read.table(
+    paste0(folder, '/barcodes.tsv'), stringsAsFactors = FALSE)$V1
+  rownames(raw.data) <- read.table(
+    paste0(folder, '/genes.tsv'), stringsAsFactors = FALSE)$V2
+  raw.data
+}
+```
+
+run read.solo on sample
+
+```{r}
+samp.raw <- read.solo(paste0(params$sample,'/Gene/raw'))
+```
+
+Plot human barcode ranks, keeping only ranks <100,000. This is approximately the total number of GEMs (Gel Bead-in-Emulsion) in a lane.
+
+```{r}
+#Using barcodeRanks, make a dataframe with a row for each barcode, columns list rank of each barcode (averaged across ties), total counts for each barcode, the fitted value from the spline for each barcode. Lower sets the lower bound for UMI count below which barcodes are assumed to correspond to empty droplets.
+branks <- barcodeRanks(samp.raw, lower=10, fit.bounds=NULL)
+
+#get only barcodes with rank above 100,000
+branks<- branks[which(branks$rank <= 100000),]
+
+#redefine samp.raw, subsetting to only the columns corresponding to the highest ranked 100,000 barcodes.in test, this left me with samp.raw having 94,209 columns. Why fewer? ties in barcode ranks?
+samp.raw<- samp.raw[,rownames(branks)]
+
+#Plot
+plot(branks$rank, branks$total, log = "xy", xlab="Rank", ylab="Total", main="Barcode Kneeplot")
+o<- order(branks$rank)
+lines(branks$rank[o],branks$fitted[o], col="red")
+abline(h=metadata(branks)$knee, col="dodgerblue", lty=2)
+abline(h=metadata(branks)$inflection, col="forestgreen", lty=2)
+legend("bottomleft", lty=2, col=c("dodgerblue", "forestgreen"),
+legend=c("knee", "inflection"))
+```
+From Lior Pachter's word press: knee plots are a standard single-cell RNA-seq QC used to determine a threshold for considering cells valid for analysis in an experiment. High quality barcodes will be further to the left. on the right, past the inflection point are barcodes that a a relatively low number of reads and are therefore considered to have had failure in capture and to be too noisy for further analysis.
+
+Filter for empty droplets
+```{r}
+#run emptyDrops, determines how likely it is that a barcode is from an empty drop
+samp.empty<- emptyDrops(samp.raw, lower=metadata(branks)$inflection/2)
+
+#redefine samp.raw, subset to only columns/barcodes that are likely to represent drops with a cell. In test, only 9,103 barcodes left. This seems correct as we expect to capture ~10,000 cells from a 10x lane
+samp.raw<- samp.raw[,which(samp.empty$FDR<=0.05)]
+```
+
+At this point, kenneth conversts rownames and assigns species in the HumanChimpEB data
+
+Make a seurat object
+
+Running this gives a message about non-unique features in the rownames(duplicates of gene names) and makes them unique. Thats why kenneth converts the rownames. I'll still leave this out for now, see if it becomes a problem
+```{r}
+samp.obj<- CreateSeuratObject(samp.raw, project="7week")
+```
+
+```{r}
+#add %MT to metadata
+samp.obj[["percent.mt"]]<- PercentageFeatureSet(samp.obj, pattern= "^MT-")
+```
+
+
+add demuxlet identity
+
+```{r}
+add_demuxlet<- function(object,best)
+{
+  best<-read.table(best, header=TRUE, stringsAsFactors = FALSE) #read in file
+  best<- best[-1,] #remove the first line (not a barcode)
+  
+  m<- match(rownames(object@meta.data),best$BARCODE)
+  if(any(is.na(m))){
+    s <- sum(is.na(m))
+    cat(paste(s, "barcodes were not in the demuxlet data. Removing these cells.\n"))
+    object@meta.data$remove <- is.na(m)
+    object <- subset(object, remove=TRUE)
+    object@meta/data$remove <- NULL
+    m <- m[!is.na(m)]
+  }
+  
+  #filter so the demux data corresponds to 10x data
+  best <- best[m,]
+  individuals<- unique(best$BEST)
+  individuals<- individuals[grep("SNG", individuals)]
+  individual <- rep("Doublet", dim(object)[2])
+  for (i in individuals)
+  {
+    individual[which(best$BEST==i)]<-i
+  }
+  names(individual) <- best$BARCODE
+  AddMetaData(object, individual, col.name = 'individual')
+}
+```
+
+run  add_demuxlet function on the sample
+
+```{r}
+samp.obj<- add_demuxlet(samp.obj, paste0(params$sample, "/demuxlet.best"))
+```
+
+```{r}
+table(samp.obj$individual)
+```
+
+In this section I'm running through QC metrics in the satija lab Guided Clustering Tutorial
+Notably, in the tutorial, they filter cells that have unique feature counts over 2,500 or less than 200 and filter cells that have over 5% MT counts. We (Kenneth and I) have not been filtering Human Chimp EBs for MT, and I don't believe we are filtering based solely on unique features(instead, we are using emptyDrops)
+
+```{r}
+#visualize QC metrics as a violin plot
+VlnPlot(samp.obj, features= c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol=3, pt.size=0)
+
+VlnPlot(samp.obj, features= c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol=3, pt.size=0, group.by = "individual")
+```
+ 18858 has higher gene count, and higher RNA count in a bunch of cells. Are these doublets from the same individual (maybe 18858 not fully dissociated?)
+
+```{r, eval=F}
+#Subsetting objects for each individual, this ended up not being necessary
+FiveEleven.obj<- subset(samp.obj, subset = individual == 'SNG-NA18511')
+OneSixty.obj<- subset(samp.obj, subset = individual == 'SNG-NA19160')
+EightFiveEight<- subset(samp.obj, subset = individual == 'SNG-NA18858')
+```
+
+```{r}
+#visualize feature-feature relationships with FeatureScatter
+plot1<- FeatureScatter(samp.obj, feature1 = "nCount_RNA", feature2 = "percent.mt", group.by = "individual")
+plot2<- FeatureScatter(samp.obj, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = "individual")
+CombinePlots(plots= list(plot1, plot2))
+```
+
+SCTransform
+
+```{r}
+
+#in seurat SCTransform vignette, they regress out MT percentage, but we don't. Reasoning is that MT percentage probably correlates with cell type for us so its still useful information for clustering.
+
+samp.obj<- SCTransform(samp.obj, verbose=F)
+```
+
+
+PCA, tSNE, UMAP
+
+
+```{r}
+samp.obj<- RunPCA(samp.obj, npcs= 100, verbose = F)
+```
+
+```{r}
+DimPlot(samp.obj, reduction = "pca")
+DimPlot(samp.obj, reduction = "pca", group.by = "individual")
+VizDimLoadings(samp.obj, dims = 1:2, reduction = "pca")
+VizDimLoadings(samp.obj, dims = 3:4, reduction = "pca")
+VizDimLoadings(samp.obj, dims = 5:6, reduction = "pca")
+```
+
+```{r}
+xlim <- c(min(samp.obj@reductions$pca@cell.embeddings[,'PC_1']),
+          max(samp.obj@reductions$pca@cell.embeddings[,'PC_1']))
+ylim <- c(min(samp.obj@reductions$pca@cell.embeddings[,'PC_2']),
+          max(samp.obj@reductions$pca@cell.embeddings[,'PC_2']))
+
+individuals <- table(samp.obj$individual)
+individuals <- individuals[individuals>50]
+individuals <- names(individuals)
+for (i in individuals)
+{
+  print(DimPlot(samp.obj, reduction = "pca", 
+                cells = WhichCells(samp.obj, expression = individual == i)) +
+          xlim(xlim) + ylim(ylim) + ggtitle(i))
+}
+```
+
+```{r}
+#Keep all dims that explain more than x% of variance
+pva<- samp.obj@reductions$pca@stdev^2/samp.obj@reductions$pca@misc$total.variance
+ndim <- length(which(pva>=0.001))
+ElbowPlot(samp.obj, ndims = ndim*2) + geom_vline(xintercept=ndim, linetype="dashed", color = "red")
+ndim
+```
+
+```{r}
+samp.clust<- FindNeighbors(samp.obj, dims = 1:ndim, verbose = F)
+samp.clust<- FindClusters(samp.clust, resolution = 1, verbose = F)
+```
+
+
+
+
+```{r}
+samp.clust<- RunUMAP(samp.clust, dims=1:ndim, verbose = F)
+samp.clust<- RunTSNE(samp.clust, dims=1:ndim, verbose = F)
+```
+
+```{r}
+DimPlot(samp.clust, reduction = "umap")
+DimPlot(samp.clust, reduction = "umap", group.by = "orig.ident")
+DimPlot(samp.clust, reduction = "umap", group.by = "individual")
+xlim <- c(min(samp.clust@reductions$umap@cell.embeddings[,'UMAP_1']),
+          max(samp.clust@reductions$umap@cell.embeddings[,'UMAP_1']))
+ylim <- c(min(samp.clust@reductions$umap@cell.embeddings[,'UMAP_2']),
+          max(samp.clust@reductions$umap@cell.embeddings[,'UMAP_2']))
+for (i in individuals)
+{
+  print(DimPlot(samp.clust, reduction = "umap", 
+                cells = WhichCells(samp.clust, expression = individual == i)) +
+          xlim(xlim) + ylim(ylim) + ggtitle(i))
+}
+```
+what cell type is represented by each cluster?
+```{r}
+VlnPlot(samp.clust, features = c("POU5F1", "PAX6", "TNNT2", "SOX17", "HAND1"), ncol=2)
+```
+
+```{r}
+FeaturePlot(samp.clust, features = c("POU5F1", "PAX6", "HAND1", "SOX17"), pt.size = 0.2, ncol=3)
+```
+
+```{r}
+DimPlot(samp.clust, reduction = "tsne")
+DimPlot(samp.clust, reduction = "tsne", group.by = "orig.ident")
+DimPlot(samp.clust, reduction = "tsne", group.by = "individual")
+xlim <- c(min(samp.clust@reductions$tsne@cell.embeddings[,'tSNE_1']),
+          max(samp.clust@reductions$tsne@cell.embeddings[,'tSNE_1']))
+ylim <- c(min(samp.clust@reductions$tsne@cell.embeddings[,'tSNE_2']),
+          max(samp.clust@reductions$tsne@cell.embeddings[,'tSNE_2']))
+for (i in individuals)
+{
+  print(DimPlot(samp.clust, reduction = "tsne", 
+                cells = WhichCells(samp.clust, expression = individual == i)) +
+          xlim(xlim) + ylim(ylim) + ggtitle(i))
+}
+```
+Determine sequencing saturation
+```{r}
+ncells <- dim(samp.clust)[2]
+s <- read.table(paste0(params$sample, "/saturation.tsv"), header=TRUE)
+mu <- s$n.reads/s$n.unique
+beta <- (mu-1)/s$n.reads
+
+reads.per.cell <- seq(0, 100000, length.out=200)
+df <- data.frame(reads.per.cell = reads.per.cell)
+df$reads <- df$reads.per.cell*ncells
+df$unique <- df$reads/(1+beta*df$reads)
+df$saturation <- df$unique/s$total.size
+df$downsampling <- df$saturation
+df$downsampling[which(df$reads>s$n.reads)] <- NA
+```
+
+```{r}
+plot <- ggplot(df, aes(x=reads.per.cell, y=100*saturation, color='black')) 
+plot <- plot + geom_line() + geom_hline(yintercept=100, linetype=2)
+plot <- plot + geom_line(aes(x=reads.per.cell, y=100*downsampling, color='darkgrey'), size=2)
+plot <- plot + geom_point(aes(x=s$n.reads/ncells, y=100*s$saturation, color='blue'))
+plot <- plot + theme(legend.position="right")
+plot <- plot + xlab("Reads per cell")
+plot <- plot + ylab("Percent of library sequenced")
+plot <- plot + ggtitle("Downsampling")
+plot <- plot + scale_colour_manual(name = '', 
+                  values = c('black'='black','darkgrey'='darkgrey', 'blue'='blue'), 
+                  labels = c('model','current','downsampling'))
+suppressWarnings(print(plot))
+```
+
+Library Complexity
+
+```{r}
+s$total.size
+s$total.size/ncells
+```
+
+```{r}
+for (i in seq(5,95, by=5))
+{
+  # x = y / ( 1 - beta * y)
+  reads <- i*s$total.size/100 / (1 - beta*i*s$total.size/100)/ 1e6
+  newreads <- round(reads - s$n.reads/1e6)
+  if (newreads > 0) {
+    cat(paste0("It will take ", newreads," million more reads to reach ", i,"% saturation\n"))
+  }
+}
+```
+
+```{r}
+samp<- basename(params$sample)
+saveRDS(samp.clust, file=paste0('/project2/gilad/katie/EBpractice/Week7EBs/',samp,'.seurat.rds'))
+```
+
