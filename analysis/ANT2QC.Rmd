@@ -1,12 +1,12 @@
 ---
-title: "ANT1_QC"
+title: "ANT2_QC"
 author: "Anthony Hung"
 date: "2019-12-12"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 params:
-  sample: "~/Desktop/scPilot/YG-AH-2S-ANT-1_S1_L008/"
+  sample: "~/Desktop/scPilot/YG-AH-2S-ANT-2_S2_L008/"
 ---
 ^ run on one sample at a time, define at the top
 
@@ -54,7 +54,7 @@ branks <- barcodeRanks(samp.raw, lower=1000, fit.bounds=NULL)
 #get only barcodes with rank below or equal to 100,000
 branks <- branks[which(branks$rank <= 100000),]
 
-#redefine samp.raw, subsetting to only the columns corresponding to the highest ranked 100,000 barcodes.in test, this left me with samp.raw having 97933 columns. Why fewer? ties in barcode ranks?
+#redefine samp.raw, subsetting to only the columns corresponding to the highest ranked 100,000 barcodes.
 samp.raw <- samp.raw[,rownames(branks)]
 dim(samp.raw)
 

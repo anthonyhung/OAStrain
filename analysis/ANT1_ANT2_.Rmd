@@ -23,8 +23,6 @@ n.reads n.unique        total.size      saturation
   
 Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns reads to hg38 using STAR solo and runs demuxlet on the output.
 
-Analysis using emptyDrops adapted from: http://research.fhcrc.org/content/dam/stripe/sun/software/scRNAseq/scRNAseq.html#312_identify_low_quallity_cells
-
 ## Load libraries
 
 ```{r load libraries}
@@ -34,7 +32,6 @@ library(dplyr)
 library(stringr)
 library(readr)
 library(Matrix)
-library(biomaRt)
 library(Seurat)
 library(gridExtra)
 ```
@@ -49,35 +46,59 @@ ANT2_dir <- paste0(proj_dir, "YG-AH-2S-ANT-2_S2_L008/")
 
 #read in data
 
+# ##Gene output from STARSOLO
+# #ANT1
+# demuxlet1 <- fread(paste0(ANT1_dir, "demuxlet.best", sep = ""))
+# count_data1 <- readMM(paste0(ANT1_dir, "Gene/filtered/matrix.mtx"))
+# genes1 <- read_tsv(paste0(ANT1_dir, "Gene/filtered/genes.tsv"), col_names = F)
+# barcodes1 <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+# #ANT2
+# demuxlet2 <- fread(paste0(ANT2_dir, "demuxlet.best", sep = ""))
+# count_data2 <- readMM(paste0(ANT2_dir, "Gene/filtered/matrix.mtx"))
+# genes2 <- read_tsv(paste0(ANT2_dir, "Gene/filtered/genes.tsv"), col_names = F)
+# barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+
+
+##GeneFull Output from STARSOLO
 #ANT1
 demuxlet1 <- fread(paste0(ANT1_dir, "demuxlet.best", sep = ""))
-count_data1 <- readMM(paste0(ANT1_dir, "Gene/filtered/matrix.mtx"))
-genes1 <- read_tsv(paste0(ANT1_dir, "Gene/filtered/genes.tsv"), col_names = F)
-barcodes1 <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+count_data1 <- readMM(paste0(ANT1_dir, "GeneFull/filtered/matrix.mtx"))
+genes1 <- read_tsv(paste0(ANT1_dir, "GeneFull/filtered/genes.tsv"), col_names = F)
+barcodes1 <- as.data.frame(read_tsv(paste0(ANT1_dir, "GeneFull/filtered/barcodes.tsv"), col_names = F))
+UMIperCell1 <- read.table(paste0(ANT1_dir, "GeneFull/UMIperCellSorted.txt"), header = F)
 #ANT2
 demuxlet2 <- fread(paste0(ANT2_dir, "demuxlet.best", sep = ""))
-count_data2 <- readMM(paste0(ANT2_dir, "Gene/filtered/matrix.mtx"))
-genes2 <- read_tsv(paste0(ANT2_dir, "Gene/filtered/genes.tsv"), col_names = F)
-barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/filtered/barcodes.tsv"), col_names = F))
+count_data2 <- readMM(paste0(ANT2_dir, "GeneFull/filtered/matrix.mtx"))
+genes2 <- read_tsv(paste0(ANT2_dir, "GeneFull/filtered/genes.tsv"), col_names = F)
+barcodes2 <- as.data.frame(read_tsv(paste0(ANT2_dir, "GeneFull/filtered/barcodes.tsv"), col_names = F))
+UMIperCell2 <- read.table(paste0(ANT2_dir, "GeneFull/UMIperCellSorted.txt"), header = F)
 ```
+
+# number of umis per cell for each sample
+
+```{r hist of umipercell}
+table(UMIperCell1$V1 > 10000)
+table(UMIperCell2$V1 > 10000)
+```
+
 
 # DecontX to remove data from ambient RNA in droplets
 
 ```{r decontX}
-library(celda)
-#read in data
-
-#ANT1
-count_data1_raw <- readMM(paste0(ANT1_dir, "Gene/raw/matrix.mtx"))
-genes1_raw <- read_tsv(paste0(ANT1_dir, "Gene/raw/genes.tsv"), col_names = F)
-barcodes1_raw <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/raw/barcodes.tsv"), col_names = F))
-#ANT2
-count_data2_raw <- readMM(paste0(ANT2_dir, "Gene/raw/matrix.mtx"))
-genes2_raw <- read_tsv(paste0(ANT2_dir, "Gene/raw/genes.tsv"), col_names = F)
-barcodes2_raw <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/raw/barcodes.tsv"), col_names = F))
-
-
-#decontxModel <- decontX(counts = count_data1_raw@x)
+# library(celda)
+# #read in data
+# 
+# #ANT1
+# count_data1_raw <- readMM(paste0(ANT1_dir, "Gene/raw/matrix.mtx"))
+# genes1_raw <- read_tsv(paste0(ANT1_dir, "Gene/raw/genes.tsv"), col_names = F)
+# barcodes1_raw <- as.data.frame(read_tsv(paste0(ANT1_dir, "Gene/raw/barcodes.tsv"), col_names = F))
+# #ANT2
+# count_data2_raw <- readMM(paste0(ANT2_dir, "Gene/raw/matrix.mtx"))
+# genes2_raw <- read_tsv(paste0(ANT2_dir, "Gene/raw/genes.tsv"), col_names = F)
+# barcodes2_raw <- as.data.frame(read_tsv(paste0(ANT2_dir, "Gene/raw/barcodes.tsv"), col_names = F))
+# 
+# 
+# #decontxModel <- decontX(counts = count_data1_raw@x)
 ```
 
 
@@ -142,6 +163,8 @@ ANT2_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT2_seurat, pattern = "^MT-
 # Visualize QC metrics as a violin plot
 VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
+VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
 
 # break down nFeature_RNA histograms by individual
 hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA19160"], main = "ANT1 SNG-NA19160 nFeatures", xlab = "nFeatures")
@@ -167,9 +190,15 @@ CombinePlots(plots = list(plot1, plot2))
 
 
 
-#Filter barcodes based on nFeatures and %MT (lowered stringency for the ANT1 in order to have cells for downstream analysis; will try using SoupX to hopefully reduce nFeatures in cells)
-ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 200 & percent.mt < 5)
-ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 200 & nFeature_RNA < 2000 & percent.mt < 5)
+#Filter barcodes based on nFeatures and %MT 
+ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 1000 & percent.mt < 10)
+table(ANT1_seurat$labels)
+ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 1000 & nFeature_RNA & percent.mt < 10)
+table(ANT2_seurat$labels)
+
+#Look at QC metrics after filtering
+VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
+VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
 ```
 
 
@@ -223,8 +252,9 @@ ANT2_seurat <- scale_data(ANT2_seurat)
 Using the highly variable features selected above, perform PCA
 
 ```{r PCA}
-ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat))
-ANT2_seurat <- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat))
+nPC <- 100
+ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat), npcs = nPC)
+ANT2_seurat <- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat), npcs = nPC)
 
 
 # Examine and visualize PCA results a few different ways
@@ -245,7 +275,7 @@ head(varExplained) #var explained by first 10 PCs
 
 DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)
 
-ElbowPlot(ANT1_seurat, ndims = 50) #42 PCs?
+ElbowPlot(ANT1_seurat, ndims = nPC) #42 PCs?
 
 
 
@@ -274,7 +304,7 @@ head(varExplained) #var explained by first 10 PCs
 
 DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)
 
-ElbowPlot(ANT2_seurat, ndims = 50) #40 PCs?
+ElbowPlot(ANT2_seurat, ndims = nPC) #29 PCs?
 ```
 
 # Clustering
@@ -307,7 +337,7 @@ saveRDS(ANT1_seurat, file = "output/ANT1_seurat.rds")
 
 
 
-num_PCs <- 40
+num_PCs <- 29
 
 ANT2_seurat <- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)
 ANT2_seurat <- FindClusters(ANT2_seurat, resolution = 0.5)
@@ -329,3 +359,42 @@ grid.arrange(p3_, p4_, p5_, p6_, p7_, nrow = 2)
 grid.arrange(p8_, p9_, p10_, nrow = 2)
 saveRDS(ANT2_seurat, file = "output/ANT2_seurat.rds")
 ```
+
+```{r expression by individual}
+#Chondrocyte markers
+VlnPlot(ANT1_seurat, features = c("COL2A1", "ACAN"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1_seurat, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+#Strain markers
+VlnPlot(ANT1_seurat, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1_seurat, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+
+#MSC Flow markers
+VlnPlot(ANT1_seurat, features = c("ENG", "THY1",  "NT5E"), 
+     pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1_seurat, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
+     pt.size = 0.2, ncol = 3, group.by = "labels")
+
+
+
+#Chondrocyte markers
+VlnPlot(ANT2_seurat, features = c("COL2A1", "ACAN"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT2_seurat, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+#Strain markers
+VlnPlot(ANT2_seurat, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT2_seurat, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+
+#MSC Flow markers
+VlnPlot(ANT2_seurat, features = c("ENG", "THY1",  "NT5E"), 
+     pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT2_seurat, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
+     pt.size = 0.2, ncol = 3, group.by = "labels")
+```
+
