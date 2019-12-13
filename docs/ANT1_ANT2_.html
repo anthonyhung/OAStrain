@@ -1254,6 +1254,11 @@ DBL-NA19160-NA18855-0.500 DBL-NA19160-NA18856-0.500               SNG-NA18855
                         0                         0                      3437 
               SNG-NA19160 
                       937 </code></pre>
+<pre class="r"><code>#Look at QC metrics after filtering
+VlnPlot(ANT1_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/QC-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/QC-13.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normalizing-data" class="section level1">
 <h1>Normalizing Data</h1>
@@ -1968,20 +1973,20 @@ ANT1_seurat &lt;- RunUMAP(ANT1_seurat, dims = 1:num_PCs)</code></pre>
 <pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 This message will be shown once per session</code></pre>
-<pre><code>11:31:18 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>11:31:18 Read 1072 rows and found 42 numeric columns</code></pre>
-<pre><code>11:31:18 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>11:31:18 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>12:44:58 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>12:44:58 Read 1072 rows and found 42 numeric columns</code></pre>
+<pre><code>12:44:58 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>12:44:58 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>**************************************************|
-11:31:18 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//Rtmpp4uDcG/file7a077d31cc7
-11:31:18 Searching Annoy index using 1 thread, search_k = 3000
-11:31:18 Annoy recall = 100%
-11:31:19 Commencing smooth kNN distance calibration using 1 thread
-11:31:20 Initializing from normalized Laplacian + noise
-11:31:20 Commencing optimization for 500 epochs, with 41976 positive edges
-11:31:23 Optimization finished</code></pre>
+12:45:00 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpRAo2BR/file8aa66e369e6
+12:45:00 Searching Annoy index using 1 thread, search_k = 3000
+12:45:00 Annoy recall = 100%
+12:45:00 Commencing smooth kNN distance calibration using 1 thread
+12:45:02 Initializing from normalized Laplacian + noise
+12:45:02 Commencing optimization for 500 epochs, with 41976 positive edges
+12:45:07 Optimization finished</code></pre>
 <pre class="r"><code>p1 &lt;- DimPlot(ANT1_seurat, reduction = &quot;umap&quot;)
 p2 &lt;- DimPlot(ANT1_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
 p3 &lt;- FeaturePlot(ANT1_seurat, features = &quot;COL10A1&quot;)
@@ -2018,6 +2023,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-1.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-1.png" target="_blank">8cf5920</a>
@@ -2081,6 +2097,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-2.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-2.png" target="_blank">8cf5920</a>
 </td>
 <td>
@@ -2142,6 +2169,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-3.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-3.png" target="_blank">8cf5920</a>
 </td>
 <td>
@@ -2186,23 +2224,23 @@ Number of edges: 150324
 Running Louvain algorithm...
 Maximum modularity in 10 random starts: 0.7720
 Number of communities: 6
-Elapsed time: 0 seconds</code></pre>
+Elapsed time: 1 seconds</code></pre>
 <pre class="r"><code>#Run UMAP
 ANT2_seurat &lt;- RunUMAP(ANT2_seurat, dims = 1:num_PCs)</code></pre>
-<pre><code>11:31:58 UMAP embedding parameters a = 0.9922 b = 1.112
-11:31:58 Read 4374 rows and found 29 numeric columns
-11:31:58 Using Annoy for neighbor search, n_neighbors = 30
-11:31:58 Building Annoy index with metric = cosine, n_trees = 50
+<pre><code>12:45:44 UMAP embedding parameters a = 0.9922 b = 1.112
+12:45:44 Read 4374 rows and found 29 numeric columns
+12:45:44 Using Annoy for neighbor search, n_neighbors = 30
+12:45:44 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-11:31:59 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//Rtmpp4uDcG/file7a045068a46
-11:31:59 Searching Annoy index using 1 thread, search_k = 3000
-11:32:01 Annoy recall = 100%
-11:32:01 Commencing smooth kNN distance calibration using 1 thread
-11:32:02 Initializing from normalized Laplacian + noise
-11:32:02 Commencing optimization for 500 epochs, with 181986 positive edges
-11:32:13 Optimization finished</code></pre>
+12:45:45 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpRAo2BR/file8aa5c3dafcf
+12:45:46 Searching Annoy index using 1 thread, search_k = 3000
+12:45:47 Annoy recall = 100%
+12:45:48 Commencing smooth kNN distance calibration using 1 thread
+12:45:49 Initializing from normalized Laplacian + noise
+12:45:50 Commencing optimization for 500 epochs, with 181986 positive edges
+12:46:05 Optimization finished</code></pre>
 <pre class="r"><code>p1_ &lt;- DimPlot(ANT2_seurat, reduction = &quot;umap&quot;)
 p2_ &lt;- DimPlot(ANT2_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
 p3_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;COL10A1&quot;)
@@ -2239,6 +2277,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-4.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-4.png" target="_blank">8cf5920</a>
@@ -2291,6 +2340,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-5.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-5.png" target="_blank">8cf5920</a>
 </td>
 <td>
@@ -2330,6 +2390,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-6.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-6.png" target="_blank">8cf5920</a>
 </td>
 <td>
@@ -2348,9 +2419,83 @@ Anthony Hung
 VlnPlot(ANT1_seurat, features = c(&quot;COL2A1&quot;, &quot;ACAN&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-1">
+Past versions of “expression by individual-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-1.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;COL10A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;, &quot;SOX9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-2">
+Past versions of “expression by individual-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-2.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Strain markers
 VlnPlot(ANT1_seurat, features = c(&quot;MMP1&quot;, &quot;MMP13&quot;, &quot;IL1B&quot;, &quot;MMP3&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
@@ -2359,13 +2504,124 @@ idents, : All cells have the same value of MMP13.</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of MMP3.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-3">
+Past versions of “expression by individual-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-3.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;MMP2&quot;, &quot;COMP&quot;, &quot;TNF&quot;, &quot;IBSP&quot;, &quot;TIMP1&quot;,  &quot;MMP9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-4">
+Past versions of “expression by individual-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-4.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#MSC Flow markers
 VlnPlot(ANT1_seurat, features = c(&quot;ENG&quot;, &quot;THY1&quot;,  &quot;NT5E&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-5">
+Past versions of “expression by individual-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-5.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;PTPRC&quot;, &quot;CD34&quot;, &quot;CD14&quot;, &quot;ITGAM&quot;, &quot;CD79A&quot;, &quot;CD19&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
@@ -2373,15 +2629,126 @@ idents, : All cells have the same value of CD34.</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of CD19.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-6">
+Past versions of “expression by individual-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-6.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Chondrocyte markers
 VlnPlot(ANT2_seurat, features = c(&quot;COL2A1&quot;, &quot;ACAN&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of ACAN.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-7">
+Past versions of “expression by individual-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-7.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;COL10A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;, &quot;SOX9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-8">
+Past versions of “expression by individual-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-8.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Strain markers
 VlnPlot(ANT2_seurat, features = c(&quot;MMP1&quot;, &quot;MMP13&quot;, &quot;IL1B&quot;, &quot;MMP3&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
@@ -2392,15 +2759,126 @@ idents, : All cells have the same value of IL1B.</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of MMP3.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-9">
+Past versions of “expression by individual-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-9.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;MMP2&quot;, &quot;COMP&quot;, &quot;TNF&quot;, &quot;IBSP&quot;, &quot;TIMP1&quot;,  &quot;MMP9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of IBSP.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-10">
+Past versions of “expression by individual-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-10.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#MSC Flow markers
 VlnPlot(ANT2_seurat, features = c(&quot;ENG&quot;, &quot;THY1&quot;,  &quot;NT5E&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-11">
+Past versions of “expression by individual-11.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-11.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;PTPRC&quot;, &quot;CD34&quot;, &quot;CD14&quot;, &quot;ITGAM&quot;, &quot;CD79A&quot;, &quot;CD19&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
@@ -2408,6 +2886,43 @@ idents, : All cells have the same value of CD34.</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of CD19.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-12">
+Past versions of “expression by individual-12.png”
+</button>
+</p>
+<div id="fig-no-spaces-expression-by-individual-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-12.png" target="_blank">1bb7658</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
