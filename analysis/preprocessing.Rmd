@@ -9,8 +9,11 @@ editor_options:
 
 # Visualizing metrics for bulk data
 
-library size, rin scores, duplication rate
-total reads vs mapped reads
+library size
+rin scores
+duplication rate
+total reads vs mapped reads box plot
+gc content
 
 ```{r}
 

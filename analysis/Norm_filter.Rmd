@@ -65,9 +65,22 @@ plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
-# Filtering for lowly expressed genes (avg CPM > 0)
+# Boxplots of normalized counts across samples
+```{r}
+
+```
+
+# Filtering for lowly expressed genes (avg CPM > 0.5 in at least 2 samples)
 
 ```{r filter}
+cpm_cutoff <- 0.5
+n_samples <- 2
+
+
+```
+
+# Boxplots of normalized/filtered counts across samples
+```{r}
 
 ```
 
