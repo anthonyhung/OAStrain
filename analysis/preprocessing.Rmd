@@ -1,0 +1,18 @@
+---
+title: "Preprocessing bulk RNA data"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Visualizing metrics for bulk data
+
+library size, rin scores, duplication rate
+total reads vs mapped reads
+
+```{r}
+
+```
+

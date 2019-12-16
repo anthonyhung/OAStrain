@@ -1,0 +1,79 @@
+---
+title: "Normalization and filtering of bulkRNA Count data"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Perform cpm normalization of raw count data and filtering of lowly expressed genes
+
+```{r config}
+#configuration
+proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
+sample_file_info <- "bulkPilot_Sample_info_RNAseq.csv" # located within the proj_dir
+```
+
+```{r load libraries and data}
+library()
+
+
+
+# load in counts
+raw_counts <- read.table(paste0(proj_dir, "out/counts/counts.txt"), header = T)
+
+# assign row.names
+row.names(raw_counts) <- raw_counts$Geneid
+
+# exclude extra data columns
+raw_counts <- raw_counts[, -c(1:6)] 
+head(raw_counts)
+
+# Check that there's no "NAs" in the data
+summary(apply(raw_counts, 1, var) == 0) 
+
+#Sample information
+samples <- read.csv(paste0(proj_dir, sample_file_info))
+head(samples)
+```
+
+# Perform cpm normalization on all counts
+
+```{r cpm normalization}
+cpm <- cpm(raw_counts, log=TRUE)
+head(cpm)
+
+strained <- c() #indices for strained samples
+unstrained <- c()
+ind_1 <- c()
+ind_2 <- c()
+ind_3 <- c()
+
+
+# Look at all individuals for each treatment
+col = as.data.frame(pal[as.numeric(samples$Individual)])
+
+plotDensities(cpm[,strained], col=col[strained, ], legend="topright")
+plotDensities(cpm[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at all individuals for each treatment
+col = as.data.frame(pal[as.numeric(samples$treatment)])
+
+plotDensities(cpm[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+# Filtering for lowly expressed genes (avg CPM > 0)
+
+```{r filter}
+
+```
+
+# Save normalized/filtered count matrix
+
+```{r save}
+
+```
+

@@ -1,0 +1,88 @@
+---
+title: "Analysis of Raw Data"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r config}
+#configuration
+proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
+sample_file_info <- "bulkPilot_Sample_info_RNAseq.csv" # located within the proj_dir
+```
+
+
+# Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples
+
+```{r load libraries and data}
+library("gplots")
+library("ggplot2")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+# load in counts
+raw_counts <- read.table(paste0(proj_dir, "out/counts/counts.txt"), header = T)
+
+# assign row.names
+row.names(raw_counts) <- raw_counts$Geneid
+
+# exclude extra data columns
+raw_counts <- raw_counts[, -c(1:6)] 
+head(raw_counts)
+
+# Check that there's no "NAs" in the data
+summary(apply(raw_counts, 1, var) == 0) 
+
+#Sample information
+samples <- read.csv(paste0(proj_dir, sample_file_info))
+head(samples)
+```
+
+# Perform PCA and hierarchical clustering on raw data
+
+```{r PCA and corr heatmap}
+#load PCA function
+source("code/PCA_fn.R")
+
+# Clustering (original code from Julien Roux)
+cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
+
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(samples$Species))], RowSideColors=pal[as.integer(as.factor(samples$Tissue))+9], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+#Perform PCA and color by factors to look for any potential correlations
+
+```{r}
+# Perform PCA
+pca_genes <- prcomp(t(raw_counts), scale = F)
+scores <- pca_genes$x
+
+
+#Make PCA plots with the factors colored by tissue
+
+### PCs 1 and 2 Raw Data
+for (n in 1:1){
+  col.v <- pal[as.integer(samples$Tissue)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+### PCs 3 and 4 Raw Data
+
+for (n in 3:3){
+  col.v <- pal[as.integer(samples$Tissue)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+```
+
+
+
+

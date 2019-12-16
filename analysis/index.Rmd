@@ -8,4 +8,17 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+Analysis of bulkRNA/scRNA sequencing data for Osteoarthritis Strain project.
+
+
+PILOT (n=3):
+
+single-cell data
+
+* [Analysis of single-cell pilot experiment data](ANT1_ANT2.html)
+
+Bulk Data
+
+* [Preprocessing](preprocessing.html)
+* [Analysis of Raw bulkRNAseq pilot data](raw_counts_analysis.html)
+* [Normalization and filtering for lowly expressed genes](Norm_filter.html)
