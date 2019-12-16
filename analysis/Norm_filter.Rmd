@@ -21,17 +21,7 @@ library()
 
 
 # load in counts
-raw_counts <- read.table(paste0(proj_dir, "out/counts/counts.txt"), header = T)
-
-# assign row.names
-row.names(raw_counts) <- raw_counts$Geneid
-
-# exclude extra data columns
-raw_counts <- raw_counts[, -c(1:6)] 
-head(raw_counts)
-
-# Check that there's no "NAs" in the data
-summary(apply(raw_counts, 1, var) == 0) 
+raw_counts <- readRDS("data/raw_counts_relabeled.rds")
 
 #Sample information
 samples <- read.csv(paste0(proj_dir, sample_file_info))
@@ -90,3 +80,77 @@ n_samples <- 2
 
 ```
 
+
+
+
+
+
+## Setup
+
+```{r packages, message=FALSE}
+library("data.table")
+library("dplyr")
+library("edgeR")
+```
+
+Input raw counts file.
+
+```{r input-counts}
+data_raw <- fread("../data/subread-counts-per-sample.txt", data.table = FALSE)
+data_raw[1:5, 1:5]
+```
+
+Input experimental information file.
+
+```{r experimental-info}
+info <- read.delim("../data/experiment-info.txt", stringsAsFactors = FALSE)
+head(info)
+```
+
+Sort raw data file so that it is in the same order as the information file.
+
+```{r sort-data-raw}
+data_raw <- data_raw %>% arrange(desc(status), individual, desc(treatment))
+stopifnot(data_raw$inindividual == info$individual,
+          data_raw$status == info$status,
+          data_raw$treatment == info$treatment)
+```  
+
+Create a sample-x-gene counts matrix.
+
+```{r transpose-counts}
+counts_raw <- data_raw %>% select(-(individual:treatment)) %>% t()
+colnames(counts_raw) <- info$id
+stopifnot(ncol(counts_raw) == 50)
+```
+
+## Remove lowly expressed genes
+
+```{r median-density}
+cpm_raw <- cpm(counts_raw, log = TRUE)
+cpm_raw_median <- apply(cpm_raw, 1, median)
+cpm_raw_median_density <- density(cpm_raw_median)
+cpm_raw_density <- apply(cpm_raw, 2, density)
+plot(cpm_raw_density[[1]], lty = "dotted", col = gray(0.05, alpha = 0.5),
+     main = "Gene expression distribution",
+     xlab = "log2 cpm", sub = "red = median; blue = cutoff")
+suppress_output <- lapply(cpm_raw_density, lines, lty = "dotted",
+                          col = gray(0.05, alpha = 0.5))
+lines(cpm_raw_median_density, col = "red", lwd = 3)
+cutoff <- 0
+abline(v = cutoff, col = "blue")
+```
+
+Keeping the `r sum(cpm_raw_median > cutoff)` genes with a median log~2~ cpm greater than `r cutoff`.
+
+```{r filter-genes}
+counts <- as.data.frame(counts_raw) %>% filter(cpm_raw_median > cutoff)
+rownames(counts) <- rownames(counts_raw)[cpm_raw_median > cutoff]
+```
+
+Save the count matrix.
+
+```{r}
+write.table(counts, "../data/counts.txt", quote = FALSE, sep = "\t",
+            col.names = NA)
+```
