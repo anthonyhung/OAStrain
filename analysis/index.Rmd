@@ -22,6 +22,7 @@ Bulk Data
 * [Preprocessing](preprocessing.html)
 * [Analysis of Raw bulkRNAseq pilot data](raw_counts_analysis.html)
 * [Normalization and filtering for lowly expressed genes](Norm_filter.html)
+
 * [Accounting for technical factors](technical_factors_analysis.html)
 * [Checking expression of individual genes of interest](check_expression.html)
 * [Differential expression using Limma/Voom](DE_analysis.html)

@@ -11,8 +11,23 @@ editor_options:
 
 ```{r load data libraries}
 library("polycor")
+library("gplots")
+library("ggplot2")
+library("reshape")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+library("dplyr")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 #load in normalized/filtered data
+filt_cpm <- readRDS("data/norm_filtered_counts.rds")
+# load in reordered sample information
+sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 ```
 
 # PCA and hierarchical clustering of normalized and filtered data
@@ -23,32 +38,32 @@ source("code/PCA_fn.R")
 
 
 # Clustering (original code from Julien Roux)
-cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
+cors <- cor(filt_cpm, method="spearman", use="pairwise.complete.obs")
 
-
-heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(samples$Species))], RowSideColors=pal[as.integer(as.factor(samples$Tissue))+9], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
 #Perform PCA and color by factors to look for any potential correlations
 
 ```{r PCA}
 # Perform PCA
-pca_genes <- prcomp(t(raw_counts), scale = F)
+pca_genes <- prcomp(t(filt_cpm), scale = F)
 scores <- pca_genes$x
 
 
-#Make PCA plots with the factors colored by tissue
+#Make PCA plots with the factors colored by Individual
 
-### PCs 1 and 2 Raw Data
+### PCs 1 and 2 norm+filt Data
 for (n in 1:1){
-  col.v <- pal[as.integer(samples$Tissue)]
+  col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
-### PCs 3 and 4 Raw Data
+### PCs 3 and 4 norm+filt Data
 
 for (n in 3:3){
-  col.v <- pal[as.integer(samples$Tissue)]
+  col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 ```
