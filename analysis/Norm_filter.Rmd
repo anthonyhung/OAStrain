@@ -12,145 +12,103 @@ editor_options:
 ```{r config}
 #configuration
 proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
-sample_file_info <- "bulkPilot_Sample_info_RNAseq.csv" # located within the proj_dir
+sample_file_info <- "data/bulkPilot_Sample_info_RNAseq.csv"
 ```
 
 ```{r load libraries and data}
-library()
+library("gplots")
+library("ggplot2")
+library("reshape")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+library("dplyr")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 
-
-# load in counts
+# load in relabeled counts
 raw_counts <- readRDS("data/raw_counts_relabeled.rds")
 
-#Sample information
-samples <- read.csv(paste0(proj_dir, sample_file_info))
-head(samples)
+# load in reordered sample information
+sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 ```
 
-# Perform cpm normalization on all counts
+# Perform cpm normalization on all counts and plot density plots
 
 ```{r cpm normalization}
 cpm <- cpm(raw_counts, log=TRUE)
 head(cpm)
 
-strained <- c() #indices for strained samples
-unstrained <- c()
-ind_1 <- c()
-ind_2 <- c()
-ind_3 <- c()
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
 
 
-# Look at all individuals for each treatment
-col = as.data.frame(pal[as.numeric(samples$Individual)])
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
 
 plotDensities(cpm[,strained], col=col[strained, ], legend="topright")
 plotDensities(cpm[,unstrained], col=col[unstrained, ], legend="topright")
 
-# Look at all individuals for each treatment
-col = as.data.frame(pal[as.numeric(samples$treatment)])
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
 
 plotDensities(cpm[,ind_1], col=col[ind_1, ], legend="topright")
 plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
-# Boxplots of normalized counts across samples
-```{r}
+# Boxplots of cpm across samples
 
+```{r boxplot cpm}
+meltcpm <- melt(cpm)
+names(meltcpm) <- c("gene", "sampleID", "cpm")
+p <- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
 # Filtering for lowly expressed genes (avg CPM > 0.5 in at least 2 samples)
 
 ```{r filter}
-cpm_cutoff <- 0.5
-n_samples <- 2
+cutoff <- 0
 
-
-```
-
-# Boxplots of normalized/filtered counts across samples
-```{r}
-
-```
-
-# Save normalized/filtered count matrix
-
-```{r save}
-
-```
-
-
-
-
-
-
-## Setup
-
-```{r packages, message=FALSE}
-library("data.table")
-library("dplyr")
-library("edgeR")
-```
-
-Input raw counts file.
-
-```{r input-counts}
-data_raw <- fread("../data/subread-counts-per-sample.txt", data.table = FALSE)
-data_raw[1:5, 1:5]
-```
-
-Input experimental information file.
-
-```{r experimental-info}
-info <- read.delim("../data/experiment-info.txt", stringsAsFactors = FALSE)
-head(info)
-```
-
-Sort raw data file so that it is in the same order as the information file.
-
-```{r sort-data-raw}
-data_raw <- data_raw %>% arrange(desc(status), individual, desc(treatment))
-stopifnot(data_raw$inindividual == info$individual,
-          data_raw$status == info$status,
-          data_raw$treatment == info$treatment)
-```  
-
-Create a sample-x-gene counts matrix.
-
-```{r transpose-counts}
-counts_raw <- data_raw %>% select(-(individual:treatment)) %>% t()
-colnames(counts_raw) <- info$id
-stopifnot(ncol(counts_raw) == 50)
-```
-
-## Remove lowly expressed genes
-
-```{r median-density}
-cpm_raw <- cpm(counts_raw, log = TRUE)
-cpm_raw_median <- apply(cpm_raw, 1, median)
-cpm_raw_median_density <- density(cpm_raw_median)
-cpm_raw_density <- apply(cpm_raw, 2, density)
-plot(cpm_raw_density[[1]], lty = "dotted", col = gray(0.05, alpha = 0.5),
+#plot densities to determine cutoff
+cpm_median <- apply(cpm, 1, median)
+cpm_median_density <- density(cpm_median)
+cpm_density <- apply(cpm, 2, density)
+plot(cpm_density[[1]], lty = "dotted", col = gray(0.05, alpha = 0.5),
      main = "Gene expression distribution",
      xlab = "log2 cpm", sub = "red = median; blue = cutoff")
-suppress_output <- lapply(cpm_raw_density, lines, lty = "dotted",
+suppress_output <- lapply(cpm_density, lines, lty = "dotted",
                           col = gray(0.05, alpha = 0.5))
-lines(cpm_raw_median_density, col = "red", lwd = 3)
-cutoff <- 0
+lines(cpm_median_density, col = "red", lwd = 3)
 abline(v = cutoff, col = "blue")
+
+#apply filter (Keeping the `r sum(cpm_median > cutoff)` genes with a median log~2~ cpm greater than `r cutoff`.)
+
+counts <- raw_counts %>% 
+     filter(cpm_median > cutoff)
+rownames(counts) <- rownames(raw_counts)[cpm_median > cutoff]
+filtered_cpm <- cpm(counts, log = T)
 ```
 
-Keeping the `r sum(cpm_raw_median > cutoff)` genes with a median log~2~ cpm greater than `r cutoff`.
-
-```{r filter-genes}
-counts <- as.data.frame(counts_raw) %>% filter(cpm_raw_median > cutoff)
-rownames(counts) <- rownames(counts_raw)[cpm_raw_median > cutoff]
+# Boxplots of normalized+filtered counts across samples
+```{r boxplot filt cpm}
+melt_filt_cpm <- melt(filtered_cpm)
+names(melt_filt_cpm) <- c("gene", "sampleID", "cpm")
+p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), cpm)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-Save the count matrix.
+# Save normalized/filtered count matrix and filtered count matrix
 
-```{r}
-write.table(counts, "../data/counts.txt", quote = FALSE, sep = "\t",
-            col.names = NA)
+```{r save}
+saveRDS(counts, "data/filtered_counts.rds")
+saveRDS(filtered_cpm, "data/norm_filtered_counts.rds")
 ```
