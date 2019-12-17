@@ -191,9 +191,9 @@ CombinePlots(plots = list(plot1, plot2))
 
 
 #Filter barcodes based on nFeatures and %MT 
-ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 1000 & percent.mt < 10)
+ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 2000 & percent.mt < 10)
 table(ANT1_seurat$labels)
-ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 1000 & nFeature_RNA & percent.mt < 10)
+ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 2000 & nFeature_RNA & percent.mt < 10)
 table(ANT2_seurat$labels)
 
 #Look at QC metrics after filtering
