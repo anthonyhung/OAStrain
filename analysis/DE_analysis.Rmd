@@ -20,276 +20,276 @@ editor_options:
 
 
 
-From jdblischak's code:
+<!-- From jdblischak's code: -->
 
 
-```{r chunk-options}
-library("knitr")
-opts_chunk$set(cache = FALSE)
-```
+<!-- ```{r chunk-options} -->
+<!-- library("knitr") -->
+<!-- opts_chunk$set(cache = FALSE) -->
+<!-- ``` -->
 
-Initial limma analysis.
+<!-- Initial limma analysis. -->
 
-## Setup
+<!-- ## Setup -->
 
-```{r packages, message=FALSE}
-library("limma")
-library("edgeR")
-library("dplyr")
-library("tidyr")
-library("ashr")
-library("ggplot2")
-library("cowplot")
-theme_set(theme_bw(base_size = 14))
-theme_update(panel.grid.minor.x = element_blank(),
-             panel.grid.minor.y = element_blank(),
-             panel.grid.major.x = element_blank(),
-             panel.grid.major.y = element_blank())
-library("VennDiagram")
-```
+<!-- ```{r packages, message=FALSE} -->
+<!-- library("limma") -->
+<!-- library("edgeR") -->
+<!-- library("dplyr") -->
+<!-- library("tidyr") -->
+<!-- library("ashr") -->
+<!-- library("ggplot2") -->
+<!-- library("cowplot") -->
+<!-- theme_set(theme_bw(base_size = 14)) -->
+<!-- theme_update(panel.grid.minor.x = element_blank(), -->
+<!--              panel.grid.minor.y = element_blank(), -->
+<!--              panel.grid.major.x = element_blank(), -->
+<!--              panel.grid.major.y = element_blank()) -->
+<!-- library("VennDiagram") -->
+<!-- ``` -->
 
-Input data.
+<!-- Input data. -->
 
-```{r input-counts}
-counts <- read.delim("../data/counts.txt", check.names = FALSE, row.names = 1)
-anno <- read.delim("../data/experiment-info.txt", stringsAsFactors = FALSE)
-rownames(anno) <- anno$id
-anno <- anno %>% select(-id, -tube_ind)
-stopifnot(colnames(counts) == rownames(anno))
-```
+<!-- ```{r input-counts} -->
+<!-- counts <- read.delim("../data/counts.txt", check.names = FALSE, row.names = 1) -->
+<!-- anno <- read.delim("../data/experiment-info.txt", stringsAsFactors = FALSE) -->
+<!-- rownames(anno) <- anno$id -->
+<!-- anno <- anno %>% select(-id, -tube_ind) -->
+<!-- stopifnot(colnames(counts) == rownames(anno)) -->
+<!-- ``` -->
 
-## Model with limma
+<!-- ## Model with limma -->
 
-```{r design-matrix}
-anno$status <- factor(anno$status, levels = c("contact", "tb"))
-anno$treatment <- factor(anno$treatment, levels = c("none", "infected"))
-design <- model.matrix(~treatment + status + status:treatment,
-                       data = anno)
-colnames(design)[1] <- "Intercept"
-colnames(design) <- gsub("treatment", "", colnames(design))
-colnames(design) <- gsub("status", "", colnames(design))
-colnames(design) <- gsub(":", ".", colnames(design))
-colnames(design)
-```
+<!-- ```{r design-matrix} -->
+<!-- anno$status <- factor(anno$status, levels = c("contact", "tb")) -->
+<!-- anno$treatment <- factor(anno$treatment, levels = c("none", "infected")) -->
+<!-- design <- model.matrix(~treatment + status + status:treatment, -->
+<!--                        data = anno) -->
+<!-- colnames(design)[1] <- "Intercept" -->
+<!-- colnames(design) <- gsub("treatment", "", colnames(design)) -->
+<!-- colnames(design) <- gsub("status", "", colnames(design)) -->
+<!-- colnames(design) <- gsub(":", ".", colnames(design)) -->
+<!-- colnames(design) -->
+<!-- ``` -->
 
-```{r fit-model, fig.width=8}
-y <- DGEList(counts)
-y <- calcNormFactors(y)
-v <- voom(y, design)
-# Model individual as a random effect
-corfit <- duplicateCorrelation(v, design, block = anno$individual)
-corfit$consensus
-v <- voom(y, design, block = anno$individual, correlation = corfit$consensus)
-fit <- lmFit(v, design, block = anno$individual, correlation = corfit$consensus)
-fit <- eBayes(fit)
-```
+<!-- ```{r fit-model, fig.width=8} -->
+<!-- y <- DGEList(counts) -->
+<!-- y <- calcNormFactors(y) -->
+<!-- v <- voom(y, design) -->
+<!-- # Model individual as a random effect -->
+<!-- corfit <- duplicateCorrelation(v, design, block = anno$individual) -->
+<!-- corfit$consensus -->
+<!-- v <- voom(y, design, block = anno$individual, correlation = corfit$consensus) -->
+<!-- fit <- lmFit(v, design, block = anno$individual, correlation = corfit$consensus) -->
+<!-- fit <- eBayes(fit) -->
+<!-- ``` -->
 
-## Assess model results
+<!-- ## Assess model results -->
 
-```{r model-results}
-top_treatment <- topTable(fit, coef = "infected")
-top_treatment
-results_treatment <- topTable(fit, coef = "infected",
-                              number = nrow(counts), sort = "none")
-ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected"]),
-                       aes(x = Amean, y = logFC)) +
-  geom_point() +
-  labs(x = "Average expression level", y = "Log fold change",
-       title = "Treatment effect")
-ma_treatment
-hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) +
-  geom_histogram(binwidth = 0.01) +
-  labs(x = "p-value", y = "Number of genes", title = "Treatment effect")
-hist_treatment
-top_status <- topTable(fit, coef = "tb")
-top_status
-results_status <- topTable(fit, coef = "tb",
-                           number = nrow(counts), sort = "none")
-ma_status <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "tb"]),
-                       aes(x = Amean, y = logFC)) +
-  geom_point() +
-  labs(x = "Average expression level", y = "Log fold change",
-       title = "Status effect")
-ma_status
-hist_status <- ggplot(results_status, aes(x = P.Value)) +
-  geom_histogram(binwidth = 0.01) +
-  labs(x = "p-value", y = "Number of genes", title = "Status effect")
-hist_status
-top_interaction <- topTable(fit, coef = "infected.tb")
-top_interaction
-results_interaction <- topTable(fit, coef = "infected.tb",
-                                number = nrow(counts), sort = "none")
-ma_interaction <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected.tb"]),
-                       aes(x = Amean, y = logFC)) +
-  geom_point() +
-  labs(x = "Average expression level", y = "Log fold change",
-       title = "Interaction effect")
-ma_interaction
-hist_interaction <- ggplot(results_interaction, aes(x = P.Value)) +
-  geom_histogram(binwidth = 0.01) +
-  labs(x = "p-value", y = "Number of genes", title = "Interaction effect")
-hist_interaction
-ggsave("fig-limma-hist-interaction.eps", plot = hist_interaction,
-       width = 7, height = 7, units = "in")
-```
+<!-- ```{r model-results} -->
+<!-- top_treatment <- topTable(fit, coef = "infected") -->
+<!-- top_treatment -->
+<!-- results_treatment <- topTable(fit, coef = "infected", -->
+<!--                               number = nrow(counts), sort = "none") -->
+<!-- ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected"]), -->
+<!--                        aes(x = Amean, y = logFC)) + -->
+<!--   geom_point() + -->
+<!--   labs(x = "Average expression level", y = "Log fold change", -->
+<!--        title = "Treatment effect") -->
+<!-- ma_treatment -->
+<!-- hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) + -->
+<!--   geom_histogram(binwidth = 0.01) + -->
+<!--   labs(x = "p-value", y = "Number of genes", title = "Treatment effect") -->
+<!-- hist_treatment -->
+<!-- top_status <- topTable(fit, coef = "tb") -->
+<!-- top_status -->
+<!-- results_status <- topTable(fit, coef = "tb", -->
+<!--                            number = nrow(counts), sort = "none") -->
+<!-- ma_status <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "tb"]), -->
+<!--                        aes(x = Amean, y = logFC)) + -->
+<!--   geom_point() + -->
+<!--   labs(x = "Average expression level", y = "Log fold change", -->
+<!--        title = "Status effect") -->
+<!-- ma_status -->
+<!-- hist_status <- ggplot(results_status, aes(x = P.Value)) + -->
+<!--   geom_histogram(binwidth = 0.01) + -->
+<!--   labs(x = "p-value", y = "Number of genes", title = "Status effect") -->
+<!-- hist_status -->
+<!-- top_interaction <- topTable(fit, coef = "infected.tb") -->
+<!-- top_interaction -->
+<!-- results_interaction <- topTable(fit, coef = "infected.tb", -->
+<!--                                 number = nrow(counts), sort = "none") -->
+<!-- ma_interaction <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected.tb"]), -->
+<!--                        aes(x = Amean, y = logFC)) + -->
+<!--   geom_point() + -->
+<!--   labs(x = "Average expression level", y = "Log fold change", -->
+<!--        title = "Interaction effect") -->
+<!-- ma_interaction -->
+<!-- hist_interaction <- ggplot(results_interaction, aes(x = P.Value)) + -->
+<!--   geom_histogram(binwidth = 0.01) + -->
+<!--   labs(x = "p-value", y = "Number of genes", title = "Interaction effect") -->
+<!-- hist_interaction -->
+<!-- ggsave("fig-limma-hist-interaction.eps", plot = hist_interaction, -->
+<!--        width = 7, height = 7, units = "in") -->
+<!-- ``` -->
 
-## Explore top hits
+<!-- ## Explore top hits -->
 
-Boxplot function.
+<!-- Boxplot function. -->
 
-```{r boxplot-function}
-plot_gene <- function(v, g) {
-  # v - An EList object containing log2 counts per million
-  # g - character vector of a single gene
-  stopifnot(class(v) == "EList",
-            is.character(g), length(g) == 1)
-  library("tidyr")
-  single_gene <- v$E[g, ]
-  single_gene_long <- gather_(as.data.frame(single_gene),
-                              gather_cols = colnames(single_gene))
-  # For some reason, the argument value_col wouldn't work
-  colnames(single_gene_long) <- "log2cpm"
-  single_gene_long$sample <- rownames(single_gene_long)
-  single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-",
-                                into = c("individual", "status", "treatment"))
-  single_gene_long$status <- factor(single_gene_long$status, levels = c("contact", "tb"))
-  single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("none", "infected"))
-  ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) +
-    geom_boxplot() +
-    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
-}
-```
+<!-- ```{r boxplot-function} -->
+<!-- plot_gene <- function(v, g) { -->
+<!--   # v - An EList object containing log2 counts per million -->
+<!--   # g - character vector of a single gene -->
+<!--   stopifnot(class(v) == "EList", -->
+<!--             is.character(g), length(g) == 1) -->
+<!--   library("tidyr") -->
+<!--   single_gene <- v$E[g, ] -->
+<!--   single_gene_long <- gather_(as.data.frame(single_gene), -->
+<!--                               gather_cols = colnames(single_gene)) -->
+<!--   # For some reason, the argument value_col wouldn't work -->
+<!--   colnames(single_gene_long) <- "log2cpm" -->
+<!--   single_gene_long$sample <- rownames(single_gene_long) -->
+<!--   single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-", -->
+<!--                                 into = c("individual", "status", "treatment")) -->
+<!--   single_gene_long$status <- factor(single_gene_long$status, levels = c("contact", "tb")) -->
+<!--   single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("none", "infected")) -->
+<!--   ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) + -->
+<!--     geom_boxplot() + -->
+<!--     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) -->
+<!-- } -->
+<!-- ``` -->
 
-Infected.
+<!-- Infected. -->
 
-```{r}
-p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) +
-  ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_2 <- plot_gene(v, rownames(top_treatment)[2]) +
-  ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_3 <- plot_gene(v, rownames(top_treatment)[3]) +
-  ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_4 <- plot_gene(v, rownames(top_treatment)[4]) +
-  ylim(3, 11) + theme(legend.position = "bottom")
-ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1,
-       width = 7, height = 7, units = "in")
-plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)
-```
+<!-- ```{r} -->
+<!-- p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) + -->
+<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
+<!-- p_treatment_2 <- plot_gene(v, rownames(top_treatment)[2]) + -->
+<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
+<!-- p_treatment_3 <- plot_gene(v, rownames(top_treatment)[3]) + -->
+<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
+<!-- p_treatment_4 <- plot_gene(v, rownames(top_treatment)[4]) + -->
+<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
+<!-- ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1, -->
+<!--        width = 7, height = 7, units = "in") -->
+<!-- plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4) -->
+<!-- ``` -->
 
-Susceptibility status.
+<!-- Susceptibility status. -->
 
-```{r}
-plot_grid(plot_gene(v, rownames(top_status)[1]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          plot_gene(v, rownames(top_status)[2]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          plot_gene(v, rownames(top_status)[3]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          nrow = 1)
-```
+<!-- ```{r} -->
+<!-- plot_grid(plot_gene(v, rownames(top_status)[1]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           plot_gene(v, rownames(top_status)[2]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           plot_gene(v, rownames(top_status)[3]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           nrow = 1) -->
+<!-- ``` -->
 
-Interaction.
+<!-- Interaction. -->
 
-```{r}
-plot_grid(plot_gene(v, rownames(top_interaction)[1]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          plot_gene(v, rownames(top_interaction)[2]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          plot_gene(v, rownames(top_interaction)[3]) +
-            ylim(3, 11) + theme(legend.position = "bottom"),
-          nrow = 1)
-```
+<!-- ```{r} -->
+<!-- plot_grid(plot_gene(v, rownames(top_interaction)[1]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           plot_gene(v, rownames(top_interaction)[2]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           plot_gene(v, rownames(top_interaction)[3]) + -->
+<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
+<!--           nrow = 1) -->
+<!-- ``` -->
 
-## Use ash for mutliple testing correction
+<!-- ## Use ash for mutliple testing correction -->
 
-Treatment effect.
+<!-- Treatment effect. -->
 
-```{r ash-treatment}
-ash_treatment <- ash(betahat = fit$coefficients[, "infected"],
-                     sebetahat = fit$stdev.unscaled[, "infected"] * sqrt(fit$s2.post),
-                     df = fit$df.total)
-class(ash_treatment)
-names(ash_treatment)
-sum(ash_treatment$svalue < .05)
-hist(ash_treatment$svalue)
-```
+<!-- ```{r ash-treatment} -->
+<!-- ash_treatment <- ash(betahat = fit$coefficients[, "infected"], -->
+<!--                      sebetahat = fit$stdev.unscaled[, "infected"] * sqrt(fit$s2.post), -->
+<!--                      df = fit$df.total) -->
+<!-- class(ash_treatment) -->
+<!-- names(ash_treatment) -->
+<!-- sum(ash_treatment$svalue < .05) -->
+<!-- hist(ash_treatment$svalue) -->
+<!-- ``` -->
 
-Susceptibility effect.
+<!-- Susceptibility effect. -->
 
-```{r ash-status}
-ash_status <- ash(betahat = fit$coefficients[, "tb"],
-                  sebetahat = fit$stdev.unscaled[, "tb"] * sqrt(fit$s2.post),
-                  df = fit$df.total)
-sum(ash_status$svalue < .05)
-hist(ash_status$svalue)
-```
+<!-- ```{r ash-status} -->
+<!-- ash_status <- ash(betahat = fit$coefficients[, "tb"], -->
+<!--                   sebetahat = fit$stdev.unscaled[, "tb"] * sqrt(fit$s2.post), -->
+<!--                   df = fit$df.total) -->
+<!-- sum(ash_status$svalue < .05) -->
+<!-- hist(ash_status$svalue) -->
+<!-- ``` -->
 
-Interaction effect.
+<!-- Interaction effect. -->
 
-```{r ash-interaction}
-ash_interaction <- ash(betahat = fit$coefficients[, "infected.tb"],
-                     sebetahat = fit$stdev.unscaled[, "infected.tb"] * sqrt(fit$s2.post),
-                     df = fit$df.total)
-sum(ash_interaction$svalue < .05)
-hist(ash_interaction$svalue)
-```
+<!-- ```{r ash-interaction} -->
+<!-- ash_interaction <- ash(betahat = fit$coefficients[, "infected.tb"], -->
+<!--                      sebetahat = fit$stdev.unscaled[, "infected.tb"] * sqrt(fit$s2.post), -->
+<!--                      df = fit$df.total) -->
+<!-- sum(ash_interaction$svalue < .05) -->
+<!-- hist(ash_interaction$svalue) -->
+<!-- ``` -->
 
-Venn diagram
+<!-- Venn diagram -->
 
-```{r venn}
-ash_treatment_de <- ash_treatment$svalue < .05
-ash_status_de <- ash_status$svalue < .05
-ash_interaction_de <- ash_interaction$svalue < .05
-grid.newpage()
-venn_rv <- draw.triple.venn(
-  area1 = sum(ash_treatment_de),
-  area2 = sum(ash_status_de),
-  area3 = sum(ash_interaction_de),
-  n12 = sum(ash_treatment_de & ash_status_de),
-  n23 = sum(ash_status_de & ash_interaction_de),
-  n13 = sum(ash_treatment_de & ash_interaction_de),
-  n123 = sum(ash_treatment_de & ash_status_de & ash_interaction_de),
-  category = c("Treatment", "Status", "Interaction"),
-#   fill = c("darkolivegreen3", "cadetblue3", "darkorchid"),
-  alpha = c(0.5, 0.5, 0.5), col = "black", cex = 2, cat.cex = 1.5,
-  euler.d = FALSE, scaled = FALSE, ind = TRUE)
-grid.draw(venn_rv)
-```
+<!-- ```{r venn} -->
+<!-- ash_treatment_de <- ash_treatment$svalue < .05 -->
+<!-- ash_status_de <- ash_status$svalue < .05 -->
+<!-- ash_interaction_de <- ash_interaction$svalue < .05 -->
+<!-- grid.newpage() -->
+<!-- venn_rv <- draw.triple.venn( -->
+<!--   area1 = sum(ash_treatment_de), -->
+<!--   area2 = sum(ash_status_de), -->
+<!--   area3 = sum(ash_interaction_de), -->
+<!--   n12 = sum(ash_treatment_de & ash_status_de), -->
+<!--   n23 = sum(ash_status_de & ash_interaction_de), -->
+<!--   n13 = sum(ash_treatment_de & ash_interaction_de), -->
+<!--   n123 = sum(ash_treatment_de & ash_status_de & ash_interaction_de), -->
+<!--   category = c("Treatment", "Status", "Interaction"), -->
+<!-- #   fill = c("darkolivegreen3", "cadetblue3", "darkorchid"), -->
+<!--   alpha = c(0.5, 0.5, 0.5), col = "black", cex = 2, cat.cex = 1.5, -->
+<!--   euler.d = FALSE, scaled = FALSE, ind = TRUE) -->
+<!-- grid.draw(venn_rv) -->
+<!-- ``` -->
 
-## Save results of differential expression analysis
+<!-- ## Save results of differential expression analysis -->
 
-Save results from limma and ash.
+<!-- Save results from limma and ash. -->
 
-```{r save-limma}
-saveRDS(v, "../data/results-limma-voom.rds")
-saveRDS(fit, "../data/results-limma-fit.rds")
-saveRDS(ash_treatment, "../data/results-ash-treatment.rds")
-saveRDS(ash_status, "../data/results-ash-status.rds")
-saveRDS(ash_interaction, "../data/results-ash-interaction.rds")
-```
+<!-- ```{r save-limma} -->
+<!-- saveRDS(v, "../data/results-limma-voom.rds") -->
+<!-- saveRDS(fit, "../data/results-limma-fit.rds") -->
+<!-- saveRDS(ash_treatment, "../data/results-ash-treatment.rds") -->
+<!-- saveRDS(ash_status, "../data/results-ash-status.rds") -->
+<!-- saveRDS(ash_interaction, "../data/results-ash-interaction.rds") -->
+<!-- ``` -->
 
-## Create figure
+<!-- ## Create figure -->
 
-```{r fig-limma}
-theme_set(theme_bw(base_size = 8))
-theme_update(panel.grid.minor.x = element_blank(),
-             panel.grid.minor.y = element_blank(),
-             panel.grid.major.x = element_blank(),
-             panel.grid.major.y = element_blank())
-fig_limma <- ggdraw() +
-  draw_plot(ma_treatment,     0.00, 0.67, 0.33, 0.33) +
-  draw_plot(ma_status,        0.00, 0.33, 0.33, 0.33) +
-  draw_plot(ma_interaction,   0.00, 0.00, 0.33, 0.33) +
-  draw_plot(hist_treatment,   0.33, 0.67, 0.33, 0.33) +
-  draw_plot(hist_status,      0.33, 0.33, 0.33, 0.33) +
-  draw_plot(hist_interaction, 0.33, 0.00, 0.33, 0.33) +
-  draw_plot(p_treatment_1,    0.67, 0.82, 0.15, 0.15) +
-  draw_plot(p_treatment_2,    0.67, 0.67, 0.15, 0.15) +
-  draw_plot(p_treatment_3,    0.82, 0.67, 0.15, 0.15) +
-  draw_plot(p_treatment_4,    0.82, 0.82, 0.15, 0.15) +
-  draw_plot_label(c("A", "B", "C"), c(0.00, 0.00, 0.00),
-                                    c(1.00, 0.67, 0.33), size = 15)
-fig_limma
-# Using cowplot ggsave, which by default does not use Dingbats font
-ggsave("fig-limma.eps", plot = fig_limma, width = 8, height = 5, units = "in")
-```
+<!-- ```{r fig-limma} -->
+<!-- theme_set(theme_bw(base_size = 8)) -->
+<!-- theme_update(panel.grid.minor.x = element_blank(), -->
+<!--              panel.grid.minor.y = element_blank(), -->
+<!--              panel.grid.major.x = element_blank(), -->
+<!--              panel.grid.major.y = element_blank()) -->
+<!-- fig_limma <- ggdraw() + -->
+<!--   draw_plot(ma_treatment,     0.00, 0.67, 0.33, 0.33) + -->
+<!--   draw_plot(ma_status,        0.00, 0.33, 0.33, 0.33) + -->
+<!--   draw_plot(ma_interaction,   0.00, 0.00, 0.33, 0.33) + -->
+<!--   draw_plot(hist_treatment,   0.33, 0.67, 0.33, 0.33) + -->
+<!--   draw_plot(hist_status,      0.33, 0.33, 0.33, 0.33) + -->
+<!--   draw_plot(hist_interaction, 0.33, 0.00, 0.33, 0.33) + -->
+<!--   draw_plot(p_treatment_1,    0.67, 0.82, 0.15, 0.15) + -->
+<!--   draw_plot(p_treatment_2,    0.67, 0.67, 0.15, 0.15) + -->
+<!--   draw_plot(p_treatment_3,    0.82, 0.67, 0.15, 0.15) + -->
+<!--   draw_plot(p_treatment_4,    0.82, 0.82, 0.15, 0.15) + -->
+<!--   draw_plot_label(c("A", "B", "C"), c(0.00, 0.00, 0.00), -->
+<!--                                     c(1.00, 0.67, 0.33), size = 15) -->
+<!-- fig_limma -->
+<!-- # Using cowplot ggsave, which by default does not use Dingbats font -->
+<!-- ggsave("fig-limma.eps", plot = fig_limma, width = 8, height = 5, units = "in") -->
+<!-- ``` -->
