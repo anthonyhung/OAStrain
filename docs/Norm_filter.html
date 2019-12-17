@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2019-12-16
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebb98d141e6a1ad34c642aa8583b371a0f3dc000etargetblankbb98d14a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bb98d141e6a1ad34c642aa8583b371a0f3dc000e" target="_blank">bb98d14</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree8a223922484f03dd37f02804f03666bf26bbe1d2targetblank8a22392a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/8a223922484f03dd37f02804f03666bf26bbe1d2" target="_blank">8a22392</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebb98d141e6a1ad34c642aa8583b371a0f3dc000etargetblankbb98d14a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree8a223922484f03dd37f02804f03666bf26bbe1d2targetblank8a22392a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,15 +507,12 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
 
-Untracked files:
-    Untracked:  data/Sample.info.RNAseq.reordered.csv
-
 Unstaged changes:
-    Modified:   analysis/Norm_filter.Rmd
-    Modified:   analysis/raw_counts_analysis.Rmd
+    Modified:   analysis/DE_analysis.Rmd
 
 </code></pre>
 <p>
@@ -554,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/Norm_filter.Rmd" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+run through with dummy data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/Norm_filter.html" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+run through with dummy data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -695,17 +726,202 @@ col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
 
 plotDensities(cpm[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/cpm%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-1">
+Past versions of “cpm normalization-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotDensities(cpm[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/cpm%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-2">
+Past versions of “cpm normalization-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Look at density plots broken down by individual
 col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
 
 plotDensities(cpm[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/cpm%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-3">
+Past versions of “cpm normalization-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotDensities(cpm[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/cpm%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-4">
+Past versions of “cpm normalization-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotDensities(cpm[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/cpm%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-5">
+Past versions of “cpm normalization-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="boxplots-of-cpm-across-samples" class="section level1">
 <h1>Boxplots of cpm across samples</h1>
@@ -714,6 +930,43 @@ names(meltcpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;cpm&quot;)
 p &lt;- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
 <p><img src="figure/Norm_filter.Rmd/boxplot%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-cpm-1">
+Past versions of “boxplot cpm-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-cpm-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="filtering-for-lowly-expressed-genes-avg-cpm-0.5-in-at-least-2-samples" class="section level1">
 <h1>Filtering for lowly expressed genes (avg CPM &gt; 0.5 in at least 2 samples)</h1>
@@ -731,6 +984,43 @@ suppress_output &lt;- lapply(cpm_density, lines, lty = &quot;dotted&quot;,
 lines(cpm_median_density, col = &quot;red&quot;, lwd = 3)
 abline(v = cutoff, col = &quot;blue&quot;)</code></pre>
 <p><img src="figure/Norm_filter.Rmd/filter-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter-1">
+Past versions of filter-1.png
+</button>
+</p>
+<div id="fig-filter-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/filter-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#apply filter (Keeping the `r sum(cpm_median &gt; cutoff)` genes with a median log~2~ cpm greater than `r cutoff`.)
 
 counts &lt;- raw_counts %&gt;% 
@@ -745,6 +1035,43 @@ names(melt_filt_cpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;cpm&q
 p1 &lt;- ggplot(melt_filt_cpm, aes(factor(sampleID), cpm)) 
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
 <p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-cpm-1">
+Past versions of “boxplot filt cpm-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-cpm-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level1">
 <h1>Save normalized/filtered count matrix and filtered count matrix</h1>

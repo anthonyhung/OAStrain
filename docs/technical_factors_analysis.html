@@ -13,7 +13,7 @@
 
 <meta name="date" content="2019-12-16" />
 
-<title>Analysis of Raw Data</title>
+<title>Analysis of Technical factors</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -377,7 +377,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">Analysis of Raw Data</h1>
+<h1 class="title toc-ignore">Analysis of Technical factors</h1>
 <h4 class="author">Anthony Hung</h4>
 <h4 class="date">2019-12-16</h4>
 
@@ -556,24 +556,24 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/raw_counts_analysis.Rmd" target="_blank">a5c9482</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/8a223922484f03dd37f02804f03666bf26bbe1d2/analysis/technical_factors_analysis.Rmd" target="_blank">8a22392</a>
 </td>
 <td>
 Anthony Hung
 </td>
 <td>
-2019-12-16
+2019-12-17
 </td>
 <td>
-run through with dummy data
+wflow_publish(files = c(“analysis/preprocessing.Rmd”,
 </td>
 </tr>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/raw_counts_analysis.html" target="_blank">a5c9482</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/technical_factors_analysis.Rmd" target="_blank">a5c9482</a>
 </td>
 <td>
 Anthony Hung
@@ -590,7 +590,7 @@ run through with dummy data
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/bb98d141e6a1ad34c642aa8583b371a0f3dc000e/analysis/raw_counts_analysis.Rmd" target="_blank">bb98d14</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bb98d141e6a1ad34c642aa8583b371a0f3dc000e/analysis/technical_factors_analysis.Rmd" target="_blank">bb98d14</a>
 </td>
 <td>
 Anthony Hung
@@ -607,7 +607,24 @@ Add sampleinfo file
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a8cef1a7772685bd04a25c93dd5d7920caa1e492/analysis/raw_counts_analysis.Rmd" target="_blank">a8cef1a</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c1f7cf7e67e7a3372e359d52a2cfa24d1a2672a6/analysis/technical_factors_analysis.Rmd" target="_blank">c1f7cf7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Start up additional analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a8cef1a7772685bd04a25c93dd5d7920caa1e492/analysis/technical_factors_analysis.Rmd" target="_blank">a8cef1a</a>
 </td>
 <td>
 Anthony Hung
@@ -626,310 +643,270 @@ Create analysis files for analysis of BulkRNA pilot data
 </div>
 </div>
 </div>
-<pre class="r"><code>#configuration
-proj_dir &lt;- &quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/&quot;
-
-#order of samples to relabel count matrix (sample ID in format 18855_1_S)
-samplenames &lt;- c(&quot;18855_1_S&quot;,&quot;18856_1_S&quot;, &quot;19160_2_U&quot;,
-                 &quot;18855_2_U&quot;,&quot;18856_2_U&quot;, &quot;19160_1_S&quot;,
-                 &quot;18855_3_S&quot;,&quot;18856_3_S&quot;, &quot;19160_3_S&quot;,
-                 &quot;18855_1_U&quot;,&quot;18856_1_U&quot;, &quot;19160_1_U&quot;,
-                 &quot;18855_3_U&quot;,&quot;18856_3_U&quot;, &quot;19160_3_U&quot;,
-                 &quot;18855_2_S&quot;,&quot;18856_2_S&quot;, &quot;19160_2_S&quot;
-                 )</code></pre>
-<div id="overview" class="section level1">
-<h1>Overview:</h1>
-<p>Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual.</p>
-</div>
-<div id="load-in-bulk-rna-sequencing-data-from-pilot-experiment-and-visualize-correlations-between-samples" class="section level1">
-<h1>Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples</h1>
-<pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
+<div id="examine-normalizedfiltered-data-and-see-if-any-pcs-correlate-with-technical-factors" class="section level1">
+<h1>Examine normalized/filtered data and see if any PCs correlate with technical factors</h1>
+<pre class="r"><code>#library(&quot;polycor&quot;)
+library(&quot;gplots&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;gplots&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:stats&#39;:
 
     lowess</code></pre>
 <pre class="r"><code>library(&quot;ggplot2&quot;)
-library(&quot;RColorBrewer&quot;)
+library(&quot;reshape&quot;)
+library(&quot;edgeR&quot;)</code></pre>
+<pre><code>Loading required package: limma</code></pre>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
 library(&quot;scales&quot;)
+library(&quot;cowplot&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
 
-# Load colors 
+    ggsave</code></pre>
+<pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
+
+    rename</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code># Load colors 
 colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
 pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
 
-# load in counts
-raw_counts &lt;- read.table(paste0(proj_dir, &quot;out/counts/counts.txt&quot;), header = T)
-
-# assign row.names
-row.names(raw_counts) &lt;- raw_counts$Geneid
-
-# exclude extra data columns
-raw_counts &lt;- raw_counts[, -c(1:6)] 
-
-# assign col.names
-names(raw_counts) &lt;- samplenames
-
-# save relabeled raw count data matrix
-saveRDS(raw_counts, &quot;data/raw_counts_relabeled.rds&quot;)
-
-# Check that there&#39;s no &quot;NAs&quot; in the data
-summary(apply(raw_counts, 1, var) == 0) </code></pre>
-<pre><code>   Mode   FALSE    TRUE 
-logical   10946   47449 </code></pre>
-<pre class="r"><code>#Sample information
-sample_info &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
-head(sample_info)</code></pre>
-<pre><code>  Sample_ID Individual Sex Replicate Passage_MSC treatment RIN
-1 18855_1_S   NA18855    F         1          10    Strain  NA
-2 18856_1_S   NA18856    M         1           8    Strain  NA
-3 19160_1_S   NA19160    M         1           8    Strain  NA
-4 18855_2_S   NA18855    F         2          10    Strain  NA
-5 18856_2_S   NA18856    M         2           8    Strain  NA
-6 19160_2_S   NA19160    M         2           8    Strain  NA</code></pre>
-<pre class="r"><code>#Re-order sample information to match the columns of count matrix
-sample_info &lt;- sample_info[match(samplenames, sample_info$Sample_ID),]
-# save reorganized sample information
-saveRDS(sample_info, &quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+#load in normalized/filtered data
+filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
 </div>
-<div id="perform-pca-and-hierarchical-clustering-on-raw-data" class="section level1">
-<h1>Perform PCA and hierarchical clustering on raw data</h1>
-<pre class="r"><code>labels &lt;- paste(sample_info$Individual, sample_info$treatment, sep=&quot; &quot;)
-
-#load PCA function
+<div id="pca-and-hierarchical-clustering-of-normalized-and-filtered-data" class="section level1">
+<h1>PCA and hierarchical clustering of normalized and filtered data</h1>
+<pre class="r"><code>#Load PCA plotting Function
 source(&quot;code/PCA_fn.R&quot;)
 
+
 # Clustering (original code from Julien Roux)
-cors &lt;- cor(raw_counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+cors &lt;- cor(filt_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
 
-
-heatmap.2(cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sample_info$Individual))], RowSideColors=pal[as.integer(as.factor(sample_info$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/raw_counts_analysis.Rmd/corr%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-1">
-Past versions of “corr heatmap-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-corr-heatmap-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/corr heatmap-1.png" target="_blank">a5c9482</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations" class="section level1">
 <h1>Perform PCA and color by factors to look for any potential correlations</h1>
 <pre class="r"><code># Perform PCA
-pca_genes &lt;- prcomp(t(raw_counts), scale = F)
+pca_genes &lt;- prcomp(t(filt_cpm), scale = T)
 scores &lt;- pca_genes$x
 
+variances &lt;- pca_genes$sdev^2
+explained &lt;- variances / sum(variances)
+plot(pca_genes, main = &quot;Variance per PC&quot;)</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Make PCA plots with the factors colored by Individual
 
-#Make PCA plots with the factors colored by individual
-
-### PCs 1 and 2 Raw Data
+### PCs 1 and 2 norm+filt Data
 for (n in 1:1){
-  col.v &lt;- pal[as.integer(sample_info$Individual)]
+  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }</code></pre>
-<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-1">
-Past versions of “PCA raw-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-PCA-raw-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-1.png" target="_blank">a5c9482</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>### PCs 3 and 4 Raw Data
+<p><img src="figure/technical_factors_analysis.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>### PCs 3 and 4 norm+filt Data
 
 for (n in 3:3){
-  col.v &lt;- pal[as.integer(sample_info$Individual)]
+  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }</code></pre>
-<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-2">
-Past versions of “PCA raw-2.png”
-</button>
-</p>
-<div id="fig-no-spaces-PCA-raw-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-2.png" target="_blank">a5c9482</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/technical_factors_analysis.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
+<div id="check-that-technical-factors-do-not-correlate-with-pcs-using-polycor" class="section level1">
+<h1>Check that technical factors do not correlate with PCs using polycor</h1>
 </div>
-<pre class="r"><code>#Make PCA plots with the factors colored by treatment
-
-### PCs 1 and 2 Raw Data
-for (n in 1:1){
-  col.v &lt;- pal[as.integer(sample_info$treatment)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}</code></pre>
-<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-3">
-Past versions of “PCA raw-3.png”
-</button>
-</p>
-<div id="fig-no-spaces-PCA-raw-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-3.png" target="_blank">a5c9482</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-</tr>
-</tbody>
-</table>
+<div id="remove-unwanted-variation" class="section level1">
+<h1>Remove unwanted variation</h1>
+<pre class="r"><code>#Use RUV for replicates (adjust k until corr heatmap looks right)</code></pre>
 </div>
+<div id="clusteringpca-after-removing-unwanted-variation" class="section level1">
+<h1>Clustering/PCA after removing unwanted variation</h1>
+<pre class="r"><code># # Clustering (original code from Julien Roux)
+# cors &lt;- cor(filt_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+# 
+# 
+# heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(samples$Species))], RowSideColors=pal[as.integer(as.factor(samples$Tissue))+9], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+# 
+# # Perform PCA
+# pca_genes &lt;- prcomp(t(filt_cpm), scale = F)
+# scores &lt;- pca_genes$x
+# 
+# 
+# #Make PCA plots with the factors colored by tissue
+# 
+# ### PCs 1 and 2 Raw Data
+# for (n in 1:1){
+#   col.v &lt;- pal[as.integer(samples$Tissue)]
+#   plot_scores(pca_genes, scores, n, n+1, col.v)
+# }
+# 
+# ### PCs 3 and 4 Raw Data
+# 
+# for (n in 3:3){
+#   col.v &lt;- pal[as.integer(samples$Tissue)]
+#   plot_scores(pca_genes, scores, n, n+1, col.v)
+# }</code></pre>
 </div>
-<pre class="r"><code>### PCs 3 and 4 Raw Data
-
-for (n in 3:3){
-  col.v &lt;- pal[as.integer(sample_info$treatment)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}</code></pre>
-<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-4">
-Past versions of “PCA raw-4.png”
-</button>
-</p>
-<div id="fig-no-spaces-PCA-raw-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-4.png" target="_blank">a5c9482</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="boxplot-of-correlations-between-replicates-and-broken-down-by-no-treatment-and-treatment-between-treatments-of-same-individual-between-individuals-of-same-treatment" class="section level1">
-<h1>Boxplot of correlations between replicates (and broken down by no treatment and treatment), between treatments of same individual, between individuals of same treatment</h1>
+<div id="save-data-adjusted-for-unwanted-variation" class="section level1">
+<h1>Save data adjusted for unwanted variation</h1>
+<!-- Calculate the relationship between each recorded covariate and the top 6 PCs. -->
+<!-- ```{r pc-covariate-correlation} -->
+<!-- p_comps <- 1:6 -->
+<!-- pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), -->
+<!--                      dimnames = list(colnames(info), colnames(pca$x)[p_comps])) -->
+<!-- for (pc in p_comps) { -->
+<!--   for (covariate in 1:ncol(info)) { -->
+<!--     lm_result <- lm(pca$x[, pc] ~ info[, covariate]) -->
+<!--     r2 <- summary(lm_result)$r.squared -->
+<!--     pc_cov_cor[covariate, pc] <- r2 -->
+<!--   } -->
+<!-- } -->
+<!-- datatable(pc_cov_cor) -->
+<!-- ``` -->
+<!-- ```{r pc-covariate-correlation-heatmap, fig.width=8} -->
+<!-- heatmap.2(pc_cov_cor, trace = "none", margins = c(4, 8)) -->
+<!-- ``` -->
+<!-- ```{r long} -->
+<!-- pc_cov_cor_2 <- as.data.frame(pc_cov_cor) -->
+<!-- pc_cov_cor_2$variable <- rownames(pc_cov_cor) -->
+<!-- pc_cov_cor_2 <- gather(pc_cov_cor_2, key = "pc", value = "cor", -variable) -->
+<!-- head(pc_cov_cor_2) -->
+<!-- ``` -->
+<!-- ```{r pca-heatmap} -->
+<!-- d_heatmap <- pc_cov_cor_2 -->
+<!-- d_heatmap$variable <- factor(d_heatmap$variable, -->
+<!--                              levels = c("rin", "master_mix", -->
+<!--                                         "extraction", "arrival", "infection", -->
+<!--                                         "individual", "status", "treatment"), -->
+<!--                              labels = c("RNA quality", "Library prep batch", -->
+<!--                                         "RNA extraction batch", "Arrival batch", -->
+<!--                                         "Infection batch", "Individual", -->
+<!--                                         "Susceptibility status", "Treatment")) -->
+<!-- pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + -->
+<!--   geom_tile(aes(fill = cor), colour = "white") + -->
+<!--   scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + -->
+<!--   labs(x = "Principal Component", y = "", -->
+<!--        title = "Correlation between principal components and experimental variables") -->
+<!-- pca_heat -->
+<!-- ``` -->
+<!-- ```{r pca-data} -->
+<!-- pca_data <- cbind(info, pca$x[, p_comps]) -->
+<!-- pca_data$status <- factor(pca_data$status, levels = c("contact", "tb"), -->
+<!--                           labels = c("resistant", "susceptible")) -->
+<!-- pca_data$treatment <- factor(pca_data$treatment, levels = c("none", "infected")) -->
+<!-- ``` -->
+<!-- PC1 versus PC2. -->
+<!-- ```{r pc1-pc2} -->
+<!-- pc1v2 <- ggplot(pca_data, aes(x = PC1, y = PC2, color = treatment)) + -->
+<!--   geom_text(aes(label = individual)) + -->
+<!--   labs(x = sprintf("PC%d (%.2f%%)", 1, round(explained[1] * 100, 2)), -->
+<!--        y = sprintf("PC%d (%.2f%%)", 2, round(explained[2] * 100, 2))) -->
+<!-- pc1v2 -->
+<!-- ``` -->
+<!-- PC3 versus PC4. -->
+<!-- ```{r pc3-pc4} -->
+<!-- pc3v4 <- ggplot(pca_data, aes(x = PC3, y = PC4, color = infection)) + -->
+<!--   geom_text(aes(label = individual)) + -->
+<!--   labs(x = sprintf("PC%d (%.2f%%)", 3, round(explained[3] * 100, 2)), -->
+<!--        y = sprintf("PC%d (%.2f%%)", 4, round(explained[4] * 100, 2))) -->
+<!-- pc3v4 -->
+<!-- ``` -->
+<!-- PC5 versus PC6. -->
+<!-- ```{r pc5-pc6} -->
+<!-- pc5v6 <- ggplot(pca_data, aes(x = PC5, y = PC6, color = infection)) + -->
+<!--   geom_text(aes(label = individual)) + -->
+<!--   labs(x = sprintf("PC%d (%.2f%%)", 5, round(explained[5] * 100, 2)), -->
+<!--        y = sprintf("PC%d (%.2f%%)", 6, round(explained[6] * 100, 2))) -->
+<!-- pc5v6 -->
+<!-- ``` -->
+<!-- ## Effect of treatment -->
+<!-- PC1 is correlated with treatment. -->
+<!-- ```{r} -->
+<!-- pc_cov_cor_2 %>% filter(variable == "treatment", cor > 0.5) -->
+<!-- pc1_treatment <- ggplot(pca_data, aes(x = treatment, y = PC1)) + -->
+<!--   geom_boxplot() + -->
+<!--   labs(title = "PC1 captures the effect of treatment") -->
+<!-- pc1_treatment -->
+<!-- ``` -->
+<!-- ## Any technical batch effects? -->
+<!-- There are multiple factors with a strong correlation with at least one of the first 6 PCs. -->
+<!-- ```{r} -->
+<!-- pc_cov_cor_2 %>% filter(cor > 0.5) -->
+<!-- ``` -->
+<!-- Most of the major correlations are with biological variables: treatment or individual. -->
+<!-- It is expected that the largest source of variation in gene expression is due to the transcriptional changes induced by the immune response to MTB. -->
+<!-- Also, we expect there to be differences between individuals, and this will be explicitly modeled for in the differential expression analysis. -->
+<!-- Thus the main concern is the variable infection. -->
+<!-- The infection experiments were done as the whole blood samples were obtained, so they are the most confounded with susceptibility status. -->
+<!-- ```{r} -->
+<!-- pc_cov_cor_2 %>% filter(variable == "infection", cor > 0.5) -->
+<!-- table(info$infection[info$treatment == "none"], -->
+<!--       info$status[info$treatment == "none"]) -->
+<!-- ``` -->
+<!-- The infection dates with susceptible samples are 2013-04-05, 2014-06-10, and 2014-11-24. -->
+<!-- We clearly see there is variation in PC3 by the date of the infection experiment. -->
+<!-- ```{r pc3-infection} -->
+<!-- pc3_infection <- ggplot(pca_data, aes(x = infection, y = PC3, fill = treatment)) + -->
+<!--   geom_boxplot() + -->
+<!--   theme(axis.text.x = element_text(angle = 90)) + -->
+<!--   labs(title = "PC3 varies by date of infection") -->
+<!-- pc3_infection -->
+<!-- ``` -->
+<!-- Reassuringly, however, this variation does not correlate strongly with susceptibilty status. -->
+<!-- ```{r pc3-status} -->
+<!-- pc_cov_cor_2 %>% filter(variable == "status", pc == "PC3") -->
+<!-- pc3_status <- ggplot(pca_data, aes(x = reorder(individual, PC3), y = PC3, color = status)) + -->
+<!--   geom_point() + -->
+<!--   facet_wrap(~treatment) + -->
+<!--   labs(title = "PC3 does not correlate with susceptibility status", -->
+<!--        x = "Individual") + -->
+<!--   theme(axis.text.x = element_text(angle = 90)) -->
+<!-- pc3_status -->
+<!-- ``` -->
+<!-- The situation is the same with PC5. -->
+<!-- It varies with infection date. -->
+<!-- ```{r pc5-infection} -->
+<!-- pc5_infection <- pc3_infection %+% aes(y = PC5) + -->
+<!--   labs(title = "PC5 varies by date of infection") -->
+<!-- pc5_infection -->
+<!-- ``` -->
+<!-- But does not correlate strongly with susceptibilty status. -->
+<!-- ```{r pc5-status} -->
+<!-- pc_cov_cor_2 %>% filter(variable == "status", pc == "PC5") -->
+<!-- pc5_status <- pc3_status %+% aes(x = reorder(individual, PC5), y = PC5) + -->
+<!--   labs(title = "PC5 does not correlate with susceptibility status", -->
+<!--        x = "Individual") -->
+<!-- pc5_status -->
+<!-- ``` -->
+<!-- ## Multipanel figures -->
+<!-- PCA -->
+<!-- ```{r pca-mulit, fig.width=14, fig.height=14} -->
+<!-- plot_grid(pc1v2 + theme(legend.position = "none"), -->
+<!--           pc3v4 + theme(legend.position = "none"), -->
+<!--           pc5v6 + theme(legend.position = "none"), -->
+<!--           pca_heat, -->
+<!--           labels = LETTERS[1:4]) -->
+<!-- ``` -->
+<!-- Batch effects -->
+<!-- ```{r effect-of-infection, fig.width=14, fig.height=14} -->
+<!-- plot_grid(pc3_infection + theme(legend.position = "bottom"), -->
+<!--           pc5_infection  + theme(legend.position = "bottom"), -->
+<!--           pc3_status + theme(legend.position = "bottom"), -->
+<!--           pc5_status + theme(legend.position = "bottom"), -->
+<!--           labels = LETTERS[1:4]) -->
+<!-- ``` -->
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -957,21 +934,23 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] scales_1.1.0       RColorBrewer_1.1-2 ggplot2_3.2.1      gplots_3.0.1.1    
+[1] dplyr_0.8.3        cowplot_0.9.3      scales_1.1.0       RColorBrewer_1.1-2
+[5] edgeR_3.20.9       limma_3.34.9       reshape_0.8.8      ggplot2_3.2.1     
+[9] gplots_3.0.1.1    
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.3         compiler_3.4.3     pillar_1.4.2       later_1.0.0       
- [5] git2r_0.26.1       workflowr_1.5.0    bitops_1.0-6       tools_3.4.3       
- [9] digest_0.6.23      evaluate_0.14      lifecycle_0.1.0    tibble_2.1.3      
-[13] gtable_0.3.0       pkgconfig_2.0.3    rlang_0.4.2        yaml_2.2.0        
-[17] xfun_0.11          withr_2.1.2        stringr_1.4.0      dplyr_0.8.3       
-[21] knitr_1.26         fs_1.3.1           gtools_3.8.1       caTools_1.17.1.3  
-[25] tidyselect_0.2.5   rprojroot_1.3-2    grid_3.4.3         glue_1.3.1        
-[29] R6_2.4.1           rmarkdown_1.18     gdata_2.18.0       purrr_0.3.3       
-[33] magrittr_1.5       whisker_0.4        backports_1.1.5    promises_1.1.0    
-[37] htmltools_0.4.0    assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.2      
-[41] KernSmooth_2.23-15 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
-[45] crayon_1.3.4      </code></pre>
+ [1] Rcpp_1.0.3         plyr_1.8.4         compiler_3.4.3     pillar_1.4.2      
+ [5] later_1.0.0        git2r_0.26.1       workflowr_1.5.0    bitops_1.0-6      
+ [9] tools_3.4.3        digest_0.6.23      lattice_0.20-35    evaluate_0.14     
+[13] lifecycle_0.1.0    tibble_2.1.3       gtable_0.3.0       pkgconfig_2.0.3   
+[17] rlang_0.4.2        yaml_2.2.0         xfun_0.11          withr_2.1.2       
+[21] stringr_1.4.0      knitr_1.26         fs_1.3.1           gtools_3.8.1      
+[25] caTools_1.17.1.3   locfit_1.5-9.1     tidyselect_0.2.5   rprojroot_1.3-2   
+[29] grid_3.4.3         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
+[33] gdata_2.18.0       purrr_0.3.3        magrittr_1.5       whisker_0.4       
+[37] backports_1.1.5    promises_1.1.0     htmltools_0.4.0    assertthat_0.2.1  
+[41] colorspace_1.4-1   httpuv_1.5.2       KernSmooth_2.23-15 stringi_1.4.3     
+[45] lazyeval_0.2.2     munsell_0.5.0      crayon_1.3.4      </code></pre>
 </div>
 </div>
 
