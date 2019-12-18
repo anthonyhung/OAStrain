@@ -28,6 +28,7 @@ Raw FASTQ files were processed through Kenneth Barr's pipeline, which aligns rea
 ```{r load libraries}
 library(data.table)
 library(tidyverse)
+library(plyr)
 library(dplyr)
 library(stringr)
 library(readr)
@@ -140,81 +141,80 @@ count_data_singlets2 <- count_data2[,singlets_index2]
 # Create Seurat object for each dataset (for singlet barcodes) and add metadata in the form of singlet identity for each barcode. Rest of analysis adapted from: https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html
 
 ```{r seurat}
+#Change labels to reflect strain/unstrain
+
+strainIndlabels1 <- revalue(barcodes_singlets1$labels, 
+                            c("SNG-NA18856"= "NA18856_Unstrain", 
+                              "SNG-NA18855" = "NA18855_Strain", 
+                              "SNG-NA19160" = "NA19160_Unstrain"))
+
+strainIndlabels2 <- revalue(barcodes_singlets2$labels, 
+                            c("SNG-NA18855" = "NA18855_Unstrain", 
+                              "SNG-NA19160" = "NA19160_Strain"))
+
+
 rownames(count_data_singlets1) <- genes1$X2
 colnames(count_data_singlets1) <- barcodes_singlets1$X1
 
 ANT1_seurat <- CreateSeuratObject(counts = count_data_singlets1, project = "ANT1") %>% 
-  AddMetaData(barcodes_singlets1$labels, col.name = "labels")
+  AddMetaData(strainIndlabels1, col.name = "labels")
 
 
 rownames(count_data_singlets2) <- genes2$X2
 colnames(count_data_singlets2) <- barcodes_singlets2$X1
 
 ANT2_seurat <- CreateSeuratObject(counts = count_data_singlets2, project = "ANT2") %>% 
-  AddMetaData(barcodes_singlets2$labels, col.name = "labels")
+  AddMetaData(strainIndlabels2, col.name = "labels")
+
+
+# Merge into one dataset (https://satijalab.org/seurat/v3.0/merge_vignette.html)
+
+ANT1.2 <- merge(x = ANT1_seurat,
+                   y = ANT2_seurat,
+                   add.cell.ids = c("ANT1", "ANT2"),
+                   merge.data = F,
+                   project = "OAStrain")
 ```
 
 Now we can perform some QC on cells in Seurat
 
 ```{r QC}
-ANT1_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT1_seurat, pattern = "^MT-")
-ANT2_seurat[["percent.mt"]] <- PercentageFeatureSet(ANT2_seurat, pattern = "^MT-")
+ANT1.2[["percent.mt"]] <- PercentageFeatureSet(ANT1.2, pattern = "^MT-")
 
-# Visualize QC metrics as a violin plot
-VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
-VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
-
-# break down nFeature_RNA histograms by individual
-hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA19160"], main = "ANT1 SNG-NA19160 nFeatures", xlab = "nFeatures")
-hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18855"], main = "ANT1 SNG-NA18855 nFeatures", xlab = "nFeatures")
-hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18856"], main = "ANT1 SNG-NA18856 nFeatures", xlab = "nFeatures")
-
-
-hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA19160"], main = "ANT2 SNG-NA19160 nFeatures", xlab = "nFeatures")
-hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == "SNG-NA18855"], main = "ANT2 SNG-NA18855 nFeatures", xlab = "nFeatures")
-
+#visualize QC metrics as violin plot
+VlnPlot(ANT1.2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(ANT1.2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
 
 # FeatureScatter is typically used to visualize feature-feature relationships, but can be used
 # for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
 
-plot1 <- FeatureScatter(ANT1_seurat, feature1 = "nCount_RNA", feature2 = "percent.mt")
-plot2 <- FeatureScatter(ANT1_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 <- FeatureScatter(ANT1.2, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(ANT1.2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 CombinePlots(plots = list(plot1, plot2))
 
-
-plot1 <- FeatureScatter(ANT2_seurat, feature1 = "nCount_RNA", feature2 = "percent.mt")
-plot2 <- FeatureScatter(ANT2_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-CombinePlots(plots = list(plot1, plot2))
 
 
 
 #Filter barcodes based on nFeatures and %MT 
-ANT1_seurat <- subset(ANT1_seurat, subset = nFeature_RNA > 2000 & percent.mt < 10)
-table(ANT1_seurat$labels)
-ANT2_seurat <- subset(ANT2_seurat, subset = nFeature_RNA > 2000 & nFeature_RNA & percent.mt < 10)
-table(ANT2_seurat$labels)
+ANT1.2 <- subset(ANT1.2, subset = nFeature_RNA > 2000 & percent.mt < 10)
+table(ANT1.2$labels)
 
 #Look at QC metrics after filtering
-VlnPlot(ANT1_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
-VlnPlot(ANT2_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
+VlnPlot(ANT1.2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = "labels")
 ```
 
 
 # Normalizing Data
 
 ```{r Norm}
-ANT1_seurat <- NormalizeData(ANT1_seurat, normalization.method = "LogNormalize", scale.factor = 10000)
-ANT2_seurat <- NormalizeData(ANT2_seurat, normalization.method = "LogNormalize", scale.factor = 10000)
+ANT1.2 <- NormalizeData(ANT1.2, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
 
 # Feature selection
 
 ```{r feature selection}
-ANT1_seurat <- FindVariableFeatures(ANT1_seurat, selection.method = "vst", nfeatures = 2000)
-ANT2_seurat <- FindVariableFeatures(ANT2_seurat, selection.method = "vst", nfeatures = 2000)
+ANT1.2 <- FindVariableFeatures(ANT1.2, selection.method = "vst", nfeatures = 2000)
 
 
 plot_variable_features <- function(seurat.obj){
@@ -223,16 +223,13 @@ plot_variable_features <- function(seurat.obj){
   
   # plot variable features with and without labels
   plot1 <- VariableFeaturePlot(seurat.obj) + 
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
        theme(legend.position="bottom")
   plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE) +
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
        theme(legend.position="bottom")
   return(CombinePlots(plots = list(plot1, plot2)))
 }
 
-plot_variable_features(ANT1_seurat)
-plot_variable_features(ANT2_seurat)
+plot_variable_features(ANT1.2)
 ```
 
 # Scaling Data
@@ -243,8 +240,7 @@ scale_data <- function(seurat.obj){
   return(ScaleData(seurat.obj, features = all.genes))
 }
 
-ANT1_seurat <- scale_data(ANT1_seurat)
-ANT2_seurat <- scale_data(ANT2_seurat)
+ANT1.2 <- scale_data(ANT1.2)
 ```
 
 # Dimensionality Reduction
@@ -253,19 +249,18 @@ Using the highly variable features selected above, perform PCA
 
 ```{r PCA}
 nPC <- 100
-ANT1_seurat <- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat), npcs = nPC)
-ANT2_seurat <- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat), npcs = nPC)
+ANT1.2 <- RunPCA(ANT1.2, features = VariableFeatures(object = ANT1.2), npcs = nPC)
 
 
 # Examine and visualize PCA results a few different ways
-print(ANT2_seurat[["pca"]], dims = 1:5, nfeatures = 5)
-VizDimLoadings(ANT1_seurat, dims = 1:2, reduction = "pca")
+print(ANT1.2[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(ANT1.2, dims = 1:2, reduction = "pca")
 
-DimPlot(ANT1_seurat, reduction = "pca", group.by = "labels")
+DimPlot(ANT1.2, reduction = "pca", group.by = "labels")
 
 # Get the total variance:
-pca <- ANT1_seurat[["pca"]]
-mat <- Seurat::GetAssayData(ANT1_seurat, assay = "RNA", slot = "scale.data")
+pca <- ANT1.2[["pca"]]
+mat <- Seurat::GetAssayData(ANT1.2, assay = "RNA", slot = "scale.data")
 total_variance <- sum(matrixStats::rowVars(mat))
 
 
@@ -273,128 +268,44 @@ eigValues <- (pca@stdev)^2  ## EigenValues
 varExplained <- eigValues / total_variance
 head(varExplained) #var explained by first 10 PCs
 
-DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)
+DimHeatmap(ANT1.2, dims = 1:15, cells = 500, balanced = TRUE)
 
-ElbowPlot(ANT1_seurat, ndims = nPC) #42 PCs?
-
-
-
-
-
-
-
-
-
-
-# Examine and visualize PCA results a few different ways
-print(ANT2_seurat[["pca"]], dims = 1:5, nfeatures = 5)
-VizDimLoadings(ANT2_seurat, dims = 1:2, reduction = "pca")
-
-DimPlot(ANT2_seurat, reduction = "pca", group.by = "labels")
-
-# Get the total variance:
-pca <- ANT2_seurat[["pca"]]
-mat <- Seurat::GetAssayData(ANT2_seurat, assay = "RNA", slot = "scale.data")
-total_variance <- sum(matrixStats::rowVars(mat))
-
-
-eigValues <- (pca@stdev)^2  ## EigenValues
-varExplained <- eigValues / total_variance
-head(varExplained) #var explained by first 10 PCs
-
-DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)
-
-ElbowPlot(ANT2_seurat, ndims = nPC) #29 PCs?
+ElbowPlot(ANT1.2, ndims = nPC) #50 PCs?
 ```
 
 # Clustering
 
 ```{r clustering}
-num_PCs <- 42
+num_PCs <- 50
 
-ANT1_seurat <- FindNeighbors(ANT1_seurat, dims = 1:num_PCs)
-ANT1_seurat <- FindClusters(ANT1_seurat, resolution = 0.5)
-
+ANT1.2 <- FindNeighbors(ANT1.2, dims = 1:num_PCs)
+ANT1.2 <- FindClusters(ANT1.2, resolution = 0.5)
 
 #Run UMAP
-ANT1_seurat <- RunUMAP(ANT1_seurat, dims = 1:num_PCs)
-p1 <- DimPlot(ANT1_seurat, reduction = "umap")
-p2 <- DimPlot(ANT1_seurat, reduction = "umap", group.by = "labels")
-p3 <- FeaturePlot(ANT1_seurat, features = "COL10A1")
-p4 <- FeaturePlot(ANT1_seurat, features = "COL11A1")
-p5 <- FeaturePlot(ANT1_seurat, features = "SOX5")
-p6 <- FeaturePlot(ANT1_seurat, features = "SOX6")
-p7 <- FeaturePlot(ANT1_seurat, features = "SOX9")
-p8 <- FeaturePlot(ANT1_seurat, features = "MMP2")
-p9 <- FeaturePlot(ANT1_seurat, features = "MMP1")
-p10 <- FeaturePlot(ANT1_seurat, features = "MMP13")
+ANT1.2 <- RunUMAP(ANT1.2, dims = 1:num_PCs)
+p1 <- DimPlot(ANT1.2, reduction = "umap")
+p2 <- DimPlot(ANT1.2, reduction = "umap", group.by = "labels")
 grid.arrange(p1, p2, nrow = 2)
-grid.arrange(p3, p4, p5, p6, p7, nrow = 2)
-grid.arrange(p8, p9, p10, nrow = 2)
-saveRDS(ANT1_seurat, file = "output/ANT1_seurat.rds")
-
-
-
-
-
-num_PCs <- 29
-
-ANT2_seurat <- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)
-ANT2_seurat <- FindClusters(ANT2_seurat, resolution = 0.5)
-
-#Run UMAP
-ANT2_seurat <- RunUMAP(ANT2_seurat, dims = 1:num_PCs)
-p1_ <- DimPlot(ANT2_seurat, reduction = "umap")
-p2_ <- DimPlot(ANT2_seurat, reduction = "umap", group.by = "labels")
-p3_ <- FeaturePlot(ANT2_seurat, features = "COL10A1")
-p4_ <- FeaturePlot(ANT2_seurat, features = "COL11A1")
-p5_ <- FeaturePlot(ANT2_seurat, features = "SOX5")
-p6_ <- FeaturePlot(ANT2_seurat, features = "SOX6")
-p7_ <- FeaturePlot(ANT2_seurat, features = "SOX9")
-p8_ <- FeaturePlot(ANT2_seurat, features = "MMP2")
-p9_ <- FeaturePlot(ANT2_seurat, features = "MMP1")
-p10_ <- FeaturePlot(ANT2_seurat, features = "MMP13")
-grid.arrange(p1_, p2_, nrow = 2)
-grid.arrange(p3_, p4_, p5_, p6_, p7_, nrow = 2)
-grid.arrange(p8_, p9_, p10_, nrow = 2)
-saveRDS(ANT2_seurat, file = "output/ANT2_seurat.rds")
+saveRDS(ANT1.2, file = "output/ANT1.2.rds")
 ```
 
 ```{r expression by individual}
 #Chondrocyte markers
-VlnPlot(ANT1_seurat, features = c("COL2A1", "ACAN"), 
+VlnPlot(ANT1.2, features = c("COL2A1", "ACAN"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1_seurat, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
+VlnPlot(ANT1.2, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
 #Strain markers
-VlnPlot(ANT1_seurat, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
+VlnPlot(ANT1.2, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1_seurat, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
+VlnPlot(ANT1.2, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
 
 #MSC Flow markers
-VlnPlot(ANT1_seurat, features = c("ENG", "THY1",  "NT5E"), 
+VlnPlot(ANT1.2, features = c("ENG", "THY1",  "NT5E"), 
      pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1_seurat, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
+VlnPlot(ANT1.2, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
      pt.size = 0.2, ncol = 3, group.by = "labels")
 
-
-
-#Chondrocyte markers
-VlnPlot(ANT2_seurat, features = c("COL2A1", "ACAN"), 
-    pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT2_seurat, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
-    pt.size = 0.2, ncol = 3, group.by = "labels")
-#Strain markers
-VlnPlot(ANT2_seurat, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
-    pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT2_seurat, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
-    pt.size = 0.2, ncol = 3, group.by = "labels")
-
-#MSC Flow markers
-VlnPlot(ANT2_seurat, features = c("ENG", "THY1",  "NT5E"), 
-     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT2_seurat, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
-     pt.size = 0.2, ncol = 3, group.by = "labels")
 ```
 

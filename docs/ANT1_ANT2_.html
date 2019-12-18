@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-12-17
+<strong>Last updated:</strong> 2019-12-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebb98d141e6a1ad34c642aa8583b371a0f3dc000etargetblankbb98d14a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bb98d141e6a1ad34c642aa8583b371a0f3dc000e" target="_blank">bb98d14</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4ca153a6bc020addaa4f20c305c4fb849c4647c0targetblank4ca153aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/4ca153a6bc020addaa4f20c305c4fb849c4647c0" target="_blank">4ca153a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebb98d141e6a1ad34c642aa8583b371a0f3dc000etargetblankbb98d14a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4ca153a6bc020addaa4f20c305c4fb849c4647c0targetblank4ca153aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,6 +515,8 @@ Untracked files:
     Untracked:  .RDataTmp
 
 Unstaged changes:
+    Deleted:    analysis/ANT1.Rmd
+    Deleted:    analysis/ANT1_ANT2.Rmd
     Modified:   analysis/ANT1_ANT2_.Rmd
 
 </code></pre>
@@ -554,6 +556,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/analysis/ANT1_ANT2_.Rmd" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+<td>
+change threshold of nfeatures per cell
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/ANT1_ANT2_.html" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+<td>
+change threshold of nfeatures per cell
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -736,6 +772,21 @@ x dplyr::first()     masks data.table::first()
 x dplyr::lag()       masks stats::lag()
 x dplyr::last()      masks data.table::last()
 x purrr::transpose() masks data.table::transpose()</code></pre>
+<pre class="r"><code>library(plyr)</code></pre>
+<pre><code>------------------------------------------------------------------------------</code></pre>
+<pre><code>You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)</code></pre>
+<pre><code>------------------------------------------------------------------------------</code></pre>
+<pre><code>
+Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    compact</code></pre>
 <pre class="r"><code>library(dplyr)
 library(stringr)
 library(readr)
@@ -881,26 +932,44 @@ count_data_singlets2 &lt;- count_data2[,singlets_index2]</code></pre>
 </div>
 <div id="create-seurat-object-for-each-dataset-for-singlet-barcodes-and-add-metadata-in-the-form-of-singlet-identity-for-each-barcode.-rest-of-analysis-adapted-from-httpssatijalab.orgseuratv3.0pbmc3k_tutorial.html" class="section level1">
 <h1>Create Seurat object for each dataset (for singlet barcodes) and add metadata in the form of singlet identity for each barcode. Rest of analysis adapted from: <a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" class="uri">https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html</a></h1>
-<pre class="r"><code>rownames(count_data_singlets1) &lt;- genes1$X2
+<pre class="r"><code>#Change labels to reflect strain/unstrain
+
+strainIndlabels1 &lt;- revalue(barcodes_singlets1$labels, 
+                            c(&quot;SNG-NA18856&quot;= &quot;NA18856_Unstrain&quot;, 
+                              &quot;SNG-NA18855&quot; = &quot;NA18855_Strain&quot;, 
+                              &quot;SNG-NA19160&quot; = &quot;NA19160_Unstrain&quot;))
+
+strainIndlabels2 &lt;- revalue(barcodes_singlets2$labels, 
+                            c(&quot;SNG-NA18855&quot; = &quot;NA18855_Unstrain&quot;, 
+                              &quot;SNG-NA19160&quot; = &quot;NA19160_Strain&quot;))
+
+
+rownames(count_data_singlets1) &lt;- genes1$X2
 colnames(count_data_singlets1) &lt;- barcodes_singlets1$X1
 
 ANT1_seurat &lt;- CreateSeuratObject(counts = count_data_singlets1, project = &quot;ANT1&quot;) %&gt;% 
-  AddMetaData(barcodes_singlets1$labels, col.name = &quot;labels&quot;)</code></pre>
+  AddMetaData(strainIndlabels1, col.name = &quot;labels&quot;)</code></pre>
 <pre><code>Warning: Non-unique features (rownames) present in the input matrix, making
 unique</code></pre>
 <pre class="r"><code>rownames(count_data_singlets2) &lt;- genes2$X2
 colnames(count_data_singlets2) &lt;- barcodes_singlets2$X1
 
 ANT2_seurat &lt;- CreateSeuratObject(counts = count_data_singlets2, project = &quot;ANT2&quot;) %&gt;% 
-  AddMetaData(barcodes_singlets2$labels, col.name = &quot;labels&quot;)</code></pre>
+  AddMetaData(strainIndlabels2, col.name = &quot;labels&quot;)</code></pre>
 <pre><code>Warning: Non-unique features (rownames) present in the input matrix, making
 unique</code></pre>
-<p>Now we can perform some QC on cells in Seurat</p>
-<pre class="r"><code>ANT1_seurat[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(ANT1_seurat, pattern = &quot;^MT-&quot;)
-ANT2_seurat[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(ANT2_seurat, pattern = &quot;^MT-&quot;)
+<pre class="r"><code># Merge into one dataset (https://satijalab.org/seurat/v3.0/merge_vignette.html)
 
-# Visualize QC metrics as a violin plot
-VlnPlot(ANT1_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
+ANT1.2 &lt;- merge(x = ANT1_seurat,
+                   y = ANT2_seurat,
+                   add.cell.ids = c(&quot;ANT1&quot;, &quot;ANT2&quot;),
+                   merge.data = F,
+                   project = &quot;OAStrain&quot;)</code></pre>
+<p>Now we can perform some QC on cells in Seurat</p>
+<pre class="r"><code>ANT1.2[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(ANT1.2, pattern = &quot;^MT-&quot;)
+
+#visualize QC metrics as violin plot
+VlnPlot(ANT1.2, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-1">
@@ -950,7 +1019,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
+<pre class="r"><code>VlnPlot(ANT1.2, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-2">
@@ -1000,7 +1069,12 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
+<pre class="r"><code># FeatureScatter is typically used to visualize feature-feature relationships, but can be used
+# for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
+
+plot1 &lt;- FeatureScatter(ANT1.2, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)
+plot2 &lt;- FeatureScatter(ANT1.2, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
+CombinePlots(plots = list(plot1, plot2))</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-3">
@@ -1061,7 +1135,16 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
+<pre class="r"><code>#Filter barcodes based on nFeatures and %MT 
+ANT1.2 &lt;- subset(ANT1.2, subset = nFeature_RNA &gt; 2000 &amp; percent.mt &lt; 10)
+table(ANT1.2$labels)</code></pre>
+<pre><code>
+  NA18855_Strain NA18855_Unstrain NA18856_Unstrain   NA19160_Strain 
+             376              996              428              426 
+NA19160_Unstrain 
+             253 </code></pre>
+<pre class="r"><code>#Look at QC metrics after filtering
+VlnPlot(ANT1.2, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-4">
@@ -1122,450 +1205,14 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code># break down nFeature_RNA histograms by individual
-hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == &quot;SNG-NA19160&quot;], main = &quot;ANT1 SNG-NA19160 nFeatures&quot;, xlab = &quot;nFeatures&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-5">
-Past versions of QC-5.png
-</button>
-</p>
-<div id="fig-QC-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-5.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/QC-5.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == &quot;SNG-NA18855&quot;], main = &quot;ANT1 SNG-NA18855 nFeatures&quot;, xlab = &quot;nFeatures&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-6">
-Past versions of QC-6.png
-</button>
-</p>
-<div id="fig-QC-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-6.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/QC-6.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>hist(ANT1_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == &quot;SNG-NA18856&quot;], main = &quot;ANT1 SNG-NA18856 nFeatures&quot;, xlab = &quot;nFeatures&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-7">
-Past versions of QC-7.png
-</button>
-</p>
-<div id="fig-QC-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-7.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/QC-7.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == &quot;SNG-NA19160&quot;], main = &quot;ANT2 SNG-NA19160 nFeatures&quot;, xlab = &quot;nFeatures&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-8">
-Past versions of QC-8.png
-</button>
-</p>
-<div id="fig-QC-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-8.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/QC-8.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>hist(ANT2_seurat$nFeature_RNA[unname(ANT1_seurat$labels) == &quot;SNG-NA18855&quot;], main = &quot;ANT2 SNG-NA18855 nFeatures&quot;, xlab = &quot;nFeatures&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-9">
-Past versions of QC-9.png
-</button>
-</p>
-<div id="fig-QC-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-9.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/QC-9.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># FeatureScatter is typically used to visualize feature-feature relationships, but can be used
-# for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
-
-plot1 &lt;- FeatureScatter(ANT1_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)
-plot2 &lt;- FeatureScatter(ANT1_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
-CombinePlots(plots = list(plot1, plot2))</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-10">
-Past versions of QC-10.png
-</button>
-</p>
-<div id="fig-QC-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-10.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>plot1 &lt;- FeatureScatter(ANT2_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)
-plot2 &lt;- FeatureScatter(ANT2_seurat, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
-CombinePlots(plots = list(plot1, plot2))</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-11.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-11">
-Past versions of QC-11.png
-</button>
-</p>
-<div id="fig-QC-11" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/QC-11.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#Filter barcodes based on nFeatures and %MT 
-ANT1_seurat &lt;- subset(ANT1_seurat, subset = nFeature_RNA &gt; 2000 &amp; percent.mt &lt; 10)
-table(ANT1_seurat$labels)</code></pre>
-<pre><code>
-DBL-NA18855-NA18856-0.500 DBL-NA18856-NA18855-0.500 DBL-NA19160-NA18855-0.500 
-                        0                         0                         0 
-DBL-NA19160-NA18856-0.500               SNG-NA18855               SNG-NA18856 
-                        0                       376                       428 
-              SNG-NA19160 
-                      253 </code></pre>
-<pre class="r"><code>ANT2_seurat &lt;- subset(ANT2_seurat, subset = nFeature_RNA &gt; 2000 &amp; nFeature_RNA &amp; percent.mt &lt; 10)
-table(ANT2_seurat$labels)</code></pre>
-<pre><code>
-DBL-NA18855-NA18856-0.500 DBL-NA18855-NA19160-0.500 DBL-NA18856-NA18855-0.500 
-                        0                         0                         0 
-DBL-NA19160-NA18855-0.500 DBL-NA19160-NA18856-0.500               SNG-NA18855 
-                        0                         0                       996 
-              SNG-NA19160 
-                      426 </code></pre>
-<pre class="r"><code>#Look at QC metrics after filtering
-VlnPlot(ANT1_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-12.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-12">
-Past versions of QC-12.png
-</button>
-</p>
-<div id="fig-QC-12" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f42cb0636389daa9809f52f7551bf6bf12d97e56/docs/figure/ANT1_ANT2_.Rmd/QC-12.png" target="_blank">f42cb06</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/QC-13.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-13">
-Past versions of QC-13.png
-</button>
-</p>
-<div id="fig-QC-13" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f42cb0636389daa9809f52f7551bf6bf12d97e56/docs/figure/ANT1_ANT2_.Rmd/QC-13.png" target="_blank">f42cb06</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="normalizing-data" class="section level1">
 <h1>Normalizing Data</h1>
-<pre class="r"><code>ANT1_seurat &lt;- NormalizeData(ANT1_seurat, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)
-ANT2_seurat &lt;- NormalizeData(ANT2_seurat, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
+<pre class="r"><code>ANT1.2 &lt;- NormalizeData(ANT1.2, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
 </div>
 <div id="feature-selection" class="section level1">
 <h1>Feature selection</h1>
-<pre class="r"><code>ANT1_seurat &lt;- FindVariableFeatures(ANT1_seurat, selection.method = &quot;vst&quot;, nfeatures = 2000)
-ANT2_seurat &lt;- FindVariableFeatures(ANT2_seurat, selection.method = &quot;vst&quot;, nfeatures = 2000)
+<pre class="r"><code>ANT1.2 &lt;- FindVariableFeatures(ANT1.2, selection.method = &quot;vst&quot;, nfeatures = 2000)
 
 
 plot_variable_features &lt;- function(seurat.obj){
@@ -1574,15 +1221,13 @@ plot_variable_features &lt;- function(seurat.obj){
   
   # plot variable features with and without labels
   plot1 &lt;- VariableFeaturePlot(seurat.obj) + 
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
        theme(legend.position=&quot;bottom&quot;)
   plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE) +
-    ggtitle(paste0(unname(seurat.obj$orig.ident[1]))) +
        theme(legend.position=&quot;bottom&quot;)
   return(CombinePlots(plots = list(plot1, plot2)))
 }
 
-plot_variable_features(ANT1_seurat)</code></pre>
+plot_variable_features(ANT1.2)</code></pre>
 <pre><code>Warning: Using `as.character()` on a quosure is deprecated as of rlang 0.3.0.
 Please use `as_label()` or `as_name()` instead.
 This warning is displayed once per session.</code></pre>
@@ -1612,6 +1257,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/feature selection-1.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f42cb0636389daa9809f52f7551bf6bf12d97e56/docs/figure/ANT1_ANT2_.Rmd/feature selection-1.png" target="_blank">f42cb06</a>
@@ -1660,82 +1316,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_variable_features(ANT2_seurat)</code></pre>
-<pre><code>When using repel, set xnudge and ynudge to 0 for optimal results</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis
-
-Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/feature%20selection-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-selection-2">
-Past versions of “feature selection-2.png”
-</button>
-</p>
-<div id="fig-no-spaces-feature-selection-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f42cb0636389daa9809f52f7551bf6bf12d97e56/docs/figure/ANT1_ANT2_.Rmd/feature selection-2.png" target="_blank">f42cb06</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/feature selection-2.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/feature selection-2.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e2ea66286c069d19bfc7e7c2bd11bd31015f5c49/docs/figure/ANT1_ANT2_.Rmd/feature selection-2.png" target="_blank">e2ea662</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="scaling-data" class="section level1">
 <h1>Scaling Data</h1>
@@ -1744,105 +1324,67 @@ Anthony Hung
   return(ScaleData(seurat.obj, features = all.genes))
 }
 
-ANT1_seurat &lt;- scale_data(ANT1_seurat)</code></pre>
-<pre><code>Centering and scaling data matrix</code></pre>
-<pre class="r"><code>ANT2_seurat &lt;- scale_data(ANT2_seurat)</code></pre>
+ANT1.2 &lt;- scale_data(ANT1.2)</code></pre>
 <pre><code>Centering and scaling data matrix</code></pre>
 </div>
 <div id="dimensionality-reduction" class="section level1">
 <h1>Dimensionality Reduction</h1>
 <p>Using the highly variable features selected above, perform PCA</p>
 <pre class="r"><code>nPC &lt;- 100
-ANT1_seurat &lt;- RunPCA(ANT1_seurat, features = VariableFeatures(object = ANT1_seurat), npcs = nPC)</code></pre>
+ANT1.2 &lt;- RunPCA(ANT1.2, features = VariableFeatures(object = ANT1.2), npcs = nPC)</code></pre>
 <pre><code>PC_ 1 
-Positive:  FKBP5, PRLR, LINC02388, CRISPLD2, FOXO1, OTULINL, SAA1, SPON2, PDPN, AC020637.1 
-       CDKN1C, DPP7, IFITM3, TSPO, PLIN2, DCN, ZBTB16, IQGAP2, GGT5, PNMT 
-       ABI3BP, FMO5, IRS2, LINC01088, CA8, ADAMTS2, MMP23B, WASF3, CLIC6, FAM213A 
-Negative:  TIMP3, INHBA, LZTS1, TPM1, CCND2, RAI14, PDLIM3, NT5E, CDKN2B, RDH10 
-       MICAL2, C12orf75, AFAP1, STK17B, SOX4, CPE, XRCC4, LINC01239, KCTD16, MANCR 
-       TCAF1, MAP3K7CL, VIM, BBOX1-AS1, PAG1, DPF3, AC112721.2, ADAM12, MAML3, COL6A3 
+Positive:  SPON2, FKBP5, PRLR, LINC02388, SAA1, TSPO, DPP7, OTULINL, CDKN1C, PNMT 
+       AC020637.1, IFITM3, GGT5, ADAMTS2, LINC01088, TMEM88, FMO5, IQGAP2, ABI3BP, SMOC2 
+       DCN, IRS2, CA8, ZBTB16, MMP23B, PLIN2, APOD, C16orf74, NUPR1, MME 
+Negative:  TIMP3, INHBA, TPM1, VIM, LZTS1, CCND2, COL6A3, KCTD16, BBOX1-AS1, C12orf75 
+       LINC01239, PDLIM3, MAP3K7CL, XRCC4, SOX4, NT5E, CPE, RAI14, RDH10, SYN3 
+       STK17B, WNT5B, MAML3, CDKN2B, DPF3, CTGF, LGALS1, TUBA1A, THBS1, AC112721.2 
 PC_ 2 
-Positive:  FTH1, ZFAS1, RPS4X, VIM, SH3BGRL3, TXN, LGALS1, TUBA1B, UCHL1, SNHG8 
-       HSPA5, B2M, CD9, KRT8, YWHAH, CAV1, TRIB3, NQO1, PHLDA2, C9orf16 
-       LGALS3, PHGDH, TIMP1, PSAT1, MT1X, MTHFD2, S100A10, TPM2, GSTO1, DDIT3 
-Negative:  PDZRN3, MAGI1, ATRNL1, FAM155A, RERE, SMYD3, GREB1L, MLLT3, ANKRD6, WDPCP 
-       KIF26B, FRS2, RORA, ALCAM, AC079380.1, UACA, CTNND2, LDLRAD4, SORBS2, NOX4 
-       SOX6, DENND1B, GRIP1, DGKI, TMTC2, CENPP, NBEA, PBX1, GLCCI1, PARD3B 
+Positive:  CHCHD2, MDK, SLC35F1, MFAP4, COL15A1, OGN, C5orf17, RSPO2, SPON1, PLAC9 
+       SLC40A1, BMP6, RIMS2, ACTA2, CEMIP, PRICKLE1, COL6A3, ADAMTS19, DKK2, SERPINF1 
+       HLA-B, MEST, SBF2-AS1, AC011287.1, ANK3, HPSE2, RBP1, MYOCD, FIBIN, MXRA5 
+Negative:  RPS4Y1, EIF1AY, SLC3A2, PTGR1, IGFL3, SERPINE1, USP9Y, UTY, LAYN, GSTO1 
+       GREM1, MT1E, FYN, SORBS2, EIF1B, MAGEH1, SQSTM1, SLITRK4, DDIT3, FAM129A 
+       SPON2, FTH1, AUTS2, KCNG1, TSPO, MANCR, MAP3K7CL, F2R, SEL1L3, FAP 
 PC_ 3 
-Positive:  RPS4Y1, FAM129A, PTGR1, SLC3A2, MT1E, UTY, SERPINE1, SLC22A15, DDIT3, ANKRD28 
-       EZR, TRIB3, COBLL1, AUTS2, PTPRM, KCNG1, SEL1L3, FAP, ANK2, MGST1 
-       SLC7A11, IRS2, AL357507.1, SORBS2, GPR1, NEK7, TTTY14, PKP2, GDF15, SQSTM1 
-Negative:  CHCHD2, SLC35F1, MDK, AC105402.3, MFAP4, MEST, PITX1, RPS4X, C5orf17, B2M 
-       HLA-A, PLAC9, COL15A1, NREP, SPON1, OGN, SLC40A1, NETO2, LURAP1L, MXRA5 
-       GNG11, BMP6, ANKH, KIF26B, HSD17B2, CEMIP, FIBIN, METTL7A, ACTA2, KCTD12 
+Positive:  FTH1, LGALS1, ZFAS1, VIM, TIMP1, TXN, IFITM3, TPM2, SH3BGRL3, TUBA1B 
+       MYL12A, TUBA1C, CD9, EIF1B, TAGLN, UCHL1, RPL22L1, HSPA5, EIF5, MGST1 
+       HLA-B, LGALS3, TRIB3, LUM, KRT8, NDUFA12, PTGER2, COTL1, ANXA1, TSC22D3 
+Negative:  ATRNL1, CTNND2, RORA, NOX4, SLIT3, AC079380.1, SORBS2, DGKI, WDPCP, AUTS2 
+       COBLL1, UACA, KCTD16, PLXDC2, TMTC2, AC108062.1, BBOX1-AS1, PRKG1, FHOD3, KCNQ5 
+       FBN2, PCAT1, PCDH7, DENND1B, DYNC1I1, AL390957.1, NKAIN3, HS6ST2, SAMD4A, PDZRN4 
 PC_ 4 
-Positive:  MSC-AS1, PLEKHA5, MAN1A1, ABCC4, RUNX1, EPB41L2, MCC, PRKCA, CBLB, WDR27 
-       TSHZ1, FOXP1, GPC6, SERINC5, LIMS1, FAT4, TMTC1, ANGPT1, KLHL4, MBNL1 
-       CSMD2, PTPRK, NEAT1, TGFBI, PRKD1, SLC7A11, DLEU2, HECTD2, PCED1B, PDE3B 
-Negative:  CLTB, TMEM88, SMOC2, GLRX, PROCR, S100A10, SELENOP, PLA2G16, PDZRN4, MEST 
-       TSPAN15, PLAC9, AQP1, CNTN1, C12orf75, COL4A4, IGFBP7, PDLIM4, LGMN, ODAPH 
-       GPC3, NSG1, SRPX, SLIT3, IGFBP2, GSTM3, OLFML3, WNT4, LY6E, PALMD 
+Positive:  S100A10, PLAC9, MEST, CLTB, ODAPH, PDZRN4, SMOC2, C12orf75, IGFBP7, TMEM88 
+       GLRX, SELENOP, PROCR, PLA2G16, AQP1, TSPAN15, MDK, COL4A4, RGS4, PITX1 
+       OLFML3, TMEM176B, TMEM176A, TAGLN, LEFTY2, TNNC1, ADAM28, SH3BGRL3, CNTN1, TNNT2 
+Negative:  ABCC4, ANKRD28, TGFBI, MGST1, PRKD1, EBF1, LTBP1, NLGN4Y, WDR27, ZNF804A 
+       TMTC1, NR2F1, DDR2, ANGPT1, THSD7A, DNM3OS, TSHZ1, EPB41L2, FAM19A2, LIMS1 
+       GRIK2, MSC-AS1, PRKCA, HECTD2, SORBS1, AP001347.1, PAG1, TLL1, SOX6, HMGA2 
 PC_ 5 
-Positive:  NR2F1, TIMP1, IL6ST, MYL10, LTBP1, TGM2, MT2A, LTBP2, HOPX, EGFLAM 
-       FBLN2, PDGFRA, TIMP3, NR2F1-AS1, LOXL3, SLC22A3, FGF1, GUCY1A1, MME, COL6A1 
-       GDF6, TGFBR1, PRKCE, RSPO2, PMP22, AC112721.2, SLC20A1, GSTO1, UBASH3B, FLT1 
-Negative:  NRG1, DYNC1I1, ANOS1, DPP10, NKAIN4, PDZRN4, PLXDC1, MFAP5, ODAPH, TENM2 
-       PROCR, HTRA1, HS6ST2, CADM1, AL356056.1, PCAT1, SDC1, SMOC2, LANCL2, ANGPTL7 
-       FRAS1, HMCN1, RASGRF2, ROR1, LEFTY2, GATM, LAMC2, FRMD4A, DNAJC15, ENAH </code></pre>
-<pre class="r"><code>ANT2_seurat &lt;- RunPCA(ANT2_seurat, features = VariableFeatures(object = ANT2_seurat), npcs = nPC)</code></pre>
-<pre><code>PC_ 1 
-Positive:  CHCHD2, TPM1, ITGA11, COL6A3, BBOX1-AS1, CADM1, PLS3, TIMP3, DKK2, KCTD16 
-       HMCN1, INHBA, LINC01239, ATXN1, SLC35F1, NREP, ADAM12, VIM, THBS1, CCND2 
-       XRCC4, GLS, ANOS1, LMO7, MXRA5, CKAP4, LZTS1, GLIPR1, ACTA2, BMP6 
-Negative:  SPON2, TSPO, RPS4Y1, DPP7, FKBP5, PRLR, SMOC2, PDPN, TMEM88, LINC02388 
-       SAA1, FTH1, HSPB1, SELENOP, PNMT, ADAMTS2, CDKN1C, AUTS2, NUPR1, FDPS 
-       GGT5, LINC01088, APOD, ABI3BP, OTULINL, SLC7A8, PDZRN4, APOE, IRS2, AC020637.1 
-PC_ 2 
-Positive:  SMYD3, PLXDC2, LDLRAD4, PTPRM, GLIS3, SOX5, ARHGAP24, EXT1, AC016831.7, RORA 
-       GLS, TRIO, MAML2, AEBP2, COBLL1, GPC6, PRICKLE2, DENND1B, ZNF804A, MLLT3 
-       DST, RUNX1, MIR181A1HG, NEAT1, FAM19A2, FOXO3, MAGI1, ST6GALNAC5, AUTS2, PTCHD4 
-Negative:  RPS4X, FTL, B2M, ACTB, TMSB4X, LGALS1, PRDX4, TAGLN, TPM2, MDK 
-       FTH1, TIMP1, IFITM3, S100A10, VIM, TXN, BEX3, SH3BGRL3, ACTA2, CHCHD2 
-       LUM, RPL22L1, HSPB1, SERPINE2, C12orf75, H2AFZ, MFAP4, ZFAS1, SLC35F1, GLRX 
-PC_ 3 
-Positive:  SOX5, COL6A1, MFAP4, ITGA1, MYOCD, PLAGL1, RSPO2, COL6A2, EBF1, VCAN 
-       ZEB1, TGFBI, SERPINF1, KIF26B, COL15A1, SPON1, DCN, LSAMP, B2M, LTBP1 
-       ADAMTS19, PDE3B, MME, AMMECR1, HGF, CDH11, CLMP, NAV2, HLA-B, CHSY3 
-Negative:  ODAPH, ANKRD1, SMOC2, DYNC1I1, MFAP5, IGFBP7, CDKN2A, IGFBP2, PDZRN4, MAP3K7CL 
-       TUBA1A, KRT18, PRSS23, S100A10, SOX4, SH3BGRL3, NRG1, SLIT3, NTM, GADD45A 
-       PROCR, SELENOP, VIM, INHBA, TSPO, GPC4, LINC01013, ENAH, AC097478.1, SPINT1 
-PC_ 4 
-Positive:  FN1, MGST1, ACTG2, TGFBI, NR2F1, ANKRD28, RAMP1, MMP2, THBS2, EGFL6 
-       GYPC, HIPK2, FERMT2, FTH1, ABCC4, CDH6, COL6A2, RUNX1, KCND2, ENAH 
-       PLIN2, COMP, THBS1, BTG1, F2RL1, ANGPTL4, PDGFRA, SNCAIP, S100A4, C1R 
-Negative:  PLAC9, SLC4A8, PDZRN3, FLT1, MEST, OGFRL1, SLC40A1, LURAP1L, MON2, OGN 
-       GREB1L, FAM155A, AQP1, CTNND2, RSPO2, EPAS1, SLIT3, PDZRN4, ATRNL1, BMPER 
-       MDK, TMTC2, MAGI1, TSPAN15, RIMS2, CHSY3, ANKH, ODAPH, AL035413.1, SBF2-AS1 
-PC_ 5 
-Positive:  HTRA1, ANOS1, ZFPM2, AEBP1, MCC, ADAMTS16, HS6ST2, FRMD4A, CADM1, NCAM1 
-       PLXDC1, NREP, DKK2, PCAT1, SERINC5, CRYBG1, GATM, NRG1, JAKMIP2-AS1, WDR27 
-       NKD1, ICE1, PLEKHA5, SHROOM3, HMCN1, MMP2, TSHZ1, KIAA1217, AL590705.1, ANK3 
-Negative:  MT2A, KRT18, TIMP3, SYN3, TGFBR1, GSTO1, SERPINE1, TIMP1, DKK1, AC112721.2 
-       PRKCE, IL6ST, AL390957.1, RNF152, PHLDA2, XYLT1, SLC22A3, EGFR, TGM2, NR2F1-AS1 
-       AC097478.1, KRT8, UACA, MYO10, DNMBP, ITGA2, ANGPTL4, MICAL2, GLRX, CTPS1 </code></pre>
+Positive:  IL6ST, HOPX, TIMP1, RSPO2, SPON1, COL15A1, SLC22A3, GUCY1A1, MME, TIMP3 
+       MYL10, EGFLAM, LTBP1, AQP1, GDF6, GAS7, NR2F1, CPE, TGM2, FBLN2 
+       MFAP4, BAMBI, HGF, NKAIN3, LTBP2, XRCC4, TNNT2, ENPP1, AC112721.2, C8orf37-AS1 
+Negative:  NRG1, ANOS1, DYNC1I1, ENAH, CRYBG1, CDH6, NCAM1, DPP10, TENM2, HMCN1 
+       PCAT1, ADAMTS16, LINC01429, SGCD, MFAP5, LINC00511, AEBP1, FRMD4A, WNT5B, AC044810.3 
+       RASGRF2, GPR1, NKAIN4, AC013652.1, PLXDC1, GATM, CASC15, PRKCA, ROR1, PLCB1 </code></pre>
 <pre class="r"><code># Examine and visualize PCA results a few different ways
-print(ANT2_seurat[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
+print(ANT1.2[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
 <pre><code>PC_ 1 
-Positive:  CHCHD2, TPM1, ITGA11, COL6A3, BBOX1-AS1 
-Negative:  SPON2, TSPO, RPS4Y1, DPP7, FKBP5 
+Positive:  SPON2, FKBP5, PRLR, LINC02388, SAA1 
+Negative:  TIMP3, INHBA, TPM1, VIM, LZTS1 
 PC_ 2 
-Positive:  SMYD3, PLXDC2, LDLRAD4, PTPRM, GLIS3 
-Negative:  RPS4X, FTL, B2M, ACTB, TMSB4X 
+Positive:  CHCHD2, MDK, SLC35F1, MFAP4, COL15A1 
+Negative:  RPS4Y1, EIF1AY, SLC3A2, PTGR1, IGFL3 
 PC_ 3 
-Positive:  SOX5, COL6A1, MFAP4, ITGA1, MYOCD 
-Negative:  ODAPH, ANKRD1, SMOC2, DYNC1I1, MFAP5 
+Positive:  FTH1, LGALS1, ZFAS1, VIM, TIMP1 
+Negative:  ATRNL1, CTNND2, RORA, NOX4, SLIT3 
 PC_ 4 
-Positive:  FN1, MGST1, ACTG2, TGFBI, NR2F1 
-Negative:  PLAC9, SLC4A8, PDZRN3, FLT1, MEST 
+Positive:  S100A10, PLAC9, MEST, CLTB, ODAPH 
+Negative:  ABCC4, ANKRD28, TGFBI, MGST1, PRKD1 
 PC_ 5 
-Positive:  HTRA1, ANOS1, ZFPM2, AEBP1, MCC 
-Negative:  MT2A, KRT18, TIMP3, SYN3, TGFBR1 </code></pre>
-<pre class="r"><code>VizDimLoadings(ANT1_seurat, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
+Positive:  IL6ST, HOPX, TIMP1, RSPO2, SPON1 
+Negative:  NRG1, ANOS1, DYNC1I1, ENAH, CRYBG1 </code></pre>
+<pre class="r"><code>VizDimLoadings(ANT1.2, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-1">
@@ -1866,6 +1408,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/PCA-1.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-1.png" target="_blank">1bb7658</a>
@@ -1903,7 +1456,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>DimPlot(ANT1_seurat, reduction = &quot;pca&quot;, group.by = &quot;labels&quot;)</code></pre>
+<pre class="r"><code>DimPlot(ANT1.2, reduction = &quot;pca&quot;, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-2">
@@ -1927,6 +1480,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/PCA-2.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-2.png" target="_blank">1bb7658</a>
@@ -1965,16 +1529,17 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code># Get the total variance:
-pca &lt;- ANT1_seurat[[&quot;pca&quot;]]
-mat &lt;- Seurat::GetAssayData(ANT1_seurat, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
+pca &lt;- ANT1.2[[&quot;pca&quot;]]
+mat &lt;- Seurat::GetAssayData(ANT1.2, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
 total_variance &lt;- sum(matrixStats::rowVars(mat))
 
 
 eigValues &lt;- (pca@stdev)^2  ## EigenValues
 varExplained &lt;- eigValues / total_variance
 head(varExplained) #var explained by first 10 PCs</code></pre>
-<pre><code>[1] 0.005845620 0.003530397 0.002825599 0.002399179 0.001740796 0.001480976</code></pre>
-<pre class="r"><code>DimHeatmap(ANT1_seurat, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
+<pre><code>[1] 0.0039237241 0.0022851352 0.0018480431 0.0016285938 0.0012453623
+[6] 0.0009454364</code></pre>
+<pre class="r"><code>DimHeatmap(ANT1.2, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-3">
@@ -1998,6 +1563,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/PCA-3.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-3.png" target="_blank">1bb7658</a>
@@ -2035,7 +1611,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>ElbowPlot(ANT1_seurat, ndims = nPC) #42 PCs?</code></pre>
+<pre class="r"><code>ElbowPlot(ANT1.2, ndims = nPC) #50 PCs?</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PCA-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-4">
@@ -2059,6 +1635,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/PCA-4.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-4.png" target="_blank">1bb7658</a>
@@ -2107,326 +1694,54 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code># Examine and visualize PCA results a few different ways
-print(ANT2_seurat[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
-<pre><code>PC_ 1 
-Positive:  CHCHD2, TPM1, ITGA11, COL6A3, BBOX1-AS1 
-Negative:  SPON2, TSPO, RPS4Y1, DPP7, FKBP5 
-PC_ 2 
-Positive:  SMYD3, PLXDC2, LDLRAD4, PTPRM, GLIS3 
-Negative:  RPS4X, FTL, B2M, ACTB, TMSB4X 
-PC_ 3 
-Positive:  SOX5, COL6A1, MFAP4, ITGA1, MYOCD 
-Negative:  ODAPH, ANKRD1, SMOC2, DYNC1I1, MFAP5 
-PC_ 4 
-Positive:  FN1, MGST1, ACTG2, TGFBI, NR2F1 
-Negative:  PLAC9, SLC4A8, PDZRN3, FLT1, MEST 
-PC_ 5 
-Positive:  HTRA1, ANOS1, ZFPM2, AEBP1, MCC 
-Negative:  MT2A, KRT18, TIMP3, SYN3, TGFBR1 </code></pre>
-<pre class="r"><code>VizDimLoadings(ANT2_seurat, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-5">
-Past versions of PCA-5.png
-</button>
-</p>
-<div id="fig-PCA-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-5.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/PCA-5.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5e0aa130f083744c554c62a1b3831a100a6a73db/docs/figure/ANT1_ANT2_.Rmd/PCA-5.png" target="_blank">5e0aa13</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>DimPlot(ANT2_seurat, reduction = &quot;pca&quot;, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-6">
-Past versions of PCA-6.png
-</button>
-</p>
-<div id="fig-PCA-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-6.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/PCA-6.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5e0aa130f083744c554c62a1b3831a100a6a73db/docs/figure/ANT1_ANT2_.Rmd/PCA-6.png" target="_blank">5e0aa13</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># Get the total variance:
-pca &lt;- ANT2_seurat[[&quot;pca&quot;]]
-mat &lt;- Seurat::GetAssayData(ANT2_seurat, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
-total_variance &lt;- sum(matrixStats::rowVars(mat))
-
-
-eigValues &lt;- (pca@stdev)^2  ## EigenValues
-varExplained &lt;- eigValues / total_variance
-head(varExplained) #var explained by first 10 PCs</code></pre>
-<pre><code>[1] 0.0039794474 0.0020515917 0.0018598900 0.0016490998 0.0010406941
-[6] 0.0009254571</code></pre>
-<pre class="r"><code>DimHeatmap(ANT2_seurat, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-7">
-Past versions of PCA-7.png
-</button>
-</p>
-<div id="fig-PCA-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-7.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/PCA-7.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5e0aa130f083744c554c62a1b3831a100a6a73db/docs/figure/ANT1_ANT2_.Rmd/PCA-7.png" target="_blank">5e0aa13</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ElbowPlot(ANT2_seurat, ndims = nPC) #29 PCs?</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/PCA-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-8">
-Past versions of PCA-8.png
-</button>
-</p>
-<div id="fig-PCA-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/PCA-8.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/PCA-8.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5e0aa130f083744c554c62a1b3831a100a6a73db/docs/figure/ANT1_ANT2_.Rmd/PCA-8.png" target="_blank">5e0aa13</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="clustering" class="section level1">
 <h1>Clustering</h1>
-<pre class="r"><code>num_PCs &lt;- 42
+<pre class="r"><code>num_PCs &lt;- 50
 
-ANT1_seurat &lt;- FindNeighbors(ANT1_seurat, dims = 1:num_PCs)</code></pre>
+ANT1.2 &lt;- FindNeighbors(ANT1.2, dims = 1:num_PCs)</code></pre>
 <pre><code>Computing nearest neighbor graph</code></pre>
 <pre><code>Computing SNN</code></pre>
-<pre class="r"><code>ANT1_seurat &lt;- FindClusters(ANT1_seurat, resolution = 0.5)</code></pre>
+<pre class="r"><code>ANT1.2 &lt;- FindClusters(ANT1.2, resolution = 0.5)</code></pre>
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 
-Number of nodes: 1057
-Number of edges: 42666
+Number of nodes: 2479
+Number of edges: 108957
 
 Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.8331
-Number of communities: 5
+Maximum modularity in 10 random starts: 0.8170
+Number of communities: 8
 Elapsed time: 0 seconds</code></pre>
 <pre class="r"><code>#Run UMAP
-ANT1_seurat &lt;- RunUMAP(ANT1_seurat, dims = 1:num_PCs)</code></pre>
+ANT1.2 &lt;- RunUMAP(ANT1.2, dims = 1:num_PCs)</code></pre>
 <pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 This message will be shown once per session</code></pre>
-<pre><code>10:08:33 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>10:08:33 Read 1057 rows and found 42 numeric columns</code></pre>
-<pre><code>10:08:33 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>10:08:33 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>11:25:38 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>11:25:38 Read 2479 rows and found 50 numeric columns</code></pre>
+<pre><code>11:25:38 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>11:25:38 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>**************************************************|
-10:08:33 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpC0otE6/file2b6596d4cef
-10:08:33 Searching Annoy index using 1 thread, search_k = 3000
-10:08:33 Annoy recall = 100%
-10:08:34 Commencing smooth kNN distance calibration using 1 thread
-10:08:35 Initializing from normalized Laplacian + noise
-10:08:35 Commencing optimization for 500 epochs, with 41752 positive edges
-10:08:38 Optimization finished</code></pre>
-<pre class="r"><code>p1 &lt;- DimPlot(ANT1_seurat, reduction = &quot;umap&quot;)
-p2 &lt;- DimPlot(ANT1_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
-p3 &lt;- FeaturePlot(ANT1_seurat, features = &quot;COL10A1&quot;)
-p4 &lt;- FeaturePlot(ANT1_seurat, features = &quot;COL11A1&quot;)
-p5 &lt;- FeaturePlot(ANT1_seurat, features = &quot;SOX5&quot;)
-p6 &lt;- FeaturePlot(ANT1_seurat, features = &quot;SOX6&quot;)
-p7 &lt;- FeaturePlot(ANT1_seurat, features = &quot;SOX9&quot;)
-p8 &lt;- FeaturePlot(ANT1_seurat, features = &quot;MMP2&quot;)
-p9 &lt;- FeaturePlot(ANT1_seurat, features = &quot;MMP1&quot;)
-p10 &lt;- FeaturePlot(ANT1_seurat, features = &quot;MMP13&quot;)</code></pre>
-<pre><code>Warning in FeaturePlot(ANT1_seurat, features = &quot;MMP13&quot;): All cells have the same
+11:25:39 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//Rtmpt2x7sa/file67bae0c51
+11:25:39 Searching Annoy index using 1 thread, search_k = 3000
+11:25:40 Annoy recall = 100%
+11:25:40 Commencing smooth kNN distance calibration using 1 thread
+11:25:41 Initializing from normalized Laplacian + noise
+11:25:41 Commencing optimization for 500 epochs, with 101496 positive edges
+11:25:47 Optimization finished</code></pre>
+<pre class="r"><code>p1 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;)
+p2 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
+p3 &lt;- FeaturePlot(ANT1.2, features = &quot;COL10A1&quot;)
+p4 &lt;- FeaturePlot(ANT1.2, features = &quot;COL11A1&quot;)
+p5 &lt;- FeaturePlot(ANT1.2, features = &quot;SOX5&quot;)
+p6 &lt;- FeaturePlot(ANT1.2, features = &quot;SOX6&quot;)
+p7 &lt;- FeaturePlot(ANT1.2, features = &quot;SOX9&quot;)
+p8 &lt;- FeaturePlot(ANT1.2, features = &quot;MMP2&quot;)
+p9 &lt;- FeaturePlot(ANT1.2, features = &quot;MMP1&quot;)
+p10 &lt;- FeaturePlot(ANT1.2, features = &quot;MMP13&quot;)</code></pre>
+<pre><code>Warning in FeaturePlot(ANT1.2, features = &quot;MMP13&quot;): All cells have the same
 value (0) of MMP13.</code></pre>
 <pre class="r"><code>grid.arrange(p1, p2, nrow = 2)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -2452,6 +1767,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/clustering-1.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-1.png" target="_blank">1bb7658</a>
@@ -2526,6 +1852,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/clustering-2.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-2.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -2598,6 +1935,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/clustering-3.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-3.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -2633,219 +1981,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>saveRDS(ANT1_seurat, file = &quot;output/ANT1_seurat.rds&quot;)
-
-
-
-
-
-num_PCs &lt;- 29
-
-ANT2_seurat &lt;- FindNeighbors(ANT2_seurat, dims = 1:num_PCs)</code></pre>
-<pre><code>Computing nearest neighbor graph
-Computing SNN</code></pre>
-<pre class="r"><code>ANT2_seurat &lt;- FindClusters(ANT2_seurat, resolution = 0.5)</code></pre>
-<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
-
-Number of nodes: 1422
-Number of edges: 56934
-
-Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.7681
-Number of communities: 6
-Elapsed time: 0 seconds</code></pre>
-<pre class="r"><code>#Run UMAP
-ANT2_seurat &lt;- RunUMAP(ANT2_seurat, dims = 1:num_PCs)</code></pre>
-<pre><code>10:09:16 UMAP embedding parameters a = 0.9922 b = 1.112
-10:09:16 Read 1422 rows and found 29 numeric columns
-10:09:16 Using Annoy for neighbor search, n_neighbors = 30
-10:09:16 Building Annoy index with metric = cosine, n_trees = 50
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-10:09:17 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpC0otE6/file2b6566d5e3be
-10:09:17 Searching Annoy index using 1 thread, search_k = 3000
-10:09:17 Annoy recall = 100%
-10:09:18 Commencing smooth kNN distance calibration using 1 thread
-10:09:18 Initializing from normalized Laplacian + noise
-10:09:18 Commencing optimization for 500 epochs, with 54592 positive edges
-10:09:22 Optimization finished</code></pre>
-<pre class="r"><code>p1_ &lt;- DimPlot(ANT2_seurat, reduction = &quot;umap&quot;)
-p2_ &lt;- DimPlot(ANT2_seurat, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
-p3_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;COL10A1&quot;)
-p4_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;COL11A1&quot;)
-p5_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;SOX5&quot;)
-p6_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;SOX6&quot;)
-p7_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;SOX9&quot;)
-p8_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;MMP2&quot;)
-p9_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;MMP1&quot;)
-p10_ &lt;- FeaturePlot(ANT2_seurat, features = &quot;MMP13&quot;)</code></pre>
-<pre><code>Warning in FeaturePlot(ANT2_seurat, features = &quot;MMP13&quot;): All cells have the same
-value (0) of MMP13.</code></pre>
-<pre class="r"><code>grid.arrange(p1_, p2_, nrow = 2)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/clustering-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-4">
-Past versions of clustering-4.png
-</button>
-</p>
-<div id="fig-clustering-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-4.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-4.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5e0aa130f083744c554c62a1b3831a100a6a73db/docs/figure/ANT1_ANT2_.Rmd/clustering-4.png" target="_blank">5e0aa13</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-10
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>grid.arrange(p3_, p4_, p5_, p6_, p7_, nrow = 2)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/clustering-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-5">
-Past versions of clustering-5.png
-</button>
-</p>
-<div id="fig-clustering-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-5.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-5.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>grid.arrange(p8_, p9_, p10_, nrow = 2)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/clustering-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-6">
-Past versions of clustering-6.png
-</button>
-</p>
-<div id="fig-clustering-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/clustering-6.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/8cf5920aed71bff561ebc5fadb4ac0c17195dfba/docs/figure/ANT1_ANT2_.Rmd/clustering-6.png" target="_blank">8cf5920</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>saveRDS(ANT2_seurat, file = &quot;output/ANT2_seurat.rds&quot;)</code></pre>
+<pre class="r"><code>saveRDS(ANT1.2, file = &quot;output/ANT1.2.rds&quot;)</code></pre>
 <pre class="r"><code>#Chondrocyte markers
-VlnPlot(ANT1_seurat, features = c(&quot;COL2A1&quot;, &quot;ACAN&quot;), 
+VlnPlot(ANT1.2, features = c(&quot;COL2A1&quot;, &quot;ACAN&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2872,6 +2010,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-1.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-1.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -2885,7 +2034,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;COL10A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;, &quot;SOX9&quot;), 
+<pre class="r"><code>VlnPlot(ANT1.2, features = c(&quot;COL10A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;, &quot;SOX9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2912,6 +2061,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-2.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-2.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -2926,7 +2086,7 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code>#Strain markers
-VlnPlot(ANT1_seurat, features = c(&quot;MMP1&quot;, &quot;MMP13&quot;, &quot;IL1B&quot;, &quot;MMP3&quot;), 
+VlnPlot(ANT1.2, features = c(&quot;MMP1&quot;, &quot;MMP13&quot;, &quot;IL1B&quot;, &quot;MMP3&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of MMP13.</code></pre>
@@ -2957,6 +2117,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-3.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-3.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -2970,7 +2141,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;MMP2&quot;, &quot;COMP&quot;, &quot;TNF&quot;, &quot;IBSP&quot;, &quot;TIMP1&quot;,  &quot;MMP9&quot;), 
+<pre class="r"><code>VlnPlot(ANT1.2, features = c(&quot;MMP2&quot;, &quot;COMP&quot;, &quot;TNF&quot;, &quot;IBSP&quot;, &quot;TIMP1&quot;,  &quot;MMP9&quot;), 
     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2997,6 +2168,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-4.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-4.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -3011,7 +2193,7 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code>#MSC Flow markers
-VlnPlot(ANT1_seurat, features = c(&quot;ENG&quot;, &quot;THY1&quot;,  &quot;NT5E&quot;), 
+VlnPlot(ANT1.2, features = c(&quot;ENG&quot;, &quot;THY1&quot;,  &quot;NT5E&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -3038,6 +2220,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-5.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-5.png" target="_blank">1bb7658</a>
 </td>
 <td>
@@ -3051,7 +2244,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>VlnPlot(ANT1_seurat, features = c(&quot;PTPRC&quot;, &quot;CD34&quot;, &quot;CD14&quot;, &quot;ITGAM&quot;, &quot;CD79A&quot;, &quot;CD19&quot;), 
+<pre class="r"><code>VlnPlot(ANT1.2, features = c(&quot;PTPRC&quot;, &quot;CD34&quot;, &quot;CD14&quot;, &quot;ITGAM&quot;, &quot;CD79A&quot;, &quot;CD19&quot;), 
      pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
 <pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
 idents, : All cells have the same value of CD34.</code></pre>
@@ -3082,264 +2275,18 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c49f2ad55f994b0b28d6e9b1f27177ed3d69dd84/docs/figure/ANT1_ANT2_.Rmd/expression by individual-6.png" target="_blank">c49f2ad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-6.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#Chondrocyte markers
-VlnPlot(ANT2_seurat, features = c(&quot;COL2A1&quot;, &quot;ACAN&quot;), 
-    pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of ACAN.</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-7">
-Past versions of “expression by individual-7.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-7.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;COL10A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;, &quot;SOX9&quot;), 
-    pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-8">
-Past versions of “expression by individual-8.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-8.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#Strain markers
-VlnPlot(ANT2_seurat, features = c(&quot;MMP1&quot;, &quot;MMP13&quot;, &quot;IL1B&quot;, &quot;MMP3&quot;), 
-    pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of MMP13.</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of IL1B.</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of MMP3.</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-9">
-Past versions of “expression by individual-9.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-9.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;MMP2&quot;, &quot;COMP&quot;, &quot;TNF&quot;, &quot;IBSP&quot;, &quot;TIMP1&quot;,  &quot;MMP9&quot;), 
-    pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of IBSP.</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-10">
-Past versions of “expression by individual-10.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-10.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#MSC Flow markers
-VlnPlot(ANT2_seurat, features = c(&quot;ENG&quot;, &quot;THY1&quot;,  &quot;NT5E&quot;), 
-     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-11.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-11">
-Past versions of “expression by individual-11.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-11" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-11.png" target="_blank">1bb7658</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>VlnPlot(ANT2_seurat, features = c(&quot;PTPRC&quot;, &quot;CD34&quot;, &quot;CD14&quot;, &quot;ITGAM&quot;, &quot;CD79A&quot;, &quot;CD19&quot;), 
-     pt.size = 0.2, ncol = 3, group.by = &quot;labels&quot;)</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of CD34.</code></pre>
-<pre><code>Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of CD19.</code></pre>
-<p><img src="figure/ANT1_ANT2_.Rmd/expression%20by%20individual-12.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-expression-by-individual-12">
-Past versions of “expression by individual-12.png”
-</button>
-</p>
-<div id="fig-no-spaces-expression-by-individual-12" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/1bb7658309c6ee18f03cbc04bfd97c70b8b555dd/docs/figure/ANT1_ANT2_.Rmd/expression by individual-12.png" target="_blank">1bb7658</a>
 </td>
 <td>
 Anthony Hung
@@ -3375,56 +2322,56 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] gridExtra_2.3     Seurat_3.1.1      Matrix_1.2-18     forcats_0.4.0    
- [5] stringr_1.4.0     dplyr_0.8.3       purrr_0.3.3       readr_1.3.1      
- [9] tidyr_1.0.0       tibble_2.1.3      ggplot2_3.2.1     tidyverse_1.3.0  
-[13] data.table_1.12.6
+ [1] gridExtra_2.3     Seurat_3.1.1      Matrix_1.2-18     plyr_1.8.5       
+ [5] forcats_0.4.0     stringr_1.4.0     dplyr_0.8.3       purrr_0.3.3      
+ [9] readr_1.3.1       tidyr_1.0.0       tibble_2.1.3      ggplot2_3.2.1    
+[13] tidyverse_1.3.0   data.table_1.12.6
 
 loaded via a namespace (and not attached):
   [1] readxl_1.3.1        backports_1.1.5     workflowr_1.5.0    
-  [4] sn_1.5-4            plyr_1.8.5          igraph_1.2.4.2     
-  [7] lazyeval_0.2.2      splines_3.6.1       listenv_0.8.0      
- [10] TH.data_1.0-10      digest_0.6.23       htmltools_0.4.0    
- [13] gdata_2.18.0        fansi_0.4.0         magrittr_1.5       
- [16] cluster_2.1.0       ROCR_1.0-7          globals_0.12.5     
- [19] modelr_0.1.5        matrixStats_0.55.0  RcppParallel_4.4.4 
- [22] R.utils_2.9.2       sandwich_2.5-1      colorspace_1.4-1   
- [25] rvest_0.3.5         ggrepel_0.8.1       haven_2.2.0        
- [28] xfun_0.11           crayon_1.3.4        jsonlite_1.6       
- [31] zeallot_0.1.0       survival_3.1-8      zoo_1.8-6          
- [34] ape_5.3             glue_1.3.1          gtable_0.3.0       
- [37] leiden_0.3.1        future.apply_1.3.0  BiocGenerics_0.30.0
- [40] scales_1.1.0        mvtnorm_1.0-11      DBI_1.0.0          
- [43] bibtex_0.4.2        Rcpp_1.0.3          metap_1.2          
- [46] plotrix_3.7-7       viridisLite_0.3.0   reticulate_1.13    
- [49] rsvd_1.0.2          SDMTools_1.1-221.2  tsne_0.1-3         
- [52] stats4_3.6.1        htmlwidgets_1.5.1   httr_1.4.1         
- [55] gplots_3.0.1.1      RColorBrewer_1.1-2  TFisher_0.2.0      
- [58] ica_1.0-2           farver_2.0.1        pkgconfig_2.0.3    
- [61] R.methodsS3_1.7.1   uwot_0.1.5          dbplyr_1.4.2       
- [64] labeling_0.3        tidyselect_0.2.5    rlang_0.4.2        
- [67] reshape2_1.4.3      later_1.0.0         munsell_0.5.0      
- [70] cellranger_1.1.0    tools_3.6.1         cli_2.0.0          
- [73] generics_0.0.2      broom_0.5.2         ggridges_0.5.1     
- [76] evaluate_0.14       yaml_2.2.0          npsurv_0.4-0       
- [79] knitr_1.26          fs_1.3.1            fitdistrplus_1.0-14
- [82] caTools_1.17.1.3    RANN_2.6.1          pbapply_1.4-2      
- [85] future_1.15.1       nlme_3.1-143        whisker_0.4        
- [88] R.oo_1.23.0         xml2_1.2.2          compiler_3.6.1     
- [91] rstudioapi_0.10     plotly_4.9.1        png_0.1-7          
- [94] lsei_1.2-0          reprex_0.3.0        stringi_1.4.3      
- [97] RSpectra_0.16-0     lattice_0.20-38     multtest_2.40.0    
-[100] vctrs_0.2.0         mutoss_0.1-12       pillar_1.4.2       
-[103] lifecycle_0.1.0     Rdpack_0.11-0       lmtest_0.9-37      
-[106] RcppAnnoy_0.0.14    cowplot_1.0.0       bitops_1.0-6       
-[109] irlba_2.3.3         gbRd_0.4-11         httpuv_1.5.2       
-[112] R6_2.4.1            promises_1.1.0      KernSmooth_2.23-16 
-[115] codetools_0.2-16    MASS_7.3-51.4       gtools_3.8.1       
-[118] assertthat_0.2.1    rprojroot_1.3-2     withr_2.1.2        
-[121] sctransform_0.2.0   mnormt_1.5-5        multcomp_1.4-11    
-[124] parallel_3.6.1      hms_0.5.2           grid_3.6.1         
-[127] rmarkdown_1.18      Rtsne_0.15          git2r_0.26.1       
-[130] numDeriv_2016.8-1.1 Biobase_2.44.0      lubridate_1.7.4    </code></pre>
+  [4] sn_1.5-4            igraph_1.2.4.2      lazyeval_0.2.2     
+  [7] splines_3.6.1       listenv_0.8.0       TH.data_1.0-10     
+ [10] digest_0.6.23       htmltools_0.4.0     gdata_2.18.0       
+ [13] fansi_0.4.0         magrittr_1.5        cluster_2.1.0      
+ [16] ROCR_1.0-7          globals_0.12.5      modelr_0.1.5       
+ [19] matrixStats_0.55.0  RcppParallel_4.4.4  R.utils_2.9.2      
+ [22] sandwich_2.5-1      colorspace_1.4-1    rvest_0.3.5        
+ [25] ggrepel_0.8.1       haven_2.2.0         xfun_0.11          
+ [28] crayon_1.3.4        jsonlite_1.6        zeallot_0.1.0      
+ [31] survival_3.1-8      zoo_1.8-6           ape_5.3            
+ [34] glue_1.3.1          gtable_0.3.0        leiden_0.3.1       
+ [37] future.apply_1.3.0  BiocGenerics_0.30.0 scales_1.1.0       
+ [40] mvtnorm_1.0-11      DBI_1.0.0           bibtex_0.4.2       
+ [43] Rcpp_1.0.3          metap_1.2           plotrix_3.7-7      
+ [46] viridisLite_0.3.0   reticulate_1.13     rsvd_1.0.2         
+ [49] SDMTools_1.1-221.2  tsne_0.1-3          stats4_3.6.1       
+ [52] htmlwidgets_1.5.1   httr_1.4.1          gplots_3.0.1.1     
+ [55] RColorBrewer_1.1-2  TFisher_0.2.0       ica_1.0-2          
+ [58] farver_2.0.1        pkgconfig_2.0.3     R.methodsS3_1.7.1  
+ [61] uwot_0.1.5          dbplyr_1.4.2        labeling_0.3       
+ [64] tidyselect_0.2.5    rlang_0.4.2         reshape2_1.4.3     
+ [67] later_1.0.0         munsell_0.5.0       cellranger_1.1.0   
+ [70] tools_3.6.1         cli_2.0.0           generics_0.0.2     
+ [73] broom_0.5.2         ggridges_0.5.1      evaluate_0.14      
+ [76] yaml_2.2.0          npsurv_0.4-0        knitr_1.26         
+ [79] fs_1.3.1            fitdistrplus_1.0-14 caTools_1.17.1.3   
+ [82] RANN_2.6.1          pbapply_1.4-2       future_1.15.1      
+ [85] nlme_3.1-143        whisker_0.4         R.oo_1.23.0        
+ [88] xml2_1.2.2          compiler_3.6.1      rstudioapi_0.10    
+ [91] plotly_4.9.1        png_0.1-7           lsei_1.2-0         
+ [94] reprex_0.3.0        stringi_1.4.3       RSpectra_0.16-0    
+ [97] lattice_0.20-38     multtest_2.40.0     vctrs_0.2.0        
+[100] mutoss_0.1-12       pillar_1.4.2        lifecycle_0.1.0    
+[103] Rdpack_0.11-0       lmtest_0.9-37       RcppAnnoy_0.0.14   
+[106] cowplot_1.0.0       bitops_1.0-6        irlba_2.3.3        
+[109] gbRd_0.4-11         httpuv_1.5.2        R6_2.4.1           
+[112] promises_1.1.0      KernSmooth_2.23-16  codetools_0.2-16   
+[115] MASS_7.3-51.4       gtools_3.8.1        assertthat_0.2.1   
+[118] rprojroot_1.3-2     withr_2.1.2         sctransform_0.2.0  
+[121] mnormt_1.5-5        multcomp_1.4-11     parallel_3.6.1     
+[124] hms_0.5.2           grid_3.6.1          rmarkdown_1.18     
+[127] Rtsne_0.15          git2r_0.26.1        numDeriv_2016.8-1.1
+[130] Biobase_2.44.0      lubridate_1.7.4    </code></pre>
 </div>
 </div>
 
