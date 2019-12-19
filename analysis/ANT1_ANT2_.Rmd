@@ -9,7 +9,7 @@ editor_options:
 
 # Analysis of processed sc pilot data ANT1/ANT2
 
-ANT1_ANT2 contain multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection and sequenced using the 10x chromium technology.
+ANT1_ANT2 contain multiplexed samples from replicate of the pilot. Equal numbers of cells from 18855 (OA strained), 19160 (unstrained), and 18856 (unstrained) were pooled into one collection for ANT1, and equal numbers of cells from 18855 (Unstrained), 19160 (OA strained) were pooled into one collection for ANT2. The collections were sequenced using the 10x chromium technology.
 
 ANT1: (19160 unstrained; 18856 unstrained; 18855 strained)
   estimated saturation statistics from Kenneth's Pipeline:
@@ -293,13 +293,21 @@ saveRDS(ANT1.2, file = "output/ANT1.2.rds")
 #Chondrocyte markers
 VlnPlot(ANT1.2, features = c("COL2A1", "ACAN"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1.2, features = c("COL10A1", "COL11A1", "SOX5", "SOX6", "SOX9"), 
+VlnPlot(ANT1.2, features = c("COL10A1", "COL11A1", "SOX5"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1.2, features = c("TGFB3", "SOX6", "SOX9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+
 #Strain markers
 VlnPlot(ANT1.2, features = c("MMP1", "MMP13", "IL1B", "MMP3"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1.2, features = c("MMP2", "COMP", "TNF", "IBSP", "TIMP1",  "MMP9"), 
+VlnPlot(ANT1.2, features = c("MMP2", "COMP", "TNF"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1.2, features = c("IBSP", "TIMP1",  "MMP9"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+VlnPlot(ANT1.2, features = c("ADAMTS4", "ADAMTS5"), 
+    pt.size = 0.2, ncol = 3, group.by = "labels")
+
 
 #MSC Flow markers
 VlnPlot(ANT1.2, features = c("ENG", "THY1",  "NT5E"), 
