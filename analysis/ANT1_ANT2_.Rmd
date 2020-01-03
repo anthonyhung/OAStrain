@@ -273,6 +273,57 @@ DimHeatmap(ANT1.2, dims = 1:15, cells = 500, balanced = TRUE)
 ElbowPlot(ANT1.2, ndims = nPC) #50 PCs?
 ```
 
+# Correlation between PC loadings and variables
+
+```{r PC corr}
+#get PC embeddings for each barcode
+PC1_embeddings <- ANT1.2@reductions$pca@cell.embeddings[,1]
+PC2_embeddings <- ANT1.2@reductions$pca@cell.embeddings[,2]
+
+#get information about individual, collection, and treatment
+barcode_labels <- ANT1.2$labels
+individual <- substr(barcode_labels, 1, 7)
+collection <- ANT1.2@meta.data$orig.ident
+treatment <- substr(barcode_labels, 9, nchar(barcode_labels))
+
+#combine all into a dataframe
+PC1_dataframe <- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC1_embeddings = PC1_embeddings)
+PC2_dataframe <- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC2_embeddings = PC2_embeddings)
+
+#plot box plots for PC embeddings
+PC1_dataframe %>% 
+  ggplot(aes(x=individual, y=PC1_embeddings)) +
+  geom_boxplot()
+
+PC1_dataframe %>% 
+  ggplot(aes(x=sc_collection, y=PC1_embeddings)) +
+  geom_boxplot()
+
+PC1_dataframe %>% 
+  ggplot(aes(x=treatment, y=PC1_embeddings)) +
+  geom_boxplot()
+
+
+
+PC2_dataframe %>% 
+  ggplot(aes(x=individual, y=PC1_embeddings)) +
+  geom_boxplot()
+
+PC2_dataframe %>% 
+  ggplot(aes(x=sc_collection, y=PC1_embeddings)) +
+  geom_boxplot()
+
+PC2_dataframe %>% 
+  ggplot(aes(x=treatment, y=PC1_embeddings)) +
+  geom_boxplot()
+
+
+
+
+#
+```
+
+
 # Clustering
 
 ```{r clustering}
@@ -291,11 +342,11 @@ saveRDS(ANT1.2, file = "output/ANT1.2.rds")
 
 ```{r expression by individual}
 #Chondrocyte markers
-VlnPlot(ANT1.2, features = c("COL2A1", "ACAN"), 
+VlnPlot(ANT1.2, features = c("COL2A1", "SOX9", "ACAN"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
 VlnPlot(ANT1.2, features = c("COL10A1", "COL11A1", "SOX5"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
-VlnPlot(ANT1.2, features = c("TGFB3", "SOX6", "SOX9"), 
+VlnPlot(ANT1.2, features = c("TGFB3", "SOX6"), 
     pt.size = 0.2, ncol = 3, group.by = "labels")
 
 #Strain markers
