@@ -35,6 +35,7 @@ library(readr)
 library(Matrix)
 library(Seurat)
 library(gridExtra)
+library(heplots)
 ```
 
 ## Load in data
@@ -320,7 +321,32 @@ PC2_dataframe %>%
 
 
 
-#
+#one way ANOVAs
+#PC1
+model.aov <- aov(PC1_embeddings ~ individual, data = PC1_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
+
+model.aov <- aov(PC1_embeddings ~ sc_collection, data = PC1_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
+
+model.aov <- aov(PC1_embeddings ~ treatment, data = PC1_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
+
+#PC2
+model.aov <- aov(PC2_embeddings ~ individual, data = PC2_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
+
+model.aov <- aov(PC2_embeddings ~ sc_collection, data = PC2_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
+
+model.aov <- aov(PC2_embeddings ~ treatment, data = PC2_dataframe)
+summary(model.aov)
+etasq(model.aov, partial = FALSE)
 ```
 
 
