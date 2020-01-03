@@ -15,7 +15,7 @@
 
 <title>ANT1/ANT2_Pilot</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -27,6 +27,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.10/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -495,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec1463c04c731df4c09cedfc7ed073e088d389593targetblankc1463c0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/c1463c04c731df4c09cedfc7ed073e088d389593" target="_blank">c1463c0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3af485f533553c6952d666cbf18c63289163cfe8targetblank3af485fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3af485f533553c6952d666cbf18c63289163cfe8" target="_blank">3af485f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec1463c04c731df4c09cedfc7ed073e088d389593targetblankc1463c0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3af485f533553c6952d666cbf18c63289163cfe8targetblank3af485fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -514,6 +522,7 @@ Ignored files:
 
 Untracked files:
     Untracked:  .RDataTmp
+    Untracked:  Rplot.png
 
 Unstaged changes:
     Modified:   analysis/ANT1_ANT2_.Rmd
@@ -555,6 +564,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/3af485f533553c6952d666cbf18c63289163cfe8/analysis/ANT1_ANT2_.Rmd" target="_blank">3af485f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+<td>
+Add ANOVA tests for percent variation explained
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -844,12 +870,12 @@ Add Seurat analysis
 <h2>Load libraries</h2>
 <pre class="r"><code>library(data.table)
 library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✓ ggplot2 3.2.1     ✓ purrr   0.3.3
 ✓ tibble  2.1.3     ✓ dplyr   0.8.3
 ✓ tidyr   1.0.0     ✓ stringr 1.4.0
 ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 x dplyr::between()   masks data.table::between()
 x dplyr::filter()    masks stats::filter()
 x dplyr::first()     masks data.table::first()
@@ -898,6 +924,18 @@ Attaching package: &#39;car&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:purrr&#39;:
 
     some</code></pre>
+<pre class="r"><code>library(DT)</code></pre>
+<pre><code>
+Attaching package: &#39;DT&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:Seurat&#39;:
+
+    JS</code></pre>
+<pre class="r"><code>library(gplots)</code></pre>
+<pre><code>
+Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    lowess</code></pre>
 </div>
 <div id="load-in-data" class="section level2">
 <h2>Load in data</h2>
@@ -1904,32 +1942,255 @@ treatment &lt;- substr(barcode_labels, 9, nchar(barcode_labels))
 #combine all into a dataframe
 PC1_dataframe &lt;- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC1_embeddings = PC1_embeddings)
 PC2_dataframe &lt;- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC2_embeddings = PC2_embeddings)
+info &lt;- data.frame(individual = individual, sc_collection = collection, treatment = treatment)
 
 #plot box plots for PC embeddings
 PC1_dataframe %&gt;% 
   ggplot(aes(x=individual, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-1">
+Past versions of “PC corr-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-1.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>PC1_dataframe %&gt;% 
   ggplot(aes(x=sc_collection, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-2">
+Past versions of “PC corr-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-2.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>PC1_dataframe %&gt;% 
   ggplot(aes(x=treatment, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-3">
+Past versions of “PC corr-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-3.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>PC2_dataframe %&gt;% 
   ggplot(aes(x=individual, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-4">
+Past versions of “PC corr-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-4.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>PC2_dataframe %&gt;% 
   ggplot(aes(x=sc_collection, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-5">
+Past versions of “PC corr-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-5.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>PC2_dataframe %&gt;% 
   ggplot(aes(x=treatment, y=PC1_embeddings)) +
   geom_boxplot()</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PC-corr-6">
+Past versions of “PC corr-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-PC-corr-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/PC corr-6.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#one way ANOVAs
 #PC1
 model.aov &lt;- aov(PC1_embeddings ~ individual, data = PC1_dataframe)
@@ -1997,6 +2258,44 @@ Residuals   2477  92218   37.23               </code></pre>
 <pre><code>                 eta^2
 treatment 0.0001464163
 Residuals           NA</code></pre>
+<pre class="r"><code>#correlation between variables and first 6 PCs
+p_comps &lt;- 1:6
+pc_cov_cor &lt;- matrix(nrow = ncol(info), ncol = length(p_comps),
+                     dimnames = list(colnames(info), colnames(ANT1.2@reductions$pca@cell.embeddings)[p_comps]))
+for (pc in p_comps) {
+  for (covariate in 1:ncol(info)) {
+    lm_result &lt;- lm(ANT1.2@reductions$pca@cell.embeddings[, pc] ~ info[, covariate])
+    r2 &lt;- summary(lm_result)$r.squared
+    pc_cov_cor[covariate, pc] &lt;- r2
+  }
+}
+datatable(pc_cov_cor)</code></pre>
+<div id="htmlwidget-530cfa52d3babb35245b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-530cfa52d3babb35245b">{"x":{"filter":"none","data":[["individual","sc_collection","treatment"],[0.604414322289525,0.0328834653346057,0.0804095317424152],[0.652521885955145,0.210721521259945,0.000146416313478383],[0.0296677335333338,0.0161182571655502,0.00109791437193489],[0.0047750511005388,0.00315059508450811,0.00233454809607618],[0.0510723758451909,0.0370377101370114,0.00195713801348928],[0.113198900129806,0.00188842479505497,0.000404049614861017]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC_1<\/th>\n      <th>PC_2<\/th>\n      <th>PC_3<\/th>\n      <th>PC_4<\/th>\n      <th>PC_5<\/th>\n      <th>PC_6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#convert to long format
+pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor)
+pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor)
+pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable)
+head(pc_cov_cor_2)</code></pre>
+<pre><code>       variable   pc          cor
+1    individual PC_1 0.6044143223
+2 sc_collection PC_1 0.0328834653
+3     treatment PC_1 0.0804095317
+4    individual PC_2 0.6525218860
+5 sc_collection PC_2 0.2107215213
+6     treatment PC_2 0.0001464163</code></pre>
+<pre class="r"><code>#plot correlation heat map for PC1-6 vs variables
+d_heatmap &lt;- pc_cov_cor_2
+d_heatmap$variable &lt;- factor(d_heatmap$variable,
+                             levels = c(&quot;individual&quot;, &quot;sc_collection&quot;, &quot;treatment&quot;),
+                             labels = c(&quot;individual&quot;, &quot;collection batch&quot;, &quot;treatment status&quot;))
+pca_heat &lt;- ggplot(d_heatmap, aes(x = pc, y = variable)) +
+  geom_tile(aes(fill = cor), colour = &quot;white&quot;) +
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;red&quot;, limits = c(0, 1)) +
+  labs(x = &quot;Principal Component&quot;, y = &quot;&quot;,
+       title = &quot;Correlation between principal components and experimental variables&quot;)
+pca_heat</code></pre>
+<p><img src="figure/ANT1_ANT2_.Rmd/PC%20corr-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clustering" class="section level1">
 <h1>Clustering</h1>
@@ -2020,20 +2319,20 @@ ANT1.2 &lt;- RunUMAP(ANT1.2, dims = 1:num_PCs)</code></pre>
 <pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 This message will be shown once per session</code></pre>
-<pre><code>20:57:24 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>20:57:24 Read 2479 rows and found 50 numeric columns</code></pre>
-<pre><code>20:57:24 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>20:57:24 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>21:48:43 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>21:48:43 Read 2479 rows and found 50 numeric columns</code></pre>
+<pre><code>21:48:43 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>21:48:43 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>**************************************************|
-20:57:25 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpWBXTum/file61383bf052b6
-20:57:25 Searching Annoy index using 1 thread, search_k = 3000
-20:57:26 Annoy recall = 100%
-20:57:27 Commencing smooth kNN distance calibration using 1 thread
-20:57:28 Initializing from normalized Laplacian + noise
-20:57:28 Commencing optimization for 500 epochs, with 101496 positive edges
-20:57:35 Optimization finished</code></pre>
+21:48:44 Writing NN index file to temp file /var/folders/td/y4r5skr139d88lvmz1yy97440000gn/T//RtmpYodGkM/file62451dcdc7c8
+21:48:44 Searching Annoy index using 1 thread, search_k = 3000
+21:48:45 Annoy recall = 100%
+21:48:46 Commencing smooth kNN distance calibration using 1 thread
+21:48:47 Initializing from normalized Laplacian + noise
+21:48:47 Commencing optimization for 500 epochs, with 101496 positive edges
+21:48:56 Optimization finished</code></pre>
 <pre class="r"><code>p1 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;)
 p2 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
 grid.arrange(p1, p2, nrow = 2)</code></pre>
@@ -2157,6 +2456,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/expression by individual-1.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/4f10224d2d318af4b60f492ec8aed67204b1641c/docs/figure/ANT1_ANT2_.Rmd/expression by individual-1.png" target="_blank">4f10224</a>
@@ -2292,6 +2602,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ef53529b6b6622f4a691fd41fe58a47622abb35d/docs/figure/ANT1_ANT2_.Rmd/expression by individual-3.png" target="_blank">ef53529</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/dba2e26e01a49161e2813d3dacf23a59b17e85b5/docs/figure/ANT1_ANT2_.Rmd/expression by individual-3.png" target="_blank">dba2e26</a>
@@ -2778,59 +3099,61 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] heplots_1.3-5     car_3.0-6         carData_3.0-3     gridExtra_2.3    
- [5] Seurat_3.1.1      Matrix_1.2-18     plyr_1.8.5        forcats_0.4.0    
- [9] stringr_1.4.0     dplyr_0.8.3       purrr_0.3.3       readr_1.3.1      
-[13] tidyr_1.0.0       tibble_2.1.3      ggplot2_3.2.1     tidyverse_1.3.0  
-[17] data.table_1.12.6
+ [1] gplots_3.0.1.1    DT_0.10           heplots_1.3-5     car_3.0-6        
+ [5] carData_3.0-3     gridExtra_2.3     Seurat_3.1.1      Matrix_1.2-18    
+ [9] plyr_1.8.5        forcats_0.4.0     stringr_1.4.0     dplyr_0.8.3      
+[13] purrr_0.3.3       readr_1.3.1       tidyr_1.0.0       tibble_2.1.3     
+[17] ggplot2_3.2.1     tidyverse_1.3.0   data.table_1.12.6
 
 loaded via a namespace (and not attached):
   [1] readxl_1.3.1        backports_1.1.5     workflowr_1.5.0    
   [4] sn_1.5-4            igraph_1.2.4.2      lazyeval_0.2.2     
-  [7] splines_3.6.1       listenv_0.8.0       TH.data_1.0-10     
- [10] digest_0.6.23       htmltools_0.4.0     gdata_2.18.0       
- [13] fansi_0.4.0         magrittr_1.5        cluster_2.1.0      
- [16] ROCR_1.0-7          openxlsx_4.1.4      globals_0.12.5     
- [19] modelr_0.1.5        matrixStats_0.55.0  RcppParallel_4.4.4 
- [22] R.utils_2.9.2       sandwich_2.5-1      colorspace_1.4-1   
- [25] rvest_0.3.5         ggrepel_0.8.1       haven_2.2.0        
- [28] xfun_0.11           crayon_1.3.4        jsonlite_1.6       
- [31] zeallot_0.1.0       survival_3.1-8      zoo_1.8-6          
- [34] ape_5.3             glue_1.3.1          gtable_0.3.0       
- [37] leiden_0.3.1        future.apply_1.3.0  BiocGenerics_0.30.0
- [40] abind_1.4-5         scales_1.1.0        mvtnorm_1.0-11     
- [43] DBI_1.0.0           bibtex_0.4.2        Rcpp_1.0.3         
- [46] metap_1.2           plotrix_3.7-7       viridisLite_0.3.0  
- [49] reticulate_1.13     foreign_0.8-72      rsvd_1.0.2         
- [52] SDMTools_1.1-221.2  tsne_0.1-3          stats4_3.6.1       
- [55] htmlwidgets_1.5.1   httr_1.4.1          gplots_3.0.1.1     
- [58] RColorBrewer_1.1-2  TFisher_0.2.0       ica_1.0-2          
- [61] farver_2.0.1        pkgconfig_2.0.3     R.methodsS3_1.7.1  
- [64] uwot_0.1.5          dbplyr_1.4.2        labeling_0.3       
- [67] tidyselect_0.2.5    rlang_0.4.2         reshape2_1.4.3     
- [70] later_1.0.0         munsell_0.5.0       cellranger_1.1.0   
- [73] tools_3.6.1         cli_2.0.0           generics_0.0.2     
- [76] broom_0.5.2         ggridges_0.5.1      evaluate_0.14      
- [79] yaml_2.2.0          npsurv_0.4-0        knitr_1.26         
- [82] fs_1.3.1            fitdistrplus_1.0-14 zip_2.0.4          
- [85] caTools_1.17.1.3    RANN_2.6.1          pbapply_1.4-2      
- [88] future_1.15.1       nlme_3.1-143        whisker_0.4        
- [91] R.oo_1.23.0         xml2_1.2.2          compiler_3.6.1     
- [94] rstudioapi_0.10     curl_4.3            plotly_4.9.1       
- [97] png_0.1-7           lsei_1.2-0          reprex_0.3.0       
-[100] stringi_1.4.3       RSpectra_0.16-0     lattice_0.20-38    
-[103] multtest_2.40.0     vctrs_0.2.0         mutoss_0.1-12      
-[106] pillar_1.4.2        lifecycle_0.1.0     Rdpack_0.11-0      
-[109] lmtest_0.9-37       RcppAnnoy_0.0.14    cowplot_1.0.0      
-[112] bitops_1.0-6        irlba_2.3.3         gbRd_0.4-11        
-[115] httpuv_1.5.2        R6_2.4.1            promises_1.1.0     
-[118] rio_0.5.16          KernSmooth_2.23-16  codetools_0.2-16   
-[121] MASS_7.3-51.4       gtools_3.8.1        assertthat_0.2.1   
-[124] rprojroot_1.3-2     withr_2.1.2         sctransform_0.2.0  
-[127] mnormt_1.5-5        multcomp_1.4-11     parallel_3.6.1     
-[130] hms_0.5.2           grid_3.6.1          rmarkdown_1.18     
-[133] Rtsne_0.15          git2r_0.26.1        numDeriv_2016.8-1.1
-[136] Biobase_2.44.0      lubridate_1.7.4    </code></pre>
+  [7] splines_3.6.1       crosstalk_1.0.0     listenv_0.8.0      
+ [10] TH.data_1.0-10      digest_0.6.23       htmltools_0.4.0    
+ [13] gdata_2.18.0        fansi_0.4.0         magrittr_1.5       
+ [16] cluster_2.1.0       ROCR_1.0-7          openxlsx_4.1.4     
+ [19] globals_0.12.5      modelr_0.1.5        matrixStats_0.55.0 
+ [22] RcppParallel_4.4.4  R.utils_2.9.2       sandwich_2.5-1     
+ [25] colorspace_1.4-1    rvest_0.3.5         ggrepel_0.8.1      
+ [28] haven_2.2.0         xfun_0.11           crayon_1.3.4       
+ [31] jsonlite_1.6        zeallot_0.1.0       survival_3.1-8     
+ [34] zoo_1.8-6           ape_5.3             glue_1.3.1         
+ [37] gtable_0.3.0        leiden_0.3.1        future.apply_1.3.0 
+ [40] BiocGenerics_0.30.0 abind_1.4-5         scales_1.1.0       
+ [43] mvtnorm_1.0-11      DBI_1.0.0           bibtex_0.4.2       
+ [46] Rcpp_1.0.3          metap_1.2           plotrix_3.7-7      
+ [49] xtable_1.8-4        viridisLite_0.3.0   reticulate_1.13    
+ [52] foreign_0.8-72      rsvd_1.0.2          SDMTools_1.1-221.2 
+ [55] tsne_0.1-3          stats4_3.6.1        htmlwidgets_1.5.1  
+ [58] httr_1.4.1          RColorBrewer_1.1-2  ellipsis_0.3.0     
+ [61] TFisher_0.2.0       ica_1.0-2           farver_2.0.1       
+ [64] pkgconfig_2.0.3     R.methodsS3_1.7.1   uwot_0.1.5         
+ [67] dbplyr_1.4.2        labeling_0.3        tidyselect_0.2.5   
+ [70] rlang_0.4.2         reshape2_1.4.3      later_1.0.0        
+ [73] munsell_0.5.0       cellranger_1.1.0    tools_3.6.1        
+ [76] cli_2.0.0           generics_0.0.2      broom_0.5.2        
+ [79] ggridges_0.5.1      fastmap_1.0.1       evaluate_0.14      
+ [82] yaml_2.2.0          npsurv_0.4-0        knitr_1.26         
+ [85] fs_1.3.1            fitdistrplus_1.0-14 zip_2.0.4          
+ [88] caTools_1.17.1.3    RANN_2.6.1          pbapply_1.4-2      
+ [91] future_1.15.1       nlme_3.1-143        mime_0.7           
+ [94] whisker_0.4         R.oo_1.23.0         xml2_1.2.2         
+ [97] compiler_3.6.1      rstudioapi_0.10     curl_4.3           
+[100] plotly_4.9.1        png_0.1-7           lsei_1.2-0         
+[103] reprex_0.3.0        stringi_1.4.3       RSpectra_0.16-0    
+[106] lattice_0.20-38     multtest_2.40.0     vctrs_0.2.0        
+[109] mutoss_0.1-12       pillar_1.4.2        lifecycle_0.1.0    
+[112] Rdpack_0.11-0       lmtest_0.9-37       RcppAnnoy_0.0.14   
+[115] cowplot_1.0.0       bitops_1.0-6        irlba_2.3.3        
+[118] gbRd_0.4-11         httpuv_1.5.2        R6_2.4.1           
+[121] promises_1.1.0      rio_0.5.16          KernSmooth_2.23-16 
+[124] codetools_0.2-16    MASS_7.3-51.4       gtools_3.8.1       
+[127] assertthat_0.2.1    rprojroot_1.3-2     withr_2.1.2        
+[130] sctransform_0.2.0   mnormt_1.5-5        multcomp_1.4-11    
+[133] parallel_3.6.1      hms_0.5.2           grid_3.6.1         
+[136] rmarkdown_1.18      Rtsne_0.15          git2r_0.26.1       
+[139] shiny_1.4.0         numDeriv_2016.8-1.1 Biobase_2.44.0     
+[142] lubridate_1.7.4    </code></pre>
 </div>
 </div>
 
