@@ -36,6 +36,8 @@ library(Matrix)
 library(Seurat)
 library(gridExtra)
 library(heplots)
+library(DT)
+library(gplots)
 ```
 
 ## Load in data
@@ -290,6 +292,7 @@ treatment <- substr(barcode_labels, 9, nchar(barcode_labels))
 #combine all into a dataframe
 PC1_dataframe <- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC1_embeddings = PC1_embeddings)
 PC2_dataframe <- data.frame(individual = individual, sc_collection = collection, treatment = treatment, PC2_embeddings = PC2_embeddings)
+info <- data.frame(individual = individual, sc_collection = collection, treatment = treatment)
 
 #plot box plots for PC embeddings
 PC1_dataframe %>% 
@@ -347,7 +350,43 @@ etasq(model.aov, partial = FALSE)
 model.aov <- aov(PC2_embeddings ~ treatment, data = PC2_dataframe)
 summary(model.aov)
 etasq(model.aov, partial = FALSE)
+
+
+
+#correlation between variables and first 6 PCs
+p_comps <- 1:6
+pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps),
+                     dimnames = list(colnames(info), colnames(ANT1.2@reductions$pca@cell.embeddings)[p_comps]))
+for (pc in p_comps) {
+  for (covariate in 1:ncol(info)) {
+    lm_result <- lm(ANT1.2@reductions$pca@cell.embeddings[, pc] ~ info[, covariate])
+    r2 <- summary(lm_result)$r.squared
+    pc_cov_cor[covariate, pc] <- r2
+  }
+}
+datatable(pc_cov_cor)
+
+#convert to long format
+pc_cov_cor_2 <- as.data.frame(pc_cov_cor)
+pc_cov_cor_2$variable <- rownames(pc_cov_cor)
+pc_cov_cor_2 <- gather(pc_cov_cor_2, key = "pc", value = "cor", -variable)
+head(pc_cov_cor_2)
+
+#plot correlation heat map for PC1-6 vs variables
+d_heatmap <- pc_cov_cor_2
+d_heatmap$variable <- factor(d_heatmap$variable,
+                             levels = c("individual", "sc_collection", "treatment"),
+                             labels = c("individual", "collection batch", "treatment status"))
+pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) +
+  geom_tile(aes(fill = cor), colour = "white") +
+  scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) +
+  labs(x = "Principal Component", y = "",
+       title = "Correlation between principal components and experimental variables")
+pca_heat
 ```
+
+
+
 
 
 # Clustering
