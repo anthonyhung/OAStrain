@@ -11,6 +11,7 @@ editor_options:
 
 ```{r loading libraries and data}
 library("limma")
+library("plyr")
 library("edgeR")
 library("dplyr")
 library("tidyr")
@@ -18,22 +19,39 @@ library("ashr")
 library("ggplot2")
 library("cowplot")
 library("VennDiagram")
-library("RColorBrewer")
-
-
-# Load colors 
-colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
-pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+library("RUVSeq")
 
 #load in filtered count data, RUVs output
 filt_counts <- readRDS("data/filtered_counts.rds")
 RUVsCPM <- readRDS("data/RUVsCPM.rds")
 ```
 
+# Limma doesn't deal with technical replicates, so here I randomly sample 1 replicate for each of the 6 individualxcondition
+
+```{r random sample}
+#randomly sample 1 replicate from each set of 3 replicates
+individuals <- c("18855", "18856", "19160")
+treatments <- c("S", "U")
+
+selected_samples <- c()
+for(i in individuals){
+     for(t in treatments){
+          sample_num <- base::sample(c(1:3), 1)
+          selected_samples <- c(selected_samples, paste0(i, sep = "_", sample_num, sep = "_", t))
+     }
+}
+selected_samples
+randomly_sampled_indices <- match(selected_samples, names(filt_counts))
+
+single_filt_counts <- filt_counts[,randomly_sampled_indices]
+anno <- pData(RUVsCPM)[randomly_sampled_indices,]
+```
+
 # Model with limma
 
 ```{r design-matrix}
-anno <- pData(RUVsCPM) #variables for samples
+#sample details
+#anno <- pData(RUVsCPM)
 
 anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
 anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
@@ -46,16 +64,19 @@ colnames(design)
 ```
 
 ```{r fit-model, fig.width=8}
-y <- DGEList(filt_counts)
+#TMM Normalization
+y <- DGEList(single_filt_counts)
 y <- calcNormFactors(y)
+#Voom for differential expression
 v <- voom(y, design)
+
 
 # Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
 
-corfit <- duplicateCorrelation(v, design, block = anno$individual)
+corfit <- duplicateCorrelation(v, design, block = anno$Individual)
 corfit$consensus
-v <- voom(y, design, block = anno$individual, correlation = corfit$consensus)
-fit <- lmFit(v, design, block = anno$individual, correlation = corfit$consensus)
+v <- voom(y, design, block = anno$Individual, correlation = corfit$consensus)
+fit <- lmFit(v, design, block = anno$Individual, correlation = corfit$consensus)
 fit <- eBayes(fit)
 ```
 
@@ -92,21 +113,21 @@ plot_gene <- function(v, g) {
             is.character(g), length(g) == 1)
   library("tidyr")
   single_gene <- v$E[g, ]
-  single_gene_long <- gather(as.data.frame(single_gene),
-                              gather_cols = colnames(single_gene))
-  # For some reason, the argument value_col wouldn't work
+  single_gene_long <- as.data.frame(single_gene)
   colnames(single_gene_long) <- "log2cpm"
   single_gene_long$sample <- rownames(single_gene_long)
-  single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-",
-                                into = c("individual", "treatment"))
-  single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("Strain", "Unstrain"))
-  ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) +
+  single_gene_long <- separate(single_gene_long, col = "sample", sep = "_",
+                                into = c("Individual", "Replicate", "Treatment"))
+  single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels = c("S", "U"))
+  single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain"))
+
+  ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) +
     geom_boxplot() +
     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
 }
 ```
 
-Infected.
+Treatment
 
 ```{r}
 p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) +
@@ -122,21 +143,125 @@ ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1,
 plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)
 ```
 
+## Use ash for mutliple testing correction
+
+Treatment effect.
+
+```{r ash-treatment}
+# ash_treatment <- ash(betahat = fit$coefficients[, "Unstrain"],
+#                      sebetahat = fit$stdev.unscaled[, "Unstrain"] * sqrt(fit$s2.post),
+#                      df = fit$df.total)
+# class(ash_treatment)
+# names(ash_treatment)
+# sum(ash_treatment$svalue < .05)
+# hist(ash_treatment$svalue)
+```
+
+# Plots
+
+```{r Plot Functions}
+plot_ma <- function(x, qval) {
+  # Create MA plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, AveExpr, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "AveExpr", "qvalue") %in% colnames(x),
+            is.numeric(qval), qval <= 1, qval >= 0)
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = AveExpr, y = logFC, color = highlight, shape = highlight)) +
+    geom_point() +
+    labs(x = "Average expression level", y = "Log fold change") +
+    scale_color_identity(drop = FALSE) +
+    scale_shape_manual(values = c(16, 1), drop = FALSE) +
+    theme(legend.position = "none")
+#   scale_color_gradient(low = "red", high = "white", limits = c(0, 0.25))
+}
+
+plot_volcano <- function(x, qval) {
+  # Create volcano plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, P.Value, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "P.Value", "qvalue") %in% colnames(x),
+            is.numeric(qval), qval <= 1, qval >= 0)
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) +
+    geom_point(shape = 1) +
+    labs(x = "Log fold change",
+         y = expression(-log[10] * " p-value")) +
+    scale_color_identity(drop = FALSE) +
+    theme(legend.position = "none")
+}
+
+plot_pval_hist <- function(x, qval) {
+  # Create histogram of p-values.
+  #
+  # x - data frame with topTable and ash output (columns P.Value and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("P.Value", "qvalue") %in% colnames(x))
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = P.Value, fill = highlight)) +
+    geom_histogram(position = "stack", binwidth = 0.01) +
+    scale_fill_identity(drop = FALSE) +
+    labs(x = "p-value", y = "Number of genes")
+}
+```
+
+```{r use Functions}
+# Get model results ------------------------------------------------------------
+
+get_results <- function(x, number = nrow(x$coefficients), sort.by = "none",
+                        ...) {
+  # x - object MArrayLM from eBayes output
+  # ... - additional arguments passed to topTable
+  stopifnot(class(x) == "MArrayLM")
+  results <- topTable(x, number = number, sort.by = sort.by, ...)
+  return(results)
+}
+
+run_ash <- function(x, coef) {
+  # Perform multiple testing correction with adaptive shrinkage (ASH)
+  #
+  # x - object MArrayLM from eBayes output
+  # coef - coefficient tested by eBayes
+  stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients))
+  result <- ash(betahat = x$coefficients[, coef],
+                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post),
+                df = x$df.total)
+  return(result)
+}
+
+tests <- colnames(fit2$coefficients)
+results <- vector(length = length(tests), mode = "list")
+names(results) <- tests
+
+for (test in tests) {
+  # Extract limma results
+  results[[test]] <- get_results(fit2, coef = test)
+  # Add mutliple testing correction with ASH
+  output_ash <- run_ash(fit2, coef = test)
+  results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+                           lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                           svalue = output_ash$svalue)
+}
+```
 
 
-<!-- ## Use ash for mutliple testing correction -->
 
-<!-- Treatment effect. -->
 
-<!-- ```{r ash-treatment} -->
-<!-- ash_treatment <- ash(betahat = fit$coefficients[, "infected"], -->
-<!--                      sebetahat = fit$stdev.unscaled[, "infected"] * sqrt(fit$s2.post), -->
-<!--                      df = fit$df.total) -->
-<!-- class(ash_treatment) -->
-<!-- names(ash_treatment) -->
-<!-- sum(ash_treatment$svalue < .05) -->
-<!-- hist(ash_treatment$svalue) -->
-<!-- ``` -->
+
+
+
+
+
 
 
 <!-- Venn diagram -->
