@@ -9,9 +9,56 @@ editor_options:
 
 ## Introduction
 
-```{r}
+```{r loading libraries and data}
+library("limma")
+library("edgeR")
+library("dplyr")
+library("tidyr")
+library("ashr")
+library("ggplot2")
+library("cowplot")
+library("VennDiagram")
 
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+#load in filtered count data, RUVs output
+filt_counts <- readRDS("data/filtered_counts.rds")
+RUVsCPM <- readRDS("data/RUVsCPM.rds")
 ```
+
+# Model with limma
+
+```{r design-matrix}
+anno <- pData(RUVsCPM) #variables for samples
+
+anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
+anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
+
+design <- model.matrix(~treatment + W_1,
+                       data = anno)
+colnames(design)[1] <- "Intercept"
+colnames(design) <- gsub("treatment", "", colnames(design))
+colnames(design)
+```
+
+```{r fit-model, fig.width=8}
+y <- DGEList(filt_counts)
+y <- calcNormFactors(y)
+v <- voom(y, design)
+
+# Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
+
+corfit <- duplicateCorrelation(v, design, block = anno$individual)
+corfit$consensus
+v <- voom(y, design, block = anno$individual, correlation = corfit$consensus)
+fit <- lmFit(v, design, block = anno$individual, correlation = corfit$consensus)
+fit <- eBayes(fit)
+```
+
+
+
 
 
 
@@ -22,11 +69,6 @@ editor_options:
 
 <!-- From jdblischak's code: -->
 
-
-<!-- ```{r chunk-options} -->
-<!-- library("knitr") -->
-<!-- opts_chunk$set(cache = FALSE) -->
-<!-- ``` -->
 
 <!-- Initial limma analysis. -->
 
