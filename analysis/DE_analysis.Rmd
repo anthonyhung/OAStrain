@@ -18,6 +18,8 @@ library("ashr")
 library("ggplot2")
 library("cowplot")
 library("VennDiagram")
+library("RColorBrewer")
+
 
 # Load colors 
 colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
@@ -58,189 +60,69 @@ fit <- eBayes(fit)
 ```
 
 
+## Assess model results
+
+```{r model-results}
+top_treatment <- topTable(fit, coef = "Unstrain")
+top_treatment
+results_treatment <- topTable(fit, coef = "Unstrain",
+                              number = nrow(filt_counts), sort = "none")
+ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "Unstrain"]),
+                       aes(x = Amean, y = logFC)) +
+  geom_point() +
+  labs(x = "Average expression level", y = "Log fold change",
+       title = "Treatment effect")
+ma_treatment
+hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) +
+  geom_histogram(binwidth = 0.01) +
+  labs(x = "p-value", y = "Number of genes", title = "Treatment effect")
+hist_treatment
+```
 
 
+## Explore top hits
+
+Boxplot function.
+
+```{r boxplot-function}
+plot_gene <- function(v, g) {
+  # v - An EList object containing log2 counts per million
+  # g - character vector of a single gene
+  stopifnot(class(v) == "EList",
+            is.character(g), length(g) == 1)
+  library("tidyr")
+  single_gene <- v$E[g, ]
+  single_gene_long <- gather(as.data.frame(single_gene),
+                              gather_cols = colnames(single_gene))
+  # For some reason, the argument value_col wouldn't work
+  colnames(single_gene_long) <- "log2cpm"
+  single_gene_long$sample <- rownames(single_gene_long)
+  single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-",
+                                into = c("individual", "treatment"))
+  single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("Strain", "Unstrain"))
+  ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) +
+    geom_boxplot() +
+    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
+}
+```
+
+Infected.
+
+```{r}
+p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) +
+  ylim(3, 11) + theme(legend.position = "bottom")
+p_treatment_2 <- plot_gene(v, rownames(top_treatment)[2]) +
+  ylim(3, 11) + theme(legend.position = "bottom")
+p_treatment_3 <- plot_gene(v, rownames(top_treatment)[3]) +
+  ylim(3, 11) + theme(legend.position = "bottom")
+p_treatment_4 <- plot_gene(v, rownames(top_treatment)[4]) +
+  ylim(3, 11) + theme(legend.position = "bottom")
+ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1,
+       width = 7, height = 7, units = "in")
+plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)
+```
 
 
-
-
-
-
-
-<!-- From jdblischak's code: -->
-
-
-<!-- Initial limma analysis. -->
-
-<!-- ## Setup -->
-
-<!-- ```{r packages, message=FALSE} -->
-<!-- library("limma") -->
-<!-- library("edgeR") -->
-<!-- library("dplyr") -->
-<!-- library("tidyr") -->
-<!-- library("ashr") -->
-<!-- library("ggplot2") -->
-<!-- library("cowplot") -->
-<!-- theme_set(theme_bw(base_size = 14)) -->
-<!-- theme_update(panel.grid.minor.x = element_blank(), -->
-<!--              panel.grid.minor.y = element_blank(), -->
-<!--              panel.grid.major.x = element_blank(), -->
-<!--              panel.grid.major.y = element_blank()) -->
-<!-- library("VennDiagram") -->
-<!-- ``` -->
-
-<!-- Input data. -->
-
-<!-- ```{r input-counts} -->
-<!-- counts <- read.delim("../data/counts.txt", check.names = FALSE, row.names = 1) -->
-<!-- anno <- read.delim("../data/experiment-info.txt", stringsAsFactors = FALSE) -->
-<!-- rownames(anno) <- anno$id -->
-<!-- anno <- anno %>% select(-id, -tube_ind) -->
-<!-- stopifnot(colnames(counts) == rownames(anno)) -->
-<!-- ``` -->
-
-<!-- ## Model with limma -->
-
-<!-- ```{r design-matrix} -->
-<!-- anno$status <- factor(anno$status, levels = c("contact", "tb")) -->
-<!-- anno$treatment <- factor(anno$treatment, levels = c("none", "infected")) -->
-<!-- design <- model.matrix(~treatment + status + status:treatment, -->
-<!--                        data = anno) -->
-<!-- colnames(design)[1] <- "Intercept" -->
-<!-- colnames(design) <- gsub("treatment", "", colnames(design)) -->
-<!-- colnames(design) <- gsub("status", "", colnames(design)) -->
-<!-- colnames(design) <- gsub(":", ".", colnames(design)) -->
-<!-- colnames(design) -->
-<!-- ``` -->
-
-<!-- ```{r fit-model, fig.width=8} -->
-<!-- y <- DGEList(counts) -->
-<!-- y <- calcNormFactors(y) -->
-<!-- v <- voom(y, design) -->
-<!-- # Model individual as a random effect -->
-<!-- corfit <- duplicateCorrelation(v, design, block = anno$individual) -->
-<!-- corfit$consensus -->
-<!-- v <- voom(y, design, block = anno$individual, correlation = corfit$consensus) -->
-<!-- fit <- lmFit(v, design, block = anno$individual, correlation = corfit$consensus) -->
-<!-- fit <- eBayes(fit) -->
-<!-- ``` -->
-
-<!-- ## Assess model results -->
-
-<!-- ```{r model-results} -->
-<!-- top_treatment <- topTable(fit, coef = "infected") -->
-<!-- top_treatment -->
-<!-- results_treatment <- topTable(fit, coef = "infected", -->
-<!--                               number = nrow(counts), sort = "none") -->
-<!-- ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected"]), -->
-<!--                        aes(x = Amean, y = logFC)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Average expression level", y = "Log fold change", -->
-<!--        title = "Treatment effect") -->
-<!-- ma_treatment -->
-<!-- hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) + -->
-<!--   geom_histogram(binwidth = 0.01) + -->
-<!--   labs(x = "p-value", y = "Number of genes", title = "Treatment effect") -->
-<!-- hist_treatment -->
-<!-- top_status <- topTable(fit, coef = "tb") -->
-<!-- top_status -->
-<!-- results_status <- topTable(fit, coef = "tb", -->
-<!--                            number = nrow(counts), sort = "none") -->
-<!-- ma_status <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "tb"]), -->
-<!--                        aes(x = Amean, y = logFC)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Average expression level", y = "Log fold change", -->
-<!--        title = "Status effect") -->
-<!-- ma_status -->
-<!-- hist_status <- ggplot(results_status, aes(x = P.Value)) + -->
-<!--   geom_histogram(binwidth = 0.01) + -->
-<!--   labs(x = "p-value", y = "Number of genes", title = "Status effect") -->
-<!-- hist_status -->
-<!-- top_interaction <- topTable(fit, coef = "infected.tb") -->
-<!-- top_interaction -->
-<!-- results_interaction <- topTable(fit, coef = "infected.tb", -->
-<!--                                 number = nrow(counts), sort = "none") -->
-<!-- ma_interaction <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "infected.tb"]), -->
-<!--                        aes(x = Amean, y = logFC)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Average expression level", y = "Log fold change", -->
-<!--        title = "Interaction effect") -->
-<!-- ma_interaction -->
-<!-- hist_interaction <- ggplot(results_interaction, aes(x = P.Value)) + -->
-<!--   geom_histogram(binwidth = 0.01) + -->
-<!--   labs(x = "p-value", y = "Number of genes", title = "Interaction effect") -->
-<!-- hist_interaction -->
-<!-- ggsave("fig-limma-hist-interaction.eps", plot = hist_interaction, -->
-<!--        width = 7, height = 7, units = "in") -->
-<!-- ``` -->
-
-<!-- ## Explore top hits -->
-
-<!-- Boxplot function. -->
-
-<!-- ```{r boxplot-function} -->
-<!-- plot_gene <- function(v, g) { -->
-<!--   # v - An EList object containing log2 counts per million -->
-<!--   # g - character vector of a single gene -->
-<!--   stopifnot(class(v) == "EList", -->
-<!--             is.character(g), length(g) == 1) -->
-<!--   library("tidyr") -->
-<!--   single_gene <- v$E[g, ] -->
-<!--   single_gene_long <- gather_(as.data.frame(single_gene), -->
-<!--                               gather_cols = colnames(single_gene)) -->
-<!--   # For some reason, the argument value_col wouldn't work -->
-<!--   colnames(single_gene_long) <- "log2cpm" -->
-<!--   single_gene_long$sample <- rownames(single_gene_long) -->
-<!--   single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-", -->
-<!--                                 into = c("individual", "status", "treatment")) -->
-<!--   single_gene_long$status <- factor(single_gene_long$status, levels = c("contact", "tb")) -->
-<!--   single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("none", "infected")) -->
-<!--   ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) + -->
-<!--     geom_boxplot() + -->
-<!--     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- Infected. -->
-
-<!-- ```{r} -->
-<!-- p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_2 <- plot_gene(v, rownames(top_treatment)[2]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_3 <- plot_gene(v, rownames(top_treatment)[3]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_4 <- plot_gene(v, rownames(top_treatment)[4]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1, -->
-<!--        width = 7, height = 7, units = "in") -->
-<!-- plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4) -->
-<!-- ``` -->
-
-<!-- Susceptibility status. -->
-
-<!-- ```{r} -->
-<!-- plot_grid(plot_gene(v, rownames(top_status)[1]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           plot_gene(v, rownames(top_status)[2]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           plot_gene(v, rownames(top_status)[3]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           nrow = 1) -->
-<!-- ``` -->
-
-<!-- Interaction. -->
-
-<!-- ```{r} -->
-<!-- plot_grid(plot_gene(v, rownames(top_interaction)[1]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           plot_gene(v, rownames(top_interaction)[2]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           plot_gene(v, rownames(top_interaction)[3]) + -->
-<!--             ylim(3, 11) + theme(legend.position = "bottom"), -->
-<!--           nrow = 1) -->
-<!-- ``` -->
 
 <!-- ## Use ash for mutliple testing correction -->
 
@@ -256,25 +138,6 @@ fit <- eBayes(fit)
 <!-- hist(ash_treatment$svalue) -->
 <!-- ``` -->
 
-<!-- Susceptibility effect. -->
-
-<!-- ```{r ash-status} -->
-<!-- ash_status <- ash(betahat = fit$coefficients[, "tb"], -->
-<!--                   sebetahat = fit$stdev.unscaled[, "tb"] * sqrt(fit$s2.post), -->
-<!--                   df = fit$df.total) -->
-<!-- sum(ash_status$svalue < .05) -->
-<!-- hist(ash_status$svalue) -->
-<!-- ``` -->
-
-<!-- Interaction effect. -->
-
-<!-- ```{r ash-interaction} -->
-<!-- ash_interaction <- ash(betahat = fit$coefficients[, "infected.tb"], -->
-<!--                      sebetahat = fit$stdev.unscaled[, "infected.tb"] * sqrt(fit$s2.post), -->
-<!--                      df = fit$df.total) -->
-<!-- sum(ash_interaction$svalue < .05) -->
-<!-- hist(ash_interaction$svalue) -->
-<!-- ``` -->
 
 <!-- Venn diagram -->
 
