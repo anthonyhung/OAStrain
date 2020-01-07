@@ -64,19 +64,23 @@ colnames(design)
 ```
 
 ```{r fit-model, fig.width=8}
+# Model individual as a random effect.
+# Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
+# Recommended to run both voom and duplicateCorrelation twice.
+# https://support.bioconductor.org/p/59700/#67620
+
 #TMM Normalization
 y <- DGEList(single_filt_counts)
 y <- calcNormFactors(y)
 #Voom for differential expression
-v <- voom(y, design)
-
-
-# Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
-
-corfit <- duplicateCorrelation(v, design, block = anno$Individual)
-corfit$consensus
-v <- voom(y, design, block = anno$Individual, correlation = corfit$consensus)
-fit <- lmFit(v, design, block = anno$Individual, correlation = corfit$consensus)
+v1 <- voom(y, design)
+corfit1 <- duplicateCorrelation(v1, design, block = anno$Individual)
+# corfit1$consensus
+v2 <- voom(y, design, block = anno$Individual, correlation = corfit1$consensus)
+corfit2 <- duplicateCorrelation(v2, design, block = anno$Individual)
+# corfit2$consensus
+fit <- lmFit(v2, design, block = anno$Individual,
+             correlation = corfit2$consensus)
 fit <- eBayes(fit)
 ```
 
@@ -84,9 +88,19 @@ fit <- eBayes(fit)
 ## Assess model results
 
 ```{r model-results}
-top_treatment <- topTable(fit, coef = "Unstrain")
+get_results <- function(x, number = nrow(x$coefficients), sort.by = "none",
+                        ...) {
+  # x - object MArrayLM from eBayes output
+  # ... - additional arguments passed to topTable
+  stopifnot(class(x) == "MArrayLM")
+  results <- topTable(x, number = number, sort.by = sort.by, ...)
+  return(results)
+}
+
+top_treatment <- get_results(fit, coef = "Unstrain", sort.by = "B")
 top_treatment
-results_treatment <- topTable(fit, coef = "Unstrain",
+
+results_treatment <- get_results(fit, coef = "Unstrain",
                               number = nrow(filt_counts), sort = "none")
 ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "Unstrain"]),
                        aes(x = Amean, y = logFC)) +
@@ -129,14 +143,14 @@ plot_gene <- function(v, g) {
 
 Treatment
 
-```{r}
-p_treatment_1 <- plot_gene(v, rownames(top_treatment)[1]) +
+```{r treatment}
+p_treatment_1 <- plot_gene(v2, rownames(top_treatment)[1]) +
   ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_2 <- plot_gene(v, rownames(top_treatment)[2]) +
+p_treatment_2 <- plot_gene(v2, rownames(top_treatment)[2]) +
   ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_3 <- plot_gene(v, rownames(top_treatment)[3]) +
+p_treatment_3 <- plot_gene(v2, rownames(top_treatment)[3]) +
   ylim(3, 11) + theme(legend.position = "bottom")
-p_treatment_4 <- plot_gene(v, rownames(top_treatment)[4]) +
+p_treatment_4 <- plot_gene(v2, rownames(top_treatment)[4]) +
   ylim(3, 11) + theme(legend.position = "bottom")
 ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1,
        width = 7, height = 7, units = "in")
@@ -148,13 +162,23 @@ plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)
 Treatment effect.
 
 ```{r ash-treatment}
-# ash_treatment <- ash(betahat = fit$coefficients[, "Unstrain"],
-#                      sebetahat = fit$stdev.unscaled[, "Unstrain"] * sqrt(fit$s2.post),
-#                      df = fit$df.total)
-# class(ash_treatment)
-# names(ash_treatment)
-# sum(ash_treatment$svalue < .05)
-# hist(ash_treatment$svalue)
+run_ash <- function(x, coef) {
+  # Perform multiple testing correction with adaptive shrinkage (ASH)
+  #
+  # x - object MArrayLM from eBayes output
+  # coef - coefficient tested by eBayes
+  stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients))
+  result <- ash(betahat = x$coefficients[, coef],
+                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post),
+                df = x$df.total[1])
+  return(result)
+}
+
+ash_treatment <- run_ash(fit, "Unstrain")
+class(ash_treatment)
+names(ash_treatment)
+sum(ash_treatment$result$svalue < .05)
+hist(ash_treatment$result$svalue)
 ```
 
 # Plots
@@ -216,110 +240,32 @@ plot_pval_hist <- function(x, qval) {
 ```
 
 ```{r use Functions}
-# Get model results ------------------------------------------------------------
-
-get_results <- function(x, number = nrow(x$coefficients), sort.by = "none",
-                        ...) {
-  # x - object MArrayLM from eBayes output
-  # ... - additional arguments passed to topTable
-  stopifnot(class(x) == "MArrayLM")
-  results <- topTable(x, number = number, sort.by = sort.by, ...)
-  return(results)
-}
-
-run_ash <- function(x, coef) {
-  # Perform multiple testing correction with adaptive shrinkage (ASH)
-  #
-  # x - object MArrayLM from eBayes output
-  # coef - coefficient tested by eBayes
-  stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients))
-  result <- ash(betahat = x$coefficients[, coef],
-                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post),
-                df = x$df.total)
-  return(result)
-}
-
-tests <- colnames(fit2$coefficients)
+tests <- colnames(fit$coefficients)
 results <- vector(length = length(tests), mode = "list")
 names(results) <- tests
 
 for (test in tests) {
   # Extract limma results
-  results[[test]] <- get_results(fit2, coef = test)
+  results[[test]] <- get_results(fit, coef = test)
   # Add mutliple testing correction with ASH
-  output_ash <- run_ash(fit2, coef = test)
+  output_ash <- run_ash(fit, coef = test)$result
   results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
                            lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
                            svalue = output_ash$svalue)
 }
+
+#FDR 0.1
+plot_ma(results[["Unstrain"]], 0.1)
+plot_volcano(results[["Unstrain"]], 0.1)
+plot_pval_hist(results[["Unstrain"]], 0.1)
+
+#FDR 0.05
+plot_ma(results[["Unstrain"]], 0.05)
+plot_volcano(results[["Unstrain"]], 0.05)
+plot_pval_hist(results[["Unstrain"]], 0.05)
+
+#FDR 0.01
+plot_ma(results[["Unstrain"]], 0.01)
+plot_volcano(results[["Unstrain"]], 0.01)
+plot_pval_hist(results[["Unstrain"]], 0.01)
 ```
-
-
-
-
-
-
-
-
-
-
-
-<!-- Venn diagram -->
-
-<!-- ```{r venn} -->
-<!-- ash_treatment_de <- ash_treatment$svalue < .05 -->
-<!-- ash_status_de <- ash_status$svalue < .05 -->
-<!-- ash_interaction_de <- ash_interaction$svalue < .05 -->
-<!-- grid.newpage() -->
-<!-- venn_rv <- draw.triple.venn( -->
-<!--   area1 = sum(ash_treatment_de), -->
-<!--   area2 = sum(ash_status_de), -->
-<!--   area3 = sum(ash_interaction_de), -->
-<!--   n12 = sum(ash_treatment_de & ash_status_de), -->
-<!--   n23 = sum(ash_status_de & ash_interaction_de), -->
-<!--   n13 = sum(ash_treatment_de & ash_interaction_de), -->
-<!--   n123 = sum(ash_treatment_de & ash_status_de & ash_interaction_de), -->
-<!--   category = c("Treatment", "Status", "Interaction"), -->
-<!-- #   fill = c("darkolivegreen3", "cadetblue3", "darkorchid"), -->
-<!--   alpha = c(0.5, 0.5, 0.5), col = "black", cex = 2, cat.cex = 1.5, -->
-<!--   euler.d = FALSE, scaled = FALSE, ind = TRUE) -->
-<!-- grid.draw(venn_rv) -->
-<!-- ``` -->
-
-<!-- ## Save results of differential expression analysis -->
-
-<!-- Save results from limma and ash. -->
-
-<!-- ```{r save-limma} -->
-<!-- saveRDS(v, "../data/results-limma-voom.rds") -->
-<!-- saveRDS(fit, "../data/results-limma-fit.rds") -->
-<!-- saveRDS(ash_treatment, "../data/results-ash-treatment.rds") -->
-<!-- saveRDS(ash_status, "../data/results-ash-status.rds") -->
-<!-- saveRDS(ash_interaction, "../data/results-ash-interaction.rds") -->
-<!-- ``` -->
-
-<!-- ## Create figure -->
-
-<!-- ```{r fig-limma} -->
-<!-- theme_set(theme_bw(base_size = 8)) -->
-<!-- theme_update(panel.grid.minor.x = element_blank(), -->
-<!--              panel.grid.minor.y = element_blank(), -->
-<!--              panel.grid.major.x = element_blank(), -->
-<!--              panel.grid.major.y = element_blank()) -->
-<!-- fig_limma <- ggdraw() + -->
-<!--   draw_plot(ma_treatment,     0.00, 0.67, 0.33, 0.33) + -->
-<!--   draw_plot(ma_status,        0.00, 0.33, 0.33, 0.33) + -->
-<!--   draw_plot(ma_interaction,   0.00, 0.00, 0.33, 0.33) + -->
-<!--   draw_plot(hist_treatment,   0.33, 0.67, 0.33, 0.33) + -->
-<!--   draw_plot(hist_status,      0.33, 0.33, 0.33, 0.33) + -->
-<!--   draw_plot(hist_interaction, 0.33, 0.00, 0.33, 0.33) + -->
-<!--   draw_plot(p_treatment_1,    0.67, 0.82, 0.15, 0.15) + -->
-<!--   draw_plot(p_treatment_2,    0.67, 0.67, 0.15, 0.15) + -->
-<!--   draw_plot(p_treatment_3,    0.82, 0.67, 0.15, 0.15) + -->
-<!--   draw_plot(p_treatment_4,    0.82, 0.82, 0.15, 0.15) + -->
-<!--   draw_plot_label(c("A", "B", "C"), c(0.00, 0.00, 0.00), -->
-<!--                                     c(1.00, 0.67, 0.33), size = 15) -->
-<!-- fig_limma -->
-<!-- # Using cowplot ggsave, which by default does not use Dingbats font -->
-<!-- ggsave("fig-limma.eps", plot = fig_limma, width = 8, height = 5, units = "in") -->
-<!-- ``` -->

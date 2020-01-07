@@ -9,6 +9,16 @@ editor_options:
 
 # 
 
+```{r load}
+#load in normalized/filtered data
+filt_cpm <- readRDS("data/norm_filtered_counts.rds")
+
+# load in reordered sample information
+sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
+```
+
+# Rename 
+
 ```{r}
 
 ```
