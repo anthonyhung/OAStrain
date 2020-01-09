@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Anthony Hung" />
 
+<meta name="date" content="2019-12-16" />
 
-<title>Home</title>
+<title>Check expression of genes of interest</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -248,6 +253,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -255,6 +323,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -299,7 +377,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">Check expression of genes of interest</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2019-12-16</h4>
 
 </div>
 
@@ -327,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-09
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -349,6 +429,66 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
 <p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -419,41 +559,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f98f498bbd9ef5e2069900b48e940b7273549dee/analysis/index.Rmd" target="_blank">f98f498</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-09
-</td>
-<td>
-make gene annotation analysis script
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f98f498bbd9ef5e2069900b48e940b7273549dee/docs/index.html" target="_blank">f98f498</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-09
-</td>
-<td>
-make gene annotation analysis script
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/3e14c8a3a54b42da0ad190f2cbcd611e847b6e35/analysis/index.Rmd" target="_blank">3e14c8a</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/3e14c8a3a54b42da0ad190f2cbcd611e847b6e35/analysis/check_expression.Rmd" target="_blank">3e14c8a</a>
 </td>
 <td>
 Anthony Hung
@@ -470,16 +576,16 @@ Add notes for checking expression of certain markers
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/index.Rmd" target="_blank">a5c9482</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/analysis/check_expression.Rmd" target="_blank">5c249f2</a>
 </td>
 <td>
 Anthony Hung
 </td>
 <td>
-2019-12-16
+2020-01-07
 </td>
 <td>
-run through with dummy data
+Add functions to plot Limma results
 </td>
 </tr>
 <tr>
@@ -487,7 +593,24 @@ run through with dummy data
 Rmd
 </td>
 <td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/c1f7cf7e67e7a3372e359d52a2cfa24d1a2672a6/analysis/index.Rmd" target="_blank">c1f7cf7</a>
+<a href="https://github.com/anthonyhung/OAStrain/blob/b7948f028fdd5633f9fb0645fee59f12457d68e0/analysis/check_expression.Rmd" target="_blank">b7948f0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+<td>
+DE analysis design matrix
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c1f7cf7e67e7a3372e359d52a2cfa24d1a2672a6/analysis/check_expression.Rmd" target="_blank">c1f7cf7</a>
 </td>
 <td>
 Anthony Hung
@@ -499,57 +622,6 @@ Anthony Hung
 Start up additional analysis files
 </td>
 </tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/a8cef1a7772685bd04a25c93dd5d7920caa1e492/analysis/index.Rmd" target="_blank">a8cef1a</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-<td>
-Create analysis files for analysis of BulkRNA pilot data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a8cef1a7772685bd04a25c93dd5d7920caa1e492/docs/index.html" target="_blank">a8cef1a</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-12-16
-</td>
-<td>
-Create analysis files for analysis of BulkRNA pilot data
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/0cd6d9c044e13d0bbe8a9b4909eb96b1edd5c544/analysis/index.Rmd" target="_blank">0cd6d9c</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2019-11-27
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -557,28 +629,70 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<div id="analysis-of-bulkrnascrna-sequencing-data-for-osteoarthritis-strain-project." class="section level1">
-<h1>Analysis of bulkRNA/scRNA sequencing data for Osteoarthritis Strain project.</h1>
-<div id="pilot-n3" class="section level2">
-<h2>PILOT (n=3):</h2>
-<p><strong>single-cell data</strong></p>
-<ul>
-<li><a href="ANT1_ANT2_.html">Analysis of single-cell pilot experiment data</a></li>
-</ul>
-<p><strong>Bulk Data</strong></p>
-<p>Working with raw data</p>
-<ul>
-<li><p><a href="preprocessing.html">Preprocessing</a></p></li>
-<li><p><a href="raw_counts_analysis.html">Analysis of Raw bulkRNAseq pilot data</a></p></li>
-<li><p><a href="Norm_filter.html">Normalization and filtering for lowly expressed genes</a></p></li>
-<li><p><a href="download_gene_annotation.html">Download Gene Annotations</a></p></li>
-</ul>
-<p>Analyses of bulk RNAseq data</p>
-<ul>
-<li><p><a href="technical_factors_analysis.html">Accounting for technical factors</a></p></li>
-<li><p><a href="check_expression.html">Checking expression of individual genes of interest</a></p></li>
-<li><p><a href="DE_analysis.html">Differential expression using Limma/Voom</a></p></li>
-</ul>
+<div id="section" class="section level1">
+<h1></h1>
+<p>Check chondro/msc markers for absolute expression strain markers boxplot comparisons</p>
+<pre class="r"><code>#load in normalized/filtered data
+filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
+
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)
+
+# load gene annotations
+gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
+                        sep = &quot;\t&quot;)</code></pre>
+</div>
+<div id="define-functions-to-plot-boxplot-of-results" class="section level1">
+<h1>Define functions to plot boxplot of results</h1>
+<pre class="r"><code>#Inputs: count matrix, sample information data frame, and gene of interest in the ENSG format
+get_gene_long &lt;- function(counts, info, gene){
+     gene_counts &lt;- as.data.frame(counts[gene,])
+     names(gene_counts) &lt;- &quot;CPM&quot;
+     gene_counts_info &lt;- cbind(gene_counts, info)
+     return(gene_counts_info)
+}
+
+boxplot_gene_treatment &lt;- function(counts_, info_, gene_){
+     df &lt;- get_gene_long(counts = counts_, info = info_, gene = gene_)
+     
+     ggplot(df, aes(x = treatment, y = CPM)) +
+          geom_boxplot() + 
+          labs(title=paste0(&quot;Expression of &quot;, as.character(gene_), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;Counts per million reads&quot;)
+}</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.5.0 Rcpp_1.0.3      rprojroot_1.3-2 digest_0.6.23  
+ [5] later_1.0.0     R6_2.4.1        backports_1.1.5 git2r_0.26.1   
+ [9] magrittr_1.5    evaluate_0.14   stringi_1.4.3   rlang_0.4.2    
+[13] fs_1.3.1        promises_1.1.0  whisker_0.4     rmarkdown_1.18 
+[17] tools_3.4.3     stringr_1.4.0   glue_1.3.1      httpuv_1.5.2   
+[21] xfun_0.11       yaml_2.2.0      compiler_3.4.3  htmltools_0.4.0
+[25] knitr_1.26     </code></pre>
 </div>
 </div>
 
@@ -596,6 +710,8 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
+</div>
+</div>
 
 </div>
 
@@ -628,6 +744,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

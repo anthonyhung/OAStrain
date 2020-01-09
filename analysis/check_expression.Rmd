@@ -18,6 +18,10 @@ filt_cpm <- readRDS("data/norm_filtered_counts.rds")
 
 # load in reordered sample information
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
+
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
 ```
 
 # Define functions to plot boxplot of results

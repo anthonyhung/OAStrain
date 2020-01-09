@@ -24,6 +24,10 @@ library("RUVSeq")
 #load in filtered count data, RUVs output
 filt_counts <- readRDS("data/filtered_counts.rds")
 RUVsCPM <- readRDS("data/RUVsCPM.rds")
+
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
 ```
 
 # Limma doesn't deal with technical replicates, so here I randomly sample 1 replicate for each of the 6 individualxcondition
@@ -144,6 +148,10 @@ plot_gene <- function(v, g) {
 Treatment
 
 ```{r treatment}
+#rename top_treatment genes to gene symbols for easier interpretation
+top_treatment_top4 <- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)]
+top_treatment_top4
+
 p_treatment_1 <- plot_gene(v2, rownames(top_treatment)[1]) +
   ylim(3, 11) + theme(legend.position = "bottom")
 p_treatment_2 <- plot_gene(v2, rownames(top_treatment)[2]) +

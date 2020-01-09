@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-06
+<strong>Last updated:</strong> 2020-01-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeea5b72e6347079882535a1b59ae8b850e48123actargetblankea5b72ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/ea5b72e6347079882535a1b59ae8b850e48123ac" target="_blank">ea5b72e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f98f498bbd9ef5e2069900b48e940b7273549dee" target="_blank">f98f498</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeea5b72e6347079882535a1b59ae8b850e48123actargetblankea5b72ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,7 +507,6 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
@@ -515,6 +514,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/DE_analysis.Rmd
+    Modified:   analysis/check_expression.Rmd
     Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
@@ -554,6 +554,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/analysis/DE_analysis.Rmd" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+<td>
+Add functions to plot Limma results
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/DE_analysis.html" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+<td>
+Add functions to plot Limma results
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -827,7 +861,11 @@ Attaching package: &#39;ShortRead&#39;</code></pre>
     id</code></pre>
 <pre class="r"><code>#load in filtered count data, RUVs output
 filt_counts &lt;- readRDS(&quot;data/filtered_counts.rds&quot;)
-RUVsCPM &lt;- readRDS(&quot;data/RUVsCPM.rds&quot;)</code></pre>
+RUVsCPM &lt;- readRDS(&quot;data/RUVsCPM.rds&quot;)
+
+# load gene annotations
+gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
+                        sep = &quot;\t&quot;)</code></pre>
 </div>
 <div id="limma-doesnt-deal-with-technical-replicates-so-here-i-randomly-sample-1-replicate-for-each-of-the-6-individualxcondition" class="section level1">
 <h1>Limma doesn’t deal with technical replicates, so here I randomly sample 1 replicate for each of the 6 individualxcondition</h1>
@@ -34553,6 +34591,11 @@ Anthony Hung
     labs(title = g, x = &quot;Treatment&quot;, y = expression(&quot;Expression level (&quot; * log[2] * &quot; cpm)&quot;))
 }</code></pre>
 <p>Treatment</p>
+<pre class="r"><code>#rename top_treatment genes to gene symbols for easier interpretation
+top_treatment_top4 &lt;- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)]
+top_treatment_top4</code></pre>
+<pre><code>[1] AFDN   MTOR   MAP2K4 ANXA2 
+56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
 <pre class="r"><code>p_treatment_1 &lt;- plot_gene(v2, rownames(top_treatment)[1]) +
   ylim(3, 11) + theme(legend.position = &quot;bottom&quot;)
 p_treatment_2 &lt;- plot_gene(v2, rownames(top_treatment)[2]) +
@@ -34565,6 +34608,43 @@ ggsave(&quot;fig-limma-treatment-hit-1.eps&quot;, plot = p_treatment_1,
        width = 7, height = 7, units = &quot;in&quot;)
 plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/treatment-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-treatment-1">
+Past versions of treatment-1.png
+</button>
+</p>
+<div id="fig-treatment-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="use-ash-for-mutliple-testing-correction" class="section level2">
 <h2>Use ash for mutliple testing correction</h2>
@@ -34590,6 +34670,43 @@ class(ash_treatment)</code></pre>
 <pre><code>[1] 62</code></pre>
 <pre class="r"><code>hist(ash_treatment$result$svalue)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/ash-treatment-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ash-treatment-1">
+Past versions of ash-treatment-1.png
+</button>
+</p>
+<div id="fig-ash-treatment-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="plots" class="section level1">
@@ -34663,12 +34780,138 @@ for (test in tests) {
 <pre><code>Warning in estimate_mixprop(data, g, prior, optmethod = optmethod, control
 = control, : Optimization failed to converge. Results may be unreliable. Try
 increasing maxiter and rerunning.</code></pre>
-<pre class="r"><code>plot_ma(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
+<pre class="r"><code>#FDR 0.1
+plot_ma(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20Functions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-1">
+Past versions of “use Functions-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20Functions-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-2">
+Past versions of “use Functions-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20Functions-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-3">
+Past versions of “use Functions-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#FDR 0.05
+plot_ma(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#FDR 0.01
+plot_ma(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-9.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
