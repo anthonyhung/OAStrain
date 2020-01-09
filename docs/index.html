@@ -324,7 +324,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-12-16
+<strong>Last updated:</strong> 2020-01-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -355,22 +355,31 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree082001117554f9a59321a625d9413accecd45917targetblank0820011a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/082001117554f9a59321a625d9413accecd45917" target="_blank">0820011</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3e14c8a3a54b42da0ad190f2cbcd611e847b6e35targetblank3e14c8aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3e14c8a3a54b42da0ad190f2cbcd611e847b6e35" target="_blank">3e14c8a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree082001117554f9a59321a625d9413accecd45917targetblank0820011a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3e14c8a3a54b42da0ad190f2cbcd611e847b6e35targetblank3e14c8aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    output/ANT1.2.rds
+    Ignored:    output/ANT1_seurat.rds
+    Ignored:    output/ANT2_seurat.rds
 
 Untracked files:
-    Untracked:  analysis/Norm_filter.Rmd
-    Untracked:  analysis/preprocessing.Rmd
-    Untracked:  analysis/raw_counts_analysis.Rmd
+    Untracked:  .RDataTmp
+    Untracked:  analysis/download_gene_annotation.Rmd
+    Untracked:  data/gene-annotation.txt
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
@@ -417,6 +426,91 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/3e14c8a3a54b42da0ad190f2cbcd611e847b6e35/analysis/index.Rmd" target="_blank">3e14c8a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+Add notes for checking expression of certain markers
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/index.Rmd" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+run through with dummy data
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c1f7cf7e67e7a3372e359d52a2cfa24d1a2672a6/analysis/index.Rmd" target="_blank">c1f7cf7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Start up additional analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a8cef1a7772685bd04a25c93dd5d7920caa1e492/analysis/index.Rmd" target="_blank">a8cef1a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Create analysis files for analysis of BulkRNA pilot data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a8cef1a7772685bd04a25c93dd5d7920caa1e492/docs/index.html" target="_blank">a8cef1a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Create analysis files for analysis of BulkRNA pilot data
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/0cd6d9c044e13d0bbe8a9b4909eb96b1edd5c544/analysis/index.Rmd" target="_blank">0cd6d9c</a>
 </td>
 <td>
@@ -443,11 +537,8 @@ Start workflowr project.
 <li><a href="ANT1_ANT2.html">Analysis of single-cell pilot experiment data</a></li>
 </ul>
 <p>Bulk Data</p>
-<ul>
-<li><a href="preprocessing.html">Preprocessing</a></li>
-<li><a href="raw_counts_analysis.html">Analysis of Raw bulkRNAseq pilot data</a></li>
-<li><a href="Norm_filter.html">Normalization and filtering for lowly expressed genes</a></li>
-</ul>
+<p>Working with raw data * <a href="preprocessing.html">Preprocessing</a> * <a href="raw_counts_analysis.html">Analysis of Raw bulkRNAseq pilot data</a> * <a href="Norm_filter.html">Normalization and filtering for lowly expressed genes</a> * <a href="download_gene_annotation.html">Download Gene Annotations</a></p>
+<p>Analyses of bulk RNAseq data * <a href="technical_factors_analysis.html">Accounting for technical factors</a> * <a href="check_expression.html">Checking expression of individual genes of interest</a> * <a href="DE_analysis.html">Differential expression using Limma/Voom</a></p>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
