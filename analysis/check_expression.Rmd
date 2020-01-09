@@ -9,6 +9,9 @@ editor_options:
 
 # 
 
+Check chondro/msc markers for absolute expression
+strain markers boxplot comparisons
+
 ```{r load}
 #load in normalized/filtered data
 filt_cpm <- readRDS("data/norm_filtered_counts.rds")
@@ -17,35 +20,23 @@ filt_cpm <- readRDS("data/norm_filtered_counts.rds")
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 ```
 
-# Rename 
+# Define functions to plot boxplot of results
 
-```{r}
+```{r boxplot functions}
+#Inputs: count matrix, sample information data frame, and gene of interest in the ENSG format
+get_gene_long <- function(counts, info, gene){
+     gene_counts <- as.data.frame(counts[gene,])
+     names(gene_counts) <- "CPM"
+     gene_counts_info <- cbind(gene_counts, info)
+     return(gene_counts_info)
+}
 
+boxplot_gene_treatment <- function(counts_, info_, gene_){
+     df <- get_gene_long(counts = counts_, info = info_, gene = gene_)
+     
+     ggplot(df, aes(x = treatment, y = CPM)) +
+          geom_boxplot() + 
+          labs(title=paste0("Expression of ", as.character(gene_), " by treatment"), x= "Treatment", y = "Counts per million reads")
+}
 ```
 
-<!-- ## Explore top hits -->
-
-<!-- Boxplot function. -->
-
-<!-- ```{r boxplot-function} -->
-<!-- plot_gene <- function(v, g) { -->
-<!--   # v - An EList object containing log2 counts per million -->
-<!--   # g - character vector of a single gene -->
-<!--   stopifnot(class(v) == "EList", -->
-<!--             is.character(g), length(g) == 1) -->
-<!--   library("tidyr") -->
-<!--   single_gene <- v$E[g, ] -->
-<!--   single_gene_long <- gather_(as.data.frame(single_gene), -->
-<!--                               gather_cols = colnames(single_gene)) -->
-<!--   # For some reason, the argument value_col wouldn't work -->
-<!--   colnames(single_gene_long) <- "log2cpm" -->
-<!--   single_gene_long$sample <- rownames(single_gene_long) -->
-<!--   single_gene_long <- separate_(single_gene_long, col = "sample", sep = "-", -->
-<!--                                 into = c("individual", "status", "treatment")) -->
-<!--   single_gene_long$status <- factor(single_gene_long$status, levels = c("contact", "tb")) -->
-<!--   single_gene_long$treatment <- factor(single_gene_long$treatment, levels = c("none", "infected")) -->
-<!--   ggplot(single_gene_long, aes(x = treatment, y = log2cpm, fill = status)) + -->
-<!--     geom_boxplot() + -->
-<!--     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) -->
-<!-- } -->
-<!-- ``` -->

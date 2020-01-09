@@ -19,10 +19,12 @@ single-cell data
 
 Bulk Data
 
+Working with raw data
 * [Preprocessing](preprocessing.html)
 * [Analysis of Raw bulkRNAseq pilot data](raw_counts_analysis.html)
 * [Normalization and filtering for lowly expressed genes](Norm_filter.html)
 
+Analyses of bulk RNAseq data
 * [Accounting for technical factors](technical_factors_analysis.html)
 * [Checking expression of individual genes of interest](check_expression.html)
 * [Differential expression using Limma/Voom](DE_analysis.html)
