@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-03
+<strong>Last updated:</strong> 2020-01-11
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree2b53e545d81bbca2a105e0d40c02cf394a941005targetblank2b53e54a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/2b53e545d81bbca2a105e0d40c02cf394a941005" target="_blank">2b53e54</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/63f57609e4da02fa5677e35c7caa4672b85a3c0f" target="_blank">63f5760</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree2b53e545d81bbca2a105e0d40c02cf394a941005targetblank2b53e54a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,13 +507,14 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
+    Modified:   analysis/Norm_filter.Rmd
     Modified:   analysis/raw_counts_analysis.Rmd
-    Modified:   analysis/technical_factors_analysis.Rmd
     Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
@@ -553,6 +554,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/b7948f028fdd5633f9fb0645fee59f12457d68e0/docs/Norm_filter.html" target="_blank">b7948f0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+<td>
+DE analysis design matrix
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -664,9 +682,6 @@ Create analysis files for analysis of BulkRNA pilot data
 </div>
 <div id="perform-cpm-normalization-of-raw-count-data-and-filtering-of-lowly-expressed-genes" class="section level1">
 <h1>Perform cpm normalization of raw count data and filtering of lowly expressed genes</h1>
-<pre class="r"><code>#configuration
-proj_dir &lt;- &quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/&quot;
-sample_file_info &lt;- &quot;data/bulkPilot_Sample_info_RNAseq.csv&quot;</code></pre>
 <pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;gplots&#39;</code></pre>
@@ -712,27 +727,27 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 <h1>Perform cpm normalization on all counts and plot density plots</h1>
 <pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
 head(cpm)</code></pre>
-<pre><code>                18855_1_S 18856_1_S 19160_2_U 18855_2_U 18856_2_U 19160_1_S
-ENSG00000223972  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000227232  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000278267  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000243485  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000284332  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000237613  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-                18855_3_S 18856_3_S 19160_3_S 18855_1_U 18856_1_U 19160_1_U
-ENSG00000223972  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000227232  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000278267  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000243485  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000284332  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000237613  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-                18855_3_U 18856_3_U 19160_3_U 18855_2_S 18856_2_S 19160_2_S
-ENSG00000223972  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000227232  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000278267  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000243485  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000284332  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337
-ENSG00000237613  5.202337  5.202337  5.202337  5.202337  5.202337  5.202337</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
+ENSG00000223972 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000227232 -1.867925 -2.772709 -3.003450 -3.874447 -3.850321 -1.426368
+ENSG00000278267 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000243485 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000284332 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000237613 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
+ENSG00000223972 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000227232 -6.102178 -3.872687 -1.664949 -1.898621 -6.102178 -3.185924
+ENSG00000278267 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000243485 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000284332 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000237613 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+                19160_2_U 19160_1_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000227232 -4.003513 -3.311668 -1.678662 -2.825456 -2.233250 -6.102178
+ENSG00000278267 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000243485 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000284332 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178
+ENSG00000237613 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178 -6.102178</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;

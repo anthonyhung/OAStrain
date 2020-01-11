@@ -13,12 +13,12 @@ proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
 
 #order of samples to relabel count matrix (sample ID in format 18855_1_S)
 #NOTE: NEED TO CHANGE THIS TO MATCH ACTUAL SAMPLE ORDERS
-samplenames <- c("18855_1_S","18856_1_S", "19160_2_U",
-                 "18855_2_U","18856_2_U", "19160_1_S",
-                 "18855_3_S","18856_3_S", "19160_3_S",
-                 "18855_1_U","18856_1_U", "19160_1_U",
-                 "18855_3_U","18856_3_U", "19160_3_U",
-                 "18855_2_S","18856_2_S", "19160_2_S"
+samplenames <- c("18855_3_S","19160_3_S", "18856_3_U",
+                 "18856_1_U","18855_2_S", "18856_2_S",
+                 "19160_3_U","18855_2_U", "19160_2_S",
+                 "18855_1_S","18856_1_S", "19160_1_S",
+                 "19160_2_U","19160_1_U", "18855_1_U",
+                 "18856_3_S","18856_2_U", "18855_3_U"
                  )
 ```
 

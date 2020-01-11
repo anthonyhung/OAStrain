@@ -12,7 +12,7 @@ editor_options:
 library size
 rin scores
 duplication rate
-total reads vs mapped reads box plot
+total reads vs mapped reads bar plot
 gc content
 
 

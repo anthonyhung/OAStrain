@@ -17,10 +17,10 @@ library("edgeR")
 library("RColorBrewer")
 library("scales")
 library("cowplot")
-library("dplyr")
 library("DT")
 library("tidyr")
 library("RUVSeq")
+library("dplyr")
 
 # Load colors 
 colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
@@ -28,6 +28,8 @@ pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 #load in normalized/filtered data
 filt_cpm <- readRDS("data/norm_filtered_counts.rds")
+#load in filtered counts
+filt_counts <- readRDS("data/filtered_counts.rds")
 
 # load in reordered sample information
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
@@ -83,7 +85,7 @@ for (n in 3:3){
 # Calculate the relationship between each recorded covariate and the top 6 PCs. 
 p_comps <- 1:6
 info <- sampleinfo %>% 
-     select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+     dplyr::select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
@@ -122,17 +124,20 @@ pca_heat
 # Remove unwanted variation using RUVSeq
 
 ```{r RUV}
-#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVs. Here, I just load in the pre-filtered/normalized cpm data.
+#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVs. 
 
 #Use RUVs (replicates) and adjust k until corr heatmap looks right
 replicates <- makeGroups(paste0(sampleinfo$Individual, sampleinfo$treatment))
+x <- paste0(sampleinfo$Individual, sampleinfo$treatment)
 
 #load data into expressionset
-set <- newSeqExpressionSet(as.matrix(filt_cpm),
+set <- newSeqExpressionSet(as.matrix(filt_counts),
                            phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
 set
+#normalization
+set <- betweenLaneNormalization(set, which="upper")
 
-set1 <- RUVs(set, rownames(filt_cpm), k=1, replicates)
+set1 <- RUVs(set, rownames(filt_counts), k=1, replicates)
 pData(set1)
 
 #Plots after correcting RUV

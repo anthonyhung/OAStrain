@@ -7,12 +7,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-# 
+# Build boxplots comparing expression (CPM) of different genes between strain and unstrain samples
 
 Check chondro/msc markers for absolute expression
 strain markers boxplot comparisons
 
 ```{r load}
+library(ggplot2)
 #load in normalized/filtered data
 filt_cpm <- readRDS("data/norm_filtered_counts.rds")
 
@@ -35,12 +36,74 @@ get_gene_long <- function(counts, info, gene){
      return(gene_counts_info)
 }
 
-boxplot_gene_treatment <- function(counts_, info_, gene_){
+boxplot_gene_treatment <- function(counts_, info_, gene_, name){
      df <- get_gene_long(counts = counts_, info = info_, gene = gene_)
      
      ggplot(df, aes(x = treatment, y = CPM)) +
           geom_boxplot() + 
-          labs(title=paste0("Expression of ", as.character(gene_), " by treatment"), x= "Treatment", y = "Counts per million reads")
+          labs(title=paste0("Expression of ", as.character(name), " by treatment"), x= "Treatment", y = "Counts per million reads")
 }
+```
+
+# Compare expression of strain markers between samples
+
+```{r strain compare}
+#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+
+#MMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000087245", "MMP2")
+
+#TIMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000035862", "TIMP2")
+
+#COMP
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000105664", "COMP")
+
+#TIMP1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000102265", "TIMP1")
+
+#ADAMTS4
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000158859", "ADAMTS4")
+
+#ADAMTS5e
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154736", "ADAMTS5")
+
+#Chond Markers
+
+#COL2A1, ACAN, COL10A1  were filtered out
+#SOX9
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000125398", "SOX9")
+
+#COL11A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000060718", "COL11A1")
+
+#SOX5
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000134532", "SOX5")
+
+#SOX6
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000110693", "SOX6")
+
+#TGFB3
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000119699", "TGFB3")
+
+
+#MSC Markers
+
+#ENG filtered out
+
+#CD34, CD14, ITGAM, CD79A, CD19 filtered out
+
+#THY1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154096", "THY1")
+
+#NT5E
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000135318", "NT5E")
+
+
+
+#PTPRC
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000081237", "PTPRC")
+
+
 ```
 

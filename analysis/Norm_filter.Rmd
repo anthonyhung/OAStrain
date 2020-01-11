@@ -9,12 +9,6 @@ editor_options:
 
 # Perform cpm normalization of raw count data and filtering of lowly expressed genes
 
-```{r config}
-#configuration
-proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
-sample_file_info <- "data/bulkPilot_Sample_info_RNAseq.csv"
-```
-
 ```{r load libraries and data}
 library("gplots")
 library("ggplot2")

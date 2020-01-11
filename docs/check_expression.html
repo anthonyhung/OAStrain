@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-09
+<strong>Last updated:</strong> 2020-01-11
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f98f498bbd9ef5e2069900b48e940b7273549dee" target="_blank">f98f498</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/63f57609e4da02fa5677e35c7caa4672b85a3c0f" target="_blank">63f5760</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -513,9 +513,13 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
-    Modified:   analysis/DE_analysis.Rmd
+    Modified:   analysis/Norm_filter.Rmd
     Modified:   analysis/check_expression.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/preprocessing.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -554,6 +558,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/analysis/check_expression.Rmd" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/check_expression.html" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -629,10 +667,11 @@ Start up additional analysis files
 </div>
 </div>
 </div>
-<div id="section" class="section level1">
-<h1></h1>
+<div id="build-boxplots-comparing-expression-cpm-of-different-genes-between-strain-and-unstrain-samples" class="section level1">
+<h1>Build boxplots comparing expression (CPM) of different genes between strain and unstrain samples</h1>
 <p>Check chondro/msc markers for absolute expression strain markers boxplot comparisons</p>
-<pre class="r"><code>#load in normalized/filtered data
+<pre class="r"><code>library(ggplot2)
+#load in normalized/filtered data
 filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
 
 # load in reordered sample information
@@ -652,13 +691,69 @@ get_gene_long &lt;- function(counts, info, gene){
      return(gene_counts_info)
 }
 
-boxplot_gene_treatment &lt;- function(counts_, info_, gene_){
+boxplot_gene_treatment &lt;- function(counts_, info_, gene_, name){
      df &lt;- get_gene_long(counts = counts_, info = info_, gene = gene_)
      
      ggplot(df, aes(x = treatment, y = CPM)) +
           geom_boxplot() + 
-          labs(title=paste0(&quot;Expression of &quot;, as.character(gene_), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;Counts per million reads&quot;)
+          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;Counts per million reads&quot;)
 }</code></pre>
+</div>
+<div id="compare-expression-of-strain-markers-between-samples" class="section level1">
+<h1>Compare expression of strain markers between samples</h1>
+<pre class="r"><code>#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+
+#MMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000087245&quot;, &quot;MMP2&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TIMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000035862&quot;, &quot;TIMP2&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#COMP
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000105664&quot;, &quot;COMP&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TIMP1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000102265&quot;, &quot;TIMP1&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ADAMTS4
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000158859&quot;, &quot;ADAMTS4&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ADAMTS5e
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154736&quot;, &quot;ADAMTS5&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Chond Markers
+
+#COL2A1, ACAN, COL10A1  were filtered out
+#SOX9
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#COL11A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#SOX5
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#SOX6
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TGFB3
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#MSC Markers
+
+#ENG filtered out
+
+#CD34, CD14, ITGAM, CD79A, CD19 filtered out
+
+#THY1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#NT5E
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#PTPRC
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-14.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -685,14 +780,21 @@ locale:
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+[1] ggplot2_3.2.1
+
 loaded via a namespace (and not attached):
- [1] workflowr_1.5.0 Rcpp_1.0.3      rprojroot_1.3-2 digest_0.6.23  
- [5] later_1.0.0     R6_2.4.1        backports_1.1.5 git2r_0.26.1   
- [9] magrittr_1.5    evaluate_0.14   stringi_1.4.3   rlang_0.4.2    
-[13] fs_1.3.1        promises_1.1.0  whisker_0.4     rmarkdown_1.18 
-[17] tools_3.4.3     stringr_1.4.0   glue_1.3.1      httpuv_1.5.2   
-[21] xfun_0.11       yaml_2.2.0      compiler_3.4.3  htmltools_0.4.0
-[25] knitr_1.26     </code></pre>
+ [1] Rcpp_1.0.3       compiler_3.4.3   pillar_1.4.2     later_1.0.0     
+ [5] git2r_0.26.1     workflowr_1.5.0  tools_3.4.3      digest_0.6.23   
+ [9] evaluate_0.14    lifecycle_0.1.0  tibble_2.1.3     gtable_0.3.0    
+[13] pkgconfig_2.0.3  rlang_0.4.2      yaml_2.2.0       xfun_0.11       
+[17] withr_2.1.2      stringr_1.4.0    dplyr_0.8.3      knitr_1.26      
+[21] fs_1.3.1         rprojroot_1.3-2  grid_3.4.3       tidyselect_0.2.5
+[25] glue_1.3.1       R6_2.4.1         rmarkdown_1.18   farver_2.0.1    
+[29] purrr_0.3.3      magrittr_1.5     whisker_0.4      backports_1.1.5 
+[33] scales_1.1.0     promises_1.1.0   htmltools_0.4.0  assertthat_0.2.1
+[37] colorspace_1.4-1 httpuv_1.5.2     labeling_0.3     stringi_1.4.3   
+[41] lazyeval_0.2.2   munsell_0.5.0    crayon_1.3.4    </code></pre>
 </div>
 </div>
 
