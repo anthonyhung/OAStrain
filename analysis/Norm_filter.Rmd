@@ -70,25 +70,11 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 # Filtering for lowly expressed genes (avg CPM > 0.5 in at least 2 samples)
 
 ```{r filter}
-cutoff <- 0
+cutoff <- 0.5
 
-#plot densities to determine cutoff
-cpm_median <- apply(cpm, 1, median)
-cpm_median_density <- density(cpm_median)
-cpm_density <- apply(cpm, 2, density)
-plot(cpm_density[[1]], lty = "dotted", col = gray(0.05, alpha = 0.5),
-     main = "Gene expression distribution",
-     xlab = "log2 cpm", sub = "red = median; blue = cutoff")
-suppress_output <- lapply(cpm_density, lines, lty = "dotted",
-                          col = gray(0.05, alpha = 0.5))
-lines(cpm_median_density, col = "red", lwd = 3)
-abline(v = cutoff, col = "blue")
+keep <- rowSums( cpm(raw_counts, log=FALSE) > 0.5 ) >=2
 
-#apply filter (Keeping the `r sum(cpm_median > cutoff)` genes with a median log~2~ cpm greater than `r cutoff`.)
-
-counts <- raw_counts %>% 
-     filter(cpm_median > cutoff)
-rownames(counts) <- rownames(raw_counts)[cpm_median > cutoff]
+counts <- raw_counts[keep,]
 filtered_cpm <- cpm(counts, log = T)
 ```
 

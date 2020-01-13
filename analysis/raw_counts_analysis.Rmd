@@ -24,7 +24,7 @@ samplenames <- c("18855_3_S","19160_3_S", "18856_3_U",
 
 # Overview:
 
-Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual.
+Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual. Based on QC metrics (only 38.4% aligned reads for sample 02), I removed this sample from further analyses.
 
 # Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples 
 
@@ -50,6 +50,9 @@ raw_counts <- raw_counts[, -c(1:6)]
 # assign col.names
 names(raw_counts) <- samplenames
 
+# remove 02 sample that does not pass QC
+raw_counts <- raw_counts[, -14] 
+
 # save relabeled raw count data matrix
 saveRDS(raw_counts, "data/raw_counts_relabeled.rds")
 
@@ -63,6 +66,8 @@ sample_info <- read.csv("data/Sample.info.RNAseq.csv")
 head(sample_info)
 #Re-order sample information to match the columns of count matrix
 sample_info <- sample_info[match(samplenames, sample_info$Sample_ID),]
+#remove 02 sample that does not pass QC
+sample_info <- sample_info[-14,]
 # save reorganized sample information
 saveRDS(sample_info, "data/Sample.info.RNAseq.reordered.csv")
 ```
@@ -122,8 +127,3 @@ for (n in 3:3){
 }
 ```
 
-# Boxplot of correlations between replicates (and broken down by no treatment and treatment), between treatments of same individual, between individuals of same treatment
-
-```{r boxplotcorr}
-
-```

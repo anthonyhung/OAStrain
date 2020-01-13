@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-11
+<strong>Last updated:</strong> 2020-01-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/63f57609e4da02fa5677e35c7caa4672b85a3c0f" target="_blank">63f5760</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebd0e9ca9fce8fcacec0258136d57c630ecf50508targetblankbd0e9caa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bd0e9ca9fce8fcacec0258136d57c630ecf50508" target="_blank">bd0e9ca</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree63f57609e4da02fa5677e35c7caa4672b85a3c0ftargetblank63f5760a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebd0e9ca9fce8fcacec0258136d57c630ecf50508targetblankbd0e9caa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -513,9 +513,7 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
-    Modified:   analysis/Norm_filter.Rmd
     Modified:   analysis/raw_counts_analysis.Rmd
-    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -554,6 +552,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/analysis/raw_counts_analysis.Rmd" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+<td>
+Re-run analyses with real data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/raw_counts_analysis.html" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+<td>
+Re-run analyses with real data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -694,7 +726,7 @@ samplenames &lt;- c(&quot;18855_3_S&quot;,&quot;19160_3_S&quot;, &quot;18856_3_U
                  )</code></pre>
 <div id="overview" class="section level1">
 <h1>Overview:</h1>
-<p>Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual.</p>
+<p>Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual. Based on QC metrics (only 38.4% aligned reads for sample 02), I removed this sample from further analyses.</p>
 </div>
 <div id="load-in-bulk-rna-sequencing-data-from-pilot-experiment-and-visualize-correlations-between-samples" class="section level1">
 <h1>Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples</h1>
@@ -724,13 +756,16 @@ raw_counts &lt;- raw_counts[, -c(1:6)]
 # assign col.names
 names(raw_counts) &lt;- samplenames
 
+# remove 02 sample that does not pass QC
+raw_counts &lt;- raw_counts[, -14] 
+
 # save relabeled raw count data matrix
 saveRDS(raw_counts, &quot;data/raw_counts_relabeled.rds&quot;)
 
 # Check that there&#39;s no &quot;NAs&quot; in the data
 summary(apply(raw_counts, 1, var) == 0) </code></pre>
 <pre><code>   Mode   FALSE    TRUE 
-logical   33237   25158 </code></pre>
+logical   32936   25459 </code></pre>
 <pre class="r"><code>#Sample information
 sample_info &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
 head(sample_info)</code></pre>
@@ -743,6 +778,8 @@ head(sample_info)</code></pre>
 6 19160_2_S   NA19160    M         2           8    Strain   1                1</code></pre>
 <pre class="r"><code>#Re-order sample information to match the columns of count matrix
 sample_info &lt;- sample_info[match(samplenames, sample_info$Sample_ID),]
+#remove 02 sample that does not pass QC
+sample_info &lt;- sample_info[-14,]
 # save reorganized sample information
 saveRDS(sample_info, &quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
 </div>
@@ -781,6 +818,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/raw_counts_analysis.Rmd/corr heatmap-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/corr heatmap-1.png" target="_blank">a5c9482</a>
@@ -836,6 +884,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/raw_counts_analysis.Rmd/PCA raw-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-1.png" target="_blank">a5c9482</a>
 </td>
 <td>
@@ -878,6 +937,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/raw_counts_analysis.Rmd/PCA raw-2.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-2.png" target="_blank">a5c9482</a>
@@ -925,6 +995,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/raw_counts_analysis.Rmd/PCA raw-3.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-3.png" target="_blank">a5c9482</a>
 </td>
 <td>
@@ -969,6 +1050,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/raw_counts_analysis.Rmd/PCA raw-4.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/raw_counts_analysis.Rmd/PCA raw-4.png" target="_blank">a5c9482</a>
 </td>
 <td>
@@ -982,9 +1074,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-</div>
-<div id="boxplot-of-correlations-between-replicates-and-broken-down-by-no-treatment-and-treatment-between-treatments-of-same-individual-between-individuals-of-same-treatment" class="section level1">
-<h1>Boxplot of correlations between replicates (and broken down by no treatment and treatment), between treatments of same individual, between individuals of same treatment</h1>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

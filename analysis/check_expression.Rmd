@@ -39,16 +39,19 @@ get_gene_long <- function(counts, info, gene){
 boxplot_gene_treatment <- function(counts_, info_, gene_, name){
      df <- get_gene_long(counts = counts_, info = info_, gene = gene_)
      
-     ggplot(df, aes(x = treatment, y = CPM)) +
-          geom_boxplot() + 
-          labs(title=paste0("Expression of ", as.character(name), " by treatment"), x= "Treatment", y = "Counts per million reads")
+     ggplot(df, aes(x = treatment, y = CPM, color = info_$Individual)) +
+          geom_boxplot() +
+          labs(title=paste0("Expression of ", as.character(name), " by treatment"), x= "Treatment", y = "log2 Counts per million reads")
 }
 ```
 
 # Compare expression of strain markers between samples
 
 ```{r strain compare}
-#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+#MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+
+#MMP1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000196611", "MMP1")
 
 #MMP2
 boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000087245", "MMP2")
@@ -70,7 +73,14 @@ boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154736", "ADAMTS5")
 
 #Chond Markers
 
-#COL2A1, ACAN, COL10A1  were filtered out
+#ACAN was filtered out
+
+#COL2A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000139219", "COL2A1")
+
+#COL10A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000123500", "COL10A1")
+
 #SOX9
 boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000125398", "SOX9")
 
@@ -89,20 +99,24 @@ boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000119699", "TGFB3")
 
 #MSC Markers
 
-#ENG filtered out
+#CD34, ITGAM, CD79A, CD19 filtered out
 
-#CD34, CD14, ITGAM, CD79A, CD19 filtered out
+#ENG
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000106991", "ENG (CD105)")
 
 #THY1
-boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154096", "THY1")
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154096", "THY1 (CD90)")
 
 #NT5E
-boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000135318", "NT5E")
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000135318", "NT5E (CD73)")
 
 
 
 #PTPRC
 boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000081237", "PTPRC")
+
+#CD14
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000170458", "CD14")
 
 
 ```
