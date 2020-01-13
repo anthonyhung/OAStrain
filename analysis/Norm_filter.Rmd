@@ -81,8 +81,8 @@ filtered_cpm <- cpm(counts, log = T)
 # Boxplots of normalized+filtered counts across samples
 ```{r boxplot filt cpm}
 melt_filt_cpm <- melt(filtered_cpm)
-names(melt_filt_cpm) <- c("gene", "sampleID", "cpm")
-p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), cpm)) 
+names(melt_filt_cpm) <- c("gene", "sampleID", "log2cpm")
+p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
