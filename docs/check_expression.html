@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-13
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebd0e9ca9fce8fcacec0258136d57c630ecf50508targetblankbd0e9caa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bd0e9ca9fce8fcacec0258136d57c630ecf50508" target="_blank">bd0e9ca</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef1425df1cce9caed0803bd9f25483dc1795ec89etargetblankf1425dfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f1425df1cce9caed0803bd9f25483dc1795ec89e" target="_blank">f1425df</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebd0e9ca9fce8fcacec0258136d57c630ecf50508targetblankbd0e9caa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef1425df1cce9caed0803bd9f25483dc1795ec89etargetblankf1425dfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -513,10 +513,6 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
-    Modified:   analysis/Norm_filter.Rmd
-    Modified:   analysis/check_expression.Rmd
-    Modified:   analysis/raw_counts_analysis.Rmd
-    Modified:   data/Sample.info.RNAseq.reordered.csv
     Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
@@ -556,6 +552,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/analysis/check_expression.Rmd" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Correct CPM Cutoff strategy
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/check_expression.html" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Correct CPM Cutoff strategy
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -726,9 +756,9 @@ get_gene_long &lt;- function(counts, info, gene){
 boxplot_gene_treatment &lt;- function(counts_, info_, gene_, name){
      df &lt;- get_gene_long(counts = counts_, info = info_, gene = gene_)
      
-     ggplot(df, aes(x = treatment, y = CPM)) +
-          geom_boxplot() + 
-          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;log Counts per million reads&quot;)
+     ggplot(df, aes(x = treatment, y = CPM, color = info_$Individual)) +
+          geom_boxplot() +
+          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;log2 Counts per million reads&quot;)
 }</code></pre>
 </div>
 <div id="compare-expression-of-strain-markers-between-samples" class="section level1">
@@ -760,6 +790,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-1.png" target="_blank">bd0e9ca</a>
@@ -802,6 +843,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-2.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-2.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -840,6 +892,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-3.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-3.png" target="_blank">bd0e9ca</a>
@@ -882,6 +945,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-4.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-4.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -920,6 +994,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-5.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-5.png" target="_blank">bd0e9ca</a>
@@ -962,6 +1047,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-6.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-6.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1002,6 +1098,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-7.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-7.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1017,9 +1124,9 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Chond Markers
 
-#COL2A1, ACAN, COL10A1  were filtered out
+#ACAN was filtered out
 
-#
+#COL2A1
 boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000139219&quot;, &quot;COL2A1&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1046,6 +1153,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-8.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-8.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1059,8 +1177,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX9
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
+<pre class="r"><code>#COL10A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000123500&quot;, &quot;COL10A1&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-9">
@@ -1086,6 +1204,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-9.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-9.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1099,8 +1228,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#COL11A1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
+<pre class="r"><code>#SOX9
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-10">
@@ -1126,6 +1255,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-10.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-10.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1139,8 +1279,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX5
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
+<pre class="r"><code>#COL11A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-11">
@@ -1166,6 +1306,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-11.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-11.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1179,8 +1330,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX6
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
+<pre class="r"><code>#SOX5
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-12">
@@ -1206,6 +1357,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-12.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-12.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1219,8 +1381,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#TGFB3
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
+<pre class="r"><code>#SOX6
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-13.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-13">
@@ -1246,6 +1408,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-13.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-13.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1259,14 +1432,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#MSC Markers
-
-#ENG filtered out
-
-#CD34, CD14, ITGAM, CD79A, CD19 filtered out
-
-#THY1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1&quot;)</code></pre>
+<pre class="r"><code>#TGFB3
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-14.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-14">
@@ -1292,6 +1459,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-14.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/check_expression.Rmd/strain compare-14.png" target="_blank">bd0e9ca</a>
 </td>
 <td>
@@ -1305,12 +1483,99 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#NT5E
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E&quot;)</code></pre>
+<pre class="r"><code>#MSC Markers
+
+#CD34, ITGAM, CD79A, CD19 filtered out
+
+#ENG
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000106991&quot;, &quot;ENG (CD105)&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-15">
+Past versions of “strain compare-15.png”
+</button>
+</p>
+<div id="fig-no-spaces-strain-compare-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-15.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#THY1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1 (CD90)&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-16">
+Past versions of “strain compare-16.png”
+</button>
+</p>
+<div id="fig-no-spaces-strain-compare-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-16.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#NT5E
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E (CD73)&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-17.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#PTPRC
 boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/check_expression.Rmd/strain%20compare-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#CD14
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000170458&quot;, &quot;CD14&quot;)</code></pre>
+<p><img src="figure/check_expression.Rmd/strain%20compare-19.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
