@@ -1,0 +1,506 @@
+---
+title: "remove_18856_strain"
+author: "Anthony Hung"
+date: "2020-01-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Re-do all analyses but remove 18856 Strain
+
+
+```{r config}
+#configuration
+proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
+
+#order of samples to relabel count matrix (sample ID in format 18855_1_S)
+#NOTE: NEED TO CHANGE THIS TO MATCH ACTUAL SAMPLE ORDERS
+samplenames <- c("18855_3_S","19160_3_S", "18856_3_U",
+                 "18856_1_U","18855_2_S", "18856_2_S",
+                 "19160_3_U","18855_2_U", "19160_2_S",
+                 "18855_1_S","18856_1_S", "19160_1_S",
+                 "19160_2_U","19160_1_U", "18855_1_U",
+                 "18856_3_S","18856_2_U", "18855_3_U"
+                 )
+```
+
+# Overview:
+
+Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual. Based on QC metrics (only 38.4% aligned reads for sample 02), I removed this sample from further analyses.
+
+# Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples 
+
+```{r load libraries and data}
+library("gplots")
+library("ggplot2")
+library("RColorBrewer")
+library("scales")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+# load in counts
+raw_counts <- read.table(paste0(proj_dir, "out/counts/counts.txt"), header = T)
+
+# assign row.names
+row.names(raw_counts) <- raw_counts$Geneid
+
+# exclude extra data columns
+raw_counts <- raw_counts[, -c(1:6)] 
+
+# assign col.names
+names(raw_counts) <- samplenames
+
+# remove 02 sample that does not pass QC. Also remove all 18856 Strain
+raw_counts <- raw_counts[, -c(6, 11, 14, 16)] 
+
+# save relabeled raw count data matrix
+saveRDS(raw_counts, "data/prime_raw_counts_relabeled.rds")
+
+# Check that there's no "NAs" in the data
+summary(apply(raw_counts, 1, var) == 0) 
+
+
+
+#Sample information
+sample_info <- read.csv("data/Sample.info.RNAseq.csv")
+head(sample_info)
+#Re-order sample information to match the columns of count matrix
+sample_info <- sample_info[match(samplenames, sample_info$Sample_ID),]
+#remove 02 sample that does not pass QC
+sample_info <- sample_info[-c(6, 11, 14, 16),]
+# save reorganized sample information
+saveRDS(sample_info, "data/prime_Sample.info.RNAseq.reordered.csv")
+```
+
+# Perform PCA and hierarchical clustering on raw data
+
+```{r corr heatmap}
+labels <- paste(sample_info$Individual, sample_info$treatment, sep=" ")
+
+#load PCA function
+source("code/PCA_fn.R")
+
+# Clustering (original code from Julien Roux)
+cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
+
+
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sample_info$Individual))], RowSideColors=pal[as.integer(as.factor(sample_info$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+#Perform PCA and color by factors to look for any potential correlations
+
+```{r PCA raw}
+# Perform PCA
+pca_genes <- prcomp(t(raw_counts), scale = F)
+scores <- pca_genes$x
+
+
+#Make PCA plots with the factors colored by individual
+
+### PCs 1 and 2 Raw Data
+for (n in 1:1){
+  col.v <- pal[as.integer(sample_info$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+### PCs 3 and 4 Raw Data
+
+for (n in 3:3){
+  col.v <- pal[as.integer(sample_info$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+#Make PCA plots with the factors colored by treatment
+
+### PCs 1 and 2 Raw Data
+for (n in 1:1){
+  col.v <- pal[as.integer(sample_info$treatment)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+### PCs 3 and 4 Raw Data
+
+for (n in 3:3){
+  col.v <- pal[as.integer(sample_info$treatment)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+```
+
+
+# Perform cpm normalization of raw count data and filtering of lowly expressed genes
+
+```{r load libraries/data}
+library("gplots")
+library("ggplot2")
+library("reshape")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+library("dplyr")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+
+# load in relabeled counts
+raw_counts <- readRDS("data/prime_raw_counts_relabeled.rds")
+
+# load in reordered sample information
+sampleinfo <- readRDS("data/prime_Sample.info.RNAseq.reordered.csv")
+```
+
+# Perform cpm normalization on all counts and plot density plots
+
+```{r cpm normalization}
+cpm <- cpm(raw_counts, log=TRUE)
+head(cpm)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(cpm[,strained], col=col[strained, ], legend="topright")
+plotDensities(cpm[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(cpm[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+# Boxplots of cpm across samples
+
+```{r boxplot cpm}
+meltcpm <- melt(cpm)
+names(meltcpm) <- c("gene", "sampleID", "cpm")
+p <- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+# Filtering for lowly expressed genes (avg CPM > 0.5 in at least 2 samples)
+
+```{r filter}
+cutoff <- 0.5
+
+keep <- rowSums( cpm(raw_counts, log=FALSE) > 0.5 ) >=2
+
+counts <- raw_counts[keep,]
+filtered_cpm <- cpm(counts, log = T)
+```
+
+# Boxplots of normalized+filtered counts across samples
+```{r boxplot filt cpm}
+melt_filt_cpm <- melt(filtered_cpm)
+names(melt_filt_cpm) <- c("gene", "sampleID", "log2cpm")
+p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+# Save normalized/filtered count matrix and filtered count matrix
+
+```{r save}
+saveRDS(counts, "data/prime_filtered_counts.rds")
+saveRDS(filtered_cpm, "data/prime_norm_filtered_counts.rds")
+```
+
+
+
+
+
+---
+title: "Analysis of Technical factors"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+# Examine normalized/filtered data and see if any PCs correlate with technical factors
+
+```{r load data/libraries again}
+library("gplots")
+library("ggplot2")
+library("reshape")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+library("DT")
+library("tidyr")
+library("RUVSeq")
+library("dplyr")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+#load in normalized/filtered data
+filt_cpm <- readRDS("data/prime_norm_filtered_counts.rds")
+#load in filtered counts
+filt_counts <- readRDS("data/prime_filtered_counts.rds")
+
+# load in reordered sample information
+sampleinfo <- readRDS("data/prime_Sample.info.RNAseq.reordered.csv")
+```
+
+# PCA and hierarchical clustering of normalized and filtered data
+
+```{r clustering}
+#Load PCA plotting Function
+source("code/PCA_fn.R")
+
+
+# Clustering (original code from Julien Roux)
+cors <- cor(filt_cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+#Perform PCA and color by factors to look for any potential correlations
+
+```{r PCA}
+# Perform PCA
+pca_genes <- prcomp(t(filt_cpm), scale = T)
+scores <- pca_genes$x
+
+variances <- pca_genes$sdev^2
+explained <- variances / sum(variances)
+plot(pca_genes, main = "Variance per PC")
+
+
+#Make PCA plots with the factors colored by Individual
+
+### PCs 1 and 2 norm+filt Data
+for (n in 1:1){
+  col.v <- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+### PCs 3 and 4 norm+filt Data
+
+for (n in 3:3){
+  col.v <- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+```
+
+
+# Check that technical factors do not correlate with PCs
+
+```{r corr PC}
+# Calculate the relationship between each recorded covariate and the top 6 PCs. 
+p_comps <- 1:6
+info <- sampleinfo %>% 
+     dplyr::select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+
+#Calculate correlations
+pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
+                      dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+for (pc in p_comps) { 
+  for (covariate in 1:ncol(info)) { 
+        lm_result <- lm(pca_genes$x[, pc] ~ info[, covariate]) 
+    r2 <- summary(lm_result)$r.squared 
+    pc_cov_cor[covariate, pc] <- r2 
+  } 
+} 
+datatable(pc_cov_cor) 
+
+#Convert to long format to plot in ggplot2
+pc_cov_cor_2 <- as.data.frame(pc_cov_cor) 
+pc_cov_cor_2$variable <- rownames(pc_cov_cor) 
+pc_cov_cor_2 <- gather(pc_cov_cor_2, key = "pc", value = "cor", -variable) 
+head(pc_cov_cor_2) 
+
+#Plot heatmap
+d_heatmap <- pc_cov_cor_2 
+d_heatmap$variable <- factor(d_heatmap$variable, 
+                              levels = c("Individual", "Sex", "Replicate", 
+                                         "Passage_MSC", "treatment", "RIN", "LibraryPrepBatch"), 
+                              labels = c("Individual", "Sex", "Replicate", 
+                                         "Passage_MSC", "treatment", "RIN", "LibraryPrepBatch")) 
+pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
+  geom_tile(aes(fill = cor), colour = "white") + 
+  scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + 
+  labs(x = "Principal Component", y = "", 
+       title = "Correlation between principal components and experimental variables") 
+pca_heat
+```
+
+
+# Remove unwanted variation using RUVSeq
+
+```{r RUV}
+#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVs. 
+
+#Use RUVs (replicates) and adjust k until corr heatmap looks right
+replicates <- makeGroups(paste0(sampleinfo$Individual, sampleinfo$treatment))
+x <- paste0(sampleinfo$Individual, sampleinfo$treatment)
+
+#load data into expressionset
+set <- newSeqExpressionSet(as.matrix(filt_counts),
+                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
+set
+#normalization
+set <- betweenLaneNormalization(set, which="upper")
+
+set1 <- RUVs(set, rownames(filt_counts), k=1, replicates)
+pData(set1)
+
+#Plots after correcting RUV
+plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])
+plotPCA(set1, col=colors[x], cex=1.2)
+
+# # Clustering (original code from Julien Roux)
+cors <- cor(set1@assayData$normalizedCounts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+"The RUVg function returns two pieces of information: the estimated factors of unwanted
+variation (added as columns to the phenoData slot of set) and the normalized counts
+obtained by regressing the original counts on the unwanted factors. The normalized
+values are stored in the normalizedCounts slot of set and can be accessed with the
+normCounts method. These counts should be used only for exploration. It is important
+that subsequent DE analysis be done on the original counts (accessible through the
+counts method), as removing the unwanted factors from the counts can also remove
+part of a factor of interest [6]."
+
+# Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)
+
+```{r}
+saveRDS(set1, "data/prime_RUVsCPM.rds")
+```
+
+
+
+---
+title: "Check expression of genes of interest"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Build boxplots comparing expression (CPM) of different genes between strain and unstrain samples
+
+Check chondro/msc markers for absolute expression
+strain markers boxplot comparisons
+
+```{r load}
+library(ggplot2)
+#load in normalized/filtered data
+filt_cpm <- readRDS("data/prime_norm_filtered_counts.rds")
+
+# load in reordered sample information
+sampleinfo <- readRDS("data/prime_Sample.info.RNAseq.reordered.csv")
+
+```
+
+# Define functions to plot boxplot of results
+
+```{r boxplot functions}
+#Inputs: count matrix, sample information data frame, and gene of interest in the ENSG format
+get_gene_long <- function(counts, info, gene){
+     gene_counts <- as.data.frame(counts[gene,])
+     names(gene_counts) <- "CPM"
+     gene_counts_info <- cbind(gene_counts, info)
+     return(gene_counts_info)
+}
+
+boxplot_gene_treatment <- function(counts_, info_, gene_, name){
+     df <- get_gene_long(counts = counts_, info = info_, gene = gene_)
+     
+     ggplot(df, aes(x = treatment, y = CPM, color = info_$Individual)) +
+          geom_boxplot() +
+          labs(title=paste0("Expression of ", as.character(name), " by treatment"), x= "Treatment", y = "log2 Counts per million reads")
+}
+```
+
+# Compare expression of strain markers between samples
+
+```{r strain compare}
+#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+
+#MMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000087245", "MMP2")
+
+#TIMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000035862", "TIMP2")
+
+#COMP
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000105664", "COMP")
+
+#TIMP1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000102265", "TIMP1")
+
+#ADAMTS4
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000158859", "ADAMTS4")
+
+#ADAMTS5e
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154736", "ADAMTS5")
+
+#Chond Markers
+
+#ACAN was filtered out
+
+#COL2A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000139219", "COL2A1")
+
+#COL10A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000123500", "COL10A1")
+
+#SOX9
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000125398", "SOX9")
+
+#COL11A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000060718", "COL11A1")
+
+#SOX5
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000134532", "SOX5")
+
+#SOX6
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000110693", "SOX6")
+
+#TGFB3
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000119699", "TGFB3")
+
+
+#MSC Markers
+
+#CD34, ITGAM, CD79A, CD19, CD14 filtered out
+
+#ENG
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000106991", "ENG (CD105)")
+
+#THY1
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000154096", "THY1 (CD90)")
+
+#NT5E
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000135318", "NT5E (CD73)")
+
+
+
+#PTPRC
+boxplot_gene_treatment(filt_cpm, sampleinfo, "ENSG00000081237", "PTPRC")
+```
