@@ -20,6 +20,7 @@ library("ggplot2")
 library("cowplot")
 library("VennDiagram")
 library("RUVSeq")
+library("topGO")
 
 #load in filtered count data, RUVs output
 filt_counts <- readRDS("data/filtered_counts.rds")
@@ -37,6 +38,7 @@ gene_anno <- read.delim("data/gene-annotation.txt",
 individuals <- c("18855", "18856", "19160")
 treatments <- c("S", "U")
 
+set.seed(1234)
 selected_samples <- c()
 for(i in c("18856", "18855")){
      for(t in treatments){
@@ -274,8 +276,10 @@ plot_volcano(results[["Unstrain"]], 0.1)
 plot_pval_hist(results[["Unstrain"]], 0.1)
 table(results[["Unstrain"]]$qvalue < 0.1)
 significant_genes_10 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.1]
-significant_genes_10 <- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)]
-significant_genes_10
+significant_symbols_10 <- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)]
+significant_symbols_10
+significant_anno_10 <- gene_anno[match(significant_genes_10, gene_anno$ensembl_gene_id),]
+
 
 #FDR 0.05
 plot_ma(results[["Unstrain"]], 0.05)
@@ -283,8 +287,10 @@ plot_volcano(results[["Unstrain"]], 0.05)
 plot_pval_hist(results[["Unstrain"]], 0.05)
 table(results[["Unstrain"]]$qvalue < 0.05)
 significant_genes_05 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05]
-significant_genes_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)]
-significant_genes_05
+significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)]
+significant_symbols_05
+significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),]
+
 
 #FDR 0.01
 plot_ma(results[["Unstrain"]], 0.01)
@@ -294,4 +300,106 @@ table(results[["Unstrain"]]$qvalue < 0.01)
 significant_genes_01 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.01]
 significant_symbols_01 <- gene_anno$external_gene_name[match(significant_genes_01, gene_anno$ensembl_gene_id)]
 significant_symbols_01
+significant_anno_01 <- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),]
 ```
+
+
+
+## Gene ontology analysis with topGO
+
+Use topGO for GO analysis.
+It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]).
+Essentially, it decreases the redundancy of the results.
+
+[Alexa2006]: http://www.ncbi.nlm.nih.gov/pubmed/16606683
+
+First create the gene universe.
+This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
+
+```{r gene-universe}
+threshold <- 0.05
+gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold)
+gene_universe <- factor(gene_universe)
+names(gene_universe) <- rownames(results[["Unstrain"]])
+head(gene_universe)
+```
+
+Create the topGO data object.
+Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
+
+```{r go-data}
+go_data <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "ensembl")
+```
+
+Use the weight01 algorithm and score the tests with Fisher's exact test.
+
+```{r go-test}
+go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher")
+```
+
+Keep the results with a Fisher's exact test p-value < 0.01.
+
+```{r go-table}
+go_table <- GenTable(go_data, weightFisher = go_test,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test) < .01))
+go_table
+```
+
+There are `r nrow(go_table)` significant results.
+
+<!-- Reassuringly, there are many categories expected for a stem cell differentiating into neuronal precursors in response to treatment with retinoic acid. -->
+
+<!-- ```{r example-categories} -->
+<!-- go_table[grep("retinoic", go_table$Term), ] -->
+<!-- go_table[grep("stem", go_table$Term), ] -->
+<!-- go_table[grep("differentiation", go_table$Term), ] -->
+<!-- go_table[grep("neur", go_table$Term), ] -->
+<!-- go_table[grep("nerv", go_table$Term), ] -->
+<!-- ``` -->
+
+<!-- Investigate the RA genes. -->
+
+<!-- ```{r ra-genes} -->
+<!-- go_id_ra <- go_table[grep("retinoic", go_table$Term), "GO.ID"] -->
+<!-- go_genes_ra <- genesInTerm(go_data, go_id_ra)[[1]] -->
+<!-- ensembl <- useMart(host = "sep2015.archive.ensembl.org", -->
+<!--                    biomart = "ENSEMBL_MART_ENSEMBL", -->
+<!--                    dataset = "mmusculus_gene_ensembl") -->
+<!-- gene_info_ra <- getBM(attributes = c("ensembl_gene_id", "chromosome_name", -->
+<!--                                   "external_gene_name", "description"), -->
+<!--                       filter = "ensembl_gene_id", -->
+<!--                       values = go_genes_ra, -->
+<!--                       mart = ensembl) -->
+<!-- stopifnot(go_genes_ra == gene_info_ra$ensembl_gene_id) -->
+<!-- gene_info_ra -->
+<!-- ``` -->
+
+<!-- Visualize the RA genes. -->
+
+<!-- ```{r gather-plot-data} -->
+<!-- log_cpm_ra <- log_cpm[go_genes_ra, ] -->
+<!-- log_cpm_ra <- data.frame(gene = rownames(log_cpm_ra), log_cpm_ra, -->
+<!--                          stringsAsFactors = FALSE) -->
+<!-- log_cpm_ra_long <- gather(log_cpm_ra, key = "sample", value = "log_cpm", -gene) -->
+<!-- log_cpm_ra_long <- separate(log_cpm_ra_long, col = sample, -->
+<!--                             into = c("treatment", "replicate"), sep = "\\.") -->
+<!-- log_cpm_ra_long$gene <- factor(log_cpm_ra_long$gene, -->
+<!--                                levels = go_genes_ra[order(de_results[go_genes_ra, "logFC"])], -->
+<!--                                labels = gene_info_ra$external_gene_name[order(de_results[go_genes_ra, "logFC"])]) -->
+<!-- head(log_cpm_ra_long) -->
+<!-- ``` -->
+
+<!-- ```{r ra-plot} -->
+<!-- ggplot(log_cpm_ra_long, aes(x = gene, y = log_cpm, fill = treatment)) + -->
+<!--   geom_boxplot() + -->
+<!--   labs(x = "Gene", y = "log2 cpm", -->
+<!--        title = sprintf("Expression of retinoic acid genes (%s)", go_id_ra)) -->
+<!-- ``` -->
+

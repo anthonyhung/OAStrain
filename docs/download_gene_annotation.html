@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-09
+<strong>Last updated:</strong> 2020-01-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -428,7 +428,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,16 +495,17 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3e14c8a3a54b42da0ad190f2cbcd611e847b6e35targetblank3e14c8aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3e14c8a3a54b42da0ad190f2cbcd611e847b6e35" target="_blank">3e14c8a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree03b499e0b710c5a48bba76aef6472cc713c58301targetblank03b499ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/03b499e0b710c5a48bba76aef6472cc713c58301" target="_blank">03b499e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3e14c8a3a54b42da0ad190f2cbcd611e847b6e35targetblank3e14c8aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree03b499e0b710c5a48bba76aef6472cc713c58301targetblank03b499ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
@@ -518,8 +519,9 @@ Ignored files:
 
 Untracked files:
     Untracked:  .RDataTmp
-    Untracked:  analysis/download_gene_annotation.Rmd
-    Untracked:  data/gene-annotation.txt
+
+Unstaged changes:
+    Modified:   analysis/download_gene_annotation.Rmd
 
 </code></pre>
 <p>
@@ -532,9 +534,69 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f98f498bbd9ef5e2069900b48e940b7273549dee/analysis/download_gene_annotation.Rmd" target="_blank">f98f498</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+make gene annotation analysis script
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f98f498bbd9ef5e2069900b48e940b7273549dee/docs/download_gene_annotation.html" target="_blank">f98f498</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+make gene annotation analysis script
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -574,6 +636,7 @@ atts &lt;- listAttributes(ensembl, page = &quot;feature_page&quot;)
 # For speed purposes, perform separate queries. Otherwise the query multiplies
 # with each new column that maps many to one.
 
+
 # Obtain annotation results that are one per gene
 basic &lt;- getBM(attributes = c(&quot;ensembl_gene_id&quot;,
                             &quot;external_gene_name&quot;,
@@ -590,7 +653,17 @@ pheno &lt;- getBM(attributes = c(&quot;ensembl_gene_id&quot;,
                filters = &quot;ensembl_gene_id&quot;,
                values = genes,
                mart = ensembl)
-stopifnot(genes %in% unique(pheno$ensembl_gene_id))</code></pre>
+stopifnot(genes %in% unique(pheno$ensembl_gene_id))
+
+# Obtain GO categories
+go &lt;- getBM(attributes = c(&quot;ensembl_gene_id&quot;,
+                           &quot;go_id&quot;,
+                           &quot;name_1006&quot;),
+            filters = &quot;ensembl_gene_id&quot;,
+            values = genes,
+            mart = ensembl)
+# Not all genes have GO annotations
+# stopifnot(genes %in% unique(go$ensembl_gene_id))</code></pre>
 </div>
 <div id="combine-annotation-per-gene" class="section level1">
 <h1>Combine annotation per gene</h1>
@@ -599,11 +672,20 @@ pheno_gene &lt;- pheno %&gt;% group_by(ensembl_gene_id) %&gt;%
   summarize(phenotype = paste(phenotype_description, collapse = &quot;;&quot;)) %&gt;%
   arrange(ensembl_gene_id)
 stopifnot(basic_gene$ensembl_gene_id == pheno_gene$ensembl_gene_id)
-basic_pheno &lt;- cbind(basic_gene, pheno_gene[, &quot;phenotype&quot;])</code></pre>
+basic_pheno &lt;- cbind(basic_gene, pheno_gene[, &quot;phenotype&quot;])
+
+go_gene &lt;- go %&gt;% group_by(ensembl_gene_id) %&gt;%
+  summarize(go_id = paste(go_id, collapse = &quot;;&quot;),
+            go_descrip = paste(name_1006, collapse = &quot;;&quot;)) %&gt;%
+  arrange(ensembl_gene_id)
+
+combined &lt;- merge(basic_pheno, go_gene, by = &quot;ensembl_gene_id&quot;,
+                  sort = TRUE, all.x = TRUE)
+stopifnot(sort(genes) == combined$ensembl_gene_id)</code></pre>
 </div>
 <div id="save-gene-annotations" class="section level1">
 <h1>Save gene annotations</h1>
-<pre class="r"><code>write.table(basic_pheno, file.path(&quot;data/gene-annotation.txt&quot;),
+<pre class="r"><code>write.table(combined, file.path(&quot;data/gene-annotation.txt&quot;),
             quote = FALSE, sep = &quot;\t&quot;, row.names = FALSE)</code></pre>
 <br>
 <p>
@@ -635,8 +717,8 @@ loaded via a namespace (and not attached):
  [4] later_1.0.0          git2r_0.26.1         workflowr_1.5.0     
  [7] prettyunits_1.0.2    progress_1.2.2       bitops_1.0-6        
 [10] tools_3.6.1          zeallot_0.1.0        digest_0.6.23       
-[13] bit_1.1-14           evaluate_0.14        RSQLite_2.1.4       
-[16] memoise_1.1.0        tibble_2.1.3         pkgconfig_2.0.3     
+[13] bit_1.1-14           memoise_1.1.0        evaluate_0.14       
+[16] RSQLite_2.1.4        tibble_2.1.3         pkgconfig_2.0.3     
 [19] rlang_0.4.2          DBI_1.0.0            curl_4.3            
 [22] parallel_3.6.1       yaml_2.2.0           xfun_0.11           
 [25] httr_1.4.1           stringr_1.4.0        knitr_1.26          
@@ -646,9 +728,10 @@ loaded via a namespace (and not attached):
 [37] Biobase_2.44.0       glue_1.3.1           R6_2.4.1            
 [40] AnnotationDbi_1.46.1 XML_3.98-1.20        rmarkdown_1.18      
 [43] purrr_0.3.3          blob_1.2.0           magrittr_1.5        
-[46] BiocGenerics_0.30.0  backports_1.1.5      promises_1.1.0      
-[49] htmltools_0.4.0      assertthat_0.2.1     httpuv_1.5.2        
-[52] stringi_1.4.3        RCurl_1.95-4.12      crayon_1.3.4        </code></pre>
+[46] whisker_0.4          BiocGenerics_0.30.0  backports_1.1.5     
+[49] promises_1.1.0       htmltools_0.4.0      assertthat_0.2.1    
+[52] httpuv_1.5.2         stringi_1.4.3        RCurl_1.95-4.12     
+[55] crayon_1.3.4        </code></pre>
 </div>
 </div>
 
