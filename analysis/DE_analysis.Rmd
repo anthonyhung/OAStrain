@@ -317,7 +317,7 @@ First create the gene universe.
 This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
 
 ```{r gene-universe}
-threshold <- 0.05
+threshold <- 0.1
 gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold)
 gene_universe <- factor(gene_universe)
 names(gene_universe) <- rownames(results[["Unstrain"]])

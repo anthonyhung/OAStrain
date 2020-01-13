@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef1425df1cce9caed0803bd9f25483dc1795ec89etargetblankf1425dfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f1425df1cce9caed0803bd9f25483dc1795ec89e" target="_blank">f1425df</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9" target="_blank">a04a1ac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef1425df1cce9caed0803bd9f25483dc1795ec89etargetblankf1425dfa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -511,9 +511,6 @@ Ignored files:
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
-
-Unstaged changes:
-    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -552,6 +549,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/analysis/check_expression.Rmd" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Add GO analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/5eb29e88b6057837b2c5c0719c225364eb484690/docs/check_expression.html" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -737,11 +768,7 @@ Start up additional analysis files
 filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
 
 # load in reordered sample information
-sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)
-
-# load gene annotations
-gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
-                        sep = &quot;\t&quot;)</code></pre>
+sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
 </div>
 <div id="define-functions-to-plot-boxplot-of-results" class="section level1">
 <h1>Define functions to plot boxplot of results</h1>
@@ -790,6 +817,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-1.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-1.png" target="_blank">f1425df</a>
@@ -843,6 +881,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-2.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-2.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -892,6 +941,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-3.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-3.png" target="_blank">f1425df</a>
@@ -945,6 +1005,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-4.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-4.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -994,6 +1065,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-5.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-5.png" target="_blank">f1425df</a>
@@ -1047,6 +1129,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-6.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-6.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1096,6 +1189,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-7.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-7.png" target="_blank">f1425df</a>
@@ -1153,6 +1257,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-8.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-8.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1202,6 +1317,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-9.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-9.png" target="_blank">f1425df</a>
@@ -1255,6 +1381,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-10.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-10.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1304,6 +1441,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-11.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-11.png" target="_blank">f1425df</a>
@@ -1357,6 +1505,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-12.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-12.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1408,6 +1567,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-13.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-13.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1457,6 +1627,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-14.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-14.png" target="_blank">f1425df</a>
@@ -1514,6 +1695,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-15.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-15.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1554,6 +1746,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-16.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-16.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1570,12 +1773,123 @@ Anthony Hung
 <pre class="r"><code>#NT5E
 boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E (CD73)&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-17">
+Past versions of “strain compare-17.png”
+</button>
+</p>
+<div id="fig-no-spaces-strain-compare-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-17.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#PTPRC
 boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-18">
+Past versions of “strain compare-18.png”
+</button>
+</p>
+<div id="fig-no-spaces-strain-compare-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-18.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#CD14
 boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000170458&quot;, &quot;CD14&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-19.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-19">
+Past versions of “strain compare-19.png”
+</button>
+</p>
+<div id="fig-no-spaces-strain-compare-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-19.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
