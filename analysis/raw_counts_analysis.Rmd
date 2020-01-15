@@ -127,3 +127,13 @@ for (n in 3:3){
 }
 ```
 
+# Library size by individual x treatment
+
+```{r lib size}
+# Plot library size
+raw_counts <- DGEList(raw_counts, group = colnames(raw_counts))
+
+boxplot_library_size <- ggplot(raw_counts$samples, aes(x = sampleinfo$Individual, y = raw_counts$samples$lib.size, fill = sampleinfo$treatment)) + geom_boxplot()
+ 
+boxplot_library_size + labs(title = "Library size by Individual") + labs(y = "Library size") + labs(x = "Individual") + guides(fill=guide_legend(title="Treatment"))
+```

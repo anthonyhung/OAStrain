@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Perform normalization of raw count data and filtering of lowly expressed genes
+# Perform normalization of raw count data using different normalization methods and filter out lowly expressed genes
 
 ```{r load libraries and data}
 library("gplots")
@@ -31,6 +31,22 @@ raw_counts <- DGEList(raw_counts, group = colnames(raw_counts))
 
 # load in reordered sample information
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
+```
+
+# Correlation heatmap of Raw Data
+
+```{r corr heatmap raw}
+#Spearman
+cors <- cor(raw_counts$counts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(raw_counts$counts, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
 # Perform cpm normalization on all counts and plot density plots
@@ -93,14 +109,19 @@ p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Correlation heatmap of log2CPM normalized samples
 
 ```{r corr heatmap CPM}
-# # Clustering (original code from Julien Roux)
+#Spearman
+cors <- cor(filtered_cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
 cors <- cor(filtered_cpm, method="pearson", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
-Interestingly, the cpm normalization changes the clustering of the samples differently compared to the clustering on the raw data. We try different normalization methods below to find one that does not remove the expected relationships between samples seen in the raw data.
 
 # TMM Normalization
 
@@ -164,13 +185,98 @@ p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Correlation heatmap of log2TMM normalized samples
 
 ```{r corr heatmap TMM}
-# # Clustering (original code from Julien Roux)
+#Spearman
+cors <- cor(filtered_TMM, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
 cors <- cor(filtered_TMM, method="pearson", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
+
+
+
+# RLE Normalization
+
+```{r RLE normalization}
+RLE <- calcNormFactors(raw_counts, method = "RLE")
+RLE <- cpm(RLE, log=TRUE)
+head(RLE)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(RLE[,strained], col=col[strained, ], legend="topright")
+plotDensities(RLE[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(RLE[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(RLE[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(RLE[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+
+## Boxplots of RLE across samples
+
+```{r boxplot RLE}
+meltRLE <- melt(RLE)
+names(meltRLE) <- c("gene", "sampleID", "RLE")
+p <- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2RLE > 1.5 in at least 4 samples)
+
+```{r filter RLE}
+cutoff <- 1.5
+
+keep <- rowSums( RLE > cutoff ) >=4
+
+counts <- raw_counts[keep,]
+filtered_RLE <- cpm(counts, log = T)
+dim(filtered_RLE)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt RLE}
+melt_filt_RLE <- melt(filtered_RLE)
+names(melt_filt_RLE) <- c("gene", "sampleID", "log2RLE")
+p1 <- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2RLE normalized samples
+
+```{r corr heatmap RLE}
+#Spearman
+cors <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(filtered_RLE, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
 
 
 

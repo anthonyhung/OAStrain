@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-14
+<strong>Last updated:</strong> 2020-01-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3targetblank4922bc1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3" target="_blank">4922bc1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea7627071e7842bb3a7c00d8562e00fed6f46a6fatargetblanka762707a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a7627071e7842bb3a7c00d8562e00fed6f46a6fa" target="_blank">a762707</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3targetblank4922bc1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea7627071e7842bb3a7c00d8562e00fed6f46a6fatargetblanka762707a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -519,6 +519,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/Norm_filter.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -557,6 +558,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/analysis/Norm_filter.Rmd" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Alternative normalization methods
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/Norm_filter.html" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Alternative normalization methods
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -848,35 +883,61 @@ pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), br
 
 # load in relabeled counts
 raw_counts &lt;- readRDS(&quot;data/raw_counts_relabeled.rds&quot;)
+# Create DGEList object to allow for easier application of different normalization methods
+raw_counts &lt;- DGEList(raw_counts, group = colnames(raw_counts))
 
 # load in reordered sample information
 sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
 </div>
+<div id="correlation-heatmap-of-raw-data" class="section level1">
+<h1>Correlation heatmap of Raw Data</h1>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(raw_counts$counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20raw-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(raw_counts$counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="library-size-by-individual-x-treatment" class="section level1">
+<h1>Library size by individual x treatment</h1>
+<pre class="r"><code># Plot library size
+
+boxplot_library_size &lt;- ggplot(raw_counts$samples, aes(x = sampleinfo$Individual, y = raw_counts$samples$lib.size, fill = sampleinfo$treatment)) + geom_boxplot()
+ 
+boxplot_library_size + labs(title = &quot;Library size by Individual&quot;) + labs(y = &quot;Library size&quot;) + labs(x = &quot;Individual&quot;) + guides(fill=guide_legend(title=&quot;Treatment&quot;))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/lib%20size-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 <div id="perform-cpm-normalization-on-all-counts-and-plot-density-plots" class="section level1">
 <h1>Perform cpm normalization on all counts and plot density plots</h1>
-<pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
+<pre class="r"><code>cpm &lt;- cpm(raw_counts, log=FALSE)
 head(cpm)</code></pre>
-<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -1.420107 -2.022996 -2.155735 -2.574324 -2.564478 -1.083803
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -3.129431 -2.573609 -1.268564 -1.442548 -3.129431 -2.254268
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -2.625352 -1.278970 -2.054133 -1.678550 -3.129431
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U  18856_1_U  18855_2_S 18856_2_S
+ENSG00000223972 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000227232 0.2594106 0.1317727 0.1101448 0.05362621 0.05477602 0.3575096
+ENSG00000278267 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000243485 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000284332 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000237613 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+                19160_3_U  18855_2_U 19160_2_S 18855_1_S 18856_1_S  19160_1_S
+ENSG00000223972         0 0.00000000 0.0000000  0.000000         0 0.00000000
+ENSG00000227232         0 0.05370947 0.3007988  0.253643         0 0.09532908
+ENSG00000278267         0 0.00000000 0.0000000  0.000000         0 0.00000000
+ENSG00000243485         0 0.00000000 0.0000000  0.000000         0 0.00000000
+ENSG00000284332         0 0.00000000 0.0000000  0.000000         0 0.00000000
+ENSG00000237613         0 0.00000000 0.0000000  0.000000         0 0.00000000
+                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000227232 0.04779137 0.2978156 0.1265193 0.1981224         0
+ENSG00000278267 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000243485 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000284332 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000237613 0.00000000 0.0000000 0.0000000 0.0000000         0</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -911,6 +972,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">f1425df</a>
@@ -972,6 +1044,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">f1425df</a>
@@ -1038,6 +1121,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1099,6 +1193,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1158,6 +1263,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">f1425df</a>
@@ -1226,6 +1342,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1262,14 +1389,16 @@ Anthony Hung
 </div>
 </div>
 </div>
-<div id="filtering-for-lowly-expressed-genes-avg-cpm-0.5-in-at-least-2-samples" class="section level2">
-<h2>Filtering for lowly expressed genes (avg CPM &gt; 0.5 in at least 2 samples)</h2>
-<pre class="r"><code>cutoff &lt;- 0.5
+<div id="filtering-for-lowly-expressed-genes-avg-log2cpm-1.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2CPM &gt; 1.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 1.5
 
-keep &lt;- rowSums( cpm(raw_counts, log=FALSE) &gt; 0.5 ) &gt;=2
+keep &lt;- rowSums(cpm &gt; cutoff ) &gt;=4
 
 counts &lt;- raw_counts[keep,]
-filtered_cpm &lt;- cpm(counts, log = T)</code></pre>
+filtered_cpm &lt;- cpm(counts, log = T)
+dim(filtered_cpm)</code></pre>
+<pre><code>[1] 12816    17</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -1300,6 +1429,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">00a66fb</a>
@@ -1351,19 +1491,241 @@ Anthony Hung
 </div>
 <div id="correlation-heatmap-of-log2cpm-normalized-samples" class="section level2">
 <h2>Correlation heatmap of log2CPM normalized samples</h2>
-<pre class="r"><code># # Clustering (original code from Julien Roux)
+<pre class="r"><code>#Spearman
 cors &lt;- cor(filtered_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
 
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
 heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20CPM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-CPM-1">
+Past versions of “corr heatmap CPM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-CPM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/corr heatmap CPM-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div id="interestingly-the-cpm-normalization-changes-the-clustering-of-the-samples-differently-compared-to-the-clustering-on-the-raw-data.-we-try-different-normalization-methods-below-to-find-one-that-does-not-remove-the-expected-relationships-between-samples-seen-in-the-raw-data." class="section level1">
-<h1>Interestingly, the cpm normalization changes the clustering of the samples differently compared to the clustering on the raw data. We try different normalization methods below to find one that does not remove the expected relationships between samples seen in the raw data.</h1>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(filtered_cpm, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20CPM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Interestingly, the cpm normalization changes the clustering of the samples differently compared to the clustering on the raw data. We try different normalization methods below to find one that does not remove the expected relationships between samples seen in the raw data.</p>
+</div>
 </div>
 <div id="tmm-normalization" class="section level1">
 <h1>TMM Normalization</h1>
+<pre class="r"><code>TMM &lt;- calcNormFactors(raw_counts, method = &quot;TMM&quot;)
+TMM &lt;- cpm(TMM, log=FALSE)
+head(TMM)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U  18856_1_U  18855_2_S 18856_2_S
+ENSG00000223972 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000  0.000000
+ENSG00000227232 0.2705006 0.1326157 0.1080854 0.05152622 0.05614586  0.328749
+ENSG00000278267 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000  0.000000
+ENSG00000243485 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000  0.000000
+ENSG00000284332 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000  0.000000
+ENSG00000237613 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000  0.000000
+                19160_3_U  18855_2_U 19160_2_S 18855_1_S 18856_1_S  19160_1_S
+ENSG00000223972         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000227232         0 0.05824905 0.2993167 0.2590259         0 0.09030826
+ENSG00000278267         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000243485         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000284332         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000237613         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000227232 0.05272408 0.3076899 0.1178162 0.2035952         0
+ENSG00000278267 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000243485 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000284332 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000237613 0.00000000 0.0000000 0.0000000 0.0000000         0</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(TMM[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(TMM[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(TMM[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(TMM[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(TMM[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="boxplots-of-tmm-across-samples" class="section level2">
+<h2>Boxplots of TMM across samples</h2>
+<pre class="r"><code>meltTMM &lt;- melt(TMM)
+names(meltTMM) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;TMM&quot;)
+p &lt;- ggplot(meltTMM, aes(factor(sampleID), TMM)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2tmm-1.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2TMM &gt; 1.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 1.5
+
+keep &lt;- rowSums( TMM &gt; cutoff ) &gt;=4
+
+counts &lt;- raw_counts[keep,]
+filtered_TMM &lt;- cpm(counts, log = T)
+dim(filtered_TMM)</code></pre>
+<pre><code>[1] 12825    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_TMM &lt;- melt(filtered_TMM)
+names(melt_filt_TMM) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2TMM&quot;)
+p1 &lt;- ggplot(melt_filt_TMM, aes(factor(sampleID), log2TMM)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="correlation-heatmap-of-log2tmm-normalized-samples" class="section level2">
+<h2>Correlation heatmap of log2TMM normalized samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_TMM, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filtered_TMM, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20TMM-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="rle-normalization" class="section level1">
+<h1>RLE Normalization</h1>
+<pre class="r"><code>RLE &lt;- calcNormFactors(raw_counts, method = &quot;RLE&quot;)
+RLE &lt;- cpm(RLE, log=FALSE)
+head(RLE)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U  18856_1_U  18855_2_S 18856_2_S
+ENSG00000223972 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000227232 0.2708317 0.1317352 0.1073144 0.05120078 0.05582936 0.3328576
+ENSG00000278267 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000243485 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000284332 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+ENSG00000237613 0.0000000 0.0000000 0.0000000 0.00000000 0.00000000 0.0000000
+                19160_3_U  18855_2_U 19160_2_S 18855_1_S 18856_1_S  19160_1_S
+ENSG00000223972         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000227232         0 0.05791947 0.2979538 0.2583772         0 0.09073041
+ENSG00000278267         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000243485         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000284332         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+ENSG00000237613         0 0.00000000 0.0000000 0.0000000         0 0.00000000
+                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000227232 0.05277765 0.3076021 0.1182932 0.2045053         0
+ENSG00000278267 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000243485 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000284332 0.00000000 0.0000000 0.0000000 0.0000000         0
+ENSG00000237613 0.00000000 0.0000000 0.0000000 0.0000000         0</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(RLE[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(RLE[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(RLE[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(RLE[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(RLE[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="boxplots-of-rle-across-samples" class="section level2">
+<h2>Boxplots of RLE across samples</h2>
+<pre class="r"><code>meltRLE &lt;- melt(RLE)
+names(meltRLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;RLE&quot;)
+p &lt;- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2rle-1.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2RLE &gt; 1.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 1.5
+
+keep &lt;- rowSums( RLE &gt; cutoff ) &gt;=4
+
+counts &lt;- raw_counts[keep,]
+filtered_RLE &lt;- cpm(counts, log = T)
+dim(filtered_RLE)</code></pre>
+<pre><code>[1] 12818    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples-2" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_RLE &lt;- melt(filtered_RLE)
+names(melt_filt_RLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2RLE&quot;)
+p1 &lt;- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="correlation-heatmap-of-log2rle-normalized-samples" class="section level2">
+<h2>Correlation heatmap of log2RLE normalized samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_RLE, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filtered_RLE, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20RLE-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 <div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level2">
 <h2>Save normalized/filtered count matrix and filtered count matrix</h2>
 <pre class="r"><code>saveRDS(counts, &quot;data/filtered_counts.rds&quot;)
