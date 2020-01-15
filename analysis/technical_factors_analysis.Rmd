@@ -144,14 +144,20 @@ pData(set1)
 plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])
 plotPCA(set1, col=colors[x], cex=1.2)
 
-# # Clustering (original code from Julien Roux)
+#Spearman
 cors <- cor(set1@assayData$normalizedCounts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(set1@assayData$normalizedCounts, method="pearson", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
-"The RUVg function returns two pieces of information: the estimated factors of unwanted
+"The RUVg [RUVs] function returns two pieces of information: the estimated factors of unwanted
 variation (added as columns to the phenoData slot of set) and the normalized counts
 obtained by regressing the original counts on the unwanted factors. The normalized
 values are stored in the normalizedCounts slot of set and can be accessed with the

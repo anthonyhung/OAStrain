@@ -92,8 +92,8 @@ cutoff <- 1.5
 
 keep <- rowSums(cpm > cutoff ) >=4
 
-counts <- raw_counts[keep,]
-filtered_cpm <- cpm(counts, log = T)
+counts_cpm <- raw_counts[keep,]
+filtered_cpm <- cpm(counts_cpm, log = T, normalized.lib.sizes = T)
 dim(filtered_cpm)
 ```
 
@@ -168,8 +168,8 @@ cutoff <- 1.5
 
 keep <- rowSums( TMM > cutoff ) >=4
 
-counts <- raw_counts[keep,]
-filtered_TMM <- cpm(counts, log = T)
+counts_TMM <- raw_counts[keep,]
+filtered_TMM <- cpm(counts_TMM, log = T, normalized.lib.sizes = T)
 dim(filtered_TMM)
 ```
 
@@ -247,8 +247,8 @@ cutoff <- 1.5
 
 keep <- rowSums( RLE > cutoff ) >=4
 
-counts <- raw_counts[keep,]
-filtered_RLE <- cpm(counts, log = T)
+counts_RLE <- raw_counts[keep,]
+filtered_RLE <- cpm(counts_RLE, log = T, normalized.lib.sizes = T)
 dim(filtered_RLE)
 ```
 
@@ -279,6 +279,81 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 ```
 
 
+# upperquartile Normalization
+
+```{r upperquartile normalization}
+upperquartile <- calcNormFactors(raw_counts, method = "upperquartile")
+upperquartile <- cpm(upperquartile, log=TRUE)
+head(upperquartile)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(upperquartile[,strained], col=col[strained, ], legend="topright")
+plotDensities(upperquartile[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(upperquartile[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(upperquartile[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(upperquartile[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+
+## Boxplots of upperquartile across samples
+
+```{r boxplot upperquartile}
+meltupperquartile <- melt(upperquartile)
+names(meltupperquartile) <- c("gene", "sampleID", "upperquartile")
+p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2upperquartile > 1.5 in at least 4 samples)
+
+```{r filter upperquartile}
+cutoff <- 1.5
+
+keep <- rowSums( upperquartile > cutoff ) >=4
+
+counts_upperquartile <- raw_counts[keep,]
+filtered_upperquartile <- cpm(counts_upperquartile, log = T, normalized.lib.sizes = T)
+dim(filtered_upperquartile)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt upperquartile}
+melt_filt_upperquartile <- melt(filtered_upperquartile)
+names(melt_filt_upperquartile) <- c("gene", "sampleID", "log2upperquartile")
+p1 <- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2upperquartile normalized samples
+
+```{r corr heatmap upperquartile}
+#Spearman
+cors <- cor(filtered_upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(filtered_upperquartile, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
 
 
 
@@ -286,6 +361,6 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 ## Save normalized/filtered count matrix and filtered count matrix
 
 ```{r save}
-saveRDS(counts, "data/filtered_counts.rds")
+saveRDS(counts_cpm, "data/filtered_counts.rds")
 saveRDS(filtered_cpm, "data/norm_filtered_counts.rds")
 ```

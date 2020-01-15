@@ -394,7 +394,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -403,7 +403,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -412,10 +412,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-13
+<strong>Last updated:</strong> 2020-01-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -431,12 +431,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -503,22 +503,32 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9" target="_blank">a04a1ac</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree414262e83ffc17132ef3688335857954f181c8betargetblank414262ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/414262e83ffc17132ef3688335857954f181c8be" target="_blank">414262e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree414262e83ffc17132ef3688335857954f181c8betargetblank414262ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/prime_RUVsCPM.rds
+    Ignored:    data/prime_filtered_counts.rds
+    Ignored:    data/prime_norm_filtered_counts.rds
+    Ignored:    data/prime_raw_counts_relabeled.rds
     Ignored:    data/raw_counts_relabeled.rds
+
+Unstaged changes:
+    Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
 
 </code></pre>
 <p>
@@ -557,6 +567,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/technical_factors_analysis.html" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+run GO enrichment analysis
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -767,10 +794,17 @@ library(&quot;edgeR&quot;)</code></pre>
 library(&quot;scales&quot;)
 library(&quot;cowplot&quot;)</code></pre>
 <pre><code>
+********************************************************</code></pre>
+<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
+<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
+<pre><code>  behavior, execute:
+  theme_set(theme_cowplot())</code></pre>
+<pre><code>********************************************************</code></pre>
+<pre><code>
 Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
 
-    ggsave</code></pre>
+    stamp</code></pre>
 <pre class="r"><code>library(&quot;DT&quot;)
 library(&quot;tidyr&quot;)</code></pre>
 <pre><code>
@@ -797,12 +831,12 @@ Attaching package: &#39;BiocGenerics&#39;</code></pre>
     IQR, mad, sd, var, xtabs</code></pre>
 <pre><code>The following objects are masked from &#39;package:base&#39;:
 
-    anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
-    colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
-    mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
-    table, tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min</code></pre>
 <pre><code>Welcome to Bioconductor
 
     Vignettes contain introductory material; view with
@@ -855,9 +889,9 @@ Attaching package: &#39;DelayedArray&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:Biostrings&#39;:
 
     type</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
+<pre><code>The following objects are masked from &#39;package:base&#39;:
 
-    apply</code></pre>
+    aperm, apply, rowsum</code></pre>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -997,9 +1031,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-</div>
-<div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations" class="section level1">
-<h1>Perform PCA and color by factors to look for any potential correlations</h1>
+<p>#Perform PCA and color by factors to look for any potential correlations</p>
 <pre class="r"><code># Perform PCA
 pca_genes &lt;- prcomp(t(filt_cpm), scale = T)
 scores &lt;- pca_genes$x
@@ -1252,19 +1284,19 @@ for (pc in p_comps) {
   } 
 } 
 datatable(pc_cov_cor) </code></pre>
-<div id="htmlwidget-87098e04a2cc41d4cd6e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","Passage_MSC","treatment","RIN","LibraryPrepBatch"],[0.862882706134546,0.101395450821528,0.0123842791404367,0.184235693763744,0.0606326961138496,0,0.00233717927135606],[0.875249985082766,0.682318024909152,0.00154353886581536,0.509854441290567,0.105479914497366,0,0.000380077669091962],[0.137583170815882,0.123066890884373,0.153056857227695,0.170340842514187,0.261913117459376,0,0.046013329483241],[0.0785748919211412,0.0565273533634649,0.109302196455347,0.0546392781143315,0.261292020197339,0,5.32124359865079e-05],[0.0262105759891421,0.026185969763068,0.322471934394753,0.0030324680312049,0.00031666182986158,0,0.209138929448299],[0.00240250924280295,0.00195410888558262,0.124291878037547,0.00607866973236303,0.09562550518126,0,0.211392350186107]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0c9a476e309710ae11e9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0c9a476e309710ae11e9">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","Passage_MSC","treatment","RIN","LibraryPrepBatch"],[0.836143615693584,0.135987816425222,0.0133389278207742,0.222610368624899,0.0785203712988527,0,0.00229660254742141],[0.869522780580331,0.615933227047747,0.00225485621534466,0.44133438698648,0.109337750764648,0,0.000732367888550313],[0.0866235112110948,0.0820630547789675,0.264663452388508,0.12654269866602,0.135221804261288,0,0.0659664776427704],[0.128138623132433,0.0974188019131907,0.0288898374275873,0.111826569053926,0.332503689491474,0,0.0123632445283745],[0.0600625526593716,0.0593624586085157,0.272475200112937,0.0214523591781996,0.0180450395767749,0,0.159377528297529],[0.000133422026419206,7.76031257326951e-05,0.109545770872459,0.00436750010559703,0.218951046385444,0,0.189299741998954]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
 pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
 head(pc_cov_cor_2) </code></pre>
 <pre><code>     variable  pc        cor
-1  Individual PC1 0.86288271
-2         Sex PC1 0.10139545
-3   Replicate PC1 0.01238428
-4 Passage_MSC PC1 0.18423569
-5   treatment PC1 0.06063270
+1  Individual PC1 0.83614362
+2         Sex PC1 0.13598782
+3   Replicate PC1 0.01333893
+4 Passage_MSC PC1 0.22261037
+5   treatment PC1 0.07852037
 6         RIN PC1 0.00000000</code></pre>
 <pre class="r"><code>#Plot heatmap
 d_heatmap &lt;- pc_cov_cor_2 
@@ -1353,7 +1385,7 @@ set &lt;- newSeqExpressionSet(as.matrix(filt_counts),
                            phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
 set</code></pre>
 <pre><code>SeqExpressionSet (storageMode: lockedEnvironment)
-assayData: 16060 features, 17 samples 
+assayData: 11741 features, 17 samples 
   element names: counts, normalizedCounts, offset 
 protocolData: none
 phenoData
@@ -1387,23 +1419,23 @@ pData(set1)</code></pre>
 18856_2_U 18856_2_U   NA18856    M         2           8  Unstrain   1
 18855_3_U 18855_3_U   NA18855    F         3          11  Unstrain   1
           LibraryPrepBatch         W_1
-18855_3_S                2 -0.54895224
-19160_3_S                2 -0.52050402
-18856_3_U                2 -0.16280587
-18856_1_U                1 -0.18170046
-18855_2_S                1 -0.29600272
-18856_2_S                1 -1.10905155
-19160_3_U                2 -0.62524727
-18855_2_U                1 -0.31291060
-19160_2_S                1 -0.64679783
-18855_1_S                1 -0.57198092
-18856_1_S                1 -0.08584935
-19160_1_S                1 -0.69005601
-19160_2_U                1 -0.88047997
-18855_1_U                1 -0.56108873
-18856_3_S                2 -0.16547978
-18856_2_U                1 -0.70766535
-18855_3_U                2 -0.66631326</code></pre>
+18855_3_S                2 -0.38594438
+19160_3_S                2 -0.57009360
+18856_3_U                2  0.03782321
+18856_1_U                1 -0.01549399
+18855_2_S                1 -0.04897027
+18856_2_S                1 -0.96788704
+19160_3_U                2 -0.76382812
+18855_2_U                1 -0.17662302
+19160_2_S                1 -0.69451686
+18855_1_S                1 -0.48506476
+18856_1_S                1  0.04037142
+19160_1_S                1 -0.77926605
+19160_2_U                1 -1.10781760
+18855_1_U                1 -0.41892411
+18856_3_S                2 -0.09468533
+18856_2_U                1 -0.47805742
+18855_3_U                2 -0.49041767</code></pre>
 <pre class="r"><code>#Plots after correcting RUV
 plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1527,7 +1559,7 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code># # Clustering (original code from Julien Roux)
+<pre class="r"><code>#Spearman
 cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
 
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
@@ -1592,6 +1624,12 @@ Anthony Hung
 </table>
 </div>
 </div>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/RUV-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>“The RUVg function returns two pieces of information: the estimated factors of unwanted variation (added as columns to the phenoData slot of set) and the normalized counts obtained by regressing the original counts on the unwanted factors. The normalized values are stored in the normalizedCounts slot of set and can be accessed with the normCounts method. These counts should be used only for exploration. It is important that subsequent DE analysis be done on the original counts (accessible through the counts method), as removing the unwanted factors from the counts can also remove part of a factor of interest [6].”</p>
 </div>
 <div id="save-data-and-ruvs-output-for-unwanted-variation-contains-the-same-cpm-data-as-before-as-well-as-pheno-data-w_1-values-from-ruvs" class="section level1">
@@ -1605,73 +1643,69 @@ Anthony Hung
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.4.3 (2017-11-30)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Scientific Linux 7.4 (Nitrogen)
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.6
 
 Matrix products: default
-BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
- [1] dplyr_0.8.3                RUVSeq_1.12.0             
- [3] EDASeq_2.12.0              ShortRead_1.36.1          
- [5] GenomicAlignments_1.14.2   SummarizedExperiment_1.8.1
- [7] DelayedArray_0.4.1         matrixStats_0.55.0        
- [9] Rsamtools_1.30.0           GenomicRanges_1.30.3      
-[11] GenomeInfoDb_1.14.0        Biostrings_2.46.0         
-[13] XVector_0.18.0             IRanges_2.12.0            
-[15] S4Vectors_0.16.0           BiocParallel_1.12.0       
-[17] Biobase_2.38.0             BiocGenerics_0.24.0       
-[19] tidyr_1.0.0                DT_0.10                   
-[21] cowplot_0.9.3              scales_1.1.0              
-[23] RColorBrewer_1.1-2         edgeR_3.20.9              
-[25] limma_3.34.9               reshape_0.8.8             
-[27] ggplot2_3.2.1              gplots_3.0.1.1            
+ [1] dplyr_0.8.3                 RUVSeq_1.18.0              
+ [3] EDASeq_2.18.0               ShortRead_1.42.0           
+ [5] GenomicAlignments_1.20.1    SummarizedExperiment_1.14.1
+ [7] DelayedArray_0.10.0         matrixStats_0.55.0         
+ [9] Rsamtools_2.0.3             GenomicRanges_1.36.1       
+[11] GenomeInfoDb_1.20.0         Biostrings_2.52.0          
+[13] XVector_0.24.0              IRanges_2.18.3             
+[15] S4Vectors_0.22.1            BiocParallel_1.18.1        
+[17] Biobase_2.44.0              BiocGenerics_0.30.0        
+[19] tidyr_1.0.0                 DT_0.10                    
+[21] cowplot_1.0.0               scales_1.1.0               
+[23] RColorBrewer_1.1-2          edgeR_3.26.8               
+[25] limma_3.40.6                reshape_0.8.8              
+[27] ggplot2_3.2.1               gplots_3.0.1.1             
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
  [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.1          
- [7] bit64_0.9-7            AnnotationDbi_1.40.0   splines_3.4.3         
-[10] R.methodsS3_1.7.1      DESeq_1.30.0           geneplotter_1.56.0    
+ [7] bit64_0.9-7            AnnotationDbi_1.46.1   splines_3.6.1         
+[10] R.methodsS3_1.7.1      DESeq_1.36.0           geneplotter_1.62.0    
 [13] knitr_1.26             zeallot_0.1.0          jsonlite_1.6          
-[16] workflowr_1.5.0        annotate_1.56.2        R.oo_1.23.0           
-[19] shiny_1.4.0            compiler_3.4.3         httr_1.4.1            
-[22] backports_1.1.5        fastmap_1.0.1          assertthat_0.2.1      
-[25] Matrix_1.2-18          lazyeval_0.2.2         later_1.0.0           
-[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
-[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
+[16] workflowr_1.5.0        annotate_1.62.0        R.oo_1.23.0           
+[19] shiny_1.4.0            compiler_3.6.1         httr_1.4.1            
+[22] backports_1.1.5        assertthat_0.2.1       Matrix_1.2-18         
+[25] fastmap_1.0.1          lazyeval_0.2.2         later_1.0.0           
+[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.6.1           
+[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.2.1
 [34] Rcpp_1.0.3             vctrs_0.2.0            gdata_2.18.0          
-[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.11             
+[37] rtracklayer_1.44.4     crosstalk_1.0.0        xfun_0.11             
 [40] stringr_1.4.0          mime_0.7               lifecycle_0.1.0       
-[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.24.0       
-[46] MASS_7.3-51.4          aroma.light_3.8.0      hms_0.5.2             
+[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.30.0       
+[46] MASS_7.3-51.4          aroma.light_3.14.0     hms_0.5.2             
 [49] promises_1.1.0         yaml_2.2.0             memoise_1.1.0         
-[52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
-[55] RSQLite_2.1.4          genefilter_1.60.0      RMySQL_0.10.17        
-[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.2           
-[61] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
-[64] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
-[67] htmlwidgets_1.5.1      bit_1.1-14             tidyselect_0.2.5      
-[70] plyr_1.8.4             magrittr_1.5           R6_2.4.1              
-[73] DBI_1.0.0              pillar_1.4.2           whisker_0.4           
-[76] withr_2.1.2            survival_2.41-3        RCurl_1.95-4.12       
-[79] tibble_2.1.3           crayon_1.3.4           KernSmooth_2.23-15    
-[82] rmarkdown_1.18         progress_1.2.2         locfit_1.5-9.1        
-[85] grid_3.4.3             blob_1.2.0             git2r_0.26.1          
-[88] digest_0.6.23          xtable_1.8-4           httpuv_1.5.2          
-[91] R.utils_2.9.2          munsell_0.5.0         </code></pre>
+[52] biomaRt_2.40.5         latticeExtra_0.6-28    stringi_1.4.3         
+[55] RSQLite_2.1.4          genefilter_1.66.0      GenomicFeatures_1.36.4
+[58] caTools_1.17.1.3       rlang_0.4.2            pkgconfig_2.0.3       
+[61] bitops_1.0-6           evaluate_0.14          lattice_0.20-38       
+[64] purrr_0.3.3            labeling_0.3           htmlwidgets_1.5.1     
+[67] bit_1.1-14             tidyselect_0.2.5       plyr_1.8.5            
+[70] magrittr_1.5           R6_2.4.1               DBI_1.0.0             
+[73] pillar_1.4.2           whisker_0.4            withr_2.1.2           
+[76] survival_3.1-8         RCurl_1.95-4.12        tibble_2.1.3          
+[79] crayon_1.3.4           KernSmooth_2.23-16     rmarkdown_1.18        
+[82] progress_1.2.2         locfit_1.5-9.1         grid_3.6.1            
+[85] blob_1.2.0             git2r_0.26.1           digest_0.6.23         
+[88] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
+[91] munsell_0.5.0         </code></pre>
 </div>
 </div>
 
