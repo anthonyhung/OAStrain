@@ -361,6 +361,6 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 ## Save normalized/filtered count matrix and filtered count matrix
 
 ```{r save}
-saveRDS(counts_cpm, "data/filtered_counts.rds")
-saveRDS(filtered_cpm, "data/norm_filtered_counts.rds")
+saveRDS(counts_upperquartile, "data/filtered_counts.rds")
+saveRDS(filtered_upperquartile, "data/norm_filtered_counts.rds")
 ```

@@ -42,8 +42,14 @@ sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 source("code/PCA_fn.R")
 
 
-# Clustering (original code from Julien Roux)
+#spearman
 cors <- cor(filt_cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#pearson
+cors <- cor(filt_cpm, method="pearson", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
@@ -131,11 +137,11 @@ replicates <- makeGroups(paste0(sampleinfo$Individual, sampleinfo$treatment))
 x <- paste0(sampleinfo$Individual, sampleinfo$treatment)
 
 #load data into expressionset
-set <- newSeqExpressionSet(as.matrix(filt_counts),
+set <- newSeqExpressionSet(as.matrix(filt_counts$counts),
                            phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
 set
 #normalization
-set <- betweenLaneNormalization(set, which="upper")
+set <- betweenLaneNormalization(set, which = "upper")
 
 set1 <- RUVs(set, rownames(filt_counts), k=1, replicates)
 pData(set1)
