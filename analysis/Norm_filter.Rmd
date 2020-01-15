@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Perform cpm normalization of raw count data and filtering of lowly expressed genes
+# Perform normalization of raw count data and filtering of lowly expressed genes
 
 ```{r load libraries and data}
 library("gplots")
@@ -26,6 +26,8 @@ pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 # load in relabeled counts
 raw_counts <- readRDS("data/raw_counts_relabeled.rds")
+# Create DGEList object to allow for easier application of different normalization methods
+raw_counts <- DGEList(raw_counts, group = colnames(raw_counts))
 
 # load in reordered sample information
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
@@ -58,7 +60,7 @@ plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
-# Boxplots of cpm across samples
+## Boxplots of cpm across samples
 
 ```{r boxplot cpm}
 meltcpm <- melt(cpm)
@@ -67,18 +69,20 @@ p <- ggplot(meltcpm, aes(factor(sampleID), cpm))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-# Filtering for lowly expressed genes (avg CPM > 0.5 in at least 2 samples)
+## Filtering for lowly expressed genes (avg log2CPM > 1.5 in at least 4 samples)
 
-```{r filter}
-cutoff <- 0.5
+```{r filter CPM}
+cutoff <- 1.5
 
-keep <- rowSums( cpm(raw_counts, log=FALSE) > 0.5 ) >=2
+keep <- rowSums(cpm > cutoff ) >=4
 
 counts <- raw_counts[keep,]
 filtered_cpm <- cpm(counts, log = T)
+dim(filtered_cpm)
 ```
 
-# Boxplots of normalized+filtered counts across samples
+## Boxplots of normalized+filtered counts across samples
+
 ```{r boxplot filt cpm}
 melt_filt_cpm <- melt(filtered_cpm)
 names(melt_filt_cpm) <- c("gene", "sampleID", "log2cpm")
@@ -86,7 +90,94 @@ p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm))
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-# Save normalized/filtered count matrix and filtered count matrix
+## Correlation heatmap of log2CPM normalized samples
+
+```{r corr heatmap CPM}
+# # Clustering (original code from Julien Roux)
+cors <- cor(filtered_cpm, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+Interestingly, the cpm normalization changes the clustering of the samples differently compared to the clustering on the raw data. We try different normalization methods below to find one that does not remove the expected relationships between samples seen in the raw data.
+
+# TMM Normalization
+
+```{r TMM normalization}
+TMM <- calcNormFactors(raw_counts, method = "TMM")
+TMM <- cpm(TMM, log=TRUE)
+head(TMM)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(TMM[,strained], col=col[strained, ], legend="topright")
+plotDensities(TMM[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(TMM[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(TMM[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(TMM[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+
+## Boxplots of TMM across samples
+
+```{r boxplot TMM}
+meltTMM <- melt(TMM)
+names(meltTMM) <- c("gene", "sampleID", "TMM")
+p <- ggplot(meltTMM, aes(factor(sampleID), TMM)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2TMM > 1.5 in at least 4 samples)
+
+```{r filter TMM}
+cutoff <- 1.5
+
+keep <- rowSums( TMM > cutoff ) >=4
+
+counts <- raw_counts[keep,]
+filtered_TMM <- cpm(counts, log = T)
+dim(filtered_TMM)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt TMM}
+melt_filt_TMM <- melt(filtered_TMM)
+names(melt_filt_TMM) <- c("gene", "sampleID", "log2TMM")
+p1 <- ggplot(melt_filt_TMM, aes(factor(sampleID), log2TMM)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2TMM normalized samples
+
+```{r corr heatmap TMM}
+# # Clustering (original code from Julien Roux)
+cors <- cor(filtered_TMM, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+
+
+
+
+
+## Save normalized/filtered count matrix and filtered count matrix
 
 ```{r save}
 saveRDS(counts, "data/filtered_counts.rds")

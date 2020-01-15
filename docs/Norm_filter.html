@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-13
+<strong>Last updated:</strong> 2020-01-14
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,22 +495,30 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9" target="_blank">a04a1ac</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3targetblank4922bc1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3" target="_blank">4922bc1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree4922bc1430dee5ae27ce4f6bc97b51393d1ed0f3targetblank4922bc1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/prime_RUVsCPM.rds
+    Ignored:    data/prime_filtered_counts.rds
+    Ignored:    data/prime_norm_filtered_counts.rds
+    Ignored:    data/prime_raw_counts_relabeled.rds
     Ignored:    data/raw_counts_relabeled.rds
+
+Unstaged changes:
+    Modified:   analysis/Norm_filter.Rmd
 
 </code></pre>
 <p>
@@ -549,6 +557,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/Norm_filter.html" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+run GO enrichment analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -777,8 +802,8 @@ Create analysis files for analysis of BulkRNA pilot data
 </div>
 </div>
 </div>
-<div id="perform-cpm-normalization-of-raw-count-data-and-filtering-of-lowly-expressed-genes" class="section level1">
-<h1>Perform cpm normalization of raw count data and filtering of lowly expressed genes</h1>
+<div id="perform-normalization-of-raw-count-data-and-filtering-of-lowly-expressed-genes" class="section level1">
+<h1>Perform normalization of raw count data and filtering of lowly expressed genes</h1>
 <pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;gplots&#39;</code></pre>
@@ -793,10 +818,17 @@ library(&quot;edgeR&quot;)</code></pre>
 library(&quot;scales&quot;)
 library(&quot;cowplot&quot;)</code></pre>
 <pre><code>
+********************************************************</code></pre>
+<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
+<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
+<pre><code>  behavior, execute:
+  theme_set(theme_cowplot())</code></pre>
+<pre><code>********************************************************</code></pre>
+<pre><code>
 Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
 
-    ggsave</code></pre>
+    stamp</code></pre>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -825,26 +857,26 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 <pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
 head(cpm)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000227232 -1.869360 -2.775397 -3.006605 -3.880222 -3.856000 -1.427425
-ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000227232 -1.420107 -2.022996 -2.155735 -2.574324 -2.564478 -1.083803
+ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000227232 -6.129431 -3.878455 -1.666196 -1.900087 -6.129431 -3.189505
-ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000227232 -3.129431 -2.573609 -1.268564 -1.442548 -3.129431 -2.254268
+ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000227232 -4.009829 -1.679921 -2.828244 -2.235099 -6.129431
-ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
-ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431</code></pre>
+ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000227232 -2.625352 -1.278970 -2.054133 -1.678550 -3.129431
+ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -1163,9 +1195,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-</div>
-<div id="boxplots-of-cpm-across-samples" class="section level1">
-<h1>Boxplots of cpm across samples</h1>
+<div id="boxplots-of-cpm-across-samples" class="section level2">
+<h2>Boxplots of cpm across samples</h2>
 <pre class="r"><code>meltcpm &lt;- melt(cpm)
 names(meltcpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;cpm&quot;)
 p &lt;- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
@@ -1231,8 +1262,8 @@ Anthony Hung
 </div>
 </div>
 </div>
-<div id="filtering-for-lowly-expressed-genes-avg-cpm-0.5-in-at-least-2-samples" class="section level1">
-<h1>Filtering for lowly expressed genes (avg CPM &gt; 0.5 in at least 2 samples)</h1>
+<div id="filtering-for-lowly-expressed-genes-avg-cpm-0.5-in-at-least-2-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg CPM &gt; 0.5 in at least 2 samples)</h2>
 <pre class="r"><code>cutoff &lt;- 0.5
 
 keep &lt;- rowSums( cpm(raw_counts, log=FALSE) &gt; 0.5 ) &gt;=2
@@ -1240,8 +1271,8 @@ keep &lt;- rowSums( cpm(raw_counts, log=FALSE) &gt; 0.5 ) &gt;=2
 counts &lt;- raw_counts[keep,]
 filtered_cpm &lt;- cpm(counts, log = T)</code></pre>
 </div>
-<div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level1">
-<h1>Boxplots of normalized+filtered counts across samples</h1>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
 <pre class="r"><code>melt_filt_cpm &lt;- melt(filtered_cpm)
 names(melt_filt_cpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2cpm&quot;)
 p1 &lt;- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
@@ -1269,6 +1300,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">f1425df</a>
@@ -1307,8 +1349,23 @@ Anthony Hung
 </div>
 </div>
 </div>
-<div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level1">
-<h1>Save normalized/filtered count matrix and filtered count matrix</h1>
+<div id="correlation-heatmap-of-log2cpm-normalized-samples" class="section level2">
+<h2>Correlation heatmap of log2CPM normalized samples</h2>
+<pre class="r"><code># # Clustering (original code from Julien Roux)
+cors &lt;- cor(filtered_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20CPM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="interestingly-the-cpm-normalization-changes-the-clustering-of-the-samples-differently-compared-to-the-clustering-on-the-raw-data.-we-try-different-normalization-methods-below-to-find-one-that-does-not-remove-the-expected-relationships-between-samples-seen-in-the-raw-data." class="section level1">
+<h1>Interestingly, the cpm normalization changes the clustering of the samples differently compared to the clustering on the raw data. We try different normalization methods below to find one that does not remove the expected relationships between samples seen in the raw data.</h1>
+</div>
+<div id="tmm-normalization" class="section level1">
+<h1>TMM Normalization</h1>
+<div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level2">
+<h2>Save normalized/filtered count matrix and filtered count matrix</h2>
 <pre class="r"><code>saveRDS(counts, &quot;data/filtered_counts.rds&quot;)
 saveRDS(filtered_cpm, &quot;data/norm_filtered_counts.rds&quot;)</code></pre>
 <br>
@@ -1319,43 +1376,40 @@ saveRDS(filtered_cpm, &quot;data/norm_filtered_counts.rds&quot;)</code></pre>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.4.3 (2017-11-30)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Scientific Linux 7.4 (Nitrogen)
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.6
 
 Matrix products: default
-BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] dplyr_0.8.3        cowplot_0.9.3      scales_1.1.0       RColorBrewer_1.1-2
-[5] edgeR_3.20.9       limma_3.34.9       reshape_0.8.8      ggplot2_3.2.1     
+[1] dplyr_0.8.3        cowplot_1.0.0      scales_1.1.0       RColorBrewer_1.1-2
+[5] edgeR_3.26.8       limma_3.40.6       reshape_0.8.8      ggplot2_3.2.1     
 [9] gplots_3.0.1.1    
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.3         plyr_1.8.4         compiler_3.4.3     pillar_1.4.2      
+ [1] Rcpp_1.0.3         plyr_1.8.5         compiler_3.6.1     pillar_1.4.2      
  [5] later_1.0.0        git2r_0.26.1       workflowr_1.5.0    bitops_1.0-6      
- [9] tools_3.4.3        digest_0.6.23      lattice_0.20-35    evaluate_0.14     
+ [9] tools_3.6.1        digest_0.6.23      lattice_0.20-38    evaluate_0.14     
 [13] lifecycle_0.1.0    tibble_2.1.3       gtable_0.3.0       pkgconfig_2.0.3   
 [17] rlang_0.4.2        yaml_2.2.0         xfun_0.11          withr_2.1.2       
 [21] stringr_1.4.0      knitr_1.26         fs_1.3.1           gtools_3.8.1      
 [25] caTools_1.17.1.3   locfit_1.5-9.1     tidyselect_0.2.5   rprojroot_1.3-2   
-[29] grid_3.4.3         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
+[29] grid_3.6.1         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
 [33] gdata_2.18.0       farver_2.0.1       purrr_0.3.3        magrittr_1.5      
 [37] whisker_0.4        backports_1.1.5    promises_1.1.0     htmltools_0.4.0   
 [41] assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.2       labeling_0.3      
-[45] KernSmooth_2.23-15 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
+[45] KernSmooth_2.23-16 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
 [49] crayon_1.3.4      </code></pre>
+</div>
 </div>
 </div>
 
