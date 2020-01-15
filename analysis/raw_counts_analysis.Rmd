@@ -33,6 +33,7 @@ library("gplots")
 library("ggplot2")
 library("RColorBrewer")
 library("scales")
+library("edgeR")
 
 # Load colors 
 colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
@@ -62,29 +63,35 @@ summary(apply(raw_counts, 1, var) == 0)
 
 
 #Sample information
-sample_info <- read.csv("data/Sample.info.RNAseq.csv")
-head(sample_info)
+sampleinfo <- read.csv("data/Sample.info.RNAseq.csv")
+head(sampleinfo)
 #Re-order sample information to match the columns of count matrix
-sample_info <- sample_info[match(samplenames, sample_info$Sample_ID),]
+sampleinfo <- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
 #remove 02 sample that does not pass QC
-sample_info <- sample_info[-14,]
+sampleinfo <- sampleinfo[-14,]
 # save reorganized sample information
-saveRDS(sample_info, "data/Sample.info.RNAseq.reordered.csv")
+saveRDS(sampleinfo, "data/Sample.info.RNAseq.reordered.csv")
 ```
 
 # Perform PCA and hierarchical clustering on raw data
 
 ```{r corr heatmap}
-labels <- paste(sample_info$Individual, sample_info$treatment, sep=" ")
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 
 #load PCA function
 source("code/PCA_fn.R")
 
-# Clustering (original code from Julien Roux)
+#spearman
 cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
 
 
-heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sample_info$Individual))], RowSideColors=pal[as.integer(as.factor(sample_info$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(raw_counts, method="pearson", use="pairwise.complete.obs")
+
+
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 ```
 
 
@@ -100,14 +107,14 @@ scores <- pca_genes$x
 
 ### PCs 1 and 2 Raw Data
 for (n in 1:1){
-  col.v <- pal[as.integer(sample_info$Individual)]
+  col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
 ### PCs 3 and 4 Raw Data
 
 for (n in 3:3){
-  col.v <- pal[as.integer(sample_info$Individual)]
+  col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
@@ -115,14 +122,14 @@ for (n in 3:3){
 
 ### PCs 1 and 2 Raw Data
 for (n in 1:1){
-  col.v <- pal[as.integer(sample_info$treatment)]
+  col.v <- pal[as.integer(sampleinfo$treatment)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
 ### PCs 3 and 4 Raw Data
 
 for (n in 3:3){
-  col.v <- pal[as.integer(sample_info$treatment)]
+  col.v <- pal[as.integer(sampleinfo$treatment)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 ```
