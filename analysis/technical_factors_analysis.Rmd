@@ -37,7 +37,7 @@ sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 
 # PCA and hierarchical clustering of normalized and filtered data
 
-```{r clustering}
+```{r clustering norm_filt_data}
 #Load PCA plotting Function
 source("code/PCA_fn.R")
 
@@ -85,7 +85,7 @@ for (n in 1:3){
 # Calculate the relationship between each recorded covariate and the top 6 PCs. 
 p_comps <- 1:6
 info <- sampleinfo %>% 
-     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch, LibSize)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
@@ -109,9 +109,9 @@ head(pc_cov_cor_2)
 d_heatmap <- pc_cov_cor_2 
 d_heatmap$variable <- factor(d_heatmap$variable, 
                               levels = c("Individual", "Sex", "Replicate", 
-                                         "treatment", "RIN", "LibraryPrepBatch"), 
+                                         "treatment", "RIN", "LibraryPrepBatch", "LibSize"), 
                               labels = c("Individual", "Sex", "Replicate", 
-                                         "treatment", "RIN", "LibraryPrepBatch")) 
+                                         "treatment", "RIN", "LibraryPrepBatch", "LibSize")) 
 pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
   geom_tile(aes(fill = cor), colour = "white") + 
   scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + 
@@ -150,7 +150,7 @@ labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 
 # 
-set1 <- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
+set1 <- RUVs(x=set, cIdx = rownames(filt_counts), k=1, scIdx = replicates, round = F)
 pData(set1)
 
 #Plots after correcting RUV
@@ -198,7 +198,7 @@ plot(pca_genes, main = "Variance per PC")
 # Calculate the relationship between each recorded covariate and the top 6 PCs. 
 p_comps <- 1:6
 info <- sampleinfo %>% 
-     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch, LibSize)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
@@ -222,9 +222,9 @@ head(pc_cov_cor_2)
 d_heatmap <- pc_cov_cor_2 
 d_heatmap$variable <- factor(d_heatmap$variable, 
                               levels = c("Individual", "Sex", "Replicate", 
-                                         "treatment", "RIN", "LibraryPrepBatch"), 
+                                         "treatment", "RIN", "LibraryPrepBatch", "LibSize"), 
                               labels = c("Individual", "Sex", "Replicate", 
-                                         "treatment", "RIN", "LibraryPrepBatch")) 
+                                         "treatment", "RIN", "LibraryPrepBatch", "LibSize")) 
 pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
   geom_tile(aes(fill = cor), colour = "white") + 
   scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + 

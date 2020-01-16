@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-15
+<strong>Last updated:</strong> 2020-01-16
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a" target="_blank">fd9ab65</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedacaeafc28ab1298a80fdd4dd762933bdfd550b0targetblankdacaeafa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/dacaeafc28ab1298a80fdd4dd762933bdfd550b0" target="_blank">dacaeaf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedacaeafc28ab1298a80fdd4dd762933bdfd550b0targetblankdacaeafa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,15 +508,14 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
-    Modified:   analysis/Norm_filter.Rmd
-    Modified:   analysis/check_expression.Rmd
-    Modified:   analysis/raw_counts_analysis.Rmd
     Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   data/Sample.info.RNAseq.csv
     Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
@@ -556,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/analysis/raw_counts_analysis.Rmd" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Use quant_normalization
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/158fdf3e906a4a488e486cb96684b4e23b567895/docs/raw_counts_analysis.html" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Use quant_normalization
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -944,13 +977,13 @@ logical   32936   25459 </code></pre>
 <pre class="r"><code>#Sample information
 sampleinfo &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
 head(sampleinfo)</code></pre>
-<pre><code>  Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch
-1 18855_1_S   NA18855    F         1    Strain  9.9                1
-2 18856_1_S   NA18856    M         1    Strain  8.5                1
-3 19160_1_S   NA19160    M         1    Strain  9.9                1
-4 18855_2_S   NA18855    F         2    Strain 10.0                1
-5 18856_2_S   NA18856    M         2    Strain  9.6                1
-6 19160_2_S   NA19160    M         2    Strain 10.0                1</code></pre>
+<pre><code>  Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch  LibSize
+1 18855_1_S   NA18855    F         1    Strain  9.9                1 19712744
+2 18856_1_S   NA18856    M         1    Strain  8.5                1 13571439
+3 19160_1_S   NA19160    M         1    Strain  9.9                1 20979958
+4 18855_2_S   NA18855    F         2    Strain 10.0                1 18256163
+5 18856_2_S   NA18856    M         2    Strain  9.6                1 16782764
+6 19160_2_S   NA19160    M         2    Strain 10.0                1 16622407</code></pre>
 <pre class="r"><code>#Re-order sample information to match the columns of count matrix
 sampleinfo &lt;- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
 #remove 02 sample that does not pass QC
@@ -1173,6 +1206,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/raw_counts_analysis.Rmd/PCA raw-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/raw_counts_analysis.Rmd/PCA raw-2.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1231,6 +1275,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/raw_counts_analysis.Rmd/PCA raw-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/raw_counts_analysis.Rmd/PCA raw-3.png" target="_blank">f1425df</a>
@@ -1299,6 +1354,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/raw_counts_analysis.Rmd/PCA raw-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/raw_counts_analysis.Rmd/PCA raw-4.png" target="_blank">f1425df</a>
 </td>
 <td>
@@ -1334,7 +1400,82 @@ Anthony Hung
 </table>
 </div>
 </div>
-<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-5">
+Past versions of “PCA raw-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-PCA-raw-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/raw_counts_analysis.Rmd/PCA raw-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-6">
+Past versions of “PCA raw-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-PCA-raw-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/raw_counts_analysis.Rmd/PCA raw-6.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="library-size-by-individual-x-treatment" class="section level1">
 <h1>Library size by individual x treatment</h1>

@@ -76,6 +76,22 @@ plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
+## Correlation heatmap of log2CPM normalized and unfiltered samples
+
+```{r corr heatmap unfiltered CPM}
+#Spearman
+cors <- cor(cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(cpm, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
 ## Boxplots of cpm across samples
 
 ```{r boxplot cpm}
@@ -106,9 +122,9 @@ p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm))
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Correlation heatmap of log2CPM normalized samples
+## Correlation heatmap of log2CPM normalized and filtered samples
 
-```{r corr heatmap CPM}
+```{r corr heatmap filtered CPM}
 #Spearman
 cors <- cor(filtered_cpm, method="spearman", use="pairwise.complete.obs")
 
@@ -151,6 +167,22 @@ plotDensities(TMM[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(TMM[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
+## Correlation heatmap of log2TMM normalized and unfiltered samples
+
+```{r corr heatmap unfiltered TMM}
+#Spearman
+cors <- cor(TMM, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(TMM, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
 
 ## Boxplots of TMM across samples
 
@@ -182,9 +214,9 @@ p1 <- ggplot(melt_filt_TMM, aes(factor(sampleID), log2TMM))
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Correlation heatmap of log2TMM normalized samples
+## Correlation heatmap of log2TMM normalized and filtered samples
 
-```{r corr heatmap TMM}
+```{r corr heatmap filtered TMM}
 #Spearman
 cors <- cor(filtered_TMM, method="spearman", use="pairwise.complete.obs")
 
@@ -230,6 +262,22 @@ plotDensities(RLE[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(RLE[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
+## Correlation heatmap of log2RLE normalized and unfiltered samples
+
+```{r corr heatmap unfiltered RLE}
+#Spearman
+cors <- cor(RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(RLE, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
 
 ## Boxplots of RLE across samples
 
@@ -261,9 +309,9 @@ p1 <- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE))
 p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Correlation heatmap of log2RLE normalized samples
+## Correlation heatmap of log2RLE normalized and filtered samples
 
-```{r corr heatmap RLE}
+```{r corr heatmap filtered RLE}
 #Spearman
 cors <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
 
@@ -312,6 +360,22 @@ plotDensities(upperquartile[,ind_2], col=col[ind_2, ], legend="topright")
 plotDensities(upperquartile[,ind_3], col=col[ind_3, ], legend="topright")
 ```
 
+## Correlation heatmap of log2upperquartile normalized and unfiltered samples
+
+```{r corr heatmap unfiltered upperquartile}
+#Spearman
+cors <- cor(upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(upperquartile, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
 
 ## Boxplots of upperquartile across samples
 
@@ -345,9 +409,9 @@ p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 plotDensities(filtered_upperquartile, legend = F)
 ```
 
-## Correlation heatmap of log2upperquartile normalized samples
+## Correlation heatmap of log2upperquartile normalized and filtered samples
 
-```{r corr heatmap upperquartile}
+```{r corr heatmap filtered upperquartile}
 #Spearman
 cors <- cor(filtered_upperquartile, method="spearman", use="pairwise.complete.obs")
 
@@ -371,3 +435,25 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 saveRDS(counts_upperquartile, "data/filtered_counts.rds")
 saveRDS(filtered_upperquartile, "data/norm_filtered_counts.rds")
 ```
+
+# Correlation heatmap of filtered Raw counts data (unnormalized)
+
+```{r corr heatmap filtered raw}
+#Spearman
+cors <- cor(counts_upperquartile$counts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(counts_upperquartile$counts, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+Conclusions about normalizations:
+     1) There isn't much of a difference between the outputs of each normalization method in terms of correlation heatmaps or number of genes kept after filtering for lowly expressed genes.
+     2) The driver for the differences between correlation heatmaps between the raw and filtered data comes down to the filtering of lowly expressed genes. In all cases, simply performing normalization and plotting the heatmap (without filtering out any genes) leads to a correlation heatmap that resembles the raw data's heatmap quite closely (and in the case of pearson correlation, one that is even better matched up to desired structure between samples).
+
+
