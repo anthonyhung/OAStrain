@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6c3b7d1459fe987e580b53ce89a1581434ee1041targetblank6c3b7d1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6c3b7d1459fe987e580b53ce89a1581434ee1041" target="_blank">6c3b7d1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a" target="_blank">fd9ab65</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6c3b7d1459fe987e580b53ce89a1581434ee1041targetblank6c3b7d1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,9 +507,17 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
+
+Unstaged changes:
+    Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/check_expression.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -548,6 +556,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/277772fa43e48353985e2c0360dae84b9286a2b3/docs/raw_counts_analysis.html" target="_blank">277772f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Run raw analysis with RIN scores
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -919,20 +944,13 @@ logical   32936   25459 </code></pre>
 <pre class="r"><code>#Sample information
 sampleinfo &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
 head(sampleinfo)</code></pre>
-<pre><code>  Sample_ID Individual Sex Replicate Passage_MSC treatment  RIN
-1 18855_1_S   NA18855    F         1          10    Strain  9.9
-2 18856_1_S   NA18856    M         1           8    Strain  8.5
-3 19160_1_S   NA19160    M         1           8    Strain  9.9
-4 18855_2_S   NA18855    F         2          10    Strain 10.0
-5 18856_2_S   NA18856    M         2           8    Strain  9.6
-6 19160_2_S   NA19160    M         2           8    Strain 10.0
-  LibraryPrepBatch
-1                1
-2                1
-3                1
-4                1
-5                1
-6                1</code></pre>
+<pre><code>  Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch
+1 18855_1_S   NA18855    F         1    Strain  9.9                1
+2 18856_1_S   NA18856    M         1    Strain  8.5                1
+3 19160_1_S   NA19160    M         1    Strain  9.9                1
+4 18855_2_S   NA18855    F         2    Strain 10.0                1
+5 18856_2_S   NA18856    M         2    Strain  9.6                1
+6 19160_2_S   NA19160    M         2    Strain 10.0                1</code></pre>
 <pre class="r"><code>#Re-order sample information to match the columns of count matrix
 sampleinfo &lt;- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
 #remove 02 sample that does not pass QC
@@ -1065,8 +1083,8 @@ scores &lt;- pca_genes$x
 
 #Make PCA plots with the factors colored by individual
 
-### PCs 1 and 2 Raw Data
-for (n in 1:1){
+### PCA Raw Data
+for (n in 1:3){
   col.v &lt;- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }</code></pre>
@@ -1130,12 +1148,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>### PCs 3 and 4 Raw Data
-
-for (n in 3:3){
-  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}</code></pre>
 <p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-2">
@@ -1196,13 +1208,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#Make PCA plots with the factors colored by treatment
-
-### PCs 1 and 2 Raw Data
-for (n in 1:1){
-  col.v &lt;- pal[as.integer(sampleinfo$treatment)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}</code></pre>
 <p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-raw-3">
@@ -1263,9 +1268,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>### PCs 3 and 4 Raw Data
+<pre class="r"><code>#Make PCA plots with the factors colored by treatment
 
-for (n in 3:3){
+for (n in 1:3){
   col.v &lt;- pal[as.integer(sampleinfo$treatment)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }</code></pre>
@@ -1329,6 +1334,7 @@ Anthony Hung
 </table>
 </div>
 </div>
+<p><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/raw_counts_analysis.Rmd/PCA%20raw-6.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="library-size-by-individual-x-treatment" class="section level1">
 <h1>Library size by individual x treatment</h1>

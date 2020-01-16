@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-13
+<strong>Last updated:</strong> 2020-01-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9" target="_blank">a04a1ac</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a" target="_blank">fd9ab65</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea04a1ac95f43c8a9cb54d14c3c67349dada7e8f9targetblanka04a1aca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,10 +507,13 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/RUVsCPM.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
+
+Unstaged changes:
+    Modified:   analysis/check_expression.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -549,6 +552,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/check_expression.html" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+run GO enrichment analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -760,12 +780,12 @@ Start up additional analysis files
 </div>
 </div>
 </div>
-<div id="build-boxplots-comparing-expression-cpm-of-different-genes-between-strain-and-unstrain-samples" class="section level1">
-<h1>Build boxplots comparing expression (CPM) of different genes between strain and unstrain samples</h1>
+<div id="build-boxplots-comparing-expression-of-different-genes-between-strain-and-unstrain-samples" class="section level1">
+<h1>Build boxplots comparing expression of different genes between strain and unstrain samples</h1>
 <p>Check chondro/msc markers for absolute expression strain markers boxplot comparisons</p>
 <pre class="r"><code>library(ggplot2)
 #load in normalized/filtered data
-filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
+filt_norm_counts &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
 
 # load in reordered sample information
 sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
@@ -775,7 +795,7 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 <pre class="r"><code>#Inputs: count matrix, sample information data frame, and gene of interest in the ENSG format
 get_gene_long &lt;- function(counts, info, gene){
      gene_counts &lt;- as.data.frame(counts[gene,])
-     names(gene_counts) &lt;- &quot;CPM&quot;
+     names(gene_counts) &lt;- &quot;norm_expr&quot;
      gene_counts_info &lt;- cbind(gene_counts, info)
      return(gene_counts_info)
 }
@@ -783,17 +803,17 @@ get_gene_long &lt;- function(counts, info, gene){
 boxplot_gene_treatment &lt;- function(counts_, info_, gene_, name){
      df &lt;- get_gene_long(counts = counts_, info = info_, gene = gene_)
      
-     ggplot(df, aes(x = treatment, y = CPM, color = info_$Individual)) +
+     ggplot(df, aes(x = treatment, y = norm_expr, color = info_$Individual)) +
           geom_boxplot() +
-          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;log2 Counts per million reads&quot;)
+          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;log2 Normalized Expression&quot;)
 }</code></pre>
 </div>
 <div id="compare-expression-of-strain-markers-between-samples" class="section level1">
 <h1>Compare expression of strain markers between samples</h1>
-<pre class="r"><code>#MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+<pre class="r"><code>#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
 
-#MMP1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000196611&quot;, &quot;MMP1&quot;)</code></pre>
+#MMP2
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000087245&quot;, &quot;MMP2&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-1">
@@ -854,8 +874,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#MMP2
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000087245&quot;, &quot;MMP2&quot;)</code></pre>
+<pre class="r"><code>#TIMP2
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000035862&quot;, &quot;TIMP2&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-2">
@@ -916,8 +936,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#TIMP2
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000035862&quot;, &quot;TIMP2&quot;)</code></pre>
+<pre class="r"><code>#COMP
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000105664&quot;, &quot;COMP&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-3">
@@ -978,8 +998,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#COMP
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000105664&quot;, &quot;COMP&quot;)</code></pre>
+<pre class="r"><code>#TIMP1
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000102265&quot;, &quot;TIMP1&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-4">
@@ -1040,8 +1060,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#TIMP1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000102265&quot;, &quot;TIMP1&quot;)</code></pre>
+<pre class="r"><code>#ADAMTS4
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000158859&quot;, &quot;ADAMTS4&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-5">
@@ -1102,8 +1122,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#ADAMTS4
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000158859&quot;, &quot;ADAMTS4&quot;)</code></pre>
+<pre class="r"><code>#ADAMTS5
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000154736&quot;, &quot;ADAMTS5&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-6">
@@ -1164,8 +1184,12 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#ADAMTS5e
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154736&quot;, &quot;ADAMTS5&quot;)</code></pre>
+<pre class="r"><code>#Chond Markers
+
+#COL2A1, COL10A1, ACAN was filtered out
+
+#SOX9
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-7">
@@ -1226,12 +1250,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#Chond Markers
-
-#ACAN was filtered out
-
-#COL2A1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000139219&quot;, &quot;COL2A1&quot;)</code></pre>
+<pre class="r"><code>#COL11A1
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-8">
@@ -1292,8 +1312,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#COL10A1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000123500&quot;, &quot;COL10A1&quot;)</code></pre>
+<pre class="r"><code>#SOX5
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-9">
@@ -1354,8 +1374,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX9
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
+<pre class="r"><code>#SOX6
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-10">
@@ -1416,8 +1436,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#COL11A1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
+<pre class="r"><code>#TGFB3
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-11">
@@ -1478,8 +1498,12 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX5
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
+<pre class="r"><code>#MSC Markers
+
+#ENG, CD34, ITGAM, CD79A, CD19, CD14 filtered out
+
+#THY1
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1 (CD90)&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-12">
@@ -1540,8 +1564,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#SOX6
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
+<pre class="r"><code>#NT5E
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E (CD73)&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-13.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-13">
@@ -1602,8 +1626,8 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#TGFB3
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
+<pre class="r"><code>#PTPRC
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
 <p><img src="figure/check_expression.Rmd/strain%20compare-14.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-14">
@@ -1658,232 +1682,6 @@ Anthony Hung
 </td>
 <td>
 2020-01-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#MSC Markers
-
-#CD34, ITGAM, CD79A, CD19 filtered out
-
-#ENG
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000106991&quot;, &quot;ENG (CD105)&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-15.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-15">
-Past versions of “strain compare-15.png”
-</button>
-</p>
-<div id="fig-no-spaces-strain-compare-15" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-15.png" target="_blank">5eb29e8</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-15.png" target="_blank">f1425df</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#THY1
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1 (CD90)&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-16.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-16">
-Past versions of “strain compare-16.png”
-</button>
-</p>
-<div id="fig-no-spaces-strain-compare-16" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-16.png" target="_blank">5eb29e8</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/check_expression.Rmd/strain compare-16.png" target="_blank">f1425df</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#NT5E
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E (CD73)&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-17.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-17">
-Past versions of “strain compare-17.png”
-</button>
-</p>
-<div id="fig-no-spaces-strain-compare-17" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-17.png" target="_blank">5eb29e8</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#PTPRC
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-18.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-18">
-Past versions of “strain compare-18.png”
-</button>
-</p>
-<div id="fig-no-spaces-strain-compare-18" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-18.png" target="_blank">5eb29e8</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>#CD14
-boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000170458&quot;, &quot;CD14&quot;)</code></pre>
-<p><img src="figure/check_expression.Rmd/strain%20compare-19.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-strain-compare-19">
-Past versions of “strain compare-19.png”
-</button>
-</p>
-<div id="fig-no-spaces-strain-compare-19" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/check_expression.Rmd/strain compare-19.png" target="_blank">5eb29e8</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-01-13
 </td>
 </tr>
 </tbody>

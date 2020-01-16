@@ -105,30 +105,16 @@ scores <- pca_genes$x
 
 #Make PCA plots with the factors colored by individual
 
-### PCs 1 and 2 Raw Data
-for (n in 1:1){
+### PCA Raw Data
+for (n in 1:3){
   col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
-### PCs 3 and 4 Raw Data
-
-for (n in 3:3){
-  col.v <- pal[as.integer(sampleinfo$Individual)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}
 
 #Make PCA plots with the factors colored by treatment
 
-### PCs 1 and 2 Raw Data
-for (n in 1:1){
-  col.v <- pal[as.integer(sampleinfo$treatment)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}
-
-### PCs 3 and 4 Raw Data
-
-for (n in 3:3){
+for (n in 1:3){
   col.v <- pal[as.integer(sampleinfo$treatment)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }

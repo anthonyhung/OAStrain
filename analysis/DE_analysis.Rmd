@@ -24,7 +24,8 @@ library("topGO")
 
 #load in filtered count data, RUVs output
 filt_counts <- readRDS("data/filtered_counts.rds")
-RUVsCPM <- readRDS("data/RUVsCPM.rds")
+filt_counts <- filt_counts$counts
+RUVsOut <- readRDS("data/RUVsOut.rds")
 
 # load gene annotations
 gene_anno <- read.delim("data/gene-annotation.txt",
@@ -38,7 +39,7 @@ gene_anno <- read.delim("data/gene-annotation.txt",
 individuals <- c("18855", "18856", "19160")
 treatments <- c("S", "U")
 
-set.seed(1234)
+set.seed(1)
 selected_samples <- c()
 for(i in c("18856", "18855")){
      for(t in treatments){
@@ -53,17 +54,17 @@ sample_num <- base::sample(c(1:3), 1)
 selected_samples <- c(selected_samples, paste0("19160", sep = "_", sample_num, sep = "_", "S"))
 
 selected_samples
-randomly_sampled_indices <- match(selected_samples, names(filt_counts))
+randomly_sampled_indices <- match(selected_samples, colnames(filt_counts))
 
 single_filt_counts <- filt_counts[,randomly_sampled_indices]
-anno <- pData(RUVsCPM)[randomly_sampled_indices,]
+anno <- pData(RUVsOut)[randomly_sampled_indices,]
 ```
 
 # Model with limma
 
 ```{r design-matrix}
 #sample details
-#anno <- pData(RUVsCPM)
+#anno <- pData(RUVsOut)
 
 anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
 anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))

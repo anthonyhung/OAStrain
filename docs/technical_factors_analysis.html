@@ -503,32 +503,32 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree414262e83ffc17132ef3688335857954f181c8betargetblank414262ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/414262e83ffc17132ef3688335857954f181c8be" target="_blank">414262e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a" target="_blank">fd9ab65</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree414262e83ffc17132ef3688335857954f181c8betargetblank414262ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
-    Ignored:    data/prime_RUVsCPM.rds
-    Ignored:    data/prime_filtered_counts.rds
-    Ignored:    data/prime_norm_filtered_counts.rds
-    Ignored:    data/prime_raw_counts_relabeled.rds
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
     Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/check_expression.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
     Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -567,6 +567,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a/analysis/technical_factors_analysis.Rmd" target="_blank">fd9ab65</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Remove MSC from sample info
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/analysis/technical_factors_analysis.Rmd" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add RIN Scores
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/technical_factors_analysis.html" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add RIN Scores
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -794,17 +845,10 @@ library(&quot;edgeR&quot;)</code></pre>
 library(&quot;scales&quot;)
 library(&quot;cowplot&quot;)</code></pre>
 <pre><code>
-********************************************************</code></pre>
-<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
-<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
-<pre><code>  behavior, execute:
-  theme_set(theme_cowplot())</code></pre>
-<pre><code>********************************************************</code></pre>
-<pre><code>
 Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:reshape&#39;:
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
 
-    stamp</code></pre>
+    ggsave</code></pre>
 <pre class="r"><code>library(&quot;DT&quot;)
 library(&quot;tidyr&quot;)</code></pre>
 <pre><code>
@@ -831,12 +875,12 @@ Attaching package: &#39;BiocGenerics&#39;</code></pre>
     IQR, mad, sd, var, xtabs</code></pre>
 <pre><code>The following objects are masked from &#39;package:base&#39;:
 
-    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unsplit, which, which.max, which.min</code></pre>
+    anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
+    colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
+    mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
 <pre><code>Welcome to Bioconductor
 
     Vignettes contain introductory material; view with
@@ -889,9 +933,9 @@ Attaching package: &#39;DelayedArray&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:Biostrings&#39;:
 
     type</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
+<pre><code>The following object is masked from &#39;package:base&#39;:
 
-    aperm, apply, rowsum</code></pre>
+    apply</code></pre>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -942,7 +986,7 @@ colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9
 pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
 
 #load in normalized/filtered data
-filt_cpm &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
+filt_norm_counts &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
 #load in filtered counts
 filt_counts &lt;- readRDS(&quot;data/filtered_counts.rds&quot;)
 
@@ -955,8 +999,8 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 source(&quot;code/PCA_fn.R&quot;)
 
 
-# Clustering (original code from Julien Roux)
-cors &lt;- cor(filt_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+#spearman
+cors &lt;- cor(filt_norm_counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
 
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
 heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
@@ -983,6 +1027,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/clustering-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/clustering-1.png" target="_blank">5eb29e8</a>
@@ -1031,9 +1086,17 @@ Anthony Hung
 </table>
 </div>
 </div>
-<p>#Perform PCA and color by factors to look for any potential correlations</p>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filt_norm_counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/clustering-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations" class="section level1">
+<h1>Perform PCA and color by factors to look for any potential correlations</h1>
 <pre class="r"><code># Perform PCA
-pca_genes &lt;- prcomp(t(filt_cpm), scale = T)
+pca_genes &lt;- prcomp(t(filt_norm_counts), scale = T)
 scores &lt;- pca_genes$x
 
 variances &lt;- pca_genes$sdev^2
@@ -1062,6 +1125,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/PCA-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/PCA-1.png" target="_blank">5eb29e8</a>
@@ -1112,8 +1186,8 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Make PCA plots with the factors colored by Individual
 
-### PCs 1 and 2 norm+filt Data
-for (n in 1:1){
+### PCA norm+filt Data
+for (n in 1:3){
   col.v &lt;- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }</code></pre>
@@ -1140,6 +1214,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/PCA-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/PCA-2.png" target="_blank">5eb29e8</a>
@@ -1188,12 +1273,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>### PCs 3 and 4 norm+filt Data
-
-for (n in 3:3){
-  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-3">
@@ -1217,6 +1296,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/PCA-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/PCA-3.png" target="_blank">5eb29e8</a>
@@ -1265,13 +1355,14 @@ Anthony Hung
 </table>
 </div>
 </div>
+<p><img src="figure/technical_factors_analysis.Rmd/PCA-4.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="check-that-technical-factors-do-not-correlate-with-pcs" class="section level1">
 <h1>Check that technical factors do not correlate with PCs</h1>
 <pre class="r"><code># Calculate the relationship between each recorded covariate and the top 6 PCs. 
 p_comps &lt;- 1:6
 info &lt;- sampleinfo %&gt;% 
-     dplyr::select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor &lt;- matrix(nrow = ncol(info), ncol = length(p_comps), 
@@ -1284,27 +1375,27 @@ for (pc in p_comps) {
   } 
 } 
 datatable(pc_cov_cor) </code></pre>
-<div id="htmlwidget-0c9a476e309710ae11e9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0c9a476e309710ae11e9">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","Passage_MSC","treatment","RIN","LibraryPrepBatch"],[0.836143615693584,0.135987816425222,0.0133389278207742,0.222610368624899,0.0785203712988527,0,0.00229660254742141],[0.869522780580331,0.615933227047747,0.00225485621534466,0.44133438698648,0.109337750764648,0,0.000732367888550313],[0.0866235112110948,0.0820630547789675,0.264663452388508,0.12654269866602,0.135221804261288,0,0.0659664776427704],[0.128138623132433,0.0974188019131907,0.0288898374275873,0.111826569053926,0.332503689491474,0,0.0123632445283745],[0.0600625526593716,0.0593624586085157,0.272475200112937,0.0214523591781996,0.0180450395767749,0,0.159377528297529],[0.000133422026419206,7.76031257326951e-05,0.109545770872459,0.00436750010559703,0.218951046385444,0,0.189299741998954]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-87098e04a2cc41d4cd6e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch"],[0.935766108229253,0.0145880369479409,0.0058185731932617,0.0139567047766335,0.383645438661594,0.00159584620030621],[0.780586702820702,0.735694699775103,0.00250463026949562,0.134608470649396,0.136127274287388,0.000385108365716671],[0.132468444933427,0.122719898404142,0.259896443982915,0.170709664480591,0.00140274723920695,0.0764941165000889],[0.0850032754065421,0.075988980694086,0.122671076290121,0.292675408786528,0.0290233380465709,2.61404141305497e-05],[0.037651655033208,0.036812879920708,0.172415004624706,0.0021051060589233,0.000816718871216688,0.177536923670496],[0.00529907961735286,0.00191065732097387,0.04468370593207,0.284647019374059,0.0503125286124001,0.061898867445597]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
 pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
 head(pc_cov_cor_2) </code></pre>
-<pre><code>     variable  pc        cor
-1  Individual PC1 0.83614362
-2         Sex PC1 0.13598782
-3   Replicate PC1 0.01333893
-4 Passage_MSC PC1 0.22261037
-5   treatment PC1 0.07852037
-6         RIN PC1 0.00000000</code></pre>
+<pre><code>          variable  pc         cor
+1       Individual PC1 0.935766108
+2              Sex PC1 0.014588037
+3        Replicate PC1 0.005818573
+4        treatment PC1 0.013956705
+5              RIN PC1 0.383645439
+6 LibraryPrepBatch PC1 0.001595846</code></pre>
 <pre class="r"><code>#Plot heatmap
 d_heatmap &lt;- pc_cov_cor_2 
 d_heatmap$variable &lt;- factor(d_heatmap$variable, 
                               levels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
-                                         &quot;Passage_MSC&quot;, &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;), 
+                                         &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;), 
                               labels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
-                                         &quot;Passage_MSC&quot;, &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;)) 
+                                         &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;)) 
 pca_heat &lt;- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
   geom_tile(aes(fill = cor), colour = &quot;white&quot;) + 
   scale_fill_gradient(low = &quot;white&quot;, high = &quot;red&quot;, limits = c(0, 1)) + 
@@ -1334,6 +1425,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/corr PC-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/corr PC-2.png" target="_blank">5eb29e8</a>
@@ -1381,63 +1483,28 @@ replicates &lt;- makeGroups(paste0(sampleinfo$Individual, sampleinfo$treatment))
 x &lt;- paste0(sampleinfo$Individual, sampleinfo$treatment)
 
 #load data into expressionset
-set &lt;- newSeqExpressionSet(as.matrix(filt_counts),
-                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
+set &lt;- newSeqExpressionSet(as.matrix(filt_counts$counts),
+                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_norm_counts)))
 set</code></pre>
 <pre><code>SeqExpressionSet (storageMode: lockedEnvironment)
-assayData: 11741 features, 17 samples 
+assayData: 11664 features, 17 samples 
   element names: counts, normalizedCounts, offset 
 protocolData: none
 phenoData
   sampleNames: 18855_3_S 19160_3_S ... 18855_3_U (17 total)
-  varLabels: Sample_ID Individual ... LibraryPrepBatch (8 total)
+  varLabels: Sample_ID Individual ... LibraryPrepBatch (7 total)
   varMetadata: labelDescription
 featureData: none
 experimentData: use &#39;experimentData(object)&#39;
 Annotation:  </code></pre>
 <pre class="r"><code>#normalization
-set &lt;- betweenLaneNormalization(set, which=&quot;upper&quot;)
+set &lt;- betweenLaneNormalization(x = set, which = &quot;upper&quot;, round = T)
 
-set1 &lt;- RUVs(set, rownames(filt_counts), k=1, replicates)
-pData(set1)</code></pre>
-<pre><code>          Sample_ID Individual Sex Replicate Passage_MSC treatment RIN
-18855_3_S 18855_3_S   NA18855    F         3          11    Strain   1
-19160_3_S 19160_3_S   NA19160    M         3           9    Strain   1
-18856_3_U 18856_3_U   NA18856    M         3           8  Unstrain   1
-18856_1_U 18856_1_U   NA18856    M         1           8  Unstrain   1
-18855_2_S 18855_2_S   NA18855    F         2          10    Strain   1
-18856_2_S 18856_2_S   NA18856    M         2           8    Strain   1
-19160_3_U 19160_3_U   NA19160    M         3           9  Unstrain   1
-18855_2_U 18855_2_U   NA18855    F         2          10  Unstrain   1
-19160_2_S 19160_2_S   NA19160    M         2           8    Strain   1
-18855_1_S 18855_1_S   NA18855    F         1          10    Strain   1
-18856_1_S 18856_1_S   NA18856    M         1           8    Strain   1
-19160_1_S 19160_1_S   NA19160    M         1           8    Strain   1
-19160_2_U 19160_2_U   NA19160    M         2           8  Unstrain   1
-18855_1_U 18855_1_U   NA18855    F         1          10  Unstrain   1
-18856_3_S 18856_3_S   NA18856    M         3           8    Strain   1
-18856_2_U 18856_2_U   NA18856    M         2           8  Unstrain   1
-18855_3_U 18855_3_U   NA18855    F         3          11  Unstrain   1
-          LibraryPrepBatch         W_1
-18855_3_S                2 -0.38594438
-19160_3_S                2 -0.57009360
-18856_3_U                2  0.03782321
-18856_1_U                1 -0.01549399
-18855_2_S                1 -0.04897027
-18856_2_S                1 -0.96788704
-19160_3_U                2 -0.76382812
-18855_2_U                1 -0.17662302
-19160_2_S                1 -0.69451686
-18855_1_S                1 -0.48506476
-18856_1_S                1  0.04037142
-19160_1_S                1 -0.77926605
-19160_2_U                1 -1.10781760
-18855_1_U                1 -0.41892411
-18856_3_S                2 -0.09468533
-18856_2_U                1 -0.47805742
-18855_3_U                2 -0.49041767</code></pre>
-<pre class="r"><code>#Plots after correcting RUV
-plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
+#Spearman
+cors &lt;- cor(set@assayData$normalizedCounts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-RUV-1">
@@ -1461,6 +1528,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/RUV-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/RUV-1.png" target="_blank">5eb29e8</a>
@@ -1498,7 +1576,11 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plotPCA(set1, col=colors[x], cex=1.2)</code></pre>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(set@assayData$normalizedCounts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-RUV-2">
@@ -1522,6 +1604,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/RUV-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/RUV-2.png" target="_blank">5eb29e8</a>
@@ -1559,11 +1652,47 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#Spearman
-cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
-labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
-heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<pre class="r"><code># 
+set1 &lt;- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
+pData(set1)</code></pre>
+<pre><code>          Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch
+18855_3_S 18855_3_S   NA18855    F         3    Strain 10.0                2
+19160_3_S 19160_3_S   NA19160    M         3    Strain 10.0                2
+18856_3_U 18856_3_U   NA18856    M         3  Unstrain 10.0                2
+18856_1_U 18856_1_U   NA18856    M         1  Unstrain  9.9                1
+18855_2_S 18855_2_S   NA18855    F         2    Strain 10.0                1
+18856_2_S 18856_2_S   NA18856    M         2    Strain  9.6                1
+19160_3_U 19160_3_U   NA19160    M         3  Unstrain 10.0                2
+18855_2_U 18855_2_U   NA18855    F         2  Unstrain 10.0                1
+19160_2_S 19160_2_S   NA19160    M         2    Strain 10.0                1
+18855_1_S 18855_1_S   NA18855    F         1    Strain  9.9                1
+18856_1_S 18856_1_S   NA18856    M         1    Strain  8.5                1
+19160_1_S 19160_1_S   NA19160    M         1    Strain  9.9                1
+19160_2_U 19160_2_U   NA19160    M         2  Unstrain 10.0                1
+18855_1_U 18855_1_U   NA18855    F         1  Unstrain 10.0                1
+18856_3_S 18856_3_S   NA18856    M         3    Strain  9.6                2
+18856_2_U 18856_2_U   NA18856    M         2  Unstrain  9.5                1
+18855_3_U 18855_3_U   NA18855    F         3  Unstrain 10.0                2
+                   W_1        W_2
+18855_3_S -0.404977602 -0.4567163
+19160_3_S -0.585991301 -0.6134834
+18856_3_U  0.007556452 -0.3557823
+18856_1_U -0.013257183 -1.0504409
+18855_2_S -0.080305276 -0.2016919
+18856_2_S -0.998493013 -0.4124403
+19160_3_U -0.773307718 -0.7040259
+18855_2_U -0.206628419 -0.3501561
+19160_2_S -0.701507740 -0.7063085
+18855_1_S -0.486619033 -0.8803110
+18856_1_S  0.032874620 -0.7942026
+19160_1_S -0.763039513 -1.2162375
+19160_2_U -1.108632660 -0.9498343
+18855_1_U -0.424649988 -0.7790956
+18856_3_S -0.124131985 -0.4031076
+18856_2_U -0.507274191 -0.3336748
+18855_3_U -0.505345560 -0.5439443</code></pre>
+<pre class="r"><code>#Plots after correcting RUV
+plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-RUV-3">
@@ -1587,6 +1716,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/RUV-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/technical_factors_analysis.Rmd/RUV-3.png" target="_blank">5eb29e8</a>
@@ -1624,17 +1764,117 @@ Anthony Hung
 </table>
 </div>
 </div>
+<pre class="r"><code>plotPCA(set1, col=colors[x], cex=1.2)</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/RUV-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-RUV-4">
+Past versions of RUV-4.png
+</button>
+</p>
+<div id="fig-RUV-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/technical_factors_analysis.Rmd/RUV-4.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/RUV-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#Pearson
 cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
 
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
 heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/technical_factors_analysis.Rmd/RUV-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>“The RUVg function returns two pieces of information: the estimated factors of unwanted variation (added as columns to the phenoData slot of set) and the normalized counts obtained by regressing the original counts on the unwanted factors. The normalized values are stored in the normalizedCounts slot of set and can be accessed with the normCounts method. These counts should be used only for exploration. It is important that subsequent DE analysis be done on the original counts (accessible through the counts method), as removing the unwanted factors from the counts can also remove part of a factor of interest [6].”</p>
+<p><img src="figure/technical_factors_analysis.Rmd/RUV-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>“The RUVg [RUVs] function returns two pieces of information: the estimated factors of unwanted variation (added as columns to the phenoData slot of set) and the normalized counts obtained by regressing the original counts on the unwanted factors. The normalized values are stored in the normalizedCounts slot of set and can be accessed with the normCounts method. These counts should be used only for exploration. It is important that subsequent DE analysis be done on the original counts (accessible through the counts method), as removing the unwanted factors from the counts can also remove part of a factor of interest [6].”</p>
+</div>
+<div id="check-that-technical-factors-do-not-correlate-with-pcs-after-ruvs" class="section level1">
+<h1>Check that technical factors do not correlate with PCs after RUVs</h1>
+<pre class="r"><code># Perform PCA
+pca_genes &lt;- prcomp(t(set1@assayData$normalizedCounts), scale = T)
+scores &lt;- pca_genes$x
+
+variances &lt;- pca_genes$sdev^2
+explained &lt;- variances / sum(variances)
+plot(pca_genes, main = &quot;Variance per PC&quot;)</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/corr%20PC%20after%20RUVs-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Calculate the relationship between each recorded covariate and the top 6 PCs. 
+p_comps &lt;- 1:6
+info &lt;- sampleinfo %&gt;% 
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+
+#Calculate correlations
+pc_cov_cor &lt;- matrix(nrow = ncol(info), ncol = length(p_comps), 
+                      dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+for (pc in p_comps) { 
+  for (covariate in 1:ncol(info)) { 
+        lm_result &lt;- lm(pca_genes$x[, pc] ~ info[, covariate]) 
+    r2 &lt;- summary(lm_result)$r.squared 
+    pc_cov_cor[covariate, pc] &lt;- r2 
+  } 
+} 
+datatable(pc_cov_cor) </code></pre>
+<div id="htmlwidget-529320416cb9ecc26f04" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-529320416cb9ecc26f04">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch"],[0.933971620058766,0.012985957522204,0.0130723073553633,0.0135593372070399,0.378457671961779,0.00645104009382803],[0.793475427471391,0.747478661323436,0.0040565394418286,0.139702306369031,0.141220175267625,0.00178420342323861],[0.232586546347376,0.214044173958361,0.00157808679480099,0.438723031337242,0.0135148277884202,0.0170979096369936],[0.0238650234659868,0.0201109312053442,0.00240985127200651,0.0117452315771808,0.00171309852601346,0.0129031428532384],[0.00108525159784976,9.52929434362679e-06,0.0434891133944553,0.345912771579875,0.0342130133853429,0.0628157674937849],[0.00324035988365735,0.000747350607069328,0.0347442374093896,0.026010761930705,0.164387548417138,0.101189582519738]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#Convert to long format to plot in ggplot2
+pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
+pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
+pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
+head(pc_cov_cor_2) </code></pre>
+<pre><code>          variable  pc        cor
+1       Individual PC1 0.93397162
+2              Sex PC1 0.01298596
+3        Replicate PC1 0.01307231
+4        treatment PC1 0.01355934
+5              RIN PC1 0.37845767
+6 LibraryPrepBatch PC1 0.00645104</code></pre>
+<pre class="r"><code>#Plot heatmap
+d_heatmap &lt;- pc_cov_cor_2 
+d_heatmap$variable &lt;- factor(d_heatmap$variable, 
+                              levels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
+                                         &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;), 
+                              labels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
+                                         &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;)) 
+pca_heat &lt;- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
+  geom_tile(aes(fill = cor), colour = &quot;white&quot;) + 
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;red&quot;, limits = c(0, 1)) + 
+  labs(x = &quot;Principal Component&quot;, y = &quot;&quot;, 
+       title = &quot;Correlation between principal components and experimental variables&quot;) 
+pca_heat</code></pre>
+<p><img src="figure/technical_factors_analysis.Rmd/corr%20PC%20after%20RUVs-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="save-data-and-ruvs-output-for-unwanted-variation-contains-the-same-cpm-data-as-before-as-well-as-pheno-data-w_1-values-from-ruvs" class="section level1">
 <h1>Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)</h1>
-<pre class="r"><code>saveRDS(set1, &quot;data/RUVsCPM.rds&quot;)</code></pre>
+<pre class="r"><code>saveRDS(set1, &quot;data/RUVsOut.rds&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1643,69 +1883,73 @@ heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trac
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.1 (2019-07-05)
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Mojave 10.14.6
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
- [1] dplyr_0.8.3                 RUVSeq_1.18.0              
- [3] EDASeq_2.18.0               ShortRead_1.42.0           
- [5] GenomicAlignments_1.20.1    SummarizedExperiment_1.14.1
- [7] DelayedArray_0.10.0         matrixStats_0.55.0         
- [9] Rsamtools_2.0.3             GenomicRanges_1.36.1       
-[11] GenomeInfoDb_1.20.0         Biostrings_2.52.0          
-[13] XVector_0.24.0              IRanges_2.18.3             
-[15] S4Vectors_0.22.1            BiocParallel_1.18.1        
-[17] Biobase_2.44.0              BiocGenerics_0.30.0        
-[19] tidyr_1.0.0                 DT_0.10                    
-[21] cowplot_1.0.0               scales_1.1.0               
-[23] RColorBrewer_1.1-2          edgeR_3.26.8               
-[25] limma_3.40.6                reshape_0.8.8              
-[27] ggplot2_3.2.1               gplots_3.0.1.1             
+ [1] dplyr_0.8.3                RUVSeq_1.12.0             
+ [3] EDASeq_2.12.0              ShortRead_1.36.1          
+ [5] GenomicAlignments_1.14.2   SummarizedExperiment_1.8.1
+ [7] DelayedArray_0.4.1         matrixStats_0.55.0        
+ [9] Rsamtools_1.30.0           GenomicRanges_1.30.3      
+[11] GenomeInfoDb_1.14.0        Biostrings_2.46.0         
+[13] XVector_0.18.0             IRanges_2.12.0            
+[15] S4Vectors_0.16.0           BiocParallel_1.12.0       
+[17] Biobase_2.38.0             BiocGenerics_0.24.0       
+[19] tidyr_1.0.0                DT_0.10                   
+[21] cowplot_0.9.3              scales_1.1.0              
+[23] RColorBrewer_1.1-2         edgeR_3.20.9              
+[25] limma_3.34.9               reshape_0.8.8             
+[27] ggplot2_3.2.1              gplots_3.0.1.1            
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
  [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.1          
- [7] bit64_0.9-7            AnnotationDbi_1.46.1   splines_3.6.1         
-[10] R.methodsS3_1.7.1      DESeq_1.36.0           geneplotter_1.62.0    
+ [7] bit64_0.9-7            AnnotationDbi_1.40.0   splines_3.4.3         
+[10] R.methodsS3_1.7.1      DESeq_1.30.0           geneplotter_1.56.0    
 [13] knitr_1.26             zeallot_0.1.0          jsonlite_1.6          
-[16] workflowr_1.5.0        annotate_1.62.0        R.oo_1.23.0           
-[19] shiny_1.4.0            compiler_3.6.1         httr_1.4.1            
-[22] backports_1.1.5        assertthat_0.2.1       Matrix_1.2-18         
-[25] fastmap_1.0.1          lazyeval_0.2.2         later_1.0.0           
-[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.6.1           
-[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.2.1
+[16] workflowr_1.5.0        annotate_1.56.2        R.oo_1.23.0           
+[19] shiny_1.4.0            compiler_3.4.3         httr_1.4.1            
+[22] backports_1.1.5        fastmap_1.0.1          assertthat_0.2.1      
+[25] Matrix_1.2-18          lazyeval_0.2.2         later_1.0.0           
+[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
+[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
 [34] Rcpp_1.0.3             vctrs_0.2.0            gdata_2.18.0          
-[37] rtracklayer_1.44.4     crosstalk_1.0.0        xfun_0.11             
+[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.11             
 [40] stringr_1.4.0          mime_0.7               lifecycle_0.1.0       
-[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.30.0       
-[46] MASS_7.3-51.4          aroma.light_3.14.0     hms_0.5.2             
+[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.24.0       
+[46] MASS_7.3-51.4          aroma.light_3.8.0      hms_0.5.2             
 [49] promises_1.1.0         yaml_2.2.0             memoise_1.1.0         
-[52] biomaRt_2.40.5         latticeExtra_0.6-28    stringi_1.4.3         
-[55] RSQLite_2.1.4          genefilter_1.66.0      GenomicFeatures_1.36.4
-[58] caTools_1.17.1.3       rlang_0.4.2            pkgconfig_2.0.3       
-[61] bitops_1.0-6           evaluate_0.14          lattice_0.20-38       
-[64] purrr_0.3.3            labeling_0.3           htmlwidgets_1.5.1     
-[67] bit_1.1-14             tidyselect_0.2.5       plyr_1.8.5            
-[70] magrittr_1.5           R6_2.4.1               DBI_1.0.0             
-[73] pillar_1.4.2           whisker_0.4            withr_2.1.2           
-[76] survival_3.1-8         RCurl_1.95-4.12        tibble_2.1.3          
-[79] crayon_1.3.4           KernSmooth_2.23-16     rmarkdown_1.18        
-[82] progress_1.2.2         locfit_1.5-9.1         grid_3.6.1            
-[85] blob_1.2.0             git2r_0.26.1           digest_0.6.23         
-[88] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
-[91] munsell_0.5.0         </code></pre>
+[52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
+[55] RSQLite_2.1.4          genefilter_1.60.0      RMySQL_0.10.17        
+[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.2           
+[61] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
+[64] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
+[67] htmlwidgets_1.5.1      bit_1.1-14             tidyselect_0.2.5      
+[70] plyr_1.8.4             magrittr_1.5           R6_2.4.1              
+[73] DBI_1.0.0              pillar_1.4.2           whisker_0.4           
+[76] withr_2.1.2            survival_2.41-3        RCurl_1.95-4.12       
+[79] tibble_2.1.3           crayon_1.3.4           KernSmooth_2.23-15    
+[82] rmarkdown_1.18         progress_1.2.2         locfit_1.5-9.1        
+[85] grid_3.4.3             blob_1.2.0             git2r_0.26.1          
+[88] digest_0.6.23          xtable_1.8-4           httpuv_1.5.2          
+[91] R.utils_2.9.2          munsell_0.5.0         </code></pre>
 </div>
 </div>
 

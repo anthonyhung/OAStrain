@@ -495,17 +495,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree277772fa43e48353985e2c0360dae84b9286a2b3targetblank277772fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/277772fa43e48353985e2c0360dae84b9286a2b3" target="_blank">277772f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a" target="_blank">fd9ab65</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree277772fa43e48353985e2c0360dae84b9286a2b3targetblank277772fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreefd9ab65abed3896df96a2bfcc38ddcfe09cb1d1atargetblankfd9ab65a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/filtered_counts.rds
@@ -514,7 +513,10 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/check_expression.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
     Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -553,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a/analysis/Norm_filter.Rmd" target="_blank">fd9ab65</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Remove MSC from sample info
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a/docs/Norm_filter.html" target="_blank">fd9ab65</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Remove MSC from sample info
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -933,17 +969,10 @@ library(&quot;edgeR&quot;)</code></pre>
 library(&quot;scales&quot;)
 library(&quot;cowplot&quot;)</code></pre>
 <pre><code>
-********************************************************</code></pre>
-<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
-<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
-<pre><code>  behavior, execute:
-  theme_set(theme_cowplot())</code></pre>
-<pre><code>********************************************************</code></pre>
-<pre><code>
 Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:reshape&#39;:
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
 
-    stamp</code></pre>
+    ggsave</code></pre>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -1107,26 +1136,26 @@ Anthony Hung
 <pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
 head(cpm)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -1.420107 -2.022996 -2.155735 -2.574324 -2.564478 -1.083803
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -1.869360 -2.775397 -3.006605 -3.880222 -3.856000 -1.427425
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -3.129431 -2.573609 -1.268564 -1.442548 -3.129431 -2.254268
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -6.129431 -3.878455 -1.666196 -1.900087 -6.129431 -3.189505
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000227232 -2.625352 -1.278970 -2.054133 -1.678550 -3.129431
-ENSG00000278267 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000243485 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000284332 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431
-ENSG00000237613 -3.129431 -3.129431 -3.129431 -3.129431 -3.129431</code></pre>
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -4.009829 -1.679921 -2.828244 -2.235099 -6.129431
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -1783,9 +1812,9 @@ Anthony Hung
 keep &lt;- rowSums(cpm &gt; cutoff ) &gt;=4
 
 counts_cpm &lt;- raw_counts[keep,]
-filtered_cpm &lt;- cpm(counts_cpm, log = T, normalized.lib.sizes = T)
+filtered_cpm &lt;- cpm[keep,]
 dim(filtered_cpm)</code></pre>
-<pre><code>[1] 11741    17</code></pre>
+<pre><code>[1] 11680    17</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -2057,29 +2086,29 @@ Anthony Hung
 <div id="tmm-normalization" class="section level1">
 <h1>TMM Normalization</h1>
 <pre class="r"><code>TMM &lt;- calcNormFactors(raw_counts, method = &quot;TMM&quot;)
-TMM &lt;- cpm(TMM, log=TRUE)
+TMM &lt;- cpm(TMM, log=TRUE, normalized.lib.sizes = T)
 head(TMM)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000227232 -1.377373 -2.017217 -2.168097 -2.591224 -2.551611 -1.174076
-ENSG00000278267 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000243485 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000284332 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000237613 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -1.811964 -2.766917 -3.030470 -3.925143 -3.827294 -1.543504
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000227232 -3.127606 -2.533930 -1.273220 -1.421034 -3.127606 -2.288228
-ENSG00000278267 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000243485 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000284332 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000237613 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -6.127606 -3.784853 -1.672915 -1.871293 -6.127606 -3.256899
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000227232 -2.580848 -1.244314 -2.106344 -1.652839 -3.127606
-ENSG00000278267 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000243485 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000284332 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606
-ENSG00000237613 -3.127606 -3.127606 -3.127606 -3.127606 -3.127606</code></pre>
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -3.899127 -1.634902 -2.920096 -2.198278 -6.127606
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -2472,9 +2501,9 @@ Anthony Hung
 keep &lt;- rowSums( TMM &gt; cutoff ) &gt;=4
 
 counts_TMM &lt;- raw_counts[keep,]
-filtered_TMM &lt;- cpm(counts_TMM, log = T, normalized.lib.sizes = T)
+filtered_TMM &lt;- TMM[keep,]
 dim(filtered_TMM)</code></pre>
-<pre><code>[1] 11747    17</code></pre>
+<pre><code>[1] 11670    17</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -2680,29 +2709,29 @@ Anthony Hung
 <div id="rle-normalization" class="section level1">
 <h1>RLE Normalization</h1>
 <pre class="r"><code>RLE &lt;- calcNormFactors(raw_counts, method = &quot;RLE&quot;)
-RLE &lt;- cpm(RLE, log=TRUE)
+RLE &lt;- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
 head(RLE)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000227232 -1.376195 -2.022466 -2.173214 -2.594202 -2.554432 -1.160816
-ENSG00000278267 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000243485 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000284332 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000237613 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -1.810299 -2.775609 -3.039611 -3.932339 -3.833833 -1.526336
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000227232 -3.127817 -2.536827 -1.278039 -1.423607 -3.127817 -2.285374
-ENSG00000278267 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000243485 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000284332 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000237613 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -6.127817 -3.791464 -1.679208 -1.874733 -6.127817 -3.251118
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000227232 -2.580530 -1.244672 -2.103487 -1.648792 -3.127817
-ENSG00000278267 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000243485 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000284332 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817
-ENSG00000237613 -3.127817 -3.127817 -3.127817 -3.127817 -3.127817</code></pre>
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -3.898019 -1.635305 -2.914918 -2.192279 -6.127817
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -3095,9 +3124,9 @@ Anthony Hung
 keep &lt;- rowSums( RLE &gt; cutoff ) &gt;=4
 
 counts_RLE &lt;- raw_counts[keep,]
-filtered_RLE &lt;- cpm(counts_RLE, log = T, normalized.lib.sizes = T)
+filtered_RLE &lt;- RLE[keep,]
 dim(filtered_RLE)</code></pre>
-<pre><code>[1] 11746    17</code></pre>
+<pre><code>[1] 11676    17</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-2" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -3303,29 +3332,29 @@ Anthony Hung
 <div id="upperquartile-normalization" class="section level1">
 <h1>upperquartile Normalization</h1>
 <pre class="r"><code>upperquartile &lt;- calcNormFactors(raw_counts, method = &quot;upperquartile&quot;)
-upperquartile &lt;- cpm(upperquartile, log=TRUE)
+upperquartile &lt;- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
 head(upperquartile)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000223972 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000227232 -1.376624 -2.046788 -2.154778 -2.585632 -2.545595 -1.167335
-ENSG00000278267 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000243485 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000284332 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000237613 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -1.810117 -2.815316 -3.004433 -3.907509 -3.809428 -1.534112
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000223972 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000227232 -3.129986 -2.527469 -1.317333 -1.415729 -3.129986 -2.313104
-ENSG00000278267 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000243485 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000284332 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000237613 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -6.129986 -3.766281 -1.730609 -1.863184 -6.129986 -3.303639
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
                 19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
-ENSG00000223972 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000227232 -2.601918 -1.247154 -2.084127 -1.609909 -3.129986
-ENSG00000278267 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000243485 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000284332 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986
-ENSG00000237613 -3.129986 -3.129986 -3.129986 -3.129986 -3.129986</code></pre>
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -3.948573 -1.637885 -2.879515 -2.134998 -6.129986
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986</code></pre>
 <pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
 unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
 ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
@@ -3586,9 +3615,9 @@ Anthony Hung
 keep &lt;- rowSums( upperquartile &gt; cutoff ) &gt;=4
 
 counts_upperquartile &lt;- raw_counts[keep,]
-filtered_upperquartile &lt;- cpm(counts_upperquartile, log = T, normalized.lib.sizes = T)
+filtered_upperquartile &lt;- upperquartile[keep,]
 dim(filtered_upperquartile)</code></pre>
-<pre><code>[1] 11730    17</code></pre>
+<pre><code>[1] 11664    17</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-3" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -3634,6 +3663,8 @@ Anthony Hung
 </table>
 </div>
 </div>
+<pre class="r"><code>plotDensities(filtered_upperquartile, legend = F)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20upperquartile-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="correlation-heatmap-of-log2upperquartile-normalized-samples" class="section level2">
 <h2>Correlation heatmap of log2upperquartile normalized samples</h2>
@@ -3736,38 +3767,42 @@ saveRDS(filtered_upperquartile, &quot;data/norm_filtered_counts.rds&quot;)</code
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.1 (2019-07-05)
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Mojave 10.14.6
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] dplyr_0.8.3        cowplot_1.0.0      scales_1.1.0       RColorBrewer_1.1-2
-[5] edgeR_3.26.8       limma_3.40.6       reshape_0.8.8      ggplot2_3.2.1     
+[1] dplyr_0.8.3        cowplot_0.9.3      scales_1.1.0       RColorBrewer_1.1-2
+[5] edgeR_3.20.9       limma_3.34.9       reshape_0.8.8      ggplot2_3.2.1     
 [9] gplots_3.0.1.1    
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.3         plyr_1.8.5         compiler_3.6.1     pillar_1.4.2      
+ [1] Rcpp_1.0.3         plyr_1.8.4         compiler_3.4.3     pillar_1.4.2      
  [5] later_1.0.0        git2r_0.26.1       workflowr_1.5.0    bitops_1.0-6      
- [9] tools_3.6.1        digest_0.6.23      lattice_0.20-38    evaluate_0.14     
+ [9] tools_3.4.3        digest_0.6.23      lattice_0.20-35    evaluate_0.14     
 [13] lifecycle_0.1.0    tibble_2.1.3       gtable_0.3.0       pkgconfig_2.0.3   
 [17] rlang_0.4.2        yaml_2.2.0         xfun_0.11          withr_2.1.2       
 [21] stringr_1.4.0      knitr_1.26         fs_1.3.1           gtools_3.8.1      
 [25] caTools_1.17.1.3   locfit_1.5-9.1     tidyselect_0.2.5   rprojroot_1.3-2   
-[29] grid_3.6.1         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
+[29] grid_3.4.3         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
 [33] gdata_2.18.0       farver_2.0.1       purrr_0.3.3        magrittr_1.5      
 [37] whisker_0.4        backports_1.1.5    promises_1.1.0     htmltools_0.4.0   
 [41] assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.2       labeling_0.3      
-[45] KernSmooth_2.23-16 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
+[45] KernSmooth_2.23-15 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
 [49] crayon_1.3.4      </code></pre>
 </div>
 </div>

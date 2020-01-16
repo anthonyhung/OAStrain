@@ -27,7 +27,7 @@ colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]
 pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 #load in normalized/filtered data
-filt_cpm <- readRDS("data/norm_filtered_counts.rds")
+filt_norm_counts <- readRDS("data/norm_filtered_counts.rds")
 #load in filtered counts
 filt_counts <- readRDS("data/filtered_counts.rds")
 
@@ -43,13 +43,13 @@ source("code/PCA_fn.R")
 
 
 #spearman
-cors <- cor(filt_cpm, method="spearman", use="pairwise.complete.obs")
+cors <- cor(filt_norm_counts, method="spearman", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 
 #pearson
-cors <- cor(filt_cpm, method="pearson", use="pairwise.complete.obs")
+cors <- cor(filt_norm_counts, method="pearson", use="pairwise.complete.obs")
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
@@ -59,7 +59,7 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 
 ```{r PCA}
 # Perform PCA
-pca_genes <- prcomp(t(filt_cpm), scale = T)
+pca_genes <- prcomp(t(filt_norm_counts), scale = T)
 scores <- pca_genes$x
 
 variances <- pca_genes$sdev^2
@@ -69,18 +69,12 @@ plot(pca_genes, main = "Variance per PC")
 
 #Make PCA plots with the factors colored by Individual
 
-### PCs 1 and 2 norm+filt Data
-for (n in 1:1){
+### PCA norm+filt Data
+for (n in 1:3){
   col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
-### PCs 3 and 4 norm+filt Data
-
-for (n in 3:3){
-  col.v <- pal[as.integer(sampleinfo$Individual)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}
 
 ```
 
@@ -91,7 +85,7 @@ for (n in 3:3){
 # Calculate the relationship between each recorded covariate and the top 6 PCs. 
 p_comps <- 1:6
 info <- sampleinfo %>% 
-     dplyr::select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
@@ -115,9 +109,9 @@ head(pc_cov_cor_2)
 d_heatmap <- pc_cov_cor_2 
 d_heatmap$variable <- factor(d_heatmap$variable, 
                               levels = c("Individual", "Sex", "Replicate", 
-                                         "Passage_MSC", "treatment", "RIN", "LibraryPrepBatch"), 
+                                         "treatment", "RIN", "LibraryPrepBatch"), 
                               labels = c("Individual", "Sex", "Replicate", 
-                                         "Passage_MSC", "treatment", "RIN", "LibraryPrepBatch")) 
+                                         "treatment", "RIN", "LibraryPrepBatch")) 
 pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
   geom_tile(aes(fill = cor), colour = "white") + 
   scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + 
@@ -138,12 +132,25 @@ x <- paste0(sampleinfo$Individual, sampleinfo$treatment)
 
 #load data into expressionset
 set <- newSeqExpressionSet(as.matrix(filt_counts$counts),
-                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
+                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_norm_counts)))
 set
 #normalization
-set <- betweenLaneNormalization(set, which = "upper")
+set <- betweenLaneNormalization(x = set, which = "upper", round = T)
 
-set1 <- RUVs(set, rownames(filt_counts), k=1, replicates)
+#Spearman
+cors <- cor(set@assayData$normalizedCounts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(set@assayData$normalizedCounts, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+# 
+set1 <- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
 pData(set1)
 
 #Plots after correcting RUV
@@ -172,8 +179,64 @@ that subsequent DE analysis be done on the original counts (accessible through t
 counts method), as removing the unwanted factors from the counts can also remove
 part of a factor of interest [6]."
 
+
+
+
+# Check that technical factors do not correlate with PCs after RUVs
+
+```{r corr PC after RUVs}
+
+# Perform PCA
+pca_genes <- prcomp(t(set1@assayData$normalizedCounts), scale = T)
+scores <- pca_genes$x
+
+variances <- pca_genes$sdev^2
+explained <- variances / sum(variances)
+plot(pca_genes, main = "Variance per PC")
+
+
+# Calculate the relationship between each recorded covariate and the top 6 PCs. 
+p_comps <- 1:6
+info <- sampleinfo %>% 
+     dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+
+#Calculate correlations
+pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
+                      dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+for (pc in p_comps) { 
+  for (covariate in 1:ncol(info)) { 
+        lm_result <- lm(pca_genes$x[, pc] ~ info[, covariate]) 
+    r2 <- summary(lm_result)$r.squared 
+    pc_cov_cor[covariate, pc] <- r2 
+  } 
+} 
+datatable(pc_cov_cor) 
+
+#Convert to long format to plot in ggplot2
+pc_cov_cor_2 <- as.data.frame(pc_cov_cor) 
+pc_cov_cor_2$variable <- rownames(pc_cov_cor) 
+pc_cov_cor_2 <- gather(pc_cov_cor_2, key = "pc", value = "cor", -variable) 
+head(pc_cov_cor_2) 
+
+#Plot heatmap
+d_heatmap <- pc_cov_cor_2 
+d_heatmap$variable <- factor(d_heatmap$variable, 
+                              levels = c("Individual", "Sex", "Replicate", 
+                                         "treatment", "RIN", "LibraryPrepBatch"), 
+                              labels = c("Individual", "Sex", "Replicate", 
+                                         "treatment", "RIN", "LibraryPrepBatch")) 
+pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
+  geom_tile(aes(fill = cor), colour = "white") + 
+  scale_fill_gradient(low = "white", high = "red", limits = c(0, 1)) + 
+  labs(x = "Principal Component", y = "", 
+       title = "Correlation between principal components and experimental variables") 
+pca_heat
+```
+
+
+
 # Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)
 
 ```{r}
-saveRDS(set1, "data/RUVsCPM.rds")
+saveRDS(set1, "data/RUVsOut.rds")
 ```
