@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-18
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree629408f29313ac35a6601656ac80732937de98e1targetblank629408fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/629408f29313ac35a6601656ac80732937de98e1" target="_blank">629408f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3c163de1c62d5f63d88254fa028dda84186718b7" target="_blank">3c163de</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree629408f29313ac35a6601656ac80732937de98e1targetblank629408fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -512,13 +512,6 @@ Ignored files:
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
-
-Unstaged changes:
-    Modified:   analysis/DE_analysis.Rmd
-    Modified:   analysis/Norm_filter.Rmd
-    Modified:   analysis/check_expression.Rmd
-    Modified:   analysis/technical_factors_analysis.Rmd
-    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -557,6 +550,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/3c163de1c62d5f63d88254fa028dda84186718b7/analysis/DE_analysis.Rmd" target="_blank">3c163de</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+reorder by pvalue
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/analysis/DE_analysis.Rmd" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+edgeR DE analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/DE_analysis.html" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+edgeR DE analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1285,7 +1329,7 @@ y &lt;- estimateGLMCommonDisp(y, design)
 y &lt;- estimateGLMTagwiseDisp(y, design)
 fit &lt;- glmFit(y, design)
 lrt &lt;- glmLRT(fit, coef=2)
-gene_values &lt;- topTags(lrt, n = nrow(lrt$coefficients), adjust.method=&quot;BH&quot;, sort.by = &quot;logFC&quot;)</code></pre>
+gene_values &lt;- topTags(lrt, n = nrow(lrt$coefficients), adjust.method=&quot;BH&quot;, sort.by = &quot;PValue&quot;)</code></pre>
 <div id="explore-top-hits" class="section level2">
 <h2>Explore top hits</h2>
 <p>Boxplot function.</p>
@@ -1350,7 +1394,8 @@ plot_pval_hist &lt;- function(x, qval) {
 #rename top_treatment genes to gene symbols for easier interpretation
 top_treatment_top10 &lt;- gene_anno$external_gene_name[match(head(rownames(gene_values@.Data[[1]]), n=10), gene_anno$ensembl_gene_id)]
 top_treatment_top10</code></pre>
-<pre><code> [1] USP9Y  UTY    TTTY15 PRKY   UGT2B7 NLGN4Y ZFY    KDM5D  IGFL3  RPS4Y1
+<pre><code> [1] RPS4Y1   USP9Y    IGFL3    KDM5D    MTCO3P12 CHCHD2   HSD3B1   SMOC2   
+ [9] CTSF     TXLNGY  
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
 <pre class="r"><code>p_treatment_1 &lt;- plot_gene(cpm, rownames(gene_values@.Data[[1]])[1])
 p_treatment_2 &lt;- plot_gene(cpm, rownames(gene_values@.Data[[1]])[2]) 
@@ -1360,14 +1405,125 @@ ggsave(&quot;fig-limma-treatment-hit-1.eps&quot;, plot = p_treatment_1,
        width = 7, height = 7, units = &quot;in&quot;)
 plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/boxplots-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-boxplots-1">
+Past versions of boxplots-1.png
+</button>
+</p>
+<div id="fig-boxplots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/boxplots-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plots-with-significant-genes-highlighted" class="section level2">
 <h2>Plots with significant genes highlighted</h2>
 <pre class="r"><code>thresh &lt;- 0.01
 plot_volcano(x=data.frame(gene_values@.Data[[1]]), thresh)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20plotting%20functions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-plotting-functions-1">
+Past versions of “use plotting functions-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-plotting-functions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use plotting functions-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot_pval_hist(x=data.frame(gene_values@.Data[[1]]), thresh)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20plotting%20functions-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-plotting-functions-2">
+Past versions of “use plotting functions-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-plotting-functions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use plotting functions-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>table(gene_values@.Data[[1]]$FDR &lt; thresh)</code></pre>
 <pre><code>
 FALSE  TRUE 
@@ -1382,9 +1538,9 @@ gene_universe &lt;- as.numeric(gene_values@.Data[[1]]$FDR &lt; threshold)
 gene_universe &lt;- factor(gene_universe)
 names(gene_universe) &lt;- rownames(gene_values@.Data[[1]])
 head(gene_universe)</code></pre>
-<pre><code>ENSG00000114374 ENSG00000183878 ENSG00000233864 ENSG00000099725 ENSG00000171234 
+<pre><code>ENSG00000129824 ENSG00000114374 ENSG00000188624 ENSG00000012817 ENSG00000198744 
               1               1               1               1               1 
-ENSG00000165246 
+ENSG00000106153 
               1 
 Levels: 0 1</code></pre>
 <p>Create the topGO data object. Only consider “Biological Process” categories and use the Mouse Ensembl database for annotation.</p>
