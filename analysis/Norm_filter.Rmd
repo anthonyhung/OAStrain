@@ -101,10 +101,10 @@ p <- ggplot(meltcpm, aes(factor(sampleID), cpm))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2CPM > 1.5 in at least 4 samples)
+## Filtering for lowly expressed genes (avg log2CPM > 2.5 in at least 4 samples)
 
 ```{r filter CPM}
-cutoff <- 1.5
+cutoff <- 2.5
 
 keep <- rowSums(cpm > cutoff ) >=4
 
@@ -193,10 +193,10 @@ p <- ggplot(meltTMM, aes(factor(sampleID), TMM))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2TMM > 1.5 in at least 4 samples)
+## Filtering for lowly expressed genes (avg log2TMM > 2.5 in at least 4 samples)
 
 ```{r filter TMM}
-cutoff <- 1.5
+cutoff <- 2.5
 
 keep <- rowSums( TMM > cutoff ) >=4
 
@@ -288,10 +288,10 @@ p <- ggplot(meltRLE, aes(factor(sampleID), RLE))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2RLE > 1.5 in at least 4 samples)
+## Filtering for lowly expressed genes (avg log2RLE > 2.5 in at least 4 samples)
 
 ```{r filter RLE}
-cutoff <- 1.5
+cutoff <- 2.5
 
 keep <- rowSums( RLE > cutoff ) >=4
 
@@ -386,10 +386,10 @@ p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2upperquartile > 1.5 in at least 4 samples)
+## Filtering for lowly expressed genes (avg log2upperquartile > 2.5 in at least 4 samples)
 
 ```{r filter upperquartile}
-cutoff <- 1.5
+cutoff <- 2.5
 
 keep <- rowSums( upperquartile > cutoff ) >=4
 

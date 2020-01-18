@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-16
+<strong>Last updated:</strong> 2020-01-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedacaeafc28ab1298a80fdd4dd762933bdfd550b0targetblankdacaeafa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/dacaeafc28ab1298a80fdd4dd762933bdfd550b0" target="_blank">dacaeaf</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree629408f29313ac35a6601656ac80732937de98e1targetblank629408fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/629408f29313ac35a6601656ac80732937de98e1" target="_blank">629408f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreedacaeafc28ab1298a80fdd4dd762933bdfd550b0targetblankdacaeafa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree629408f29313ac35a6601656ac80732937de98e1targetblank629408fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -522,10 +522,10 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
 
 Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
     Modified:   analysis/Norm_filter.Rmd
     Modified:   analysis/technical_factors_analysis.Rmd
-    Modified:   data/Sample.info.RNAseq.csv
-    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -564,6 +564,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/analysis/technical_factors_analysis.Rmd" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Getting to the bottom of the mystery of the changing correlation heatmaps – conclusion: filtering out lowly expressed genes is responsible
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/629408f29313ac35a6601656ac80732937de98e1/docs/technical_factors_analysis.html" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Getting to the bottom of the mystery of the changing correlation heatmaps – conclusion: filtering out lowly expressed genes is responsible
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1053,12 +1087,86 @@ cors &lt;- cor(filt_norm_counts, method=&quot;spearman&quot;, use=&quot;pairwise
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
 heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/clustering%20norm_filt_data-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-clustering-norm_filt_data-1">
+Past versions of “clustering norm_filt_data-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-clustering-norm_filt_data-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/clustering norm_filt_data-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#pearson
 cors &lt;- cor(filt_norm_counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
 
 labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
 heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/clustering%20norm_filt_data-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-clustering-norm_filt_data-2">
+Past versions of “clustering norm_filt_data-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-clustering-norm_filt_data-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/clustering norm_filt_data-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations" class="section level1">
 <h1>Perform PCA and color by factors to look for any potential correlations</h1>
@@ -1413,19 +1521,19 @@ for (pc in p_comps) {
 } 
 datatable(pc_cov_cor) </code></pre>
 <div id="htmlwidget-87098e04a2cc41d4cd6e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.935766108229253,0.0145880369479409,0.0058185731932617,0.0139567047766335,0.383645438661594,0.00159584620030621,0.342796589931846],[0.780586702820702,0.735694699775103,0.00250463026949562,0.134608470649396,0.136127274287388,0.000385108365716671,0.0185871135110494],[0.132468444933427,0.122719898404142,0.259896443982915,0.170709664480591,0.00140274723920695,0.0764941165000889,0.0448446486782534],[0.0850032754065421,0.075988980694086,0.122671076290121,0.292675408786528,0.0290233380465709,2.61404141305497e-05,0.00900081714208898],[0.037651655033208,0.036812879920708,0.172415004624706,0.0021051060589233,0.000816718871216688,0.177536923670496,0.307277528865914],[0.00529907961735286,0.00191065732097387,0.04468370593207,0.284647019374059,0.0503125286124001,0.061898867445597,0.0139139868193454]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.937228077639086,0.012899748018467,0.0058540386525592,0.0131477134223357,0.379545181902798,0.00163891093223698,0.342995060146532],[0.76507519687444,0.72314930628686,0.00282821963541058,0.14254767046418,0.141599583602183,0.000466214578389932,0.0202194451692655],[0.121357303753474,0.113417972850561,0.298593975451343,0.133677231500241,0.002841735342827,0.084320706702587,0.0556430900947729],[0.0949190484431932,0.0848709094819577,0.0836910330415082,0.311513833969581,0.0252154836152721,0.00152507083815938,0.00248155794863567],[0.0519940357997541,0.0514511583390728,0.169158613857535,2.1835093199424e-05,0.00138233077074412,0.165035084411511,0.299547291113071],[0.00628575388746606,0.00246335789934122,0.0416949054631134,0.288018144066067,0.0563919132547236,0.0530300238400473,0.0154618430618555]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
 pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
 head(pc_cov_cor_2) </code></pre>
 <pre><code>          variable  pc         cor
-1       Individual PC1 0.935766108
-2              Sex PC1 0.014588037
-3        Replicate PC1 0.005818573
-4        treatment PC1 0.013956705
-5              RIN PC1 0.383645439
-6 LibraryPrepBatch PC1 0.001595846</code></pre>
+1       Individual PC1 0.937228078
+2              Sex PC1 0.012899748
+3        Replicate PC1 0.005854039
+4        treatment PC1 0.013147713
+5              RIN PC1 0.379545182
+6 LibraryPrepBatch PC1 0.001638911</code></pre>
 <pre class="r"><code>#Plot heatmap
 d_heatmap &lt;- pc_cov_cor_2 
 d_heatmap$variable &lt;- factor(d_heatmap$variable, 
@@ -1462,6 +1570,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/corr PC-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/corr PC-2.png" target="_blank">158fdf3</a>
@@ -1535,7 +1654,7 @@ set &lt;- newSeqExpressionSet(as.matrix(filt_counts$counts),
                            phenoData = data.frame(sampleinfo, row.names=colnames(filt_norm_counts)))
 set</code></pre>
 <pre><code>SeqExpressionSet (storageMode: lockedEnvironment)
-assayData: 11664 features, 17 samples 
+assayData: 10447 features, 17 samples 
   element names: counts, normalizedCounts, offset 
 protocolData: none
 phenoData
@@ -1723,7 +1842,7 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code># 
-set1 &lt;- RUVs(x=set, cIdx = rownames(filt_counts), k=1, scIdx = replicates, round = F)
+set1 &lt;- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
 pData(set1)</code></pre>
 <pre><code>          Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch
 18855_3_S 18855_3_S   NA18855    F         3    Strain 10.0                2
@@ -1743,24 +1862,24 @@ pData(set1)</code></pre>
 18856_3_S 18856_3_S   NA18856    M         3    Strain  9.6                2
 18856_2_U 18856_2_U   NA18856    M         2  Unstrain  9.5                1
 18855_3_U 18855_3_U   NA18855    F         3  Unstrain 10.0                2
-           LibSize          W_1
-18855_3_S 15419569 -0.404977602
-19160_3_S 15177653 -0.585991301
-18856_3_U 13722909  0.007556452
-18856_1_U 18647599 -0.013257183
-18855_2_S 18256163 -0.080305276
-18856_2_S 16782764 -0.998493013
-19160_3_U 19839604 -0.773307718
-18855_2_U 18618691 -0.206628419
-19160_2_S 16622407 -0.701507740
-18855_1_S 19712744 -0.486619033
-18856_1_S 13571439  0.032874620
-19160_1_S 20979958 -0.763039513
-19160_2_U 20924281 -1.108632660
-18855_1_U 20146697 -0.424649988
-18856_3_S 15807863 -0.124131985
-18856_2_U 15142152 -0.507274191
-18855_3_U 18157918 -0.505345560</code></pre>
+           LibSize       W_1        W_2
+18855_3_S 15419569 0.6403178 -1.0334196
+19160_3_S 15177653 0.4887528 -1.3355831
+18856_3_U 13722909 0.9502388 -0.7892404
+18856_1_U 18647599 1.2228123 -1.4496449
+18855_2_S 18256163 0.8233400 -0.6748150
+18856_2_S 16782764 0.0515988 -1.2784836
+19160_3_U 19839604 0.3406102 -1.4859733
+18855_2_U 18618691 0.7609177 -0.8596946
+19160_2_S 16622407 0.4247172 -1.4414851
+18855_1_S 19712744 0.7356719 -1.4499412
+18856_1_S 13571439 1.1409773 -1.1686123
+19160_1_S 20979958 0.5909682 -1.9538068
+19160_2_U 20924281 0.1295380 -1.8537818
+18855_1_U 20146697 0.7569979 -1.3228202
+18856_3_S 15807863 0.8205467 -0.8981659
+18856_2_U 15142152 0.4572116 -1.0041098
+18855_3_U 18157918 0.5909283 -1.1455295</code></pre>
 <pre class="r"><code>#Plots after correcting RUV
 plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1786,6 +1905,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/RUV-3.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/RUV-3.png" target="_blank">158fdf3</a>
@@ -1871,6 +2001,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/RUV-4.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/RUV-4.png" target="_blank">158fdf3</a>
 </td>
 <td>
@@ -1925,6 +2066,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/RUV-5.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/RUV-5.png" target="_blank">158fdf3</a>
 </td>
 <td>
@@ -1966,6 +2118,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/RUV-6.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/RUV-6.png" target="_blank">158fdf3</a>
@@ -2017,6 +2180,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/corr PC after RUVs-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/corr PC after RUVs-1.png" target="_blank">158fdf3</a>
 </td>
 <td>
@@ -2047,19 +2221,19 @@ for (pc in p_comps) {
 } 
 datatable(pc_cov_cor) </code></pre>
 <div id="htmlwidget-529320416cb9ecc26f04" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-529320416cb9ecc26f04">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.920708115005605,0.0121110226600311,0.00426423219878614,0.0182076977799449,0.37760028223723,0.00251632304728574,0.330403473242757],[0.81380035429674,0.767553559816821,0.000478844919718458,0.12368823812068,0.13759162180371,0.000314234564631166,0.0178490049771436],[0.112963383425689,0.0860744123527045,0.305118325407329,0.235686970818152,0.000141924247696114,0.141466919450023,0.0920163011321468],[0.114971047036802,0.109927126648132,0.264157575099083,0.213426104435407,0.0225035333518494,0.0422753450061369,0.117738568755362],[0.0224471647112468,0.0190609705958224,0.000386417870854382,0.026670971410356,0.00101052831328512,0.0131774884215901,0.138479453427686],[0.00222022808947321,0.000264245112096791,0.0622474068704887,0.346138666972436,0.0318911901385918,0.0898051807404463,0.023926406087791]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-529320416cb9ecc26f04">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.942423350263047,0.00668853490335259,0.0131384245059351,0.00991989728634208,0.360152438073828,0.00652946944654194,0.287523347602405],[0.769917707954355,0.737388446965364,0.00343860005650638,0.152831524598535,0.160631002359226,0.00170955367296787,0.0353045119613478],[0.249299897087026,0.232409132934963,0.00117716205454385,0.426508309999629,0.0112572091229939,0.0154782383649311,2.69693770910183e-05],[0.0228456288560086,0.0182119551249913,0.00225753035572014,0.0155684514488491,0.00125319628274228,0.0132824492887433,0.114059598899647],[0.00105169957782928,1.53715013657428e-05,0.0374723286708531,0.328271897748881,0.0493089596231795,0.051752050913323,0.0531747215441056],[0.00282652703469329,0.000506447634392042,0.0416013868698146,0.0426959451070644,0.147399837512512,0.116786929159431,0.0645922262080098]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
 pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
 head(pc_cov_cor_2) </code></pre>
 <pre><code>          variable  pc         cor
-1       Individual PC1 0.920708115
-2              Sex PC1 0.012111023
-3        Replicate PC1 0.004264232
-4        treatment PC1 0.018207698
-5              RIN PC1 0.377600282
-6 LibraryPrepBatch PC1 0.002516323</code></pre>
+1       Individual PC1 0.942423350
+2              Sex PC1 0.006688535
+3        Replicate PC1 0.013138425
+4        treatment PC1 0.009919897
+5              RIN PC1 0.360152438
+6 LibraryPrepBatch PC1 0.006529469</code></pre>
 <pre class="r"><code>#Plot heatmap
 d_heatmap &lt;- pc_cov_cor_2 
 d_heatmap$variable &lt;- factor(d_heatmap$variable, 
@@ -2098,6 +2272,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/technical_factors_analysis.Rmd/corr PC after RUVs-3.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/technical_factors_analysis.Rmd/corr PC after RUVs-3.png" target="_blank">158fdf3</a>
 </td>
 <td>
@@ -2112,8 +2297,8 @@ Anthony Hung
 </div>
 </div>
 </div>
-<div id="save-data-and-ruvs-output-for-unwanted-variation-contains-the-same-cpm-data-as-before-as-well-as-pheno-data-w_1-values-from-ruvs" class="section level1">
-<h1>Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)</h1>
+<div id="save-data-and-ruvs-output-for-unwanted-variation-contains-the-same-cpm-data-as-before-as-well-as-pheno-data-w-values-from-ruvs" class="section level1">
+<h1>Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W values from RUVs)</h1>
 <pre class="r"><code>saveRDS(set1, &quot;data/RUVsOut.rds&quot;)</code></pre>
 <br>
 <p>

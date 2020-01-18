@@ -150,7 +150,7 @@ labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 
 # 
-set1 <- RUVs(x=set, cIdx = rownames(filt_counts), k=1, scIdx = replicates, round = F)
+set1 <- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
 pData(set1)
 
 #Plots after correcting RUV
@@ -235,7 +235,7 @@ pca_heat
 
 
 
-# Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)
+# Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W values from RUVs)
 
 ```{r}
 saveRDS(set1, "data/RUVsOut.rds")

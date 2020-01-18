@@ -87,18 +87,12 @@ boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000119699", "TGFB3")
 
 #MSC Markers
 
-#ENG, CD34, ITGAM, CD79A, CD19, CD14 filtered out
+#ENG, CD34, ITGAM, CD79A, CD19, CD14, PTPRC filtered out
 
 #THY1
 boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000154096", "THY1 (CD90)")
 
 #NT5E
 boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000135318", "NT5E (CD73)")
-
-
-
-#PTPRC
-boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000081237", "PTPRC")
-
 ```
 
