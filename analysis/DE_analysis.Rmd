@@ -379,7 +379,7 @@ y <- estimateGLMCommonDisp(y, design)
 y <- estimateGLMTagwiseDisp(y, design)
 fit <- glmFit(y, design)
 lrt <- glmLRT(fit, coef=2)
-gene_values <- topTags(lrt, n = nrow(lrt$coefficients), adjust.method="BH", sort.by = "logFC")
+gene_values <- topTags(lrt, n = nrow(lrt$coefficients), adjust.method="BH", sort.by = "PValue")
 ```
 
 ## Explore top hits
