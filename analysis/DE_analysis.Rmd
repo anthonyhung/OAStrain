@@ -42,7 +42,7 @@ sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 individuals <- c("18855", "18856", "19160")
 treatments <- c("S", "U")
 
-set.seed(1)
+set.seed(1234)
 selected_samples <- c()
 for(i in c("18856", "18855")){
      for(t in treatments){
@@ -63,300 +63,293 @@ single_filt_counts <- filt_counts[,randomly_sampled_indices]
 anno <- pData(RUVsOut)[randomly_sampled_indices,]
 ```
 
-<!-- # Model with limma -->
 
-<!-- ```{r design-matrix} -->
-<!-- #sample details -->
-<!-- #anno <- pData(RUVsOut) -->
+```{r design-matrix}
+single_filt_counts <- filt_counts
+anno <- pData(RUVsOut)
+x <- paste0(anno$Individual, anno$treatment)
 
-<!-- anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2")) -->
-<!-- anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3")) -->
-<!-- anno$LibSize <- as.numeric(anno$LibSize) -->
+anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
+anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
 
+design <- model.matrix(~treatment + Individual + W_1 + W_2 + RIN,
+                       data = anno)
+colnames(design) <- gsub("treatment", "", colnames(design))
+colnames(design)
+```
 
-<!-- design <- model.matrix(~treatment + W_1 + W_2 + RIN + LibSize, -->
-<!--                        data = anno) -->
-<!-- colnames(design)[1] <- "Intercept" -->
-<!-- colnames(design) <- gsub("treatment", "", colnames(design)) -->
-<!-- colnames(design) -->
-<!-- ``` -->
+```{r fit-model, fig.width=8}
+# Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
+     # Because of issues with duplicateCorrelation with the number of covariates I include in the design matrix, I elect intead to include all samples (all technical replicates) and use duplicateCorrelation for technical replicates and instead include Individual as a fixed effect in the linear model
+# Recommended to run both voom and duplicateCorrelation twice.
+# https://support.bioconductor.org/p/59700/#67620
 
-<!-- ```{r fit-model, fig.width=8} -->
-<!-- # Model individual as a random effect. -->
-<!-- # Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors -->
-<!-- # Recommended to run both voom and duplicateCorrelation twice. -->
-<!-- # https://support.bioconductor.org/p/59700/#67620 -->
-
-<!-- #TMM Normalization -->
-<!-- y <- DGEList(single_filt_counts) -->
-<!-- y <- calcNormFactors(y, method = "TMM") -->
-<!-- #Voom for differential expression -->
-<!-- v1 <- voom(y, design) -->
-<!-- corfit1 <- duplicateCorrelation(v1, design, block = anno$Individual) -->
-<!-- corfit1$consensus -->
-<!-- v2 <- voom(y, design, block = anno$Individual, correlation = corfit1$consensus) -->
-<!-- corfit2 <- duplicateCorrelation(v2, design, block = anno$Individual) -->
-<!-- # corfit2$consensus -->
-<!-- fit <- lmFit(v2, design, block = anno$Individual, -->
-<!--              correlation = corfit2$consensus) -->
-<!-- fit <- eBayes(fit) -->
-<!-- ``` -->
+#TMM Normalization
+y <- DGEList(single_filt_counts)
+y <- calcNormFactors(y, method = "TMM")
+#Voom for differential expression
+v1 <- voom(y, design)
+corfit1 <- duplicateCorrelation(v1, design, block = x)
+corfit1$consensus.correlation
+v2 <- voom(y, design, block = x, correlation = corfit1$consensus.correlation)
+corfit2 <- duplicateCorrelation(v2, design, block = x)
+corfit2$consensus.correlation
+fit <- lmFit(v2, design, block = x,
+             correlation = corfit2$consensus.correlation)
+fit <- eBayes(fit)
+```
 
 
-<!-- ## Assess model results -->
+## Assess model results
 
-<!-- ```{r model-results} -->
-<!-- get_results <- function(x, number = nrow(x$coefficients), sort.by = "none", -->
-<!--                         ...) { -->
-<!--   # x - object MArrayLM from eBayes output -->
-<!--   # ... - additional arguments passed to topTable -->
-<!--   stopifnot(class(x) == "MArrayLM") -->
-<!--   results <- topTable(x, number = number, sort.by = sort.by, ...) -->
-<!--   return(results) -->
-<!-- } -->
+```{r model-results}
+get_results <- function(x, number = nrow(x$coefficients), sort.by = "none",
+                        ...) {
+  # x - object MArrayLM from eBayes output
+  # ... - additional arguments passed to topTable
+  stopifnot(class(x) == "MArrayLM")
+  results <- topTable(x, number = number, sort.by = sort.by, ...)
+  return(results)
+}
 
-<!-- top_treatment <- get_results(fit, coef = "Unstrain", sort.by = "B") -->
-<!-- top_treatment -->
+top_treatment <- get_results(fit, coef = "Unstrain", sort.by = "B")
+head(top_treatment)
 
-<!-- results_treatment <- get_results(fit, coef = "Unstrain", -->
-<!--                               number = nrow(filt_counts), sort = "none") -->
-<!-- ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "Unstrain"]), -->
-<!--                        aes(x = Amean, y = logFC)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Average expression level", y = "Log fold change", -->
-<!--        title = "Treatment effect") -->
-<!-- ma_treatment -->
-<!-- hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) + -->
-<!--   geom_histogram(binwidth = 0.01) + -->
-<!--   labs(x = "p-value", y = "Number of genes", title = "Treatment effect") -->
-<!-- hist_treatment -->
-<!-- ``` -->
-
-
-<!-- ## Explore top hits -->
-
-<!-- Boxplot function. -->
-
-<!-- ```{r boxplot-function} -->
-<!-- plot_gene <- function(v, g) { -->
-<!--   # v - An EList object containing log2 counts per million -->
-<!--   # g - character vector of a single gene -->
-<!--   stopifnot(class(v) == "EList", -->
-<!--             is.character(g), length(g) == 1) -->
-<!--   library("tidyr") -->
-<!--   single_gene <- v$E[g, ] -->
-<!--   single_gene_long <- as.data.frame(single_gene) -->
-<!--   colnames(single_gene_long) <- "log2cpm" -->
-<!--   single_gene_long$sample <- rownames(single_gene_long) -->
-<!--   single_gene_long <- separate(single_gene_long, col = "sample", sep = "_", -->
-<!--                                 into = c("Individual", "Replicate", "Treatment")) -->
-<!--   single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels = c("S", "U")) -->
-<!--   single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain")) -->
-
-<!--   ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) + -->
-<!--     geom_boxplot() + -->
-<!--     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- Treatment -->
-
-<!-- ```{r treatment} -->
-<!-- #rename top_treatment genes to gene symbols for easier interpretation -->
-<!-- top_treatment_top4 <- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)] -->
-<!-- top_treatment_top4 -->
-
-<!-- p_treatment_1 <- plot_gene(v2, rownames(top_treatment)[1]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_2 <- plot_gene(v2, rownames(top_treatment)[2]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_3 <- plot_gene(v2, rownames(top_treatment)[3]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_4 <- plot_gene(v2, rownames(top_treatment)[4]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1, -->
-<!--        width = 7, height = 7, units = "in") -->
-<!-- plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4) -->
-<!-- ``` -->
-
-<!-- ## Use ash for mutliple testing correction -->
-
-<!-- Treatment effect. -->
-
-<!-- ```{r ash-treatment} -->
-<!-- run_ash <- function(x, coef) { -->
-<!--   # Perform multiple testing correction with adaptive shrinkage (ASH) -->
-<!--   # -->
-<!--   # x - object MArrayLM from eBayes output -->
-<!--   # coef - coefficient tested by eBayes -->
-<!--   stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients)) -->
-<!--   result <- ash(betahat = x$coefficients[, coef], -->
-<!--                 sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post), -->
-<!--                 df = x$df.total[1]) -->
-<!--   return(result) -->
-<!-- } -->
-
-<!-- ash_treatment <- run_ash(fit, "Unstrain") -->
-<!-- class(ash_treatment) -->
-<!-- names(ash_treatment) -->
-<!-- sum(ash_treatment$result$svalue < .05) -->
-<!-- hist(ash_treatment$result$svalue) -->
-<!-- ``` -->
-
-<!-- # Plots -->
-
-<!-- ```{r Plot Functions} -->
-<!-- plot_ma <- function(x, qval) { -->
-<!--   # Create MA plot. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ASH output -->
-<!--   #     (columns logFC, AveExpr, and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("logFC", "AveExpr", "qvalue") %in% colnames(x), -->
-<!--             is.numeric(qval), qval <= 1, qval >= 0) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = AveExpr, y = logFC, color = highlight, shape = highlight)) + -->
-<!--     geom_point() + -->
-<!--     labs(x = "Average expression level", y = "Log fold change") + -->
-<!--     scale_color_identity(drop = FALSE) + -->
-<!--     scale_shape_manual(values = c(16, 1), drop = FALSE) + -->
-<!--     theme(legend.position = "none") -->
-<!-- #   scale_color_gradient(low = "red", high = "white", limits = c(0, 0.25)) -->
-<!-- } -->
-
-<!-- plot_volcano <- function(x, qval) { -->
-<!--   # Create volcano plot. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ASH output -->
-<!--   #     (columns logFC, P.Value, and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("logFC", "P.Value", "qvalue") %in% colnames(x), -->
-<!--             is.numeric(qval), qval <= 1, qval >= 0) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) + -->
-<!--     geom_point(shape = 1) + -->
-<!--     labs(x = "Log fold change", -->
-<!--          y = expression(-log[10] * " p-value")) + -->
-<!--     scale_color_identity(drop = FALSE) + -->
-<!--     theme(legend.position = "none") -->
-<!-- } -->
-
-<!-- plot_pval_hist <- function(x, qval) { -->
-<!--   # Create histogram of p-values. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ash output (columns P.Value and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("P.Value", "qvalue") %in% colnames(x)) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = P.Value, fill = highlight)) + -->
-<!--     geom_histogram(position = "stack", binwidth = 0.01) + -->
-<!--     scale_fill_identity(drop = FALSE) + -->
-<!--     labs(x = "p-value", y = "Number of genes") -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- ```{r use Functions} -->
-<!-- tests <- colnames(fit$coefficients) -->
-<!-- results <- vector(length = length(tests), mode = "list") -->
-<!-- names(results) <- tests -->
-
-<!-- for (test in tests) { -->
-<!--   # Extract limma results -->
-<!--   results[[test]] <- get_results(fit, coef = test) -->
-<!--   # Add mutliple testing correction with ASH -->
-<!--   output_ash <- run_ash(fit, coef = test)$result -->
-<!--   results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr, -->
-<!--                            lfdr = output_ash$lfdr, qvalue = output_ash$qvalue, -->
-<!--                            svalue = output_ash$svalue) -->
-<!-- } -->
-
-<!-- #FDR 0.1 -->
-<!-- plot_ma(results[["Unstrain"]], 0.1) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.1) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.1) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.1) -->
-<!-- significant_genes_10 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.1] -->
-<!-- significant_symbols_10 <- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_10 -->
-<!-- significant_anno_10 <- gene_anno[match(significant_genes_10, gene_anno$ensembl_gene_id),] -->
+results_treatment <- get_results(fit, coef = "Unstrain",
+                              number = nrow(filt_counts), sort = "none")
+ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "Unstrain"]),
+                       aes(x = Amean, y = logFC)) +
+  geom_point() +
+  labs(x = "Average expression level", y = "Log fold change",
+       title = "Treatment effect")
+ma_treatment
+hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) +
+  geom_histogram(binwidth = 0.01) +
+  labs(x = "p-value", y = "Number of genes", title = "Treatment effect")
+hist_treatment
+```
 
 
-<!-- #FDR 0.05 -->
-<!-- plot_ma(results[["Unstrain"]], 0.05) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.05) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.05) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.05) -->
-<!-- significant_genes_05 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05] -->
-<!-- significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_05 -->
-<!-- significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),] -->
+## Explore top hits
+
+Boxplot function.
+
+```{r boxplot-function}
+plot_gene <- function(v, g) {
+  # v - An EList object containing log2 counts per million
+  # g - character vector of a single gene
+  stopifnot(class(v) == "EList",
+            is.character(g), length(g) == 1)
+  library("tidyr")
+  single_gene <- v$E[g, ]
+  single_gene_long <- as.data.frame(single_gene)
+  colnames(single_gene_long) <- "log2cpm"
+  single_gene_long$sample <- rownames(single_gene_long)
+  single_gene_long <- separate(single_gene_long, col = "sample", sep = "_",
+                                into = c("Individual", "Replicate", "Treatment"))
+  single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels = c("S", "U"))
+  single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain"))
+
+  ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) +
+    geom_boxplot() +
+    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
+}
+```
+
+Treatment
+
+```{r treatment}
+#rename top_treatment genes to gene symbols for easier interpretation
+top_treatment_top4 <- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)]
+top_treatment_top4
+
+p_treatment_1 <- plot_gene(v2, rownames(top_treatment)[1])
+p_treatment_2 <- plot_gene(v2, rownames(top_treatment)[2]) 
+p_treatment_3 <- plot_gene(v2, rownames(top_treatment)[3]) 
+p_treatment_4 <- plot_gene(v2, rownames(top_treatment)[4]) 
+ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1,
+       width = 7, height = 7, units = "in")
+plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)
+```
+
+## Use ash for mutliple testing correction
+
+Treatment effect.
+
+```{r ash-treatment}
+run_ash <- function(x, coef) {
+  # Perform multiple testing correction with adaptive shrinkage (ASH)
+  #
+  # x - object MArrayLM from eBayes output
+  # coef - coefficient tested by eBayes
+  stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients))
+  result <- ash(betahat = x$coefficients[, coef],
+                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post),
+                df = x$df.total[1])
+  return(result)
+}
+
+ash_treatment <- run_ash(fit, "Unstrain")
+class(ash_treatment)
+names(ash_treatment)
+sum(ash_treatment$result$svalue < .05)
+hist(ash_treatment$result$svalue)
+```
+
+# Plots
+
+```{r Plot Functions}
+plot_ma <- function(x, qval) {
+  # Create MA plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, AveExpr, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "AveExpr", "qvalue") %in% colnames(x),
+            is.numeric(qval), qval <= 1, qval >= 0)
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = AveExpr, y = logFC, color = highlight, shape = highlight)) +
+    geom_point() +
+    labs(x = "Average expression level", y = "Log fold change") +
+    scale_color_identity(drop = FALSE) +
+    scale_shape_manual(values = c(16, 1), drop = FALSE) +
+    theme(legend.position = "none")
+#   scale_color_gradient(low = "red", high = "white", limits = c(0, 0.25))
+}
+
+plot_volcano <- function(x, qval) {
+  # Create volcano plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, P.Value, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "P.Value", "qvalue") %in% colnames(x),
+            is.numeric(qval), qval <= 1, qval >= 0)
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) +
+    geom_point(shape = 1) +
+    labs(x = "Log fold change",
+         y = expression(-log[10] * " p-value")) +
+    scale_color_identity(drop = FALSE) +
+    theme(legend.position = "none")
+}
+
+plot_pval_hist <- function(x, qval) {
+  # Create histogram of p-values.
+  #
+  # x - data frame with topTable and ash output (columns P.Value and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("P.Value", "qvalue") %in% colnames(x))
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = P.Value, fill = highlight)) +
+    geom_histogram(position = "stack", binwidth = 0.01) +
+    scale_fill_identity(drop = FALSE) +
+    labs(x = "p-value", y = "Number of genes")
+}
+```
+
+```{r use Functions}
+tests <- colnames(fit$coefficients)
+results <- vector(length = length(tests), mode = "list")
+names(results) <- tests
+
+for (test in tests) {
+  # Extract limma results
+  results[[test]] <- get_results(fit, coef = test)
+  # Add mutliple testing correction with ASH
+  output_ash <- run_ash(fit, coef = test)$result
+  results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+                           lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                           svalue = output_ash$svalue)
+}
+
+#FDR 0.1
+plot_ma(results[["Unstrain"]], 0.1)
+plot_volcano(results[["Unstrain"]], 0.1)
+plot_pval_hist(results[["Unstrain"]], 0.1)
+table(results[["Unstrain"]]$qvalue < 0.1)
+significant_genes_10 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.1]
+significant_symbols_10 <- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)]
+head(significant_symbols_10)
+significant_anno_10 <- gene_anno[match(significant_genes_10, gene_anno$ensembl_gene_id),]
 
 
-<!-- #FDR 0.01 -->
-<!-- plot_ma(results[["Unstrain"]], 0.01) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.01) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.01) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.01) -->
-<!-- significant_genes_01 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.01] -->
-<!-- significant_symbols_01 <- gene_anno$external_gene_name[match(significant_genes_01, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_01 -->
-<!-- significant_anno_01 <- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),] -->
-<!-- ``` -->
+#FDR 0.05
+plot_ma(results[["Unstrain"]], 0.05)
+plot_volcano(results[["Unstrain"]], 0.05)
+plot_pval_hist(results[["Unstrain"]], 0.05)
+table(results[["Unstrain"]]$qvalue < 0.05)
+significant_genes_05 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05]
+significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)]
+head(significant_symbols_05)
+significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),]
+
+
+#FDR 0.01
+plot_ma(results[["Unstrain"]], 0.01)
+plot_volcano(results[["Unstrain"]], 0.01)
+plot_pval_hist(results[["Unstrain"]], 0.01)
+table(results[["Unstrain"]]$qvalue < 0.01)
+significant_genes_01 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.01]
+significant_symbols_01 <- gene_anno$external_gene_name[match(significant_genes_01, gene_anno$ensembl_gene_id)]
+head(significant_symbols_01)
+significant_anno_01 <- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),]
+```
 
 
 
-<!-- ## Gene ontology analysis with topGO -->
+## Gene ontology analysis with topGO
 
-<!-- Use topGO for GO analysis. -->
-<!-- It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]). -->
-<!-- Essentially, it decreases the redundancy of the results. -->
+Use topGO for GO analysis.
+It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]).
+Essentially, it decreases the redundancy of the results.
 
-<!-- [Alexa2006]: http://www.ncbi.nlm.nih.gov/pubmed/16606683 -->
+[Alexa2006]: http://www.ncbi.nlm.nih.gov/pubmed/16606683
 
-<!-- First create the gene universe. -->
-<!-- This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not. -->
+First create the gene universe.
+This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
 
-<!-- ```{r gene-universe} -->
-<!-- threshold <- 0.1 -->
-<!-- gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold) -->
-<!-- gene_universe <- factor(gene_universe) -->
-<!-- names(gene_universe) <- rownames(results[["Unstrain"]]) -->
-<!-- head(gene_universe) -->
-<!-- ``` -->
+```{r gene-universe}
+threshold <- 0.05
+gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold)
+gene_universe <- factor(gene_universe)
+names(gene_universe) <- rownames(results[["Unstrain"]])
+head(gene_universe)
+```
 
-<!-- Create the topGO data object. -->
-<!-- Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation. -->
+Create the topGO data object.
+Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
 
-<!-- ```{r go-data} -->
-<!-- go_data <- new("topGOdata", -->
-<!--                ontology = "BP", -->
-<!--                allGenes = gene_universe, -->
-<!--                nodeSize = 5, -->
-<!--                annotationFun = annFUN.org, -->
-<!--                mapping = "org.Hs.eg.db", -->
-<!--                ID = "ensembl") -->
-<!-- ``` -->
+```{r go-data}
+go_data <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "ensembl")
+```
 
-<!-- Use the weight01 algorithm and score the tests with Fisher's exact test. -->
+Use the weight01 algorithm and score the tests with Fisher's exact test.
 
-<!-- ```{r go-test} -->
-<!-- go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher") -->
-<!-- ``` -->
+```{r go-test}
+go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher")
+```
 
-<!-- Keep the results with a Fisher's exact test p-value < 0.01. -->
+Keep the results with a Fisher's exact test p-value < 0.01.
 
-<!-- ```{r go-table} -->
-<!-- go_table <- GenTable(go_data, weightFisher = go_test, -->
-<!--                      orderBy = "weightFisher", ranksOf = "weightFisher", -->
-<!--                      topNodes = sum(score(go_test) < .01)) -->
-<!-- go_table -->
-<!-- ``` -->
+```{r go-table}
+go_table <- GenTable(go_data, weightFisher = go_test,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test) < .01))
+go_table
+```
 
 
 
@@ -482,12 +475,10 @@ Use topGO for GO analysis.
 It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]).
 Essentially, it decreases the redundancy of the results.
 
-[Alexa2006]: http://www.ncbi.nlm.nih.gov/pubmed/16606683
-
 First create the gene universe.
 This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
 
-```{r gene-universe}
+```{r gene-universe1}
 threshold <- 0.01
 gene_universe <- as.numeric(gene_values@.Data[[1]]$FDR < threshold)
 gene_universe <- factor(gene_universe)
@@ -498,7 +489,7 @@ head(gene_universe)
 Create the topGO data object.
 Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
 
-```{r go-data}
+```{r go-data1}
 go_data <- new("topGOdata",
                ontology = "BP",
                allGenes = gene_universe,
@@ -510,13 +501,13 @@ go_data <- new("topGOdata",
 
 Use the weight01 algorithm and score the tests with Fisher's exact test.
 
-```{r go-test}
+```{r go-test1}
 go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher")
 ```
 
 Keep the results with a Fisher's exact test p-value < 0.01.
 
-```{r go-table}
+```{r go-table1}
 go_table <- GenTable(go_data, weightFisher = go_test,
                      orderBy = "weightFisher", ranksOf = "weightFisher",
                      topNodes = sum(score(go_test) < .01))

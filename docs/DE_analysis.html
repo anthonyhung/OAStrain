@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-18
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3c163de1c62d5f63d88254fa028dda84186718b7" target="_blank">3c163de</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea3565148512e79e1482c774b845a50b8c9c06e74targetblanka356514a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a3565148512e79e1482c774b845a50b8c9c06e74" target="_blank">a356514</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea3565148512e79e1482c774b845a50b8c9c06e74targetblanka356514a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -512,6 +512,10 @@ Ignored files:
     Ignored:    data/filtered_counts.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
+
+Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -550,6 +554,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a3565148512e79e1482c774b845a50b8c9c06e74/docs/DE_analysis.html" target="_blank">a356514</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+knit analysis files
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1048,7 +1069,7 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 individuals &lt;- c(&quot;18855&quot;, &quot;18856&quot;, &quot;19160&quot;)
 treatments &lt;- c(&quot;S&quot;, &quot;U&quot;)
 
-set.seed(1)
+set.seed(1234)
 selected_samples &lt;- c()
 for(i in c(&quot;18856&quot;, &quot;18855&quot;)){
      for(t in treatments){
@@ -1063,258 +1084,2091 @@ sample_num &lt;- base::sample(c(1:3), 1)
 selected_samples &lt;- c(selected_samples, paste0(&quot;19160&quot;, sep = &quot;_&quot;, sample_num, sep = &quot;_&quot;, &quot;S&quot;))
 
 selected_samples</code></pre>
-<pre><code>[1] &quot;18856_1_S&quot; &quot;18856_2_U&quot; &quot;18855_2_S&quot; &quot;18855_3_U&quot; &quot;19160_2_U&quot; &quot;19160_3_S&quot;</code></pre>
+<pre><code>[1] &quot;18856_1_S&quot; &quot;18856_2_U&quot; &quot;18855_2_S&quot; &quot;18855_2_U&quot; &quot;19160_3_U&quot; &quot;19160_2_S&quot;</code></pre>
 <pre class="r"><code>randomly_sampled_indices &lt;- match(selected_samples, colnames(filt_counts))
 
 single_filt_counts &lt;- filt_counts[,randomly_sampled_indices]
 anno &lt;- pData(RUVsOut)[randomly_sampled_indices,]</code></pre>
-<!-- # Model with limma -->
-<!-- ```{r design-matrix} -->
-<!-- #sample details -->
-<!-- #anno <- pData(RUVsOut) -->
-<!-- anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2")) -->
-<!-- anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3")) -->
-<!-- anno$LibSize <- as.numeric(anno$LibSize) -->
-<!-- design <- model.matrix(~treatment + W_1 + W_2 + RIN + LibSize, -->
-<!--                        data = anno) -->
-<!-- colnames(design)[1] <- "Intercept" -->
-<!-- colnames(design) <- gsub("treatment", "", colnames(design)) -->
-<!-- colnames(design) -->
-<!-- ``` -->
-<!-- ```{r fit-model, fig.width=8} -->
-<!-- # Model individual as a random effect. -->
-<!-- # Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors -->
-<!-- # Recommended to run both voom and duplicateCorrelation twice. -->
-<!-- # https://support.bioconductor.org/p/59700/#67620 -->
-<!-- #TMM Normalization -->
-<!-- y <- DGEList(single_filt_counts) -->
-<!-- y <- calcNormFactors(y, method = "TMM") -->
-<!-- #Voom for differential expression -->
-<!-- v1 <- voom(y, design) -->
-<!-- corfit1 <- duplicateCorrelation(v1, design, block = anno$Individual) -->
-<!-- corfit1$consensus -->
-<!-- v2 <- voom(y, design, block = anno$Individual, correlation = corfit1$consensus) -->
-<!-- corfit2 <- duplicateCorrelation(v2, design, block = anno$Individual) -->
-<!-- # corfit2$consensus -->
-<!-- fit <- lmFit(v2, design, block = anno$Individual, -->
-<!--              correlation = corfit2$consensus) -->
-<!-- fit <- eBayes(fit) -->
-<!-- ``` -->
-<!-- ## Assess model results -->
-<!-- ```{r model-results} -->
-<!-- get_results <- function(x, number = nrow(x$coefficients), sort.by = "none", -->
-<!--                         ...) { -->
-<!--   # x - object MArrayLM from eBayes output -->
-<!--   # ... - additional arguments passed to topTable -->
-<!--   stopifnot(class(x) == "MArrayLM") -->
-<!--   results <- topTable(x, number = number, sort.by = sort.by, ...) -->
-<!--   return(results) -->
-<!-- } -->
-<!-- top_treatment <- get_results(fit, coef = "Unstrain", sort.by = "B") -->
-<!-- top_treatment -->
-<!-- results_treatment <- get_results(fit, coef = "Unstrain", -->
-<!--                               number = nrow(filt_counts), sort = "none") -->
-<!-- ma_treatment <- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, "Unstrain"]), -->
-<!--                        aes(x = Amean, y = logFC)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Average expression level", y = "Log fold change", -->
-<!--        title = "Treatment effect") -->
-<!-- ma_treatment -->
-<!-- hist_treatment <- ggplot(results_treatment, aes(x = P.Value)) + -->
-<!--   geom_histogram(binwidth = 0.01) + -->
-<!--   labs(x = "p-value", y = "Number of genes", title = "Treatment effect") -->
-<!-- hist_treatment -->
-<!-- ``` -->
-<!-- ## Explore top hits -->
-<!-- Boxplot function. -->
-<!-- ```{r boxplot-function} -->
-<!-- plot_gene <- function(v, g) { -->
-<!--   # v - An EList object containing log2 counts per million -->
-<!--   # g - character vector of a single gene -->
-<!--   stopifnot(class(v) == "EList", -->
-<!--             is.character(g), length(g) == 1) -->
-<!--   library("tidyr") -->
-<!--   single_gene <- v$E[g, ] -->
-<!--   single_gene_long <- as.data.frame(single_gene) -->
-<!--   colnames(single_gene_long) <- "log2cpm" -->
-<!--   single_gene_long$sample <- rownames(single_gene_long) -->
-<!--   single_gene_long <- separate(single_gene_long, col = "sample", sep = "_", -->
-<!--                                 into = c("Individual", "Replicate", "Treatment")) -->
-<!--   single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels = c("S", "U")) -->
-<!--   single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain")) -->
-<!--   ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) + -->
-<!--     geom_boxplot() + -->
-<!--     labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) -->
-<!-- } -->
-<!-- ``` -->
-<!-- Treatment -->
-<!-- ```{r treatment} -->
-<!-- #rename top_treatment genes to gene symbols for easier interpretation -->
-<!-- top_treatment_top4 <- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)] -->
-<!-- top_treatment_top4 -->
-<!-- p_treatment_1 <- plot_gene(v2, rownames(top_treatment)[1]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_2 <- plot_gene(v2, rownames(top_treatment)[2]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_3 <- plot_gene(v2, rownames(top_treatment)[3]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- p_treatment_4 <- plot_gene(v2, rownames(top_treatment)[4]) + -->
-<!--   ylim(3, 11) + theme(legend.position = "bottom") -->
-<!-- ggsave("fig-limma-treatment-hit-1.eps", plot = p_treatment_1, -->
-<!--        width = 7, height = 7, units = "in") -->
-<!-- plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4) -->
-<!-- ``` -->
-<!-- ## Use ash for mutliple testing correction -->
-<!-- Treatment effect. -->
-<!-- ```{r ash-treatment} -->
-<!-- run_ash <- function(x, coef) { -->
-<!--   # Perform multiple testing correction with adaptive shrinkage (ASH) -->
-<!--   # -->
-<!--   # x - object MArrayLM from eBayes output -->
-<!--   # coef - coefficient tested by eBayes -->
-<!--   stopifnot(class(x) == "MArrayLM", coef %in% colnames(x$coefficients)) -->
-<!--   result <- ash(betahat = x$coefficients[, coef], -->
-<!--                 sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post), -->
-<!--                 df = x$df.total[1]) -->
-<!--   return(result) -->
-<!-- } -->
-<!-- ash_treatment <- run_ash(fit, "Unstrain") -->
-<!-- class(ash_treatment) -->
-<!-- names(ash_treatment) -->
-<!-- sum(ash_treatment$result$svalue < .05) -->
-<!-- hist(ash_treatment$result$svalue) -->
-<!-- ``` -->
-<!-- # Plots -->
-<!-- ```{r Plot Functions} -->
-<!-- plot_ma <- function(x, qval) { -->
-<!--   # Create MA plot. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ASH output -->
-<!--   #     (columns logFC, AveExpr, and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("logFC", "AveExpr", "qvalue") %in% colnames(x), -->
-<!--             is.numeric(qval), qval <= 1, qval >= 0) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = AveExpr, y = logFC, color = highlight, shape = highlight)) + -->
-<!--     geom_point() + -->
-<!--     labs(x = "Average expression level", y = "Log fold change") + -->
-<!--     scale_color_identity(drop = FALSE) + -->
-<!--     scale_shape_manual(values = c(16, 1), drop = FALSE) + -->
-<!--     theme(legend.position = "none") -->
-<!-- #   scale_color_gradient(low = "red", high = "white", limits = c(0, 0.25)) -->
-<!-- } -->
-<!-- plot_volcano <- function(x, qval) { -->
-<!--   # Create volcano plot. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ASH output -->
-<!--   #     (columns logFC, P.Value, and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("logFC", "P.Value", "qvalue") %in% colnames(x), -->
-<!--             is.numeric(qval), qval <= 1, qval >= 0) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) + -->
-<!--     geom_point(shape = 1) + -->
-<!--     labs(x = "Log fold change", -->
-<!--          y = expression(-log[10] * " p-value")) + -->
-<!--     scale_color_identity(drop = FALSE) + -->
-<!--     theme(legend.position = "none") -->
-<!-- } -->
-<!-- plot_pval_hist <- function(x, qval) { -->
-<!--   # Create histogram of p-values. -->
-<!--   # -->
-<!--   # x - data frame with topTable and ash output (columns P.Value and qvalue) -->
-<!--   # qval - qvalue cutoff for calling a gene DE -->
-<!--   # -->
-<!--   stopifnot(is.data.frame(x), c("P.Value", "qvalue") %in% colnames(x)) -->
-<!--   x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75") -->
-<!--   x$highlight <- factor(x$highlight, levels = c("darkred", "gray75")) -->
-<!--   ggplot(x, aes(x = P.Value, fill = highlight)) + -->
-<!--     geom_histogram(position = "stack", binwidth = 0.01) + -->
-<!--     scale_fill_identity(drop = FALSE) + -->
-<!--     labs(x = "p-value", y = "Number of genes") -->
-<!-- } -->
-<!-- ``` -->
-<!-- ```{r use Functions} -->
-<!-- tests <- colnames(fit$coefficients) -->
-<!-- results <- vector(length = length(tests), mode = "list") -->
-<!-- names(results) <- tests -->
-<!-- for (test in tests) { -->
-<!--   # Extract limma results -->
-<!--   results[[test]] <- get_results(fit, coef = test) -->
-<!--   # Add mutliple testing correction with ASH -->
-<!--   output_ash <- run_ash(fit, coef = test)$result -->
-<!--   results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr, -->
-<!--                            lfdr = output_ash$lfdr, qvalue = output_ash$qvalue, -->
-<!--                            svalue = output_ash$svalue) -->
-<!-- } -->
-<!-- #FDR 0.1 -->
-<!-- plot_ma(results[["Unstrain"]], 0.1) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.1) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.1) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.1) -->
-<!-- significant_genes_10 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.1] -->
-<!-- significant_symbols_10 <- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_10 -->
-<!-- significant_anno_10 <- gene_anno[match(significant_genes_10, gene_anno$ensembl_gene_id),] -->
-<!-- #FDR 0.05 -->
-<!-- plot_ma(results[["Unstrain"]], 0.05) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.05) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.05) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.05) -->
-<!-- significant_genes_05 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05] -->
-<!-- significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_05 -->
-<!-- significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),] -->
-<!-- #FDR 0.01 -->
-<!-- plot_ma(results[["Unstrain"]], 0.01) -->
-<!-- plot_volcano(results[["Unstrain"]], 0.01) -->
-<!-- plot_pval_hist(results[["Unstrain"]], 0.01) -->
-<!-- table(results[["Unstrain"]]$qvalue < 0.01) -->
-<!-- significant_genes_01 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.01] -->
-<!-- significant_symbols_01 <- gene_anno$external_gene_name[match(significant_genes_01, gene_anno$ensembl_gene_id)] -->
-<!-- significant_symbols_01 -->
-<!-- significant_anno_01 <- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),] -->
-<!-- ``` -->
-<!-- ## Gene ontology analysis with topGO -->
-<!-- Use topGO for GO analysis. -->
-<!-- It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]). -->
-<!-- Essentially, it decreases the redundancy of the results. -->
-<!-- [Alexa2006]: http://www.ncbi.nlm.nih.gov/pubmed/16606683 -->
-<!-- First create the gene universe. -->
-<!-- This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not. -->
-<!-- ```{r gene-universe} -->
-<!-- threshold <- 0.1 -->
-<!-- gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold) -->
-<!-- gene_universe <- factor(gene_universe) -->
-<!-- names(gene_universe) <- rownames(results[["Unstrain"]]) -->
-<!-- head(gene_universe) -->
-<!-- ``` -->
-<!-- Create the topGO data object. -->
-<!-- Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation. -->
-<!-- ```{r go-data} -->
-<!-- go_data <- new("topGOdata", -->
-<!--                ontology = "BP", -->
-<!--                allGenes = gene_universe, -->
-<!--                nodeSize = 5, -->
-<!--                annotationFun = annFUN.org, -->
-<!--                mapping = "org.Hs.eg.db", -->
-<!--                ID = "ensembl") -->
-<!-- ``` -->
-<!-- Use the weight01 algorithm and score the tests with Fisher's exact test. -->
-<!-- ```{r go-test} -->
-<!-- go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher") -->
-<!-- ``` -->
-<!-- Keep the results with a Fisher's exact test p-value < 0.01. -->
-<!-- ```{r go-table} -->
-<!-- go_table <- GenTable(go_data, weightFisher = go_test, -->
-<!--                      orderBy = "weightFisher", ranksOf = "weightFisher", -->
-<!--                      topNodes = sum(score(go_test) < .01)) -->
-<!-- go_table -->
-<!-- ``` -->
+<pre class="r"><code>single_filt_counts &lt;- filt_counts
+anno &lt;- pData(RUVsOut)
+x &lt;- paste0(anno$Individual, anno$treatment)
+
+anno$LibraryPrepBatch &lt;- factor(anno$LibraryPrepBatch, levels = c(&quot;1&quot;, &quot;2&quot;))
+anno$Replicate &lt;- factor(anno$Replicate, levels = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;))
+
+design &lt;- model.matrix(~treatment + Individual + W_1 + W_2 + RIN,
+                       data = anno)
+colnames(design) &lt;- gsub(&quot;treatment&quot;, &quot;&quot;, colnames(design))
+colnames(design)</code></pre>
+<pre><code>[1] &quot;(Intercept)&quot;        &quot;Unstrain&quot;           &quot;IndividualNA18856 &quot;
+[4] &quot;IndividualNA19160 &quot; &quot;W_1&quot;                &quot;W_2&quot;               
+[7] &quot;RIN&quot;               </code></pre>
+<pre class="r"><code># Model individual as a random effect (use duplicate correlation function); treatment as a fixed effect, covariates = RUV factors
+     # Because of issues with duplicateCorrelation with the number of covariates I include in the design matrix, I elect intead to include all samples (all technical replicates) and use duplicateCorrelation for technical replicates and instead include Individual as a fixed effect in the linear model
+# Recommended to run both voom and duplicateCorrelation twice.
+# https://support.bioconductor.org/p/59700/#67620
+
+#TMM Normalization
+y &lt;- DGEList(single_filt_counts)
+y &lt;- calcNormFactors(y, method = &quot;TMM&quot;)
+#Voom for differential expression
+v1 &lt;- voom(y, design)
+corfit1 &lt;- duplicateCorrelation(v1, design, block = x)</code></pre>
+<pre><code>Warning in glmgam.fit(dx, dy, coef.start = start, tol = tol, maxit = maxit, :
+Too much damping - convergence tolerance not achievable
+
+Warning in glmgam.fit(dx, dy, coef.start = start, tol = tol, maxit = maxit, :
+Too much damping - convergence tolerance not achievable</code></pre>
+<pre class="r"><code>corfit1$consensus.correlation</code></pre>
+<pre><code>[1] 0.354764</code></pre>
+<pre class="r"><code>v2 &lt;- voom(y, design, block = x, correlation = corfit1$consensus.correlation)
+corfit2 &lt;- duplicateCorrelation(v2, design, block = x)
+corfit2$consensus.correlation</code></pre>
+<pre><code>[1] 0.3549247</code></pre>
+<pre class="r"><code>fit &lt;- lmFit(v2, design, block = x,
+             correlation = corfit2$consensus.correlation)
+fit &lt;- eBayes(fit)</code></pre>
+<div id="assess-model-results" class="section level2">
+<h2>Assess model results</h2>
+<pre class="r"><code>get_results &lt;- function(x, number = nrow(x$coefficients), sort.by = &quot;none&quot;,
+                        ...) {
+  # x - object MArrayLM from eBayes output
+  # ... - additional arguments passed to topTable
+  stopifnot(class(x) == &quot;MArrayLM&quot;)
+  results &lt;- topTable(x, number = number, sort.by = sort.by, ...)
+  return(results)
+}
+
+top_treatment &lt;- get_results(fit, coef = &quot;Unstrain&quot;, sort.by = &quot;B&quot;)
+head(top_treatment)</code></pre>
+<pre><code>                     logFC  AveExpr         t      P.Value    adj.P.Val
+ENSG00000102317  0.9646069 6.618528  9.788653 1.959478e-08 0.0002047067
+ENSG00000104368 -3.0887783 3.753098 -7.935283 3.851911e-07 0.0020120458
+ENSG00000100292 -1.1068651 5.399316 -7.090906 1.727530e-06 0.0058401006
+ENSG00000080824 -0.5373642 8.888436 -6.533334 4.905709e-06 0.0058401006
+ENSG00000133142  0.5627867 7.056389  6.522848 5.004984e-06 0.0058401006
+ENSG00000181019 -0.7843440 5.824401 -6.517648 5.054991e-06 0.0058401006
+                       B
+ENSG00000102317 9.570798
+ENSG00000104368 6.229870
+ENSG00000100292 5.330764
+ENSG00000080824 4.350280
+ENSG00000133142 4.328594
+ENSG00000181019 4.322443</code></pre>
+<pre class="r"><code>results_treatment &lt;- get_results(fit, coef = &quot;Unstrain&quot;,
+                              number = nrow(filt_counts), sort = &quot;none&quot;)
+ma_treatment &lt;- ggplot(data.frame(Amean = fit$Amean, logFC = fit$coef[, &quot;Unstrain&quot;]),
+                       aes(x = Amean, y = logFC)) +
+  geom_point() +
+  labs(x = &quot;Average expression level&quot;, y = &quot;Log fold change&quot;,
+       title = &quot;Treatment effect&quot;)
+ma_treatment</code></pre>
+<p><img src="figure/DE_analysis.Rmd/model-results-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model-results-1">
+Past versions of model-results-1.png
+</button>
+</p>
+<div id="fig-model-results-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ea5b72e6347079882535a1b59ae8b850e48123ac/docs/figure/DE_analysis.Rmd/model-results-1.png" target="_blank">ea5b72e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>hist_treatment &lt;- ggplot(results_treatment, aes(x = P.Value)) +
+  geom_histogram(binwidth = 0.01) +
+  labs(x = &quot;p-value&quot;, y = &quot;Number of genes&quot;, title = &quot;Treatment effect&quot;)
+hist_treatment</code></pre>
+<p><img src="figure/DE_analysis.Rmd/model-results-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model-results-2">
+Past versions of model-results-2.png
+</button>
+</p>
+<div id="fig-model-results-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ea5b72e6347079882535a1b59ae8b850e48123ac/docs/figure/DE_analysis.Rmd/model-results-2.png" target="_blank">ea5b72e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="explore-top-hits" class="section level2">
+<h2>Explore top hits</h2>
+<p>Boxplot function.</p>
+<pre class="r"><code>plot_gene &lt;- function(v, g) {
+  # v - An EList object containing log2 counts per million
+  # g - character vector of a single gene
+  stopifnot(class(v) == &quot;EList&quot;,
+            is.character(g), length(g) == 1)
+  library(&quot;tidyr&quot;)
+  single_gene &lt;- v$E[g, ]
+  single_gene_long &lt;- as.data.frame(single_gene)
+  colnames(single_gene_long) &lt;- &quot;log2cpm&quot;
+  single_gene_long$sample &lt;- rownames(single_gene_long)
+  single_gene_long &lt;- separate(single_gene_long, col = &quot;sample&quot;, sep = &quot;_&quot;,
+                                into = c(&quot;Individual&quot;, &quot;Replicate&quot;, &quot;Treatment&quot;))
+  single_gene_long$Treatment &lt;- factor(single_gene_long$Treatment, levels = c(&quot;S&quot;, &quot;U&quot;))
+  single_gene_long$Treatment &lt;- revalue(single_gene_long$Treatment, c(&quot;S&quot;=&quot;Strain&quot;, &quot;U&quot;=&quot;No Strain&quot;))
+
+  ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) +
+    geom_boxplot() +
+    labs(title = g, x = &quot;Treatment&quot;, y = expression(&quot;Expression level (&quot; * log[2] * &quot; cpm)&quot;))
+}</code></pre>
+<p>Treatment</p>
+<pre class="r"><code>#rename top_treatment genes to gene symbols for easier interpretation
+top_treatment_top4 &lt;- gene_anno$external_gene_name[match(head(rownames(top_treatment), n=4), gene_anno$ensembl_gene_id)]
+top_treatment_top4</code></pre>
+<pre><code>[1] RBM3     PLAT     HMOX1    HSP90AA1
+56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
+<pre class="r"><code>p_treatment_1 &lt;- plot_gene(v2, rownames(top_treatment)[1])
+p_treatment_2 &lt;- plot_gene(v2, rownames(top_treatment)[2]) 
+p_treatment_3 &lt;- plot_gene(v2, rownames(top_treatment)[3]) 
+p_treatment_4 &lt;- plot_gene(v2, rownames(top_treatment)[4]) 
+ggsave(&quot;fig-limma-treatment-hit-1.eps&quot;, plot = p_treatment_1,
+       width = 7, height = 7, units = &quot;in&quot;)
+plot_grid(p_treatment_1, p_treatment_2, p_treatment_3, p_treatment_4)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/treatment-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-treatment-1">
+Past versions of treatment-1.png
+</button>
+</p>
+<div id="fig-treatment-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="use-ash-for-mutliple-testing-correction" class="section level2">
+<h2>Use ash for mutliple testing correction</h2>
+<p>Treatment effect.</p>
+<pre class="r"><code>run_ash &lt;- function(x, coef) {
+  # Perform multiple testing correction with adaptive shrinkage (ASH)
+  #
+  # x - object MArrayLM from eBayes output
+  # coef - coefficient tested by eBayes
+  stopifnot(class(x) == &quot;MArrayLM&quot;, coef %in% colnames(x$coefficients))
+  result &lt;- ash(betahat = x$coefficients[, coef],
+                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$s2.post),
+                df = x$df.total[1])
+  return(result)
+}
+
+ash_treatment &lt;- run_ash(fit, &quot;Unstrain&quot;)
+class(ash_treatment)</code></pre>
+<pre><code>[1] &quot;ash&quot;</code></pre>
+<pre class="r"><code>names(ash_treatment)</code></pre>
+<pre><code>[1] &quot;fitted_g&quot; &quot;loglik&quot;   &quot;logLR&quot;    &quot;data&quot;     &quot;result&quot;   &quot;call&quot;    </code></pre>
+<pre class="r"><code>sum(ash_treatment$result$svalue &lt; .05)</code></pre>
+<pre><code>[1] 784</code></pre>
+<pre class="r"><code>hist(ash_treatment$result$svalue)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/ash-treatment-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ash-treatment-1">
+Past versions of ash-treatment-1.png
+</button>
+</p>
+<div id="fig-ash-treatment-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/ash-treatment-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="plots" class="section level1">
+<h1>Plots</h1>
+<pre class="r"><code>plot_ma &lt;- function(x, qval) {
+  # Create MA plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, AveExpr, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c(&quot;logFC&quot;, &quot;AveExpr&quot;, &quot;qvalue&quot;) %in% colnames(x),
+            is.numeric(qval), qval &lt;= 1, qval &gt;= 0)
+  x$highlight &lt;- ifelse(x$qvalue &lt; qval, &quot;darkred&quot;, &quot;gray75&quot;)
+  x$highlight &lt;- factor(x$highlight, levels = c(&quot;darkred&quot;, &quot;gray75&quot;))
+  ggplot(x, aes(x = AveExpr, y = logFC, color = highlight, shape = highlight)) +
+    geom_point() +
+    labs(x = &quot;Average expression level&quot;, y = &quot;Log fold change&quot;) +
+    scale_color_identity(drop = FALSE) +
+    scale_shape_manual(values = c(16, 1), drop = FALSE) +
+    theme(legend.position = &quot;none&quot;)
+#   scale_color_gradient(low = &quot;red&quot;, high = &quot;white&quot;, limits = c(0, 0.25))
+}
+
+plot_volcano &lt;- function(x, qval) {
+  # Create volcano plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, P.Value, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c(&quot;logFC&quot;, &quot;P.Value&quot;, &quot;qvalue&quot;) %in% colnames(x),
+            is.numeric(qval), qval &lt;= 1, qval &gt;= 0)
+  x$highlight &lt;- ifelse(x$qvalue &lt; qval, &quot;darkred&quot;, &quot;gray75&quot;)
+  x$highlight &lt;- factor(x$highlight, levels = c(&quot;darkred&quot;, &quot;gray75&quot;))
+  ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) +
+    geom_point(shape = 1) +
+    labs(x = &quot;Log fold change&quot;,
+         y = expression(-log[10] * &quot; p-value&quot;)) +
+    scale_color_identity(drop = FALSE) +
+    theme(legend.position = &quot;none&quot;)
+}
+
+plot_pval_hist &lt;- function(x, qval) {
+  # Create histogram of p-values.
+  #
+  # x - data frame with topTable and ash output (columns P.Value and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c(&quot;P.Value&quot;, &quot;qvalue&quot;) %in% colnames(x))
+  x$highlight &lt;- ifelse(x$qvalue &lt; qval, &quot;darkred&quot;, &quot;gray75&quot;)
+  x$highlight &lt;- factor(x$highlight, levels = c(&quot;darkred&quot;, &quot;gray75&quot;))
+  ggplot(x, aes(x = P.Value, fill = highlight)) +
+    geom_histogram(position = &quot;stack&quot;, binwidth = 0.01) +
+    scale_fill_identity(drop = FALSE) +
+    labs(x = &quot;p-value&quot;, y = &quot;Number of genes&quot;)
+}</code></pre>
+<pre class="r"><code>tests &lt;- colnames(fit$coefficients)
+results &lt;- vector(length = length(tests), mode = &quot;list&quot;)
+names(results) &lt;- tests
+
+for (test in tests) {
+  # Extract limma results
+  results[[test]] &lt;- get_results(fit, coef = test)
+  # Add mutliple testing correction with ASH
+  output_ash &lt;- run_ash(fit, coef = test)$result
+  results[[test]] &lt;- cbind(results[[test]], lfsr = output_ash$lfsr,
+                           lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                           svalue = output_ash$svalue)
+}
+
+#FDR 0.1
+plot_ma(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-1">
+Past versions of “use Functions-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-1.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-2">
+Past versions of “use Functions-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-2.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-3">
+Past versions of “use Functions-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5c249f2f98d1b83fb038052c768a3570dbdb04c5/docs/figure/DE_analysis.Rmd/use Functions-3.png" target="_blank">5c249f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>table(results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.1)</code></pre>
+<pre><code>
+FALSE  TRUE 
+ 8154  2293 </code></pre>
+<pre class="r"><code>significant_genes_10 &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.1]
+significant_symbols_10 &lt;- gene_anno$external_gene_name[match(significant_genes_10, gene_anno$ensembl_gene_id)]
+head(significant_symbols_10)</code></pre>
+<pre><code>[1] LINC01128  DVL1       MXRA8      AURKAIP1   AL391244.1 MRPL20    
+56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
+<pre class="r"><code>significant_anno_10 &lt;- gene_anno[match(significant_genes_10, gene_anno$ensembl_gene_id),]
+
+
+#FDR 0.05
+plot_ma(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-4">
+Past versions of “use Functions-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-4.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-5">
+Past versions of “use Functions-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-5.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.05)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-6">
+Past versions of “use Functions-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-6.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>table(results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.05)</code></pre>
+<pre><code>
+FALSE  TRUE 
+ 9438  1009 </code></pre>
+<pre class="r"><code>significant_genes_05 &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.05]
+significant_symbols_05 &lt;- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)]
+head(significant_symbols_05)</code></pre>
+<pre><code>[1] DVL1   MRPL20 MMP23B PEX10  CEP104 ACOT7 
+56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
+<pre class="r"><code>significant_anno_05 &lt;- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),]
+
+
+#FDR 0.01
+plot_ma(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-7">
+Past versions of “use Functions-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-7.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_volcano(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-8">
+Past versions of “use Functions-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-8.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_pval_hist(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
+<p><img src="figure/DE_analysis.Rmd/use%20Functions-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-use-Functions-9">
+Past versions of “use Functions-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-use-Functions-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a04a1ac95f43c8a9cb54d14c3c67349dada7e8f9/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">a04a1ac</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5eb29e88b6057837b2c5c0719c225364eb484690/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/figure/DE_analysis.Rmd/use Functions-9.png" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>table(results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.01)</code></pre>
+<pre><code>
+FALSE  TRUE 
+10317   130 </code></pre>
+<pre class="r"><code>significant_genes_01 &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.01]
+significant_symbols_01 &lt;- gene_anno$external_gene_name[match(significant_genes_01, gene_anno$ensembl_gene_id)]
+head(significant_symbols_01)</code></pre>
+<pre><code>[1] SPSB1      TENT5B     RCC1       SLC6A9     PLK3       ST6GALNAC5
+56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
+<pre class="r"><code>significant_anno_01 &lt;- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),]</code></pre>
+<div id="gene-ontology-analysis-with-topgo" class="section level2">
+<h2>Gene ontology analysis with topGO</h2>
+<p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
+<p>First create the gene universe. This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
+<pre class="r"><code>threshold &lt;- 0.05
+gene_universe &lt;- as.numeric(results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold)
+gene_universe &lt;- factor(gene_universe)
+names(gene_universe) &lt;- rownames(results[[&quot;Unstrain&quot;]])
+head(gene_universe)</code></pre>
+<pre><code>ENSG00000225972 ENSG00000225630 ENSG00000237973 ENSG00000248527 ENSG00000198744 
+              0               0               0               0               0 
+ENSG00000228794 
+              0 
+Levels: 0 1</code></pre>
+<p>Create the topGO data object. Only consider “Biological Process” categories and use the Mouse Ensembl database for annotation.</p>
+<pre class="r"><code>go_data &lt;- new(&quot;topGOdata&quot;,
+               ontology = &quot;BP&quot;,
+               allGenes = gene_universe,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = &quot;org.Hs.eg.db&quot;,
+               ID = &quot;ensembl&quot;)</code></pre>
+<pre><code>
+Building most specific GOs .....</code></pre>
+<pre><code>Loading required package: org.Hs.eg.db</code></pre>
+<pre><code></code></pre>
+<pre><code>    ( 9640 GO terms found. )</code></pre>
+<pre><code>
+Build GO DAG topology ..........</code></pre>
+<pre><code>    ( 13704 GO terms and 31801 relations. )</code></pre>
+<pre><code>
+Annotating nodes ...............</code></pre>
+<pre><code>    ( 9322 genes annotated to the GO terms. )</code></pre>
+<p>Use the weight01 algorithm and score the tests with Fisher’s exact test.</p>
+<pre class="r"><code>go_test &lt;- runTest(go_data, algorithm = &quot;weight01&quot;, statistic = &quot;fisher&quot;)</code></pre>
+<pre><code>
+             -- Weight01 Algorithm -- 
+
+         the algorithm is scoring 5706 nontrivial nodes
+         parameters: 
+             test statistic: fisher</code></pre>
+<pre><code>
+     Level 19:  1 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 18:  3 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 17:  10 nodes to be scored   (10 eliminated genes)</code></pre>
+<pre><code>
+     Level 16:  17 nodes to be scored   (16 eliminated genes)</code></pre>
+<pre><code>
+     Level 15:  47 nodes to be scored   (58 eliminated genes)</code></pre>
+<pre><code>
+     Level 14:  106 nodes to be scored  (176 eliminated genes)</code></pre>
+<pre><code>
+     Level 13:  170 nodes to be scored  (597 eliminated genes)</code></pre>
+<pre><code>
+     Level 12:  287 nodes to be scored  (1446 eliminated genes)</code></pre>
+<pre><code>
+     Level 11:  484 nodes to be scored  (2969 eliminated genes)</code></pre>
+<pre><code>
+     Level 10:  637 nodes to be scored  (4066 eliminated genes)</code></pre>
+<pre><code>
+     Level 9:   768 nodes to be scored  (5624 eliminated genes)</code></pre>
+<pre><code>
+     Level 8:   797 nodes to be scored  (6882 eliminated genes)</code></pre>
+<pre><code>
+     Level 7:   833 nodes to be scored  (7755 eliminated genes)</code></pre>
+<pre><code>
+     Level 6:   713 nodes to be scored  (8386 eliminated genes)</code></pre>
+<pre><code>
+     Level 5:   457 nodes to be scored  (8751 eliminated genes)</code></pre>
+<pre><code>
+     Level 4:   248 nodes to be scored  (8966 eliminated genes)</code></pre>
+<pre><code>
+     Level 3:   105 nodes to be scored  (9083 eliminated genes)</code></pre>
+<pre><code>
+     Level 2:   22 nodes to be scored   (9153 eliminated genes)</code></pre>
+<pre><code>
+     Level 1:   1 nodes to be scored    (9213 eliminated genes)</code></pre>
+<p>Keep the results with a Fisher’s exact test p-value &lt; 0.01.</p>
+<pre class="r"><code>go_table &lt;- GenTable(go_data, weightFisher = go_test,
+                     orderBy = &quot;weightFisher&quot;, ranksOf = &quot;weightFisher&quot;,
+                     topNodes = sum(score(go_test) &lt; .01))
+go_table</code></pre>
+<pre><code>        GO.ID                                        Term Annotated Significant
+1  GO:0055114                 oxidation-reduction process       619          94
+2  GO:0045454                      cell redox homeostasis        53          15
+3  GO:0002576                      platelet degranulation        71          18
+4  GO:0006027         glycosaminoglycan catabolic process        40          10
+5  GO:0001568                    blood vessel development       393          60
+6  GO:0030574                  collagen catabolic process        40          12
+7  GO:0048842 positive regulation of axon extension in...         5           4
+8  GO:0046364         monosaccharide biosynthetic process        58           9
+9  GO:0006695            cholesterol biosynthetic process        56          14
+10 GO:0030198           extracellular matrix organization       206          47
+11 GO:1904950 negative regulation of establishment of ...       129          17
+12 GO:0051639            actin filament network formation         6           4
+13 GO:0006986                response to unfolded protein       147          30
+14 GO:0042493                            response to drug       217          37
+15 GO:0002063                     chondrocyte development        20           7
+16 GO:1901700      response to oxygen-containing compound       873         108
+17 GO:0030199                collagen fibril organization        31           9
+18 GO:0050731 positive regulation of peptidyl-tyrosine...        78          19
+19 GO:0036499     PERK-mediated unfolded protein response        16           5
+20 GO:0017185               peptidyl-lysine hydroxylation         7           4
+21 GO:0032964               collagen biosynthetic process        24           5
+22 GO:0042060                               wound healing       311          47
+23 GO:0035987             endodermal cell differentiation        32           9
+24 GO:0007566                         embryo implantation        33          10
+25 GO:0034329                      cell junction assembly       141          17
+26 GO:0022617            extracellular matrix disassembly        53          12
+27 GO:0070527                        platelet aggregation        33           8
+28 GO:0006024      glycosaminoglycan biosynthetic process        74          15
+29 GO:0006516              glycoprotein catabolic process        13           5
+30 GO:0010332                 response to gamma radiation        43           7
+31 GO:0009617                       response to bacterium       204          21
+32 GO:0051898 negative regulation of protein kinase B ...        36           9
+33 GO:0042267 natural killer cell mediated cytotoxicit...        19           6
+34 GO:0019321                   pentose metabolic process         9           4
+35 GO:0031643          positive regulation of myelination         9           4
+36 GO:0043619 regulation of transcription from RNA pol...         9           4
+37 GO:0021781                  glial cell fate commitment         5           3
+38 GO:0050665      hydrogen peroxide biosynthetic process         5           3
+39 GO:1900016 negative regulation of cytokine producti...         5           3
+40 GO:0048875        chemical homeostasis within a tissue         5           3
+41 GO:2001256 regulation of store-operated calcium ent...         5           3
+42 GO:0071578            zinc II ion transmembrane import         5           3
+43 GO:0071500     cellular response to nitrosative stress         5           3
+44 GO:0060638       mesenchymal-epithelial cell signaling         5           3
+45 GO:0098780    response to mitochondrial depolarisation        18           4
+46 GO:0000423                                   mitophagy        19           4
+47 GO:0009725                         response to hormone       523          51
+48 GO:0006098                     pentose-phosphate shunt        14           5
+49 GO:0045471                         response to ethanol        57          12
+50 GO:0016266                         O-glycan processing        25           7
+   Expected weightFisher
+1     62.15      3.2e-07
+2      5.32      0.00015
+3      7.13      0.00016
+4      4.02      0.00018
+5     39.46      0.00025
+6      4.02      0.00038
+7      0.50      0.00046
+8      5.82      0.00047
+9      5.62      0.00078
+10    20.68      0.00094
+11    12.95      0.00100
+12     0.60      0.00128
+13    14.76      0.00146
+14    21.79      0.00164
+15     2.01      0.00241
+16    87.66      0.00255
+17     3.11      0.00262
+18     7.83      0.00266
+19     1.61      0.00276
+20     0.70      0.00276
+21     2.41      0.00276
+22    31.23      0.00299
+23     3.21      0.00333
+24     3.31      0.00388
+25    14.16      0.00440
+26     5.32      0.00508
+27     3.31      0.00584
+28     7.43      0.00621
+29     1.31      0.00653
+30     4.32      0.00654
+31    20.48      0.00663
+32     3.61      0.00776
+33     1.91      0.00839
+34     0.90      0.00842
+35     0.90      0.00842
+36     0.90      0.00842
+37     0.50      0.00864
+38     0.50      0.00864
+39     0.50      0.00864
+40     0.50      0.00864
+41     0.50      0.00864
+42     0.50      0.00864
+43     0.50      0.00864
+44     0.50      0.00864
+45     1.81      0.00865
+46     1.91      0.00865
+47    52.51      0.00896
+48     1.41      0.00933
+49     5.72      0.00942
+50     2.51      0.00959</code></pre>
+</div>
 </div>
 <div id="perform-de-analysis-using-edger" class="section level1">
 <h1>Perform DE analysis using edgeR</h1>
@@ -1330,7 +3184,7 @@ y &lt;- estimateGLMTagwiseDisp(y, design)
 fit &lt;- glmFit(y, design)
 lrt &lt;- glmLRT(fit, coef=2)
 gene_values &lt;- topTags(lrt, n = nrow(lrt$coefficients), adjust.method=&quot;BH&quot;, sort.by = &quot;PValue&quot;)</code></pre>
-<div id="explore-top-hits" class="section level2">
+<div id="explore-top-hits-1" class="section level2">
 <h2>Explore top hits</h2>
 <p>Boxplot function.</p>
 <pre class="r"><code>plot_gene &lt;- function(v, g) {
@@ -1394,8 +3248,8 @@ plot_pval_hist &lt;- function(x, qval) {
 #rename top_treatment genes to gene symbols for easier interpretation
 top_treatment_top10 &lt;- gene_anno$external_gene_name[match(head(rownames(gene_values@.Data[[1]]), n=10), gene_anno$ensembl_gene_id)]
 top_treatment_top10</code></pre>
-<pre><code> [1] RPS4Y1   USP9Y    IGFL3    KDM5D    MTCO3P12 CHCHD2   HSD3B1   SMOC2   
- [9] CTSF     TXLNGY  
+<pre><code> [1] LINC01013 APLNR     TBX1      CTSF      ACTC1     EGR1      WNT10A   
+ [8] NQO1      HMOX1     EXTL1    
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
 <pre class="r"><code>p_treatment_1 &lt;- plot_gene(cpm, rownames(gene_values@.Data[[1]])[1])
 p_treatment_2 &lt;- plot_gene(cpm, rownames(gene_values@.Data[[1]])[2]) 
@@ -1427,6 +3281,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a3565148512e79e1482c774b845a50b8c9c06e74/docs/figure/DE_analysis.Rmd/boxplots-1.png" target="_blank">a356514</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/boxplots-1.png" target="_blank">cb6a0a5</a>
@@ -1470,6 +3335,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a3565148512e79e1482c774b845a50b8c9c06e74/docs/figure/DE_analysis.Rmd/use plotting functions-1.png" target="_blank">a356514</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/DE_analysis.Rmd/use plotting functions-1.png" target="_blank">cb6a0a5</a>
@@ -1527,9 +3403,9 @@ Anthony Hung
 <pre class="r"><code>table(gene_values@.Data[[1]]$FDR &lt; thresh)</code></pre>
 <pre><code>
 FALSE  TRUE 
- 9569   878 </code></pre>
+10241   206 </code></pre>
 </div>
-<div id="gene-ontology-analysis-with-topgo" class="section level2">
+<div id="gene-ontology-analysis-with-topgo-1" class="section level2">
 <h2>Gene ontology analysis with topGO</h2>
 <p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
 <p>First create the gene universe. This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
@@ -1538,9 +3414,9 @@ gene_universe &lt;- as.numeric(gene_values@.Data[[1]]$FDR &lt; threshold)
 gene_universe &lt;- factor(gene_universe)
 names(gene_universe) &lt;- rownames(gene_values@.Data[[1]])
 head(gene_universe)</code></pre>
-<pre><code>ENSG00000129824 ENSG00000114374 ENSG00000188624 ENSG00000012817 ENSG00000198744 
+<pre><code>ENSG00000228495 ENSG00000134817 ENSG00000184058 ENSG00000174080 ENSG00000159251 
               1               1               1               1               1 
-ENSG00000106153 
+ENSG00000120738 
               1 
 Levels: 0 1</code></pre>
 <p>Create the topGO data object. Only consider “Biological Process” categories and use the Mouse Ensembl database for annotation.</p>
@@ -1553,8 +3429,6 @@ Levels: 0 1</code></pre>
                ID = &quot;ensembl&quot;)</code></pre>
 <pre><code>
 Building most specific GOs .....</code></pre>
-<pre><code>Loading required package: org.Hs.eg.db</code></pre>
-<pre><code></code></pre>
 <pre><code>    ( 9640 GO terms found. )</code></pre>
 <pre><code>
 Build GO DAG topology ..........</code></pre>
@@ -1567,7 +3441,7 @@ Annotating nodes ...............</code></pre>
 <pre><code>
              -- Weight01 Algorithm -- 
 
-         the algorithm is scoring 5453 nontrivial nodes
+         the algorithm is scoring 3289 nontrivial nodes
          parameters: 
              test statistic: fisher</code></pre>
 <pre><code>
@@ -1575,37 +3449,37 @@ Annotating nodes ...............</code></pre>
 <pre><code>
      Level 18:  1 nodes to be scored    (0 eliminated genes)</code></pre>
 <pre><code>
-     Level 17:  11 nodes to be scored   (10 eliminated genes)</code></pre>
+     Level 17:  3 nodes to be scored    (10 eliminated genes)</code></pre>
 <pre><code>
-     Level 16:  21 nodes to be scored   (14 eliminated genes)</code></pre>
+     Level 16:  5 nodes to be scored    (14 eliminated genes)</code></pre>
 <pre><code>
-     Level 15:  43 nodes to be scored   (68 eliminated genes)</code></pre>
+     Level 15:  11 nodes to be scored   (40 eliminated genes)</code></pre>
 <pre><code>
-     Level 14:  91 nodes to be scored   (201 eliminated genes)</code></pre>
+     Level 14:  32 nodes to be scored   (88 eliminated genes)</code></pre>
 <pre><code>
-     Level 13:  161 nodes to be scored  (555 eliminated genes)</code></pre>
+     Level 13:  64 nodes to be scored   (243 eliminated genes)</code></pre>
 <pre><code>
-     Level 12:  262 nodes to be scored  (1267 eliminated genes)</code></pre>
+     Level 12:  107 nodes to be scored  (775 eliminated genes)</code></pre>
 <pre><code>
-     Level 11:  409 nodes to be scored  (2861 eliminated genes)</code></pre>
+     Level 11:  204 nodes to be scored  (2265 eliminated genes)</code></pre>
 <pre><code>
-     Level 10:  584 nodes to be scored  (3916 eliminated genes)</code></pre>
+     Level 10:  309 nodes to be scored  (3221 eliminated genes)</code></pre>
 <pre><code>
-     Level 9:   757 nodes to be scored  (5411 eliminated genes)</code></pre>
+     Level 9:   402 nodes to be scored  (4625 eliminated genes)</code></pre>
 <pre><code>
-     Level 8:   791 nodes to be scored  (6736 eliminated genes)</code></pre>
+     Level 8:   466 nodes to be scored  (6168 eliminated genes)</code></pre>
 <pre><code>
-     Level 7:   809 nodes to be scored  (7691 eliminated genes)</code></pre>
+     Level 7:   530 nodes to be scored  (7174 eliminated genes)</code></pre>
 <pre><code>
-     Level 6:   696 nodes to be scored  (8356 eliminated genes)</code></pre>
+     Level 6:   489 nodes to be scored  (8139 eliminated genes)</code></pre>
 <pre><code>
-     Level 5:   442 nodes to be scored  (8735 eliminated genes)</code></pre>
+     Level 5:   353 nodes to be scored  (8660 eliminated genes)</code></pre>
 <pre><code>
-     Level 4:   248 nodes to be scored  (8956 eliminated genes)</code></pre>
+     Level 4:   194 nodes to be scored  (8938 eliminated genes)</code></pre>
 <pre><code>
-     Level 3:   104 nodes to be scored  (9083 eliminated genes)</code></pre>
+     Level 3:   95 nodes to be scored   (9078 eliminated genes)</code></pre>
 <pre><code>
-     Level 2:   21 nodes to be scored   (9153 eliminated genes)</code></pre>
+     Level 2:   22 nodes to be scored   (9142 eliminated genes)</code></pre>
 <pre><code>
      Level 1:   1 nodes to be scored    (9213 eliminated genes)</code></pre>
 <p>Keep the results with a Fisher’s exact test p-value &lt; 0.01.</p>
@@ -1613,273 +3487,133 @@ Annotating nodes ...............</code></pre>
                      orderBy = &quot;weightFisher&quot;, ranksOf = &quot;weightFisher&quot;,
                      topNodes = sum(score(go_test) &lt; .01))
 go_table</code></pre>
-<pre><code>         GO.ID                                        Term Annotated
-1   GO:0030198           extracellular matrix organization       206
-2   GO:0045540 regulation of cholesterol biosynthetic p...        39
-3   GO:0010469             regulation of receptor activity       176
-4   GO:0055114                 oxidation-reduction process       619
-5   GO:0098869             cellular oxidant detoxification        54
-6   GO:0007267                         cell-cell signaling       777
-7   GO:0007155                               cell adhesion       685
-8   GO:0071281               cellular response to iron ion         8
-9   GO:0050919                         negative chemotaxis        21
-10  GO:0010951 negative regulation of endopeptidase act...       110
-11  GO:0006695            cholesterol biosynthetic process        56
-12  GO:0051897 positive regulation of protein kinase B ...        69
-13  GO:0048662 negative regulation of smooth muscle cel...        22
-14  GO:0007271          synaptic transmission, cholinergic         7
-15  GO:0007588                                   excretion        15
-16  GO:0051781        positive regulation of cell division        43
-17  GO:0060021                          palate development        63
-18  GO:0060600 dichotomous subdivision of an epithelial...         8
-19  GO:0042474                    middle ear morphogenesis        12
-20  GO:0048265                            response to pain         5
-21  GO:0008217                regulation of blood pressure        70
-22  GO:0007413                        axonal fasciculation        13
-23  GO:0032956 regulation of actin cytoskeleton organiz...       191
-24  GO:0035094                        response to nicotine        18
-25  GO:0006805                xenobiotic metabolic process        35
-26  GO:0000305                  response to oxygen radical        21
-27  GO:1902106 negative regulation of leukocyte differe...        46
-28  GO:0003223 ventricular compact myocardium morphogen...         6
-29  GO:0007601                           visual perception        64
-30  GO:0008299             isoprenoid biosynthetic process        15
-31  GO:0031290         retinal ganglion cell axon guidance        10
-32  GO:0071636 positive regulation of transforming grow...        10
-33  GO:0002063                     chondrocyte development        20
-34  GO:0042493                            response to drug       217
-35  GO:0001658 branching involved in ureteric bud morph...        33
-36  GO:0007156 homophilic cell adhesion via plasma memb...        53
-37  GO:0006954                       inflammatory response       266
-38  GO:0010463              mesenchymal cell proliferation        32
-39  GO:0032836    glomerular basement membrane development         7
-40  GO:0002480 antigen processing and presentation of e...         7
-41  GO:0090331 negative regulation of platelet aggregat...         7
-42  GO:0008544                       epidermis development       158
-43  GO:0051965     positive regulation of synapse assembly        28
-44  GO:0009952    anterior/posterior pattern specification       117
-45  GO:0030890 positive regulation of B cell proliferat...        12
-46  GO:0045766         positive regulation of angiogenesis        77
-47  GO:0006501               C-terminal protein lipidation        23
-48  GO:0000768 syncytium formation by plasma membrane f...        23
-49  GO:0001764                            neuron migration        77
-50  GO:1901616 organic hydroxy compound catabolic proce...        23
-51  GO:0007186 G-protein coupled receptor signaling pat...       288
-52  GO:0015850          organic hydroxy compound transport        83
-53  GO:0000302         response to reactive oxygen species       150
-54  GO:0007166     cell surface receptor signaling pathway      1522
-55  GO:0060415                 muscle tissue morphogenesis        46
-56  GO:0019433              triglyceride catabolic process         8
-57  GO:0032026                   response to magnesium ion         8
-58  GO:0015909             long-chain fatty acid transport        28
-59  GO:0009611                        response to wounding       365
-60  GO:0045987 positive regulation of smooth muscle con...        13
-61  GO:0008347                        glial cell migration        29
-62  GO:0001525                                angiogenesis       271
-63  GO:0051384                  response to glucocorticoid        74
-64  GO:0030199                collagen fibril organization        31
-65  GO:0001501                 skeletal system development       306
-66  GO:0043410         positive regulation of MAPK cascade       272
-67  GO:0042127            regulation of cell proliferation       867
-68  GO:0030154                        cell differentiation      2089
-69  GO:0007411                               axon guidance       135
-70  GO:0060349                          bone morphogenesis        51
-71  GO:0033280                       response to vitamin D        21
-72  GO:2000353 positive regulation of endothelial cell ...         9
-73  GO:0042744         hydrogen peroxide catabolic process         9
-74  GO:0045880 positive regulation of smoothened signal...        20
-75  GO:0050776               regulation of immune response       449
-76  GO:0030574                  collagen catabolic process        40
-77  GO:0006809           nitric oxide biosynthetic process        36
-78  GO:0030828 positive regulation of cGMP biosynthetic...         5
-79  GO:0016114              terpenoid biosynthetic process         5
-80  GO:0060100 positive regulation of phagocytosis, eng...         5
-81  GO:0060539                       diaphragm development         5
-82  GO:0045080 positive regulation of chemokine biosynt...         5
-83  GO:0035930            corticosteroid hormone secretion         5
-84  GO:0046851      negative regulation of bone remodeling         5
-85  GO:2000192 negative regulation of fatty acid transp...         5
-86  GO:0061302          smooth muscle cell-matrix adhesion         5
-87  GO:0097151 positive regulation of inhibitory postsy...         5
-88  GO:0090193 positive regulation of glomerulus develo...         5
-89  GO:0002544               chronic inflammatory response         5
-90  GO:0090270 regulation of fibroblast growth factor p...         5
-91  GO:0014820             tonic smooth muscle contraction         5
-92  GO:0042472                     inner ear morphogenesis        38
-93  GO:0001942                   hair follicle development        58
-94  GO:0048663                      neuron fate commitment        21
-95  GO:0010575 positive regulation of vascular endothel...        15
-96  GO:0016486                  peptide hormone processing        15
-97  GO:0042572                   retinol metabolic process        10
-98  GO:0036342                post-anal tail morphogenesis        10
-99  GO:0030195    negative regulation of blood coagulation        24
-100 GO:0044259 multicellular organismal macromolecule m...        71
-101 GO:0046456              icosanoid biosynthetic process        21
-102 GO:0006833                             water transport         7
-103 GO:0042632                     cholesterol homeostasis        29
-104 GO:0001937 negative regulation of endothelial cell ...        22
-105 GO:0055088                           lipid homeostasis        54
-106 GO:0034599       cellular response to oxidative stress       203
-107 GO:0007568                                       aging       189
-108 GO:0008285 negative regulation of cell proliferatio...       411
-109 GO:0030326                embryonic limb morphogenesis        91
-110 GO:0003094                       glomerular filtration        13
-111 GO:0031638                          zymogen activation        27
-112 GO:0021602                 cranial nerve morphogenesis        12
-113 GO:0007586                                   digestion        31
-114 GO:0001913                T cell mediated cytotoxicity        14
-115 GO:2001053 regulation of mesenchymal cell apoptotic...         6
-116 GO:0019371                      cyclooxygenase pathway         6
-117 GO:0060004                                      reflex         6
-118 GO:0021520 spinal cord motor neuron cell fate speci...         6
-119 GO:0072124 regulation of glomerular mesangial cell ...         6
-120 GO:0048791 calcium ion-regulated exocytosis of neur...         6
-121 GO:0006069                           ethanol oxidation         6
-122 GO:0035810         positive regulation of urine volume         6
-123 GO:0071625                       vocalization behavior         6
-124 GO:0006703               estrogen biosynthetic process         6
-125 GO:0009247             glycolipid biosynthetic process        43
-126 GO:0071548                   response to dexamethasone        27
-127 GO:0030258                          lipid modification       165
-128 GO:0008037                            cell recognition        48
-129 GO:0007157 heterophilic cell-cell adhesion via plas...        23
-130 GO:0048844                        artery morphogenesis        38
-131 GO:0007422       peripheral nervous system development        37
-132 GO:0036066               protein O-linked fucosylation        11
-    Significant Expected weightFisher
-1            56    17.10      1.4e-12
-2            17     3.24      2.3e-09
-3            37    14.61      7.4e-09
-4            78    51.40      6.4e-08
-5            19     4.48      1.9e-06
-6            96    64.51      4.7e-06
-7           100    56.88      7.8e-06
-8             6     0.66      7.8e-06
-9             9     1.74      2.1e-05
-10           19     9.13      2.2e-05
-11           25     4.65      2.4e-05
-12           17     5.73      3.4e-05
-13            9     1.83      5.3e-05
-14            5     0.58      7.1e-05
-15            7     1.25      9.4e-05
-16           12     3.57      0.00011
-17           15     5.23      0.00015
-18            5     0.66      0.00018
-19            6     1.00      0.00019
-20            4     0.42      0.00022
-21           19     5.81      0.00032
-22            6     1.08      0.00033
-23           20    15.86      0.00033
-24            7     1.49      0.00037
-25           10     2.91      0.00052
-26            9     1.74      0.00056
-27           11     3.82      0.00056
-28            4     0.50      0.00062
-29           14     5.31      0.00062
-30            8     1.25      0.00068
-31            5     0.83      0.00069
-32            5     0.83      0.00069
-33            7     1.66      0.00078
-34           29    18.02      0.00100
-35            9     2.74      0.00108
-36           12     4.40      0.00109
-37           42    22.09      0.00112
-38            9     2.66      0.00133
-39            4     0.58      0.00135
-40            4     0.58      0.00135
-41            4     0.58      0.00135
-42           27    13.12      0.00139
-43            8     2.32      0.00151
-44           18     9.71      0.00179
-45            5     1.00      0.00188
-46           16     6.39      0.00194
-47            7     1.91      0.00199
-48            8     1.91      0.00211
-49           14     6.39      0.00212
-50            6     1.91      0.00213
-51           44    23.91      0.00221
-52           18     6.89      0.00239
-53           23    12.45      0.00243
-54          164   126.37      0.00246
-55           10     3.82      0.00248
-56            4     0.66      0.00252
-57            4     0.66      0.00252
-58            8     2.32      0.00282
-59           57    30.31      0.00285
-60            5     1.08      0.00285
-61            6     2.41      0.00286
-62           48    22.50      0.00296
-63           13     6.14      0.00303
-64            8     2.57      0.00307
-65           48    25.41      0.00324
-66           37    22.58      0.00352
-67          133    71.99      0.00354
-68          256   173.45      0.00354
-69           29    11.21      0.00366
-70           10     4.23      0.00418
-71            6     1.74      0.00421
-72            4     0.75      0.00423
-73            4     0.75      0.00423
-74            6     1.66      0.00452
-75           39    37.28      0.00460
-76            9     3.32      0.00468
-77            8     2.99      0.00497
-78            3     0.42      0.00502
-79            3     0.42      0.00502
-80            3     0.42      0.00502
-81            3     0.42      0.00502
-82            3     0.42      0.00502
-83            3     0.42      0.00502
-84            3     0.42      0.00502
-85            3     0.42      0.00502
-86            3     0.42      0.00502
-87            3     0.42      0.00502
-88            3     0.42      0.00502
-89            3     0.42      0.00502
-90            3     0.42      0.00502
-91            3     0.42      0.00502
-92            9     3.16      0.00534
-93           11     4.82      0.00561
-94            8     1.74      0.00570
-95            5     1.25      0.00578
-96            5     1.25      0.00658
-97            4     0.83      0.00659
-98            4     0.83      0.00659
-99           13     1.99      0.00672
-100          16     5.90      0.00674
-101           8     1.74      0.00681
-102           3     0.58      0.00688
-103           7     2.41      0.00752
-104           6     1.83      0.00754
-105          12     4.48      0.00768
-106          26    16.85      0.00797
-107          20    15.69      0.00826
-108          66    34.13      0.00834
-109          15     7.56      0.00931
-110           6     1.08      0.00934
-111           7     2.24      0.00934
-112           5     1.00      0.00937
-113           6     2.57      0.00939
-114           4     1.16      0.00941
-115           3     0.50      0.00942
-116           3     0.50      0.00942
-117           3     0.50      0.00942
-118           3     0.50      0.00942
-119           3     0.50      0.00942
-120           3     0.50      0.00942
-121           3     0.50      0.00942
-122           3     0.50      0.00942
-123           3     0.50      0.00942
-124           3     0.50      0.00942
-125           6     3.57      0.00942
-126           4     2.24      0.00945
-127          15    13.70      0.00946
-128          12     3.99      0.00947
-129           6     1.91      0.00950
-130           9     3.16      0.00957
-131           7     3.07      0.00965
-132           4     0.91      0.00969</code></pre>
-<p>There are 132 significant results.</p>
+<pre><code>        GO.ID                                        Term Annotated Significant
+1  GO:0045540 regulation of cholesterol biosynthetic p...        39          10
+2  GO:0048662 negative regulation of smooth muscle cel...        22           6
+3  GO:0007588                                   excretion        15           5
+4  GO:0000305                  response to oxygen radical        21           4
+5  GO:0008299             isoprenoid biosynthetic process        15           6
+6  GO:0036066               protein O-linked fucosylation        11           4
+7  GO:0007586                                   digestion        31           5
+8  GO:0021520 spinal cord motor neuron cell fate speci...         6           3
+9  GO:0055114                 oxidation-reduction process       619          27
+10 GO:0006695            cholesterol biosynthetic process        56          14
+11 GO:0007171 activation of transmembrane receptor pro...         7           3
+12 GO:0035094                        response to nicotine        18           4
+13 GO:0071636 positive regulation of transforming grow...        10           3
+14 GO:0007157 heterophilic cell-cell adhesion via plas...        23           4
+15 GO:0098869             cellular oxidant detoxification        54           6
+16 GO:0061082       myeloid leukocyte cytokine production        14           4
+17 GO:0009611                        response to wounding       365          13
+18 GO:0042474                    middle ear morphogenesis        12           3
+19 GO:0010628      positive regulation of gene expression      1166          32
+20 GO:0002686 negative regulation of leukocyte migrati...        13           3
+21 GO:0009954           proximal/distal pattern formation        13           3
+22 GO:0051897 positive regulation of protein kinase B ...        69           6
+23 GO:0090130                            tissue migration       172           6
+24 GO:0030325                   adrenal gland development        14           3
+25 GO:0050922           negative regulation of chemotaxis        14           3
+26 GO:0001649                  osteoblast differentiation       146           8
+27 GO:0008543 fibroblast growth factor receptor signal...        71           7
+28 GO:2001223     negative regulation of neuron migration         5           2
+29 GO:0048265                            response to pain         5           2
+30 GO:0021781                  glial cell fate commitment         5           2
+31 GO:0045080 positive regulation of chemokine biosynt...         5           2
+32 GO:0016114              terpenoid biosynthetic process         5           2
+33 GO:0061081 positive regulation of myeloid leukocyte...         5           2
+34 GO:0070661                     leukocyte proliferation       113           4
+35 GO:0030154                        cell differentiation      2089          68
+36 GO:0045471                         response to ethanol        57           5
+37 GO:0030198           extracellular matrix organization       206          11
+38 GO:0072132                    mesenchyme morphogenesis        33           5
+39 GO:0048791 calcium ion-regulated exocytosis of neur...         6           2
+40 GO:0006069                           ethanol oxidation         6           2
+41 GO:0097384         cellular lipid biosynthetic process         6           2
+42 GO:2001053 regulation of mesenchymal cell apoptotic...         6           2
+43 GO:0007584                        response to nutrient       100           8
+44 GO:0060021                          palate development        63           5
+45 GO:0051048            negative regulation of secretion        91           7
+46 GO:0001658 branching involved in ureteric bud morph...        33           4
+47 GO:0010463              mesenchymal cell proliferation        32           4
+48 GO:0043586                          tongue development        12           3
+49 GO:0019432           triglyceride biosynthetic process        16           3
+50 GO:0043030         regulation of macrophage activation        17           3
+51 GO:0007271          synaptic transmission, cholinergic         7           2
+52 GO:0043568 positive regulation of insulin-like grow...         7           2
+53 GO:0023019 signal transduction involved in regulati...         7           2
+54 GO:0045766         positive regulation of angiogenesis        77           6
+55 GO:0001558                   regulation of cell growth       244          12
+56 GO:0051781        positive regulation of cell division        43           4
+57 GO:0030326                embryonic limb morphogenesis        91           5
+58 GO:0060415                 muscle tissue morphogenesis        46           4
+59 GO:0006084                acetyl-CoA metabolic process        26           3
+60 GO:0010984 regulation of lipoprotein particle clear...         8           2
+61 GO:0010935 regulation of macrophage cytokine produc...         8           2
+62 GO:0043931    ossification involved in bone maturation         8           2
+   Expected weightFisher
+1      0.74      1.9e-09
+2      0.42      4.0e-06
+3      0.28      6.0e-06
+4      0.40      6.7e-06
+5      0.28      2.3e-05
+6      0.21      3.7e-05
+7      0.59      0.00013
+8      0.11      0.00013
+9     11.75      0.00017
+10     1.06      0.00020
+11     0.13      0.00022
+12     0.34      0.00031
+13     0.19      0.00073
+14     0.44      0.00084
+15     1.03      0.00088
+16     0.27      0.00104
+17     6.93      0.00110
+18     0.23      0.00131
+19    22.14      0.00146
+20     0.25      0.00167
+21     0.25      0.00167
+22     1.31      0.00192
+23     3.27      0.00208
+24     0.27      0.00210
+25     0.27      0.00210
+26     2.77      0.00218
+27     1.35      0.00308
+28     0.09      0.00345
+29     0.09      0.00345
+30     0.09      0.00345
+31     0.09      0.00345
+32     0.09      0.00345
+33     0.09      0.00345
+34     2.15      0.00345
+35    39.66      0.00350
+36     1.08      0.00440
+37     3.91      0.00446
+38     0.63      0.00497
+39     0.11      0.00511
+40     0.11      0.00511
+41     0.11      0.00511
+42     0.11      0.00511
+43     1.90      0.00581
+44     1.20      0.00674
+45     1.73      0.00681
+46     0.63      0.00688
+47     0.61      0.00695
+48     0.23      0.00700
+49     0.30      0.00701
+50     0.32      0.00701
+51     0.13      0.00707
+52     0.13      0.00707
+53     0.13      0.00707
+54     1.46      0.00708
+55     4.63      0.00867
+56     0.82      0.00871
+57     1.73      0.00891
+58     0.87      0.00918
+59     0.49      0.00924
+60     0.15      0.00931
+61     0.15      0.00931
+62     0.15      0.00931</code></pre>
+<p>There are 62 significant results.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1940,24 +3674,25 @@ loaded via a namespace (and not attached):
 [31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
 [34] Rcpp_1.0.3             vctrs_0.2.0            rtracklayer_1.38.3    
 [37] iterators_1.0.12       xfun_0.11              stringr_1.4.0         
-[40] lifecycle_0.1.0        XML_3.98-1.20          zlibbioc_1.24.0       
-[43] MASS_7.3-51.4          scales_1.1.0           aroma.light_3.8.0     
-[46] hms_0.5.2              promises_1.1.0         lambda.r_1.2.4        
-[49] RColorBrewer_1.1-2     yaml_2.2.0             memoise_1.1.0         
-[52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
-[55] RSQLite_2.1.4          SQUAREM_2017.10-1      genefilter_1.60.0     
-[58] foreach_1.4.7          RMySQL_0.10.17         GenomicFeatures_1.30.3
-[61] truncnorm_1.0-8        rlang_0.4.2            pkgconfig_2.0.3       
-[64] bitops_1.0-6           evaluate_0.14          lattice_0.20-35       
-[67] purrr_0.3.3            labeling_0.3           bit_1.1-14            
-[70] tidyselect_0.2.5       magrittr_1.5           R6_2.4.1              
-[73] DBI_1.0.0              pillar_1.4.2           whisker_0.4           
-[76] withr_2.1.2            survival_2.41-3        RCurl_1.95-4.12       
-[79] mixsqp_0.2-2           tibble_2.1.3           crayon_1.3.4          
-[82] futile.options_1.0.1   rmarkdown_1.18         progress_1.2.2        
-[85] locfit_1.5-9.1         blob_1.2.0             git2r_0.26.1          
-[88] digest_0.6.23          xtable_1.8-4           httpuv_1.5.2          
-[91] R.utils_2.9.2          munsell_0.5.0         </code></pre>
+[40] lifecycle_0.1.0        statmod_1.4.32         XML_3.98-1.20         
+[43] zlibbioc_1.24.0        MASS_7.3-51.4          scales_1.1.0          
+[46] aroma.light_3.8.0      hms_0.5.2              promises_1.1.0        
+[49] lambda.r_1.2.4         RColorBrewer_1.1-2     yaml_2.2.0            
+[52] memoise_1.1.0          biomaRt_2.34.2         latticeExtra_0.6-28   
+[55] stringi_1.4.3          RSQLite_2.1.4          SQUAREM_2017.10-1     
+[58] genefilter_1.60.0      foreach_1.4.7          RMySQL_0.10.17        
+[61] GenomicFeatures_1.30.3 truncnorm_1.0-8        rlang_0.4.2           
+[64] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
+[67] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
+[70] bit_1.1-14             tidyselect_0.2.5       magrittr_1.5          
+[73] R6_2.4.1               DBI_1.0.0              pillar_1.4.2          
+[76] whisker_0.4            withr_2.1.2            survival_2.41-3       
+[79] RCurl_1.95-4.12        mixsqp_0.2-2           tibble_2.1.3          
+[82] crayon_1.3.4           futile.options_1.0.1   rmarkdown_1.18        
+[85] progress_1.2.2         locfit_1.5-9.1         blob_1.2.0            
+[88] git2r_0.26.1           etrunct_0.1            digest_0.6.23         
+[91] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
+[94] munsell_0.5.0         </code></pre>
 </div>
 </div>
 </div>
