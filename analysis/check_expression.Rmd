@@ -94,5 +94,13 @@ boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000154096", "THY1 (C
 
 #NT5E
 boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000135318", "NT5E (CD73)")
+
+
+
+
+
+boxplot_gene_treatment(filt_norm_counts, sampleinfo, "ENSG00000169174", "toptable")
+
+
 ```
 
