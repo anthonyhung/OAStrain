@@ -27,6 +27,7 @@ ANT1.2 <- readRDS("data/ANT1_2.rds")
 ```{r assign metadata}
 #Compute the correlation matrix use a seurat object and cell line matrix as input
 cor.mat <- ComputeCorMat(ANT1.2,cell.line)
+head(cor.mat)
 
 #Add a metadata column "clusteredCellAtlas" to the object
 ANT1.2 <- AssignClusteredLabel(ANT1.2,cor.mat, K=25, topCorrelation=5)
@@ -46,5 +47,21 @@ for(kval in 11:95){
 }
 
 ```
+
+
+
+# Removing iPSCs/MSCs/Fibroblasts as options
+```{r}
+cell.line <- cell.line[,-c(12:21, 26,27,56,57)]
+
+#Compute the correlation matrix use a seurat object and cell line matrix as input
+cor.mat <- ComputeCorMat(ANT1.2,cell.line)
+
+for(kval in 11:81){
+     print(kval)
+     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
+}
+```
+
 
 

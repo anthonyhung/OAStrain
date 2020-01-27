@@ -261,15 +261,7 @@ VizDimLoadings(ANT1.2, dims = 1:2, reduction = "pca")
 
 DimPlot(ANT1.2, reduction = "pca", group.by = "labels")
 
-# Get the total variance:
-pca <- ANT1.2[["pca"]]
-mat <- Seurat::GetAssayData(ANT1.2, assay = "RNA", slot = "scale.data")
-total_variance <- sum(matrixStats::rowVars(mat))
-
-
-eigValues <- (pca@stdev)^2  ## EigenValues
-varExplained <- eigValues / total_variance
-head(varExplained) #var explained by first 10 PCs
+# var explained by top 10 PCs
 
 DimHeatmap(ANT1.2, dims = 1:15, cells = 500, balanced = TRUE)
 
