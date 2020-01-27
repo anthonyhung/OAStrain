@@ -1,0 +1,50 @@
+---
+title: "cell Atlas Assignments"
+author: "Anthony Hung"
+date: "2020-01-24"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+# Load correlation functions
+
+```{r load functions}
+library(Seurat)
+
+#load correlation functions
+source("code/cellAtlas_assignment.R")
+
+#load single-cell data from pilot
+ANT1.2 <- readRDS("data/ANT1_2.rds")
+
+```
+
+# Apply functions to single cell data to label them with assigned cell type
+
+```{r assign metadata}
+#Compute the correlation matrix use a seurat object and cell line matrix as input
+cor.mat <- ComputeCorMat(ANT1.2,cell.line)
+
+#Add a metadata column "clusteredCellAtlas" to the object
+ANT1.2 <- AssignClusteredLabel(ANT1.2,cor.mat, K=25, topCorrelation=5)
+
+#Table of assigned cell labels
+table(ANT1.2$clusteredCellAtlas)
+```
+
+# Exploring different values of K (clusters of cellatlas populations)
+
+Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types
+
+```{r try K}
+for(kval in 11:95){
+     print(kval)
+     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
+}
+
+```
+
+

@@ -349,6 +349,7 @@ go_table <- GenTable(go_data, weightFisher = go_test,
                      orderBy = "weightFisher", ranksOf = "weightFisher",
                      topNodes = sum(score(go_test) < .01))
 go_table
+go_table[,-1]
 ```
 
 
@@ -512,6 +513,7 @@ go_table <- GenTable(go_data, weightFisher = go_test,
                      orderBy = "weightFisher", ranksOf = "weightFisher",
                      topNodes = sum(score(go_test) < .01))
 go_table
+go_table[,-1]
 ```
 
 There are `r nrow(go_table)` significant results.

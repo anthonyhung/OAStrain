@@ -62,10 +62,10 @@ AssignClusteredLabel=function (object,cor.mat,K=10,topCorrelation=5,	dist.method
 }
 
 #load cell atlas data matrix
-load("cell_atlas_ref_panel")
+load("data/cell_atlas_ref_panel")
 
 #Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat=ComputeCorMat(object,cell.line)
+#cor.mat=ComputeCorMat(object,cell.line)
 
 #Add a metadata column "clusteredCellAtlas" to the object
-object=AssignClusteredLabel (object,cor.mat)
+#object=AssignClusteredLabel (object,cor.mat)

@@ -44,7 +44,7 @@ library(gplots)
 
 ```{r specify directory structure}
 ## link to directories containing data files (count matrices)
-proj_dir <- "~/Desktop/scPilot/"
+proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/YriMultiplex/"
 ANT1_dir <- paste0(proj_dir, "YG-AH-2S-ANT-1_S1_L008/")
 ANT2_dir <- paste0(proj_dir, "YG-AH-2S-ANT-2_S2_L008/")
 
@@ -402,7 +402,6 @@ ANT1.2 <- RunUMAP(ANT1.2, dims = 1:num_PCs)
 p1 <- DimPlot(ANT1.2, reduction = "umap")
 p2 <- DimPlot(ANT1.2, reduction = "umap", group.by = "labels")
 grid.arrange(p1, p2, nrow = 2)
-saveRDS(ANT1.2, file = "output/ANT1.2.rds")
 ```
 
 ```{r expression by individual}
@@ -431,5 +430,12 @@ VlnPlot(ANT1.2, features = c("ENG", "THY1",  "NT5E"),
 VlnPlot(ANT1.2, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"), 
      pt.size = 0.2, ncol = 3, group.by = "labels")
 
+```
+
+# Save seurat object
+
+```{r save}
+# save reorganized sample information
+saveRDS(ANT1.2, "data/ANT1_2.rds")
 ```
 
