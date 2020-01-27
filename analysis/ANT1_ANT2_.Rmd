@@ -262,8 +262,50 @@ VizDimLoadings(ANT1.2, dims = 1:2, reduction = "pca")
 DimPlot(ANT1.2, reduction = "pca", group.by = "labels")
 
 # var explained by top 10 PCs
+mat <- Seurat::GetAssayData(ANT1.2, assay = "RNA", slot = "scale.data")
+pca <- ANT1.2[["pca"]]
+
+# Get the total variance:
+total_variance <- sum(matrixStats::rowVars(mat))
+
+eigValues = (pca@stdev)^2  ## EigenValues
+varExplained = eigValues / total_variance
 
 DimHeatmap(ANT1.2, dims = 1:15, cells = 500, balanced = TRUE)
+
+
+
+
+
+
+#extract scaled data for highlyvargenes to a matrix outside of seurat to perform PCA and examine varexplained
+source("code/PCA_fn.R")
+library("RColorBrewer")
+library("scales")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+scaled <- ANT1.2@assays$RNA@scale.data[VariableFeatures(ANT1.2),]
+dim(scaled)
+
+pca_genes <- prcomp(t(scaled), scale = F)
+scores <- pca_genes$x
+
+
+### PCA Raw Data
+for (n in 1:3){
+     col.v <- pal[as.integer(factor(ANT1.2@meta.data$labels))]
+     plot_scores(pca_genes, scores, n, n+1, cols = col.v, legend = F, points = T)
+}
+
+#% Var explained by top 10 pcs
+for(n in 1:10){
+     print(n)
+     print(summary(pca_genes)$importance[2,n]*100)
+}
+
 
 ElbowPlot(ANT1.2, ndims = nPC) #50 PCs?
 ```
