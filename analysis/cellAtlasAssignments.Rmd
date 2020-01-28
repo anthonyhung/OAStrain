@@ -51,9 +51,80 @@ for(kval in 11:95){
 
 # Crude analyses of correlation matrix
 
-```{r}
+```{r crude}
 # see which cell lines are highest correlated (sum over all cells) in the data with the summed values
 colSums(cor.mat)[colSums(cor.mat) > 800]
 
+```
+
+# clustering Analysis of cell atlas data (PCA)
+
+```{r clustering of cell atlas alone}
+library("RColorBrewer")
+library("scales")
+library("ggplot2")
+library("ggfortify")
+
+# Perform PCA
+pca_genes <- prcomp(t(cell.line), scale = T)
+
+#relabel cell.line with cell types
+cell.line.relabeled <- as.data.frame(t(cell.line))
+cell.line.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2)
+rownames(cell.line.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2))
+
+#Make PCA plots with the factors colored by individual
+
+autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype')
+autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype', label=T)
+
+
+
+
+
+#Trying PCA after removing spermatocyte
+cell.line.sperm <- cell.line[, -95]
+# Perform PCA
+pca_genes.sperm <- prcomp(t(cell.line.sperm), scale = T)
+
+#relabel cell.line with cell types
+cell.line.sperm.relabeled <- as.data.frame(t(cell.line.sperm))
+cell.line.sperm.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2)
+rownames(cell.line.sperm.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2))
+
+#Make PCA plots with the factors colored by individual
+
+autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype')
+autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T) + theme(legend.position = "none")
+autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T, x=2, y=3) + theme(legend.position = "none")
+autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T, x=3, y=4) + theme(legend.position = "none")
+
+```
+
+# clustering Analysis of cell atlas data (Corr Heatmap)
+
+```{r corr heatmap}
+library("gplots")
+library("RColorBrewer")
+library("scales")
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+
+#Corr heatmap
+cors <- cor(cell.line, method="spearman", use="pairwise.complete.obs")
+plot <- heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=cell.line.relabeled$celltype,
+          ColSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
+plot
+
+# Open a pdf file
+pdf("output/corrheatmap.pdf") 
+# 2. Create a plot
+plot
+# Close the pdf file
+dev.off() 
 ```
 

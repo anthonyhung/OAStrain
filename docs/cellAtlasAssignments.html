@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec59397270ca9831dd87f7b639e4e4510bae948d8targetblankc593972a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/c59397270ca9831dd87f7b639e4e4510bae948d8" target="_blank">c593972</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree230347d31eea2744e2e4274fa8e31c0d1c1e991btargetblank230347da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/230347d31eea2744e2e4274fa8e31c0d1c1e991b" target="_blank">230347d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec59397270ca9831dd87f7b639e4e4510bae948d8targetblankc593972a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree230347d31eea2744e2e4274fa8e31c0d1c1e991btargetblank230347da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/230347d31eea2744e2e4274fa8e31c0d1c1e991b/analysis/cellAtlasAssignments.Rmd" target="_blank">230347d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add crude analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/230347d31eea2744e2e4274fa8e31c0d1c1e991b/docs/cellAtlasAssignments.html" target="_blank">230347d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add crude analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1370,6 +1404,78 @@ L43_Smooth.muscle.cell_Bronchial              L55_MSC_Fetal.Blood
                         877.5111                         969.6336 
        L56_MSC_Fetal.Bone.Marrow              L57_MSC_Fetal.Liver 
                         958.1726                         939.2849 </code></pre>
+</div>
+<div id="clustering-analysis-of-cell-atlas-data-pca" class="section level1">
+<h1>clustering Analysis of cell atlas data (PCA)</h1>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;ggfortify&quot;)
+
+# Perform PCA
+pca_genes &lt;- prcomp(t(cell.line), scale = T)
+
+#relabel cell.line with cell types
+cell.line.relabeled &lt;- as.data.frame(t(cell.line))
+cell.line.relabeled$celltype &lt;- sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2)
+rownames(cell.line.relabeled) &lt;- paste0(sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 1), &quot; &quot;, sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2))
+
+#Make PCA plots with the factors colored by individual
+
+autoplot(pca_genes, data = cell.line.relabeled, colour = &#39;celltype&#39;)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>autoplot(pca_genes, data = cell.line.relabeled, colour = &#39;celltype&#39;, label=T)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Trying PCA after removing spermatocyte
+cell.line.sperm &lt;- cell.line[, -95]
+# Perform PCA
+pca_genes.sperm &lt;- prcomp(t(cell.line.sperm), scale = T)
+
+#relabel cell.line with cell types
+cell.line.sperm.relabeled &lt;- as.data.frame(t(cell.line.sperm))
+cell.line.sperm.relabeled$celltype &lt;- sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2)
+rownames(cell.line.sperm.relabeled) &lt;- paste0(sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 1), &quot; &quot;, sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2))
+
+#Make PCA plots with the factors colored by individual
+
+autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = &#39;celltype&#39;)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = &#39;celltype&#39;, label=T) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = &#39;celltype&#39;, label=T, x=2, y=3) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = &#39;celltype&#39;, label=T, x=3, y=4) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-6.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clustering-analysis-of-cell-atlas-data-corr-heatmap" class="section level1">
+<h1>clustering Analysis of cell atlas data (Corr Heatmap)</h1>
+<pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    lowess</code></pre>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+# Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+
+#Corr heatmap
+cors &lt;- cor(cell.line, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+heatmap.2(cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=cell.line.relabeled$celltype,
+          ColSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/corr%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Corr heatmap
+cors &lt;- cor(cell.line, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+heatmap.2(cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=cell.line.relabeled$celltype,
+          ColSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))</code></pre>
+<p><img src="figure/cellAtlasAssignments.Rmd/corr%20heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1397,49 +1503,50 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] Seurat_3.1.1
+[1] gplots_3.0.1.1     ggfortify_0.4.8    ggplot2_3.2.1      scales_1.1.0      
+[5] RColorBrewer_1.1-2 Seurat_3.1.1      
 
 loaded via a namespace (and not attached):
   [1] TH.data_1.0-10      Rtsne_0.15          colorspace_1.4-1   
   [4] ggridges_0.5.1      rprojroot_1.3-2     fs_1.3.1           
-  [7] leiden_0.3.1        listenv_0.8.0       npsurv_0.4-0       
- [10] ggrepel_0.8.1       mvtnorm_1.0-7       codetools_0.2-15   
- [13] splines_3.4.3       R.methodsS3_1.7.1   mnormt_1.5-5       
- [16] lsei_1.2-0          knitr_1.26          TFisher_0.2.0      
- [19] zeallot_0.1.0       jsonlite_1.6        workflowr_1.5.0    
- [22] ica_1.0-2           cluster_2.0.6       png_0.1-7          
- [25] R.oo_1.23.0         uwot_0.1.5          sctransform_0.2.0  
- [28] compiler_3.4.3      httr_1.4.1          backports_1.1.5    
- [31] assertthat_0.2.1    Matrix_1.2-18       lazyeval_0.2.2     
- [34] later_1.0.0         htmltools_0.4.0     tools_3.4.3        
- [37] rsvd_1.0.2          igraph_1.2.4.2      gtable_0.3.0       
- [40] glue_1.3.1          RANN_2.6.1          reshape2_1.4.3     
- [43] dplyr_0.8.3         Rcpp_1.0.3          Biobase_2.38.0     
- [46] vctrs_0.2.0         multtest_2.34.0     gdata_2.18.0       
- [49] ape_5.3             nlme_3.1-131        gbRd_0.4-11        
- [52] lmtest_0.9-37       xfun_0.11           stringr_1.4.0      
- [55] globals_0.12.5      lifecycle_0.1.0     irlba_2.3.3        
- [58] gtools_3.8.1        future_1.15.1       MASS_7.3-51.4      
- [61] zoo_1.8-6           scales_1.1.0        promises_1.1.0     
- [64] parallel_3.4.3      sandwich_2.5-1      RColorBrewer_1.1-2 
- [67] yaml_2.2.0          gridExtra_2.3       reticulate_1.13    
- [70] pbapply_1.4-2       ggplot2_3.2.1       stringi_1.4.3      
- [73] mutoss_0.1-12       plotrix_3.7-2       caTools_1.17.1.3   
- [76] BiocGenerics_0.24.0 bibtex_0.4.2        Rdpack_0.11-0      
- [79] SDMTools_1.1-221.2  rlang_0.4.2         pkgconfig_2.0.3    
- [82] bitops_1.0-6        evaluate_0.14       lattice_0.20-35    
- [85] ROCR_1.0-7          purrr_0.3.3         htmlwidgets_1.5.1  
- [88] cowplot_0.9.3       tidyselect_0.2.5    RcppAnnoy_0.0.14   
- [91] plyr_1.8.4          magrittr_1.5        R6_2.4.1           
- [94] gplots_3.0.1.1      multcomp_1.4-8      pillar_1.4.2       
- [97] whisker_0.4         sn_1.5-4            fitdistrplus_1.0-14
-[100] survival_2.41-3     tsne_0.1-3          tibble_2.1.3       
-[103] future.apply_1.3.0  crayon_1.3.4        KernSmooth_2.23-15 
-[106] plotly_4.9.1        rmarkdown_1.18      grid_3.4.3         
-[109] data.table_1.12.6   git2r_0.26.1        metap_1.2          
-[112] digest_0.6.23       tidyr_1.0.0         httpuv_1.5.2       
-[115] numDeriv_2016.8-1.1 R.utils_2.9.2       RcppParallel_4.4.4 
-[118] stats4_3.4.3        munsell_0.5.0       viridisLite_0.3.0  </code></pre>
+  [7] farver_2.0.1        leiden_0.3.1        listenv_0.8.0      
+ [10] npsurv_0.4-0        ggrepel_0.8.1       mvtnorm_1.0-7      
+ [13] codetools_0.2-15    splines_3.4.3       R.methodsS3_1.7.1  
+ [16] mnormt_1.5-5        lsei_1.2-0          knitr_1.26         
+ [19] TFisher_0.2.0       zeallot_0.1.0       jsonlite_1.6       
+ [22] workflowr_1.5.0     ica_1.0-2           cluster_2.0.6      
+ [25] png_0.1-7           R.oo_1.23.0         uwot_0.1.5         
+ [28] sctransform_0.2.0   compiler_3.4.3      httr_1.4.1         
+ [31] backports_1.1.5     assertthat_0.2.1    Matrix_1.2-18      
+ [34] lazyeval_0.2.2      later_1.0.0         htmltools_0.4.0    
+ [37] tools_3.4.3         rsvd_1.0.2          igraph_1.2.4.2     
+ [40] gtable_0.3.0        glue_1.3.1          RANN_2.6.1         
+ [43] reshape2_1.4.3      dplyr_0.8.3         Rcpp_1.0.3         
+ [46] Biobase_2.38.0      vctrs_0.2.0         multtest_2.34.0    
+ [49] gdata_2.18.0        ape_5.3             nlme_3.1-131       
+ [52] gbRd_0.4-11         lmtest_0.9-37       xfun_0.11          
+ [55] stringr_1.4.0       globals_0.12.5      lifecycle_0.1.0    
+ [58] irlba_2.3.3         gtools_3.8.1        future_1.15.1      
+ [61] MASS_7.3-51.4       zoo_1.8-6           promises_1.1.0     
+ [64] parallel_3.4.3      sandwich_2.5-1      yaml_2.2.0         
+ [67] gridExtra_2.3       reticulate_1.13     pbapply_1.4-2      
+ [70] stringi_1.4.3       mutoss_0.1-12       plotrix_3.7-2      
+ [73] caTools_1.17.1.3    BiocGenerics_0.24.0 bibtex_0.4.2       
+ [76] Rdpack_0.11-0       SDMTools_1.1-221.2  rlang_0.4.2        
+ [79] pkgconfig_2.0.3     bitops_1.0-6        evaluate_0.14      
+ [82] lattice_0.20-35     ROCR_1.0-7          purrr_0.3.3        
+ [85] labeling_0.3        htmlwidgets_1.5.1   cowplot_0.9.3      
+ [88] tidyselect_0.2.5    RcppAnnoy_0.0.14    plyr_1.8.4         
+ [91] magrittr_1.5        R6_2.4.1            multcomp_1.4-8     
+ [94] withr_2.1.2         pillar_1.4.2        whisker_0.4        
+ [97] sn_1.5-4            fitdistrplus_1.0-14 survival_2.41-3    
+[100] tsne_0.1-3          tibble_2.1.3        future.apply_1.3.0 
+[103] crayon_1.3.4        KernSmooth_2.23-15  plotly_4.9.1       
+[106] rmarkdown_1.18      grid_3.4.3          data.table_1.12.6  
+[109] git2r_0.26.1        metap_1.2           digest_0.6.23      
+[112] tidyr_1.0.0         httpuv_1.5.2        numDeriv_2016.8-1.1
+[115] R.utils_2.9.2       RcppParallel_4.4.4  stats4_3.4.3       
+[118] munsell_0.5.0       viridisLite_0.3.0  </code></pre>
 </div>
 </div>
 
