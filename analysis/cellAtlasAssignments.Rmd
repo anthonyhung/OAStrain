@@ -114,17 +114,10 @@ pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 #Corr heatmap
 cors <- cor(cell.line, method="spearman", use="pairwise.complete.obs")
-plot <- heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=cell.line.relabeled$celltype,
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=cell.line.relabeled$celltype,
           ColSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
           RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
           cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
-plot
 
-# Open a pdf file
-pdf("output/corrheatmap.pdf") 
-# 2. Create a plot
-plot
-# Close the pdf file
-dev.off() 
 ```
 
