@@ -49,19 +49,11 @@ for(kval in 11:95){
 ```
 
 
+# Crude analyses of correlation matrix
 
-# Removing iPSCs/MSCs/Fibroblasts as options
 ```{r}
-cell.line <- cell.line[,-c(12:21, 26,27,56,57)]
+# see which cell lines are highest correlated (sum over all cells) in the data with the summed values
+colSums(cor.mat)[colSums(cor.mat) > 800]
 
-#Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat <- ComputeCorMat(ANT1.2,cell.line)
-
-for(kval in 11:81){
-     print(kval)
-     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
-}
 ```
-
-
 

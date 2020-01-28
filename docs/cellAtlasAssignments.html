@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-27
+<strong>Last updated:</strong> 2020-01-28
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeb967c3ceb4e6c6da17db3be8f12c4009730dde44targetblankb967c3ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/b967c3ceb4e6c6da17db3be8f12c4009730dde44" target="_blank">b967c3c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec59397270ca9831dd87f7b639e4e4510bae948d8targetblankc593972a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/c59397270ca9831dd87f7b639e4e4510bae948d8" target="_blank">c593972</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeb967c3ceb4e6c6da17db3be8f12c4009730dde44targetblankb967c3ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec59397270ca9831dd87f7b639e4e4510bae948d8targetblankc593972a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/4b7b862fcc613e73a5ac464c4079a642dab2d37d/analysis/cellAtlasAssignments.Rmd" target="_blank">4b7b862</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell line analysis after removing some catgories
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/4b7b862fcc613e73a5ac464c4079a642dab2d37d/docs/cellAtlasAssignments.html" target="_blank">4b7b862</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell line analysis after removing some catgories
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1314,331 +1348,28 @@ iPSC  MSC
 iPSC  MSC 
 2474    5 </code></pre>
 </div>
-<div id="removing-ipscsmscsfibroblasts-as-options" class="section level1">
-<h1>Removing iPSCs/MSCs/Fibroblasts as options</h1>
-<pre class="r"><code>cell.line &lt;- cell.line[,-c(12:21, 26,27,56,57)]
-
-#Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat &lt;- ComputeCorMat(ANT1.2,cell.line)
-
-for(kval in 11:81){
-     print(kval)
-     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
-}</code></pre>
-<pre><code>[1] 11
-
-                 Endothelial_ESC_Schwann.cell 
-                                            3 
-Osteoblast_Chondrocyte_MSC_Smooth.muscle.cell 
-                                         2476 
-[1] 12
-
-                 Endothelial_ESC_Schwann.cell 
-                                            3 
-Osteoblast_Chondrocyte_MSC_Smooth.muscle.cell 
-                                         2476 
-[1] 13
-
-                 Endothelial_ESC_Schwann.cell 
-                                            3 
-Osteoblast_Chondrocyte_MSC_Smooth.muscle.cell 
-                                         2476 
-[1] 14
-
-                 Endothelial_ESC_Schwann.cell 
-                                            3 
-Osteoblast_Chondrocyte_MSC_Smooth.muscle.cell 
-                                         2476 
-[1] 15
-
-  Chondrocyte_MSC_Osteoblast Endothelial_ESC_Schwann.cell 
-                        2476                            3 
-[1] 16
-
-  Chondrocyte_MSC_Osteoblast Endothelial_ESC_Schwann.cell 
-                        2476                            3 
-[1] 17
-
-  Chondrocyte_MSC_Osteoblast Endothelial_ESC_Schwann.cell 
-                        2476                            3 
-[1] 18
-
-   Chondrocyte_MSC_Osteoblast  Endothelial_ESC_Schwann.cell 
-                         2451                             3 
-Osteoblast_Smooth.muscle.cell 
-                           25 
-[1] 19
-
-        Adipocyte_Chondrocyte    Chondrocyte_MSC_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 20
-
-        Adipocyte_Chondrocyte    Chondrocyte_MSC_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 21
-
-  Chondrocyte_MSC_Osteoblast Endothelial_ESC_Schwann.cell 
-                        2477                            2 
-[1] 22
-
-        Adipocyte_Chondrocyte        Chondrocyte_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 23
-
-        Adipocyte_Chondrocyte        Chondrocyte_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 24
-
-        Adipocyte_Chondrocyte        Chondrocyte_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 25
-
-        Adipocyte_Chondrocyte        Chondrocyte_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 26
-
-        Adipocyte_Chondrocyte        Chondrocyte_Osteoblast 
-                           11                          2440 
- Endothelial_ESC_Schwann.cell Osteoblast_Smooth.muscle.cell 
-                            3                            25 
-[1] 27
-
-       Adipocyte_Chondrocyte       Chondrocyte_Osteoblast 
-                          11                         2465 
-Endothelial_ESC_Schwann.cell 
-                           3 
-[1] 28
-
-       Adipocyte_Chondrocyte       Chondrocyte_Osteoblast 
-                          11                         2465 
-Endothelial_ESC_Schwann.cell 
-                           3 
-[1] 29
-
-       Adipocyte_Chondrocyte       Chondrocyte_Osteoblast 
-                          11                         2465 
-Endothelial_ESC_Schwann.cell 
-                           3 
-[1] 30
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 31
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 32
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 33
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 34
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 35
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 36
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 37
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 38
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 39
-
-   Adipocyte_Chondrocyte   Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                      11                     2463                        5 
-[1] 40
-
-  Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                    2474                        5 
-[1] 41
-
-  Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                    2474                        5 
-[1] 42
-
-  Chondrocyte_Osteoblast Endothelial_Schwann.cell 
-                    2474                        5 
-[1] 43
-
-             Chondrocyte Endothelial_Schwann.cell               Osteoblast 
-                    2461                        7                       11 
-[1] 44
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 45
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 46
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 47
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 48
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 49
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 50
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 51
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 52
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 53
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 54
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 55
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 56
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 57
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 58
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 59
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 60
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 61
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 62
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 63
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 64
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 65
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 66
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 67
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 68
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 69
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 70
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 71
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 72
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 73
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 74
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 75
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 76
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 77
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 78
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 79
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 80
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 
-[1] 81
-
-Chondrocyte Endothelial  Osteoblast 
-       2462           5          12 </code></pre>
+<div id="crude-analyses-of-correlation-matrix" class="section level1">
+<h1>Crude analyses of correlation matrix</h1>
+<pre class="r"><code># see which cell lines are highest correlated (sum over all cells) in the data with the summed values
+colSums(cor.mat)[colSums(cor.mat) &gt; 800]</code></pre>
+<pre><code>                        L12_iPSC                         L13_iPSC 
+                        925.2322                        1003.8866 
+                        L15_iPSC                          L16_MSC 
+                        971.0174                         931.8518 
+                         L17_MSC                          L19_MSC 
+                        848.3917                         931.9304 
+                         L20_MSC          L26_Fibroblast_Foreskin 
+                        940.7790                         895.0013 
+    L27_Fibroblast_Breast.Tissue                  L35_Chondrocyte 
+                        978.2214                         925.9770 
+                 L36_Chondrocyte                   L37_Osteoblast 
+                        842.2880                         946.8134 
+                  L38_Osteoblast                    L39_Adipocyte 
+                        903.9756                         821.5032 
+L43_Smooth.muscle.cell_Bronchial              L55_MSC_Fetal.Blood 
+                        877.5111                         969.6336 
+       L56_MSC_Fetal.Bone.Marrow              L57_MSC_Fetal.Liver 
+                        958.1726                         939.2849 </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
