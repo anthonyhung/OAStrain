@@ -1,0 +1,316 @@
+---
+title: "Bulk_cellComposition_analysis"
+author: "Anthony Hung"
+date: "2020-01-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Cluster pilot Bulk RNA data with subset of cellAtlas bulk data and other data to determine where my samples fall in comparison
+
+## Load data
+
+```{r load}
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+#load cell atlas data matrix
+load("data/cell_atlas_ref_panel")
+cell.line <- cell.line[,c(12:20,35,36,40,55:57)]
+
+#load pilot data
+raw_counts <- as.matrix(readRDS("data/raw_counts_relabeled.rds"))
+
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
+
+#relabel pilot data genes to symbols
+pilot <- raw_counts
+rownames(pilot) <- gene_anno$external_gene_name[match(unlist(rownames(pilot)), gene_anno$ensembl_gene_id)]
+```
+
+## Before combining the datasets, I apply the same standardizations/normalizations performed on the cellAtlas data to my pilot data
+
+```{r normalize}
+#perform normalizations (taken from cellAtlas_assignment.R code)
+pilot_norm <- apply(pilot, 2, function(x) x/sum(x))
+pilot_libsize <- apply(pilot_norm, 2, function(x) x * 1e+06)
+Data.use <- pilot_libsize
+
+#Only include genes that are common between the two data sets
+gene.id <- rownames(Data.use)
+gene.ref <- rownames(cell.line)
+common <- intersect(gene.id, gene.ref)
+print(paste0("There are ", length(common), " genes in common between the two sets"))
+logxx <- apply(Data.use[common, ], 2, function(x) {
+        log(x + 0.1)
+    })
+selected.cell.line <- apply(cell.line[common, ], 2, function(x) {
+        x - mean(x)
+    })
+```
+
+## Combine the two datasets into one matrix
+
+```{r combine}
+combined <- cbind(logxx, selected.cell.line)
+```
+
+## Clustering (PCA)
+
+```{r PCA}
+library("ggplot2")
+library("ggfortify")
+
+# Perform PCA
+pca_genes <- prcomp(t(combined), scale = T)
+
+#Make PCA plots 
+
+autoplot(pca_genes, label = T)
+```
+
+## Clustering (corr heatmap)
+
+```{r corr heatmap}
+library("gplots")
+
+#Corr heatmap
+cors <- cor(combined, method="spearman", use="pairwise.complete.obs")
+heatmap.2(cors, scale="none", margins = c(12, 12), trace='none', denscol="white",
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
+```
+
+
+# Outside data analysis
+
+Compare pilot bulk data with bulk data collected from iPSCs, MSCs, chondrocytes from OA patients, and heart tissue (note: I have only used a Single read from each sample and trimmed to the first 50 bases to ensure that there are not mapping biases between samples). Here, I try both upperquartile and RLE normalization methods
+
+```{r load outside}
+# load in counts
+outside_data_counts <- read.table("/project2/gilad/anthonyhung/Projects/OAStrain_project/bulkRNAseq_outsideData/out/counts/counts.txt", header = T)
+
+# assign row.names
+row.names(outside_data_counts) <- outside_data_counts$Geneid
+
+# exclude extra data columns
+outside_data_counts <- outside_data_counts[, -c(1:6)]
+
+#rename samples (colnames)
+names(outside_data_counts) <- c("Heart_1_tr", "MSC_nt_hBM1_tr", "Heart_4", "Chond_TCP_P1_2_tr",
+                                "Chond_dmg_2", "Chond_intact_1", "Heart_1", "Heart_3_tr", 
+                                "MSC_nt_hBM3_tr", "Chond_intact_2", "MSC_bm1", "iPSC-MSC5_H20157-d5-r1", 
+                                "Chond_dmg_1", "Chond_SCM_P1_3", "Chond_TCP_P1_1_tr", "MSC_nt_hBM2_tr", 
+                                "MSC_bm2", "Chond_SCM_P1_1", "Chond_intact_1_tr", "iPSC-MSC9_H20157-d9-r2", 
+                                "Chond_SCM_P1_2_tr", "Chond_TCP_P1_1", "Chond_intact_3_tr", "Chond_dmg_2_tr",
+                                "MSC_hAD", "Chond_intact_3", "MSC_nt_hBM2", "MSC_hAD_tr", 
+                                "Chond_dmg_1_tr", "Chond_intact_2_tr", "Heart_2_tr", "Heart_3", 
+                                "MSC_nt_hBM1", "Heart_4_tr", "Heart_2", "iPSC-MSC5_H20157-d5-r2", 
+                                "Chond_dmg_3", "Chond_SCM_P1_3_tr", "Chond_SCM_P1_2", "Chond_dmg_3_tr", 
+                                "MSC_bm1_tr", "MSC_nt_hBM3", "Chond_TCP_P1_3", "MSC_bm2_tr",
+                                "iPSC_H20157-d0-r1", "Chond_SCM_P1_1_tr", "iPSC-MSC9_H20157-d9-r1", "Chond_TCP_P1_3_tr",
+                                "iPSC_H20157-d0-r2", "Chond_TCP_P1_2")
+
+untrimmed <- c(3,5,6,7,10,11,13,14,17,18,22,25,26,27,32,33,35,37,39,42,43,50)
+
+#subset to only the datasets that were trimmed to 50bp
+outside_data_counts <- outside_data_counts[,-untrimmed]
+
+#Combine all bulk data together
+merged_raw_data <- merge(raw_counts, outside_data_counts, by = "row.names")
+row.names(merged_raw_data) <- merged_raw_data$Row.names
+merged_raw_data <- merged_raw_data[,-1]
+
+#Remove rows with all 0s
+dim(merged_raw_data)
+merged_raw_data <- merged_raw_data[apply(merged_raw_data, 1, function(x) !all(x==0)),]
+dim(merged_raw_data)
+```
+
+## Raw counts analysis
+
+```{r raw analysis}
+library("gplots")
+library("ggplot2")
+library("ggfortify")
+
+# Perform PCA
+pca_genes <- prcomp(t(data.matrix(merged_raw_data)), scale = T)
+
+#Make PCA plots 
+autoplot(pca_genes, label = T)
+
+
+#Corr heatmap
+cors <- cor(merged_raw_data, method="spearman", use="pairwise.complete.obs")
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Normalize raw merged counts: upperquartile Normalization
+
+```{r upperquartile normalization}
+library(edgeR)
+merged_raw_data <- DGEList(merged_raw_data, group = colnames(merged_raw_data))
+upperquartile <- calcNormFactors(merged_raw_data, method = "upperquartile")
+upperquartile <- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
+head(upperquartile)
+
+# Look at density plots
+plotDensities(upperquartile, legend="topright")
+```
+
+## Correlation heatmap of log2upperquartile normalized and unfiltered samples
+
+```{r corr heatmap unfiltered upperquartile}
+cors <- cor(upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of upperquartile across samples
+
+```{r boxplot upperquartile}
+library(reshape2)
+meltupperquartile <- melt(upperquartile)
+names(meltupperquartile) <- c("gene", "sampleID", "upperquartile")
+p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2upperquartile > 3 in at least 15 samples)
+
+```{r filter upperquartile}
+cutoff <- 3
+
+keep <- rowSums( upperquartile > cutoff ) >= 15
+
+counts_upperquartile <- raw_counts[keep,]
+filtered_upperquartile <- upperquartile[keep,]
+dim(filtered_upperquartile)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt upperquartile}
+melt_filt_upperquartile <- melt(filtered_upperquartile)
+names(melt_filt_upperquartile) <- c("gene", "sampleID", "log2upperquartile")
+p1 <- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+
+plotDensities(filtered_upperquartile, legend = F)
+```
+
+## Correlation heatmap of log2upperquartile normalized and filtered samples
+
+```{r corr heatmap filtered upperquartile}
+cors <- cor(filtered_upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## PCA of log2upperquartile normalized and filtered samples
+
+```{r PCA quartile}
+# Perform PCA
+pca_genes <- prcomp(t(data.matrix(filtered_upperquartile)), scale = T)
+
+#Make PCA plots 
+autoplot(pca_genes, label = T)
+```
+
+
+
+
+
+
+
+## Normalize raw merged counts: RLE Normalization
+
+```{r RLE normalization}
+library(edgeR)
+merged_raw_data <- DGEList(merged_raw_data, group = colnames(merged_raw_data))
+RLE <- calcNormFactors(merged_raw_data, method = "RLE")
+RLE <- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
+head(RLE)
+
+# Look at density plots
+plotDensities(RLE, legend="topright")
+```
+
+## Correlation heatmap of log2RLE normalized and unfiltered samples
+
+```{r corr heatmap unfiltered RLE}
+cors <- cor(RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of RLE across samples
+
+```{r boxplot RLE}
+library(reshape2)
+meltRLE <- melt(RLE)
+names(meltRLE) <- c("gene", "sampleID", "RLE")
+p <- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2RLE > 3 in at least 15 samples)
+
+```{r filter RLE}
+cutoff <- 3
+
+keep <- rowSums( RLE > cutoff ) >= 15
+
+counts_RLE <- raw_counts[keep,]
+filtered_RLE <- RLE[keep,]
+dim(filtered_RLE)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt RLE}
+melt_filt_RLE <- melt(filtered_RLE)
+names(melt_filt_RLE) <- c("gene", "sampleID", "log2RLE")
+p1 <- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+
+plotDensities(filtered_RLE, legend = F)
+```
+
+## Correlation heatmap of log2RLE normalized and filtered samples
+
+```{r corr heatmap filtered RLE}
+cors <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## PCA of log2RLE normalized and filtered samples
+
+```{r}
+# Perform PCA
+pca_genes <- prcomp(t(data.matrix(filtered_RLE)), scale = T)
+
+#Make PCA plots 
+autoplot(pca_genes, label = T)
+```
+

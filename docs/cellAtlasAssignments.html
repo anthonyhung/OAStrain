@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -407,7 +407,7 @@ div.section {
 <strong>Last updated:</strong> 2020-01-28
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree56119a80c2a1a204bfcc311a3c21b6f93bad488atargetblank56119a8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/56119a80c2a1a204bfcc311a3c21b6f93bad488a" target="_blank">56119a8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1ba1f2a57d04da14b6b8abffec8b714a98e27c64targetblank1ba1f2aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/1ba1f2a57d04da14b6b8abffec8b714a98e27c64" target="_blank">1ba1f2a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree56119a80c2a1a204bfcc311a3c21b6f93bad488atargetblank56119a8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1ba1f2a57d04da14b6b8abffec8b714a98e27c64targetblank1ba1f2aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,7 +507,6 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
@@ -516,12 +515,11 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
-Unstaged changes:
-    Modified:   analysis/cellAtlasAssignments.Rmd
+Untracked files:
+    Untracked:  analysis/Bulk_cellComposition_analysis.Rmd
 
-Staged changes:
-    Modified:   analysis/cellAtlasAssignments.Rmd
-    New:        output/corrheatmap.png
+Unstaged changes:
+    Modified:   code/cellAtlas_assignment.R
 
 </code></pre>
 <p>
@@ -560,6 +558,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/fe389f20fba1596c42e7a7c15b253b4e8090ecac/analysis/cellAtlasAssignments.Rmd" target="_blank">fe389f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+make png for corr heatmap
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/fe389f20fba1596c42e7a7c15b253b4e8090ecac/docs/cellAtlasAssignments.html" target="_blank">fe389f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+make png for corr heatmap
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -719,8 +751,9 @@ ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)</code></pre>
 <div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type" class="section level1">
 <h1>Apply functions to single cell data to label them with assigned cell type</h1>
 <pre class="r"><code>#Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat &lt;- ComputeCorMat(ANT1.2,cell.line)
-head(cor.mat)</code></pre>
+cor.mat &lt;- ComputeCorMat(ANT1.2,cell.line)</code></pre>
+<pre><code>[1] &quot;There are 4134genes in common between the two sets&quot;</code></pre>
+<pre class="r"><code>head(cor.mat)</code></pre>
 <pre><code>                         L1_ESC    L2_ESC    L3_ESC    L4_ESC    L5_ESC
 ANT1_AAACCCAAGTAGGAAG 0.1920874 0.2103660 0.2469438 0.2624036 0.2815602
 ANT1_AAACCCATCTCGGGAC 0.2042120 0.2228802 0.2750716 0.2900762 0.2992497

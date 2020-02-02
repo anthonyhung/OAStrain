@@ -13,6 +13,7 @@ ComputeCorMat=function(object,cell.line,CorMethod = "pearson"){
     gene.id <- rownames(Data.use)
     gene.ref <- rownames(cell.line)
     common <- intersect(gene.id, gene.ref)
+    print(paste0("There are ", length(common), "genes in common between the two sets"))
     logxx <- apply(Data.use[common, ], 2, function(x) {
         log(x + 0.1)
     })

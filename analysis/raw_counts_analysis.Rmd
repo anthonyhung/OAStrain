@@ -40,7 +40,7 @@ colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]
 pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
 
 # load in counts
-raw_counts <- read.table(paste0(proj_dir, "out/counts/counts.txt"), header = T)
+raw_counts <- read.table(paste0(proj_dir, "bulkRNAseq/out/counts/counts.txt"), header = T)
 
 # assign row.names
 row.names(raw_counts) <- raw_counts$Geneid

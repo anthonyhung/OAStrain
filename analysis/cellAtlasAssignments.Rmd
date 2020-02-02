@@ -60,8 +60,6 @@ colSums(cor.mat)[colSums(cor.mat) > 800]
 # clustering Analysis of cell atlas data (PCA)
 
 ```{r clustering of cell atlas alone}
-library("RColorBrewer")
-library("scales")
 library("ggplot2")
 library("ggfortify")
 
@@ -73,7 +71,7 @@ cell.line.relabeled <- as.data.frame(t(cell.line))
 cell.line.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2)
 rownames(cell.line.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2))
 
-#Make PCA plots with the factors colored by individual
+#Make PCA plots
 
 autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype')
 autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype', label=T)
@@ -92,7 +90,7 @@ cell.line.sperm.relabeled <- as.data.frame(t(cell.line.sperm))
 cell.line.sperm.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2)
 rownames(cell.line.sperm.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2))
 
-#Make PCA plots with the factors colored by individual
+#Make PCA plots
 
 autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype')
 autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T) + theme(legend.position = "none")
