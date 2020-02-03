@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-01-29" />
+
+<title>Pilot_GoMAnalysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Pilot_GoMAnalysis</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-01-29</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-02-03
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree26132157c6605eb09d8628dff14a004a6a374809targetblank2613215a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/26132157c6605eb09d8628dff14a004a6a374809" target="_blank">2613215</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree26132157c6605eb09d8628dff14a004a6a374809targetblank2613215a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/HumanLiverSeurat.rds
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    output/ANT1.2.rds
+
+Untracked files:
+    Untracked:  analysis/figures/
+    Untracked:  data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv
+
+Unstaged changes:
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/26132157c6605eb09d8628dff14a004a6a374809/analysis/Pilot_GoMAnalysis.Rmd" target="_blank">2613215</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-02
+</td>
+<td>
+outside bulk datasets comparison to my pilot bulk data
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="applying-topic-modeling-approaches-on-sc-pilot-data" class="section level1">
+<h1>Applying topic modeling approaches on sc pilot data</h1>
+<p>Include data from: Pilot (iPSC-derived chondrocytes from 3 individuals x 2 treatment conditions; 10x) MSC-Pilot (Genevieve Housman’s human data of iPSCs and iPSC-derived MSCs from human-chimp study; 10x) Hepatocytes (from liver homogenate; 10x) Chondrocytes (from OA patients; STRT protocol)</p>
+</div>
+<div id="load-libraries" class="section level1">
+<h1>Load Libraries</h1>
+<pre class="r"><code>library(Seurat)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>✔ ggplot2 3.2.1     ✔ purrr   0.3.3
+✔ tibble  2.1.3     ✔ dplyr   0.8.3
+✔ tidyr   1.0.0     ✔ stringr 1.4.0
+✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
+<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div id="load-in-datasets" class="section level1">
+<h1>Load in datasets</h1>
+<p>Load in datasets and create Seurat objects for each of them. Add metadata about the cell type they were assigned in their original contexts.</p>
+<pre class="r"><code>#Pilot data
+ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)
+ANT1.2 &lt;- AddMetaData(ANT1.2, &quot;iPSC-Chondrocyte&quot;, col.name = &quot;Cell.Type&quot;)
+dim(ANT1.2)</code></pre>
+<pre><code>[1] 33538  2479</code></pre>
+<pre class="r"><code>#Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
+chondro &lt;- read.table(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/outside_scData/GSE104782_allcells_UMI_count.txt.gz&quot;, header = T)
+chondro_genes &lt;- chondro[,1]
+chondro_data &lt;- chondro[,-1]
+chondro &lt;- chondro_data
+rownames(chondro) &lt;- chondro_genes
+#load chondro cluster data from paper
+chondro_metadata &lt;- read_csv(&quot;data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv&quot;)</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  Cell = col_character(),
+  `Raw reads` = col_double(),
+  `Clean reads` = col_double(),
+  `Aligned reads` = col_double(),
+  `Mapping rate` = col_character(),
+  `Gene number` = col_double(),
+  `Transcript number` = col_double(),
+  Cluster = col_character()
+)</code></pre>
+<pre class="r"><code>#subset data to include only those that were assigned to a chondrocyte cluster in the paper
+chondro.filtered &lt;- chondro[,!is.na(chondro_metadata$Cluster)]
+cluster.ident &lt;- paste0(&quot;Chondro &quot;, chondro_metadata$Cluster[!is.na(chondro_metadata$Cluster)])
+#Create seurat object from chondrocytes
+chondro.seurat &lt;- CreateSeuratObject(chondro.filtered, project=&quot;Chondrocytes&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>chondro.seurat &lt;- AddMetaData(chondro.seurat, cluster.ident, col.name = &quot;Cell.Type&quot;)
+dim(chondro.seurat)</code></pre>
+<pre><code>[1] 24153  1464</code></pre>
+<pre class="r"><code>#iPSCs/MSCs/osteoblasts from Human/chimp panel. Combine all the datasets and subset for humans
+ghousman_data_dir &lt;- (&quot;/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/cellranger-data-full/&quot;)
+gh_ipsc_1.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.GHO-1.rds&quot;))
+gh_msc_1.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.GHO-2.rds&quot;))
+gh_ipsc_1.2 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-10.rds&quot;))
+gh_msc_1.2 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-12.rds&quot;))
+gh_ipsc_2.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-1.rds&quot;))
+gh_msc_2.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-2.rds&quot;))
+gh_ipsc_3.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-9.rds&quot;))
+gh_msc_3.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-11.rds&quot;))
+gh_big &lt;- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_ipsc_1.2, gh_msc_1.2, gh_ipsc_2.1, gh_msc_2.1, gh_ipsc_3.1, gh_msc_3.1), 
+                add.cell.ids = c(&quot;ipsc1.1&quot;, &quot;msc1.1&quot;, &quot;ipsc1.2&quot;, &quot;msc1.2&quot;, &quot;ipsc2.1&quot;, &quot;msc2.1&quot;, &quot;ipsc3.1&quot;, &quot;msc3.1&quot;), project = &quot;ghousman&quot;)
+gh_big_humans &lt;- subset(gh_big, species == &quot;Human&quot;)
+gh_big_humans &lt;- AddMetaData(gh_big_humans, &quot;Ghousman&quot;, col.name = &quot;orig.ident&quot;)
+dim(gh_big_humans)</code></pre>
+<pre><code>[1] 19399 23283</code></pre>
+<pre class="r"><code>#Human Liver samples run through 10x (https://doi.org/10.1038/s41467-018-06318-7). This is a subset of the entire dataset, which is from whole liver homogenate. I used scViz to subset the data for clusters that were called hepatocytes in the original study (3490 cells)
+liver &lt;- readRDS(&quot;data/humanLiverSubset_hepatocytes.rds&quot;)
+liver &lt;- AddMetaData(liver, &quot;Hepatocyte&quot;, col.name = &quot;Cell.Type&quot;)
+dim(liver)</code></pre>
+<pre><code>[1] 20007  3490</code></pre>
+<p><img src="../analysis/figures/scviz1.png" alt="Cell Type Clusters from original paper" /> <img src="../analysis/figures/scviz2.png" alt="Subsetting gate drawn in scViz" /></p>
+</div>
+<div id="merge-datasets" class="section level1">
+<h1>Merge Datasets</h1>
+<p>Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.</p>
+<pre class="r"><code>#Merge, entering a &quot;0&quot; value for genes that are not in common
+Combined &lt;- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans, liver), project = &quot;Combined&quot;)
+
+# merge based on common genes between ALL datasets
+common.features &lt;- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(gh_big_humans), rownames(liver)))
+length(x = common.features)</code></pre>
+<pre><code>[1] 14809</code></pre>
+<pre class="r"><code>Combined.common &lt;- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = &quot;Combined.common&quot;)</code></pre>
+<pre><code>Warning in is.na(x = cells): is.na() applied to non-(list or vector) of type
+&#39;NULL&#39;</code></pre>
+<p>Now we can look at the cells in Seurat</p>
+<pre class="r"><code>VlnPlot(Combined.common, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;), ncol = 2, group.by = &quot;orig.ident&quot;)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/QC-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(Combined.common, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;), ncol = 2, group.by = &quot;Cell.Type&quot;)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/QC-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># FeatureScatter is typically used to visualize feature-feature relationships, but can be used
+# for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
+
+FeatureScatter(Combined.common, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/QC-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="normalizing-data" class="section level1">
+<h1>Normalizing Data</h1>
+<pre class="r"><code>Combined.common &lt;- NormalizeData(Combined.common, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
+</div>
+<div id="feature-selection" class="section level1">
+<h1>Feature selection</h1>
+<pre class="r"><code>Combined.common &lt;- FindVariableFeatures(Combined.common, selection.method = &quot;vst&quot;, nfeatures = 2000)
+
+
+plot_variable_features &lt;- function(seurat.obj){
+  # Identify the 10 most highly variable genes
+  top10 &lt;- head(VariableFeatures(seurat.obj), 10)
+  
+  # plot variable features with and without labels
+  plot1 &lt;- VariableFeaturePlot(seurat.obj) + 
+       theme(legend.position=&quot;bottom&quot;)
+  plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE) +
+       theme(legend.position=&quot;bottom&quot;)
+  return(CombinePlots(plots = list(plot1, plot2)))
+}
+
+plot_variable_features(Combined.common)</code></pre>
+<pre><code>Warning: Using `as.character()` on a quosure is deprecated as of rlang 0.3.0.
+Please use `as_label()` or `as_name()` instead.
+This warning is displayed once per session.</code></pre>
+<pre><code>When using repel, set xnudge and ynudge to 0 for optimal results</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/feature%20selection-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scaling-data" class="section level1">
+<h1>Scaling Data</h1>
+<pre class="r"><code>scale_data &lt;- function(seurat.obj){
+  all.genes &lt;- rownames(seurat.obj)
+  return(ScaleData(seurat.obj, features = all.genes))
+}
+
+Combined.common &lt;- scale_data(Combined.common)</code></pre>
+<pre><code>Centering and scaling data matrix</code></pre>
+</div>
+<div id="dimensionality-reduction" class="section level1">
+<h1>Dimensionality Reduction</h1>
+<p>Using the highly variable features selected above, perform PCA</p>
+<pre class="r"><code>nPC &lt;- 100
+Combined.common &lt;- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common), npcs = nPC)</code></pre>
+<pre><code>PC_ 1 
+Positive:  FMOD, PRELP, MGP, COMP, SCRG1, BGN, CILP, DCN, NDUFA4L2, MIA 
+       CHAD, FGFBP2, PCOLCE2, S100B, SMOC2, RGCC, MMP3, PLA2G2A, CD55, ANGPTL2 
+       ATP6V0C, GPRC5A, IFITM1, OGN, GABARAP, COL11A2, LUM, GPX3, COX7A1, C11orf96 
+Negative:  PMAIP1, TAF9, ALPL, CRABP2, PTN, ID1, PINX1, MMP1, DUSP6, SAA2 
+       AKR1B1, MT1H, DCLK1, CCDC71L, FABP5, SPINK1, AIF1, HLA-DPB1, MMP9, PREX2 
+       RARRES2, SAA1, MAEA, IGFBP5, SUV39H1, HLA-DRB1, CA12, KLK10, COL5A3, LRRC8B 
+PC_ 2 
+Positive:  RBP4, MT1G, TF, SERPINA1, SERPING1, SAA2, MT1X, SAA1, C1R, RARRES2 
+       CP, TMEM176B, MT1H, TMEM176A, MT1M, MT1F, CFI, UQCR11, HSD11B1, SPINK1 
+       CLU, A2M, CFH, SERPINA6, MT1E, AKR1C1, PRG4, CD14, NDUFA13, F5 
+Negative:  SPARC, COL1A1, TNFRSF12A, COL5A2, COL1A2, COL5A1, ANXA1, TIMP1, IER3, PHLDA2 
+       COL6A2, HSPB1, GSN, ARID5B, CCDC80, IGFBP5, COL3A1, FN1, NT5E, PLAUR 
+       TGFBI, GARS, DAB2, SERPINE2, SLC3A2, IGFBP6, FHL1, PDLIM4, CDKN1A, KCNMA1 
+PC_ 3 
+Positive:  TAF9, PNP, CD9, PMAIP1, IER2, FGF2, EIF4E, MLF1, COL9A3, FXYD6 
+       TCEAL2, FABP5, SLC29A1, ID1, NOP16, SLC2A1, ITM2A, PHLDA1, NMB, SLC3A2 
+       PTN, ASNS, ADM, AKR1B1, S100B, MIA, CHAD, NDUFA4L2, CNPY2, FGFBP2 
+Negative:  KCTD16, COL3A1, CST3, SPON2, SERPINE2, GPC6, LDLRAD4, PTGER2, LRPAP1, AQP1 
+       FAM89A, SRPX2, COL12A1, COL5A1, COL1A2, SEMA3C, MXRA5, RUNX1, FOXO1, FKBP2 
+       COL5A2, CRISPLD2, RORA, COL1A1, PPP1R12B, PLOD2, ERG, SLC40A1, SERPINF1, STC2 
+PC_ 4 
+Positive:  UGP2, PDPN, SOX4, OLFML3, COL9A3, ALPL, FABP5, FGFR1, EGLN3, JMJD1C 
+       GFPT2, FADS1, GPC6, TCEAL2, PTN, PLXDC2, FOXO1, TSPAN6, ANOS1, FBXO2 
+       SOCS2, ANK3, STK26, MAP2K6, N4BP2, LDLRAD4, CRISPLD2, SKIL, KCNK1, IVNS1ABP 
+Negative:  FN1, ANXA1, MT2A, DUSP1, DAB2, PHLDA2, IGFBP5, B2M, CD44, PLAUR 
+       CRIP2, ARID5B, CCDC80, GREM1, MMP1, ITGA5, NT5E, IGFBP6, EFEMP1, RCAN1 
+       GSN, PLK2, KLF2, INHBA, JUN, IER3, COL1A1, KLF6, CDKN1A, CRYAB 
+PC_ 5 
+Positive:  P3H2, BMP2, KCNMA1, LRRC8C, NGF, CLCF1, TGFBI, COL6A3, SYNJ2, GPRC5A 
+       CD44, UGDH, FOSL1, C11orf96, CAV1, ST3GAL1, B3GNT5, FGF2, S100A3, FGF1 
+       LIF, PTPRE, SMOX, TENM2, GIPR, ZNF365, NPR2, TNC, NFATC2, SLC4A5 
+Negative:  DNAJB1, CRYAB, NR4A1, FOS, HSPA1A, NR4A2, HSPA1B, DDIT3, RGS16, HES1 
+       RASD1, BHLHE41, GEM, MYLIP, OSR2, FOXC1, DUSP1, USP53, RSRP1, PPP1R10 
+       TXNIP, WWP2, CYSTM1, ZFAND2A, MXRA8, CSGALNACT1, LMO2, RERG, DNAJB4, CLK1 </code></pre>
+<pre class="r"><code># Examine and visualize PCA results a few different ways
+print(Combined.common[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
+<pre><code>PC_ 1 
+Positive:  FMOD, PRELP, MGP, COMP, SCRG1 
+Negative:  PMAIP1, TAF9, ALPL, CRABP2, PTN 
+PC_ 2 
+Positive:  RBP4, MT1G, TF, SERPINA1, SERPING1 
+Negative:  SPARC, COL1A1, TNFRSF12A, COL5A2, COL1A2 
+PC_ 3 
+Positive:  TAF9, PNP, CD9, PMAIP1, IER2 
+Negative:  KCTD16, COL3A1, CST3, SPON2, SERPINE2 
+PC_ 4 
+Positive:  UGP2, PDPN, SOX4, OLFML3, COL9A3 
+Negative:  FN1, ANXA1, MT2A, DUSP1, DAB2 
+PC_ 5 
+Positive:  P3H2, BMP2, KCNMA1, LRRC8C, NGF 
+Negative:  DNAJB1, CRYAB, NR4A1, FOS, HSPA1A </code></pre>
+<pre class="r"><code>VizDimLoadings(Combined.common, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(Combined.common, reduction = &quot;pca&quot;, group.by = &quot;Cell.Type&quot;)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># var explained by top 10 PCs
+mat &lt;- Seurat::GetAssayData(Combined.common, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
+pca &lt;- Combined.common[[&quot;pca&quot;]]
+
+# Get the total variance:
+total_variance &lt;- sum(matrixStats::rowVars(mat))
+
+eigValues = (pca@stdev)^2  ## EigenValues
+varExplained = eigValues / total_variance
+
+DimHeatmap(Combined.common, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#extract scaled data for highlyvargenes to a matrix outside of seurat to perform PCA and examine varexplained
+source(&quot;code/PCA_fn.R&quot;)
+library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    discard</code></pre>
+<pre><code>The following object is masked from &#39;package:readr&#39;:
+
+    col_factor</code></pre>
+<pre class="r"><code># Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+scaled &lt;- Combined.common@assays$RNA@scale.data[VariableFeatures(Combined.common),]
+dim(scaled)</code></pre>
+<pre><code>[1]  2000 30716</code></pre>
+<pre class="r"><code>pca_genes &lt;- prcomp(t(scaled), scale = F)
+scores &lt;- pca_genes$x
+
+
+### PCA Raw Data
+for (n in 1:3){
+     col.v &lt;- pal[as.integer(factor(Combined.common@meta.data$labels))]
+     plot_scores(pca_genes, scores, n, n+1, cols = col.v, legend = F, points = T)
+}</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#% Var explained by top 10 pcs
+for(n in 1:10){
+     print(n)
+     print(summary(pca_genes)$importance[2,n]*100)
+}</code></pre>
+<pre><code>[1] 1
+[1] 9.527
+[1] 2
+[1] 3.484
+[1] 3
+[1] 2.648
+[1] 4
+[1] 1.918
+[1] 5
+[1] 0.737
+[1] 6
+[1] 0.725
+[1] 7
+[1] 0.568
+[1] 8
+[1] 0.539
+[1] 9
+[1] 0.394
+[1] 10
+[1] 0.35</code></pre>
+<pre class="r"><code>ElbowPlot(Combined.common, ndims = nPC) #50 PCs?</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/PCA-7.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ## Subset Pulse-seq data for finer-scale analysis -->
+<!-- In the interest of exploring finer structure within the Pulse-seq data, here I partition these data into groups of cell types as identified by the authors. These smaller datasets will then be analyzed separately. -->
+<!-- ```{r subset pulseseq} -->
+<!-- pulseseq_counts_Tuft_Neuro <- pulseseq_counts[,grepl("Tuft|Neuroendocrine", colnames(pulseseq_counts))] -->
+<!-- dim(pulseseq_counts_Tuft_Neuro) -->
+<!-- pulseseq_counts_Goblet <- pulseseq_counts[,grepl("Goblet", colnames(pulseseq_counts))] -->
+<!-- dim(pulseseq_counts_Goblet) -->
+<!-- pulseseq_counts_Club <- pulseseq_counts[,grepl("Club", colnames(pulseseq_counts))] -->
+<!-- dim(pulseseq_counts_Club) -->
+<!-- pulseseq_counts_Goblet_Club <- pulseseq_counts[,grepl("Club|Goblet", colnames(pulseseq_counts))] -->
+<!-- dim(pulseseq_counts_Goblet_Club) -->
+<!-- ``` -->
+<!-- # Data preprocessing in Seurat (code adapted from code supplied by Kushal Dey) -->
+<!-- ```{r load_packages, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE} -->
+<!-- library(CountClust) -->
+<!-- library(maptpx) -->
+<!-- library(ggplot2) -->
+<!-- library(MAST) -->
+<!-- library(Seurat) -->
+<!-- library(RColorBrewer) -->
+<!-- ``` -->
+<!-- The initial preprocessing steps take place in Seurat. -->
+<!-- ## Make a function to convert datasets into a seurat object, filter/normalize/scale, find variable genes, and Run PCA and tSNE; run the function on the three datasets and save the output as rda files. Also label each cell with its identified cell type. -->
+<!-- The code below represents preprocessing of the three datasets performed using Seurat. In brief, variable genes are selected and cells are selected that pass the mitochondrial gene content filter. -->
+<!-- In each of these datasets, cell type for each cell was parsed from the cell labels. These cell types were determined by the authors through k nearest neighbour-graph based clustering followed by labeling of each cluster using known markers for tracheal epithelial subsets. -->
+<!-- Details from the paper: "The number k of nearest neighbours was chosen in a manner roughly consistent with the size of the dataset, and set to 25 and 150 for plate- and droplet-based data, respectively. For sub-clustering of rare cell subsets, we used k = 100, 50, 50 and 20 for tuft cells, neuroendocrine cells, ionocytes and goblet cells, respectiveThe k nearest neighbour graph was computed using the function ‘nng’ from the R package ‘cccd’ and was then used as the input to Infomap62, implemented using the ‘infomap.community’ function from the ‘igraph’ R package" -->
+<!-- In cases where multiple clusters showed marker gene expression for a particular cell type, these clusters were combined to represent that one cell type. This is relevant because of the large number of clusters generated by the authors in order to better separate out relatively rare cell types. -->
+<!-- ```{r create function to makeSeurat object and filter} -->
+<!-- makeSeurat <- function(dataset, filter = TRUE, cutoffs){ -->
+<!--   seurat_object <- CreateSeuratObject(raw.data = dataset, min.cells = 3, min.genes = 200) -->
+<!--   # calculate percent mitochondrial genes -->
+<!--   mito.genes <- grep(pattern = "^MT-", x = rownames(x = seurat_object@data), value = TRUE) -->
+<!--   percent.mito <- Matrix::colSums(seurat_object@raw.data[mito.genes, ])/Matrix::colSums(seurat_object@raw.data) -->
+<!--   # AddMetaData adds columns to object@meta.data, and is a great place to stash QC stats -->
+<!--   seurat_object <- AddMetaData(object = seurat_object, metadata = percent.mito, col.name = "percent.mito") -->
+<!--   # Filter cells and normalize -->
+<!--   if(filter == TRUE){ -->
+<!--   seurat_object <- FilterCells(object = seurat_object, subset.names = c("nGene", "percent.mito"),  -->
+<!--     low.thresholds = c(200, -Inf), high.thresholds = c(2500, 0.05)) -->
+<!--   seurat_object <- NormalizeData(object = seurat_object, normalization.method = "LogNormalize", scale.factor = 10000) -->
+<!--   } -->
+<!--   # find variable genes -->
+<!--   seurat_object <- FindVariableGenes(object = seurat_object, mean.function = ExpMean, dispersion.function = LogVMR, do.plot = TRUE, x.low.cutoff = cutoffs[1], x.high.cutoff = cutoffs[2], y.cutoff = cutoffs[3]) -->
+<!--   # scale object -->
+<!--   seurat_object <- ScaleData(object = seurat_object, vars.to.regress = c("nUMI", "percent.mito"), check.for.norm = FALSE) -->
+<!--   # Run PCA and tSNE -->
+<!--   seurat_object <- RunPCA(object = seurat_object, pc.genes = seurat_object@var.genes, do.print = TRUE, pcs.print = 1:5,  -->
+<!--     genes.print = 5) -->
+<!--   seurat_object <- RunTSNE(object = seurat_object, dims.use = 1:10, do.fast = TRUE) -->
+<!--   # return seurat object -->
+<!--   return(seurat_object) -->
+<!-- } -->
+<!-- # make seurat objects for all 3 datasets -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_seurat.rda") -->
+<!-- } else { -->
+<!--   threeprime_seurat <- makeSeurat(threeprime_counts, cutoffs = c(0.0125, 3, 2)) -->
+<!--   ident.names <- names(threeprime_seurat@ident) -->
+<!--   threeprime_seurat@ident <- factor(sapply(strsplit(ident.names,split = "_"),function (x) x[3])) -->
+<!--   names(threeprime_seurat@ident) <- ident.names -->
+<!--   save(threeprime_seurat, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_seurat.rda") -->
+<!-- } -->
+<!-- dim(threeprime_seurat@raw.data) -->
+<!-- dim(threeprime_seurat@data) -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_seurat.rda") -->
+<!-- } else { -->
+<!--   pulseseq_seurat <- makeSeurat(pulseseq_counts, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names0 <- names(pulseseq_seurat@ident) -->
+<!--   pulseseq_seurat@ident <- factor(sapply(strsplit(pulseseq_seurat@cell.names,split = "_"),function (x) x[5])) -->
+<!--   names(pulseseq_seurat@ident) <- ident.names0 -->
+<!--   save(pulseseq_seurat, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_seurat.rda") -->
+<!-- } -->
+<!-- dim(pulseseq_seurat@raw.data) -->
+<!-- dim(pulseseq_seurat@data) -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_seurat.rda") -->
+<!-- } else { -->
+<!--   fullLength_seurat <- makeSeurat(fullLength_logTPM, filter = FALSE, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names1 <- names(fullLength_seurat@ident) -->
+<!--   fullLength_seurat@ident <- factor(sapply(strsplit(fullLength_seurat@cell.names,split = "_"),function (x) x[4])) -->
+<!--   names(fullLength_seurat@ident) <- ident.names1 -->
+<!--   save(fullLength_seurat, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_seurat.rda") -->
+<!-- } -->
+<!-- # make seurat objects for Pulseseq subsetted data -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_tuft_neuro_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_tuft_neuro_seurat.rda") -->
+<!-- } else { -->
+<!--   pulseseq_seurat_Tuft_Neuro <- makeSeurat(pulseseq_counts_Tuft_Neuro, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names0 <- names(pulseseq_seurat_Tuft_Neuro@ident) -->
+<!--   pulseseq_seurat_Tuft_Neuro@ident <- factor(sapply(strsplit(pulseseq_seurat_Tuft_Neuro@cell.names,split = "_"),function (x) x[5])) -->
+<!--   names(pulseseq_seurat_Tuft_Neuro@ident) <- ident.names0 -->
+<!--   save(pulseseq_seurat_Tuft_Neuro, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_tuft_neuro_seurat.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_seurat.rda") -->
+<!-- } else { -->
+<!--   pulseseq_seurat_Goblet <- makeSeurat(pulseseq_counts_Goblet, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names0 <- names(pulseseq_seurat_Goblet@ident) -->
+<!--   pulseseq_seurat_Goblet@ident <- factor(sapply(strsplit(pulseseq_seurat_Goblet@cell.names,split = "_"),function (x) x[5])) -->
+<!--   names(pulseseq_seurat_Goblet@ident) <- ident.names0 -->
+<!--   save(pulseseq_seurat_Goblet, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_seurat.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Club_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Club_seurat.rda") -->
+<!-- } else { -->
+<!--   pulseseq_seurat_Club <- makeSeurat(pulseseq_counts_Club, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names0 <- names(pulseseq_seurat_Club@ident) -->
+<!--   pulseseq_seurat_Club@ident <- factor(sapply(strsplit(pulseseq_seurat_Club@cell.names,split = "_"),function (x) x[5])) -->
+<!--   names(pulseseq_seurat_Club@ident) <- ident.names0 -->
+<!--   save(pulseseq_seurat_Club, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Club_seurat.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_Club_seurat.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_Club_seurat.rda") -->
+<!-- } else { -->
+<!--   pulseseq_seurat_Goblet_Club <- makeSeurat(pulseseq_counts_Goblet_Club, cutoffs = c(0.0125, 5, 0.5)) -->
+<!--   ident.names0 <- names(pulseseq_seurat_Goblet_Club@ident) -->
+<!--   pulseseq_seurat_Goblet_Club@ident <- factor(sapply(strsplit(pulseseq_seurat_Goblet_Club@cell.names,split = "_"),function (x) x[5])) -->
+<!--   names(pulseseq_seurat_Goblet_Club@ident) <- ident.names0 -->
+<!--   save(pulseseq_seurat_Goblet_Club, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/Pulseseq_Goblet_Club_seurat.rda") -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## Plot PCA and tSNE from Seurat objects -->
+<!-- Visualize the datasets after performing the preprocessing. -->
+<!-- ```{r Plot PCA and tSNE} -->
+<!-- #3prime -->
+<!-- threeprime_identities <- levels(threeprime_seurat@ident) -->
+<!-- my_color_palette <- brewer.pal(length(threeprime_identities), name = "Set2") -->
+<!-- DimPlot(object = threeprime_seurat, cols.use = my_color_palette, group.by = "ident")  -->
+<!-- DimPlot(threeprime_seurat, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE,  cols.use = my_color_palette, group.by = "ident")  -->
+<!-- DimPlot(threeprime_seurat, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette, group.by = "ident")  -->
+<!-- threeprime_seurat <- ProjectPCA(object = threeprime_seurat, do.print = FALSE)  -->
+<!-- TSNEPlot(object = threeprime_seurat, do.label = TRUE, colors.use = my_color_palette, group.by = "ident")  -->
+<!-- #pulseseq -->
+<!-- pulseseq_identities <- levels(pulseseq_seurat@ident) -->
+<!-- my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!-- my_color_palette1.2 <- brewer.pal(5, name = "Set3") -->
+<!-- my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!-- DimPlot(object = pulseseq_seurat, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- pulseseq_seurat <- ProjectPCA(object = pulseseq_seurat, do.print = FALSE) -->
+<!-- TSNEPlot(object = pulseseq_seurat, do.label = TRUE, colors.use = my_color_palette1, group.by = "ident")  -->
+<!-- #fullLength -->
+<!-- fullLength_identities <- levels(fullLength_seurat@ident) -->
+<!-- my_color_palette2 <- brewer.pal(length(fullLength_identities), name = "Set2") -->
+<!-- DimPlot(object = fullLength_seurat, cols.use = my_color_palette2, group.by = "ident", pt.shape = "ident") -->
+<!-- DimPlot(fullLength_seurat, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette2, group.by = "ident", pt.shape = "ident") -->
+<!-- DimPlot(fullLength_seurat, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette2, group.by = "ident", pt.shape = "ident") -->
+<!-- fullLength_seurat <- ProjectPCA(object = fullLength_seurat, do.print = FALSE) -->
+<!-- TSNEPlot(object = fullLength_seurat, do.label = TRUE, colors.use = my_color_palette2, group.by = "ident", pt.shape = "ident") -->
+<!-- #Pulseseq Tuft and neuroendocrine -->
+<!-- pulseseq_identities_Tuft_Neuro <- levels(pulseseq_seurat_Tuft_Neuro@ident) -->
+<!-- my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!-- my_color_palette1.2 <- brewer.pal(5, name = "Set3") -->
+<!-- my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!-- DimPlot(object = pulseseq_seurat_Tuft_Neuro, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Tuft_Neuro, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Tuft_Neuro, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- pulseseq_seurat_Tuft_Neuro <- ProjectPCA(object = pulseseq_seurat_Tuft_Neuro, do.print = FALSE) -->
+<!-- TSNEPlot(object = pulseseq_seurat_Tuft_Neuro, do.label = TRUE, colors.use = my_color_palette1, group.by = "ident")  -->
+<!-- #Pulseseq Goblet -->
+<!-- pulseseq_identities_Goblet <- levels(pulseseq_seurat_Goblet@ident) -->
+<!-- my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!-- my_color_palette1.2 <- brewer.pal(5, name = "Set3") -->
+<!-- my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!-- DimPlot(object = pulseseq_seurat_Goblet, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Goblet, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Goblet, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- pulseseq_seurat_Goblet <- ProjectPCA(object = pulseseq_seurat_Goblet, do.print = FALSE) -->
+<!-- TSNEPlot(object = pulseseq_seurat_Goblet, do.label = TRUE, colors.use = my_color_palette1, group.by = "ident")  -->
+<!-- #Pulseseq Club -->
+<!-- pulseseq_identities_Club <- levels(pulseseq_seurat_Club@ident) -->
+<!-- my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!-- my_color_palette1.2 <- brewer.pal(5, name = "Set3") -->
+<!-- my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!-- DimPlot(object = pulseseq_seurat_Club, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Club, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Club, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- pulseseq_seurat_Club <- ProjectPCA(object = pulseseq_seurat_Club, do.print = FALSE) -->
+<!-- TSNEPlot(object = pulseseq_seurat_Club, do.label = TRUE, colors.use = my_color_palette1, group.by = "ident")  -->
+<!-- #Pulseseq Goblet and Club -->
+<!-- pulseseq_identities_Goblet_Club <- levels(pulseseq_seurat_Goblet_Club@ident) -->
+<!-- my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!-- my_color_palette1.2 <- brewer.pal(5, name = "Set3") -->
+<!-- my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!-- DimPlot(object = pulseseq_seurat_Goblet_Club, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Goblet_Club, reduction.use = "pca", 3, 4, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- DimPlot(pulseseq_seurat_Goblet_Club, reduction.use = "pca", 5, 6, cells.use = NULL, pt.size = 1, do.return = FALSE, do.bare = FALSE, cols.use = my_color_palette1, group.by = "ident")  -->
+<!-- pulseseq_seurat_Goblet_Club <- ProjectPCA(object = pulseseq_seurat_Goblet_Club, do.print = FALSE) -->
+<!-- TSNEPlot(object = pulseseq_seurat_Goblet_Club, do.label = TRUE, colors.use = my_color_palette1, group.by = "ident")  -->
+<!-- ``` -->
+<!-- # Run CountClust::FitGoM on the data for k = 2:10 -->
+<!-- Make a function to run the CountClust::FitGoM function on the datasets.  -->
+<!-- ```{r fitgom function} -->
+<!-- runfitGoM <- function(datamatrix, tol = 0.1){ -->
+<!--   listofks <- list() -->
+<!--   counter <- 1 -->
+<!--   for(i in 2:10){ -->
+<!--     listofks[[counter]] <- CountClust::FitGoM(datamatrix, K=i, tol = tol, control=list(tmax=100)) -->
+<!--     counter <- counter + 1 -->
+<!--   } -->
+<!--   return(listofks) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## Run the function on the 3 datasets.  -->
+<!-- First create a data matrix for each dataset that only includes counts for highly variable genes and cells that passed the filter as determined by the Seurat functions above. Also create a vector containing the cell type identities for the cells that pass the filter by parsing the cell labels. For both the threeprime and Pulseseq datasets, this represents the raw count data subsetted to include only variable genes and cells that passed the filter. For the FullLength dataset, this represents the TPM data subsetted to include only variable genes and cells that passed the filter. -->
+<!-- ```{r run the function on the datasets} -->
+<!-- threeprime_counts_filtered <- threeprime_seurat@raw.data[threeprime_seurat@var.genes, colnames(threeprime_seurat@data)] -->
+<!-- dim(threeprime_counts_filtered) -->
+<!-- threeprime_counts_filtered_celltypes <- factor(sapply(strsplit(colnames(threeprime_counts_filtered),split = "_"),function (x) x[3])) -->
+<!-- length(threeprime_counts_filtered_celltypes) -->
+<!-- pulseseq_counts_filtered <- pulseseq_seurat@raw.data[pulseseq_seurat@var.genes, colnames(pulseseq_seurat@data)] -->
+<!-- dim(pulseseq_counts_filtered) -->
+<!-- pulseseq_counts_filtered_celltypes <- factor(sapply(strsplit(colnames(pulseseq_counts_filtered),split = "_"),function (x) x[5])) -->
+<!-- length(pulseseq_counts_filtered_celltypes) -->
+<!-- fullLengthTPM_filtered <- fullLength_seurat@raw.data[fullLength_seurat@var.genes, ] -->
+<!-- dim(fullLengthTPM_filtered) -->
+<!-- fullLengthTPM_filtered_celltypes <- factor(sapply(strsplit(colnames(fullLengthTPM_filtered),split = "_"),function (x) x[4])) -->
+<!-- length(fullLengthTPM_filtered_celltypes) -->
+<!-- pulseseq_counts_filtered_Tuft_Neuro <- pulseseq_seurat_Tuft_Neuro@raw.data[pulseseq_seurat_Tuft_Neuro@var.genes, colnames(pulseseq_seurat_Tuft_Neuro@data)] -->
+<!-- dim(pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- pulseseq_counts_filtered_celltypes_Tuft_Neuro <- factor(sapply(strsplit(colnames(pulseseq_counts_filtered_Tuft_Neuro),split = "_"),function (x) x[5])) -->
+<!-- length(pulseseq_counts_filtered_celltypes_Tuft_Neuro) -->
+<!-- pulseseq_counts_filtered_Goblet <- pulseseq_seurat_Goblet@raw.data[pulseseq_seurat_Goblet@var.genes, colnames(pulseseq_seurat_Goblet@data)] -->
+<!-- dim(pulseseq_counts_filtered_Goblet) -->
+<!-- pulseseq_counts_filtered_celltypes_Goblet <- factor(sapply(strsplit(colnames(pulseseq_counts_filtered_Goblet),split = "_"),function (x) x[5])) -->
+<!-- length(pulseseq_counts_filtered_celltypes_Goblet) -->
+<!-- pulseseq_counts_filtered_Club <- pulseseq_seurat_Club@raw.data[pulseseq_seurat_Club@var.genes, colnames(pulseseq_seurat_Club@data)] -->
+<!-- dim(pulseseq_counts_filtered_Club) -->
+<!-- pulseseq_counts_filtered_celltypes_Club <- factor(sapply(strsplit(colnames(pulseseq_counts_filtered_Club),split = "_"),function (x) x[5])) -->
+<!-- length(pulseseq_counts_filtered_celltypes_Club) -->
+<!-- pulseseq_counts_filtered_Goblet_Club <- pulseseq_seurat_Goblet_Club@raw.data[pulseseq_seurat_Goblet_Club@var.genes, colnames(pulseseq_seurat_Goblet_Club@data)] -->
+<!-- dim(pulseseq_counts_filtered_Goblet_Club) -->
+<!-- pulseseq_counts_filtered_celltypes_Goblet_Club <- factor(sapply(strsplit(colnames(pulseseq_counts_filtered_Goblet_Club),split = "_"),function (x) x[5])) -->
+<!-- length(pulseseq_counts_filtered_celltypes_Goblet_Club) -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_gom.rda") -->
+<!-- } else { -->
+<!--   threeprimeGoM <- runfitGoM(t(as.matrix(threeprime_counts_filtered))) -->
+<!--   save(threeprimeGoM, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/threeprime_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_gom.rda") -->
+<!-- } else { -->
+<!--   pulseseqGoM <- runfitGoM(t(as.matrix(pulseseq_counts_filtered))) -->
+<!--   save(pulseseqGoM, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_gom.rda") -->
+<!-- } else { -->
+<!--   fullLengthGoM <- runfitGoM(t(as.matrix(fullLengthTPM_filtered))) -->
+<!--   save(fullLengthGoM, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/fullLength_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Tuft_Neuro_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Tuft_Neuro_gom.rda") -->
+<!-- } else { -->
+<!--   pulseseqGoM_Tuft_Neuro <- runfitGoM(t(as.matrix(pulseseq_counts_filtered_Tuft_Neuro))) -->
+<!--   save(pulseseqGoM_Tuft_Neuro, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Tuft_Neuro_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_gom.rda") -->
+<!-- } else { -->
+<!--   pulseseqGoM_Goblet <- runfitGoM(t(as.matrix(pulseseq_counts_filtered_Goblet))) -->
+<!--   save(pulseseqGoM_Goblet, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Club_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Club_gom.rda") -->
+<!-- } else { -->
+<!--   pulseseqGoM_Club <- runfitGoM(t(as.matrix(pulseseq_counts_filtered_Club))) -->
+<!--   save(pulseseqGoM_Club, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Club_gom.rda") -->
+<!-- } -->
+<!-- if (file.exists("/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_Club_gom.rda")){ -->
+<!--   load(file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_Club_gom.rda") -->
+<!-- } else { -->
+<!--   pulseseqGoM_Goblet_Club <- runfitGoM(t(as.matrix(pulseseq_counts_filtered_Goblet_Club))) -->
+<!--   save(pulseseqGoM_Goblet_Club, file = "/project2/mstephens/topic-modeling-airway-epithelium/GoM_rda_files/pulseseq_Goblet_Club_gom.rda") -->
+<!-- } -->
+<!-- ``` -->
+<!-- # Analysis of the Topics within the Topic models generated for each dataset -->
+<!-- See the bottom of this document for visualizations for all topic models generated for each dataset as well as the top 100 genes for each respective topic model. -->
+<!-- Visualizations: -->
+<!--   visualizeGoM plots each cell based on the tSNE1 and tSNE2 embeddings. Colors are determmined based on assignment of each cell to a particular topic based on plurality membership (cells are colored by the topic that constitutes the largest proportion out of all the topics contributing to that cell). -->
+<!--   visualizeGoM_topic_gradients plots each cell based on the tSNE1 and tSNE2 embeddings. Separate plots are created for each topic. In each plot, cells are colored on a gradient according to the proportion of each cell contributed to by the topic. -->
+<!--   plot_structure_plot plots a stacked bar plot for each cell (separated into cell type categories determined by the authors) for the topics that contribute to each cell. -->
+<!--   plot_structure_plot_rare_only plots the same as above but removes the basal and club cell bar plots to allow for better visualization of the rare cell types. -->
+<!--   make_topic_plots plots separate boxplots for each topic. The y axis in each case is proportion contributed by the topic in question, and the x axis is faceted based on the cell types assigned to single cells by the authors. -->
+<!-- ```{r functions to visualize GoM} -->
+<!-- visualizeGoM <- function(omega, seuratobject, data){ -->
+<!--   omega <- omega[match(seuratobject@cell.names, colnames(data)),] -->
+<!--   labs_clus <- colnames(omega)[apply(omega,1,which.max)] -->
+<!--   data_ggplot <- data.frame(labels = labs_clus, -->
+<!--                           tSNE_1 = seuratobject@dr$tsne@cell.embeddings[, 1], -->
+<!--                           tSNE_2 = seuratobject@dr$tsne@cell.embeddings[, 2]) -->
+<!--   plot1 <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),  -->
+<!--                                      panel.grid.major = element_blank(),  -->
+<!--                                      panel.grid.minor = element_blank(),  -->
+<!--                                      axis.text.y = element_blank(), -->
+<!--                                      axis.text.x = element_blank(), -->
+<!--                                      axis.ticks = element_blank(), -->
+<!--                                      legend.text = element_text(size = 15)) + geom_point(aes(x = tSNE_1, y = tSNE_2, color = labels), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_color_discrete('') -->
+<!--   return(plot1) -->
+<!-- } -->
+<!-- visualizeGoM_topic_gradients <- function(omega, seuratobject, data){ -->
+<!--   omega <- omega[match(seuratobject@cell.names, colnames(data)),] -->
+<!--   ntopics <- ncol(omega) -->
+<!--   for (n in 1:ntopics){ -->
+<!--   data_ggplot <- data.frame(proportion = omega[,n], -->
+<!--                           tSNE_1 = seuratobject@dr$tsne@cell.embeddings[, 1], -->
+<!--                           tSNE_2 = seuratobject@dr$tsne@cell.embeddings[, 2]) -->
+<!--   plot.gradient <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),  -->
+<!--                                      panel.grid.major = element_blank(),  -->
+<!--                                      panel.grid.minor = element_blank(),  -->
+<!--                                      axis.text.y = element_blank(), -->
+<!--                                      axis.text.x = element_blank(), -->
+<!--                                      axis.ticks = element_blank(), -->
+<!--                                      legend.text = element_text(size = 15)) + geom_point(aes(x = tSNE_1, y = tSNE_2, color = proportion), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_colour_gradient(low="grey", high="red") -->
+<!--   plot(plot.gradient) -->
+<!--   } -->
+<!-- } -->
+<!-- plot_structure_plot <- function(omega, seuratobject){ -->
+<!--   annotation <- data.frame( -->
+<!--     sample_id = rownames(omega), -->
+<!--     tissue_label = seuratobject@ident -->
+<!--     ) -->
+<!--   my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!--   my_color_palette1.2 <- brewer.pal(3, name = "Set3") -->
+<!--   my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!--   StructureGGplot(omega = omega, -->
+<!--                 annotation = annotation, -->
+<!--                 palette = my_color_palette1, -->
+<!--                 order_sample = TRUE, -->
+<!--                 axis_tick = list(axis_ticks_length = .1, -->
+<!--                                  axis_ticks_lwd_y = .1, -->
+<!--                                  axis_ticks_lwd_x = .1, -->
+<!--                                  axis_label_size = 7, -->
+<!--                                  axis_label_face = "bold")) -->
+<!-- } -->
+<!-- plot_structure_plot_rare_only <- function(omega, seuratobject){ -->
+<!--   annotation <- data.frame( -->
+<!--     sample_id = rownames(omega)[!(seuratobject@ident %in% c("Basal", "Club"))], -->
+<!--     tissue_label = seuratobject@ident[!(seuratobject@ident %in% c("Basal", "Club"))] -->
+<!--     ) -->
+<!--   omega_rare <- omega[!(seuratobject@ident %in% c("Basal", "Club")),] -->
+<!--   my_color_palette1.1 <- brewer.pal(8, name = "Set2") -->
+<!--   my_color_palette1.2 <- brewer.pal(3, name = "Set3") -->
+<!--   my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2) -->
+<!--   StructureGGplot(omega = omega_rare, -->
+<!--                 annotation = annotation, -->
+<!--                 palette = my_color_palette1, -->
+<!--                 order_sample = TRUE, -->
+<!--                 axis_tick = list(axis_ticks_length = .1, -->
+<!--                                  axis_ticks_lwd_y = .1, -->
+<!--                                  axis_ticks_lwd_x = .1, -->
+<!--                                  axis_label_size = 7, -->
+<!--                                  axis_label_face = "bold")) -->
+<!-- } -->
+<!-- make_topic_plots <- function(omega, celltypes){ -->
+<!--   omega <- as.data.frame(omega) -->
+<!--   omega <- cbind(omega,celltypes) -->
+<!--   for (k in 1:(ncol(omega)-1)) { -->
+<!--     base_plot <- ggplot(data = omega, mapping = aes(x = celltypes, y = omega[,k])) + labs(y = paste0("Topic ", k, " value"), x = paste0("Cell Type")) + theme(axis.text.x = element_text(angle = -20, hjust = 0, vjust = 0)) -->
+<!--     plot(base_plot + geom_violin(width = 1.5, fill = "skyblue",color = "skyblue") +  -->
+<!--       geom_boxplot(width = 0.1,outlier.shape = NA, alpha = 0.2)) -->
+<!--    } -->
+<!-- } -->
+<!-- ``` -->
+<!-- Use the CountClust::ExtractTopFeatures function to obtain KL measurement scores for the top 100 genes per cluster that best distinguish that cluster from the rest. -->
+<!-- ```{r cluster annotations function} -->
+<!-- annotate_clusters <- function(theta_mat, countmatrix){ -->
+<!--   top_features <- ExtractTopFeatures(theta_mat,  -->
+<!--                                      top_features=100,  -->
+<!--                                      method="poisson",  -->
+<!--                                      options="min") -->
+<!--   gene_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) rownames(countmatrix)[top_features[[1]][x,]])) -->
+<!--   scores_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) top_features[[2]][x,])) -->
+<!--   print(gene_vector) -->
+<!--   print(scores_vector) -->
+<!-- } -->
+<!-- ``` -->
+<!-- For the topic model fit to the threeprime dataset containing 7 topics,  -->
+<!--   topic 1 seems to correspond to Basal cells,  -->
+<!--   topic 2 seems to correspond to Club cells, -->
+<!--   topic 3 seems to correspond to Ciliated cells,  -->
+<!--   topic 4 seems to correspond to Goblet cells, -->
+<!--   topic 5 seems to correspond to Tuft cells,  -->
+<!--   topic 6 seems to correspond to Neuroendocrine cells, -->
+<!--   topic 7 does not seem to correspond strongly to any cell type. -->
+<!-- ```{r threeprime k of 7} -->
+<!-- visualizeGoM(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
+<!-- visualizeGoM_topic_gradients(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
+<!-- plot_structure_plot(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat) -->
+<!-- plot_structure_plot_rare_only(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat) -->
+<!-- make_topic_plots(threeprimeGoM[[6]]$fit$omega, threeprime_counts_filtered_celltypes) -->
+<!-- annotate_clusters(threeprimeGoM[[6]]$fit$theta, threeprime_counts_filtered) -->
+<!-- ``` -->
+<!-- For the topic model fit to the Pulseseq dataset containing 8 topics,  -->
+<!--   topic 2 seems to correspond to Basal and Proliferating cells, -->
+<!--   topic 5 seems to correspond to Ciliated cells. -->
+<!-- ```{r pulseseq k of 8} -->
+<!-- visualizeGoM(omega=pulseseqGoM[[7]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered) -->
+<!-- visualizeGoM_topic_gradients(omega=pulseseqGoM[[7]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered) -->
+<!-- plot_structure_plot(omega=pulseseqGoM[[7]]$fit$omega, seuratobject=pulseseq_seurat) -->
+<!-- plot_structure_plot_rare_only(omega=pulseseqGoM[[7]]$fit$omega, seuratobject=pulseseq_seurat) -->
+<!-- make_topic_plots(pulseseqGoM[[7]]$fit$omega, pulseseq_counts_filtered_celltypes)  -->
+<!-- annotate_clusters(pulseseqGoM[[7]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- ``` -->
+<!-- For the topic model fit to the Pulseseq dataset containing 10 topics,  -->
+<!--   topic 2 seems to correspond to a subset of proliferating and basal cells, -->
+<!--   topic 3 seems to correspond to a subset of proliferating and basal cells, -->
+<!--   topic 9 seems to correspond to Tuft, Ionocyte, and Neuroendocrine cells, -->
+<!--   topic 10 seems to correspond to a subset of Ionocytes. -->
+<!-- ```{r pulseseq k of 10} -->
+<!-- visualizeGoM(omega=pulseseqGoM[[9]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered) -->
+<!-- visualizeGoM_topic_gradients(omega=pulseseqGoM[[9]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered) -->
+<!-- plot_structure_plot(omega=pulseseqGoM[[9]]$fit$omega, seuratobject=pulseseq_seurat) -->
+<!-- plot_structure_plot_rare_only(omega=pulseseqGoM[[9]]$fit$omega, seuratobject=pulseseq_seurat) -->
+<!-- make_topic_plots(pulseseqGoM[[9]]$fit$omega, pulseseq_counts_filtered_celltypes) -->
+<!-- annotate_clusters(pulseseqGoM[[9]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- ``` -->
+<!-- For the topic model fit to the FullLength dataset containing 7 topics,  -->
+<!--   topic 1 seems to correspond to Ciliated cells,  -->
+<!--   topic 4 seems to correspond to a subset of Basal cells, -->
+<!--   topic 5 seems to correspond to a subset of Basal cells, -->
+<!--   topic 7 seems to correspond to Tuft, Neuroendocrine cells, and a subset of Ionocytes. (Note: Since the data used to do the GoM analysis was TPM data, this is not very meaningful.) -->
+<!-- ```{r FullLength k of 7} -->
+<!-- visualizeGoM(omega=fullLengthGoM[[6]]$fit$omega, seuratobject=fullLength_seurat, data=fullLengthTPM_filtered) -->
+<!-- visualizeGoM_topic_gradients(omega=fullLengthGoM[[6]]$fit$omega, seuratobject=fullLength_seurat, data=fullLengthTPM_filtered) -->
+<!-- plot_structure_plot(omega=fullLengthGoM[[6]]$fit$omega, seuratobject=fullLength_seurat) -->
+<!-- plot_structure_plot_rare_only(omega=fullLengthGoM[[6]]$fit$omega, seuratobject=fullLength_seurat) -->
+<!-- make_topic_plots(fullLengthGoM[[6]]$fit$omega, fullLengthTPM_filtered_celltypes) -->
+<!-- annotate_clusters(fullLengthGoM[[6]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- ``` -->
+<!-- # Visualizations for All values of k for each dataset -->
+<!-- ## Visualize GoM clustering output -->
+<!-- ### Visualize threeprime Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize threeprime} -->
+<!-- for (i in 3:length(threeprimeGoM)){ -->
+<!--   plot(visualizeGoM(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered)) -->
+<!-- } -->
+<!-- for (i in 3:length(threeprimeGoM)){ -->
+<!--   visualizeGoM_topic_gradients(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
+<!-- } -->
+<!-- for (i in 3:length(threeprimeGoM)){ -->
+<!--   plot(plot_structure_plot(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(threeprimeGoM)){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(threeprimeGoM)){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for ThreePrime k = ", j)) -->
+<!--   make_topic_plots(threeprimeGoM[[i]]$fit$omega, threeprime_counts_filtered_celltypes) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Pulseseq Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize pulseseq} -->
+<!-- for (i in 3:length(pulseseqGoM)){ -->
+<!--   plot(visualizeGoM(omega=pulseseqGoM[[i]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered)) -->
+<!-- } -->
+<!-- for (i in 3:length(pulseseqGoM)){ -->
+<!--   visualizeGoM_topic_gradients(omega=pulseseqGoM[[i]]$fit$omega, seuratobject=pulseseq_seurat, data=pulseseq_counts_filtered) -->
+<!-- } -->
+<!-- for (i in 3:length(pulseseqGoM)){ -->
+<!--   plot(plot_structure_plot(omega=pulseseqGoM[[i]]$fit$omega, seuratobject=pulseseq_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(pulseseqGoM)){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=pulseseqGoM[[i]]$fit$omega, seuratobject=pulseseq_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(pulseseqGoM)){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for Pulseseq k = ", j)) -->
+<!--   make_topic_plots(pulseseqGoM[[i]]$fit$omega, pulseseq_counts_filtered_celltypes) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Full Length Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize fullLength} -->
+<!-- for (i in 3:length(fullLengthGoM)){ -->
+<!--   plot(visualizeGoM(omega=fullLengthGoM[[i]]$fit$omega, seuratobject=fullLength_seurat, data=fullLengthTPM_filtered)) -->
+<!-- } -->
+<!-- for (i in 3:length(fullLengthGoM)){ -->
+<!--   visualizeGoM_topic_gradients(omega=fullLengthGoM[[i]]$fit$omega, seuratobject=fullLength_seurat, data=fullLengthTPM_filtered) -->
+<!-- } -->
+<!-- for (i in 3:length(fullLengthGoM)){ -->
+<!--   plot(plot_structure_plot(omega=fullLengthGoM[[i]]$fit$omega, seuratobject=fullLength_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(fullLengthGoM)){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=fullLengthGoM[[i]]$fit$omega, seuratobject=fullLength_seurat)) -->
+<!-- } -->
+<!-- for (i in 3:length(fullLengthGoM)){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for FullLength k = ", j)) -->
+<!--   make_topic_plots(fullLengthGoM[[i]]$fit$omega, fullLengthTPM_filtered_celltypes) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Pulseseq (Tuft and Neuroendocrine) Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize pulseseq tuftneuro} -->
+<!-- for (i in 1:length(pulseseqGoM_Tuft_Neuro)){ -->
+<!--   plot(visualizeGoM(omega=pulseseqGoM_Tuft_Neuro[[i]]$fit$omega, seuratobject=pulseseq_seurat_Tuft_Neuro, data=pulseseq_counts_filtered_Tuft_Neuro)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Tuft_Neuro)){ -->
+<!--   visualizeGoM_topic_gradients(omega=pulseseqGoM_Tuft_Neuro[[i]]$fit$omega, seuratobject=pulseseq_seurat_Tuft_Neuro, data=pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Tuft_Neuro)){ -->
+<!--   plot(plot_structure_plot(omega=pulseseqGoM_Tuft_Neuro[[i]]$fit$omega, seuratobject=pulseseq_seurat_Tuft_Neuro)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Tuft_Neuro)){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=pulseseqGoM_Tuft_Neuro[[i]]$fit$omega, seuratobject=pulseseq_seurat_Tuft_Neuro)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Tuft_Neuro)){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for Pulseseq Tuft_Neuro k = ", j)) -->
+<!--   make_topic_plots(pulseseqGoM_Tuft_Neuro[[i]]$fit$omega, pulseseq_counts_filtered_celltypes_Tuft_Neuro) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Pulseseq (Goblet) Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize pulseseq Goblet} -->
+<!-- for (i in 1:5){ -->
+<!--   plot(visualizeGoM(omega=pulseseqGoM_Goblet[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet, data=pulseseq_counts_filtered_Goblet)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   visualizeGoM_topic_gradients(omega=pulseseqGoM_Goblet[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet, data=pulseseq_counts_filtered_Goblet) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   plot(plot_structure_plot(omega=pulseseqGoM_Goblet[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=pulseseqGoM_Goblet[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for Pulseseq Goblet k = ", j)) -->
+<!--   make_topic_plots(pulseseqGoM_Goblet[[i]]$fit$omega, pulseseq_counts_filtered_celltypes_Goblet) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Pulseseq (Club) Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize pulseseq club} -->
+<!-- for (i in 1:5){ -->
+<!--   plot(visualizeGoM(omega=pulseseqGoM_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Club, data=pulseseq_counts_filtered_Club)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   visualizeGoM_topic_gradients(omega=pulseseqGoM_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Club, data=pulseseq_counts_filtered_Club) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   plot(plot_structure_plot(omega=pulseseqGoM_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Club)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=pulseseqGoM_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Club)) -->
+<!-- } -->
+<!-- for (i in 1:5){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for Pulseseq Club k = ", j)) -->
+<!--   make_topic_plots(pulseseqGoM_Club[[i]]$fit$omega, pulseseq_counts_filtered_celltypes_Club) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ### Visualize Pulseseq (Goblet and Club) Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
+<!-- ```{r visualize pulseseq goblet club} -->
+<!-- for (i in 1:length(pulseseqGoM_Goblet_Club)){ -->
+<!--   plot(visualizeGoM(omega=pulseseqGoM_Goblet_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet_Club, data=pulseseq_counts_filtered_Goblet_Club)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Goblet_Club)){ -->
+<!--   visualizeGoM_topic_gradients(omega=pulseseqGoM_Goblet_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet_Club, data=pulseseq_counts_filtered_Goblet_Club) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Goblet_Club)){ -->
+<!--   plot(plot_structure_plot(omega=pulseseqGoM_Goblet_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet_Club)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Goblet_Club)){ -->
+<!--   plot(plot_structure_plot_rare_only(omega=pulseseqGoM_Goblet_Club[[i]]$fit$omega, seuratobject=pulseseq_seurat_Goblet_Club)) -->
+<!-- } -->
+<!-- for (i in 1:length(pulseseqGoM_Goblet_Club)){ -->
+<!--   j <- i + 1 -->
+<!--   print(paste0("Plots for Pulseseq Goblet_Club k = ", j)) -->
+<!--   make_topic_plots(pulseseqGoM_Goblet_Club[[i]]$fit$omega, pulseseq_counts_filtered_celltypes_Goblet_Club) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## Cluster annotations -->
+<!-- ### Top 100 Genes Driving Clusters in the threeprime Dataset  -->
+<!-- ```{r visualize threeprime genes} -->
+<!-- annotate_clusters(threeprimeGoM[[3]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[4]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[5]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[6]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[7]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[8]]$fit$theta, threeprime_counts_filtered) -->
+<!-- annotate_clusters(threeprimeGoM[[9]]$fit$theta, threeprime_counts_filtered) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the Pulseseq Dataset  -->
+<!-- ```{r visualize pulseseq genes} -->
+<!-- annotate_clusters(pulseseqGoM[[3]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[4]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[5]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[6]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[7]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[8]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- annotate_clusters(pulseseqGoM[[9]]$fit$theta, pulseseq_counts_filtered) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the FullLength Dataset  -->
+<!-- ```{r visualize fullLength genes} -->
+<!-- annotate_clusters(fullLengthGoM[[3]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[4]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[5]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[6]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[7]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[8]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- annotate_clusters(fullLengthGoM[[9]]$fit$theta, fullLengthTPM_filtered) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the Pulseseq (Tuft and Neuroendocrine) Dataset  -->
+<!-- ```{r visualize pulseseq genes tuft neuro} -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[1]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[2]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[3]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[4]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[5]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[6]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[7]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[8]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- annotate_clusters(pulseseqGoM_Tuft_Neuro[[9]]$fit$theta, pulseseq_counts_filtered_Tuft_Neuro) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the Pulseseq (Goblet) Dataset  -->
+<!-- ```{r visualize pulseseq genes goblet} -->
+<!-- #annotate_clusters(pulseseqGoM_Goblet[[1]]$fit$theta, pulseseq_counts_filtered_Goblet) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet[[2]]$fit$theta, pulseseq_counts_filtered_Goblet) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet[[3]]$fit$theta, pulseseq_counts_filtered_Goblet) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet[[4]]$fit$theta, pulseseq_counts_filtered_Goblet) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet[[5]]$fit$theta, pulseseq_counts_filtered_Goblet) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the Pulseseq (Club) Dataset  -->
+<!-- ```{r visualize pulseseq genes club} -->
+<!-- annotate_clusters(pulseseqGoM_Club[[1]]$fit$theta, pulseseq_counts_filtered_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Club[[2]]$fit$theta, pulseseq_counts_filtered_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Club[[3]]$fit$theta, pulseseq_counts_filtered_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Club[[4]]$fit$theta, pulseseq_counts_filtered_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Club[[5]]$fit$theta, pulseseq_counts_filtered_Club) -->
+<!-- ``` -->
+<!-- ### Top 100 Genes Driving Clusters in the Pulseseq (Goblet and Club) Dataset  -->
+<!-- ```{r visualize pulseseq genes goblet club} -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[1]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[2]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[3]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[4]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[5]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[6]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[7]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[8]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- annotate_clusters(pulseseqGoM_Goblet_Club[[9]]$fit$theta, pulseseq_counts_filtered_Goblet_Club) -->
+<!-- ``` -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scales_1.1.0       RColorBrewer_1.1-2 forcats_0.4.0      stringr_1.4.0     
+ [5] dplyr_0.8.3        purrr_0.3.3        readr_1.3.1        tidyr_1.0.0       
+ [9] tibble_2.1.3       ggplot2_3.2.1      tidyverse_1.3.0    Seurat_3.1.1      
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.3.1        backports_1.1.5     workflowr_1.5.0    
+  [4] sn_1.5-4            plyr_1.8.4          igraph_1.2.4.2     
+  [7] lazyeval_0.2.2      splines_3.4.3       listenv_0.8.0      
+ [10] TH.data_1.0-10      digest_0.6.23       htmltools_0.4.0    
+ [13] gdata_2.18.0        magrittr_1.5        cluster_2.0.6      
+ [16] ROCR_1.0-7          globals_0.12.5      modelr_0.1.5       
+ [19] matrixStats_0.55.0  RcppParallel_4.4.4  R.utils_2.9.2      
+ [22] sandwich_2.5-1      colorspace_1.4-1    rvest_0.3.5        
+ [25] ggrepel_0.8.1       haven_2.2.0         xfun_0.12          
+ [28] crayon_1.3.4        jsonlite_1.6        zeallot_0.1.0      
+ [31] survival_2.41-3     zoo_1.8-6           ape_5.3            
+ [34] glue_1.3.1          gtable_0.3.0        leiden_0.3.1       
+ [37] future.apply_1.3.0  BiocGenerics_0.24.0 mvtnorm_1.0-7      
+ [40] DBI_1.0.0           bibtex_0.4.2        Rcpp_1.0.3         
+ [43] metap_1.2           plotrix_3.7-2       viridisLite_0.3.0  
+ [46] reticulate_1.13     rsvd_1.0.2          SDMTools_1.1-221.2 
+ [49] stats4_3.4.3        tsne_0.1-3          htmlwidgets_1.5.1  
+ [52] httr_1.4.1          gplots_3.0.1.1      TFisher_0.2.0      
+ [55] ica_1.0-2           farver_2.0.3        pkgconfig_2.0.3    
+ [58] R.methodsS3_1.7.1   uwot_0.1.5          dbplyr_1.4.2       
+ [61] labeling_0.3        tidyselect_0.2.5    rlang_0.4.4        
+ [64] reshape2_1.4.3      later_1.0.0         munsell_0.5.0      
+ [67] cellranger_1.1.0    tools_3.4.3         cli_1.1.0          
+ [70] generics_0.0.2      broom_0.5.2         ggridges_0.5.1     
+ [73] evaluate_0.14       yaml_2.2.0          npsurv_0.4-0       
+ [76] knitr_1.26          fs_1.3.1            fitdistrplus_1.0-14
+ [79] caTools_1.17.1.3    RANN_2.6.1          pbapply_1.4-2      
+ [82] future_1.15.1       nlme_3.1-131        whisker_0.4        
+ [85] R.oo_1.23.0         xml2_1.2.2          rstudioapi_0.10    
+ [88] compiler_3.4.3      plotly_4.9.1        png_0.1-7          
+ [91] lsei_1.2-0          reprex_0.3.0        stringi_1.4.3      
+ [94] lattice_0.20-35     Matrix_1.2-18       multtest_2.34.0    
+ [97] vctrs_0.2.0         mutoss_0.1-12       pillar_1.4.2       
+[100] lifecycle_0.1.0     Rdpack_0.11-0       lmtest_0.9-37      
+[103] RcppAnnoy_0.0.14    data.table_1.12.6   cowplot_0.9.3      
+[106] bitops_1.0-6        irlba_2.3.3         gbRd_0.4-11        
+[109] httpuv_1.5.2        R6_2.4.1            promises_1.1.0     
+[112] KernSmooth_2.23-15  gridExtra_2.3       codetools_0.2-15   
+[115] MASS_7.3-51.4       gtools_3.8.1        assertthat_0.2.1   
+[118] rprojroot_1.3-2     withr_2.1.2         sctransform_0.2.0  
+[121] mnormt_1.5-5        multcomp_1.4-8      parallel_3.4.3     
+[124] hms_0.5.2           grid_3.4.3          rmarkdown_1.18     
+[127] Rtsne_0.15          git2r_0.26.1        numDeriv_2016.8-1.1
+[130] Biobase_2.38.0      lubridate_1.7.4    </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
