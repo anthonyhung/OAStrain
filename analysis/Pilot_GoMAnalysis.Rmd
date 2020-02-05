@@ -20,12 +20,23 @@ Include data from:
 ```{r load libraries}
 library(Seurat)
 library(tidyverse)
+library(CountClust)
+library(maptpx)
+library(ggplot2)
+library(MAST)
+library(RColorBrewer)
 ```
 
-# Load in datasets
-Load in datasets and create Seurat objects for each of them. Add metadata about the cell type they were assigned in their original contexts.
+# Load in datasets and merge them
+
+Load in datasets and create Seurat objects for each of them. Add metadata about the cell type they were assigned in their original contexts. Merge the Seurat object into one large object.
 
 ```{r Loading in data matrices}
+
+if (file.exists("data/Combined_singlecell_data.rds")){
+Combined.common <- readRDS("data/Combined_singlecell_data.rds")
+} else {
+
 #Pilot data
 ANT1.2 <- readRDS("data/ANT1_2.rds")
 ANT1.2 <- AddMetaData(ANT1.2, "iPSC-Chondrocyte", col.name = "Cell.Type")
@@ -67,32 +78,26 @@ dim(gh_big_humans)
 liver <- readRDS("data/humanLiverSubset_hepatocytes.rds")
 liver <- AddMetaData(liver, "Hepatocyte", col.name = "Cell.Type")
 dim(liver)
-```
-
-![Cell Type Clusters from original paper](../analysis/figures/scviz1.png)
-![Subsetting gate drawn in scViz](../analysis/figures/scviz2.png)
 
 # Merge Datasets
 
-Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.
-
-```{r merge}
-#Merge, entering a "0" value for genes that are not in common
-Combined <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans, liver), project = "Combined")
+# Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.
 
 # merge based on common genes between ALL datasets
 common.features <- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(gh_big_humans), rownames(liver)))
 length(x = common.features)
 Combined.common <- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = "Combined.common")
+}
 ```
 
+![Cell Type Clusters from original paper](../analysis/figures/scviz1.png)
+![Subsetting gate drawn in scViz](../analysis/figures/scviz2.png)
 
+# Analysis of combined dataset in Seurat
 
+Now we can look at the cells in Seurat, including PCA and UMAP
 
-
-Now we can look at the cells in Seurat
-
-```{r QC}
+```{r Seurat analysis}
 VlnPlot(Combined.common, features = c("nFeature_RNA", "nCount_RNA"), ncol = 2, group.by = "orig.ident")
 VlnPlot(Combined.common, features = c("nFeature_RNA", "nCount_RNA"), ncol = 2, group.by = "Cell.Type")
 
@@ -100,22 +105,50 @@ VlnPlot(Combined.common, features = c("nFeature_RNA", "nCount_RNA"), ncol = 2, g
 # for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
 
 FeatureScatter(Combined.common, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-```
 
+if (file.exists("data/Combined_singlecell_data.rds")){
+Combined.common <- readRDS("data/Combined_singlecell_data.rds")
+} else {
 
-# Normalizing Data
-
-```{r Norm}
+#Normalize Data
 Combined.common <- NormalizeData(Combined.common, normalization.method = "LogNormalize", scale.factor = 10000)
-```
-
 
 # Feature selection
 
-```{r feature selection}
 Combined.common <- FindVariableFeatures(Combined.common, selection.method = "vst", nfeatures = 2000)
 
+# Scaling Data
 
+scale_data <- function(seurat.obj){
+  all.genes <- rownames(seurat.obj)
+  return(ScaleData(seurat.obj, features = all.genes))
+}
+
+Combined.common <- scale_data(Combined.common)
+
+# Dimensionality Reduction
+
+#Using the highly variable features selected above, perform PCA
+
+nPC <- 100
+Combined.common <- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common), npcs = nPC)
+
+
+#UMAP
+num_PCs <- 50
+
+Combined.common <- FindNeighbors(Combined.common, dims = 1:num_PCs)
+Combined.common <- FindClusters(Combined.common, resolution = 0.5)
+
+#Run UMAP
+Combined.common <- RunUMAP(Combined.common, dims = 1:num_PCs)
+}
+
+
+
+#Plots 
+
+#Var features
 plot_variable_features <- function(seurat.obj){
   # Identify the 10 most highly variable genes
   top10 <- head(VariableFeatures(seurat.obj), 10)
@@ -129,26 +162,6 @@ plot_variable_features <- function(seurat.obj){
 }
 
 plot_variable_features(Combined.common)
-```
-
-# Scaling Data
-
-```{r scaling}
-scale_data <- function(seurat.obj){
-  all.genes <- rownames(seurat.obj)
-  return(ScaleData(seurat.obj, features = all.genes, vars.to.regress = c("nUMI")))
-}
-
-Combined.common <- scale_data(Combined.common)
-```
-
-# Dimensionality Reduction
-
-Using the highly variable features selected above, perform PCA
-
-```{r PCA}
-nPC <- 100
-Combined.common <- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common), npcs = nPC)
 
 
 # Examine and visualize PCA results a few different ways
@@ -168,10 +181,6 @@ eigValues = (pca@stdev)^2  ## EigenValues
 varExplained = eigValues / total_variance
 
 DimHeatmap(Combined.common, dims = 1:15, cells = 500, balanced = TRUE)
-
-
-
-
 
 
 #extract scaled data for highlyvargenes to a matrix outside of seurat to perform PCA and examine varexplained
@@ -200,51 +209,28 @@ for (n in 1:3){
 for(n in 1:10){
      print(n)
      print(summary(pca_genes)$importance[2,n]*100)
+
+saveRDS(Combined.common, "data/Combined_singlecell_data.rds")
 }
 
-
+#elbow plot
 ElbowPlot(Combined.common, ndims = nPC) #50 PCs?
-```
 
-
-# Clustering
-
-```{r clustering}
-num_PCs <- 50
-
-Combined.common <- FindNeighbors(Combined.common, dims = 1:num_PCs)
-Combined.common <- FindClusters(Combined.common, resolution = 0.5)
-
-#Run UMAP
-Combined.common <- RunUMAP(Combined.common, dims = 1:num_PCs)
+#UMAP
 DimPlot(Combined.common, reduction = "umap", group.by = "Cell.Type")
+
 ```
-
-
-```{r save}
-# save reorganized sample information
-saveRDS(Combined.common, "data/Combined_singlecell_data.rds")
-```
-
 
 # Grades of Membership analysis
-
-```{r load_packages, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
-library(CountClust)
-library(maptpx)
-library(ggplot2)
-library(MAST)
-library(RColorBrewer)
-```
 
 # Run CountClust::FitGoM on the data for k = 3:8
 Make a function to run the CountClust::FitGoM function on the datasets.
 
 ```{r fitgom function}
-runfitGoM <- function(datamatrix, tol = 0.1){
+runfitGoM <- function(datamatrix, tol = 0.1, start, end){
   listofks <- list()
   counter <- 1
-  for(i in 3:8){
+  for(i in start:end){
     listofks[[counter]] <- CountClust::FitGoM(datamatrix, K=i, tol = tol, control=list(tmax=100))
     counter <- counter + 1
   }
@@ -253,15 +239,50 @@ runfitGoM <- function(datamatrix, tol = 0.1){
 ```
 
 ## Run the function.
-First create a data matrix that only includes counts for highly variable genes and cells that passed the filter as determined by the Seurat functions above. Then run the GoM function on the data
+Then run the GoM function on the data
 
 ```{r run the function on the datasets}
-Combined_counts_filtered <- Combined.common@assays$RNA@counts[Combined.common@assays$RNA@var.features, colnames(Combined.common@assays$RNA@counts)]
-dim(Combined_counts_filtered)
-Combined_counts_filtered_celltypes <- Combined.common@meta.data$Cell.Type
-length(Combined_counts_filtered_celltypes)
+Combined_counts <- Combined.common@assays$RNA@counts
+dim(Combined_counts)
+Combined_counts_celltypes <- Combined.common@meta.data$Cell.Type
+length(Combined_counts_celltypes)
 
-Combined_GoM <- runfitGoM(t(as.matrix(Combined_counts_filtered)))
+if (file.exists("data/GoMresultsk3.rds")){
+  Combined_GoM3 <- readRDS(file = "data/GoMresultsk3.rds")
+} else {
+  Combined_GoM3 <- runfitGoM(t(Combined_counts), start = 3, end = 3)
+  saveRDS(Combined_GoM3, "data/GoMresultsk3.rds")
+}
+if (file.exists("data/GoMresultsk4.rds")){
+  Combined_GoM4 <- readRDS(file = "data/GoMresultsk4.rds")
+} else {
+  Combined_GoM4 <- runfitGoM(t(Combined_counts), start = 4, end = 4)
+  saveRDS(Combined_GoM4, "data/GoMresultsk4.rds")
+}
+if (file.exists("data/GoMresultsk5.rds")){
+  Combined_GoM5 <- readRDS(file = "data/GoMresultsk5.rds")
+} else {
+  Combined_GoM5 <- runfitGoM(t(Combined_counts), start = 5, end = 5)
+  saveRDS(Combined_GoM5, "data/GoMresultsk5.rds")
+}
+if (file.exists("data/GoMresultsk6.rds")){
+  Combined_GoM6 <- readRDS(file = "data/GoMresultsk6.rds")
+} else {
+  Combined_GoM6 <- runfitGoM(t(Combined_counts), start = 6, end = 6)
+  saveRDS(Combined_GoM6, "data/GoMresultsk6.rds")
+}
+if (file.exists("data/GoMresultsk7.rds")){
+  Combined_GoM7 <- readRDS(file = "data/GoMresultsk7.rds")
+} else {
+  Combined_GoM7 <- runfitGoM(t(Combined_counts), start = 7, end = 7)
+  saveRDS(Combined_GoM7, "data/GoMresultsk7.rds")
+}
+if (file.exists("data/GoMresultsk8.rds")){
+  Combined_GoM8 <- readRDS(file = "data/GoMresultsk8.rds")
+} else {
+  Combined_GoM8 <- runfitGoM(t(Combined_counts), start = 8, end = 8)
+  saveRDS(Combined_GoM8, "data/GoMresultsk8.rds")
+}
 ```
 
 # Analysis of the Topics within the Topic models generated for each dataset
@@ -280,35 +301,35 @@ Visualizations:
   
 ```{r functions to visualize GoM}
 visualizeGoM <- function(omega, seuratobject, data){
-  omega <- omega[match(seuratobject@cell.names, colnames(data)),]
+  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
   labs_clus <- colnames(omega)[apply(omega,1,which.max)]
   data_ggplot <- data.frame(labels = labs_clus,
-                          tSNE_1 = seuratobject@dr$tsne@cell.embeddings[, 1],
-                          tSNE_2 = seuratobject@dr$tsne@cell.embeddings[, 2])
+                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
+                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
   plot1 <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
                                      panel.grid.major = element_blank(),
                                      panel.grid.minor = element_blank(),
                                      axis.text.y = element_blank(),
                                      axis.text.x = element_blank(),
                                      axis.ticks = element_blank(),
-                                     legend.text = element_text(size = 15)) + geom_point(aes(x = tSNE_1, y = tSNE_2, color = labels), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_color_discrete('')
+                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = labels), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_color_discrete('')
   return(plot1)
 }
 
 visualizeGoM_topic_gradients <- function(omega, seuratobject, data){
-  omega <- omega[match(seuratobject@cell.names, colnames(data)),]
+  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
   ntopics <- ncol(omega)
   for (n in 1:ntopics){
   data_ggplot <- data.frame(proportion = omega[,n],
-                          tSNE_1 = seuratobject@dr$tsne@cell.embeddings[, 1],
-                          tSNE_2 = seuratobject@dr$tsne@cell.embeddings[, 2])
+                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
+                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
   plot.gradient <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
                                      panel.grid.major = element_blank(),
                                      panel.grid.minor = element_blank(),
                                      axis.text.y = element_blank(),
                                      axis.text.x = element_blank(),
                                      axis.ticks = element_blank(),
-                                     legend.text = element_text(size = 15)) + geom_point(aes(x = tSNE_1, y = tSNE_2, color = proportion), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_colour_gradient(low="grey", high="red")
+                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = proportion), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_colour_gradient(low="grey", high="red")
   plot(plot.gradient)
   }
 }
@@ -316,7 +337,7 @@ visualizeGoM_topic_gradients <- function(omega, seuratobject, data){
 plot_structure_plot <- function(omega, seuratobject){
   annotation <- data.frame(
     sample_id = rownames(omega),
-    tissue_label = seuratobject@ident
+    tissue_label = seuratobject@meta.data$Cell.Type
     )
   my_color_palette1.1 <- brewer.pal(8, name = "Set2")
   my_color_palette1.2 <- brewer.pal(3, name = "Set3")
@@ -332,25 +353,6 @@ plot_structure_plot <- function(omega, seuratobject){
                                  axis_label_face = "bold"))
 }
 
-plot_structure_plot_rare_only <- function(omega, seuratobject){
-  annotation <- data.frame(
-    sample_id = rownames(omega)[!(seuratobject@ident %in% c("Basal", "Club"))],
-    tissue_label = seuratobject@ident[!(seuratobject@ident %in% c("Basal", "Club"))]
-    )
-  omega_rare <- omega[!(seuratobject@ident %in% c("Basal", "Club")),]
-  my_color_palette1.1 <- brewer.pal(8, name = "Set2")
-  my_color_palette1.2 <- brewer.pal(3, name = "Set3")
-  my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2)
-  StructureGGplot(omega = omega_rare,
-                annotation = annotation,
-                palette = my_color_palette1,
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = "bold"))
-}
 
 make_topic_plots <- function(omega, celltypes){
   omega <- as.data.frame(omega)
@@ -378,63 +380,53 @@ annotate_clusters <- function(theta_mat, countmatrix){
 }
 ```
 
-<!-- For the topic model fit to the threeprime dataset containing 7 topics,  -->
+# Apply Visualization/annotation functions to GoM results
 
-<!--   topic 1 seems to correspond to Basal cells,  -->
+```{r k of 3}
+visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
+```
 
-<!--   topic 2 seems to correspond to Club cells, -->
+```{r k of 4}
+visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
+```
 
-<!--   topic 3 seems to correspond to Ciliated cells,  -->
+```{r k of 5}
+visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
+```
 
-<!--   topic 4 seems to correspond to Goblet cells, -->
+```{r k of 6}
+visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
+```
 
-<!--   topic 5 seems to correspond to Tuft cells,  -->
+```{r k of 7}
+visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
+```
 
-<!--   topic 6 seems to correspond to Neuroendocrine cells, -->
+```{r k of 8}
+visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
+```
 
-<!--   topic 7 does not seem to correspond strongly to any cell type. -->
-<!-- ```{r threeprime k of 7} -->
-<!-- visualizeGoM(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
-<!-- visualizeGoM_topic_gradients(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
-<!-- plot_structure_plot(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat) -->
-<!-- plot_structure_plot_rare_only(omega=threeprimeGoM[[6]]$fit$omega, seuratobject=threeprime_seurat) -->
-<!-- make_topic_plots(threeprimeGoM[[6]]$fit$omega, threeprime_counts_filtered_celltypes) -->
-<!-- annotate_clusters(threeprimeGoM[[6]]$fit$theta, threeprime_counts_filtered) -->
-<!-- ``` -->
-
-
-<!-- # Visualizations for All values of k for each dataset -->
-<!-- ## Visualize GoM clustering output -->
-<!-- ### Visualize threeprime Dataset in tSNE plots, STRUCTURE plots, boxplots, and violin plots -->
-<!-- ```{r visualize threeprime} -->
-<!-- for (i in 3:length(threeprimeGoM)){ -->
-<!--   plot(visualizeGoM(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered)) -->
-<!-- } -->
-<!-- for (i in 3:length(threeprimeGoM)){ -->
-<!--   visualizeGoM_topic_gradients(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat, data=threeprime_counts_filtered) -->
-<!-- } -->
-<!-- for (i in 3:length(threeprimeGoM)){ -->
-<!--   plot(plot_structure_plot(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat)) -->
-<!-- } -->
-<!-- for (i in 3:length(threeprimeGoM)){ -->
-<!--   plot(plot_structure_plot_rare_only(omega=threeprimeGoM[[i]]$fit$omega, seuratobject=threeprime_seurat)) -->
-<!-- } -->
-<!-- for (i in 3:length(threeprimeGoM)){ -->
-<!--   j <- i + 1 -->
-<!--   print(paste0("Plots for ThreePrime k = ", j)) -->
-<!--   make_topic_plots(threeprimeGoM[[i]]$fit$omega, threeprime_counts_filtered_celltypes) -->
-<!-- } -->
-<!-- ``` -->
-
-
-<!-- ## Cluster annotations -->
-<!-- ### Top 100 Genes Driving Clusters in the threeprime Dataset  -->
-<!-- ```{r visualize threeprime genes} -->
-<!-- annotate_clusters(threeprimeGoM[[3]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[4]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[5]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[6]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[7]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[8]]$fit$theta, threeprime_counts_filtered) -->
-<!-- annotate_clusters(threeprimeGoM[[9]]$fit$theta, threeprime_counts_filtered) -->
-<!-- ``` -->
