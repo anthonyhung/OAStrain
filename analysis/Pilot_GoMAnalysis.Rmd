@@ -25,6 +25,7 @@ library(maptpx)
 library(ggplot2)
 library(MAST)
 library(RColorBrewer)
+library(ggfortify)
 ```
 
 # Load in datasets and merge them
@@ -33,8 +34,8 @@ Load in datasets and create Seurat objects for each of them. Add metadata about 
 
 ```{r Loading in data matrices}
 
-if (file.exists("data/Combined_singlecell_data.rds")){
-Combined.common <- readRDS("data/Combined_singlecell_data.rds")
+if (file.exists("data/Combined_singlecell_data_first.rds")){
+Combined.common <- readRDS("data/Combined_singlecell_data_first.rds")
 } else {
 
 #Pilot data
@@ -87,6 +88,8 @@ dim(liver)
 common.features <- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(gh_big_humans), rownames(liver)))
 length(x = common.features)
 Combined.common <- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = "Combined.common")
+
+saveRDS(Combined.common, "data/Combined_singlecell_data_first.rds")
 }
 ```
 
@@ -142,6 +145,7 @@ Combined.common <- FindClusters(Combined.common, resolution = 0.5)
 
 #Run UMAP
 Combined.common <- RunUMAP(Combined.common, dims = 1:num_PCs)
+saveRDS(Combined.common, "data/Combined_singlecell_data.rds")
 }
 
 
@@ -170,49 +174,25 @@ VizDimLoadings(Combined.common, dims = 1:2, reduction = "pca")
 
 DimPlot(Combined.common, reduction = "pca", group.by = "Cell.Type")
 
-# var explained by top 10 PCs
-mat <- Seurat::GetAssayData(Combined.common, assay = "RNA", slot = "scale.data")
-pca <- Combined.common[["pca"]]
-
-# Get the total variance:
-total_variance <- sum(matrixStats::rowVars(mat))
-
-eigValues = (pca@stdev)^2  ## EigenValues
-varExplained = eigValues / total_variance
-
 DimHeatmap(Combined.common, dims = 1:15, cells = 500, balanced = TRUE)
 
 
 #extract scaled data for highlyvargenes to a matrix outside of seurat to perform PCA and examine varexplained
-source("code/PCA_fn.R")
-library("RColorBrewer")
-library("scales")
-
-# Load colors 
-colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
-pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
-
 scaled <- Combined.common@assays$RNA@scale.data[VariableFeatures(Combined.common),]
 dim(scaled)
 
 pca_genes <- prcomp(t(scaled), scale = F)
 scores <- pca_genes$x
 
-
-### PCA Raw Data
-for (n in 1:3){
-     col.v <- pal[as.integer(factor(Combined.common@meta.data$labels))]
-     plot_scores(pca_genes, scores, n, n+1, cols = col.v, legend = F, points = T)
-}
+autoplot(pca_genes, label = T)
 
 #% Var explained by top 10 pcs
 for(n in 1:10){
      print(n)
      print(summary(pca_genes)$importance[2,n]*100)
-
-saveRDS(Combined.common, "data/Combined_singlecell_data.rds")
 }
 
+nPC <- 100
 #elbow plot
 ElbowPlot(Combined.common, ndims = nPC) #50 PCs?
 
@@ -334,24 +314,24 @@ visualizeGoM_topic_gradients <- function(omega, seuratobject, data){
   }
 }
 
+
+
 plot_structure_plot <- function(omega, seuratobject){
-  annotation <- data.frame(
-    sample_id = rownames(omega),
-    tissue_label = seuratobject@meta.data$Cell.Type
-    )
-  my_color_palette1.1 <- brewer.pal(8, name = "Set2")
-  my_color_palette1.2 <- brewer.pal(3, name = "Set3")
-  my_color_palette1 <- c(my_color_palette1.1, my_color_palette1.2)
-  StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = my_color_palette1,
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = "bold"))
-}
+     labels <- sapply(strsplit(seuratobject@meta.data$Cell.Type," "), `[`, 1)
+     annotation <- data.frame(
+          sample_id = rownames(omega),
+          tissue_label = labels
+          )
+     StructureGGplot(omega = omega,
+                     annotation = annotation,
+                     #palette = my_color_palette1,
+                     order_sample = TRUE,
+                     axis_tick = list(axis_ticks_length = .1,
+                                      axis_ticks_lwd_y = .1,
+                                      axis_ticks_lwd_x = .1,
+                                      axis_label_size = 7,
+                                      axis_label_face = "bold"))
+     }
 
 
 make_topic_plots <- function(omega, celltypes){
@@ -385,7 +365,7 @@ annotate_clusters <- function(theta_mat, countmatrix){
 ```{r k of 3}
 visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
 ```
@@ -393,7 +373,7 @@ annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
 ```{r k of 4}
 visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
 ```
@@ -401,7 +381,7 @@ annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
 ```{r k of 5}
 visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
 ```
@@ -409,7 +389,7 @@ annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
 ```{r k of 6}
 visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
 ```
@@ -417,7 +397,7 @@ annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
 ```{r k of 7}
 visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
 ```
@@ -425,7 +405,7 @@ annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
 ```{r k of 8}
 visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
 visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
+plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
 make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
 annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
 ```

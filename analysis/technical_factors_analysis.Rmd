@@ -48,6 +48,14 @@ cors <- cor(filt_norm_counts, method="spearman", use="pairwise.complete.obs")
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 
+#extract correlations between technical replicates
+coords <- cbind(rbind(c(1,5),c(1,10), c(2,9), c(2,12), c(3,4), c(3,16), c(4,16), c(5,10), c(6,11), c(6,15), c(7,13), c(8,14), c(8,17), c(9,12), c(11,15), c(14,17)))
+colnames(coords) <- c("index1","index2")
+coords
+cors_technical <- cors[coords]
+median(cors_technical)
+min(cors_technical)
+
 #pearson
 cors <- cor(filt_norm_counts, method="pearson", use="pairwise.complete.obs")
 
@@ -162,6 +170,14 @@ cors <- cor(set1@assayData$normalizedCounts, method="spearman", use="pairwise.co
 
 labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
 heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#extract correlations between technical replicates
+coords <- cbind(rbind(c(1,5),c(1,10), c(2,9), c(2,12), c(3,4), c(3,16), c(4,16), c(5,10), c(6,11), c(6,15), c(7,13), c(8,14), c(8,17), c(9,12), c(11,15), c(14,17)))
+colnames(coords) <- c("index1","index2")
+coords
+cors_technical <- cors[coords]
+median(cors_technical)
+min(cors_technical)
 
 #Pearson
 cors <- cor(set1@assayData$normalizedCounts, method="pearson", use="pairwise.complete.obs")

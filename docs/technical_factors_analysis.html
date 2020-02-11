@@ -394,7 +394,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -403,7 +403,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -412,10 +412,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-18
+<strong>Last updated:</strong> 2020-02-06
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -431,12 +431,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea3565148512e79e1482c774b845a50b8c9c06e74targetblanka356514a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a3565148512e79e1482c774b845a50b8c9c06e74" target="_blank">a356514</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e1229a05fec914deb0447add85f8f485f5d99f7f" target="_blank">e1229a0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea3565148512e79e1482c774b845a50b8c9c06e74targetblanka356514a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,15 +515,28 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    output/ANT1.2.rds
 
 Unstaged changes:
-    Modified:   analysis/DE_analysis.Rmd
-    Modified:   fig-limma-treatment-hit-1.eps
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
 
 </code></pre>
 <p>
@@ -562,6 +575,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/797305a2d5605d72ff27136f96afcfe42a089f7f/docs/technical_factors_analysis.html" target="_blank">797305a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-19
+</td>
+<td>
+include Individual as a FE
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1184,6 +1214,32 @@ Anthony Hung
 </table>
 </div>
 </div>
+<pre class="r"><code>#extract correlations between technical replicates
+coords &lt;- cbind(rbind(c(1,5),c(1,10), c(2,9), c(2,12), c(3,4), c(3,16), c(4,16), c(5,10), c(6,11), c(6,15), c(7,13), c(8,14), c(8,17), c(9,12), c(11,15), c(14,17)))
+colnames(coords) &lt;- c(&quot;index1&quot;,&quot;index2&quot;)
+coords</code></pre>
+<pre><code>      index1 index2
+ [1,]      1      5
+ [2,]      1     10
+ [3,]      2      9
+ [4,]      2     12
+ [5,]      3      4
+ [6,]      3     16
+ [7,]      4     16
+ [8,]      5     10
+ [9,]      6     11
+[10,]      6     15
+[11,]      7     13
+[12,]      8     14
+[13,]      8     17
+[14,]      9     12
+[15,]     11     15
+[16,]     14     17</code></pre>
+<pre class="r"><code>cors_technical &lt;- cors[coords]
+median(cors_technical)</code></pre>
+<pre><code>[1] 0.9870723</code></pre>
+<pre class="r"><code>min(cors_technical)</code></pre>
+<pre><code>[1] 0.9717589</code></pre>
 <pre class="r"><code>#pearson
 cors &lt;- cor(filt_norm_counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
 
@@ -2271,6 +2327,32 @@ Anthony Hung
 </table>
 </div>
 </div>
+<pre class="r"><code>#extract correlations between technical replicates
+coords &lt;- cbind(rbind(c(1,5),c(1,10), c(2,9), c(2,12), c(3,4), c(3,16), c(4,16), c(5,10), c(6,11), c(6,15), c(7,13), c(8,14), c(8,17), c(9,12), c(11,15), c(14,17)))
+colnames(coords) &lt;- c(&quot;index1&quot;,&quot;index2&quot;)
+coords</code></pre>
+<pre><code>      index1 index2
+ [1,]      1      5
+ [2,]      1     10
+ [3,]      2      9
+ [4,]      2     12
+ [5,]      3      4
+ [6,]      3     16
+ [7,]      4     16
+ [8,]      5     10
+ [9,]      6     11
+[10,]      6     15
+[11,]      7     13
+[12,]      8     14
+[13,]      8     17
+[14,]      9     12
+[15,]     11     15
+[16,]     14     17</code></pre>
+<pre class="r"><code>cors_technical &lt;- cors[coords]
+median(cors_technical)</code></pre>
+<pre><code>[1] 0.9941572</code></pre>
+<pre class="r"><code>min(cors_technical)</code></pre>
+<pre><code>[1] 0.9908676</code></pre>
 <pre class="r"><code>#Pearson
 cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
 
@@ -2559,7 +2641,7 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
- [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.1          
+ [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.3          
  [7] bit64_0.9-7            AnnotationDbi_1.40.0   splines_3.4.3         
 [10] R.methodsS3_1.7.1      DESeq_1.30.0           geneplotter_1.56.0    
 [13] knitr_1.26             zeallot_0.1.0          jsonlite_1.6          
@@ -2570,14 +2652,14 @@ loaded via a namespace (and not attached):
 [28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
 [31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
 [34] Rcpp_1.0.3             vctrs_0.2.0            gdata_2.18.0          
-[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.11             
-[40] stringr_1.4.0          mime_0.7               lifecycle_0.1.0       
+[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.12             
+[40] stringr_1.4.0          mime_0.8               lifecycle_0.1.0       
 [43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.24.0       
 [46] MASS_7.3-51.4          aroma.light_3.8.0      hms_0.5.2             
 [49] promises_1.1.0         yaml_2.2.0             memoise_1.1.0         
 [52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
 [55] RSQLite_2.1.4          genefilter_1.60.0      RMySQL_0.10.17        
-[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.2           
+[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.4           
 [61] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
 [64] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
 [67] htmlwidgets_1.5.1      bit_1.1-14             tidyselect_0.2.5      

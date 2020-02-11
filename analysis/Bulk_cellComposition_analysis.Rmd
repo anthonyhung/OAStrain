@@ -15,6 +15,16 @@ editor_options:
 library("RColorBrewer")
 library("scales")
 library("cowplot")
+library(CountClust)
+library(maptpx)
+library(MAST)
+library("ggplot2")
+library("ggfortify")
+library("gplots")
+
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
 
 # Load colors 
 colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
@@ -65,10 +75,7 @@ combined <- cbind(logxx, selected.cell.line)
 
 ## Clustering (PCA)
 
-```{r PCA}
-library("ggplot2")
-library("ggfortify")
-
+```{r PCA cell atlas}
 # Perform PCA
 pca_genes <- prcomp(t(combined), scale = T)
 
@@ -80,8 +87,6 @@ autoplot(pca_genes, label = T)
 ## Clustering (corr heatmap)
 
 ```{r corr heatmap}
-library("gplots")
-
 #Corr heatmap
 cors <- cor(combined, method="spearman", use="pairwise.complete.obs")
 heatmap.2(cors, scale="none", margins = c(12, 12), trace='none', denscol="white",
@@ -137,10 +142,6 @@ dim(merged_raw_data)
 ## Raw counts analysis
 
 ```{r raw analysis}
-library("gplots")
-library("ggplot2")
-library("ggfortify")
-
 # Perform PCA
 pca_genes <- prcomp(t(data.matrix(merged_raw_data)), scale = T)
 
@@ -196,7 +197,7 @@ cutoff <- 3
 
 keep <- rowSums( upperquartile > cutoff ) >= 15
 
-counts_upperquartile <- raw_counts[keep,]
+counts_upperquartile <- merged_raw_data[keep,]
 filtered_upperquartile <- upperquartile[keep,]
 dim(filtered_upperquartile)
 ```
@@ -278,7 +279,7 @@ cutoff <- 3
 
 keep <- rowSums( RLE > cutoff ) >= 15
 
-counts_RLE <- raw_counts[keep,]
+counts_RLE <- merged_raw_data[keep,]
 filtered_RLE <- RLE[keep,]
 dim(filtered_RLE)
 ```
@@ -306,11 +307,116 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 
 ## PCA of log2RLE normalized and filtered samples
 
-```{r}
+```{r PCA}
 # Perform PCA
 pca_genes <- prcomp(t(data.matrix(filtered_RLE)), scale = T)
 
 #Make PCA plots 
 autoplot(pca_genes, label = T)
 ```
+
+# Grade of Membership analysis
+
+```{r gom}
+runfitGoM <- function(datamatrix, tol = 0.1, start, end){
+  listofks <- list()
+  counter <- 1
+  for(i in start:end){
+    listofks[[counter]] <- CountClust::FitGoM(datamatrix, K=i, tol = tol, control=list(tmax=100))
+    counter <- counter + 1
+  }
+  return(listofks)
+}
+
+filtered_counts <- counts_upperquartile$counts
+Combined_counts_celltypes <- sapply(strsplit(as.character(counts_upperquartile$samples$group),"_"), `[`, 1)
+
+Combined_GoM <- runfitGoM(t(filtered_counts), start = 3, end = 8)
+```
+
+
+```{r plotting GoM}
+plot_structure_plot <- function(omega, labels){
+     annotation <- data.frame(
+          sample_id = rownames(omega),
+          tissue_label = labels
+          )
+     StructureGGplot(omega = omega,
+                     annotation = annotation,
+                     #palette = my_color_palette1,
+                     order_sample = TRUE,
+                     axis_tick = list(axis_ticks_length = .1,
+                                      axis_ticks_lwd_y = .1,
+                                      axis_ticks_lwd_x = .1,
+                                      axis_label_size = 7,
+                                      axis_label_face = "bold"))
+     }
+
+
+make_topic_plots <- function(omega, labels){
+  omega <- as.data.frame(omega)
+  omega <- cbind(omega,labels)
+  for (k in 1:(ncol(omega)-1)) {
+    base_plot <- ggplot(data = omega, mapping = aes(x = labels, y = omega[,k])) + labs(y = paste0("Topic ", k, " value"), x = paste0("Cell Type")) + theme(axis.text.x = element_text(angle = -20, hjust = 0, vjust = 0))
+    plot(base_plot + geom_violin(width = 1.5, fill = "skyblue",color = "skyblue") +
+      geom_boxplot(width = 0.1,outlier.shape = NA, alpha = 0.2))
+   }
+}
+
+annotate_clusters <- function(theta_mat, countmatrix){
+  top_features <- ExtractTopFeatures(theta_mat,
+                                     top_features=100,
+                                     method="poisson",
+                                     options="min")
+  gene_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) rownames(countmatrix)[top_features[[1]][x,]]))
+  scores_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) top_features[[2]][x,]))
+  return(list(gene_vector, scores_vector))
+}
+
+
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+
+# k = 3
+plot_structure_plot(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[1]]$clust_3$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 4
+plot_structure_plot(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[2]]$clust_4$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 5
+plot_structure_plot(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[3]]$clust_5$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 6
+plot_structure_plot(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[4]]$clust_6$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 7
+plot_structure_plot(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[5]]$clust_7$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 8
+plot_structure_plot(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[6]]$clust_8$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+```
+
 

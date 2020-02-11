@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-05
+<strong>Last updated:</strong> 2020-02-06
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,19 +495,22 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee2253361f00148a0c0eaa938f38c35e398fb9fa6targetblanke225336a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e2253361f00148a0c0eaa938f38c35e398fb9fa6" target="_blank">e225336</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e1229a05fec914deb0447add85f8f485f5d99f7f" target="_blank">e1229a0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee2253361f00148a0c0eaa938f38c35e398fb9fa6targetblanke225336a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
     Ignored:    data/GoMresultsk4.rds
@@ -525,7 +528,9 @@ Ignored files:
     Ignored:    output/ANT1.2.rds
 
 Unstaged changes:
+    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
     Modified:   analysis/Pilot_GoMAnalysis.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
 
 </code></pre>
 <p>
@@ -564,6 +569,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/analysis/Pilot_GoMAnalysis.Rmd" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+<td>
+Finish GoM analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/Pilot_GoMAnalysis.html" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+<td>
+Finish GoM analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -630,12 +669,12 @@ outside bulk datasets comparison to my pilot bulk data
 <h1>Load Libraries</h1>
 <pre class="r"><code>library(Seurat)
 library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>── Attaching packages ──────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✔ ggplot2 3.2.1     ✔ purrr   0.3.3
 ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ✔ tidyr   1.0.0     ✔ stringr 1.4.0
 ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(CountClust)
@@ -731,46 +770,38 @@ Attaching package: &#39;MAST&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:stats&#39;:
 
     filter</code></pre>
-<pre class="r"><code>library(RColorBrewer)</code></pre>
+<pre class="r"><code>library(RColorBrewer)
+library(ggfortify)</code></pre>
 </div>
 <div id="load-in-datasets-and-merge-them" class="section level1">
 <h1>Load in datasets and merge them</h1>
 <p>Load in datasets and create Seurat objects for each of them. Add metadata about the cell type they were assigned in their original contexts. Merge the Seurat object into one large object.</p>
-<pre class="r"><code>#Pilot data
+<pre class="r"><code>if (file.exists(&quot;data/Combined_singlecell_data_first.rds&quot;)){
+Combined.common &lt;- readRDS(&quot;data/Combined_singlecell_data_first.rds&quot;)
+} else {
+
+#Pilot data
 ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)
 ANT1.2 &lt;- AddMetaData(ANT1.2, &quot;iPSC-Chondrocyte&quot;, col.name = &quot;Cell.Type&quot;)
-dim(ANT1.2)</code></pre>
-<pre><code>[1] 33538  2479</code></pre>
-<pre class="r"><code>#Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
+dim(ANT1.2)
+
+#Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
 chondro &lt;- read.table(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/outside_scData/GSE104782_allcells_UMI_count.txt.gz&quot;, header = T)
 chondro_genes &lt;- chondro[,1]
 chondro_data &lt;- chondro[,-1]
 chondro &lt;- chondro_data
 rownames(chondro) &lt;- chondro_genes
 #load chondro cluster data from paper
-chondro_metadata &lt;- read_csv(&quot;data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv&quot;)</code></pre>
-<pre><code>Parsed with column specification:
-cols(
-  Cell = col_character(),
-  `Raw reads` = col_double(),
-  `Clean reads` = col_double(),
-  `Aligned reads` = col_double(),
-  `Mapping rate` = col_character(),
-  `Gene number` = col_double(),
-  `Transcript number` = col_double(),
-  Cluster = col_character()
-)</code></pre>
-<pre class="r"><code>#subset data to include only those that were assigned to a chondrocyte cluster in the paper
+chondro_metadata &lt;- read_csv(&quot;data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv&quot;)
+#subset data to include only those that were assigned to a chondrocyte cluster in the paper
 chondro.filtered &lt;- chondro[,!is.na(chondro_metadata$Cluster)]
 cluster.ident &lt;- paste0(&quot;Chondro &quot;, chondro_metadata$Cluster[!is.na(chondro_metadata$Cluster)])
 #Create seurat object from chondrocytes
-chondro.seurat &lt;- CreateSeuratObject(chondro.filtered, project=&quot;Chondrocytes&quot;)</code></pre>
-<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
-(&#39;-&#39;)</code></pre>
-<pre class="r"><code>chondro.seurat &lt;- AddMetaData(chondro.seurat, cluster.ident, col.name = &quot;Cell.Type&quot;)
-dim(chondro.seurat)</code></pre>
-<pre><code>[1] 24153  1464</code></pre>
-<pre class="r"><code>#iPSCs/MSCs/osteoblasts from Human/chimp panel. Combine all the datasets and subset for humans
+chondro.seurat &lt;- CreateSeuratObject(chondro.filtered, project=&quot;Chondrocytes&quot;)
+chondro.seurat &lt;- AddMetaData(chondro.seurat, cluster.ident, col.name = &quot;Cell.Type&quot;)
+dim(chondro.seurat)
+
+#iPSCs/MSCs/osteoblasts from Human/chimp panel. Combine all the datasets and subset for humans
 ghousman_data_dir &lt;- (&quot;/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/cellranger-data-full/&quot;)
 gh_ipsc_1.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.GHO-1.rds&quot;))
 gh_msc_1.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.GHO-2.rds&quot;))
@@ -784,24 +815,24 @@ gh_big &lt;- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_ipsc_1.2, gh_msc_1.2, gh_ip
                 add.cell.ids = c(&quot;ipsc1.1&quot;, &quot;msc1.1&quot;, &quot;ipsc1.2&quot;, &quot;msc1.2&quot;, &quot;ipsc2.1&quot;, &quot;msc2.1&quot;, &quot;ipsc3.1&quot;, &quot;msc3.1&quot;), project = &quot;ghousman&quot;)
 gh_big_humans &lt;- subset(gh_big, species == &quot;Human&quot;)
 gh_big_humans &lt;- AddMetaData(gh_big_humans, &quot;Ghousman&quot;, col.name = &quot;orig.ident&quot;)
-dim(gh_big_humans)</code></pre>
-<pre><code>[1] 19399 23283</code></pre>
-<pre class="r"><code>#Human Liver samples run through 10x (https://doi.org/10.1038/s41467-018-06318-7). This is a subset of the entire dataset, which is from whole liver homogenate. I used scViz to subset the data for clusters that were called hepatocytes in the original study (3490 cells)
+dim(gh_big_humans)
+
+#Human Liver samples run through 10x (https://doi.org/10.1038/s41467-018-06318-7). This is a subset of the entire dataset, which is from whole liver homogenate. I used scViz to subset the data for clusters that were called hepatocytes in the original study (3490 cells)
 liver &lt;- readRDS(&quot;data/humanLiverSubset_hepatocytes.rds&quot;)
 liver &lt;- AddMetaData(liver, &quot;Hepatocyte&quot;, col.name = &quot;Cell.Type&quot;)
-dim(liver)</code></pre>
-<pre><code>[1] 20007  3490</code></pre>
-<pre class="r"><code># Merge Datasets
+dim(liver)
+
+# Merge Datasets
 
 # Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.
 
 # merge based on common genes between ALL datasets
 common.features &lt;- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(gh_big_humans), rownames(liver)))
-length(x = common.features)</code></pre>
-<pre><code>[1] 14809</code></pre>
-<pre class="r"><code>Combined.common &lt;- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = &quot;Combined.common&quot;)</code></pre>
-<pre><code>Warning in is.na(x = cells): is.na() applied to non-(list or vector) of type
-&#39;NULL&#39;</code></pre>
+length(x = common.features)
+Combined.common &lt;- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = &quot;Combined.common&quot;)
+
+saveRDS(Combined.common, &quot;data/Combined_singlecell_data_first.rds&quot;)
+}</code></pre>
 <p><img src="../analysis/figures/scviz1.png" alt="Cell Type Clusters from original paper" /> <img src="../analysis/figures/scviz2.png" alt="Subsetting gate drawn in scViz" /></p>
 </div>
 <div id="analysis-of-combined-dataset-in-seurat" class="section level1">
@@ -809,13 +840,124 @@ length(x = common.features)</code></pre>
 <p>Now we can look at the cells in Seurat, including PCA and UMAP</p>
 <pre class="r"><code>VlnPlot(Combined.common, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;), ncol = 2, group.by = &quot;orig.ident&quot;)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-1">
+Past versions of “Seurat analysis-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(Combined.common, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;), ncol = 2, group.by = &quot;Cell.Type&quot;)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-2">
+Past versions of “Seurat analysis-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># FeatureScatter is typically used to visualize feature-feature relationships, but can be used
 # for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
 
 FeatureScatter(Combined.common, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-3">
+Past versions of “Seurat analysis-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>if (file.exists(&quot;data/Combined_singlecell_data.rds&quot;)){
 Combined.common &lt;- readRDS(&quot;data/Combined_singlecell_data.rds&quot;)
 } else {
@@ -852,73 +994,12 @@ Combined.common &lt;- FindClusters(Combined.common, resolution = 0.5)
 
 #Run UMAP
 Combined.common &lt;- RunUMAP(Combined.common, dims = 1:num_PCs)
-}</code></pre>
-<pre><code>Centering and scaling data matrix</code></pre>
-<pre><code>PC_ 1 
-Positive:  FMOD, PRELP, MGP, COMP, SCRG1, BGN, CILP, DCN, NDUFA4L2, MIA 
-       CHAD, FGFBP2, PCOLCE2, S100B, SMOC2, RGCC, MMP3, PLA2G2A, CD55, ANGPTL2 
-       ATP6V0C, GPRC5A, IFITM1, OGN, GABARAP, COL11A2, LUM, GPX3, COX7A1, C11orf96 
-Negative:  PMAIP1, TAF9, ALPL, CRABP2, PTN, ID1, PINX1, MMP1, DUSP6, SAA2 
-       AKR1B1, MT1H, DCLK1, CCDC71L, FABP5, SPINK1, AIF1, HLA-DPB1, MMP9, PREX2 
-       RARRES2, SAA1, MAEA, IGFBP5, SUV39H1, HLA-DRB1, CA12, KLK10, COL5A3, LRRC8B 
-PC_ 2 
-Positive:  RBP4, MT1G, TF, SERPINA1, SERPING1, SAA2, MT1X, SAA1, C1R, RARRES2 
-       CP, TMEM176B, MT1H, TMEM176A, MT1M, MT1F, CFI, UQCR11, HSD11B1, SPINK1 
-       CLU, A2M, CFH, SERPINA6, MT1E, AKR1C1, PRG4, CD14, NDUFA13, F5 
-Negative:  SPARC, COL1A1, TNFRSF12A, COL5A2, COL1A2, COL5A1, ANXA1, TIMP1, IER3, PHLDA2 
-       COL6A2, HSPB1, GSN, ARID5B, CCDC80, IGFBP5, COL3A1, FN1, NT5E, PLAUR 
-       TGFBI, GARS, DAB2, SERPINE2, SLC3A2, IGFBP6, FHL1, PDLIM4, CDKN1A, KCNMA1 
-PC_ 3 
-Positive:  TAF9, PNP, CD9, PMAIP1, IER2, FGF2, EIF4E, MLF1, COL9A3, FXYD6 
-       TCEAL2, FABP5, SLC29A1, ID1, NOP16, SLC2A1, ITM2A, PHLDA1, NMB, SLC3A2 
-       PTN, ASNS, ADM, AKR1B1, S100B, MIA, CHAD, NDUFA4L2, CNPY2, FGFBP2 
-Negative:  KCTD16, COL3A1, CST3, SPON2, SERPINE2, GPC6, LDLRAD4, PTGER2, LRPAP1, AQP1 
-       FAM89A, SRPX2, COL12A1, COL5A1, COL1A2, SEMA3C, MXRA5, RUNX1, FOXO1, FKBP2 
-       COL5A2, CRISPLD2, RORA, COL1A1, PPP1R12B, PLOD2, ERG, SLC40A1, SERPINF1, STC2 
-PC_ 4 
-Positive:  UGP2, PDPN, SOX4, OLFML3, COL9A3, ALPL, FABP5, FGFR1, EGLN3, JMJD1C 
-       GFPT2, FADS1, GPC6, TCEAL2, PTN, PLXDC2, FOXO1, TSPAN6, ANOS1, FBXO2 
-       SOCS2, ANK3, STK26, MAP2K6, N4BP2, LDLRAD4, CRISPLD2, SKIL, KCNK1, IVNS1ABP 
-Negative:  FN1, ANXA1, MT2A, DUSP1, DAB2, PHLDA2, IGFBP5, B2M, CD44, PLAUR 
-       CRIP2, ARID5B, CCDC80, GREM1, MMP1, ITGA5, NT5E, IGFBP6, EFEMP1, RCAN1 
-       GSN, PLK2, KLF2, INHBA, JUN, IER3, COL1A1, KLF6, CDKN1A, CRYAB 
-PC_ 5 
-Positive:  P3H2, BMP2, KCNMA1, LRRC8C, NGF, CLCF1, TGFBI, COL6A3, SYNJ2, GPRC5A 
-       CD44, UGDH, FOSL1, C11orf96, CAV1, ST3GAL1, B3GNT5, FGF2, S100A3, FGF1 
-       LIF, PTPRE, SMOX, TENM2, GIPR, ZNF365, NPR2, TNC, NFATC2, SLC4A5 
-Negative:  DNAJB1, CRYAB, NR4A1, FOS, HSPA1A, NR4A2, HSPA1B, DDIT3, RGS16, HES1 
-       RASD1, BHLHE41, GEM, MYLIP, OSR2, FOXC1, DUSP1, USP53, RSRP1, PPP1R10 
-       TXNIP, WWP2, CYSTM1, ZFAND2A, MXRA8, CSGALNACT1, LMO2, RERG, DNAJB4, CLK1 </code></pre>
-<pre><code>Computing nearest neighbor graph</code></pre>
-<pre><code>Computing SNN</code></pre>
-<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+saveRDS(Combined.common, &quot;data/Combined_singlecell_data.rds&quot;)
+}
 
-Number of nodes: 30716
-Number of edges: 1673550
 
-Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.9506
-Number of communities: 18
-Elapsed time: 7 seconds</code></pre>
-<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
-To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
-This message will be shown once per session</code></pre>
-<pre><code>10:34:06 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>10:34:06 Read 30716 rows and found 50 numeric columns</code></pre>
-<pre><code>10:34:06 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>10:34:06 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
-<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
-<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
-<pre><code>**************************************************|
-10:34:12 Writing NN index file to temp file /tmp/RtmpW9HbOP/filecf4a3fd7b62c
-10:34:12 Searching Annoy index using 1 thread, search_k = 3000
-10:34:22 Annoy recall = 99.87%
-10:34:23 Commencing smooth kNN distance calibration using 1 thread
-10:34:24 84 smooth knn distance failures
-10:34:25 Initializing from normalized Laplacian + noise
-10:34:36 Commencing optimization for 200 epochs, with 1455964 positive edges
-10:35:16 Optimization finished</code></pre>
-<pre class="r"><code>#Plots 
+
+#Plots 
 
 #Var features
 plot_variable_features &lt;- function(seurat.obj){
@@ -941,6 +1022,43 @@ This warning is displayed once per session.</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-4">
+Past versions of “Seurat analysis-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Examine and visualize PCA results a few different ways
 print(Combined.common[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</code></pre>
 <pre><code>PC_ 1 
@@ -960,57 +1078,171 @@ Positive:  P3H2, BMP2, KCNMA1, LRRC8C, NGF
 Negative:  DNAJB1, CRYAB, NR4A1, FOS, HSPA1A </code></pre>
 <pre class="r"><code>VizDimLoadings(Combined.common, dims = 1:2, reduction = &quot;pca&quot;)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-5">
+Past versions of “Seurat analysis-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(Combined.common, reduction = &quot;pca&quot;, group.by = &quot;Cell.Type&quot;)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># var explained by top 10 PCs
-mat &lt;- Seurat::GetAssayData(Combined.common, assay = &quot;RNA&quot;, slot = &quot;scale.data&quot;)
-pca &lt;- Combined.common[[&quot;pca&quot;]]
-
-# Get the total variance:
-total_variance &lt;- sum(matrixStats::rowVars(mat))
-
-eigValues = (pca@stdev)^2  ## EigenValues
-varExplained = eigValues / total_variance
-
-DimHeatmap(Combined.common, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-6">
+Past versions of “Seurat analysis-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>DimHeatmap(Combined.common, dims = 1:15, cells = 500, balanced = TRUE)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-7">
+Past versions of “Seurat analysis-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#extract scaled data for highlyvargenes to a matrix outside of seurat to perform PCA and examine varexplained
-source(&quot;code/PCA_fn.R&quot;)
-library(&quot;RColorBrewer&quot;)
-library(&quot;scales&quot;)</code></pre>
-<pre><code>
-Attaching package: &#39;scales&#39;
-
-The following object is masked from &#39;package:purrr&#39;:
-
-    discard
-
-The following object is masked from &#39;package:readr&#39;:
-
-    col_factor</code></pre>
-<pre class="r"><code># Load colors 
-colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
-pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
-
 scaled &lt;- Combined.common@assays$RNA@scale.data[VariableFeatures(Combined.common),]
 dim(scaled)</code></pre>
 <pre><code>[1]  2000 30716</code></pre>
 <pre class="r"><code>pca_genes &lt;- prcomp(t(scaled), scale = F)
 scores &lt;- pca_genes$x
 
-
-### PCA Raw Data
-for (n in 1:3){
-     col.v &lt;- pal[as.integer(factor(Combined.common@meta.data$labels))]
-     plot_scores(pca_genes, scores, n, n+1, cols = col.v, legend = F, points = T)
-}</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-8.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-9.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-10.png" width="672" style="display: block; margin: auto;" /></p>
+autoplot(pca_genes, label = T)</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-8">
+Past versions of “Seurat analysis-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#% Var explained by top 10 pcs
 for(n in 1:10){
      print(n)
      print(summary(pca_genes)$importance[2,n]*100)
-
-saveRDS(Combined.common, &quot;data/Combined_singlecell_data.rds&quot;)
 }</code></pre>
 <pre><code>[1] 1
 [1] 9.527
@@ -1032,12 +1264,87 @@ saveRDS(Combined.common, &quot;data/Combined_singlecell_data.rds&quot;)
 [1] 0.394
 [1] 10
 [1] 0.35</code></pre>
-<pre class="r"><code>#elbow plot
+<pre class="r"><code>nPC &lt;- 100
+#elbow plot
 ElbowPlot(Combined.common, ndims = nPC) #50 PCs?</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-9">
+Past versions of “Seurat analysis-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#UMAP
 DimPlot(Combined.common, reduction = &quot;umap&quot;, group.by = &quot;Cell.Type&quot;)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/Seurat%20analysis-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Seurat-analysis-10">
+Past versions of “Seurat analysis-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-Seurat-analysis-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-10.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="grades-of-membership-analysis" class="section level1">
 <h1>Grades of Membership analysis</h1>
@@ -1143,24 +1450,24 @@ visualizeGoM_topic_gradients &lt;- function(omega, seuratobject, data){
   }
 }
 
+
+
 plot_structure_plot &lt;- function(omega, seuratobject){
-  annotation &lt;- data.frame(
-    sample_id = rownames(omega),
-    tissue_label = seuratobject@meta.data$Cell.Type
-    )
-  my_color_palette1.1 &lt;- brewer.pal(8, name = &quot;Set2&quot;)
-  my_color_palette1.2 &lt;- brewer.pal(3, name = &quot;Set3&quot;)
-  my_color_palette1 &lt;- c(my_color_palette1.1, my_color_palette1.2)
-  StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = my_color_palette1,
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = &quot;bold&quot;))
-}
+     labels &lt;- sapply(strsplit(seuratobject@meta.data$Cell.Type,&quot; &quot;), `[`, 1)
+     annotation &lt;- data.frame(
+          sample_id = rownames(omega),
+          tissue_label = labels
+          )
+     StructureGGplot(omega = omega,
+                     annotation = annotation,
+                     #palette = my_color_palette1,
+                     order_sample = TRUE,
+                     axis_tick = list(axis_ticks_length = .1,
+                                      axis_ticks_lwd_y = .1,
+                                      axis_ticks_lwd_x = .1,
+                                      axis_label_size = 7,
+                                      axis_label_face = &quot;bold&quot;))
+     }
 
 
 make_topic_plots &lt;- function(omega, celltypes){
@@ -1188,16 +1495,278 @@ make_topic_plots &lt;- function(omega, celltypes){
 <h1>Apply Visualization/annotation functions to GoM results</h1>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-1">
+Past versions of “k of 3-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-2">
+Past versions of “k of 3-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-3">
+Past versions of “k of 3-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-4">
+Past versions of “k of 3-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-5">
+Past versions of “k of 3-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-6">
+Past versions of “k of 3-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-7">
+Past versions of “k of 3-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-3-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-8.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]     [,2]     [,3]       [,4]     [,5]    [,6]    [,7]     [,8]    
 [1,] &quot;GAPDH&quot;  &quot;EEF1A1&quot; &quot;RPL15&quot;    &quot;ACTG1&quot;  &quot;RPS3A&quot; &quot;RPL8&quot;  &quot;RPL10&quot;  &quot;RPS3&quot;  
@@ -1321,18 +1890,355 @@ make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)</c
 [3,] 0.004115274 0.003977905 0.003970936 0.003867043</code></pre>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-1">
+Past versions of “k of 4-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-2">
+Past versions of “k of 4-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-3">
+Past versions of “k of 4-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-4">
+Past versions of “k of 4-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-5">
+Past versions of “k of 4-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-6">
+Past versions of “k of 4-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-7">
+Past versions of “k of 4-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-8">
+Past versions of “k of 4-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-9">
+Past versions of “k of 4-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-4-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-10.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]     [,2]      [,3]    [,4]     [,5]    [,6]     [,7]     [,8]      
 [1,] &quot;RPS2&quot;   &quot;RPL29&quot;   &quot;H3F3A&quot; &quot;RPS12&quot;  &quot;RPS7&quot;  &quot;RPS19&quot;  &quot;RPS3&quot;   &quot;PFN1&quot;    
@@ -1486,20 +2392,432 @@ make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)</c
 [4,] 0.0021668677 0.0021536825 0.0021480985 0.0020456371</code></pre>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-1">
+Past versions of “k of 5-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-2">
+Past versions of “k of 5-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-3">
+Past versions of “k of 5-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-4">
+Past versions of “k of 5-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-5">
+Past versions of “k of 5-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-6">
+Past versions of “k of 5-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-7">
+Past versions of “k of 5-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-8">
+Past versions of “k of 5-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-9">
+Past versions of “k of 5-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-10">
+Past versions of “k of 5-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-10.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-11">
+Past versions of “k of 5-11.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-5-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-11.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]     [,2]      [,3]    [,4]    [,5]     [,6]      [,7]   [,8]   
 [1,] &quot;RPL8&quot;   &quot;RPS3A&quot;   &quot;RPS3&quot;  &quot;HMGA1&quot; &quot;RPL10&quot;  &quot;RPS23&quot;   &quot;RPS5&quot; &quot;RPL11&quot;
@@ -1695,22 +3013,509 @@ make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)</c
 [5,] 0.0009605337 0.0009532394 0.0008867222</code></pre>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-1">
+Past versions of “k of 6-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-2">
+Past versions of “k of 6-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-3">
+Past versions of “k of 6-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-4">
+Past versions of “k of 6-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-5">
+Past versions of “k of 6-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-6">
+Past versions of “k of 6-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-7">
+Past versions of “k of 6-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-8">
+Past versions of “k of 6-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-9">
+Past versions of “k of 6-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-10">
+Past versions of “k of 6-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-10.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-11">
+Past versions of “k of 6-11.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-11.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-12">
+Past versions of “k of 6-12.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-12.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-13">
+Past versions of “k of 6-13.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-6-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-13.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-14.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]     [,2]     [,3]    [,4]      [,5]     [,6]     [,7]        [,8]    
 [1,] &quot;RPS3&quot;   &quot;HMGA1&quot;  &quot;RPL8&quot;  &quot;RPS7&quot;    &quot;RPS2&quot;   &quot;RPS3A&quot;  &quot;RPL29&quot;     &quot;RPS5&quot;  
@@ -1938,24 +3743,586 @@ make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)</c
 [6,] 0.0007633233 0.0007626970 0.0007598122 0.0007480783</code></pre>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-1">
+Past versions of “k of 7-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-2">
+Past versions of “k of 7-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-3">
+Past versions of “k of 7-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-4">
+Past versions of “k of 7-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-5">
+Past versions of “k of 7-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-6">
+Past versions of “k of 7-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-7">
+Past versions of “k of 7-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-8">
+Past versions of “k of 7-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-9">
+Past versions of “k of 7-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-10">
+Past versions of “k of 7-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-10.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-11">
+Past versions of “k of 7-11.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-11.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-12">
+Past versions of “k of 7-12.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-12.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-13">
+Past versions of “k of 7-13.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-13.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-14">
+Past versions of “k of 7-14.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-14.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-15">
+Past versions of “k of 7-15.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-7-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-15.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-16.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]     [,2]     [,3]    [,4]      [,5]    [,6]     [,7]     [,8]    
 [1,] &quot;RPL10&quot;  &quot;RPL13&quot;  &quot;RPL32&quot; &quot;GAPDH&quot;   &quot;RPL18&quot; &quot;RPS13&quot;  &quot;RPS14&quot;  &quot;RPL10A&quot;
@@ -2223,26 +4590,663 @@ make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)</c
 [7,] 0.0003552455 0.0003443627</code></pre>
 <pre class="r"><code>visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-1">
+Past versions of “k of 8-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-1.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-8.png" width="672" style="display: block; margin: auto;" /><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-9.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)</code></pre>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-2">
+Past versions of “k of 8-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-2.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-3">
+Past versions of “k of 8-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-3.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-4">
+Past versions of “k of 8-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-4.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-5">
+Past versions of “k of 8-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-5.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-6">
+Past versions of “k of 8-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-6.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-7">
+Past versions of “k of 8-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-7.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-8">
+Past versions of “k of 8-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-8.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-9">
+Past versions of “k of 8-9.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-9.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-10">
+Past versions of “k of 8-10.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-10.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-11">
+Past versions of “k of 8-11.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-11.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-12">
+Past versions of “k of 8-12.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-12.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-13">
+Past versions of “k of 8-13.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-13.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-14">
+Past versions of “k of 8-14.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-14.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-15">
+Past versions of “k of 8-15.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-15.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-16">
+Past versions of “k of 8-16.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-16.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-17">
+Past versions of “k of 8-17.png”
+</button>
+</p>
+<div id="fig-no-spaces-k-of-8-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e1229a05fec914deb0447add85f8f485f5d99f7f/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-17.png" target="_blank">e1229a0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-18.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)</code></pre>
 <pre><code>     [,1]      [,2]     [,3]      [,4]     [,5]       [,6]     [,7]       
 [1,] &quot;IGFBP2&quot;  &quot;KRT18&quot;  &quot;TMSB4X&quot;  &quot;RGS4&quot;   &quot;ANKRD1&quot;   &quot;KRT81&quot;  &quot;TPM1&quot;     
@@ -2587,7 +5591,7 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] scales_1.1.0               RColorBrewer_1.1-2        
+ [1] ggfortify_0.4.8            RColorBrewer_1.1-2        
  [3] MAST_1.4.1                 SummarizedExperiment_1.8.1
  [5] DelayedArray_0.4.1         matrixStats_0.55.0        
  [7] Biobase_2.38.0             GenomicRanges_1.30.3      
@@ -2614,18 +5618,18 @@ loaded via a namespace (and not attached):
  [28] TH.data_1.0-10         xfun_0.12              R6_2.4.1              
  [31] rsvd_1.0.2             flexmix_2.3-15         bitops_1.0-6          
  [34] assertthat_0.2.1       promises_1.1.0         SDMTools_1.1-221.2    
- [37] multcomp_1.4-8         nnet_7.3-12            gtable_0.3.0          
- [40] npsurv_0.4-0           globals_0.12.5         sandwich_2.5-1        
- [43] workflowr_1.5.0        rlang_0.4.4            zeallot_0.1.0         
- [46] splines_3.4.3          lazyeval_0.2.2         broom_0.5.2           
- [49] abind_1.4-5            yaml_2.2.0             reshape2_1.4.3        
- [52] modelr_0.1.5           backports_1.1.5        httpuv_1.5.2          
- [55] tools_3.4.3            gplots_3.0.1.1         ggridges_0.5.1        
- [58] TFisher_0.2.0          Rcpp_1.0.3             plyr_1.8.4            
- [61] zlibbioc_1.24.0        RCurl_1.95-4.12        pbapply_1.4-2         
- [64] cowplot_0.9.3          zoo_1.8-6              haven_2.2.0           
- [67] ggrepel_0.8.1          cluster_2.0.6          fs_1.3.1              
- [70] magrittr_1.5           RSpectra_0.16-0        data.table_1.12.6     
+ [37] scales_1.1.0           multcomp_1.4-8         nnet_7.3-12           
+ [40] gtable_0.3.0           npsurv_0.4-0           globals_0.12.5        
+ [43] sandwich_2.5-1         workflowr_1.5.0        rlang_0.4.4           
+ [46] zeallot_0.1.0          splines_3.4.3          lazyeval_0.2.2        
+ [49] broom_0.5.2            abind_1.4-5            yaml_2.2.0            
+ [52] reshape2_1.4.3         modelr_0.1.5           backports_1.1.5       
+ [55] httpuv_1.5.2           tools_3.4.3            gplots_3.0.1.1        
+ [58] ggridges_0.5.1         TFisher_0.2.0          Rcpp_1.0.3            
+ [61] plyr_1.8.4             zlibbioc_1.24.0        RCurl_1.95-4.12       
+ [64] pbapply_1.4-2          cowplot_0.9.3          zoo_1.8-6             
+ [67] haven_2.2.0            ggrepel_0.8.1          cluster_2.0.6         
+ [70] fs_1.3.1               magrittr_1.5           data.table_1.12.6     
  [73] lmtest_0.9-37          reprex_0.3.0           RANN_2.6.1            
  [76] mvtnorm_1.0-7          whisker_0.4            fitdistrplus_1.0-14   
  [79] hms_0.5.2              lsei_1.2-0             evaluate_0.14         
