@@ -443,17 +443,17 @@ boxplot_gene_sample_type <- function(counts_, info_, gene_, name, y_axis = "log2
 labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
 
 #SOX9
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000125398", "SOX9")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000125398", "SOX9")
 #ACAN
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000157766", "ACAN")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000157766", "ACAN")
 #COL11A1
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000060718", "COL11A1")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000060718", "COL11A1")
 #SOX5
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000134532", "SOX5")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000134532", "SOX5")
 #SOX6
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000110693", "SOX6")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000110693", "SOX6")
 #TGFB3
-boxplot_gene_sample_type(filtered_upperquartile, labels, "ENSG00000119699", "TGFB3")
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000119699", "TGFB3")
 
 #COL2A1
 boxplot_gene_sample_type(merged_raw_data$counts, labels, "ENSG00000139219", "COL2A1", y_axis = "Raw counts")
