@@ -12,6 +12,7 @@ editor_options:
 Include data from:
      Pilot (iPSC-derived chondrocytes from 3 individuals x 2 treatment conditions; 10x)
      MSC-Pilot (Genevieve Housman's human data of iPSCs and iPSC-derived MSCs from human-chimp study; 10x)
+          Also one dataset from chondrocytes (ipsc-derived)
      Hepatocytes (from liver homogenate; 10x)
      Chondrocytes (from OA patients; STRT protocol)
      
@@ -69,6 +70,7 @@ gh_ipsc_2.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.HOU-1.rds"))
 gh_msc_2.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.HOU-2.rds"))
 gh_ipsc_3.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.HOU-9.rds"))
 gh_msc_3.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.HOU-11.rds"))
+gh_chondro <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-4.rds")) #need to verify the sample name for the chondro/if these were processed yet
 gh_big <- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_ipsc_1.2, gh_msc_1.2, gh_ipsc_2.1, gh_msc_2.1, gh_ipsc_3.1, gh_msc_3.1), 
                 add.cell.ids = c("ipsc1.1", "msc1.1", "ipsc1.2", "msc1.2", "ipsc2.1", "msc2.1", "ipsc3.1", "msc3.1"), project = "ghousman")
 gh_big_humans <- subset(gh_big, species == "Human")

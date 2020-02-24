@@ -109,17 +109,17 @@ row.names(outside_data_counts) <- outside_data_counts$Geneid
 outside_data_counts <- outside_data_counts[, -c(1:6)]
 
 #rename samples (colnames)
-names(outside_data_counts) <- c("Heart_1_tr", "MSC_nt_hBM1_tr", "Heart_4", "Chond_TCP_P1_2_tr",
-                                "Chond_dmg_2", "Chond_intact_1", "Heart_1", "Heart_3_tr", 
-                                "MSC_nt_hBM3_tr", "Chond_intact_2", "MSC_bm1", "iPSC-MSC5_H20157-d5-r1", 
-                                "Chond_dmg_1", "Chond_SCM_P1_3", "Chond_TCP_P1_1_tr", "MSC_nt_hBM2_tr", 
-                                "MSC_bm2", "Chond_SCM_P1_1", "Chond_intact_1_tr", "iPSC-MSC9_H20157-d9-r2", 
-                                "Chond_SCM_P1_2_tr", "Chond_TCP_P1_1", "Chond_intact_3_tr", "Chond_dmg_2_tr",
-                                "MSC_hAD", "Chond_intact_3", "MSC_nt_hBM2", "MSC_hAD_tr", 
-                                "Chond_dmg_1_tr", "Chond_intact_2_tr", "Heart_2_tr", "Heart_3", 
-                                "MSC_nt_hBM1", "Heart_4_tr", "Heart_2", "iPSC-MSC5_H20157-d5-r2", 
-                                "Chond_dmg_3", "Chond_SCM_P1_3_tr", "Chond_SCM_P1_2", "Chond_dmg_3_tr", 
-                                "MSC_bm1_tr", "MSC_nt_hBM3", "Chond_TCP_P1_3", "MSC_bm2_tr",
+names(outside_data_counts) <- c("Heart_1_tr", "MSC.BM_nt_hBM1_tr", "Heart_4", "Chond_TCP_P1_2_tr",
+                                "ChondOA_dmg_2", "ChondOA_intact_1", "Heart_1", "Heart_3_tr", 
+                                "MSC.BM_nt_hBM3_tr", "ChondOA_intact_2", "MSC.BM_bm1", "iPSC-MSC5_H20157-d5-r1", 
+                                "ChondOA_dmg_1", "Chond_SCM_P1_3", "Chond_TCP_P1_1_tr", "MSC.BM_nt_hBM2_tr", 
+                                "MSC.BM_bm2", "Chond_SCM_P1_1", "ChondOA_intact_1_tr", "iPSC-MSC9_H20157-d9-r2", 
+                                "Chond_SCM_P1_2_tr", "Chond_TCP_P1_1", "ChondOA_intact_3_tr", "ChondOA_dmg_2_tr",
+                                "MSC.AD_hAD", "ChondOA_intact_3", "MSC.BM_nt_hBM2", "MSC.AD_hAD_tr", 
+                                "ChondOA_dmg_1_tr", "ChondOA_intact_2_tr", "Heart_2_tr", "Heart_3", 
+                                "MSC.BM_nt_hBM1", "Heart_4_tr", "Heart_2", "iPSC-MSC5_H20157-d5-r2", 
+                                "ChondOA_dmg_3", "Chond_SCM_P1_3_tr", "Chond_SCM_P1_2", "ChondOA_dmg_3_tr", 
+                                "MSC.BM_bm1_tr", "MSC.BM_nt_hBM3", "Chond_TCP_P1_3", "MSC.BM_bm2_tr",
                                 "iPSC_H20157-d0-r1", "Chond_SCM_P1_1_tr", "iPSC-MSC9_H20157-d9-r1", "Chond_TCP_P1_3_tr",
                                 "iPSC_H20157-d0-r2", "Chond_TCP_P1_2")
 
@@ -460,3 +460,76 @@ boxplot_gene_sample_type(merged_raw_data$counts, labels, "ENSG00000139219", "COL
 
 ```
 
+# Check expression of GoM cluster markers across data
+
+For k = 
+
+```{r cluster markers}
+#SOX9
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000125398", "SOX9")
+```
+
+
+
+
+
+
+# Grade of Membership analysis after removing OA samples (because we were worried about these samples being potentially strange and clustering as an outgroup compared to all other samples)
+
+```{r gom no OA}
+
+filtered_counts <- counts_upperquartile$counts
+filtered_counts <- filtered_counts[,-c(26, 29, 30, 32, 33, 38)]
+labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
+labels <- labels[-c(26, 29, 30, 32, 33, 38)]
+Combined_counts_celltypes <- sapply(strsplit(as.character(counts_upperquartile$samples$group),"_"), `[`, 1)
+
+Combined_GoM <- runfitGoM(t(filtered_counts), start = 3, end = 8)
+```
+
+
+```{r plotting GoM no OA}
+
+
+# k = 3
+plot_structure_plot(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[1]]$clust_3$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 4
+plot_structure_plot(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[2]]$clust_4$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 5
+plot_structure_plot(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[3]]$clust_5$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 6
+plot_structure_plot(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[4]]$clust_6$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 7
+plot_structure_plot(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[5]]$clust_7$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 8
+plot_structure_plot(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM[[6]]$clust_8$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+```

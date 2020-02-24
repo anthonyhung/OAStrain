@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-19
+<strong>Last updated:</strong> 2020-02-24
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree88682cc9e2c11f7ae7ba25b9959dfde687206e29targetblank88682cca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/88682cc9e2c11f7ae7ba25b9959dfde687206e29" target="_blank">88682cc</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree7fe1d0c84437c41023cfa69b6c56ce46235b4f65targetblank7fe1d0ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/7fe1d0c84437c41023cfa69b6c56ce46235b4f65" target="_blank">7fe1d0c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree88682cc9e2c11f7ae7ba25b9959dfde687206e29targetblank88682cca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree7fe1d0c84437c41023cfa69b6c56ce46235b4f65targetblank7fe1d0ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -527,8 +527,12 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  analysis/Pseudobulk.Rmd
+
 Unstaged changes:
     Modified:   analysis/Bulk_cellComposition_analysis.Rmd
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
 
 </code></pre>
 <p>
@@ -567,6 +571,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+check expression using RLE norm
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/Bulk_cellComposition_analysis.html" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+check expression using RLE norm
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -920,17 +958,17 @@ row.names(outside_data_counts) &lt;- outside_data_counts$Geneid
 outside_data_counts &lt;- outside_data_counts[, -c(1:6)]
 
 #rename samples (colnames)
-names(outside_data_counts) &lt;- c(&quot;Heart_1_tr&quot;, &quot;MSC_nt_hBM1_tr&quot;, &quot;Heart_4&quot;, &quot;Chond_TCP_P1_2_tr&quot;,
-                                &quot;Chond_dmg_2&quot;, &quot;Chond_intact_1&quot;, &quot;Heart_1&quot;, &quot;Heart_3_tr&quot;, 
-                                &quot;MSC_nt_hBM3_tr&quot;, &quot;Chond_intact_2&quot;, &quot;MSC_bm1&quot;, &quot;iPSC-MSC5_H20157-d5-r1&quot;, 
-                                &quot;Chond_dmg_1&quot;, &quot;Chond_SCM_P1_3&quot;, &quot;Chond_TCP_P1_1_tr&quot;, &quot;MSC_nt_hBM2_tr&quot;, 
-                                &quot;MSC_bm2&quot;, &quot;Chond_SCM_P1_1&quot;, &quot;Chond_intact_1_tr&quot;, &quot;iPSC-MSC9_H20157-d9-r2&quot;, 
-                                &quot;Chond_SCM_P1_2_tr&quot;, &quot;Chond_TCP_P1_1&quot;, &quot;Chond_intact_3_tr&quot;, &quot;Chond_dmg_2_tr&quot;,
-                                &quot;MSC_hAD&quot;, &quot;Chond_intact_3&quot;, &quot;MSC_nt_hBM2&quot;, &quot;MSC_hAD_tr&quot;, 
-                                &quot;Chond_dmg_1_tr&quot;, &quot;Chond_intact_2_tr&quot;, &quot;Heart_2_tr&quot;, &quot;Heart_3&quot;, 
-                                &quot;MSC_nt_hBM1&quot;, &quot;Heart_4_tr&quot;, &quot;Heart_2&quot;, &quot;iPSC-MSC5_H20157-d5-r2&quot;, 
-                                &quot;Chond_dmg_3&quot;, &quot;Chond_SCM_P1_3_tr&quot;, &quot;Chond_SCM_P1_2&quot;, &quot;Chond_dmg_3_tr&quot;, 
-                                &quot;MSC_bm1_tr&quot;, &quot;MSC_nt_hBM3&quot;, &quot;Chond_TCP_P1_3&quot;, &quot;MSC_bm2_tr&quot;,
+names(outside_data_counts) &lt;- c(&quot;Heart_1_tr&quot;, &quot;MSC.BM_nt_hBM1_tr&quot;, &quot;Heart_4&quot;, &quot;Chond_TCP_P1_2_tr&quot;,
+                                &quot;ChondOA_dmg_2&quot;, &quot;ChondOA_intact_1&quot;, &quot;Heart_1&quot;, &quot;Heart_3_tr&quot;, 
+                                &quot;MSC.BM_nt_hBM3_tr&quot;, &quot;ChondOA_intact_2&quot;, &quot;MSC.BM_bm1&quot;, &quot;iPSC-MSC5_H20157-d5-r1&quot;, 
+                                &quot;ChondOA_dmg_1&quot;, &quot;Chond_SCM_P1_3&quot;, &quot;Chond_TCP_P1_1_tr&quot;, &quot;MSC.BM_nt_hBM2_tr&quot;, 
+                                &quot;MSC.BM_bm2&quot;, &quot;Chond_SCM_P1_1&quot;, &quot;ChondOA_intact_1_tr&quot;, &quot;iPSC-MSC9_H20157-d9-r2&quot;, 
+                                &quot;Chond_SCM_P1_2_tr&quot;, &quot;Chond_TCP_P1_1&quot;, &quot;ChondOA_intact_3_tr&quot;, &quot;ChondOA_dmg_2_tr&quot;,
+                                &quot;MSC.AD_hAD&quot;, &quot;ChondOA_intact_3&quot;, &quot;MSC.BM_nt_hBM2&quot;, &quot;MSC.AD_hAD_tr&quot;, 
+                                &quot;ChondOA_dmg_1_tr&quot;, &quot;ChondOA_intact_2_tr&quot;, &quot;Heart_2_tr&quot;, &quot;Heart_3&quot;, 
+                                &quot;MSC.BM_nt_hBM1&quot;, &quot;Heart_4_tr&quot;, &quot;Heart_2&quot;, &quot;iPSC-MSC5_H20157-d5-r2&quot;, 
+                                &quot;ChondOA_dmg_3&quot;, &quot;Chond_SCM_P1_3_tr&quot;, &quot;Chond_SCM_P1_2&quot;, &quot;ChondOA_dmg_3_tr&quot;, 
+                                &quot;MSC.BM_bm1_tr&quot;, &quot;MSC.BM_nt_hBM3&quot;, &quot;Chond_TCP_P1_3&quot;, &quot;MSC.BM_bm2_tr&quot;,
                                 &quot;iPSC_H20157-d0-r1&quot;, &quot;Chond_SCM_P1_1_tr&quot;, &quot;iPSC-MSC9_H20157-d9-r1&quot;, &quot;Chond_TCP_P1_3_tr&quot;,
                                 &quot;iPSC_H20157-d0-r2&quot;, &quot;Chond_TCP_P1_2&quot;)
 
@@ -1074,62 +1112,69 @@ ENSG00000000419  5.644925  5.857292  6.216666  6.090712  5.815480   4.577290
 ENSG00000000457  3.878511  3.561903  3.907355  3.749208  3.553448   3.966220
 ENSG00000000460  3.051476  2.335564  2.264378  2.166455  2.096231   3.295334
 ENSG00000000938 -6.600244 -6.600244 -6.600244 -6.600244 -6.600244   2.949516
-                MSC_nt_hBM1_tr Chond_TCP_P1_2_tr Heart_3_tr MSC_nt_hBM3_tr
-ENSG00000000003       4.723491          5.890428  2.2553972       4.852111
-ENSG00000000005      -6.600244         -6.600244 -6.6002444      -6.600244
-ENSG00000000419       5.930937          4.544137  3.7558810       5.858455
-ENSG00000000457       3.321379          3.119490  2.1884313       3.310979
-ENSG00000000460       5.048588          1.265023 -0.2507509       5.140665
-ENSG00000000938      -3.826993         -2.726694  2.3193921      -4.376412
-                iPSC-MSC5_H20157-d5-r1 Chond_TCP_P1_1_tr MSC_nt_hBM2_tr
-ENSG00000000003               7.164506          5.415393       4.877361
-ENSG00000000005              -1.317173         -6.600244      -6.600244
-ENSG00000000419               5.104061          4.389979       5.846623
-ENSG00000000457               4.415054          2.881012       3.287920
-ENSG00000000460               4.192484          1.656117       5.151237
-ENSG00000000938              -4.780929         -2.257546      -3.560035
-                Chond_intact_1_tr iPSC-MSC9_H20157-d9-r2 Chond_SCM_P1_2_tr
-ENSG00000000003          6.337861               7.018176          5.625414
-ENSG00000000005         -6.600244              -3.154436         -6.600244
-ENSG00000000419          2.791829               6.237620          4.628252
-ENSG00000000457          4.204236               3.385247          3.341020
-ENSG00000000460          1.158925               4.437565          1.502989
-ENSG00000000938         -6.600244              -6.600244         -3.362917
-                Chond_intact_3_tr Chond_dmg_2_tr MSC_hAD_tr Chond_dmg_1_tr
-ENSG00000000003          5.704363     5.47050111   4.945231      5.6516428
-ENSG00000000005         -2.931688    -2.10428002  -4.238873     -2.9365657
-ENSG00000000419          2.845301     2.85228272   5.658641      2.7608277
-ENSG00000000457          3.809187     3.44312510   3.794262      3.7108586
-ENSG00000000460          1.257548     2.28550261   2.942682      0.9967162
-ENSG00000000938         -1.989562    -0.07591601  -6.600244     -1.9946393
-                Chond_intact_2_tr Heart_2_tr Heart_4_tr iPSC-MSC5_H20157-d5-r2
-ENSG00000000003          5.064755  2.2043370  2.7425656               7.680809
-ENSG00000000005         -3.075975 -4.8882112 -4.0868989              -2.753296
-ENSG00000000419          2.961340  3.9449149  4.4699220               5.689008
-ENSG00000000457          3.535598  1.5800637  1.6400853               4.503196
-ENSG00000000460          1.834114  0.1236721 -0.2593221               4.754366
-ENSG00000000938          1.109611  4.0156768  3.2734698              -6.600244
-                Chond_SCM_P1_3_tr Chond_dmg_3_tr MSC_bm1_tr MSC_bm2_tr
-ENSG00000000003          5.687845      6.3960371   5.256177   5.013122
-ENSG00000000005         -4.034267     -1.5927852  -6.600244  -6.600244
-ENSG00000000419          4.823518      3.0073577   5.423245   5.394106
-ENSG00000000457          3.300295      3.4383116   3.166023   3.231837
-ENSG00000000460          1.769329      1.2189100   1.749256   1.545696
-ENSG00000000938         -1.668119     -0.7205512  -6.600244  -6.600244
-                iPSC_H20157-d0-r1 Chond_SCM_P1_1_tr iPSC-MSC9_H20157-d9-r1
-ENSG00000000003          7.029258          6.090197               6.715044
-ENSG00000000005          1.802805         -4.280230              -6.600244
-ENSG00000000419          6.394817          4.853205               5.562411
-ENSG00000000457          2.928815          3.517603               2.921131
-ENSG00000000460          5.071419          1.552190               4.186870
-ENSG00000000938         -2.538634         -2.902013              -6.600244
-                Chond_TCP_P1_3_tr iPSC_H20157-d0-r2
-ENSG00000000003          5.341044          6.978583
-ENSG00000000005         -6.600244          2.294688
-ENSG00000000419          4.547562          6.401747
-ENSG00000000457          3.398671          2.807551
-ENSG00000000460          2.405898          5.061166
-ENSG00000000938         -2.466488         -2.772884</code></pre>
+                MSC.BM_nt_hBM1_tr Chond_TCP_P1_2_tr Heart_3_tr
+ENSG00000000003          4.723491          5.890428  2.2553972
+ENSG00000000005         -6.600244         -6.600244 -6.6002444
+ENSG00000000419          5.930937          4.544137  3.7558810
+ENSG00000000457          3.321379          3.119490  2.1884313
+ENSG00000000460          5.048588          1.265023 -0.2507509
+ENSG00000000938         -3.826993         -2.726694  2.3193921
+                MSC.BM_nt_hBM3_tr iPSC-MSC5_H20157-d5-r1 Chond_TCP_P1_1_tr
+ENSG00000000003          4.852111               7.164506          5.415393
+ENSG00000000005         -6.600244              -1.317173         -6.600244
+ENSG00000000419          5.858455               5.104061          4.389979
+ENSG00000000457          3.310979               4.415054          2.881012
+ENSG00000000460          5.140665               4.192484          1.656117
+ENSG00000000938         -4.376412              -4.780929         -2.257546
+                MSC.BM_nt_hBM2_tr ChondOA_intact_1_tr iPSC-MSC9_H20157-d9-r2
+ENSG00000000003          4.877361            6.337861               7.018176
+ENSG00000000005         -6.600244           -6.600244              -3.154436
+ENSG00000000419          5.846623            2.791829               6.237620
+ENSG00000000457          3.287920            4.204236               3.385247
+ENSG00000000460          5.151237            1.158925               4.437565
+ENSG00000000938         -3.560035           -6.600244              -6.600244
+                Chond_SCM_P1_2_tr ChondOA_intact_3_tr ChondOA_dmg_2_tr
+ENSG00000000003          5.625414            5.704363       5.47050111
+ENSG00000000005         -6.600244           -2.931688      -2.10428002
+ENSG00000000419          4.628252            2.845301       2.85228272
+ENSG00000000457          3.341020            3.809187       3.44312510
+ENSG00000000460          1.502989            1.257548       2.28550261
+ENSG00000000938         -3.362917           -1.989562      -0.07591601
+                MSC.AD_hAD_tr ChondOA_dmg_1_tr ChondOA_intact_2_tr Heart_2_tr
+ENSG00000000003      4.945231        5.6516428            5.064755  2.2043370
+ENSG00000000005     -4.238873       -2.9365657           -3.075975 -4.8882112
+ENSG00000000419      5.658641        2.7608277            2.961340  3.9449149
+ENSG00000000457      3.794262        3.7108586            3.535598  1.5800637
+ENSG00000000460      2.942682        0.9967162            1.834114  0.1236721
+ENSG00000000938     -6.600244       -1.9946393            1.109611  4.0156768
+                Heart_4_tr iPSC-MSC5_H20157-d5-r2 Chond_SCM_P1_3_tr
+ENSG00000000003  2.7425656               7.680809          5.687845
+ENSG00000000005 -4.0868989              -2.753296         -4.034267
+ENSG00000000419  4.4699220               5.689008          4.823518
+ENSG00000000457  1.6400853               4.503196          3.300295
+ENSG00000000460 -0.2593221               4.754366          1.769329
+ENSG00000000938  3.2734698              -6.600244         -1.668119
+                ChondOA_dmg_3_tr MSC.BM_bm1_tr MSC.BM_bm2_tr iPSC_H20157-d0-r1
+ENSG00000000003        6.3960371      5.256177      5.013122          7.029258
+ENSG00000000005       -1.5927852     -6.600244     -6.600244          1.802805
+ENSG00000000419        3.0073577      5.423245      5.394106          6.394817
+ENSG00000000457        3.4383116      3.166023      3.231837          2.928815
+ENSG00000000460        1.2189100      1.749256      1.545696          5.071419
+ENSG00000000938       -0.7205512     -6.600244     -6.600244         -2.538634
+                Chond_SCM_P1_1_tr iPSC-MSC9_H20157-d9-r1 Chond_TCP_P1_3_tr
+ENSG00000000003          6.090197               6.715044          5.341044
+ENSG00000000005         -4.280230              -6.600244         -6.600244
+ENSG00000000419          4.853205               5.562411          4.547562
+ENSG00000000457          3.517603               2.921131          3.398671
+ENSG00000000460          1.552190               4.186870          2.405898
+ENSG00000000938         -2.902013              -6.600244         -2.466488
+                iPSC_H20157-d0-r2
+ENSG00000000003          6.978583
+ENSG00000000005          2.294688
+ENSG00000000419          6.401747
+ENSG00000000457          2.807551
+ENSG00000000460          5.061166
+ENSG00000000938         -2.772884</code></pre>
 <pre class="r"><code># Look at density plots
 plotDensities(upperquartile, legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/upperquartile%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1478,62 +1523,69 @@ ENSG00000000419  5.328849  5.528152  5.481596  5.537099  5.441140   5.416413
 ENSG00000000457  3.562719  3.233173  3.172971  3.196168  3.179564   4.805220
 ENSG00000000460  2.735994  2.007524  1.531817  1.614841  1.723350   4.134124
 ENSG00000000938 -6.434432 -6.434432 -6.434432 -6.434432 -6.434432   3.788153
-                MSC_nt_hBM1_tr Chond_TCP_P1_2_tr Heart_3_tr MSC_nt_hBM3_tr
-ENSG00000000003       4.226281          6.022694  3.2328099       4.370835
-ENSG00000000005      -6.434432         -6.434432 -6.4344315      -6.434432
-ENSG00000000419       5.433540          4.676411  4.7341617       5.377033
-ENSG00000000457       2.824708          3.251790  3.1657802       2.830260
-ENSG00000000460       4.551312          1.397428  0.7203624       4.659336
-ENSG00000000938      -4.206320         -2.592120  3.2968631      -4.692893
-                iPSC-MSC5_H20157-d5-r1 Chond_TCP_P1_1_tr MSC_nt_hBM2_tr
-ENSG00000000003              7.5059715          5.541037       4.444064
-ENSG00000000005             -0.9799501         -6.434432      -6.434432
-ENSG00000000419              5.4454888          4.515633       5.413199
-ENSG00000000457              4.7564515          3.006703       2.855147
-ENSG00000000460              4.5338681          1.781885       4.717896
-ENSG00000000938             -4.4870949         -2.129905      -3.905977
-                Chond_intact_1_tr iPSC-MSC9_H20157-d9-r2 Chond_SCM_P1_2_tr
-ENSG00000000003          7.275156               7.032248          5.661060
-ENSG00000000005         -6.434432              -3.125765         -6.434432
-ENSG00000000419          3.728311               6.251702          4.663926
-ENSG00000000457          5.141274               3.399465          3.376776
-ENSG00000000460          2.093536               4.451701          1.539103
-ENSG00000000938         -6.434432              -6.434432         -3.312924
-                Chond_intact_3_tr Chond_dmg_2_tr MSC_hAD_tr Chond_dmg_1_tr
-ENSG00000000003          6.678346      6.4068057   4.524272       6.668137
-ENSG00000000005         -2.007089     -1.1945420  -4.525566      -1.971571
-ENSG00000000419          3.818518      3.7878737   5.237588       3.776476
-ENSG00000000457          4.782838      4.3790026   3.373598       4.726979
-ENSG00000000460          2.228983      3.2206833   2.522451       2.010019
-ENSG00000000938         -1.041011      0.8540266  -6.434432      -1.004659
-                Chond_intact_2_tr Heart_2_tr Heart_4_tr iPSC-MSC5_H20157-d5-r2
-ENSG00000000003          6.149181  3.0190060  3.7215581               7.676719
-ENSG00000000005         -2.051649 -4.2416559 -3.2202547              -2.744917
-ENSG00000000419          4.045076  4.7604044  5.4495836               5.684946
-ENSG00000000457          4.619629  2.3940984  2.6179774               4.499179
-ENSG00000000460          2.916783  0.9345528  0.7129331               4.750336
-ENSG00000000938          2.190996  4.8311831  4.2527575              -6.434432
-                Chond_SCM_P1_3_tr Chond_dmg_3_tr MSC_bm1_tr MSC_bm2_tr
-ENSG00000000003          5.614903      7.4071012   4.892904   4.676196
-ENSG00000000005         -4.064056     -0.6016691  -6.434432  -6.434432
-ENSG00000000419          4.750619      4.0176799   5.059952   5.057134
-ENSG00000000457          3.227573      4.4488456   2.803311   2.895378
-ENSG00000000460          1.697121      2.2272170   1.387769   1.210700
-ENSG00000000938         -1.732630      0.2796853  -6.434432  -6.434432
-                iPSC_H20157-d0-r1 Chond_SCM_P1_1_tr iPSC-MSC9_H20157-d9-r1
-ENSG00000000003          7.208712          6.010708               6.671216
-ENSG00000000005          1.982220         -4.307171              -6.434432
-ENSG00000000419          6.574270          4.773771               5.518611
-ENSG00000000457          3.108252          3.438315               2.877588
-ENSG00000000460          5.250870          1.473600               4.143148
-ENSG00000000938         -2.359992         -2.961084              -6.434432
-                Chond_TCP_P1_3_tr iPSC_H20157-d0-r2
-ENSG00000000003          5.353992          7.143388
-ENSG00000000005         -6.434432          2.459494
-ENSG00000000419          4.560540          6.566552
-ENSG00000000457          3.411736          2.972357
-ENSG00000000460          2.419119          5.225971
-ENSG00000000938         -2.444421         -2.608008</code></pre>
+                MSC.BM_nt_hBM1_tr Chond_TCP_P1_2_tr Heart_3_tr
+ENSG00000000003          4.226281          6.022694  3.2328099
+ENSG00000000005         -6.434432         -6.434432 -6.4344315
+ENSG00000000419          5.433540          4.676411  4.7341617
+ENSG00000000457          2.824708          3.251790  3.1657802
+ENSG00000000460          4.551312          1.397428  0.7203624
+ENSG00000000938         -4.206320         -2.592120  3.2968631
+                MSC.BM_nt_hBM3_tr iPSC-MSC5_H20157-d5-r1 Chond_TCP_P1_1_tr
+ENSG00000000003          4.370835              7.5059715          5.541037
+ENSG00000000005         -6.434432             -0.9799501         -6.434432
+ENSG00000000419          5.377033              5.4454888          4.515633
+ENSG00000000457          2.830260              4.7564515          3.006703
+ENSG00000000460          4.659336              4.5338681          1.781885
+ENSG00000000938         -4.692893             -4.4870949         -2.129905
+                MSC.BM_nt_hBM2_tr ChondOA_intact_1_tr iPSC-MSC9_H20157-d9-r2
+ENSG00000000003          4.444064            7.275156               7.032248
+ENSG00000000005         -6.434432           -6.434432              -3.125765
+ENSG00000000419          5.413199            3.728311               6.251702
+ENSG00000000457          2.855147            5.141274               3.399465
+ENSG00000000460          4.717896            2.093536               4.451701
+ENSG00000000938         -3.905977           -6.434432              -6.434432
+                Chond_SCM_P1_2_tr ChondOA_intact_3_tr ChondOA_dmg_2_tr
+ENSG00000000003          5.661060            6.678346        6.4068057
+ENSG00000000005         -6.434432           -2.007089       -1.1945420
+ENSG00000000419          4.663926            3.818518        3.7878737
+ENSG00000000457          3.376776            4.782838        4.3790026
+ENSG00000000460          1.539103            2.228983        3.2206833
+ENSG00000000938         -3.312924           -1.041011        0.8540266
+                MSC.AD_hAD_tr ChondOA_dmg_1_tr ChondOA_intact_2_tr Heart_2_tr
+ENSG00000000003      4.524272         6.668137            6.149181  3.0190060
+ENSG00000000005     -4.525566        -1.971571           -2.051649 -4.2416559
+ENSG00000000419      5.237588         3.776476            4.045076  4.7604044
+ENSG00000000457      3.373598         4.726979            4.619629  2.3940984
+ENSG00000000460      2.522451         2.010019            2.916783  0.9345528
+ENSG00000000938     -6.434432        -1.004659            2.190996  4.8311831
+                Heart_4_tr iPSC-MSC5_H20157-d5-r2 Chond_SCM_P1_3_tr
+ENSG00000000003  3.7215581               7.676719          5.614903
+ENSG00000000005 -3.2202547              -2.744917         -4.064056
+ENSG00000000419  5.4495836               5.684946          4.750619
+ENSG00000000457  2.6179774               4.499179          3.227573
+ENSG00000000460  0.7129331               4.750336          1.697121
+ENSG00000000938  4.2527575              -6.434432         -1.732630
+                ChondOA_dmg_3_tr MSC.BM_bm1_tr MSC.BM_bm2_tr iPSC_H20157-d0-r1
+ENSG00000000003        7.4071012      4.892904      4.676196          7.208712
+ENSG00000000005       -0.6016691     -6.434432     -6.434432          1.982220
+ENSG00000000419        4.0176799      5.059952      5.057134          6.574270
+ENSG00000000457        4.4488456      2.803311      2.895378          3.108252
+ENSG00000000460        2.2272170      1.387769      1.210700          5.250870
+ENSG00000000938        0.2796853     -6.434432     -6.434432         -2.359992
+                Chond_SCM_P1_1_tr iPSC-MSC9_H20157-d9-r1 Chond_TCP_P1_3_tr
+ENSG00000000003          6.010708               6.671216          5.353992
+ENSG00000000005         -4.307171              -6.434432         -6.434432
+ENSG00000000419          4.773771               5.518611          4.560540
+ENSG00000000457          3.438315               2.877588          3.411736
+ENSG00000000460          1.473600               4.143148          2.419119
+ENSG00000000938         -2.961084              -6.434432         -2.444421
+                iPSC_H20157-d0-r2
+ENSG00000000003          7.143388
+ENSG00000000005          2.459494
+ENSG00000000419          6.566552
+ENSG00000000457          2.972357
+ENSG00000000460          5.225971
+ENSG00000000938         -2.608008</code></pre>
 <pre class="r"><code># Look at density plots
 plotDensities(RLE, legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/RLE%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -4898,6 +4950,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-1.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-1.png" target="_blank">605da87</a>
 </td>
 <td>
@@ -4936,6 +4999,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-2.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-2.png" target="_blank">605da87</a>
@@ -4978,6 +5052,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-3.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-3.png" target="_blank">605da87</a>
 </td>
 <td>
@@ -5016,6 +5101,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-4.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-4.png" target="_blank">605da87</a>
@@ -5058,6 +5154,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-5.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-5.png" target="_blank">605da87</a>
 </td>
 <td>
@@ -5096,6 +5203,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7fe1d0c84437c41023cfa69b6c56ce46235b4f65/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-6.png" target="_blank">7fe1d0c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Bulk_cellComposition_analysis.Rmd/chond markers-6.png" target="_blank">605da87</a>
@@ -5151,6 +5269,1518 @@ Anthony Hung
 </table>
 </div>
 </div>
+</div>
+<div id="grade-of-membership-analysis-after-removing-oa-samples-because-we-were-worried-about-these-samples-being-potentially-strange-and-clustering-as-an-outgroup-compared-to-all-other-samples" class="section level1">
+<h1>Grade of Membership analysis after removing OA samples (because we were worried about these samples being potentially strange and clustering as an outgroup compared to all other samples)</h1>
+<pre class="r"><code>filtered_counts &lt;- counts_upperquartile$counts
+filtered_counts &lt;- filtered_counts[,-c(26, 29, 30, 32, 33, 38)]
+labels &lt;- sapply(strsplit(colnames(merged_raw_data),&quot;_&quot;), `[`, 1)
+labels &lt;- labels[-c(26, 29, 30, 32, 33, 38)]
+Combined_counts_celltypes &lt;- sapply(strsplit(as.character(counts_upperquartile$samples$group),&quot;_&quot;), `[`, 1)
+
+Combined_GoM &lt;- runfitGoM(t(filtered_counts), start = 3, end = 8)</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 3
+log posterior increase: 16247282, done.
+log BF( 3 ) = 174736177.86</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 4
+log posterior increase: 11191350.7, 871669.1, 2037871, done.
+log BF( 4 ) = 202516789.26</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 5
+log posterior increase: 35151925.2, 1078667.9, done.
+log BF( 5 ) = 233970630.77</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 6
+log posterior increase: 82161159, 688117.4, done.
+log BF( 6 ) = 239394802.7</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 7
+log posterior increase: 78414453.4, 1776031.1, done.
+log BF( 7 ) = 253199170.85</code></pre>
+<pre><code>Fitting a Grade of Membership model
+            (Taddy M., AISTATS 2012, JMLR 22,
+            http://proceedings.mlr.press/v22/taddy12/taddy12.pdf)</code></pre>
+<pre><code>
+Estimating on a 39 document collection.
+Fit and Bayes Factor Estimation for K = 8
+log posterior increase: 112406030.4, 646106.2, done.
+log BF( 8 ) = 260008738.08</code></pre>
+<pre class="r"><code># k = 3
+plot_structure_plot(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[1]]$clust_3$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[1]]$clust_3$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]     [,2]      [,3]     [,4]     [,5]     [,6]       [,7]    
+[1,] &quot;COL1A1&quot; &quot;FN1&quot;     &quot;COL3A1&quot; &quot;COL1A2&quot; &quot;SPARC&quot;  &quot;COL5A1&quot;   &quot;COL4A1&quot;
+[2,] &quot;TOP2A&quot;  &quot;MKI67&quot;   &quot;CTSV&quot;   &quot;HMGA1&quot;  &quot;HSPA8&quot;  &quot;ANLN&quot;     &quot;KRT19&quot; 
+[3,] &quot;MT-ND4&quot; &quot;MT-RNR2&quot; &quot;MT-CO1&quot; &quot;MT-CYB&quot; &quot;MT-ND1&quot; &quot;SERPINA1&quot; &quot;MT-CO3&quot;
+     [,8]      [,9]      [,10]    [,11]    [,12]     [,13]    [,14]    
+[1,] &quot;COL11A1&quot; &quot;COL12A1&quot; &quot;COL4A2&quot; &quot;ITGA11&quot; &quot;LOX&quot;     &quot;POSTN&quot;  &quot;LUM&quot;    
+[2,] &quot;CENPF&quot;   &quot;SLC2A3&quot;  &quot;KRT8&quot;   &quot;CSE1L&quot;  &quot;TUBB&quot;    &quot;NCL&quot;    &quot;STMN1&quot;  
+[3,] &quot;MT-ATP6&quot; &quot;MT-ND2&quot;  &quot;MT-CO2&quot; &quot;MT-ND3&quot; &quot;MT-RNR1&quot; &quot;MT-ND5&quot; &quot;MT-ND4L&quot;
+     [,15]      [,16]   [,17]    [,18]      [,19]   [,20]   [,21]      [,22]  
+[1,] &quot;SERPINE2&quot; &quot;TIMP1&quot; &quot;IGFBP3&quot; &quot;COL5A2&quot;   &quot;CEMIP&quot; &quot;LTBP2&quot; &quot;MMP2&quot;     &quot;LRP1&quot; 
+[2,] &quot;ENO1&quot;     &quot;SFRP1&quot; &quot;TPX2&quot;   &quot;HSP90AA1&quot; &quot;MCM4&quot;  &quot;AHNAK&quot; &quot;PAICS&quot;    &quot;XRCC5&quot;
+[3,] &quot;C3&quot;       &quot;TNNT2&quot; &quot;TTN&quot;    &quot;TF&quot;       &quot;ACAN&quot;  &quot;CRYAB&quot; &quot;MTATP6P1&quot; &quot;PDK4&quot; 
+     [,23]    [,24]     [,25]    [,26]   [,27]   [,28]   [,29]   [,30]  
+[1,] &quot;COL6A2&quot; &quot;CTGF&quot;    &quot;FKBP10&quot; &quot;TGFBI&quot; &quot;MXRA5&quot; &quot;MRC2&quot;  &quot;SPON2&quot; &quot;FBN1&quot; 
+[2,] &quot;ASPM&quot;   &quot;LDHA&quot;    &quot;TFPI2&quot;  &quot;IPO5&quot;  &quot;PEG10&quot; &quot;PRKDC&quot; &quot;HMGA2&quot; &quot;PLAT&quot; 
+[3,] &quot;TNNC1&quot;  &quot;MT-ATP8&quot; &quot;FABP3&quot;  &quot;HSPB7&quot; &quot;ACTC1&quot; &quot;CP&quot;    &quot;A2M&quot;   &quot;NR4A1&quot;
+     [,31]    [,32]        [,33]     [,34]    [,35]   [,36]  [,37]   [,38]     
+[1,] &quot;BGN&quot;    &quot;AC089987.1&quot; &quot;TIMP3&quot;   &quot;PDPN&quot;   &quot;FBLN5&quot; &quot;DCN&quot;  &quot;SULF1&quot; &quot;PCDH10&quot;  
+[2,] &quot;HNRNPU&quot; &quot;DYNC1H1&quot;    &quot;KPNB1&quot;   &quot;NUCKS1&quot; &quot;CCBE1&quot; &quot;XPO1&quot; &quot;CCT5&quot;  &quot;LMNB2&quot;   
+[3,] &quot;MT-TL1&quot; &quot;AOX1&quot;       &quot;SLC25A4&quot; &quot;MT-ND6&quot; &quot;NEBL&quot;  &quot;PLN&quot;  &quot;CMYA5&quot; &quot;SERPING1&quot;
+     [,39]      [,40]       [,41]    [,42]    [,43]   [,44]    [,45]   
+[1,] &quot;GREM1&quot;    &quot;COMP&quot;      &quot;HTRA1&quot;  &quot;CDKN2B&quot; &quot;IGFL2&quot; &quot;CALD1&quot;  &quot;COL6A1&quot;
+[2,] &quot;DEK&quot;      &quot;HNRNPA2B1&quot; &quot;NPM1&quot;   &quot;H2AFZ&quot;  &quot;TMPO&quot;  &quot;CDCP1&quot;  &quot;CCNB1&quot; 
+[3,] &quot;MTND2P28&quot; &quot;APOD&quot;      &quot;HSPA1A&quot; &quot;VTN&quot;    &quot;NDRG4&quot; &quot;ECHDC2&quot; &quot;MAOB&quot;  
+     [,46]    [,47]    [,48]     [,49]   [,50]   [,51]    [,52]    [,53]  
+[1,] &quot;CDH11&quot;  &quot;ADAM12&quot; &quot;ACTA2&quot;   &quot;MEST&quot;  &quot;WNT2&quot;  &quot;CILP&quot;   &quot;SPTBN2&quot; &quot;FAP&quot;  
+[2,] &quot;KIF11&quot;  &quot;CTSC&quot;   &quot;EZR&quot;     &quot;MSH2&quot;  &quot;LMNB1&quot; &quot;KIF20A&quot; &quot;CENPE&quot;  &quot;HSPD1&quot;
+[3,] &quot;HSPA1B&quot; &quot;CPS1&quot;   &quot;ALDH1A1&quot; &quot;TXNIP&quot; &quot;GPX3&quot;  &quot;C1S&quot;    &quot;TPM1&quot;   &quot;EPHX1&quot;
+     [,54]    [,55]   [,56]      [,57]   [,58]   [,59]    [,60]    [,61]   
+[1,] &quot;ANTXR1&quot; &quot;LOXL1&quot; &quot;MATN2&quot;    &quot;TAGLN&quot; &quot;P4HA2&quot; &quot;ACTG2&quot;  &quot;TIMP2&quot;  &quot;CERCAM&quot;
+[2,] &quot;MCM7&quot;   &quot;KRT18&quot; &quot;SET&quot;      &quot;MCM3&quot;  &quot;SMC4&quot;  &quot;FOXM1&quot;  &quot;HNRNPK&quot; &quot;HNRNPC&quot;
+[3,] &quot;CRIP2&quot;  &quot;ITGA7&quot; &quot;PPP1R12B&quot; &quot;ALDH2&quot; &quot;ACACB&quot; &quot;ABLIM1&quot; &quot;C1R&quot;    &quot;ANKRD1&quot;
+     [,62]   [,63]    [,64]   [,65]    [,66]    [,67]    [,68]    [,69]   
+[1,] &quot;AEBP1&quot; &quot;CHI3L1&quot; &quot;AQP1&quot;  &quot;CCDC80&quot; &quot;CPA4&quot;   &quot;MFGE8&quot;  &quot;FSTL1&quot;  &quot;IGFBP7&quot;
+[2,] &quot;KPNA2&quot; &quot;DCBLD2&quot; &quot;CBX5&quot;  &quot;DPPA4&quot;  &quot;KIF20B&quot; &quot;TRIM28&quot; &quot;HDAC2&quot;  &quot;FLNB&quot;  
+[3,] &quot;ALPK3&quot; &quot;SORBS1&quot; &quot;NEAT1&quot; &quot;ACADVL&quot; &quot;ATP2A2&quot; &quot;GATM&quot;   &quot;SLC4A3&quot; &quot;ACSL1&quot; 
+     [,70]    [,71]     [,72]   [,73]    [,74]      [,75]  [,76]   [,77]  
+[1,] &quot;PTGER2&quot; &quot;CHPF&quot;    &quot;EDIL3&quot; &quot;PLOD1&quot;  &quot;EGFL6&quot;    &quot;CD63&quot; &quot;SRPX2&quot; &quot;HSPG2&quot;
+[2,] &quot;CCT3&quot;   &quot;NASP&quot;    &quot;CAV1&quot;  &quot;ATP2B1&quot; &quot;DHX9&quot;     &quot;ILF3&quot; &quot;SPP1&quot;  &quot;CCNA2&quot;
+[3,] &quot;TNXB&quot;   &quot;CHCHD10&quot; &quot;CFH&quot;   &quot;HADHB&quot;  &quot;SELENBP1&quot; &quot;ATF5&quot; &quot;C5&quot;    &quot;GSN&quot;  
+     [,78]   [,79]    [,80]     [,81]    [,82]      [,83]     [,84]   [,85]   
+[1,] &quot;PLD3&quot;  &quot;KCTD16&quot; &quot;COL8A2&quot;  &quot;NRP2&quot;   &quot;OGFRL1&quot;   &quot;FLT1&quot;    &quot;CTSB&quot;  &quot;COL6A3&quot;
+[2,] &quot;RPS24&quot; &quot;FANCI&quot;  &quot;SLC16A1&quot; &quot;CCT8&quot;   &quot;ARHGAP29&quot; &quot;SUPT16H&quot; &quot;CCT6A&quot; &quot;PRDX1&quot; 
+[3,] &quot;NDRG2&quot; &quot;OBSCN&quot;  &quot;HSPB8&quot;   &quot;SHANK3&quot; &quot;COQ8A&quot;    &quot;CAT&quot;     &quot;ZFP36&quot; &quot;MYO15B&quot;
+     [,86]    [,87]     [,88]   [,89]     [,90]   [,91]     [,92]    [,93]     
+[1,] &quot;EFEMP1&quot; &quot;MFAP4&quot;   &quot;VIM&quot;   &quot;KDELR3&quot;  &quot;P4HA3&quot; &quot;MME&quot;     &quot;LMCD1&quot;  &quot;ADGRA2&quot;  
+[2,] &quot;HAPLN1&quot; &quot;RAN&quot;     &quot;RRM1&quot;  &quot;SLC38A1&quot; &quot;ACTB&quot;  &quot;DDX21&quot;   &quot;SERBP1&quot; &quot;SEPT9&quot;   
+[3,] &quot;RGS5&quot;   &quot;CYP27A1&quot; &quot;DUSP1&quot; &quot;ECH1&quot;    &quot;CFLAR&quot; &quot;HSD17B6&quot; &quot;DNAJA4&quot; &quot;MTCO1P12&quot;
+     [,94]   [,95]   [,96]    [,97]      [,98]      [,99]    [,100]   
+[1,] &quot;THY1&quot;  &quot;ITGB5&quot; &quot;CDKN1A&quot; &quot;FMOD&quot;     &quot;PTK7&quot;     &quot;TNC&quot;    &quot;P3H1&quot;   
+[2,] &quot;SAMD9&quot; &quot;CCT2&quot;  &quot;PSIP1&quot;  &quot;HMGB2&quot;    &quot;SLC39A10&quot; &quot;GAPDH&quot;  &quot;ARL6IP1&quot;
+[3,] &quot;IDH2&quot;  &quot;RBM24&quot; &quot;CLU&quot;    &quot;SLC9A3R2&quot; &quot;PER1&quot;     &quot;ACADSB&quot; &quot;TNS2&quot;   </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]       [,5]        [,6]
+[1,] 0.231101810 0.185508334 0.142497217 0.121617401 0.07991048 0.030302566
+[2,] 0.003159301 0.003062278 0.002783535 0.002580503 0.00252780 0.002080893
+[3,] 0.174189432 0.150126410 0.118163241 0.116307484 0.08335560 0.081965229
+            [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
+[1,] 0.014245733 0.011852321 0.010654354 0.010540793 0.009279029 0.008931097
+[2,] 0.001604236 0.001472752 0.001407058 0.001354739 0.001253806 0.001241648
+[3,] 0.073499996 0.065603442 0.059481041 0.052480610 0.039992303 0.033593640
+           [,13]       [,14]       [,15]       [,16]       [,17]       [,18]
+[1,] 0.007997916 0.007255638 0.006998556 0.006672923 0.005225592 0.004745408
+[2,] 0.001225001 0.001195998 0.001181693 0.001130025 0.001123869 0.001115250
+[3,] 0.019454305 0.019417562 0.018649916 0.017126534 0.016483791 0.015284920
+           [,19]       [,20]       [,21]       [,22]        [,23]        [,24]
+[1,] 0.004679143 0.004317342 0.003417530 0.003264794 0.0032258265 0.0032212422
+[2,] 0.001084343 0.001043793 0.001031905 0.001011918 0.0009799266 0.0009563151
+[3,] 0.013871219 0.009099664 0.008101827 0.007572856 0.0068519390 0.0066164329
+            [,25]        [,26]        [,27]        [,28]        [,29]
+[1,] 0.0031602587 0.0029206305 0.0028558424 0.0027253159 0.0026675726
+[2,] 0.0009346307 0.0009083564 0.0008769126 0.0008705218 0.0008491459
+[3,] 0.0064397720 0.0059263786 0.0054153200 0.0053494552 0.0042839450
+            [,30]        [,31]        [,32]       [,33]        [,34]
+[1,] 0.0026254943 0.0026200745 0.0024691336 0.002447749 0.0021027498
+[2,] 0.0007888233 0.0007861941 0.0007619206 0.000745549 0.0007427095
+[3,] 0.0036780598 0.0032335126 0.0030264725 0.003020519 0.0029909487
+            [,35]        [,36]        [,37]        [,38]        [,39]
+[1,] 0.0019908680 0.0019813938 0.0018482046 0.0018204315 0.0017992990
+[2,] 0.0007331155 0.0007194174 0.0007174207 0.0006911494 0.0006845179
+[3,] 0.0029761707 0.0028017400 0.0026556938 0.0025488277 0.0025387422
+            [,40]        [,41]        [,42]       [,43]        [,44]
+[1,] 0.0017974532 0.0017404829 0.0017151648 0.001710148 0.0017086800
+[2,] 0.0006739733 0.0006670484 0.0006613374 0.000638131 0.0006368365
+[3,] 0.0023227376 0.0022107024 0.0019117974 0.001908112 0.0016817537
+            [,45]        [,46]        [,47]        [,48]        [,49]
+[1,] 0.0016190121 0.0015956345 0.0015853562 0.0015809454 0.0014508486
+[2,] 0.0006357748 0.0006344404 0.0006332022 0.0006301096 0.0006194816
+[3,] 0.0016693732 0.0015028739 0.0014573197 0.0014144541 0.0013340859
+            [,50]        [,51]        [,52]        [,53]        [,54]
+[1,] 0.0014349150 0.0013767242 0.0013499834 0.0013456270 0.0012448843
+[2,] 0.0006152828 0.0006142999 0.0006099287 0.0006096705 0.0006039954
+[3,] 0.0012879411 0.0012475598 0.0012245965 0.0012068149 0.0011556015
+            [,55]        [,56]       [,57]       [,58]        [,59]
+[1,] 0.0012343670 0.0012186228 0.001189684 0.001153980 0.0011344534
+[2,] 0.0005723562 0.0005718289 0.000569735 0.000564139 0.0005578119
+[3,] 0.0011167799 0.0010813536 0.001050540 0.001007853 0.0009960672
+            [,60]        [,61]        [,62]        [,63]        [,64]
+[1,] 0.0010473741 0.0010461689 0.0010078752 0.0009647728 0.0009461994
+[2,] 0.0005558650 0.0005508572 0.0005445425 0.0005409394 0.0005393775
+[3,] 0.0009888989 0.0009613221 0.0009250018 0.0009085686 0.0008899654
+            [,65]        [,66]        [,67]        [,68]        [,69]
+[1,] 0.0008790985 0.0008667406 0.0008348461 0.0008103396 0.0008077829
+[2,] 0.0005365720 0.0005344322 0.0005312628 0.0005286947 0.0005216098
+[3,] 0.0008769995 0.0008766285 0.0008766137 0.0008439353 0.0008274533
+            [,70]        [,71]        [,72]        [,73]        [,74]
+[1,] 0.0007941638 0.0007912757 0.0007861453 0.0007810550 0.0007754516
+[2,] 0.0005166480 0.0005076502 0.0005070780 0.0005065889 0.0005037488
+[3,] 0.0008076613 0.0008008582 0.0007918326 0.0006893698 0.0006814175
+            [,75]        [,76]        [,77]        [,78]        [,79]
+[1,] 0.0007625646 0.0007586129 0.0007415766 0.0007415105 0.0007303870
+[2,] 0.0004985889 0.0004957110 0.0004928486 0.0004907827 0.0004906789
+[3,] 0.0006734242 0.0006609137 0.0005793442 0.0005762705 0.0005702562
+            [,80]        [,81]        [,82]        [,83]        [,84]
+[1,] 0.0006551334 0.0006472049 0.0006321336 0.0006227453 0.0006162835
+[2,] 0.0004886823 0.0004882115 0.0004837100 0.0004819462 0.0004811902
+[3,] 0.0005350778 0.0005266994 0.0005083447 0.0004930856 0.0004884071
+            [,85]        [,86]        [,87]        [,88]        [,89]
+[1,] 0.0006069581 0.0006044486 0.0006003416 0.0005853835 0.0005853524
+[2,] 0.0004763485 0.0004752549 0.0004742026 0.0004646958 0.0004616148
+[3,] 0.0004607244 0.0004536247 0.0004526851 0.0004281637 0.0004218058
+            [,90]        [,91]        [,92]        [,93]        [,94]
+[1,] 0.0005656734 0.0005637081 0.0005566216 0.0005558815 0.0005458728
+[2,] 0.0004613619 0.0004581689 0.0004536100 0.0004498280 0.0004454927
+[3,] 0.0004178032 0.0003854779 0.0003731876 0.0003663557 0.0003566165
+            [,95]        [,96]        [,97]        [,98]        [,99]
+[1,] 0.0005413476 0.0005256184 0.0005228240 0.0005200969 0.0005181088
+[2,] 0.0004445881 0.0004345241 0.0004343503 0.0004270968 0.0004238498
+[3,] 0.0003557002 0.0003475670 0.0003418286 0.0003409097 0.0003398891
+           [,100]
+[1,] 0.0005062947
+[2,] 0.0004221079
+[3,] 0.0003370436</code></pre>
+<pre class="r"><code># k = 4
+plot_structure_plot(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[2]]$clust_4$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[2]]$clust_4$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]       [,2]      [,3]     [,4]     [,5]     [,6]     [,7]     
+[1,] &quot;COL3A1&quot;   &quot;COL1A2&quot;  &quot;COL1A1&quot; &quot;SPARC&quot;  &quot;FN1&quot;    &quot;COL4A1&quot; &quot;COL5A1&quot; 
+[2,] &quot;IGFBP3&quot;   &quot;EFEMP1&quot;  &quot;BGN&quot;    &quot;AHNAK&quot;  &quot;HAPLN1&quot; &quot;CD44&quot;   &quot;COL6A3&quot; 
+[3,] &quot;SERPINA1&quot; &quot;CTSV&quot;    &quot;KRT8&quot;   &quot;KRT19&quot;  &quot;APOE&quot;   &quot;TF&quot;     &quot;VTN&quot;    
+[4,] &quot;MT-ND4&quot;   &quot;MT-RNR2&quot; &quot;MT-CYB&quot; &quot;MT-CO1&quot; &quot;MT-ND1&quot; &quot;MT-ND2&quot; &quot;MT-ATP6&quot;
+     [,8]     [,9]     [,10]     [,11]     [,12]     [,13]    [,14]    
+[1,] &quot;ITGA11&quot; &quot;COL4A2&quot; &quot;TIMP1&quot;   &quot;COL11A1&quot; &quot;MXRA5&quot;   &quot;SPON2&quot;  &quot;CEMIP&quot;  
+[2,] &quot;TGFBI&quot;  &quot;MKI67&quot;  &quot;IGFBP4&quot;  &quot;ACAN&quot;    &quot;SULF1&quot;   &quot;VIM&quot;    &quot;TNC&quot;    
+[3,] &quot;DPPA4&quot;  &quot;SLC2A3&quot; &quot;HAND1&quot;   &quot;C3&quot;      &quot;ALDH1A1&quot; &quot;AOX1&quot;   &quot;CD24&quot;   
+[4,] &quot;MT-CO3&quot; &quot;MT-CO2&quot; &quot;MT-RNR1&quot; &quot;MT-ND3&quot;  &quot;TTN&quot;     &quot;CHI3L1&quot; &quot;MT-ND4L&quot;
+     [,15]    [,16]        [,17]   [,18]      [,19]   [,20]     [,21]    
+[1,] &quot;LOX&quot;    &quot;AC089987.1&quot; &quot;TIMP3&quot; &quot;SERPINE2&quot; &quot;IGFL2&quot; &quot;FBLN5&quot;   &quot;HTRA1&quot;  
+[2,] &quot;IGFBP5&quot; &quot;ABI3BP&quot;     &quot;ACTG1&quot; &quot;AEBP1&quot;    &quot;GAPDH&quot; &quot;ANLN&quot;    &quot;LDHA&quot;   
+[3,] &quot;MDK&quot;    &quot;GATM&quot;       &quot;RPS12&quot; &quot;RPS18&quot;    &quot;CPS1&quot;  &quot;HSD17B6&quot; &quot;LDHB&quot;   
+[4,] &quot;MT-ND5&quot; &quot;TNNT2&quot;      &quot;PDK4&quot;  &quot;CRYAB&quot;    &quot;FABP3&quot; &quot;TNNC1&quot;   &quot;MT-ATP8&quot;
+     [,22]      [,23]   [,24]    [,25]    [,26]    [,27]    [,28]    [,29]  
+[1,] &quot;CDKN2B&quot;   &quot;COMP&quot;  &quot;COL5A2&quot; &quot;ACTA2&quot;  &quot;MRC2&quot;   &quot;FKBP10&quot; &quot;CALD1&quot;  &quot;CILP&quot; 
+[2,] &quot;MALAT1&quot;   &quot;ACTB&quot;  &quot;GJA1&quot;   &quot;PKM&quot;    &quot;CCDC80&quot; &quot;PTX3&quot;   &quot;ITGA5&quot;  &quot;THBS1&quot;
+[3,] &quot;C5&quot;       &quot;RPS19&quot; &quot;RPL23&quot;  &quot;RPS24&quot;  &quot;RPS20&quot;  &quot;RPL37&quot;  &quot;SNHG14&quot; &quot;RPS6&quot; 
+[4,] &quot;MTATP6P1&quot; &quot;HSPB7&quot; &quot;ACTC1&quot;  &quot;MT-TL1&quot; &quot;NR4A1&quot;  &quot;MT-ND6&quot; &quot;PLN&quot;    &quot;CMYA5&quot;
+     [,30]      [,31]    [,32]    [,33]    [,34]   [,35]     [,36]    [,37]   
+[1,] &quot;MATN2&quot;    &quot;TAGLN&quot;  &quot;PCDH10&quot; &quot;ACTG2&quot;  &quot;P4HA2&quot; &quot;PDPN&quot;    &quot;WNT2&quot;   &quot;DCN&quot;   
+[2,] &quot;DYNC1H1&quot;  &quot;PABPC1&quot; &quot;SCARA3&quot; &quot;PRKDC&quot;  &quot;PLAT&quot;  &quot;SFRP1&quot;   &quot;MXRA8&quot;  &quot;TFPI2&quot; 
+[3,] &quot;MGST1&quot;    &quot;EPHX1&quot;  &quot;PRDX1&quot;  &quot;DSP&quot;    &quot;RPS9&quot;  &quot;SLC38A1&quot; &quot;RPS11&quot;  &quot;TMSB4X&quot;
+[4,] &quot;MTND2P28&quot; &quot;APOD&quot;   &quot;NEBL&quot;   &quot;HSPA1A&quot; &quot;NDRG4&quot; &quot;SLC25A4&quot; &quot;HSPA1B&quot; &quot;GPX3&quot;  
+     [,38]    [,39]    [,40]    [,41]    [,42]      [,43]    [,44]    [,45]   
+[1,] &quot;AQP1&quot;   &quot;IGFBP7&quot; &quot;MFGE8&quot;  &quot;MEST&quot;   &quot;FLT1&quot;     &quot;SRPX2&quot;  &quot;PTGER2&quot; &quot;COL8A2&quot;
+[2,] &quot;ACTN4&quot;  &quot;PCOLCE&quot; &quot;COL6A1&quot; &quot;TPX2&quot;   &quot;PRRX1&quot;    &quot;PRUNE2&quot; &quot;MYH9&quot;   &quot;CDCP1&quot; 
+[3,] &quot;SEPHS1&quot; &quot;CYB5A&quot;  &quot;RPS21&quot;  &quot;HNRNPC&quot; &quot;IGFBP2&quot;   &quot;RPL31&quot;  &quot;RPS25&quot;  &quot;RPL11&quot; 
+[4,] &quot;ANKRD1&quot; &quot;STEAP4&quot; &quot;TXNIP&quot;  &quot;TPM1&quot;   &quot;PPP1R12B&quot; &quot;ATP2A2&quot; &quot;CRIP2&quot;  &quot;ITGA7&quot; 
+     [,46]       [,47]    [,48]    [,49]   [,50]     [,51]     [,52]    [,53]  
+[1,] &quot;CERCAM&quot;    &quot;MFAP4&quot;  &quot;SPTBN2&quot; &quot;CHPF&quot;  &quot;CDH11&quot;   &quot;EGFL6&quot;   &quot;OGFRL1&quot; &quot;LMCD1&quot;
+[2,] &quot;AXL&quot;       &quot;CAV1&quot;   &quot;OSMR&quot;   &quot;WWP2&quot;  &quot;HIF1A&quot;   &quot;NOTCH2&quot;  &quot;MMP3&quot;   &quot;WNT5A&quot;
+[3,] &quot;HNRNPA2B1&quot; &quot;RPL41&quot;  &quot;RPS5&quot;   &quot;RPL30&quot; &quot;RPS14&quot;   &quot;SLC16A1&quot; &quot;RPL8&quot;   &quot;F11R&quot; 
+[4,] &quot;GSN&quot;       &quot;SLC4A3&quot; &quot;SORBS1&quot; &quot;ALPK3&quot; &quot;PLA2G2A&quot; &quot;HSPB8&quot;   &quot;HADHB&quot;  &quot;C1R&quot;  
+     [,54]      [,55]     [,56]    [,57]      [,58]    [,59]    [,60]    [,61] 
+[1,] &quot;P4HA3&quot;    &quot;CDKN1A&quot;  &quot;LOXL1&quot;  &quot;KCTD16&quot;   &quot;ADGRA2&quot; &quot;ADAM12&quot; &quot;CD63&quot;   &quot;MME&quot; 
+[2,] &quot;CCBE1&quot;    &quot;ENPP2&quot;   &quot;ARL4C&quot;  &quot;DCBLD2&quot;   &quot;LHFPL2&quot; &quot;P3H2&quot;   &quot;SIX1&quot;   &quot;NFIX&quot;
+[3,] &quot;MARCKSL1&quot; &quot;ANXA3&quot;   &quot;HINT1&quot;  &quot;RPS3&quot;     &quot;ABAT&quot;   &quot;IQGAP2&quot; &quot;TSKU&quot;   &quot;DSC2&quot;
+[4,] &quot;ACADVL&quot;   &quot;CHCHD10&quot; &quot;ABLIM1&quot; &quot;MTCO1P12&quot; &quot;RBM24&quot;  &quot;LTBP4&quot;  &quot;ADSSL1&quot; &quot;CP&quot;  
+     [,62]     [,63]    [,64]      [,65]     [,66]    [,67]   [,68]   
+[1,] &quot;FBN1&quot;    &quot;TPM2&quot;   &quot;SLC6A17&quot;  &quot;FMOD&quot;    &quot;KDELR3&quot; &quot;NRP2&quot;  &quot;FIBIN&quot; 
+[2,] &quot;FGF2&quot;    &quot;PDGFRA&quot; &quot;CYR61&quot;    &quot;PIEZO2&quot;  &quot;MEGF6&quot;  &quot;MYOF&quot;  &quot;MEG3&quot;  
+[3,] &quot;SINHCAF&quot; &quot;RPL5&quot;   &quot;DSG2&quot;     &quot;H2AFZ&quot;   &quot;CCT3&quot;   &quot;FLRT3&quot; &quot;RPL13A&quot;
+[4,] &quot;CFLAR&quot;   &quot;SORBS2&quot; &quot;MAPKAPK3&quot; &quot;RETREG1&quot; &quot;OBSCN&quot;  &quot;MT-TP&quot; &quot;DNAJA4&quot;
+     [,69]        [,70]   [,71]   [,72]     [,73]   [,74]   [,75]      [,76]   
+[1,] &quot;AC112721.2&quot; &quot;SCG2&quot;  &quot;ITGB5&quot; &quot;P3H1&quot;    &quot;CTGF&quot;  &quot;DKK2&quot;  &quot;SSC5D&quot;    &quot;LZTS1&quot; 
+[2,] &quot;MAP4K4&quot;     &quot;ENO1&quot;  &quot;MYO1D&quot; &quot;ADAMTS5&quot; &quot;SAMD9&quot; &quot;HMOX1&quot; &quot;PHLDA1&quot;   &quot;NAV1&quot;  
+[3,] &quot;GSTP1&quot;      &quot;HDAC2&quot; &quot;XRCC5&quot; &quot;NASP&quot;    &quot;PODXL&quot; &quot;HSPD1&quot; &quot;ITM2C&quot;    &quot;RPS13&quot; 
+[4,] &quot;SNTA1&quot;      &quot;TNXB&quot;  &quot;ABCA8&quot; &quot;PALMD&quot;   &quot;FHL2&quot;  &quot;F8&quot;    &quot;SLC9A3R2&quot; &quot;SHANK3&quot;
+     [,77]   [,78]     [,79]      [,80]     [,81]    [,82]    [,83]   
+[1,] &quot;OGN&quot;   &quot;SPON1&quot;   &quot;CDC42BPA&quot; &quot;CPA4&quot;    &quot;PLD3&quot;   &quot;PLOD1&quot;  &quot;ATP10A&quot;
+[2,] &quot;LAMA4&quot; &quot;APCDD1L&quot; &quot;MAFB&quot;     &quot;MET&quot;     &quot;SPOCK1&quot; &quot;DST&quot;    &quot;SEMA3A&quot;
+[3,] &quot;PAICS&quot; &quot;TUBB2B&quot;  &quot;HSD17B4&quot;  &quot;RPS27A&quot;  &quot;RPL34&quot;  &quot;DHCR24&quot; &quot;ACSL1&quot; 
+[4,] &quot;RGS5&quot;  &quot;ZFP36&quot;   &quot;ECH1&quot;     &quot;ADAMTS4&quot; &quot;FLNC&quot;   &quot;MYL12A&quot; &quot;NEAT1&quot; 
+     [,84]      [,85]     [,86]    [,87]     [,88]      [,89]     [,90]    
+[1,] &quot;SERPINH1&quot; &quot;PITX2&quot;   &quot;P3H4&quot;   &quot;ANGPTL7&quot; &quot;CRISPLD2&quot; &quot;COL15A1&quot; &quot;LRRC32&quot; 
+[2,] &quot;FOXC1&quot;    &quot;DUSP4&quot;   &quot;CTSK&quot;   &quot;CPXM2&quot;   &quot;RGS4&quot;     &quot;GPRC5A&quot;  &quot;COL14A1&quot;
+[3,] &quot;AHCY&quot;     &quot;SRSF7&quot;   &quot;SRSF3&quot;  &quot;ILF2&quot;    &quot;RPL35&quot;    &quot;ADGRL2&quot;  &quot;RIDA&quot;   
+[4,] &quot;PER1&quot;     &quot;TINAGL1&quot; &quot;MYO15B&quot; &quot;PRG4&quot;    &quot;HSPB1&quot;    &quot;TACC2&quot;   &quot;HLA-B&quot;  
+     [,91]    [,92]    [,93]     [,94]        [,95]    [,96]     [,97]   
+[1,] &quot;CLEC3A&quot; &quot;VCAN&quot;   &quot;SELENOM&quot; &quot;AC112721.1&quot; &quot;GLS&quot;    &quot;TMEM59&quot;  &quot;TGFBR1&quot;
+[2,] &quot;DDR2&quot;   &quot;CCNI&quot;   &quot;ENAH&quot;    &quot;COTL1&quot;      &quot;GOLM1&quot;  &quot;SYNJ2&quot;   &quot;FLNB&quot;  
+[3,] &quot;RPL10A&quot; &quot;SLC7A2&quot; &quot;FAM84B&quot;  &quot;CCT2&quot;       &quot;RPL24&quot;  &quot;COL18A1&quot; &quot;PCK2&quot;  
+[4,] &quot;RCAN2&quot;  &quot;CBX7&quot;   &quot;RASD1&quot;   &quot;A2M&quot;        &quot;DGLUCY&quot; &quot;RNF207&quot;  &quot;HTRA3&quot; 
+     [,98]    [,99]      [,100]  
+[1,] &quot;PALLD&quot;  &quot;ODAPH&quot;    &quot;PPIC&quot;  
+[2,] &quot;CD109&quot;  &quot;PRKCA&quot;    &quot;PRSS23&quot;
+[3,] &quot;EIF4A2&quot; &quot;KIAA1551&quot; &quot;CASP3&quot; 
+[4,] &quot;COQ8A&quot;  &quot;TNS2&quot;     &quot;PFKM&quot;  </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>           [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.16883355 0.160889748 0.153984672 0.112227839 0.055067591 0.019530979
+[2,] 0.01255665 0.008045602 0.006028731 0.005283665 0.004050831 0.003540066
+[3,] 0.02124872 0.007306591 0.007248235 0.004594728 0.003834971 0.003399408
+[4,] 0.23299375 0.208557374 0.162059231 0.154701904 0.116249510 0.080654266
+            [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
+[1,] 0.017138298 0.012454783 0.012208585 0.009134582 0.009018245 0.003895187
+[2,] 0.003318854 0.003236027 0.002832801 0.002717679 0.002603077 0.002581526
+[3,] 0.003185581 0.002217800 0.002176998 0.001484159 0.001364244 0.001342145
+[4,] 0.061575709 0.054527098 0.048227483 0.040871242 0.031742342 0.030120954
+           [,13]       [,14]       [,15]       [,16]       [,17]       [,18]
+[1,] 0.003709659 0.003604830 0.003280075 0.003234449 0.003164381 0.002948345
+[2,] 0.002436901 0.002392551 0.002386477 0.002276151 0.002012818 0.001956670
+[3,] 0.001234954 0.001202102 0.001118231 0.001046708 0.001025637 0.001023037
+[4,] 0.029968558 0.026771649 0.024365635 0.023656055 0.015331693 0.013801321
+           [,19]        [,20]        [,21]        [,22]        [,23]
+[1,] 0.002801771 0.0026805312 0.0024680321 0.0023422465 0.0023308798
+[2,] 0.001953066 0.0019198339 0.0017105614 0.0016544374 0.0013735888
+[3,] 0.001014831 0.0009849777 0.0009689307 0.0009499858 0.0009424827
+[4,] 0.013721232 0.0119216191 0.0103043782 0.0088611540 0.0082641328
+            [,24]        [,25]        [,26]        [,27]        [,28]
+[1,] 0.0022977514 0.0022014188 0.0021014024 0.0020872108 0.0019464267
+[2,] 0.0013478144 0.0012893789 0.0010721663 0.0010484883 0.0010443260
+[3,] 0.0009422062 0.0009343994 0.0009247526 0.0009011614 0.0008999973
+[4,] 0.0082450073 0.0055499411 0.0046710636 0.0042075484 0.0039585444
+            [,29]        [,30]        [,31]        [,32]        [,33]
+[1,] 0.0018460386 0.0017465646 0.0016155220 0.0015517116 0.0015303655
+[2,] 0.0010293469 0.0009583931 0.0009303685 0.0009136676 0.0009125199
+[3,] 0.0008625819 0.0008541837 0.0008246787 0.0008231043 0.0007993246
+[4,] 0.0038976995 0.0035030725 0.0030476785 0.0027483881 0.0026470707
+            [,34]        [,35]        [,36]        [,37]        [,38]
+[1,] 0.0015169437 0.0014877704 0.0014617415 0.0014438340 0.0013185749
+[2,] 0.0009046264 0.0009010057 0.0008595966 0.0008508665 0.0008423490
+[3,] 0.0007888572 0.0007872701 0.0007717262 0.0007555777 0.0007460928
+[4,] 0.0025326600 0.0022675857 0.0019991227 0.0018909820 0.0018275487
+            [,39]        [,40]        [,41]        [,42]        [,43]
+[1,] 0.0011601341 0.0011509107 0.0010967656 0.0010541603 0.0010122276
+[2,] 0.0008397084 0.0008033765 0.0007961583 0.0007944635 0.0007834235
+[3,] 0.0007449484 0.0007427344 0.0007344580 0.0007332221 0.0007196409
+[4,] 0.0017769275 0.0016855105 0.0013148502 0.0012784069 0.0011061478
+            [,44]        [,45]        [,46]        [,47]        [,48]
+[1,] 0.0009302331 0.0009294100 0.0008360624 0.0008171614 0.0007921358
+[2,] 0.0007292212 0.0007260272 0.0007189069 0.0006919741 0.0006898254
+[3,] 0.0007137960 0.0007036388 0.0006980194 0.0006963367 0.0006931563
+[4,] 0.0010906846 0.0008792916 0.0008344212 0.0008169908 0.0008042348
+            [,49]        [,50]        [,51]        [,52]        [,53]
+[1,] 0.0007902623 0.0007754078 0.0007749495 0.0007746778 0.0007663141
+[2,] 0.0006888389 0.0006804340 0.0006722200 0.0006575660 0.0006509195
+[3,] 0.0006904197 0.0006893950 0.0006860159 0.0006724379 0.0006664512
+[4,] 0.0007552100 0.0007095259 0.0006892041 0.0005800538 0.0005019813
+            [,54]        [,55]        [,56]        [,57]        [,58]
+[1,] 0.0007657402 0.0007646186 0.0007624729 0.0007559414 0.0007250659
+[2,] 0.0006423036 0.0006407239 0.0006404415 0.0006396276 0.0006295748
+[3,] 0.0006524392 0.0006304382 0.0006200654 0.0006183040 0.0006085640
+[4,] 0.0004664652 0.0004588540 0.0004465492 0.0004407024 0.0004404021
+            [,59]        [,60]        [,61]        [,62]        [,63]
+[1,] 0.0007036103 0.0006901637 0.0006758202 0.0006694476 0.0005938406
+[2,] 0.0006138903 0.0006103232 0.0005963958 0.0005919853 0.0005813298
+[3,] 0.0006000209 0.0005822713 0.0005761682 0.0005749679 0.0005736307
+[4,] 0.0004138587 0.0003970448 0.0003901399 0.0003849879 0.0003823417
+            [,64]        [,65]        [,66]        [,67]        [,68]
+[1,] 0.0005673207 0.0005354893 0.0005108589 0.0005057337 0.0005036465
+[2,] 0.0005806957 0.0005651806 0.0005635459 0.0005595283 0.0005541124
+[3,] 0.0005701068 0.0005671207 0.0005540550 0.0005491211 0.0005381379
+[4,] 0.0003755205 0.0003702896 0.0003633243 0.0003478786 0.0003375625
+            [,69]        [,70]        [,71]        [,72]        [,73]
+[1,] 0.0004725982 0.0004477149 0.0004367813 0.0004342196 0.0004165713
+[2,] 0.0005418949 0.0005389656 0.0005286678 0.0005188449 0.0005117251
+[3,] 0.0005296805 0.0005294938 0.0005132895 0.0005091591 0.0005054520
+[4,] 0.0003374444 0.0003199214 0.0003197305 0.0003092616 0.0003043366
+            [,74]        [,75]        [,76]        [,77]        [,78]
+[1,] 0.0004103655 0.0004060952 0.0003978154 0.0003873178 0.0003815343
+[2,] 0.0005063152 0.0004950833 0.0004862087 0.0004759408 0.0004740767
+[3,] 0.0005022216 0.0004979173 0.0004901099 0.0004860793 0.0004838616
+[4,] 0.0003021001 0.0002958550 0.0002952807 0.0002915945 0.0002909189
+            [,79]        [,80]        [,81]        [,82]        [,83]
+[1,] 0.0003798537 0.0003694847 0.0003685780 0.0003633979 0.0003615670
+[2,] 0.0004546127 0.0004502915 0.0004430729 0.0004048396 0.0004026490
+[3,] 0.0004827761 0.0004801692 0.0004800653 0.0004748922 0.0004734965
+[4,] 0.0002789852 0.0002714906 0.0002714660 0.0002635839 0.0002617335
+            [,84]        [,85]        [,86]        [,87]        [,88]
+[1,] 0.0003592630 0.0003370786 0.0003095030 0.0003080031 0.0003060651
+[2,] 0.0004018412 0.0004012064 0.0003959241 0.0003953520 0.0003822553
+[3,] 0.0004694276 0.0004623455 0.0004602348 0.0004584387 0.0004578136
+[4,] 0.0002612386 0.0002470561 0.0002452496 0.0002411858 0.0002407568
+            [,89]        [,90]        [,91]        [,92]        [,93]
+[1,] 0.0003049318 0.0002955308 0.0002886094 0.0002870758 0.0002787927
+[2,] 0.0003782113 0.0003732939 0.0003669011 0.0003639766 0.0003624845
+[3,] 0.0004561488 0.0004534212 0.0004503242 0.0004475683 0.0004424846
+[4,] 0.0002374548 0.0002370192 0.0002368110 0.0002343485 0.0002270230
+            [,94]        [,95]        [,96]        [,97]        [,98]
+[1,] 0.0002758236 0.0002731820 0.0002730066 0.0002705149 0.0002690279
+[2,] 0.0003607968 0.0003569735 0.0003517509 0.0003469557 0.0003290896
+[3,] 0.0004399827 0.0004354452 0.0004281559 0.0004268093 0.0004267898
+[4,] 0.0002219981 0.0002189494 0.0002181725 0.0002152311 0.0002129480
+            [,99]       [,100]
+[1,] 0.0002689167 0.0002622494
+[2,] 0.0003269537 0.0003216943
+[3,] 0.0004262402 0.0004240533
+[4,] 0.0002096476 0.0002058382</code></pre>
+<pre class="r"><code># k = 5
+plot_structure_plot(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[3]]$clust_5$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[3]]$clust_5$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]     [,2]       [,3]     [,4]     [,5]       [,6]     [,7]     
+[1,] &quot;COL3A1&quot; &quot;SPARC&quot;    &quot;COL1A1&quot; &quot;COL4A1&quot; &quot;COL4A2&quot;   &quot;COL1A2&quot; &quot;COL5A1&quot; 
+[2,] &quot;CTSV&quot;   &quot;KRT19&quot;    &quot;HSPA8&quot;  &quot;SFRP1&quot;  &quot;HSP90AA1&quot; &quot;KRT8&quot;   &quot;TOP2A&quot;  
+[3,] &quot;CHI3L1&quot; &quot;IGFBP3&quot;   &quot;ACAN&quot;   &quot;DCN&quot;    &quot;EFEMP1&quot;   &quot;IGFBP5&quot; &quot;COL12A1&quot;
+[4,] &quot;MT-ND4&quot; &quot;MT-RNR2&quot;  &quot;MT-CO1&quot; &quot;MT-CYB&quot; &quot;SERPINA1&quot; &quot;MT-ND1&quot; &quot;MT-ND2&quot; 
+[5,] &quot;THBS1&quot;  &quot;SERPINE1&quot; &quot;ACTB&quot;   &quot;MYH9&quot;   &quot;FLNA&quot;     &quot;ACTG1&quot;  &quot;PLAT&quot;   
+     [,8]      [,9]         [,10]       [,11]    [,12]    [,13]     [,14]   
+[1,] &quot;SPON2&quot;   &quot;AC089987.1&quot; &quot;FBLN5&quot;     &quot;TIMP1&quot;  &quot;ITGA11&quot; &quot;ACTA2&quot;   &quot;CDKN2B&quot;
+[2,] &quot;STMN1&quot;   &quot;NCL&quot;        &quot;HNRNPA2B1&quot; &quot;HSPD1&quot;  &quot;SLC2A3&quot; &quot;PAICS&quot;   &quot;CSE1L&quot; 
+[3,] &quot;TNC&quot;     &quot;LUM&quot;        &quot;NDUFA4L2&quot;  &quot;BGN&quot;    &quot;AEBP1&quot;  &quot;LRP1&quot;    &quot;SULF1&quot; 
+[4,] &quot;MT-ATP6&quot; &quot;MT-CO3&quot;     &quot;MT-CO2&quot;    &quot;MT-ND3&quot; &quot;C3&quot;     &quot;MT-RNR1&quot; &quot;TNNT2&quot; 
+[5,] &quot;GREM1&quot;   &quot;CYR61&quot;      &quot;PKM&quot;       &quot;DCBLD2&quot; &quot;MICAL2&quot; &quot;POSTN&quot;   &quot;CAV1&quot;  
+     [,15]    [,16]     [,17]     [,18]    [,19]     [,20]      [,21]   [,22]  
+[1,] &quot;CILP&quot;   &quot;MATN2&quot;   &quot;PCDH10&quot;  &quot;FN1&quot;    &quot;WNT2&quot;    &quot;ACTG2&quot;    &quot;CALD1&quot; &quot;AQP1&quot; 
+[2,] &quot;XRCC5&quot;  &quot;MCM4&quot;    &quot;PEG10&quot;   &quot;NASP&quot;   &quot;SPP1&quot;    &quot;HAND1&quot;    &quot;H2AFZ&quot; &quot;DPPA4&quot;
+[3,] &quot;PRUNE2&quot; &quot;PRELP&quot;   &quot;PDGFRA&quot;  &quot;GPNMB&quot;  &quot;ADAMTS5&quot; &quot;HMOX1&quot;    &quot;TGFBI&quot; &quot;FMOD&quot; 
+[4,] &quot;TTN&quot;    &quot;MT-ND4L&quot; &quot;PDK4&quot;    &quot;MT-ND5&quot; &quot;TNNC1&quot;   &quot;MTATP6P1&quot; &quot;HSPB7&quot; &quot;TF&quot;   
+[5,] &quot;TLN1&quot;   &quot;RGS4&quot;    &quot;DYNC1H1&quot; &quot;CSRP1&quot;  &quot;LDHA&quot;    &quot;ITGA5&quot;    &quot;ACTN4&quot; &quot;LOXL2&quot;
+     [,23]     [,24]    [,25]   [,26]     [,27]    [,28]      [,29]     [,30]  
+[1,] &quot;MEST&quot;    &quot;SPTBN2&quot; &quot;FLT1&quot;  &quot;PTGER2&quot;  &quot;P4HA2&quot;  &quot;SERPINE2&quot; &quot;COL5A2&quot;  &quot;EGFL6&quot;
+[2,] &quot;LMNB2&quot;   &quot;EZR&quot;    &quot;MCM3&quot;  &quot;SRSF3&quot;   &quot;HNRNPC&quot; &quot;RPS24&quot;    &quot;HMGA1&quot;   &quot;HMGB2&quot;
+[3,] &quot;SCD&quot;     &quot;CYBRD1&quot; &quot;NDRG1&quot; &quot;COL14A1&quot; &quot;CPXM2&quot;  &quot;CTSD&quot;     &quot;ISLR&quot;    &quot;EDIL3&quot;
+[4,] &quot;MT-ATP8&quot; &quot;ACTC1&quot;  &quot;CRYAB&quot; &quot;FABP3&quot;   &quot;MT-TL1&quot; &quot;PLN&quot;      &quot;SLC25A4&quot; &quot;APOD&quot; 
+[5,] &quot;SLC20A1&quot; &quot;CAVIN1&quot; &quot;MSN&quot;   &quot;HEG1&quot;    &quot;AXL&quot;    &quot;ANXA2&quot;    &quot;SRGN&quot;    &quot;INHBA&quot;
+     [,31]   [,32]   [,33]    [,34]    [,35]      [,36]     [,37]     [,38]   
+[1,] &quot;SRPX2&quot; &quot;MFAP4&quot; &quot;IGFL2&quot;  &quot;KCTD16&quot; &quot;ADGRA2&quot;   &quot;LMCD1&quot;   &quot;CHPF&quot;    &quot;FKBP10&quot;
+[2,] &quot;HDAC2&quot; &quot;CCT3&quot;  &quot;TMPO&quot;   &quot;PRDX1&quot;  &quot;SEPHS1&quot;   &quot;CCT8&quot;    &quot;SLC38A1&quot; &quot;DHX9&quot;  
+[3,] &quot;WWP2&quot;  &quot;MAFB&quot;  &quot;COL6A2&quot; &quot;ENPP2&quot;  &quot;TIMP2&quot;    &quot;INSIG1&quot;  &quot;GPC6&quot;    &quot;MMP2&quot;  
+[4,] &quot;NR4A1&quot; &quot;VTN&quot;   &quot;A2M&quot;    &quot;CMYA5&quot;  &quot;MTND2P28&quot; &quot;ALDH1A1&quot; &quot;TXNIP&quot;   &quot;AOX1&quot;  
+[5,] &quot;THBS2&quot; &quot;COTL1&quot; &quot;LAMC1&quot;  &quot;ITGA3&quot;  &quot;NOTCH2&quot;   &quot;ZFHX4&quot;   &quot;CRIM1&quot;   &quot;DLC1&quot;  
+     [,39]    [,40]    [,41]     [,42]    [,43]     [,44]     [,45]    [,46]   
+[1,] &quot;SPON1&quot;  &quot;PTK7&quot;   &quot;TMEM59&quot;  &quot;OGFRL1&quot; &quot;SLC6A17&quot; &quot;COL11A1&quot; &quot;PDPN&quot;   &quot;FIBIN&quot; 
+[2,] &quot;MCM7&quot;   &quot;MSH2&quot;   &quot;TUBB&quot;    &quot;LDHB&quot;   &quot;RAN&quot;     &quot;LMNB1&quot;   &quot;NUCKS1&quot; &quot;CCT2&quot;  
+[3,] &quot;PCOLCE&quot; &quot;CTSL&quot;   &quot;PTTG1IP&quot; &quot;ABI3BP&quot; &quot;MYO1D&quot;   &quot;MALAT1&quot;  &quot;PLXDC2&quot; &quot;PIEZO2&quot;
+[4,] &quot;HSPA1A&quot; &quot;MT-ND6&quot; &quot;NDRG4&quot;   &quot;HSPA1B&quot; &quot;ANKRD1&quot;  &quot;EPHX1&quot;   &quot;GATM&quot;   &quot;CPS1&quot;  
+[5,] &quot;CORO1C&quot; &quot;ADAM9&quot;  &quot;NEK7&quot;    &quot;TFPI2&quot;  &quot;AFAP1&quot;   &quot;HIF1A&quot;   &quot;ZBTB38&quot; &quot;LGALS1&quot;
+     [,47]    [,48]    [,49]    [,50]      [,51]       [,52]    [,53]   
+[1,] &quot;LZTS1&quot;  &quot;MME&quot;    &quot;APP&quot;    &quot;DKK2&quot;     &quot;MPZL1&quot;     &quot;FTL&quot;    &quot;PITX2&quot; 
+[2,] &quot;APOE&quot;   &quot;PARP1&quot;  &quot;NPM1&quot;   &quot;RPS20&quot;    &quot;RPL11&quot;     &quot;TRA2B&quot;  &quot;MAD2L1&quot;
+[3,] &quot;FOXC1&quot;  &quot;NPC1&quot;   &quot;NRN1&quot;   &quot;SCRG1&quot;    &quot;IL1R1&quot;     &quot;VIM&quot;    &quot;SMOC2&quot; 
+[4,] &quot;ECHDC2&quot; &quot;SORBS1&quot; &quot;ACADVL&quot; &quot;PPP1R12B&quot; &quot;ACSL1&quot;     &quot;ABLIM1&quot; &quot;NEBL&quot;  
+[5,] &quot;FRMD6&quot;  &quot;RAB3B&quot;  &quot;TRIO&quot;   &quot;FGF2&quot;     &quot;KIAA1549L&quot; &quot;SLC7A1&quot; &quot;GAPDH&quot; 
+     [,54]     [,55]     [,56]     [,57]    [,58]   [,59]      [,60]     
+[1,] &quot;SCG2&quot;    &quot;COL15A1&quot; &quot;LOX&quot;     &quot;KDELR3&quot; &quot;PLD3&quot;  &quot;CRISPLD2&quot; &quot;CDC42BPA&quot;
+[2,] &quot;ARL6IP1&quot; &quot;CDC6&quot;    &quot;PTPRF&quot;   &quot;HNRNPM&quot; &quot;DEK&quot;   &quot;RPL23&quot;    &quot;SRSF1&quot;   
+[3,] &quot;GJA1&quot;    &quot;CYP1B1&quot;  &quot;GALNT1&quot;  &quot;CTSK&quot;   &quot;FNDC1&quot; &quot;TPP1&quot;     &quot;ANTXR1&quot;  
+[4,] &quot;GPX3&quot;    &quot;GSN&quot;     &quot;SLC4A3&quot;  &quot;ALDH2&quot;  &quot;ITGA7&quot; &quot;HADHB&quot;    &quot;HSPB8&quot;   
+[5,] &quot;VCL&quot;     &quot;MOK&quot;     &quot;ADAMTS2&quot; &quot;TAGLN2&quot; &quot;PLEC&quot;  &quot;TPM2&quot;     &quot;NABP1&quot;   
+     [,61]     [,62]     [,63]    [,64]    [,65]    [,66]     [,67]    [,68]  
+[1,] &quot;ODAPH&quot;   &quot;LRRC32&quot;  &quot;IGFBP7&quot; &quot;P3H4&quot;   &quot;BMP6&quot;   &quot;SLC22A3&quot; &quot;DPYSL3&quot; &quot;FSTL3&quot;
+[2,] &quot;SRSF7&quot;   &quot;SLC16A1&quot; &quot;RPL8&quot;   &quot;CCT4&quot;   &quot;HNRNPU&quot; &quot;EIF4G2&quot;  &quot;PRMT1&quot;  &quot;RPL37&quot;
+[3,] &quot;ANGPTL2&quot; &quot;LAMP2&quot;   &quot;COL6A1&quot; &quot;LHFPL2&quot; &quot;PAM&quot;    &quot;SEMA3C&quot;  &quot;CCNI&quot;   &quot;PRRX1&quot;
+[4,] &quot;ATF5&quot;    &quot;CHCHD10&quot; &quot;OBSCN&quot;  &quot;NDRG2&quot;  &quot;C5&quot;     &quot;ACACB&quot;   &quot;ECH1&quot;   &quot;ALPK3&quot;
+[5,] &quot;FLNB&quot;    &quot;NAV1&quot;    &quot;CDCP1&quot;  &quot;PTX3&quot;   &quot;NCOR2&quot;  &quot;ITGA2&quot;   &quot;PLAU&quot;   &quot;MET&quot;  
+     [,69]    [,70]     [,71]    [,72]   [,73]      [,74]      [,75]    
+[1,] &quot;SMYD3&quot;  &quot;PDZRN3&quot;  &quot;CLEC3A&quot; &quot;KCNK6&quot; &quot;NEDD9&quot;    &quot;RDH10&quot;    &quot;XYLT1&quot;  
+[2,] &quot;CD24&quot;   &quot;KPNA2&quot;   &quot;XPO1&quot;   &quot;CKS2&quot;  &quot;C1QBP&quot;    &quot;CCT6A&quot;    &quot;HNRNPDL&quot;
+[3,] &quot;TRPS1&quot;  &quot;HSPG2&quot;   &quot;SLC5A3&quot; &quot;MELTF&quot; &quot;PTGIS&quot;    &quot;CD109&quot;    &quot;VCAM1&quot;  
+[4,] &quot;SHANK3&quot; &quot;HSD17B6&quot; &quot;COQ8A&quot;  &quot;RGS5&quot;  &quot;SERPING1&quot; &quot;MTCO1P12&quot; &quot;PER1&quot;   
+[5,] &quot;TAGLN&quot;  &quot;NAV3&quot;    &quot;SEMA7A&quot; &quot;NRP1&quot;  &quot;CTGF&quot;     &quot;VGLL3&quot;    &quot;SACS&quot;   
+     [,76]      [,77]    [,78]    [,79]    [,80]      [,81]    [,82]     
+[1,] &quot;SERPINH1&quot; &quot;TMED3&quot;  &quot;LOXL1&quot;  &quot;YIPF5&quot;  &quot;CEMIP2&quot;   &quot;TGFBR1&quot; &quot;RFLNA&quot;   
+[2,] &quot;LBR&quot;      &quot;DNAJA1&quot; &quot;TRIM28&quot; &quot;DHX15&quot;  &quot;MCM5&quot;     &quot;PCNA&quot;   &quot;ZWINT&quot;   
+[3,] &quot;ISM1&quot;     &quot;CRTAP&quot;  &quot;PMP22&quot;  &quot;ZNF395&quot; &quot;PABPC1&quot;   &quot;VAT1&quot;   &quot;LAMP1&quot;   
+[4,] &quot;RBM24&quot;    &quot;IDH2&quot;   &quot;MYO15B&quot; &quot;MT-TP&quot;  &quot;ATP2A2&quot;   &quot;CRIP2&quot;  &quot;SLC9A3R2&quot;
+[5,] &quot;TPM4&quot;     &quot;SH2B3&quot;  &quot;ACTR2&quot;  &quot;SPOCD1&quot; &quot;CDC42EP3&quot; &quot;NQO1&quot;   &quot;S100A16&quot; 
+     [,83]   [,84]   [,85]    [,86]      [,87]    [,88]    [,89]    [,90]     
+[1,] &quot;NOX4&quot;  &quot;PPIC&quot;  &quot;NALCN&quot;  &quot;PRDX4&quot;    &quot;SPSB1&quot;  &quot;GPRC5B&quot; &quot;CXCL14&quot; &quot;SCUBE2&quot;  
+[2,] &quot;RPS2&quot;  &quot;DSC2&quot;  &quot;CCT7&quot;   &quot;ANXA3&quot;    &quot;NDC1&quot;   &quot;RPL5&quot;   &quot;SLC7A2&quot; &quot;PSIP1&quot;   
+[3,] &quot;SNED1&quot; &quot;TRAM1&quot; &quot;HAPLN1&quot; &quot;ITGA10&quot;   &quot;PTGFR&quot;  &quot;ATP8B2&quot; &quot;EEF2&quot;   &quot;PCOLCE2&quot; 
+[4,] &quot;ABAT&quot;  &quot;ZFP36&quot; &quot;MPC1&quot;   &quot;MAPKAPK3&quot; &quot;GOT1&quot;   &quot;ABCA8&quot;  &quot;SORBS2&quot; &quot;MTND4P12&quot;
+[5,] &quot;MAP1B&quot; &quot;TGM2&quot;  &quot;PRNP&quot;   &quot;TUBB6&quot;    &quot;SH3BP4&quot; &quot;ASAP1&quot;  &quot;FOSL1&quot;  &quot;SMURF2&quot;  
+     [,91]     [,92]     [,93]    [,94]   [,95]     [,96]    [,97]    [,98]   
+[1,] &quot;TBC1D9&quot;  &quot;PRDX6&quot;   &quot;PALLD&quot;  &quot;LIMK2&quot; &quot;SLC26A2&quot; &quot;ARF4&quot;   &quot;FBLN2&quot;  &quot;ZMAT3&quot; 
+[2,] &quot;PPP1CC&quot;  &quot;HNRNPR&quot;  &quot;HNRNPK&quot; &quot;RPS12&quot; &quot;SINHCAF&quot; &quot;PODXL&quot;  &quot;MCM2&quot;   &quot;HSPA4&quot; 
+[3,] &quot;GOLM1&quot;   &quot;NUCB1&quot;   &quot;NEGR1&quot;  &quot;LOXL3&quot; &quot;AHNAK2&quot;  &quot;IGFBP4&quot; &quot;MAF&quot;    &quot;PTGS2&quot; 
+[4,] &quot;SELENOW&quot; &quot;TINAGL1&quot; &quot;MAOB&quot;   &quot;MT1X&quot;  &quot;ADAMTS4&quot; &quot;SNTA1&quot;  &quot;SDHA&quot;   &quot;ACADSB&quot;
+[5,] &quot;ASPH&quot;    &quot;LASP1&quot;   &quot;LIF&quot;    &quot;PLOD2&quot; &quot;EPHA2&quot;   &quot;CLIC4&quot;  &quot;PTPN14&quot; &quot;WNT5B&quot; 
+     [,99]     [,100]  
+[1,] &quot;TCAF1&quot;   &quot;STXBP6&quot;
+[2,] &quot;G3BP1&quot;   &quot;SF3B1&quot; 
+[3,] &quot;ZCCHC14&quot; &quot;PLBD2&quot; 
+[4,] &quot;COX4I1&quot;  &quot;DECR1&quot; 
+[5,] &quot;SPHK1&quot;   &quot;MBNL1&quot; </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.206726031 0.118427072 0.036355135 0.016039035 0.009667166 0.006374534
+[2,] 0.005184928 0.002256233 0.001970463 0.001793738 0.001764308 0.001518948
+[3,] 0.142869776 0.029026837 0.018953836 0.016647112 0.007577740 0.006982725
+[4,] 0.188224326 0.128190336 0.115957155 0.106117194 0.084468540 0.082441745
+[5,] 0.014516660 0.013529054 0.009172312 0.008445918 0.003492862 0.003405313
+            [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
+[1,] 0.003864480 0.003588459 0.003473945 0.002958140 0.002724449 0.002570429
+[2,] 0.001411554 0.001370905 0.001369456 0.001302864 0.001285833 0.001247418
+[3,] 0.006594120 0.006508502 0.005867129 0.005374014 0.004940391 0.004892782
+[4,] 0.065104383 0.057494998 0.057130824 0.044600618 0.030693159 0.022871332
+[5,] 0.002925118 0.002212044 0.002165046 0.002105231 0.002104435 0.002071634
+           [,13]       [,14]       [,15]       [,16]       [,17]        [,18]
+[1,] 0.002322846 0.002075780 0.002011075 0.001877523 0.001844844 0.0017491102
+[2,] 0.001111770 0.001073775 0.001060966 0.001060362 0.001012016 0.0009412466
+[3,] 0.003111384 0.002833504 0.002800772 0.002111427 0.001943120 0.0018210590
+[4,] 0.022488272 0.019480066 0.017437189 0.014463784 0.009501361 0.0091020028
+[5,] 0.002036180 0.002012201 0.001992597 0.001818560 0.001628590 0.0015572824
+            [,19]        [,20]       [,21]        [,22]        [,23]
+[1,] 0.0016601295 0.0016452365 0.001619540 0.0015374865 0.0014387133
+[2,] 0.0009107998 0.0008321179 0.000754991 0.0007309951 0.0007289893
+[3,] 0.0017569504 0.0016782363 0.001494676 0.0014516568 0.0014427089
+[4,] 0.0081996238 0.0080637287 0.006678617 0.0059813391 0.0051429386
+[5,] 0.0014159142 0.0013007499 0.001246811 0.0012191711 0.0011790268
+            [,24]        [,25]        [,26]        [,27]        [,28]
+[1,] 0.0013921451 0.0011574905 0.0011327723 0.0011157564 0.0010991934
+[2,] 0.0007255459 0.0007239816 0.0006702852 0.0006506434 0.0006336696
+[3,] 0.0014244413 0.0013578504 0.0010892860 0.0010529268 0.0010132989
+[4,] 0.0048488877 0.0043614023 0.0037932672 0.0037037191 0.0032782057
+[5,] 0.0011698759 0.0011490184 0.0011121659 0.0010897300 0.0010788401
+            [,29]        [,30]        [,31]        [,32]        [,33]
+[1,] 0.0010085872 0.0010072008 0.0009249750 0.0009236797 0.0009080534
+[2,] 0.0006227664 0.0006108135 0.0006031945 0.0005900479 0.0005831591
+[3,] 0.0009925553 0.0008683092 0.0008240702 0.0008185424 0.0008109665
+[4,] 0.0027083991 0.0026161810 0.0025861599 0.0021361164 0.0021255401
+[5,] 0.0010632857 0.0010342005 0.0010237778 0.0010159731 0.0009953141
+            [,34]        [,35]        [,36]        [,37]        [,38]
+[1,] 0.0008761893 0.0008756602 0.0008351353 0.0007303732 0.0007194389
+[2,] 0.0005761401 0.0005723236 0.0005688916 0.0005668090 0.0005504056
+[3,] 0.0008100349 0.0007759223 0.0007461041 0.0007327841 0.0007146446
+[4,] 0.0019359022 0.0017973291 0.0016310416 0.0014309617 0.0014166119
+[5,] 0.0009845270 0.0009371407 0.0009258427 0.0009191582 0.0008727146
+            [,39]        [,40]        [,41]        [,42]        [,43]
+[1,] 0.0007102334 0.0006634283 0.0006211359 0.0006154880 0.0006144074
+[2,] 0.0005481082 0.0005360688 0.0005302827 0.0005278689 0.0005252077
+[3,] 0.0007011453 0.0006776751 0.0006515527 0.0006232253 0.0006142332
+[4,] 0.0013940625 0.0013694915 0.0013381434 0.0013065149 0.0011365916
+[5,] 0.0008007491 0.0007931495 0.0007528273 0.0007497505 0.0007251710
+            [,44]        [,45]        [,46]        [,47]        [,48]
+[1,] 0.0005897782 0.0005832494 0.0005666567 0.0005065332 0.0004975410
+[2,] 0.0005228512 0.0005120037 0.0004934565 0.0004788843 0.0004781488
+[3,] 0.0005493579 0.0005343608 0.0005293101 0.0005168325 0.0004967863
+[4,] 0.0010353614 0.0009689196 0.0009658060 0.0009567045 0.0009533634
+[5,] 0.0007218067 0.0007012324 0.0006771029 0.0006634363 0.0006447967
+            [,49]        [,50]        [,51]        [,52]        [,53]
+[1,] 0.0004724059 0.0004312348 0.0004159455 0.0004156163 0.0003877822
+[2,] 0.0004660754 0.0004587696 0.0004585200 0.0004413217 0.0004366191
+[3,] 0.0004683576 0.0004589842 0.0004469945 0.0004447524 0.0004320872
+[4,] 0.0008917412 0.0008588562 0.0008510200 0.0008335294 0.0007873920
+[5,] 0.0006399022 0.0006200645 0.0006072080 0.0005753397 0.0005675271
+            [,54]        [,55]        [,56]        [,57]        [,58]
+[1,] 0.0003804870 0.0003750506 0.0003737768 0.0003733053 0.0003623102
+[2,] 0.0004245858 0.0004213872 0.0004163947 0.0004150993 0.0004103725
+[3,] 0.0004261248 0.0004048454 0.0003985885 0.0003961232 0.0003894858
+[4,] 0.0007688830 0.0007413702 0.0007210864 0.0007077550 0.0006480324
+[5,] 0.0005655769 0.0005460616 0.0005407340 0.0005331125 0.0005256925
+            [,59]        [,60]        [,61]        [,62]        [,63]
+[1,] 0.0003619164 0.0003606315 0.0003588377 0.0003504236 0.0003179070
+[2,] 0.0004079067 0.0004073823 0.0004070237 0.0004032490 0.0004031856
+[3,] 0.0003862990 0.0003757137 0.0003665796 0.0003593714 0.0003554571
+[4,] 0.0006221233 0.0005545645 0.0005140249 0.0004993749 0.0004905477
+[5,] 0.0004954245 0.0004922770 0.0004768306 0.0004726452 0.0004641067
+            [,64]        [,65]        [,66]        [,67]        [,68]
+[1,] 0.0003171309 0.0003149439 0.0003095046 0.0003089048 0.0002830850
+[2,] 0.0003987201 0.0003897869 0.0003854763 0.0003834036 0.0003785910
+[3,] 0.0003364803 0.0003166579 0.0003143409 0.0003102027 0.0003099850
+[4,] 0.0004604264 0.0004603647 0.0004576680 0.0004503645 0.0004475407
+[5,] 0.0004588378 0.0004559375 0.0004486277 0.0004425226 0.0004359761
+            [,69]        [,70]        [,71]        [,72]        [,73]
+[1,] 0.0002791082 0.0002710334 0.0002677713 0.0002677656 0.0002464619
+[2,] 0.0003785305 0.0003764614 0.0003724812 0.0003693223 0.0003635200
+[3,] 0.0003099451 0.0003048034 0.0003039506 0.0003028542 0.0002987116
+[4,] 0.0004378221 0.0004215170 0.0004129366 0.0004104757 0.0003944395
+[5,] 0.0004342861 0.0004228969 0.0004216038 0.0004184492 0.0004171206
+            [,74]        [,75]        [,76]        [,77]        [,78]
+[1,] 0.0002445363 0.0002388869 0.0002362406 0.0002361440 0.0002322924
+[2,] 0.0003616403 0.0003592338 0.0003574641 0.0003484351 0.0003445845
+[3,] 0.0002876651 0.0002699478 0.0002696239 0.0002665417 0.0002657804
+[4,] 0.0003756136 0.0003609360 0.0003533270 0.0003275877 0.0003235765
+[5,] 0.0004162594 0.0004160043 0.0004133950 0.0004094226 0.0004083350
+            [,79]        [,80]        [,81]        [,82]        [,83]
+[1,] 0.0002297560 0.0002248177 0.0002182550 0.0002131482 0.0001975210
+[2,] 0.0003423728 0.0003408192 0.0003339073 0.0003286002 0.0003277460
+[3,] 0.0002579587 0.0002537916 0.0002532912 0.0002518607 0.0002401534
+[4,] 0.0003191576 0.0003168791 0.0003148295 0.0003003484 0.0002958287
+[5,] 0.0004076467 0.0004039590 0.0004007403 0.0003996512 0.0003922405
+            [,84]        [,85]        [,86]        [,87]        [,88]
+[1,] 0.0001967927 0.0001918600 0.0001912588 0.0001826607 0.0001794138
+[2,] 0.0003270887 0.0003256075 0.0003245697 0.0003169576 0.0003129516
+[3,] 0.0002360853 0.0002322806 0.0002321231 0.0002245237 0.0002224569
+[4,] 0.0002865820 0.0002848812 0.0002808359 0.0002802341 0.0002756400
+[5,] 0.0003845453 0.0003695764 0.0003655939 0.0003634005 0.0003598606
+            [,89]        [,90]        [,91]        [,92]        [,93]
+[1,] 0.0001739607 0.0001727006 0.0001708050 0.0001677984 0.0001669945
+[2,] 0.0003076578 0.0003073060 0.0003065053 0.0003061495 0.0003045230
+[3,] 0.0002224177 0.0002184832 0.0002181207 0.0002153503 0.0002128238
+[4,] 0.0002666587 0.0002663851 0.0002663403 0.0002611700 0.0002410831
+[5,] 0.0003575081 0.0003569470 0.0003480437 0.0003454150 0.0003441370
+            [,94]        [,95]        [,96]        [,97]        [,98]
+[1,] 0.0001630904 0.0001589704 0.0001565709 0.0001565428 0.0001547234
+[2,] 0.0003038756 0.0002992768 0.0002990160 0.0002983948 0.0002957687
+[3,] 0.0002091724 0.0002072598 0.0002067719 0.0002041763 0.0002036683
+[4,] 0.0002401031 0.0002390566 0.0002131240 0.0002100720 0.0002023894
+[5,] 0.0003368438 0.0003295389 0.0003291656 0.0003288103 0.0003267961
+            [,99]       [,100]
+[1,] 0.0001534548 0.0001530033
+[2,] 0.0002953815 0.0002924684
+[3,] 0.0002014325 0.0001991897
+[4,] 0.0001988158 0.0001986328
+[5,] 0.0003254288 0.0003246231</code></pre>
+<pre class="r"><code># k = 6
+plot_structure_plot(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-16.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[4]]$clust_6$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-17.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-19.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-20.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-21.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-22.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[4]]$clust_6$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]       [,2]     [,3]      [,4]      [,5]      [,6]       [,7]    
+[1,] &quot;COL3A1&quot;   &quot;SPARC&quot;  &quot;COL1A1&quot;  &quot;FN1&quot;     &quot;COL4A1&quot;  &quot;COL4A2&quot;   &quot;COL5A1&quot;
+[2,] &quot;CTSV&quot;     &quot;KRT19&quot;  &quot;SFRP1&quot;   &quot;KRT8&quot;    &quot;SLC2A3&quot;  &quot;PAICS&quot;    &quot;HAND1&quot; 
+[3,] &quot;SERPINE1&quot; &quot;THBS1&quot;  &quot;MYH9&quot;    &quot;ACTB&quot;    &quot;DYNC1H1&quot; &quot;PLAT&quot;     &quot;TFPI2&quot; 
+[4,] &quot;MT-ND4&quot;   &quot;MT-CO1&quot; &quot;MT-CYB&quot;  &quot;MT-RNR2&quot; &quot;MT-ND1&quot;  &quot;SERPINA1&quot; &quot;MT-ND2&quot;
+[5,] &quot;DCN&quot;      &quot;IGFBP3&quot; &quot;COL12A1&quot; &quot;LUM&quot;     &quot;IGFBP5&quot;  &quot;ACAN&quot;     &quot;PRELP&quot; 
+[6,] &quot;POSTN&quot;    &quot;COL6A3&quot; &quot;BGN&quot;     &quot;TGFBI&quot;   &quot;VIM&quot;     &quot;SCD&quot;      &quot;THBS2&quot; 
+     [,8]      [,9]     [,10]        [,11]    [,12]     [,13]    [,14]  
+[1,] &quot;COL1A2&quot;  &quot;SPON2&quot;  &quot;AC089987.1&quot; &quot;FBLN5&quot;  &quot;ACTA2&quot;   &quot;CILP&quot;   &quot;MATN2&quot;
+[2,] &quot;NASP&quot;    &quot;APOE&quot;   &quot;DPPA4&quot;      &quot;HNRNPC&quot; &quot;XRCC5&quot;   &quot;HSPD1&quot;  &quot;HMGB2&quot;
+[3,] &quot;FLNA&quot;    &quot;DCBLD2&quot; &quot;RGS4&quot;       &quot;MICAL2&quot; &quot;GREM1&quot;   &quot;CORO1C&quot; &quot;TLN1&quot; 
+[4,] &quot;MT-ATP6&quot; &quot;MT-CO3&quot; &quot;MT-CO2&quot;     &quot;MT-ND3&quot; &quot;MT-RNR1&quot; &quot;TNNT2&quot;  &quot;C3&quot;   
+[5,] &quot;ADAMTS5&quot; &quot;FMOD&quot;   &quot;EFEMP1&quot;     &quot;IGFBP4&quot; &quot;MALAT1&quot;  &quot;PRUNE2&quot; &quot;SMOC2&quot;
+[6,] &quot;LTBP2&quot;   &quot;MMP2&quot;   &quot;COL6A2&quot;     &quot;EEF2&quot;   &quot;VEGFA&quot;   &quot;INSIG1&quot; &quot;MMP14&quot;
+     [,15]     [,16]     [,17]    [,18]    [,19]      [,20]     [,21]   
+[1,] &quot;PCDH10&quot;  &quot;WNT2&quot;    &quot;ITGA11&quot; &quot;AQP1&quot;   &quot;CDKN2B&quot;   &quot;COL5A2&quot;  &quot;IGFBP7&quot;
+[2,] &quot;SLC38A1&quot; &quot;LDHB&quot;    &quot;MCM3&quot;   &quot;SEPHS1&quot; &quot;RPS20&quot;    &quot;HDAC2&quot;   &quot;MSH2&quot;  
+[3,] &quot;CSRP1&quot;   &quot;CYR61&quot;   &quot;ANXA2&quot;  &quot;CAV1&quot;   &quot;COTL1&quot;    &quot;ACTN4&quot;   &quot;GPRC5A&quot;
+[4,] &quot;TTN&quot;     &quot;MT-ND4L&quot; &quot;MT-ND5&quot; &quot;PDK4&quot;   &quot;MTATP6P1&quot; &quot;TNNC1&quot;   &quot;HSPB7&quot; 
+[5,] &quot;ANTXR1&quot;  &quot;CYP1B1&quot;  &quot;SEMA3C&quot; &quot;FSTL1&quot;  &quot;TRAM1&quot;    &quot;PTTG1IP&quot; &quot;CHI3L1&quot;
+[6,] &quot;LTBP1&quot;   &quot;COL8A1&quot;  &quot;CEMIP&quot;  &quot;SPOCK1&quot; &quot;TNC&quot;      &quot;CD44&quot;    &quot;AEBP1&quot; 
+     [,22]       [,23]     [,24]     [,25]     [,26]    [,27]   [,28]    
+[1,] &quot;CALD1&quot;     &quot;SPTBN2&quot;  &quot;FLT1&quot;    &quot;ACTG2&quot;   &quot;PTGER2&quot; &quot;MEST&quot;  &quot;P4HA2&quot;  
+[2,] &quot;HNRNPA2B1&quot; &quot;RPL23&quot;   &quot;H2AFZ&quot;   &quot;STMN1&quot;   &quot;RPS24&quot;  &quot;CD24&quot;  &quot;ARL6IP1&quot;
+[3,] &quot;SRGN&quot;      &quot;MSN&quot;     &quot;ITGA2&quot;   &quot;ZFHX4&quot;   &quot;RAB3B&quot;  &quot;DLC1&quot;  &quot;AXL&quot;    
+[4,] &quot;TF&quot;        &quot;MT-ATP8&quot; &quot;ACTC1&quot;   &quot;MT-TL1&quot;  &quot;PLN&quot;    &quot;CRYAB&quot; &quot;NR4A1&quot;  
+[5,] &quot;HSPG2&quot;     &quot;CYBRD1&quot;  &quot;PLPP3&quot;   &quot;GALNT1&quot;  &quot;PMP22&quot;  &quot;COMP&quot;  &quot;OGN&quot;    
+[6,] &quot;COL6A1&quot;    &quot;PTGS2&quot;   &quot;APCDD1L&quot; &quot;EMILIN1&quot; &quot;LTBP3&quot;  &quot;NDRG1&quot; &quot;ITGA10&quot; 
+     [,29]      [,30]     [,31]   [,32]     [,33]    [,34]      [,35]  
+[1,] &quot;SERPINE2&quot; &quot;MFAP4&quot;   &quot;PDPN&quot;  &quot;ADGRA2&quot;  &quot;EGFL6&quot;  &quot;FKBP10&quot;   &quot;TIMP1&quot;
+[2,] &quot;SRSF7&quot;    &quot;PRDX1&quot;   &quot;RPL37&quot; &quot;CCT3&quot;    &quot;PODXL&quot;  &quot;SRSF3&quot;    &quot;ANXA3&quot;
+[3,] &quot;MKI67&quot;    &quot;FLNB&quot;    &quot;TUBB6&quot; &quot;PRKDC&quot;   &quot;SLC7A1&quot; &quot;NEK7&quot;     &quot;ACTG1&quot;
+[4,] &quot;FABP3&quot;    &quot;MT-ND6&quot;  &quot;APOD&quot;  &quot;SLC25A4&quot; &quot;VTN&quot;    &quot;MTND2P28&quot; &quot;A2M&quot;  
+[5,] &quot;DIO2&quot;     &quot;SLC38A2&quot; &quot;ISM1&quot;  &quot;ECM2&quot;    &quot;MFGE8&quot;  &quot;CTGF&quot;     &quot;STS&quot;  
+[6,] &quot;GAPDH&quot;    &quot;COLEC12&quot; &quot;EDIL3&quot; &quot;SCARA3&quot;  &quot;ITGBL1&quot; &quot;GAS6&quot;     &quot;FAP&quot;  
+     [,36]    [,37]    [,38]     [,39]     [,40]    [,41]    [,42]    [,43]    
+[1,] &quot;SPON1&quot;  &quot;SRPX2&quot;  &quot;FIBIN&quot;   &quot;SLC6A17&quot; &quot;PTK7&quot;   &quot;TMEM59&quot; &quot;KCTD16&quot; &quot;COL11A1&quot;
+[2,] &quot;PEG10&quot;  &quot;RPS12&quot;  &quot;PARP1&quot;   &quot;CCT2&quot;    &quot;MCM4&quot;   &quot;RPS18&quot;  &quot;SPP1&quot;   &quot;DSC2&quot;   
+[3,] &quot;SMURF2&quot; &quot;INHBA&quot;  &quot;LAMC1&quot;   &quot;EIF4G1&quot;  &quot;NOTCH2&quot; &quot;ZBTB38&quot; &quot;PSMD2&quot;  &quot;ADAM9&quot;  
+[4,] &quot;CMYA5&quot;  &quot;HSPA1A&quot; &quot;ALDH1A1&quot; &quot;HSPA1B&quot;  &quot;NDRG4&quot;  &quot;AOX1&quot;   &quot;TXNIP&quot;  &quot;GATM&quot;   
+[5,] &quot;THY1&quot;   &quot;FGF7&quot;   &quot;PODN&quot;    &quot;ELL2&quot;    &quot;SCRG1&quot;  &quot;NTRK2&quot;  &quot;PRSS23&quot; &quot;LAMB2&quot;  
+[6,] &quot;PCOLCE&quot; &quot;HAPLN1&quot; &quot;CDH13&quot;   &quot;SLC5A3&quot;  &quot;PRRX1&quot;  &quot;PHLDA1&quot; &quot;CCNI&quot;   &quot;RACK1&quot;  
+     [,44]    [,45]    [,46]     [,47]   [,48]     [,49]      [,50]   
+[1,] &quot;LZTS1&quot;  &quot;CHPF&quot;   &quot;LMCD1&quot;   &quot;DKK2&quot;  &quot;PITX2&quot;   &quot;FTL&quot;      &quot;OGFRL1&quot;
+[2,] &quot;NUCKS1&quot; &quot;RPS25&quot;  &quot;SINHCAF&quot; &quot;MCM7&quot;  &quot;SLC16A1&quot; &quot;HSP90AA1&quot; &quot;MDK&quot;   
+[3,] &quot;NCEH1&quot;  &quot;VCL&quot;    &quot;SAMD9&quot;   &quot;HIF1A&quot; &quot;ACTR2&quot;   &quot;HEG1&quot;     &quot;AFAP1&quot; 
+[4,] &quot;SORBS1&quot; &quot;ACADVL&quot; &quot;CPS1&quot;    &quot;ACSL1&quot; &quot;EPHX1&quot;   &quot;ITGA7&quot;    &quot;ECHDC2&quot;
+[5,] &quot;CP&quot;     &quot;ABI3BP&quot; &quot;ARID5B&quot;  &quot;C1R&quot;   &quot;CCDC80&quot;  &quot;TBL1XR1&quot;  &quot;TMTC1&quot; 
+[6,] &quot;LAMB1&quot;  &quot;SEMA5A&quot; &quot;COL16A1&quot; &quot;NPC1&quot;  &quot;ISLR&quot;    &quot;PYGB&quot;     &quot;WWTR1&quot; 
+     [,51]     [,52]   [,53]   [,54]      [,55]      [,56]    [,57]    
+[1,] &quot;COL15A1&quot; &quot;APP&quot;   &quot;MPZL1&quot; &quot;LOXL1&quot;    &quot;CRISPLD2&quot; &quot;LRRC32&quot; &quot;ODAPH&quot;  
+[2,] &quot;DEK&quot;     &quot;NCL&quot;   &quot;RPS23&quot; &quot;SNHG1&quot;    &quot;SLC7A2&quot;   &quot;CSE1L&quot;  &quot;RPL11&quot;  
+[3,] &quot;PKM&quot;     &quot;CCND1&quot; &quot;EGFR&quot;  &quot;TRIO&quot;     &quot;SLC20A1&quot;  &quot;FGF2&quot;   &quot;FRMD6&quot;  
+[4,] &quot;ABLIM1&quot;  &quot;NEBL&quot;  &quot;GSN&quot;   &quot;PPP1R12B&quot; &quot;SLC4A3&quot;   &quot;HADHB&quot;  &quot;ALDH2&quot;  
+[5,] &quot;TSPAN4&quot;  &quot;MDFIC&quot; &quot;GPC6&quot;  &quot;IFITM3&quot;   &quot;REV3L&quot;    &quot;PLXNA4&quot; &quot;S100A10&quot;
+[6,] &quot;FAM20C&quot;  &quot;FNDC1&quot; &quot;EIF4B&quot; &quot;NRN1&quot;     &quot;SH3PXD2A&quot; &quot;MAP4K4&quot; &quot;ENO1&quot;   
+     [,58]    [,59]    [,60]     [,61]     [,62]   [,63]      [,64]     
+[1,] &quot;P3H4&quot;   &quot;CDKN1A&quot; &quot;BMP6&quot;    &quot;MME&quot;     &quot;PLD3&quot;  &quot;FSTL3&quot;    &quot;CDC42BPA&quot;
+[2,] &quot;ILF2&quot;   &quot;ADGRL2&quot; &quot;PCNA&quot;    &quot;PSIP1&quot;   &quot;IGSF3&quot; &quot;MARCKSL1&quot; &quot;SF3B1&quot;   
+[3,] &quot;RAI14&quot;  &quot;MAP1B&quot;  &quot;LASP1&quot;   &quot;NAV3&quot;    &quot;UHMK1&quot; &quot;CAVIN1&quot;   &quot;PTPN14&quot;  
+[4,] &quot;HSPB8&quot;  &quot;ANKRD1&quot; &quot;ATF5&quot;    &quot;CHCHD10&quot; &quot;ECH1&quot;  &quot;ALPK3&quot;    &quot;HSD17B6&quot; 
+[5,] &quot;ITM2B&quot;  &quot;P3H2&quot;   &quot;EBF1&quot;    &quot;SVEP1&quot;   &quot;DSTN&quot;  &quot;NPR3&quot;     &quot;STEAP4&quot;  
+[6,] &quot;PABPC1&quot; &quot;CD109&quot;  &quot;TMEM119&quot; &quot;ANPEP&quot;   &quot;PGK1&quot;  &quot;PDGFC&quot;    &quot;GJA1&quot;    
+     [,65]      [,66]    [,67]   [,68]     [,69]    [,70]       [,71]    
+[1,] &quot;SERPINH1&quot; &quot;TMED3&quot;  &quot;SMYD3&quot; &quot;KCNK6&quot;   &quot;CLEC3A&quot; &quot;KDELR3&quot;    &quot;VCAN&quot;   
+[2,] &quot;KIAA1551&quot; &quot;SNHG14&quot; &quot;AHCY&quot;  &quot;PRMT1&quot;   &quot;TUBB2B&quot; &quot;TOP2A&quot;     &quot;RPS21&quot;  
+[3,] &quot;NABP1&quot;    &quot;SEMA7A&quot; &quot;EPHA2&quot; &quot;TMSB10&quot;  &quot;HUWE1&quot;  &quot;SH3BP4&quot;    &quot;PLAU&quot;   
+[4,] &quot;OBSCN&quot;    &quot;SHANK3&quot; &quot;ACACB&quot; &quot;ATP2A2&quot;  &quot;NDRG2&quot;  &quot;GPX3&quot;      &quot;COQ8A&quot;  
+[5,] &quot;PIEZO2&quot;   &quot;PRG4&quot;   &quot;CRLF1&quot; &quot;ZFP36L1&quot; &quot;CYB5R3&quot; &quot;RECK&quot;      &quot;CD164&quot;  
+[6,] &quot;RPL28&quot;    &quot;FADS2&quot;  &quot;ENO2&quot;  &quot;TGFB2&quot;   &quot;FTH1&quot;   &quot;TNFRSF11B&quot; &quot;CAMK2N1&quot;
+     [,72]      [,73]    [,74]      [,75]       [,76]   [,77]    [,78]    
+[1,] &quot;PDZRN3&quot;   &quot;CEMIP2&quot; &quot;NEDD9&quot;    &quot;OLFML3&quot;    &quot;RFLNA&quot; &quot;TBC1D9&quot; &quot;DPYSL3&quot; 
+[2,] &quot;RPS5&quot;     &quot;RPL41&quot;  &quot;RPS27A&quot;   &quot;CKS2&quot;      &quot;RPL8&quot;  &quot;MAD2L1&quot; &quot;HACD3&quot;  
+[3,] &quot;MACF1&quot;    &quot;MYO10&quot;  &quot;MET&quot;      &quot;KIAA1549L&quot; &quot;PXN&quot;   &quot;VGLL3&quot;  &quot;ANKRD52&quot;
+[4,] &quot;MTCO1P12&quot; &quot;PER1&quot;   &quot;SLC9A3R2&quot; &quot;TPM1&quot;      &quot;C5&quot;    &quot;MT-TP&quot;  &quot;RBM24&quot;  
+[5,] &quot;ADAMTS1&quot;  &quot;PLPP1&quot;  &quot;CPA4&quot;     &quot;MGP&quot;       &quot;GAS1&quot;  &quot;ASAP3&quot;  &quot;SDK2&quot;   
+[6,] &quot;CTHRC1&quot;   &quot;S100A6&quot; &quot;LSS&quot;      &quot;MAFB&quot;      &quot;SOD2&quot;  &quot;NUCB1&quot;  &quot;ARL4C&quot;  
+     [,79]    [,80]     [,81]   [,82]      [,83]   [,84]     [,85]   
+[1,] &quot;NALCN&quot;  &quot;SPSB1&quot;   &quot;NOX4&quot;  &quot;SCUBE2&quot;   &quot;ARF4&quot;  &quot;SLC22A3&quot; &quot;PRDX6&quot; 
+[2,] &quot;CTNNB1&quot; &quot;CCT8&quot;    &quot;LSM4&quot;  &quot;RPS19&quot;    &quot;CASP3&quot; &quot;RPL30&quot;   &quot;MCM6&quot;  
+[3,] &quot;PLEC&quot;   &quot;TRIP12&quot;  &quot;PLK2&quot;  &quot;NR2F2&quot;    &quot;F2R&quot;   &quot;SACS&quot;    &quot;PAPPA&quot; 
+[4,] &quot;IDH2&quot;   &quot;RGS5&quot;    &quot;ABAT&quot;  &quot;MAPKAPK3&quot; &quot;MPC1&quot;  &quot;GOT1&quot;    &quot;ABCA8&quot; 
+[5,] &quot;CREB5&quot;  &quot;B4GALT1&quot; &quot;STAT2&quot; &quot;PLXDC2&quot;   &quot;KAZN&quot;  &quot;AHNAK2&quot;  &quot;FRMD4B&quot;
+[6,] &quot;ITPR1&quot;  &quot;HMOX1&quot;   &quot;TRPS1&quot; &quot;NDUFA4L2&quot; &quot;TSPO&quot;  &quot;LGALS1&quot;  &quot;CLMP&quot;  
+     [,86]      [,87]     [,88]    [,89]      [,90]     [,91]     [,92]   
+[1,] &quot;TCAF1&quot;    &quot;IGFL2&quot;   &quot;STXBP6&quot; &quot;PPIC&quot;     &quot;PRDX4&quot;   &quot;PAG1&quot;    &quot;SCG2&quot;  
+[2,] &quot;LMNB1&quot;    &quot;RPS14&quot;   &quot;RPL10A&quot; &quot;TMSB4X&quot;   &quot;NPM1&quot;    &quot;RPL31&quot;   &quot;FLRT3&quot; 
+[3,] &quot;ADAM19&quot;   &quot;UAP1&quot;    &quot;NQO1&quot;   &quot;CDC42EP3&quot; &quot;CAPN2&quot;   &quot;CEP170&quot;  &quot;POLR2A&quot;
+[4,] &quot;MTND4P12&quot; &quot;MYO15B&quot;  &quot;ZFP36&quot;  &quot;SORBS2&quot;   &quot;TINAGL1&quot; &quot;ADAMTS4&quot; &quot;DECR1&quot; 
+[5,] &quot;NFATC4&quot;   &quot;RABGAP1&quot; &quot;SMOC1&quot;  &quot;ATP8B2&quot;   &quot;VWA5A&quot;   &quot;ACKR3&quot;   &quot;SDC2&quot;  
+[6,] &quot;LRRC15&quot;   &quot;ENG&quot;     &quot;STXBP5&quot; &quot;COL7A1&quot;   &quot;UNC5B&quot;   &quot;GPR68&quot;   &quot;CIC&quot;   
+     [,93]     [,94]     [,95]      [,96]      [,97]     [,98]    [,99]  
+[1,] &quot;SLC46A3&quot; &quot;GPRC5B&quot;  &quot;P3H1&quot;     &quot;ALDH18A1&quot; &quot;FILIP1L&quot; &quot;ITGAV&quot;  &quot;MRAP2&quot;
+[2,] &quot;ARMT1&quot;   &quot;NES&quot;     &quot;RPL24&quot;    &quot;SLC39A10&quot; &quot;EIF4A2&quot;  &quot;RPL35&quot;  &quot;RPS9&quot; 
+[3,] &quot;LIF&quot;     &quot;CRIM1&quot;   &quot;ITGA3&quot;    &quot;WDR1&quot;     &quot;ASAP1&quot;   &quot;HRAS&quot;   &quot;ITGA4&quot;
+[4,] &quot;MT1X&quot;    &quot;SELENOW&quot; &quot;CFLAR&quot;    &quot;SNTA1&quot;    &quot;NCAM1&quot;   &quot;RCAN2&quot;  &quot;SDHA&quot; 
+[5,] &quot;NEGR1&quot;   &quot;PTGIS&quot;   &quot;CMKLR1&quot;   &quot;FOSL2&quot;    &quot;PPP1R3C&quot; &quot;ARSB&quot;   &quot;SULF1&quot;
+[6,] &quot;NXPH4&quot;   &quot;EFEMP2&quot;  &quot;ARHGAP22&quot; &quot;CLEC11A&quot;  &quot;HLA-A&quot;   &quot;CAMK2D&quot; &quot;PLOD1&quot;
+     [,100]  
+[1,] &quot;CXCL14&quot;
+[2,] &quot;MTF2&quot;  
+[3,] &quot;BDNF&quot;  
+[4,] &quot;SAA1&quot;  
+[5,] &quot;DAAM2&quot; 
+[6,] &quot;RPL10&quot; </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.197866226 0.116622005 0.056778865 0.016926386 0.011683660 0.006329219
+[2,] 0.005889223 0.002927786 0.002251378 0.002153392 0.001351043 0.001144304
+[3,] 0.007180351 0.004838324 0.004342494 0.003949697 0.003123496 0.002476392
+[4,] 0.193090343 0.114848939 0.111699350 0.108062556 0.081666964 0.075857174
+[5,] 0.035624700 0.034279194 0.013740414 0.013472923 0.012926274 0.004910620
+[6,] 0.092330280 0.012022384 0.011600969 0.007944028 0.006865470 0.004843052
+            [,7]        [,8]        [,9]       [,10]        [,11]       [,12]
+[1,] 0.005460746 0.003784056 0.003602130 0.003416704 0.0029690749 0.002330466
+[2,] 0.001110350 0.001074208 0.001011152 0.000982223 0.0008475906 0.000821547
+[3,] 0.001718779 0.001465705 0.001334191 0.001329481 0.0011890718 0.001095893
+[4,] 0.064257243 0.057445002 0.054187636 0.043406594 0.0251078871 0.024389307
+[5,] 0.004248721 0.003113544 0.003026096 0.002494350 0.0022570321 0.001650023
+[6,] 0.003708429 0.002305800 0.001805622 0.001560812 0.0013516446 0.001266674
+            [,13]        [,14]        [,15]        [,16]        [,17]
+[1,] 0.0020108919 0.0018583998 0.0017895928 0.0016484931 0.0016431682
+[2,] 0.0007723058 0.0007407124 0.0007382133 0.0007274934 0.0007068691
+[3,] 0.0009064436 0.0009062115 0.0008695795 0.0008689737 0.0008361325
+[4,] 0.0192927589 0.0181701473 0.0169812770 0.0155502152 0.0120817062
+[5,] 0.0011589238 0.0010586597 0.0009452069 0.0008651868 0.0007909595
+[6,] 0.0010455713 0.0008683220 0.0008396969 0.0007411737 0.0007007362
+            [,18]        [,19]        [,20]        [,21]        [,22]
+[1,] 0.0014802366 0.0013206703 0.0013125847 0.0012899235 0.0012441142
+[2,] 0.0007021145 0.0006637471 0.0006619521 0.0006412236 0.0005980062
+[3,] 0.0008196967 0.0007725614 0.0007454145 0.0007357532 0.0006493529
+[4,] 0.0091947070 0.0081643176 0.0080347149 0.0066389677 0.0054912893
+[5,] 0.0007475731 0.0007168094 0.0007166534 0.0006708143 0.0006295900
+[6,] 0.0006921872 0.0006448811 0.0006341056 0.0006245587 0.0005929108
+            [,23]        [,24]        [,25]        [,26]        [,27]
+[1,] 0.0012159068 0.0011611043 0.0011594333 0.0011238736 0.0010838722
+[2,] 0.0005948879 0.0005831416 0.0005647817 0.0005472931 0.0005387473
+[3,] 0.0006486487 0.0006203233 0.0006121045 0.0005669584 0.0005637121
+[4,] 0.0051375450 0.0042493661 0.0036839282 0.0032192952 0.0031482178
+[5,] 0.0006075513 0.0004705542 0.0004416952 0.0003939987 0.0003478781
+[6,] 0.0005657759 0.0005646849 0.0005553209 0.0004816470 0.0004704444
+            [,28]        [,29]        [,30]        [,31]        [,32]
+[1,] 0.0009411626 0.0009305856 0.0009293270 0.0009134353 0.0008753436
+[2,] 0.0005333475 0.0005282337 0.0005087151 0.0005028301 0.0004974592
+[3,] 0.0005571665 0.0005477450 0.0005361777 0.0005339848 0.0005167951
+[4,] 0.0029548461 0.0027862620 0.0025770579 0.0025645448 0.0024820260
+[5,] 0.0003291551 0.0002716249 0.0002698197 0.0002695374 0.0002500544
+[6,] 0.0004541625 0.0004402964 0.0004253283 0.0004213807 0.0004090878
+            [,33]        [,34]        [,35]        [,36]        [,37]
+[1,] 0.0007832119 0.0006832601 0.0006642820 0.0006253001 0.0005897462
+[2,] 0.0004925586 0.0004781423 0.0004743855 0.0004703419 0.0004703190
+[3,] 0.0004961266 0.0004732380 0.0004584492 0.0004512858 0.0004457281
+[4,] 0.0021272328 0.0021133221 0.0018723039 0.0018505979 0.0016334689
+[5,] 0.0002469360 0.0002374155 0.0002326912 0.0002189290 0.0002056233
+[6,] 0.0003937723 0.0003687470 0.0003648547 0.0003577796 0.0003576406
+            [,38]        [,39]        [,40]        [,41]        [,42]
+[1,] 0.0005665873 0.0005394603 0.0005236670 0.0005191548 0.0005094631
+[2,] 0.0004391106 0.0004334626 0.0004243006 0.0004211638 0.0004172067
+[3,] 0.0004453206 0.0004335122 0.0004176120 0.0004163059 0.0004066579
+[4,] 0.0016011517 0.0012664736 0.0012575518 0.0011979367 0.0011917224
+[5,] 0.0001960994 0.0001919980 0.0001886209 0.0001806302 0.0001797354
+[6,] 0.0003503708 0.0003253120 0.0003102060 0.0003000463 0.0002964225
+            [,43]        [,44]        [,45]        [,46]        [,47]
+[1,] 0.0005011991 0.0004967663 0.0004821950 0.0004320886 0.0004277533
+[2,] 0.0004150086 0.0004099365 0.0003975289 0.0003971785 0.0003850971
+[3,] 0.0003942568 0.0003852978 0.0003787377 0.0003716375 0.0003678101
+[4,] 0.0009467074 0.0009442903 0.0008930183 0.0008451532 0.0008417857
+[5,] 0.0001752689 0.0001696201 0.0001683367 0.0001639940 0.0001613338
+[6,] 0.0002825750 0.0002764529 0.0002759689 0.0002696492 0.0002696326
+            [,48]        [,49]        [,50]        [,51]        [,52]
+[1,] 0.0004025569 0.0004020745 0.0003800090 0.0003790538 0.0003757287
+[2,] 0.0003834293 0.0003783972 0.0003752769 0.0003697533 0.0003680840
+[3,] 0.0003597954 0.0003540621 0.0003536859 0.0003526505 0.0003518193
+[4,] 0.0008401071 0.0008271736 0.0008032126 0.0007139333 0.0006856337
+[5,] 0.0001589437 0.0001554364 0.0001538576 0.0001346889 0.0001329909
+[6,] 0.0002668728 0.0002651118 0.0002518047 0.0002424042 0.0002273472
+            [,53]        [,54]        [,55]        [,56]        [,57]
+[1,] 0.0003676994 0.0003533682 0.0003513029 0.0003410964 0.0003390324
+[2,] 0.0003646935 0.0003591283 0.0003584282 0.0003552860 0.0003460299
+[3,] 0.0003503316 0.0003444111 0.0003369774 0.0003365630 0.0003291258
+[4,] 0.0006811422 0.0006803734 0.0006472446 0.0006210519 0.0005707417
+[5,] 0.0001288443 0.0001277761 0.0001256270 0.0001239825 0.0001236251
+[6,] 0.0002220731 0.0002135135 0.0002102032 0.0001992256 0.0001869132
+            [,58]        [,59]        [,60]        [,61]        [,62]
+[1,] 0.0003308059 0.0003226093 0.0003170135 0.0003067451 0.0002993733
+[2,] 0.0003449298 0.0003383317 0.0003353329 0.0003325923 0.0003299113
+[3,] 0.0003285778 0.0003209041 0.0003097760 0.0003014249 0.0002998607
+[4,] 0.0005649750 0.0005329998 0.0005057755 0.0004816667 0.0004433679
+[5,] 0.0001125905 0.0001092303 0.0001089412 0.0001071673 0.0001043467
+[6,] 0.0001781226 0.0001666682 0.0001630670 0.0001628809 0.0001512194
+            [,63]        [,64]        [,65]        [,66]        [,67]
+[1,] 0.0002787410 0.0002764444 2.646260e-04 2.626018e-04 2.616385e-04
+[2,] 0.0003289456 0.0003281771 3.195258e-04 3.183129e-04 3.178793e-04
+[3,] 0.0002878731 0.0002813061 2.767225e-04 2.761531e-04 2.693682e-04
+[4,] 0.0004337746 0.0004133500 4.115153e-04 4.020209e-04 4.011784e-04
+[5,] 0.0001030517 0.0001024297 9.961167e-05 9.294919e-05 9.277919e-05
+[6,] 0.0001482334 0.0001458005 1.438128e-04 1.419651e-04 1.400701e-04
+            [,68]        [,69]        [,70]        [,71]        [,72]
+[1,] 2.444933e-04 2.411844e-04 2.369228e-04 2.306755e-04 0.0002225954
+[2,] 3.129144e-04 3.108610e-04 3.073232e-04 3.030126e-04 0.0003007442
+[3,] 2.666955e-04 2.591387e-04 2.553591e-04 2.525424e-04 0.0002508135
+[4,] 3.886871e-04 3.837368e-04 3.812481e-04 3.740066e-04 0.0003726396
+[5,] 9.207677e-05 8.743801e-05 8.691898e-05 8.623037e-05 0.0000840736
+[6,] 1.339210e-04 1.215778e-04 1.208491e-04 1.158684e-04 0.0001127656
+            [,73]        [,74]        [,75]        [,76]        [,77]
+[1,] 2.173287e-04 2.158747e-04 2.035746e-04 0.0002003434 1.976488e-04
+[2,] 2.970275e-04 2.939759e-04 2.916145e-04 0.0002902564 2.884748e-04
+[3,] 2.411340e-04 2.407833e-04 2.395596e-04 0.0002390188 2.374398e-04
+[4,] 3.543290e-04 3.510305e-04 3.269760e-04 0.0003216218 3.151263e-04
+[5,] 8.333109e-05 8.238544e-05 7.703049e-05 0.0000751239 7.303891e-05
+[6,] 1.127580e-04 1.114795e-04 1.113522e-04 0.0001112135 1.086023e-04
+            [,78]        [,79]        [,80]        [,81]        [,82]
+[1,] 1.964125e-04 1.909471e-04 1.834701e-04 1.805651e-04 1.734380e-04
+[2,] 2.876743e-04 2.863371e-04 2.857065e-04 2.851845e-04 2.828983e-04
+[3,] 2.319462e-04 2.271741e-04 2.238931e-04 2.220521e-04 2.203715e-04
+[4,] 3.108455e-04 3.098868e-04 3.076278e-04 2.913620e-04 2.888975e-04
+[5,] 7.302895e-05 7.234634e-05 7.138009e-05 7.020354e-05 6.745436e-05
+[6,] 1.083704e-04 1.061927e-04 1.057639e-04 1.042105e-04 1.023314e-04
+            [,83]        [,84]        [,85]        [,86]        [,87]
+[1,] 1.704230e-04 1.597711e-04 1.575025e-04 1.545505e-04 1.542929e-04
+[2,] 2.792189e-04 2.750175e-04 2.732726e-04 2.670863e-04 2.662875e-04
+[3,] 2.198058e-04 2.195874e-04 2.191046e-04 2.183420e-04 2.162610e-04
+[4,] 2.835923e-04 2.773397e-04 2.740217e-04 2.661258e-04 2.629012e-04
+[5,] 6.639665e-05 6.577919e-05 6.242933e-05 6.240570e-05 6.219446e-05
+[6,] 9.801063e-05 9.593347e-05 9.584519e-05 9.555766e-05 9.546916e-05
+            [,88]        [,89]        [,90]        [,91]        [,92]
+[1,] 1.533713e-04 1.489312e-04 1.451618e-04 1.448967e-04 1.444941e-04
+[2,] 2.576605e-04 2.552153e-04 2.535150e-04 2.526857e-04 2.523435e-04
+[3,] 2.159854e-04 2.159220e-04 2.149353e-04 2.134674e-04 2.067699e-04
+[4,] 2.612797e-04 2.479280e-04 2.375124e-04 2.351729e-04 2.305397e-04
+[5,] 6.175775e-05 5.906702e-05 5.894458e-05 5.730734e-05 5.729785e-05
+[6,] 9.516481e-05 8.787553e-05 8.630713e-05 8.317833e-05 8.286599e-05
+            [,93]        [,94]        [,95]        [,96]        [,97]
+[1,] 1.392756e-04 1.356678e-04 1.355091e-04 1.348775e-04 1.329896e-04
+[2,] 2.496753e-04 2.477127e-04 2.469301e-04 2.440237e-04 2.432754e-04
+[3,] 2.058852e-04 2.056345e-04 2.046390e-04 1.961428e-04 1.958556e-04
+[4,] 2.155655e-04 2.140014e-04 2.073852e-04 2.072419e-04 1.923918e-04
+[5,] 5.582600e-05 5.554581e-05 5.507125e-05 5.357017e-05 5.163460e-05
+[6,] 8.211158e-05 8.202085e-05 8.046064e-05 7.823966e-05 7.808104e-05
+            [,98]        [,99]       [,100]
+[1,] 1.310926e-04 1.277206e-04 1.270649e-04
+[2,] 2.383080e-04 2.357900e-04 2.325306e-04
+[3,] 1.913715e-04 1.896532e-04 1.860845e-04
+[4,] 1.880944e-04 1.874593e-04 1.837581e-04
+[5,] 5.075806e-05 5.026055e-05 5.018295e-05
+[6,] 7.531080e-05 7.386352e-05 7.349386e-05</code></pre>
+<pre class="r"><code># k = 7
+plot_structure_plot(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-23.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[5]]$clust_7$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-24.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-25.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-26.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-28.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-29.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-30.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[5]]$clust_7$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]       [,2]       [,3]     [,4]     [,5]      [,6]     [,7]        
+[1,] &quot;COL3A1&quot;   &quot;SPARC&quot;    &quot;COL1A2&quot; &quot;SPON2&quot;  &quot;COL5A1&quot;  &quot;ITGA11&quot; &quot;AC089987.1&quot;
+[2,] &quot;TOP2A&quot;    &quot;HSP90AA1&quot; &quot;SFRP1&quot;  &quot;NCL&quot;    &quot;HSPA8&quot;   &quot;CSE1L&quot;  &quot;MKI67&quot;     
+[3,] &quot;CHI3L1&quot;   &quot;IGFBP3&quot;   &quot;ACAN&quot;   &quot;DCN&quot;    &quot;COL12A1&quot; &quot;EFEMP1&quot; &quot;NDUFA4L2&quot;  
+[4,] &quot;TIMP1&quot;    &quot;TIMP3&quot;    &quot;AQP1&quot;   &quot;IGFL2&quot;  &quot;F2RL1&quot;   &quot;RDH10&quot;  &quot;UCHL1&quot;     
+[5,] &quot;THBS1&quot;    &quot;POSTN&quot;    &quot;FN1&quot;    &quot;ACTG1&quot;  &quot;THBS2&quot;   &quot;ACTB&quot;   &quot;FLNA&quot;      
+[6,] &quot;MT-ND4&quot;   &quot;MT-RNR2&quot;  &quot;MT-CO1&quot; &quot;MT-CYB&quot; &quot;MT-ND1&quot;  &quot;MT-ND2&quot; &quot;MT-CO3&quot;    
+[7,] &quot;SERPINA1&quot; &quot;TF&quot;       &quot;CTSV&quot;   &quot;APOE&quot;   &quot;C3&quot;      &quot;SLC2A3&quot; &quot;KRT19&quot;     
+     [,8]      [,9]     [,10]    [,11]     [,12]     [,13]     [,14]    
+[1,] &quot;MEST&quot;    &quot;FBLN5&quot;  &quot;COL1A1&quot; &quot;MFAP4&quot;   &quot;COL5A2&quot;  &quot;MATN2&quot;   &quot;SPTBN2&quot; 
+[2,] &quot;MCM4&quot;    &quot;PAICS&quot;  &quot;ANLN&quot;   &quot;HMGA1&quot;   &quot;CENPF&quot;   &quot;XRCC5&quot;   &quot;TUBB&quot;   
+[3,] &quot;LUM&quot;     &quot;IGFBP5&quot; &quot;TNC&quot;    &quot;AEBP1&quot;   &quot;PRUNE2&quot;  &quot;BGN&quot;     &quot;PRELP&quot;  
+[4,] &quot;ARHGEF3&quot; &quot;FLT1&quot;   &quot;ACTG2&quot;  &quot;FSCN1&quot;   &quot;ITGB1&quot;   &quot;F2R&quot;     &quot;ANXA5&quot;  
+[5,] &quot;ITGA5&quot;   &quot;MYH9&quot;   &quot;LOXL2&quot;  &quot;CYR61&quot;   &quot;TLN1&quot;    &quot;SRGN&quot;    &quot;ADAMTS2&quot;
+[6,] &quot;MT-ATP6&quot; &quot;MT-CO2&quot; &quot;MT-ND3&quot; &quot;MT-RNR1&quot; &quot;TNNT2&quot;   &quot;MT-ND4L&quot; &quot;TTN&quot;    
+[7,] &quot;AOX1&quot;    &quot;VTN&quot;    &quot;CPS1&quot;   &quot;EPHX1&quot;   &quot;ALDH1A1&quot; &quot;C5&quot;      &quot;HAND1&quot;  
+     [,15]     [,16]     [,17]   [,18]      [,19]     [,20]      [,21]   
+[1,] &quot;COL11A1&quot; &quot;PDPN&quot;    &quot;ACTA2&quot; &quot;FIBIN&quot;    &quot;COL15A1&quot; &quot;CDC42BPA&quot; &quot;SCG2&quot;  
+[2,] &quot;SEPHS1&quot;  &quot;KPNB1&quot;   &quot;XPO1&quot;  &quot;DPPA4&quot;    &quot;MSH2&quot;    &quot;PRKDC&quot;    &quot;NUCKS1&quot;
+[3,] &quot;GPNMB&quot;   &quot;ADAMTS5&quot; &quot;LRP1&quot;  &quot;SULF1&quot;    &quot;PDGFRA&quot;  &quot;NDRG1&quot;    &quot;FMOD&quot;  
+[4,] &quot;ADAM19&quot;  &quot;RAI14&quot;   &quot;ITGAV&quot; &quot;EGFLAM&quot;   &quot;LOX&quot;     &quot;SLC22A3&quot;  &quot;SEPT11&quot;
+[5,] &quot;HEG1&quot;    &quot;CRIM1&quot;   &quot;STC2&quot;  &quot;MEG3&quot;     &quot;PTX3&quot;    &quot;ITGBL1&quot;   &quot;CD248&quot; 
+[6,] &quot;MT-ND5&quot;  &quot;PDK4&quot;    &quot;HSPB7&quot; &quot;MTATP6P1&quot; &quot;TNNC1&quot;   &quot;MT-ATP8&quot;  &quot;ACTC1&quot; 
+[7,] &quot;MGST1&quot;   &quot;CYB5A&quot;   &quot;GATM&quot;  &quot;SERPING1&quot; &quot;SLC7A2&quot;  &quot;ANXA3&quot;    &quot;ACSL1&quot; 
+     [,22]    [,23]    [,24]     [,25]      [,26]    [,27]      [,28]      
+[1,] &quot;SPON1&quot;  &quot;DKK2&quot;   &quot;ODAPH&quot;   &quot;GPRC5B&quot;   &quot;SCUBE2&quot; &quot;SERPINE2&quot; &quot;CRISPLD2&quot; 
+[2,] &quot;LDHB&quot;   &quot;TPX2&quot;   &quot;HNRNPU&quot;  &quot;NPM1&quot;     &quot;CCNB1&quot;  &quot;DHX9&quot;     &quot;LMNB2&quot;    
+[3,] &quot;CYBRD1&quot; &quot;CPXM2&quot;  &quot;VIM&quot;     &quot;HMOX1&quot;    &quot;WWP2&quot;   &quot;CTSD&quot;     &quot;SCD&quot;      
+[4,] &quot;SSR3&quot;   &quot;LZTS1&quot;  &quot;PTPRN&quot;   &quot;MAP3K7CL&quot; &quot;PDLIM3&quot; &quot;EGFL6&quot;    &quot;TNFRSF12A&quot;
+[5,] &quot;LMO7&quot;   &quot;PKM&quot;    &quot;CAVIN1&quot;  &quot;ADAM9&quot;    &quot;GAPDH&quot;  &quot;NRP1&quot;     &quot;LGALS1&quot;   
+[6,] &quot;CRYAB&quot;  &quot;MT-TL1&quot; &quot;FABP3&quot;   &quot;PLN&quot;      &quot;NR4A1&quot;  &quot;APOD&quot;     &quot;SLC25A4&quot;  
+[7,] &quot;DSC2&quot;   &quot;MDK&quot;    &quot;ST6GAL1&quot; &quot;HSD17B6&quot;  &quot;KRT8&quot;   &quot;ATF5&quot;     &quot;RIDA&quot;     
+     [,29]    [,30]       [,31]     [,32]      [,33]     [,34]    [,35]    
+[1,] &quot;COL4A1&quot; &quot;PPIC&quot;      &quot;PTGER2&quot;  &quot;TBC1D9&quot;   &quot;TMEM59&quot;  &quot;NRP2&quot;   &quot;LOXL1&quot;  
+[2,] &quot;DEK&quot;    &quot;HNRNPA2B1&quot; &quot;ILF3&quot;    &quot;TRIM28&quot;   &quot;TACC3&quot;   &quot;KIF11&quot;  &quot;CENPE&quot;  
+[3,] &quot;TGFBI&quot;  &quot;GPC6&quot;      &quot;COL14A1&quot; &quot;EDIL3&quot;    &quot;MALAT1&quot;  &quot;ENPP2&quot;  &quot;NPC1&quot;   
+[4,] &quot;EGR2&quot;   &quot;MGAT5&quot;     &quot;GFPT2&quot;   &quot;COLGALT1&quot; &quot;GDF6&quot;    &quot;TAGLN&quot;  &quot;ANGPTL4&quot;
+[5,] &quot;TPM4&quot;   &quot;SH3PXD2A&quot;  &quot;LAMC1&quot;   &quot;NABP1&quot;    &quot;SLC16A3&quot; &quot;ENG&quot;    &quot;MYO1C&quot;  
+[6,] &quot;CMYA5&quot;  &quot;MTND2P28&quot;  &quot;HSPA1A&quot;  &quot;MT-ND6&quot;   &quot;TXNIP&quot;   &quot;HSPA1B&quot; &quot;NDRG4&quot;  
+[7,] &quot;AMOT&quot;   &quot;SCP2&quot;      &quot;IGSF3&quot;   &quot;FTL&quot;      &quot;ALDH2&quot;   &quot;TSKU&quot;   &quot;EPAS1&quot;  
+     [,36]    [,37]      [,38]    [,39]        [,40]     [,41]    [,42]    
+[1,] &quot;MPZL1&quot;  &quot;SPSB1&quot;    &quot;MME&quot;    &quot;SH3D19&quot;     &quot;ADGRA2&quot;  &quot;RSPO2&quot;  &quot;TSC22D3&quot;
+[2,] &quot;GPRC5A&quot; &quot;H2AFZ&quot;    &quot;FANCI&quot;  &quot;CCT3&quot;       &quot;HSPD1&quot;   &quot;CCT5&quot;   &quot;TFPI2&quot;  
+[3,] &quot;ISLR&quot;   &quot;ABI3BP&quot;   &quot;PCOLCE&quot; &quot;TIMP2&quot;      &quot;FOXC1&quot;   &quot;CTSL&quot;   &quot;PLXDC2&quot; 
+[4,] &quot;S1PR3&quot;  &quot;PAG1&quot;     &quot;CALU&quot;   &quot;AC112721.2&quot; &quot;ANXA1&quot;   &quot;CNN3&quot;   &quot;CLTB&quot;   
+[5,] &quot;GNAI2&quot;  &quot;MOK&quot;      &quot;ATP8B1&quot; &quot;LDHA&quot;       &quot;COL7A1&quot;  &quot;LMNA&quot;   &quot;ACTN4&quot;  
+[6,] &quot;ATP2A2&quot; &quot;PPP1R12B&quot; &quot;NEBL&quot;   &quot;GPX3&quot;       &quot;SLC4A3&quot;  &quot;ITGA7&quot;  &quot;SORBS1&quot; 
+[7,] &quot;ACADSB&quot; &quot;C1S&quot;      &quot;ERRFI1&quot; &quot;DCXR&quot;       &quot;SELENOP&quot; &quot;DHCR24&quot; &quot;CLU&quot;    
+     [,43]    [,44]       [,45]    [,46]     [,47]     [,48]      [,49]      
+[1,] &quot;APP&quot;    &quot;PRDX4&quot;     &quot;APCDD1&quot; &quot;SLC46A3&quot; &quot;PDZRN3&quot;  &quot;CILP&quot;     &quot;CXCL14&quot;   
+[2,] &quot;CCNA2&quot;  &quot;ASPM&quot;      &quot;MCM7&quot;   &quot;PSIP1&quot;   &quot;HNRNPK&quot;  &quot;IPO5&quot;     &quot;HNRNPR&quot;   
+[3,] &quot;MYO1D&quot;  &quot;GJA1&quot;      &quot;NRN1&quot;   &quot;MAFB&quot;    &quot;SCRG1&quot;   &quot;GALNT1&quot;   &quot;TPP1&quot;     
+[4,] &quot;AMIGO2&quot; &quot;TNFRSF10B&quot; &quot;MRAP2&quot;  &quot;WISP1&quot;   &quot;ECE1&quot;    &quot;CAVIN4&quot;   &quot;BMPR2&quot;    
+[5,] &quot;S100A6&quot; &quot;MBNL1&quot;     &quot;MYOF&quot;   &quot;ASPH&quot;    &quot;PEAR1&quot;   &quot;KCTD20&quot;   &quot;TNFRSF11B&quot;
+[6,] &quot;CRIP2&quot;  &quot;ALPK3&quot;     &quot;HADHB&quot;  &quot;ABLIM1&quot;  &quot;SELENOW&quot; &quot;MTCO1P12&quot; &quot;CHCHD10&quot;  
+[7,] &quot;PCK2&quot;   &quot;PKDCC&quot;     &quot;TMBIM6&quot; &quot;FLRT3&quot;   &quot;PEBP1&quot;   &quot;PTGR1&quot;    &quot;OSBPL9&quot;   
+     [,50]        [,51]     [,52]     [,53]    [,54]      [,55]     [,56]     
+[1,] &quot;GALNT18&quot;    &quot;ARL4A&quot;   &quot;LMCD1&quot;   &quot;MYOCD&quot;  &quot;DLK1&quot;     &quot;ATRNL1&quot;  &quot;PCDH10&quot;  
+[2,] &quot;MAD2L1&quot;     &quot;PPP1CC&quot;  &quot;SUPT16H&quot; &quot;PARP1&quot;  &quot;HSP90AB1&quot; &quot;CTSC&quot;    &quot;HNRNPC&quot;  
+[3,] &quot;IL1R1&quot;      &quot;CTSK&quot;    &quot;ANGPTL2&quot; &quot;SMOC2&quot;  &quot;CYP1B1&quot;   &quot;CD109&quot;   &quot;PTTG1IP&quot; 
+[4,] &quot;AC112721.1&quot; &quot;SEL1L3&quot;  &quot;DRP2&quot;    &quot;NKAIN4&quot; &quot;PMEPA1&quot;   &quot;PFKP&quot;    &quot;C12orf75&quot;
+[5,] &quot;EMP1&quot;       &quot;NOTCH2&quot;  &quot;HAS2&quot;    &quot;CAV1&quot;   &quot;FOXC2&quot;    &quot;RRBP1&quot;   &quot;RGMB&quot;    
+[6,] &quot;SORBS2&quot;     &quot;MT-TP&quot;   &quot;HSPB8&quot;   &quot;ABCA8&quot;  &quot;MAPKAPK3&quot; &quot;ADAMTS4&quot; &quot;GSN&quot;     
+[7,] &quot;ITM2C&quot;      &quot;ALDH6A1&quot; &quot;ISYNA1&quot;  &quot;CGNL1&quot;  &quot;ABAT&quot;     &quot;ECHDC2&quot;  &quot;POR&quot;     
+     [,57]    [,58]     [,59]   [,60]     [,61]     [,62]     [,63]    
+[1,] &quot;FKBP10&quot; &quot;SLC26A2&quot; &quot;CLIC6&quot; &quot;RGS2&quot;    &quot;PDCD4&quot;   &quot;P3H4&quot;    &quot;TSPAN10&quot;
+[2,] &quot;HDAC2&quot;  &quot;MCM2&quot;    &quot;PCNA&quot;  &quot;CCT6A&quot;   &quot;KPNA2&quot;   &quot;KIF20B&quot;  &quot;SET&quot;    
+[3,] &quot;COL6A2&quot; &quot;LHFPL2&quot;  &quot;TRPS1&quot; &quot;ANTXR1&quot;  &quot;SEMA3C&quot;  &quot;MMP2&quot;    &quot;PAM&quot;    
+[4,] &quot;MRS2&quot;   &quot;STK17B&quot;  &quot;NUAK1&quot; &quot;GLRX&quot;    &quot;SLC20A1&quot; &quot;S100A11&quot; &quot;PLTP&quot;   
+[5,] &quot;ANXA6&quot;  &quot;ARHGEF2&quot; &quot;QSOX1&quot; &quot;NQO1&quot;    &quot;SSH1&quot;    &quot;VEGFC&quot;   &quot;GALNT5&quot; 
+[6,] &quot;SNTA1&quot;  &quot;HSPB1&quot;   &quot;CFLAR&quot; &quot;COX5A&quot;   &quot;LTBP4&quot;   &quot;COX7B&quot;   &quot;GPD1L&quot;  
+[7,] &quot;EFNA1&quot;  &quot;PERP&quot;    &quot;SHMT1&quot; &quot;ALDH4A1&quot; &quot;OBSL1&quot;   &quot;MT1X&quot;    &quot;ALAS1&quot;  
+     [,64]     [,65]     [,66]     [,67]    [,68]     [,69]     [,70]     
+[1,] &quot;CERCAM&quot;  &quot;LURAP1L&quot; &quot;FAM117B&quot; &quot;ACLY&quot;   &quot;HS6ST2&quot;  &quot;DPP4&quot;    &quot;SLC22A17&quot;
+[2,] &quot;CDC6&quot;    &quot;TUBB2B&quot;  &quot;ECT2&quot;    &quot;SMC4&quot;   &quot;DNMT1&quot;   &quot;RAN&quot;     &quot;KIF20A&quot;  
+[3,] &quot;OSMR&quot;    &quot;MELTF&quot;   &quot;CRTAP&quot;   &quot;PRSS23&quot; &quot;PMP22&quot;   &quot;TRAM1&quot;   &quot;GOLM1&quot;   
+[4,] &quot;SRPX&quot;    &quot;CDKN2B&quot;  &quot;SEMA7A&quot;  &quot;TMED9&quot;  &quot;DSC3&quot;    &quot;IKBIP&quot;   &quot;EXTL1&quot;   
+[5,] &quot;EHBP1L1&quot; &quot;TPM2&quot;    &quot;PDLIM7&quot;  &quot;CSRP1&quot;  &quot;COL8A1&quot;  &quot;PLEKHG4&quot; &quot;NOTCH3&quot;  
+[6,] &quot;DNAJA4&quot;  &quot;TACC2&quot;   &quot;RCAN2&quot;   &quot;RBM24&quot;  &quot;SHANK3&quot;  &quot;COX4I1&quot;  &quot;RAPGEF3&quot; 
+[7,] &quot;ASS1&quot;    &quot;BAMBI&quot;   &quot;SOD1&quot;    &quot;MBNL3&quot;  &quot;SLC38A1&quot; &quot;SEPHS2&quot;  &quot;CERS4&quot;   
+     [,71]    [,72]     [,73]    [,74]      [,75]   [,76]    [,77]    
+[1,] &quot;KCTD16&quot; &quot;MMP23B&quot;  &quot;LAMB1&quot;  &quot;ADGRF4&quot;   &quot;DHCR7&quot; &quot;MCTP2&quot;  &quot;DEGS1&quot;  
+[2,] &quot;NUP205&quot; &quot;SLIT2&quot;   &quot;NCAPD2&quot; &quot;MCM6&quot;     &quot;TMPO&quot;  &quot;CCT8&quot;   &quot;WDHD1&quot;  
+[3,] &quot;CCNI&quot;   &quot;PIEZO2&quot;  &quot;SLC5A3&quot; &quot;AHNAK2&quot;   &quot;VAT1&quot;  &quot;NEGR1&quot;  &quot;PRRX1&quot;  
+[4,] &quot;CPE&quot;    &quot;CEMIP2&quot;  &quot;IGFBP7&quot; &quot;SLITRK4&quot;  &quot;ITGA2&quot; &quot;STXBP6&quot; &quot;NEDD9&quot;  
+[5,] &quot;AXL&quot;    &quot;NEK7&quot;    &quot;SPOCD1&quot; &quot;GAS6&quot;     &quot;CEMIP&quot; &quot;ANXA2&quot;  &quot;COL16A1&quot;
+[6,] &quot;PFKM&quot;   &quot;SLC41A1&quot; &quot;KIF1C&quot;  &quot;SLC9A3R2&quot; &quot;OBSCN&quot; &quot;ACO2&quot;   &quot;NDUFB10&quot;
+[7,] &quot;DBI&quot;    &quot;DACT1&quot;   &quot;ID2&quot;    &quot;GPAM&quot;     &quot;ADI1&quot;  &quot;DHTKD1&quot; &quot;FGFR3&quot;  
+     [,78]     [,79]    [,80]    [,81]    [,82]      [,83]      [,84]    
+[1,] &quot;ITGA1&quot;   &quot;SQLE&quot;   &quot;STARD4&quot; &quot;FBN1&quot;   &quot;PHACTR2&quot;  &quot;ALCAM&quot;    &quot;SLC2A10&quot;
+[2,] &quot;SMARCC1&quot; &quot;JARID2&quot; &quot;MCM8&quot;   &quot;DDX21&quot;  &quot;ARHGAP29&quot; &quot;RRM1&quot;     &quot;NDC1&quot;   
+[3,] &quot;PLBD2&quot;   &quot;ATP8B2&quot; &quot;AHNAK&quot;  &quot;ITGA10&quot; &quot;CLMP&quot;     &quot;PTGFR&quot;    &quot;LAMP1&quot;  
+[4,] &quot;PELO&quot;    &quot;PDLIM4&quot; &quot;MACF1&quot;  &quot;GFPT1&quot;  &quot;IGF1R&quot;    &quot;NDFIP2&quot;   &quot;TET3&quot;   
+[5,] &quot;SH3BP4&quot;  &quot;PIEZO1&quot; &quot;PPARD&quot;  &quot;G6PD&quot;   &quot;ARHGDIA&quot;  &quot;MPRIP&quot;    &quot;MAP4&quot;   
+[6,] &quot;FILIP1&quot;  &quot;PPM1K&quot;  &quot;BAG3&quot;   &quot;COX6B1&quot; &quot;S1PR1&quot;    &quot;C15orf41&quot; &quot;DPT&quot;    
+[7,] &quot;ANKS1A&quot;  &quot;RPS9&quot;   &quot;DOK4&quot;   &quot;IVD&quot;    &quot;GRHPR&quot;    &quot;HSD17B4&quot;  &quot;PLXNB1&quot; 
+     [,85]     [,86]    [,87]    [,88]      [,89]        [,90]    [,91]     
+[1,] &quot;FAM168A&quot; &quot;OPN3&quot;   &quot;MUM1L1&quot; &quot;TCEAL4&quot;   &quot;HAND2&quot;      &quot;GRIK2&quot;  &quot;CHPF&quot;    
+[2,] &quot;PEG10&quot;   &quot;G3BP1&quot;  &quot;CKAP5&quot;  &quot;SRSF1&quot;    &quot;SERBP1&quot;     &quot;SMC2&quot;   &quot;TCP1&quot;    
+[3,] &quot;LAMP2&quot;   &quot;PABPC1&quot; &quot;MAF&quot;    &quot;FNDC1&quot;    &quot;IGFBP4&quot;     &quot;PTGS2&quot;  &quot;SNED1&quot;   
+[4,] &quot;GSTO1&quot;   &quot;LAMC2&quot;  &quot;MLLT11&quot; &quot;YKT6&quot;     &quot;PEA15&quot;      &quot;DYNLT3&quot; &quot;RCN1&quot;    
+[5,] &quot;PML&quot;     &quot;PLCB4&quot;  &quot;COPG1&quot;  &quot;EHD2&quot;     &quot;STARD4-AS1&quot; &quot;INHBA&quot;  &quot;MCAM&quot;    
+[6,] &quot;MDH1&quot;    &quot;OGDH&quot;   &quot;MYL12A&quot; &quot;COX5B&quot;    &quot;ADSSL1&quot;     &quot;NDUFA1&quot; &quot;SDHA&quot;    
+[7,] &quot;NAMPT&quot;   &quot;IQGAP2&quot; &quot;ECHS1&quot;  &quot;HSD17B11&quot; &quot;CAT&quot;        &quot;LY6E&quot;   &quot;SELENBP1&quot;
+     [,92]    [,93]     [,94]     [,95]       [,96]     [,97]    [,98]   
+[1,] &quot;MRC2&quot;   &quot;CLEC3A&quot;  &quot;NPNT&quot;    &quot;VCAN&quot;      &quot;PLD3&quot;    &quot;PYCR1&quot;  &quot;COL8A2&quot;
+[2,] &quot;ATAD2&quot;  &quot;PRPF40A&quot; &quot;PAPOLA&quot;  &quot;SSRP1&quot;     &quot;MCM3&quot;    &quot;CCT2&quot;   &quot;TCOF1&quot; 
+[3,] &quot;FAM20C&quot; &quot;ISM1&quot;    &quot;ZCCHC14&quot; &quot;SNX9&quot;      &quot;HEXB&quot;    &quot;TENT5A&quot; &quot;VCAM1&quot; 
+[4,] &quot;CDH2&quot;   &quot;CAP1&quot;    &quot;DBN1&quot;    &quot;NR2F1-AS1&quot; &quot;HOPX&quot;    &quot;RFLNA&quot;  &quot;GOLGA7&quot;
+[5,] &quot;NAV1&quot;   &quot;TGM2&quot;    &quot;CCDC9B&quot;  &quot;ZBTB38&quot;    &quot;ADGRE5&quot;  &quot;NRG1&quot;   &quot;WARS&quot;  
+[6,] &quot;NEXN&quot;   &quot;BTG2&quot;    &quot;ANKRD9&quot;  &quot;NCAM1&quot;     &quot;SLCO4A1&quot; &quot;KLF4&quot;   &quot;TPM1&quot;  
+[7,] &quot;RPS11&quot;  &quot;CES2&quot;    &quot;ABCC3&quot;   &quot;ACAA1&quot;     &quot;CA2&quot;     &quot;ID1&quot;    &quot;PC&quot;    
+     [,99]    [,100]  
+[1,] &quot;OLFML3&quot; &quot;SMYD3&quot; 
+[2,] &quot;CKS2&quot;   &quot;LMNB1&quot; 
+[3,] &quot;GNS&quot;    &quot;ZMIZ1&quot; 
+[4,] &quot;SEC23A&quot; &quot;EHD1&quot;  
+[5,] &quot;PLXNB3&quot; &quot;ARSJ&quot;  
+[6,] &quot;NDUFA3&quot; &quot;RNF207&quot;
+[7,] &quot;IGFBP2&quot; &quot;RHOU&quot;  </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.194388915 0.061435056 0.008760900 0.004795637 0.004534335 0.002597482
+[2,] 0.002480191 0.002443179 0.002084364 0.001816092 0.001754005 0.001671614
+[3,] 0.157301594 0.025541704 0.018222480 0.017024930 0.006768821 0.006500213
+[4,] 0.015235033 0.008441893 0.007887276 0.001808556 0.001056513 0.001010501
+[5,] 0.008959491 0.007789427 0.003798085 0.002853307 0.002626451 0.002443223
+[6,] 0.173121397 0.149037385 0.116185135 0.114198792 0.080355357 0.069108988
+[7,] 0.074217491 0.016703360 0.012889109 0.011924774 0.010695099 0.009034533
+             [,7]         [,8]         [,9]        [,10]        [,11]
+[1,] 0.0025584979 0.0020493935 0.0017871734 0.0016887627 0.0012579979
+[2,] 0.0015306101 0.0014351799 0.0013996931 0.0012217601 0.0010810153
+[3,] 0.0060969926 0.0057075549 0.0048683859 0.0047948679 0.0037222542
+[4,] 0.0006740706 0.0006333749 0.0005933358 0.0004651545 0.0004462134
+[5,] 0.0020790985 0.0019555621 0.0019102775 0.0015491763 0.0014046907
+[6,] 0.0597391650 0.0565220982 0.0443021213 0.0327927777 0.0247743382
+[7,] 0.0057333481 0.0052037291 0.0049904122 0.0042782925 0.0038576149
+            [,12]        [,13]        [,14]        [,15]        [,16]
+[1,] 0.0010263071 0.0008556966 0.0007879945 0.0006639783 0.0006624174
+[2,] 0.0010580782 0.0010444089 0.0008572008 0.0008461217 0.0008193101
+[3,] 0.0028292122 0.0027128409 0.0023346462 0.0020458980 0.0019475214
+[4,] 0.0004061313 0.0004021172 0.0003963713 0.0003848169 0.0003723449
+[5,] 0.0009999512 0.0008322052 0.0008063168 0.0006234858 0.0006201433
+[6,] 0.0224884442 0.0179964938 0.0166293163 0.0132440223 0.0100221719
+[7,] 0.0036574821 0.0033409295 0.0032572089 0.0031750459 0.0031335099
+            [,17]        [,18]        [,19]        [,20]        [,21]
+[1,] 0.0006475778 0.0005223072 0.0004215008 0.0003612851 0.0003518538
+[2,] 0.0008159263 0.0007678118 0.0007629200 0.0007528641 0.0007050178
+[3,] 0.0019334544 0.0018337873 0.0016839542 0.0015440748 0.0014766732
+[4,] 0.0003697300 0.0003670898 0.0003395463 0.0003392368 0.0003225583
+[5,] 0.0006114620 0.0005438994 0.0004709404 0.0003536791 0.0003037109
+[6,] 0.0081676035 0.0076788423 0.0071566058 0.0065981174 0.0059349254
+[7,] 0.0029117021 0.0022807495 0.0021481522 0.0021198143 0.0021102895
+            [,22]        [,23]        [,24]        [,25]        [,26]
+[1,] 0.0003372799 0.0003298538 0.0003130176 0.0002409017 0.0002357038
+[2,] 0.0006895228 0.0006762460 0.0006676664 0.0006593193 0.0006296612
+[3,] 0.0014322337 0.0011895253 0.0011656246 0.0011168566 0.0010436425
+[4,] 0.0003222135 0.0002934894 0.0002843746 0.0002776401 0.0002753930
+[5,] 0.0003017229 0.0002955971 0.0002823352 0.0002782201 0.0002749898
+[6,] 0.0050026188 0.0045586849 0.0043414595 0.0035717538 0.0031241991
+[7,] 0.0017611328 0.0017216365 0.0016178071 0.0016116111 0.0015437449
+            [,27]        [,28]        [,29]        [,30]        [,31]
+[1,] 0.0002325889 0.0002272820 0.0002251650 0.0002180458 0.0002063486
+[2,] 0.0006098708 0.0005966973 0.0005929009 0.0005882496 0.0005695230
+[3,] 0.0009426411 0.0009357069 0.0007946965 0.0007925430 0.0007236274
+[4,] 0.0002589914 0.0002525536 0.0002470148 0.0002462287 0.0002305379
+[5,] 0.0002644293 0.0002626970 0.0002388828 0.0002324653 0.0002316090
+[6,] 0.0027863726 0.0027598997 0.0022622275 0.0021371051 0.0019653138
+[7,] 0.0015217059 0.0014570560 0.0014335564 0.0013828241 0.0013228001
+            [,32]        [,33]        [,34]        [,35]        [,36]
+[1,] 0.0002060078 0.0002028040 0.0001773143 0.0001705264 0.0001517681
+[2,] 0.0005496279 0.0005447787 0.0005443881 0.0005414649 0.0005363465
+[3,] 0.0007163903 0.0006971647 0.0006779118 0.0006671006 0.0006641437
+[4,] 0.0002261731 0.0002252017 0.0002244254 0.0002206979 0.0002188140
+[5,] 0.0002290909 0.0002282747 0.0002152720 0.0001971042 0.0001938243
+[6,] 0.0018883612 0.0015014986 0.0014278902 0.0012999558 0.0010086146
+[7,] 0.0012756065 0.0012741173 0.0012399259 0.0012318150 0.0012230391
+            [,37]        [,38]        [,39]        [,40]        [,41]
+[1,] 0.0001338587 0.0001302309 0.0001242653 0.0001137896 0.0001114998
+[2,] 0.0005334995 0.0005264155 0.0005163202 0.0005080613 0.0004955636
+[3,] 0.0006503188 0.0006100666 0.0005530506 0.0005505012 0.0005288454
+[4,] 0.0002158366 0.0002037574 0.0001738197 0.0001729487 0.0001705866
+[5,] 0.0001892344 0.0001756955 0.0001723123 0.0001675387 0.0001666741
+[6,] 0.0009603482 0.0008786695 0.0008122601 0.0006619216 0.0006212291
+[7,] 0.0011519429 0.0011190196 0.0011177943 0.0011171816 0.0011023147
+            [,42]        [,43]        [,44]        [,45]        [,46]
+[1,] 0.0001102318 0.0001035947 0.0001019324 9.738703e-05 9.402978e-05
+[2,] 0.0004876143 0.0004852816 0.0004812243 4.760015e-04 4.729235e-04
+[3,] 0.0004982330 0.0004811062 0.0004657214 4.614210e-04 4.526356e-04
+[4,] 0.0001660421 0.0001574540 0.0001537715 1.528157e-04 1.525888e-04
+[5,] 0.0001617437 0.0001579468 0.0001567593 1.343665e-04 1.290646e-04
+[6,] 0.0005865181 0.0004125111 0.0004064430 3.996817e-04 3.879814e-04
+[7,] 0.0010960099 0.0010621916 0.0010549561 1.051942e-03 1.013669e-03
+            [,47]        [,48]        [,49]        [,50]        [,51]
+[1,] 9.073033e-05 8.940372e-05 8.923552e-05 8.847781e-05 8.407002e-05
+[2,] 4.670939e-04 4.637643e-04 4.476086e-04 4.464418e-04 4.383280e-04
+[3,] 4.483459e-04 4.451636e-04 4.380312e-04 4.316360e-04 4.231899e-04
+[4,] 1.480993e-04 1.475883e-04 1.471368e-04 1.466888e-04 1.446537e-04
+[5,] 1.262964e-04 1.249719e-04 1.248359e-04 1.209482e-04 1.176220e-04
+[6,] 3.658591e-04 3.557013e-04 3.147554e-04 3.124342e-04 3.094131e-04
+[7,] 1.004161e-03 1.001141e-03 9.745243e-04 9.621484e-04 9.476920e-04
+            [,52]        [,53]        [,54]        [,55]        [,56]
+[1,] 8.053659e-05 7.960781e-05 7.788901e-05 7.749052e-05 7.499839e-05
+[2,] 4.366527e-04 4.314564e-04 4.310351e-04 4.301809e-04 4.260507e-04
+[3,] 4.177028e-04 4.166972e-04 4.120866e-04 4.019629e-04 3.953952e-04
+[4,] 1.437263e-04 1.430482e-04 1.407093e-04 1.377433e-04 1.361594e-04
+[5,] 1.170716e-04 1.130441e-04 1.104079e-04 1.098778e-04 1.074976e-04
+[6,] 2.908254e-04 2.902389e-04 2.779256e-04 2.692802e-04 2.509144e-04
+[7,] 9.450033e-04 9.400864e-04 9.371185e-04 9.038974e-04 8.581711e-04
+            [,57]        [,58]        [,59]        [,60]        [,61]
+[1,] 0.0000749091 7.249697e-05 6.667762e-05 6.412267e-05 6.095890e-05
+[2,] 0.0004123795 4.021266e-04 3.970861e-04 3.908302e-04 3.896325e-04
+[3,] 0.0003894994 3.839280e-04 3.833441e-04 3.807765e-04 3.552891e-04
+[4,] 0.0001357712 1.352841e-04 1.337626e-04 1.323574e-04 1.296163e-04
+[5,] 0.0001049096 1.041088e-04 1.016750e-04 9.919253e-05 9.752523e-05
+[6,] 0.0002390304 2.370294e-04 2.097332e-04 2.060424e-04 1.933677e-04
+[7,] 0.0008396578 8.263003e-04 8.097863e-04 7.873572e-04 7.682922e-04
+            [,62]        [,63]        [,64]        [,65]        [,66]
+[1,] 6.056735e-05 6.024044e-05 0.0000597125 5.889945e-05 5.778961e-05
+[2,] 3.723294e-04 3.626958e-04 0.0003581797 3.529503e-04 3.512541e-04
+[3,] 3.375806e-04 3.214558e-04 0.0003127847 3.124882e-04 3.074564e-04
+[4,] 1.294806e-04 1.259931e-04 0.0001253539 1.228890e-04 1.215630e-04
+[5,] 9.624770e-05 9.295013e-05 0.0000899165 8.980611e-05 8.719058e-05
+[6,] 1.923662e-04 1.736606e-04 0.0001723640 1.719840e-04 1.618906e-04
+[7,] 7.407486e-04 7.380037e-04 0.0007274005 7.156724e-04 6.929364e-04
+            [,67]        [,68]        [,69]        [,70]        [,71]
+[1,] 5.740119e-05 5.095546e-05 5.038774e-05 4.793308e-05 4.561021e-05
+[2,] 3.506134e-04 3.505841e-04 3.504569e-04 3.501908e-04 3.474193e-04
+[3,] 2.933001e-04 2.925863e-04 2.882415e-04 2.865729e-04 2.782648e-04
+[4,] 1.200092e-04 1.177142e-04 1.172963e-04 1.163048e-04 1.150171e-04
+[5,] 8.425931e-05 8.352189e-05 8.142433e-05 7.932090e-05 7.919080e-05
+[6,] 1.614869e-04 1.563323e-04 1.561120e-04 1.432244e-04 1.346695e-04
+[7,] 6.906220e-04 6.671043e-04 6.388428e-04 6.247168e-04 6.207828e-04
+            [,72]        [,73]        [,74]        [,75]        [,76]
+[1,] 4.392136e-05 4.169818e-05 4.166172e-05 4.158211e-05 4.096112e-05
+[2,] 3.455645e-04 3.410548e-04 3.409042e-04 3.391500e-04 3.384237e-04
+[3,] 2.746899e-04 2.690091e-04 2.554398e-04 2.552255e-04 2.457005e-04
+[4,] 1.133803e-04 1.110818e-04 1.106945e-04 1.078838e-04 1.074424e-04
+[5,] 7.877953e-05 7.854394e-05 7.819238e-05 7.740681e-05 7.737604e-05
+[6,] 1.328367e-04 1.283337e-04 1.275258e-04 1.272042e-04 1.227898e-04
+[7,] 6.107058e-04 6.047966e-04 5.891385e-04 5.873830e-04 5.845810e-04
+            [,77]        [,78]        [,79]        [,80]        [,81]
+[1,] 3.878828e-05 3.777388e-05 3.633002e-05 3.616701e-05 3.612653e-05
+[2,] 3.383294e-04 3.334160e-04 3.331790e-04 3.298966e-04 3.297138e-04
+[3,] 2.390104e-04 2.389945e-04 2.376993e-04 2.375761e-04 2.360272e-04
+[4,] 1.034740e-04 1.020363e-04 1.012996e-04 1.009054e-04 9.884426e-05
+[5,] 7.588038e-05 7.398845e-05 7.086380e-05 6.982946e-05 6.935339e-05
+[6,] 1.164081e-04 1.118065e-04 1.114321e-04 1.101125e-04 1.081875e-04
+[7,] 5.828432e-04 5.810726e-04 5.771916e-04 5.760568e-04 5.729680e-04
+            [,82]        [,83]        [,84]        [,85]        [,86]
+[1,] 3.510294e-05 3.483991e-05 3.437207e-05 3.399940e-05 3.332319e-05
+[2,] 3.292968e-04 3.266775e-04 3.256846e-04 3.255298e-04 3.251015e-04
+[3,] 2.345619e-04 2.341643e-04 2.311765e-04 2.176837e-04 2.171655e-04
+[4,] 9.774589e-05 9.701459e-05 9.665800e-05 9.634342e-05 9.630302e-05
+[5,] 6.889916e-05 6.857297e-05 6.761134e-05 6.718369e-05 6.707228e-05
+[6,] 1.081468e-04 1.078008e-04 1.012758e-04 1.001218e-04 9.833455e-05
+[7,] 5.653258e-04 5.565913e-04 5.535005e-04 5.505596e-04 5.490274e-04
+            [,87]        [,88]        [,89]        [,90]        [,91]
+[1,] 3.318701e-05 3.192839e-05 2.992538e-05 2.852344e-05 2.830789e-05
+[2,] 3.234386e-04 3.232752e-04 3.205435e-04 3.192627e-04 3.165643e-04
+[3,] 2.168477e-04 2.155157e-04 2.149912e-04 2.056526e-04 2.015981e-04
+[4,] 9.245222e-05 9.000449e-05 8.989493e-05 8.893665e-05 8.868137e-05
+[5,] 6.568586e-05 6.280464e-05 6.178021e-05 6.121187e-05 6.079331e-05
+[6,] 9.685777e-05 9.541512e-05 9.404913e-05 9.195369e-05 9.150308e-05
+[7,] 5.418389e-04 5.395246e-04 5.295380e-04 5.285800e-04 5.198645e-04
+            [,92]        [,93]        [,94]        [,95]        [,96]
+[1,] 2.823205e-05 2.821234e-05 2.795923e-05 2.735334e-05 2.709275e-05
+[2,] 3.158084e-04 3.155251e-04 3.112150e-04 3.109360e-04 3.052041e-04
+[3,] 2.010495e-04 1.933319e-04 1.924744e-04 1.912193e-04 1.911928e-04
+[4,] 8.676362e-05 8.648871e-05 8.495372e-05 8.393305e-05 8.291524e-05
+[5,] 6.019917e-05 5.992965e-05 5.950715e-05 5.924598e-05 5.813287e-05
+[6,] 9.139391e-05 8.704427e-05 8.322738e-05 8.225066e-05 8.116379e-05
+[7,] 4.983578e-04 4.979107e-04 4.914529e-04 4.912088e-04 4.897313e-04
+            [,97]        [,98]        [,99]       [,100]
+[1,] 2.697215e-05 2.680183e-05 2.677804e-05 2.673738e-05
+[2,] 3.028962e-04 3.026450e-04 2.996299e-04 2.958948e-04
+[3,] 1.901197e-04 1.824879e-04 1.778904e-04 1.739221e-04
+[4,] 8.146717e-05 7.877674e-05 7.871673e-05 7.804987e-05
+[5,] 5.431619e-05 5.350872e-05 5.296646e-05 5.288972e-05
+[6,] 8.116040e-05 8.104578e-05 7.937169e-05 7.755185e-05
+[7,] 4.893987e-04 4.864418e-04 4.798534e-04 4.683343e-04</code></pre>
+<pre class="r"><code># k = 8
+plot_structure_plot(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-31.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>make_topic_plots(omega = Combined_GoM[[6]]$clust_8$omega, labels = labels)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-32.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-33.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-34.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-35.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-36.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-37.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-38.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM%20no%20OA-39.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Combined_GoM[[6]]$clust_8$theta, countmatrix = filtered_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]       [,2]     [,3]      [,4]     [,5]     [,6]      [,7]      
+[1,] &quot;COL3A1&quot;   &quot;SPARC&quot;  &quot;COL1A1&quot;  &quot;COL1A2&quot; &quot;COL5A1&quot; &quot;ITGA11&quot;  &quot;SPON2&quot;   
+[2,] &quot;CTSV&quot;     &quot;TOP2A&quot;  &quot;HSPA8&quot;   &quot;KRT19&quot;  &quot;MCM4&quot;   &quot;CSE1L&quot;   &quot;HSP90AA1&quot;
+[3,] &quot;THBS1&quot;    &quot;ACTB&quot;   &quot;DYNC1H1&quot; &quot;ACTG1&quot;  &quot;POSTN&quot;  &quot;MYH9&quot;    &quot;FLNA&quot;    
+[4,] &quot;CHI3L1&quot;   &quot;IGFBP3&quot; &quot;ACAN&quot;    &quot;DCN&quot;    &quot;EFEMP1&quot; &quot;COL12A1&quot; &quot;LUM&quot;     
+[5,] &quot;TIMP1&quot;    &quot;TIMP3&quot;  &quot;AQP1&quot;    &quot;IGFL2&quot;  &quot;FLT1&quot;   &quot;RDH10&quot;   &quot;F2RL1&quot;   
+[6,] &quot;MT-RNR2&quot;  &quot;MT-ND4&quot; &quot;MT-CO1&quot;  &quot;MT-ND1&quot; &quot;MT-CYB&quot; &quot;MT-CO3&quot;  &quot;MT-CO2&quot;  
+[7,] &quot;SERPINA1&quot; &quot;TF&quot;     &quot;C3&quot;      &quot;AOX1&quot;   &quot;VTN&quot;    &quot;EPHX1&quot;   &quot;CPS1&quot;    
+[8,] &quot;TNNT2&quot;    &quot;TPM1&quot;   &quot;ACTC1&quot;   &quot;ATP2A2&quot; &quot;PLN&quot;    &quot;NEBL&quot;    &quot;TTN&quot;     
+     [,8]       [,9]         [,10]     [,11]     [,12]    [,13]     [,14]    
+[1,] &quot;FBLN5&quot;    &quot;AC089987.1&quot; &quot;COL5A2&quot;  &quot;MEST&quot;    &quot;MATN2&quot;  &quot;SPTBN2&quot;  &quot;PDPN&quot;   
+[2,] &quot;NCL&quot;      &quot;XRCC5&quot;      &quot;PEG10&quot;   &quot;HMGA1&quot;   &quot;DPPA4&quot;  &quot;PAICS&quot;   &quot;SFRP1&quot;  
+[3,] &quot;LDHA&quot;     &quot;CYR61&quot;      &quot;CAV1&quot;    &quot;ITGA5&quot;   &quot;TLN1&quot;   &quot;AXL&quot;     &quot;LOXL2&quot;  
+[4,] &quot;NDUFA4L2&quot; &quot;AEBP1&quot;      &quot;IGFBP5&quot;  &quot;BGN&quot;     &quot;TNC&quot;    &quot;SULF1&quot;   &quot;LRP1&quot;   
+[5,] &quot;CPE&quot;      &quot;UCHL1&quot;      &quot;ACTG2&quot;   &quot;ARHGEF3&quot; &quot;LZTS1&quot;  &quot;EGFLAM&quot;  &quot;FSCN1&quot;  
+[6,] &quot;MT-RNR1&quot;  &quot;MT-ND2&quot;     &quot;MT-ATP6&quot; &quot;MT-ND5&quot;  &quot;MT-ND3&quot; &quot;MT-ND4L&quot; &quot;MT-ATP8&quot;
+[7,] &quot;ALDH1A1&quot;  &quot;SERPING1&quot;   &quot;C5&quot;      &quot;C1S&quot;     &quot;FTL&quot;    &quot;CLU&quot;     &quot;GATM&quot;   
+[8,] &quot;SLC25A4&quot;  &quot;HSPB7&quot;      &quot;PDK4&quot;    &quot;SORBS1&quot;  &quot;NR4A1&quot;  &quot;TNNC1&quot;   &quot;MDH1&quot;   
+     [,15]      [,16]     [,17]      [,18]      [,19]    [,20]      [,21]   
+[1,] &quot;COL11A1&quot;  &quot;ACTA2&quot;   &quot;SERPINE2&quot; &quot;CALD1&quot;    &quot;MME&quot;    &quot;APP&quot;      &quot;MFAP4&quot; 
+[2,] &quot;MCM3&quot;     &quot;HNRNPC&quot;  &quot;MSH2&quot;     &quot;DHX9&quot;     &quot;SLC2A3&quot; &quot;NUCKS1&quot;   &quot;NPM1&quot;  
+[3,] &quot;RGS4&quot;     &quot;THBS2&quot;   &quot;NOTCH2&quot;   &quot;SAMD9&quot;    &quot;TFPI2&quot;  &quot;HEG1&quot;     &quot;ACTN4&quot; 
+[4,] &quot;PRUNE2&quot;   &quot;PDGFRA&quot;  &quot;TGFBI&quot;    &quot;FMOD&quot;     &quot;VIM&quot;    &quot;CYBRD1&quot;   &quot;COL6A2&quot;
+[5,] &quot;SERPINE1&quot; &quot;SLC22A3&quot; &quot;MAP3K7CL&quot; &quot;EGFL6&quot;    &quot;LOX&quot;    &quot;GPC3&quot;     &quot;S1PR3&quot; 
+[6,] &quot;MT-TL1&quot;   &quot;MT-ND6&quot;  &quot;HSPA1B&quot;   &quot;MTATP6P1&quot; &quot;HSPA1A&quot; &quot;MTND2P28&quot; &quot;MT-TP&quot; 
+[7,] &quot;HSD17B6&quot;  &quot;ATF5&quot;    &quot;MGST1&quot;    &quot;CYB5A&quot;    &quot;TSKU&quot;   &quot;PCK2&quot;     &quot;PTGR1&quot; 
+[8,] &quot;ADAMTS4&quot;  &quot;APOD&quot;    &quot;GSN&quot;      &quot;SORBS2&quot;   &quot;FABP3&quot;  &quot;NDRG4&quot;    &quot;RBM24&quot; 
+     [,22]      [,23]     [,24]     [,25]      [,26]     [,27]       [,28]   
+[1,] &quot;DKK2&quot;     &quot;MPZL1&quot;   &quot;ODAPH&quot;   &quot;CDC42BPA&quot; &quot;SCG2&quot;    &quot;PPIC&quot;      &quot;TMEM59&quot;
+[2,] &quot;STMN1&quot;    &quot;MCM7&quot;    &quot;LMNB2&quot;   &quot;TUBB&quot;     &quot;CCT3&quot;    &quot;H2AFZ&quot;     &quot;DEK&quot;   
+[3,] &quot;FGF2&quot;     &quot;DLC1&quot;    &quot;ZFHX4&quot;   &quot;CRIM1&quot;    &quot;COTL1&quot;   &quot;LAMC1&quot;     &quot;PKM&quot;   
+[4,] &quot;ISLR&quot;     &quot;ADAMTS5&quot; &quot;GPNMB&quot;   &quot;WWP2&quot;     &quot;PRELP&quot;   &quot;COL14A1&quot;   &quot;CPXM2&quot; 
+[5,] &quot;MGAT5&quot;    &quot;GFPT2&quot;   &quot;F2R&quot;     &quot;PAG1&quot;     &quot;CTGF&quot;    &quot;TNFRSF12A&quot; &quot;CDKN2B&quot;
+[6,] &quot;MTCO1P12&quot; &quot;TXNIP&quot;   &quot;DNAJB1&quot;  &quot;OTUD1&quot;    &quot;RAPGEF3&quot; &quot;FOS&quot;       &quot;KLF2&quot;  
+[7,] &quot;ABAT&quot;     &quot;DHCR24&quot;  &quot;ACSL1&quot;   &quot;SCP2&quot;     &quot;A2M&quot;     &quot;ST6GAL1&quot;   &quot;APOE&quot;  
+[8,] &quot;HADHB&quot;    &quot;SLCO4A1&quot; &quot;ATP5F1B&quot; &quot;ABLIM1&quot;   &quot;NEXN&quot;    &quot;COX4I1&quot;    &quot;FHL2&quot;  
+     [,29]     [,30]     [,31]    [,32]     [,33]       [,34]   [,35]    
+[1,] &quot;PTGER2&quot;  &quot;COL4A1&quot;  &quot;LOXL1&quot;  &quot;OLFML3&quot;  &quot;NRP2&quot;      &quot;SPON1&quot; &quot;FKBP10&quot; 
+[2,] &quot;SLC16A1&quot; &quot;NASP&quot;    &quot;RPS24&quot;  &quot;LMNB1&quot;   &quot;SEPHS1&quot;    &quot;HDAC2&quot; &quot;CD24&quot;   
+[3,] &quot;CDCP1&quot;   &quot;HIF1A&quot;   &quot;PTX3&quot;   &quot;ADAMTS2&quot; &quot;KIAA1549L&quot; &quot;NAV1&quot;  &quot;PTPN14&quot; 
+[4,] &quot;MALAT1&quot;  &quot;HMOX1&quot;   &quot;TIMP2&quot;  &quot;PCOLCE&quot;  &quot;ABI3BP&quot;    &quot;EDIL3&quot; &quot;CTSD&quot;   
+[5,] &quot;RAI14&quot;   &quot;PTPRN&quot;   &quot;ADAM19&quot; &quot;ANXA5&quot;   &quot;TAGLN&quot;     &quot;GDF6&quot;  &quot;SSR3&quot;   
+[6,] &quot;DNAJB2&quot;  &quot;HERC2P2&quot; &quot;PTPRB&quot;  &quot;ARAP3&quot;   &quot;NOTCH1&quot;    &quot;LDB2&quot;  &quot;MTMR9LP&quot;
+[7,] &quot;ACADSB&quot;  &quot;ERRFI1&quot;  &quot;C1R&quot;    &quot;ASS1&quot;    &quot;ALDH2&quot;     &quot;RIDA&quot;  &quot;TMBIM6&quot; 
+[8,] &quot;SLC25A3&quot; &quot;MFN2&quot;    &quot;UQCRC1&quot; &quot;OBSCN&quot;   &quot;MTND4P12&quot;  &quot;ACO2&quot;  &quot;PFKM&quot;   
+     [,36]      [,37]     [,38]      [,39]        [,40]     [,41]     [,42]   
+[1,] &quot;GPRC5B&quot;   &quot;FIBIN&quot;   &quot;SERPINH1&quot; &quot;PRDX4&quot;      &quot;CERCAM&quot;  &quot;LIX1&quot;    &quot;PLD3&quot;  
+[2,] &quot;MAD2L1&quot;   &quot;XPO1&quot;    &quot;TRIM28&quot;   &quot;RPS2&quot;       &quot;PCNA&quot;    &quot;PSIP1&quot;   &quot;HMGB2&quot; 
+[3,] &quot;NCOR2&quot;    &quot;MET&quot;     &quot;PLAT&quot;     &quot;ADAM9&quot;      &quot;FOSL1&quot;   &quot;SRGN&quot;    &quot;ZNFX1&quot; 
+[4,] &quot;GPC6&quot;     &quot;NDRG1&quot;   &quot;ENPP2&quot;    &quot;COL6A1&quot;     &quot;MAFB&quot;    &quot;MYO1D&quot;   &quot;MMP2&quot;  
+[5,] &quot;COLGALT1&quot; &quot;AFAP1L2&quot; &quot;AMIGO2&quot;   &quot;AC112721.2&quot; &quot;SEMA7A&quot;  &quot;MRAP2&quot;   &quot;ITGA2&quot; 
+[6,] &quot;SHANK3&quot;   &quot;BTN3A3&quot;  &quot;BAG3&quot;     &quot;REEP2&quot;      &quot;CXCL12&quot;  &quot;AFAP1L1&quot; &quot;BTN3A1&quot;
+[7,] &quot;ABCC3&quot;    &quot;CAT&quot;     &quot;DCXR&quot;     &quot;ECHDC2&quot;     &quot;ALDH6A1&quot; &quot;PC&quot;      &quot;SHMT1&quot; 
+[8,] &quot;ASAH1&quot;    &quot;ATP5F1A&quot; &quot;KIF1C&quot;    &quot;MYL12A&quot;     &quot;COX7C&quot;   &quot;SLC4A3&quot;  &quot;SMYD2&quot; 
+     [,43]    [,44]     [,45]      [,46]        [,47]     [,48]    [,49]    
+[1,] &quot;TBC1D9&quot; &quot;CXCL14&quot;  &quot;ACLY&quot;     &quot;COL15A1&quot;    &quot;SLC26A2&quot; &quot;ADGRA2&quot; &quot;NPNT&quot;   
+[2,] &quot;CCT5&quot;   &quot;CDC6&quot;    &quot;MCM2&quot;     &quot;RPL5&quot;       &quot;TUBB2B&quot;  &quot;CTSC&quot;   &quot;SMARCC1&quot;
+[3,] &quot;PLAU&quot;   &quot;TPM4&quot;    &quot;EGFR&quot;     &quot;NRP1&quot;       &quot;ASAP1&quot;   &quot;ANXA2&quot;  &quot;EIF4G1&quot; 
+[4,] &quot;FOXC1&quot;  &quot;SCD&quot;     &quot;LTBP2&quot;    &quot;NPC1&quot;       &quot;IGFBP4&quot;  &quot;PLXDC2&quot; &quot;CD109&quot;  
+[5,] &quot;STRA6&quot;  &quot;STXBP6&quot;  &quot;SEPT11&quot;   &quot;PMEPA1&quot;     &quot;WISP1&quot;   &quot;CEMIP2&quot; &quot;SEL1L3&quot; 
+[6,] &quot;TBX2&quot;   &quot;TMEM204&quot; &quot;EGR1&quot;     &quot;AC239868.1&quot; &quot;MECOM&quot;   &quot;ZNF251&quot; &quot;BTN3A2&quot; 
+[7,] &quot;POR&quot;    &quot;CYP27A1&quot; &quot;CFH&quot;      &quot;METTL7A&quot;    &quot;SLC38A4&quot; &quot;CP&quot;     &quot;SELENOP&quot;
+[8,] &quot;ABCA8&quot;  &quot;CRYAB&quot;   &quot;PPP1R12B&quot; &quot;UQCRB&quot;      &quot;PER1&quot;    &quot;SVIL&quot;   &quot;TOM1L2&quot; 
+     [,50]    [,51]      [,52]     [,53]        [,54]      [,55]    
+[1,] &quot;SCUBE2&quot; &quot;LMCD1&quot;    &quot;SPSB1&quot;   &quot;DPP4&quot;       &quot;CHPF&quot;     &quot;TSPAN10&quot;
+[2,] &quot;RPL23&quot;  &quot;CCNA2&quot;    &quot;HAND1&quot;   &quot;ILF2&quot;       &quot;KIF20B&quot;   &quot;EIF4G2&quot; 
+[3,] &quot;DCBLD2&quot; &quot;ANKRD13A&quot; &quot;CORO1C&quot;  &quot;IFIT3&quot;      &quot;STC2&quot;     &quot;NABP1&quot;  
+[4,] &quot;NRN1&quot;   &quot;CTSK&quot;     &quot;PIEZO2&quot;  &quot;CTSL&quot;       &quot;SCRG1&quot;    &quot;COL6A3&quot; 
+[5,] &quot;NEDD9&quot;  &quot;EGR2&quot;     &quot;CALU&quot;    &quot;AC112721.1&quot; &quot;STK17B&quot;   &quot;GREM1&quot;  
+[6,] &quot;MAP4K2&quot; &quot;ITPKB&quot;    &quot;FGD5&quot;    &quot;UBALD2&quot;     &quot;ARHGEF25&quot; &quot;GNG11&quot;  
+[7,] &quot;ENTPD5&quot; &quot;GPAM&quot;     &quot;MT1X&quot;    &quot;EFNA1&quot;      &quot;ALDH4A1&quot;  &quot;ALAS1&quot;  
+[8,] &quot;CMYA5&quot;  &quot;ATP5MC3&quot;  &quot;PDE4DIP&quot; &quot;FILIP1&quot;     &quot;PDHA1&quot;    &quot;SLC8A1&quot; 
+     [,56]       [,57]    [,58]   [,59]      [,60]    [,61]    [,62]   
+[1,] &quot;GALNT2&quot;    &quot;ARL4A&quot;  &quot;CADM1&quot; &quot;DEGS1&quot;    &quot;HS6ST2&quot; &quot;KCTD12&quot; &quot;RSPO2&quot; 
+[2,] &quot;KPNA2&quot;     &quot;MCM5&quot;   &quot;SET&quot;   &quot;MCM6&quot;     &quot;CKS2&quot;   &quot;NDC1&quot;   &quot;ECT2&quot;  
+[3,] &quot;CAVIN1&quot;    &quot;NCEH1&quot;  &quot;SACS&quot;  &quot;ASPH&quot;     &quot;GAPDH&quot;  &quot;DOCK5&quot;  &quot;UHMK1&quot; 
+[4,] &quot;SMOC2&quot;     &quot;FNDC1&quot;  &quot;PRRX1&quot; &quot;PTTG1IP&quot;  &quot;TPP1&quot;   &quot;CYP1B1&quot; &quot;GJA1&quot;  
+[5,] &quot;TNFRSF10B&quot; &quot;HOPX&quot;   &quot;EXTL1&quot; &quot;SRPX2&quot;    &quot;BMPR2&quot;  &quot;MRS2&quot;   &quot;RFLNA&quot; 
+[6,] &quot;TBKBP1&quot;    &quot;MAPK11&quot; &quot;DGKE&quot;  &quot;SHROOM4&quot;  &quot;MRVI1&quot;  &quot;BCL2&quot;   &quot;DNAJA4&quot;
+[7,] &quot;SEPHS2&quot;    &quot;GRHPR&quot;  &quot;NADK2&quot; &quot;SELENBP1&quot; &quot;SDC1&quot;   &quot;PBLD&quot;   &quot;ADI1&quot;  
+[8,] &quot;ZNF106&quot;    &quot;PPTC7&quot;  &quot;YBX3&quot;  &quot;NDUFA1&quot;   &quot;CFLAR&quot;  &quot;PPM1K&quot;  &quot;PDLIM5&quot;
+     [,63]     [,64]     [,65]      [,66]    [,67]      [,68]    [,69]     
+[1,] &quot;IGF2&quot;    &quot;PTK7&quot;    &quot;MFAP5&quot;    &quot;MRC2&quot;   &quot;SEMA6D&quot;   &quot;PDZRN3&quot; &quot;CRISPLD2&quot;
+[2,] &quot;PODXL&quot;   &quot;SUPT16H&quot; &quot;RAN&quot;      &quot;RPS20&quot;  &quot;TMPO&quot;     &quot;RPS18&quot;  &quot;CCT6A&quot;   
+[3,] &quot;MEG3&quot;    &quot;ARHGDIA&quot; &quot;ITGA4&quot;    &quot;POLR2A&quot; &quot;SLC7A1&quot;   &quot;ADARB1&quot; &quot;SH2B3&quot;   
+[4,] &quot;EEF2&quot;    &quot;LHFPL2&quot;  &quot;ANTXR1&quot;   &quot;MELTF&quot;  &quot;GALNT1&quot;   &quot;TRPS1&quot;  &quot;PABPC1&quot;  
+[5,] &quot;DRP2&quot;    &quot;DSC3&quot;    &quot;NUAK1&quot;    &quot;LAMC2&quot;  &quot;C12orf75&quot; &quot;ITGB1&quot;  &quot;FBLN2&quot;   
+[6,] &quot;CDK2AP2&quot; &quot;PGGHG&quot;   &quot;TEK&quot;      &quot;AHSA1&quot;  &quot;CABLES2&quot;  NA       NA        
+[7,] &quot;SREBF1&quot;  &quot;CRYL1&quot;   &quot;SERPINF1&quot; &quot;CES2&quot;   &quot;SLC39A14&quot; &quot;TTC38&quot;  &quot;STARD10&quot; 
+[8,] &quot;SELENOW&quot; &quot;ANKRD9&quot;  &quot;MYL9&quot;     &quot;CYC1&quot;   &quot;DMPK&quot;     &quot;SDHA&quot;   &quot;TACC2&quot;   
+     [,70]      [,71]      [,72]     [,73]     [,74]    [,75]     [,76]   
+[1,] &quot;SH3D19&quot;   &quot;SLC22A17&quot; &quot;PDCD4&quot;   &quot;KIF26B&quot;  &quot;OPN3&quot;   &quot;ATRNL1&quot;  &quot;MCTP2&quot; 
+[2,] &quot;PRPF40A&quot;  &quot;RPS3&quot;     &quot;WDHD1&quot;   &quot;CCT8&quot;    &quot;CCT2&quot;   &quot;MSH6&quot;    &quot;SERBP1&quot;
+[3,] &quot;MARCKS&quot;   &quot;GNG12&quot;    &quot;PLOD2&quot;   &quot;RGMB&quot;    &quot;ITGBL1&quot; &quot;SIPA1L3&quot; &quot;CD248&quot; 
+[4,] &quot;SEMA3C&quot;   &quot;ANGPTL2&quot;  &quot;VAT1&quot;    &quot;ITGA10&quot;  &quot;TRAM1&quot;  &quot;CLMP&quot;    &quot;ISM1&quot;  
+[5,] &quot;ECE1&quot;     &quot;UPP1&quot;     &quot;ANGPTL4&quot; &quot;SLITRK4&quot; &quot;LUZP1&quot;  &quot;GSTO1&quot;   &quot;PDLIM4&quot;
+[6,] NA         NA         NA        NA        NA       NA        NA      
+[7,] &quot;HSD17B11&quot; &quot;PTP4A1&quot;   &quot;IL1RAP&quot;  &quot;ETNK2&quot;   &quot;TST&quot;    &quot;CMBL&quot;    &quot;ASL&quot;   
+[8,] &quot;COX6C&quot;    &quot;C15orf41&quot; &quot;NDUFA4&quot;  &quot;EIF1B&quot;   &quot;SYNM&quot;   &quot;FAM129A&quot; &quot;EIF1AY&quot;
+     [,77]   [,78]    [,79]      [,80]     [,81]     [,82]     [,83]   [,84]   
+[1,] &quot;PRLR&quot;  &quot;APCDD1&quot; &quot;FST&quot;      &quot;GALNT18&quot; &quot;FAM117B&quot; &quot;PCDH10&quot;  &quot;P3H4&quot;  &quot;MXD4&quot;  
+[2,] &quot;CBX3&quot;  &quot;FANCI&quot;  &quot;SLC39A10&quot; &quot;PRMT1&quot;   &quot;CENPE&quot;   &quot;ZWINT&quot;   &quot;SMC2&quot;  &quot;MDK&quot;   
+[3,] &quot;SMAD3&quot; &quot;ZBTB38&quot; &quot;HERC4&quot;    &quot;GNAI2&quot;   &quot;MOK&quot;     &quot;NEK7&quot;    &quot;PEAR1&quot; &quot;PLK2&quot;  
+[4,] &quot;VCAM1&quot; &quot;CRTAP&quot;  &quot;PRSS23&quot;   &quot;MXRA8&quot;   &quot;HSPG2&quot;   &quot;GOLM1&quot;   &quot;PLBD2&quot; &quot;PTGFR&quot; 
+[5,] &quot;PELO&quot;  &quot;IKBIP&quot;  &quot;NDFIP2&quot;   &quot;GLRX&quot;    &quot;CLTB&quot;    &quot;GUCY1A1&quot; &quot;GFPT1&quot; &quot;PDLIM3&quot;
+[6,] NA      NA       NA         NA        NA        NA        NA      NA      
+[7,] &quot;CDO1&quot;  &quot;DHTKD1&quot; &quot;MFSD2A&quot;   &quot;C1RL&quot;    &quot;ECHS1&quot;   &quot;SCARB1&quot;  &quot;APMAP&quot; &quot;ACAA1&quot; 
+[8,] &quot;TNS1&quot;  &quot;NDUFB4&quot; &quot;DPT&quot;      &quot;FOSL2&quot;   &quot;JPH2&quot;    &quot;PRKAR1A&quot; &quot;GPX3&quot;  &quot;MPP3&quot;  
+     [,85]    [,86]    [,87]     [,88]     [,89]    [,90]     [,91]    
+[1,] &quot;STARD4&quot; &quot;CDH11&quot;  &quot;ADGRF4&quot;  &quot;PHACTR2&quot; &quot;RPN2&quot;   &quot;SLC2A10&quot; &quot;SQLE&quot;   
+[2,] &quot;DHX15&quot;  &quot;TACC3&quot;  &quot;SINHCAF&quot; &quot;CCNB1&quot;   &quot;HNRNPR&quot; &quot;PARP1&quot;   &quot;SAE1&quot;   
+[3,] &quot;ATP8B1&quot; &quot;HAS2&quot;   &quot;EMP1&quot;    &quot;SLC16A3&quot; &quot;CLTC&quot;   &quot;EIF2AK2&quot; &quot;MYO1C&quot;  
+[4,] &quot;OSMR&quot;   &quot;ATP8B2&quot; &quot;MMP14&quot;   &quot;CRLF1&quot;   &quot;PTGS2&quot;  &quot;LAMP1&quot;   &quot;LAMP2&quot;  
+[5,] &quot;CDH2&quot;   &quot;COL4A2&quot; &quot;ITGAV&quot;   &quot;TET3&quot;    &quot;CNN3&quot;   &quot;YKT6&quot;    &quot;CAP1&quot;   
+[6,] NA       NA       NA        NA        NA       NA        NA       
+[7,] &quot;TTC39C&quot; &quot;IGFBP2&quot; &quot;OAF&quot;     &quot;OSGIN1&quot;  &quot;FAH&quot;    &quot;SOD1&quot;    &quot;SCCPDH&quot; 
+[8,] &quot;CPEB4&quot;  &quot;OGDH&quot;   &quot;AKAP6&quot;   &quot;CLK1&quot;    &quot;MGST3&quot;  &quot;PNPLA2&quot;  &quot;NDUFAB1&quot;
+     [,92]    [,93]    [,94]    [,95]      [,96]    [,97]      [,98]   
+[1,] &quot;ADAM12&quot; &quot;PBXIP1&quot; &quot;TPST1&quot;  &quot;LGMN&quot;     &quot;KDELR2&quot; &quot;MMP23B&quot;   &quot;CILP&quot;  
+[2,] &quot;HNRNPU&quot; &quot;SNHG1&quot;  &quot;FEN1&quot;   &quot;RPL10A&quot;   &quot;TCOF1&quot;  &quot;ZWILCH&quot;   &quot;HNRNPM&quot;
+[3,] &quot;NF2&quot;    &quot;LMNA&quot;   &quot;ELK3&quot;   &quot;PLEKHG4&quot;  &quot;ACTR2&quot;  &quot;MYOF&quot;     &quot;OAS3&quot;  
+[4,] &quot;MAF&quot;    &quot;SOX9&quot;   &quot;SNED1&quot;  &quot;PTGIS&quot;    &quot;SLC5A3&quot; &quot;IL1R1&quot;    &quot;STS&quot;   
+[5,] &quot;OLR1&quot;   &quot;GOLGA7&quot; &quot;CAVIN4&quot; &quot;MYL12B&quot;   &quot;UACA&quot;   &quot;PFKP&quot;     &quot;TMED9&quot; 
+[6,] NA       NA       NA       NA         NA       NA         NA      
+[7,] &quot;GAMT&quot;   &quot;GLUD1&quot;  &quot;PEBP1&quot;  &quot;SLC40A1&quot;  &quot;IVD&quot;    &quot;C11orf54&quot; &quot;PROS1&quot; 
+[8,] &quot;BTG2&quot;   &quot;ADCY6&quot;  &quot;PDE3A&quot;  &quot;RABGAP1L&quot; &quot;UBE2B&quot;  &quot;AKAP13&quot;   &quot;ANK1&quot;  
+     [,99]     [,100] 
+[1,] &quot;CD63&quot;    &quot;BMPER&quot;
+[2,] &quot;RFWD3&quot;   &quot;POLD1&quot;
+[3,] &quot;KITLG&quot;   &quot;FOXC2&quot;
+[4,] &quot;NEGR1&quot;   &quot;NFIX&quot; 
+[5,] &quot;TNFAIP1&quot; &quot;PAK2&quot; 
+[6,] NA        NA     
+[7,] &quot;NNMT&quot;    &quot;MT1E&quot; 
+[8,] &quot;GNAS&quot;    &quot;BSG&quot;  </code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.220386758 0.084246780 0.013277201 0.011978620 0.008055977 0.005705844
+[2,] 0.004055720 0.001698952 0.001416573 0.001359230 0.001234514 0.001144103
+[3,] 0.006632869 0.004691043 0.002910060 0.002707969 0.002591259 0.002519083
+[4,] 0.139416159 0.032801188 0.026455814 0.010974699 0.008809127 0.007125645
+[5,] 0.021717638 0.015169371 0.015021792 0.004233267 0.001701354 0.001687077
+[6,] 0.155925918 0.134224972 0.110771315 0.059441872 0.056611486 0.044672678
+[7,] 0.156870563 0.037543153 0.016512087 0.013454360 0.011089965 0.008039904
+[8,] 0.008614301 0.005498619 0.004516171 0.004329839 0.004081978 0.002854787
+            [,7]        [,8]         [,9]        [,10]        [,11]
+[1,] 0.002982340 0.002305460 0.0016587417 0.0016275006 0.0014381965
+[2,] 0.001140473 0.001099802 0.0009970473 0.0009658277 0.0009075645
+[3,] 0.001708090 0.001365814 0.0013138629 0.0011498355 0.0011191225
+[4,] 0.005983195 0.005884053 0.0056150359 0.0055411045 0.0054929380
+[5,] 0.001261524 0.001186871 0.0011828959 0.0010582432 0.0009749120
+[6,] 0.042863665 0.032252065 0.0308568550 0.0223543682 0.0212389753
+[7,] 0.007842998 0.006746619 0.0057682586 0.0057580542 0.0048596808
+[8,] 0.002673638 0.002496654 0.0021456272 0.0020180943 0.0018128255
+            [,12]        [,13]        [,14]        [,15]        [,16]
+[1,] 0.0011735395 0.0010965995 0.0010092881 0.0010070687 0.0008461263
+[2,] 0.0008466424 0.0008442394 0.0008087361 0.0007196143 0.0007098930
+[3,] 0.0010468918 0.0010112475 0.0009815296 0.0009287813 0.0009280046
+[4,] 0.0045634233 0.0031243199 0.0030492718 0.0029386536 0.0020715172
+[5,] 0.0007776768 0.0006758833 0.0006457310 0.0005943963 0.0005831946
+[6,] 0.0189343442 0.0166533481 0.0064488247 0.0045615823 0.0038913957
+[7,] 0.0044343162 0.0043962676 0.0041065467 0.0038003030 0.0036869363
+[8,] 0.0018034945 0.0017953188 0.0017295082 0.0015903246 0.0012902881
+            [,17]        [,18]        [,19]        [,20]        [,21]
+[1,] 0.0007284550 0.0005979479 0.0005736205 0.0005603225 0.0005118642
+[2,] 0.0006937186 0.0006221844 0.0005992259 0.0005849604 0.0005829464
+[3,] 0.0008692607 0.0008490527 0.0008320545 0.0007778320 0.0007663731
+[4,] 0.0018395296 0.0015470362 0.0015437551 0.0013425911 0.0013290057
+[5,] 0.0005518774 0.0005432550 0.0005294997 0.0005160836 0.0005010237
+[6,] 0.0023962845 0.0023585405 0.0017895426 0.0008868040 0.0003713921
+[7,] 0.0034941564 0.0029603529 0.0025699089 0.0025070338 0.0023129870
+[8,] 0.0012626405 0.0011673766 0.0010991730 0.0010915546 0.0009439317
+            [,22]        [,23]        [,24]        [,25]        [,26]
+[1,] 0.0004252854 0.0004150491 3.600451e-04 3.252933e-04 3.153999e-04
+[2,] 0.0005756770 0.0005590080 5.553892e-04 5.505888e-04 5.285336e-04
+[3,] 0.0007496400 0.0006658735 5.991748e-04 5.971691e-04 5.644050e-04
+[4,] 0.0011521055 0.0011330483 1.068707e-03 9.974738e-04 9.898374e-04
+[5,] 0.0004689849 0.0004495580 4.472859e-04 4.264105e-04 4.234305e-04
+[6,] 0.0003703456 0.0003566256 9.507071e-05 9.132554e-05 8.990083e-05
+[7,] 0.0021933377 0.0021908828 2.018954e-03 1.781138e-03 1.748252e-03
+[8,] 0.0008942138 0.0008932457 8.921973e-04 8.279568e-04 8.271083e-04
+            [,27]        [,28]        [,29]        [,30]        [,31]
+[1,] 0.0003135714 3.126999e-04 2.649018e-04 2.643551e-04 2.449653e-04
+[2,] 0.0005281480 5.192938e-04 4.970732e-04 4.826495e-04 4.726399e-04
+[3,] 0.0005541625 5.474767e-04 5.336060e-04 5.164966e-04 5.036447e-04
+[4,] 0.0009691543 9.645107e-04 9.592902e-04 8.962586e-04 8.945264e-04
+[5,] 0.0004194276 4.152679e-04 4.149842e-04 4.089556e-04 3.893891e-04
+[6,] 0.0000460395 4.545583e-05 3.232419e-05 2.739463e-05 2.011126e-05
+[7,] 0.0017103164 1.662474e-03 1.587428e-03 1.575463e-03 1.499030e-03
+[8,] 0.0007947152 7.684813e-04 7.430832e-04 7.399927e-04 7.090926e-04
+            [,32]        [,33]        [,34]        [,35]        [,36]
+[1,] 2.289313e-04 0.0002132587 2.050435e-04 0.0002019162 1.944984e-04
+[2,] 4.722960e-04 0.0004462109 4.417457e-04 0.0004413068 4.241637e-04
+[3,] 4.716980e-04 0.0004707429 4.195382e-04 0.0004090907 3.830542e-04
+[4,] 8.810520e-04 0.0008771357 8.595977e-04 0.0008180580 8.004539e-04
+[5,] 3.762075e-04 0.0003612875 3.508501e-04 0.0003480258 3.418194e-04
+[6,] 1.310862e-05 0.0000109999 9.866189e-06 0.0000076276 7.410947e-06
+[7,] 1.475338e-03 0.0014572191 1.441027e-03 0.0014390139 1.381958e-03
+[8,] 7.033574e-04 0.0006779434 6.723222e-04 0.0006555823 6.163577e-04
+            [,37]        [,38]        [,39]        [,40]        [,41]
+[1,] 1.887591e-04 1.813651e-04 1.745663e-04 1.623240e-04 1.583062e-04
+[2,] 4.231952e-04 4.148233e-04 4.114877e-04 4.053392e-04 3.989226e-04
+[3,] 3.774005e-04 3.744243e-04 3.733003e-04 3.431477e-04 3.250138e-04
+[4,] 7.216888e-04 7.102551e-04 6.831395e-04 6.783605e-04 6.620266e-04
+[5,] 3.362597e-04 3.355887e-04 3.163805e-04 3.138738e-04 3.119929e-04
+[6,] 6.944182e-06 6.339454e-06 6.329004e-06 6.159276e-06 4.186194e-06
+[7,] 1.361047e-03 1.307321e-03 1.248165e-03 1.158757e-03 1.126176e-03
+[8,] 5.965009e-04 5.827415e-04 5.802838e-04 5.761515e-04 5.732943e-04
+            [,42]        [,43]        [,44]        [,45]        [,46]
+[1,] 1.493296e-04 0.0001436102 1.404112e-04 1.322132e-04 1.228483e-04
+[2,] 3.908488e-04 0.0003833443 3.697611e-04 3.652555e-04 3.513968e-04
+[3,] 3.129855e-04 0.0003080709 3.068580e-04 3.066979e-04 3.014310e-04
+[4,] 6.235741e-04 0.0005990832 5.662836e-04 5.654109e-04 5.653828e-04
+[5,] 2.991686e-04 0.0002990985 2.949539e-04 2.789303e-04 2.769024e-04
+[6,] 3.040299e-06 0.0000028280 2.517328e-06 2.369221e-06 2.097986e-06
+[7,] 1.112995e-03 0.0011070285 1.094970e-03 1.081520e-03 1.054253e-03
+[8,] 5.485889e-04 0.0005484342 5.372066e-04 5.304712e-04 5.299130e-04
+            [,47]        [,48]        [,49]        [,50]        [,51]
+[1,] 1.224000e-04 1.223305e-04 1.122396e-04 1.109500e-04 9.016944e-05
+[2,] 3.453359e-04 3.421982e-04 3.379556e-04 3.377209e-04 3.356144e-04
+[3,] 2.980352e-04 2.942684e-04 2.614255e-04 2.574832e-04 2.510037e-04
+[4,] 5.573603e-04 5.385290e-04 5.193282e-04 5.152845e-04 5.080668e-04
+[5,] 2.690480e-04 2.663427e-04 2.651954e-04 2.611614e-04 2.602905e-04
+[6,] 1.796129e-06 1.778946e-06 1.733253e-06 1.380749e-06 1.372443e-06
+[7,] 1.051166e-03 9.212984e-04 9.175198e-04 9.115509e-04 8.906377e-04
+[8,] 5.123710e-04 5.074707e-04 5.033342e-04 4.910439e-04 4.779433e-04
+            [,52]        [,53]        [,54]        [,55]        [,56]
+[1,] 8.480855e-05 8.133623e-05 7.978784e-05 7.962392e-05 7.499546e-05
+[2,] 3.351613e-04 3.290400e-04 3.273122e-04 3.201636e-04 3.196996e-04
+[3,] 2.410096e-04 2.322828e-04 2.309658e-04 2.297754e-04 2.190571e-04
+[4,] 4.913698e-04 4.803423e-04 4.733111e-04 4.697593e-04 4.412678e-04
+[5,] 2.594929e-04 2.532047e-04 2.472642e-04 2.442840e-04 2.426304e-04
+[6,] 1.357856e-06 1.331101e-06 1.232802e-06 9.552382e-07 4.580155e-07
+[7,] 8.691134e-04 8.484688e-04 8.315075e-04 8.036345e-04 7.932883e-04
+[8,] 4.742667e-04 4.626795e-04 4.569119e-04 4.553683e-04 4.477677e-04
+            [,57]        [,58]        [,59]        [,60]        [,61]
+[1,] 7.316930e-05 7.275614e-05 7.206177e-05 7.137657e-05 7.089614e-05
+[2,] 3.193913e-04 3.171052e-04 3.161591e-04 3.145281e-04 3.133779e-04
+[3,] 2.149140e-04 2.123081e-04 2.095074e-04 2.048110e-04 2.032126e-04
+[4,] 4.324943e-04 4.279276e-04 4.273095e-04 4.257579e-04 4.252977e-04
+[5,] 2.363927e-04 2.325801e-04 2.306755e-04 2.248582e-04 2.190864e-04
+[6,] 3.900552e-07 2.034491e-07 1.875935e-07 1.363445e-07 7.588371e-08
+[7,] 7.790454e-04 7.738714e-04 7.729102e-04 7.572888e-04 7.482499e-04
+[8,] 4.399823e-04 4.287722e-04 4.126365e-04 4.125597e-04 4.034834e-04
+            [,62]        [,63]        [,64]        [,65]        [,66]
+[1,] 6.946232e-05 6.811630e-05 6.749768e-05 6.655098e-05 6.642691e-05
+[2,] 3.112429e-04 3.105740e-04 3.050961e-04 3.042465e-04 3.036447e-04
+[3,] 1.951673e-04 1.923333e-04 1.870749e-04 1.831312e-04 1.810971e-04
+[4,] 4.247232e-04 4.042923e-04 3.893918e-04 3.874465e-04 3.848598e-04
+[5,] 2.180185e-04 2.092154e-04 2.077117e-04 2.065690e-04 2.029624e-04
+[6,] 6.641744e-08 5.472129e-08 4.326621e-08 1.419234e-08 9.741089e-09
+[7,] 7.417472e-04 7.079691e-04 6.843152e-04 6.564695e-04 6.415781e-04
+[8,] 4.031990e-04 3.857044e-04 3.817757e-04 3.808577e-04 3.695571e-04
+            [,67]        [,68]        [,69]        [,70]        [,71]
+[1,] 6.581629e-05 6.479602e-05 6.266061e-05 6.088676e-05 6.080326e-05
+[2,] 3.001960e-04 2.980241e-04 2.978028e-04 2.974585e-04 2.970079e-04
+[3,] 1.801185e-04 1.689943e-04 1.656631e-04 1.624096e-04 1.570561e-04
+[4,] 3.709645e-04 3.621804e-04 3.556592e-04 3.489358e-04 3.234961e-04
+[5,] 2.017237e-04 1.988721e-04 1.942763e-04 1.886240e-04 1.858506e-04
+[6,] 2.091211e-09           NA           NA           NA           NA
+[7,] 6.307526e-04 6.278344e-04 6.268506e-04 6.139870e-04 5.776087e-04
+[8,] 3.677559e-04 3.664594e-04 3.616979e-04 3.557244e-04 3.518700e-04
+            [,72]        [,73]        [,74]        [,75]        [,76]
+[1,] 6.051345e-05 5.901271e-05 5.848434e-05 5.837021e-05 5.600438e-05
+[2,] 2.966682e-04 2.944566e-04 2.932317e-04 2.910385e-04 2.848070e-04
+[3,] 1.566602e-04 1.560769e-04 1.552406e-04 1.510753e-04 1.443789e-04
+[4,] 3.098285e-04 3.073588e-04 3.063670e-04 2.967266e-04 2.955016e-04
+[5,] 1.850154e-04 1.831227e-04 1.830897e-04 1.825331e-04 1.813465e-04
+[6,]           NA           NA           NA           NA           NA
+[7,] 5.755958e-04 5.480327e-04 5.331790e-04 5.260908e-04 5.234761e-04
+[8,] 3.449097e-04 3.400077e-04 3.372291e-04 3.322229e-04 3.269558e-04
+            [,77]        [,78]        [,79]        [,80]        [,81]
+[1,] 5.477504e-05 5.387832e-05 5.181111e-05 5.013524e-05 4.889448e-05
+[2,] 2.819051e-04 2.810899e-04 2.795334e-04 2.789103e-04 2.776759e-04
+[3,] 1.441767e-04 1.435687e-04 1.424154e-04 1.397244e-04 1.340254e-04
+[4,] 2.937544e-04 2.922775e-04 2.740799e-04 2.639002e-04 2.594803e-04
+[5,] 1.748273e-04 1.734257e-04 1.697992e-04 1.695329e-04 1.546801e-04
+[6,]           NA           NA           NA           NA           NA
+[7,] 5.186104e-04 5.035371e-04 4.442440e-04 4.398792e-04 4.374015e-04
+[8,] 3.250638e-04 3.136919e-04 3.127438e-04 3.101756e-04 3.077629e-04
+            [,82]        [,83]        [,84]        [,85]        [,86]
+[1,] 4.821139e-05 4.590471e-05 4.543521e-05 4.420997e-05 0.0000412960
+[2,] 2.770178e-04 2.725044e-04 2.677894e-04 2.665477e-04 0.0002651343
+[3,] 1.260645e-04 1.260525e-04 1.186343e-04 1.183051e-04 0.0001159489
+[4,] 2.518377e-04 2.510428e-04 2.451829e-04 2.399520e-04 0.0002372431
+[5,] 1.541679e-04 1.510610e-04 1.504750e-04 1.440401e-04 0.0001433811
+[6,]           NA           NA           NA           NA           NA
+[7,] 4.343765e-04 4.334435e-04 4.321386e-04 4.214556e-04 0.0004160842
+[8,] 3.029718e-04 3.008520e-04 2.980535e-04 2.961199e-04 0.0002921599
+            [,87]        [,88]        [,89]        [,90]        [,91]
+[1,] 3.988575e-05 3.984275e-05 3.976276e-05 3.948019e-05 3.769396e-05
+[2,] 2.605199e-04 2.581206e-04 2.575441e-04 2.556055e-04 2.505893e-04
+[3,] 1.124362e-04 1.122805e-04 1.117179e-04 1.114403e-04 1.081073e-04
+[4,] 2.350428e-04 2.307413e-04 2.284686e-04 2.280100e-04 2.186789e-04
+[5,] 1.428389e-04 1.370984e-04 1.367790e-04 1.362367e-04 1.345680e-04
+[6,]           NA           NA           NA           NA           NA
+[7,] 4.073221e-04 4.056458e-04 4.052630e-04 4.014570e-04 3.960350e-04
+[8,] 2.850107e-04 2.800895e-04 2.763944e-04 2.748773e-04 2.740168e-04
+            [,92]        [,93]        [,94]        [,95]        [,96]
+[1,] 3.753063e-05 3.748161e-05 3.524413e-05 3.484857e-05 3.433878e-05
+[2,] 2.451127e-04 2.439366e-04 2.396399e-04 2.365696e-04 2.359215e-04
+[3,] 1.078524e-04 1.072864e-04 1.060841e-04 1.022580e-04 9.831680e-05
+[4,] 2.174541e-04 2.139760e-04 2.124743e-04 2.119676e-04 2.099683e-04
+[5,] 1.343396e-04 1.335707e-04 1.311199e-04 1.294391e-04 1.279694e-04
+[6,]           NA           NA           NA           NA           NA
+[7,] 3.853531e-04 3.743249e-04 3.723204e-04 3.717713e-04 3.577731e-04
+[8,] 2.710422e-04 2.708550e-04 2.699866e-04 2.636664e-04 2.546494e-04
+            [,97]        [,98]        [,99]       [,100]
+[1,] 3.280429e-05 3.208058e-05 3.115279e-05 3.068548e-05
+[2,] 2.340367e-04 2.327333e-04 2.314955e-04 2.298898e-04
+[3,] 9.687997e-05 9.526751e-05 9.521651e-05 9.484154e-05
+[4,] 2.075954e-04 2.027610e-04 1.998311e-04 1.968862e-04
+[5,] 1.267499e-04 1.226241e-04 1.225315e-04 1.222906e-04
+[6,]           NA           NA           NA           NA
+[7,] 3.571386e-04 3.535281e-04 3.497520e-04 3.384591e-04
+[8,] 2.538087e-04 2.506422e-04 2.469083e-04 2.466426e-04</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
