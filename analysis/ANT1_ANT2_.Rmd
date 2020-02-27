@@ -466,6 +466,44 @@ VlnPlot(ANT1.2, features = c("PTPRC", "CD34", "CD14", "ITGAM", "CD79A", "CD19"),
 
 ```
 
+# Number of cells that have non-zero expression of SOX9, ACAN, or COL2A1
+
+```{r}
+counts <- ANT1.2@assays$RNA@counts
+#155 cells express SOX9
+table(counts["SOX9", ])
+#3 cells express ACAN
+table(counts["ACAN", ])
+#4 cells express COL2A1
+table(counts["COL2A1", ])
+
+cell_labels <- ANT1.2@meta.data$labels
+#SOX9 broken down by sample
+table(counts["SOX9", ][cell_labels == "NA18855_Strain"]) #27/376 cells
+table(counts["SOX9", ][cell_labels == "NA18855_Unstrain"]) #38/996 cells
+table(counts["SOX9", ][cell_labels == "NA18856_Unstrain"]) #84/428 cells
+table(counts["SOX9", ][cell_labels == "NA19160_Strain"]) #5/426 cells
+table(counts["SOX9", ][cell_labels == "NA19160_Unstrain"]) #1/253 cells
+
+sox9_expression <- data.frame("counts" = c(27, 38, 84, 5, 1, 349, 958, 344, 421, 252),
+                              "type" = c(rep("SOX9 positive", 5), rep("SOX9 negative", 5)),
+                              "sample" = rep(c("NA18855_Strain", "NA18855_Unstrain", "NA18856_Unstrain", "NA19160_Strain", "NA19160_Unstrain"),2))
+
+
+ggplot(sox9_expression, aes(fill=type, y=counts, x=sample)) + 
+  geom_bar(position="stack", stat="identity") +
+  theme_cowplot(12) +
+  theme(legend.position = "top", legend.title = element_blank()) + 
+  labs(title = "SOX9 expression by sample", x = "sample", y = "Number of cells")
+
+ggplot(sox9_expression, aes(fill=type, y=counts, x=sample)) + 
+  geom_bar(position="fill", stat="identity") +
+  theme_cowplot(12) +
+  theme(legend.position = "top", legend.title = element_blank()) + 
+  labs(title = "SOX9 expression by sample", x = "sample", y = "Proportion of cells")
+```
+
+
 # Save seurat object
 
 ```{r save}

@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-19
+<strong>Last updated:</strong> 2020-02-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree605da875aae021b28ea700a7c7af372b50a19dc6targetblank605da87a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/605da875aae021b28ea700a7c7af372b50a19dc6" target="_blank">605da87</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee0cb97297da19032063e3627b0cb97dd39a82c15targetblanke0cb972a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e0cb97297da19032063e3627b0cb97dd39a82c15" target="_blank">e0cb972</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree605da875aae021b28ea700a7c7af372b50a19dc6targetblank605da87a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee0cb97297da19032063e3627b0cb97dd39a82c15targetblanke0cb972a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -527,10 +527,8 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
-Untracked files:
-    Untracked:  fig-limma-treatment-hit-1.eps
-
 Unstaged changes:
+    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
     Modified:   analysis/Pilot_GoMAnalysis.Rmd
 
 </code></pre>
@@ -570,6 +568,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/analysis/Pilot_GoMAnalysis.Rmd" target="_blank">e0cb972</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-24
+</td>
+<td>
+Separate out sample based on origin; also add pseudobulk
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/analysis/Pilot_GoMAnalysis.Rmd" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+add additional chondro markers
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/Pilot_GoMAnalysis.html" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+add additional chondro markers
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -732,7 +781,7 @@ outside bulk datasets comparison to my pilot bulk data
 </div>
 <div id="applying-topic-modeling-approaches-on-sc-pilot-data" class="section level1">
 <h1>Applying topic modeling approaches on sc pilot data</h1>
-<p>Include data from: Pilot (iPSC-derived chondrocytes from 3 individuals x 2 treatment conditions; 10x) MSC-Pilot (Genevieve Housman’s human data of iPSCs and iPSC-derived MSCs from human-chimp study; 10x) Hepatocytes (from liver homogenate; 10x) Chondrocytes (from OA patients; STRT protocol)</p>
+<p>Include data from: Pilot (iPSC-derived chondrocytes from 3 individuals x 2 treatment conditions; 10x) MSC-Pilot (Genevieve Housman’s human data of iPSCs and iPSC-derived MSCs from human-chimp study; 10x) Also one dataset from chondrocytes (ipsc-derived) Hepatocytes (from liver homogenate; 10x) Chondrocytes (from OA patients; STRT protocol)</p>
 </div>
 <div id="load-libraries" class="section level1">
 <h1>Load Libraries</h1>
@@ -880,6 +929,7 @@ gh_ipsc_2.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-1.rds&
 gh_msc_2.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-2.rds&quot;))
 gh_ipsc_3.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-9.rds&quot;))
 gh_msc_3.1 &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.HOU-11.rds&quot;))
+gh_chondro &lt;- readRDS(paste0(ghousman_data_dir, &quot;h.c.dat.spp.GHO-4.rds&quot;)) #need to verify the sample name for the chondro/if these were processed yet
 gh_big &lt;- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_ipsc_1.2, gh_msc_1.2, gh_ipsc_2.1, gh_msc_2.1, gh_ipsc_3.1, gh_msc_3.1), 
                 add.cell.ids = c(&quot;ipsc1.1&quot;, &quot;msc1.1&quot;, &quot;ipsc1.2&quot;, &quot;msc1.2&quot;, &quot;ipsc2.1&quot;, &quot;msc2.1&quot;, &quot;ipsc3.1&quot;, &quot;msc3.1&quot;), project = &quot;ghousman&quot;)
 gh_big_humans &lt;- subset(gh_big, species == &quot;Human&quot;)
@@ -960,6 +1010,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-1.png" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-1.png" target="_blank">605da87</a>
 </td>
 <td>
@@ -999,6 +1060,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-2.png" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-2.png" target="_blank">605da87</a>
 </td>
 <td>
@@ -1019,8 +1091,82 @@ dim(ANT1.2)</code></pre>
 <pre><code>[1] 33538  2479</code></pre>
 <pre class="r"><code>VlnPlot(object=ANT1.2, features = c(&quot;SOX9&quot;, &quot;ACAN&quot;, &quot;COL2A1&quot;, &quot;COL11A1&quot;, &quot;SOX5&quot;, &quot;SOX6&quot;))</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-3">
+Past versions of unnamed-chunk-1-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-3.png" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=ANT1.2, features = c(&quot;TGFB3&quot;))</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-4">
+Past versions of unnamed-chunk-1-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/figure/Pilot_GoMAnalysis.Rmd/unnamed-chunk-1-4.png" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="../analysis/figures/scviz1.png" alt="Cell Type Clusters from original paper" /> <img src="../analysis/figures/scviz2.png" alt="Subsetting gate drawn in scViz" /></p>
 </div>
 <div id="analysis-of-combined-dataset-in-seurat" class="section level1">
@@ -1232,6 +1378,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-4.png" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/605da875aae021b28ea700a7c7af372b50a19dc6/docs/figure/Pilot_GoMAnalysis.Rmd/Seurat analysis-4.png" target="_blank">605da87</a>
@@ -1648,7 +1805,7 @@ if (file.exists(&quot;data/GoMresultsk8.rds&quot;)){
 } else {
   Combined_GoM8 &lt;- runfitGoM(t(Combined_counts), start = 8, end = 8)
   saveRDS(Combined_GoM8, &quot;data/GoMresultsk8.rds&quot;)
-}</code></pre>
+     }</code></pre>
 </div>
 </div>
 <div id="analysis-of-the-topics-within-the-topic-models-generated-for-each-dataset" class="section level1">
@@ -1890,7 +2047,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-5">
@@ -1940,7 +2099,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2035,45 +2193,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%203-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-3-8">
-Past versions of “k of 3-8.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-3-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 3-8.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
@@ -2448,7 +2567,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-6">
@@ -2498,7 +2619,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2643,45 +2763,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%204-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-4-10">
-Past versions of “k of 4-10.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-4-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 4-10.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
@@ -3135,7 +3216,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-7">
@@ -3185,7 +3268,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -3380,45 +3462,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%205-12.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-5-12">
-Past versions of “k of 5-12.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-5-12" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 5-12.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
@@ -3963,7 +4006,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-8">
@@ -4013,7 +4058,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -4258,45 +4302,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%206-14.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-6-14">
-Past versions of “k of 6-14.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-6-14" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 6-14.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
@@ -4922,7 +4927,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-9">
@@ -4972,7 +4979,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -5267,45 +5273,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%207-16.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-7-16">
-Past versions of “k of 7-16.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-7-16" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 7-16.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
@@ -6020,7 +5987,9 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)</code></pre>
+<pre class="r"><code>#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-10">
@@ -6070,7 +6039,6 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)</code></pre>
 <pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -6415,45 +6383,6 @@ Anthony Hung
 </td>
 <td>
 2020-02-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="figure/Pilot_GoMAnalysis.Rmd/k%20of%208-18.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-k-of-8-18">
-Past versions of “k of 8-18.png”
-</button>
-</p>
-<div id="fig-no-spaces-k-of-8-18" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/docs/figure/Pilot_GoMAnalysis.Rmd/k of 8-18.png" target="_blank">2bbbdad</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-11
 </td>
 </tr>
 </tbody>
