@@ -109,19 +109,32 @@ row.names(outside_data_counts) <- outside_data_counts$Geneid
 outside_data_counts <- outside_data_counts[, -c(1:6)]
 
 #rename samples (colnames)
-names(outside_data_counts) <- c("Heart_1_tr", "MSC.BM_nt_hBM1_tr", "Heart_4", "Chond_TCP_P1_2_tr",
-                                "ChondOA_dmg_2", "ChondOA_intact_1", "Heart_1", "Heart_3_tr", 
-                                "MSC.BM_nt_hBM3_tr", "ChondOA_intact_2", "MSC.BM_bm1", "iPSC-MSC5_H20157-d5-r1", 
-                                "ChondOA_dmg_1", "Chond_SCM_P1_3", "Chond_TCP_P1_1_tr", "MSC.BM_nt_hBM2_tr", 
-                                "MSC.BM_bm2", "Chond_SCM_P1_1", "ChondOA_intact_1_tr", "iPSC-MSC9_H20157-d9-r2", 
-                                "Chond_SCM_P1_2_tr", "Chond_TCP_P1_1", "ChondOA_intact_3_tr", "ChondOA_dmg_2_tr",
-                                "MSC.AD_hAD", "ChondOA_intact_3", "MSC.BM_nt_hBM2", "MSC.AD_hAD_tr", 
-                                "ChondOA_dmg_1_tr", "ChondOA_intact_2_tr", "Heart_2_tr", "Heart_3", 
-                                "MSC.BM_nt_hBM1", "Heart_4_tr", "Heart_2", "iPSC-MSC5_H20157-d5-r2", 
-                                "ChondOA_dmg_3", "Chond_SCM_P1_3_tr", "Chond_SCM_P1_2", "ChondOA_dmg_3_tr", 
-                                "MSC.BM_bm1_tr", "MSC.BM_nt_hBM3", "Chond_TCP_P1_3", "MSC.BM_bm2_tr",
-                                "iPSC_H20157-d0-r1", "Chond_SCM_P1_1_tr", "iPSC-MSC9_H20157-d9-r1", "Chond_TCP_P1_3_tr",
-                                "iPSC_H20157-d0-r2", "Chond_TCP_P1_2")
+# SRR_details <- read.csv("data/SRRdetails_for_outsideData.csv")
+# sample_names <- names(outside_data_counts)
+# label_vector <- c(rep(0, length(sample_names)))
+# for(i in SRR_details$Sample.ID){
+#      location <- grepl(i, sample_names)
+#      label_vector[location] <- SRR_details$Label[location]
+# }
+# label_vector
+# names(outside_data_counts) <- SRR_details$Label[label_vector]
+names(outside_data_counts) <- c("OA_dmg_3", "MSC-Chond-d14_1", "MSC-Chond-d1_2", "Chond_TCP_P1_2", "MSC-Chond-d3_2",
+                                "Lung_4", "Chond_TCP_P1_3", "Lung_3", "Chond_TCP_P1_1", "bmMSC_1.1", 
+                                "MSC-Chond-d3_1", "Lung_2", "MSC-Chond-d0_1", "Heart_4", "MSC-Chond-d7_1",
+                                "MSC-Chond-d21_3", "MSC-Chond-d3_3", "Heart_1", "iPSC-MSC5_2", "iPSC-MSC9_1",
+                                "Kidney_1", "Heart_2", "iPSC-1", "iPSC-MSC5_1", "bmMSC_2.2", 
+                                "bmMSC_1.2", "OA_dmg_2", "OA_intact_3", "Kidney_3", "Liver_1", 
+                                "Chond_SCM_P1_3", "OA_intact_2", "Liver_3", "Liver_4", "OA_dmg_1", 
+                                "Heart_3", "MSC-Chond-d14_3", "Chond_SCM_P1_1", "iPSC-2", "MSC-Chond-d21_2",
+                                "bmMSC_1.3", "MSC-Chond-d1_1", "MSC-Chond-d0_2", "adMSC", "Kidney_2",
+                                "MSC-Chond-d1_3", "Kidney_4", "Chond_SCM_P1_2", "MSC-Chond-d14_2", "MSC-Chond-d0_3",
+                                "OA_intact_1", "Liver_2", "iPSC-MSC9_2", "MSC-Chond-d21_1", "Lung_1", 
+                                "bmMSC_2.1", "MSC-Chond-d7_3", "MSC-Chond-d7_2")
+
+#remove MSC-chond samples and OA samples
+MSC_chond_samples <- c(2:3, 5, 11, 13, 15:17, 37, 40, 42:43, 46, 49:50, 54, 57:58)
+OA_samples <- c(1, 27:28, 32, 35, 51)
+outside_data_counts<- outside_data_counts[,-c(MSC_chond_samples, OA_samples)]
 
 #Combine all bulk data together
 merged_raw_data <- merge(raw_counts, outside_data_counts, by = "row.names")
@@ -185,12 +198,12 @@ p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2upperquartile > 3 in at least 15 samples)
+## Filtering for lowly expressed genes (avg log2upperquartile > 2 in at least 10 samples)
 
 ```{r filter upperquartile}
-cutoff <- 3
+cutoff <- 2
 
-keep <- rowSums( upperquartile > cutoff ) >= 15
+keep <- rowSums( upperquartile > cutoff ) >= 10
 
 counts_upperquartile <- merged_raw_data[keep,]
 filtered_upperquartile <- upperquartile[keep,]
@@ -267,12 +280,12 @@ p <- ggplot(meltRLE, aes(factor(sampleID), RLE))
 p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ```
 
-## Filtering for lowly expressed genes (avg log2RLE > 3 in at least 15 samples)
+## Filtering for lowly expressed genes (avg log2RLE > 2 in at least 10 samples)
 
 ```{r filter RLE}
-cutoff <- 3
+cutoff <- 2
 
-keep <- rowSums( RLE > cutoff ) >= 15
+keep <- rowSums( RLE > cutoff ) >= 10
 
 counts_RLE <- merged_raw_data[keep,]
 filtered_RLE <- RLE[keep,]
@@ -313,15 +326,15 @@ autoplot(pca_genes, label = T)
 # Grade of Membership analysis
 
 ```{r gom}
-filtered_counts <- counts_upperquartile$counts
+merged_raw_data_counts <- merged_raw_data$counts
 Combined_counts_celltypes <- sapply(strsplit(as.character(counts_upperquartile$samples$group),"_"), `[`, 1)
 
 #Choosing between values of k
-Combined_GoM <- CountClust::FitGoM(t(filtered_counts), K=c(3:20), tol = 0.1, control=list(tmax=100))
+Combined_GoM <- CountClust::FitGoM(t(merged_raw_data_counts), K=c(2:20), tol = 0.1, control=list(tmax=100))
 #choosing between k
-comparisons <- compGoM(data = t(filtered_counts), model = Combined_GoM)
-plot(cbind(comparisons[1,], c(3:20)))
-plot(cbind(comparisons[2,], c(3:20)))
+comparisons <- compGoM(data = t(merged_raw_data_counts), model = Combined_GoM)
+plot(cbind(comparisons[1,], c(2:20)))
+plot(cbind(comparisons[2,], c(2:20)))
 ```
 
 
@@ -364,47 +377,47 @@ annotate_clusters <- function(theta_mat, countmatrix){
 }
 
 
-labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
-
-# k = 3
-#plot_structure_plot(omega = Combined_GoM$clust_3$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_3$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_3$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
+labels <- sapply(strsplit(colnames(merged_raw_data_counts),"_"), `[`, 1)
 
 # k = 4
 #plot_structure_plot(omega = Combined_GoM$clust_4$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_4$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_4$theta, countmatrix = filtered_counts)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_4$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 5
 #plot_structure_plot(omega = Combined_GoM$clust_5$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_5$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_5$theta, countmatrix = filtered_counts)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_5$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 6
 #plot_structure_plot(omega = Combined_GoM$clust_6$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_6$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_6$theta, countmatrix = filtered_counts)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_6$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 7
 #plot_structure_plot(omega = Combined_GoM$clust_7$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_7$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_7$theta, countmatrix = filtered_counts)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_7$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 8
 #plot_structure_plot(omega = Combined_GoM$clust_8$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_8$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_8$theta, countmatrix = filtered_counts)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_8$theta, countmatrix = merged_raw_data_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
+
+# k = 9
+#plot_structure_plot(omega = Combined_GoM$clust_9$omega, labels = labels)
+make_topic_plots(omega = Combined_GoM$clust_9$omega, labels = labels)
+genes <- annotate_clusters(theta_mat = Combined_GoM$clust_9$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 ```
@@ -434,8 +447,6 @@ labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
 
 #SOX9
 boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000125398", "SOX9")
-#ACAN
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000157766", "ACAN")
 #COL11A1
 boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000060718", "COL11A1")
 #SOX5
@@ -447,7 +458,8 @@ boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000119699", "TGFB3")
 
 #COL2A1
 boxplot_gene_sample_type(merged_raw_data$counts, labels, "ENSG00000139219", "COL2A1", y_axis = "Raw counts")
-
+#ACAN
+boxplot_gene_sample_type(merged_raw_data$counts, labels, "ENSG00000157766", "ACAN", y_axis = "Raw counts")
 ```
 
 # Check expression of GoM cluster markers across data
@@ -455,116 +467,134 @@ boxplot_gene_sample_type(merged_raw_data$counts, labels, "ENSG00000139219", "COL
 For k = 4
 
 ```{r cluster markers}
-# cluster 1
-
-#COL3A1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000168542", "COL3A1")
-#COL1A2
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000164692", "COL1A2")
-#COL1A1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000108821", "COL1A1")
-#SPARC
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000113140", "SPARC")
-#FN1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000115414", "FN1")
-
-# cluster 2
-
-#IGFBP3
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000146674", "IGFBP3")
-#EFEMP1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000115380", "EFEMP1")
-#BGN
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000182492", "BGN")
-#AHNAK
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000124942", "AHNAK")
-#HAPLN1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000145681", "HAPLN1")
-
-
-
-# cluster 3
-
-#SERPINA1
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000197249", "SERPINA1")
-#CTSV
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000136943", "CTSV")
-#KRT8
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000170421", "KRT8")
-#KRT19
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000171345", "KRT19")
-#APOE
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000130203", "APOE")
-
-
-# Cluster 4 (although is the representation of MT genes worrisome?)
-#TTN
-boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000155657", "TTN")
+# # cluster 1
+# 
+# #COL3A1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000168542", "COL3A1")
+# #COL1A2
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000164692", "COL1A2")
+# #COL1A1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000108821", "COL1A1")
+# #SPARC
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000113140", "SPARC")
+# #FN1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000115414", "FN1")
+# 
+# # cluster 2
+# 
+# #IGFBP3
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000146674", "IGFBP3")
+# #EFEMP1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000115380", "EFEMP1")
+# #BGN
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000182492", "BGN")
+# #AHNAK
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000124942", "AHNAK")
+# #HAPLN1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000145681", "HAPLN1")
+# 
+# 
+# 
+# # cluster 3
+# 
+# #SERPINA1
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000197249", "SERPINA1")
+# #CTSV
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000136943", "CTSV")
+# #KRT8
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000170421", "KRT8")
+# #KRT19
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000171345", "KRT19")
+# #APOE
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000130203", "APOE")
+# 
+# 
+# # Cluster 4 (although is the representation of MT genes worrisome?)
+# #TTN
+# boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000155657", "TTN")
 ```
 
+# Semi-supervised topic modeling (define some known clusters prior to fitting topic model)
+
+```{r supervised}
+library("classtpx")
+
+# labels for "known" clusters
+index_heart <- which(labels=="Heart")
+index_lung <- which(labels=="Lung")
+index_liver <- which(labels=="Liver")
+index_kidney <- which(labels=="Kidney")
+index_iPSC <- which(labels=="iPSC")
+index_chond <- which(labels=="Chond")
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond))
+                )
+
+# Perform topic modeling k=6
+Topic_clus <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=6,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
+Topic_clus <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+
+omega <- Topic_clus$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
 
 
 
 
 
-# Grade of Membership analysis after removing OA samples (because we were worried about these samples being potentially strange and clustering as an outgroup compared to all other samples)
+# Perform topic modeling k=7
+Topic_clus <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
+Topic_clus <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
 
-```{r gom no OA}
-
-filtered_counts <- counts_upperquartile$counts
-filtered_counts <- filtered_counts[,-c(26, 29, 30, 32, 33, 38)]
-labels <- sapply(strsplit(colnames(merged_raw_data),"_"), `[`, 1)
-labels <- labels[-c(26, 29, 30, 32, 33, 38)]
-
-#Choosing between values of k
-Combined_GoM <- CountClust::FitGoM(t(filtered_counts), K=c(3:20), tol = 0.1, control=list(tmax=100))
-#choosing between k
-comparisons <- compGoM(data = t(filtered_counts), model = Combined_GoM)
-plot(cbind(comparisons[1,], c(3:20)))
-plot(cbind(comparisons[2,], c(3:20)))
+omega <- Topic_clus$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
 ```
 
-
-```{r plotting GoM no OA}
-# k = 3
-#plot_structure_plot(omega = Combined_GoM$clust_3$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_3$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_3$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 4
-#plot_structure_plot(omega = Combined_GoM$clust_4$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_4$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_4$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 5
-#plot_structure_plot(omega = Combined_GoM$clust_5$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_5$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_5$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 6
-#plot_structure_plot(omega = Combined_GoM$clust_6$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_6$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_6$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 7
-#plot_structure_plot(omega = Combined_GoM$clust_7$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_7$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_7$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 8
-#plot_structure_plot(omega = Combined_GoM$clust_8$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_8$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_8$theta, countmatrix = filtered_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-```
