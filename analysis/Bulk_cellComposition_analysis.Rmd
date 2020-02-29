@@ -118,22 +118,23 @@ outside_data_counts <- outside_data_counts[, -c(1:6)]
 # }
 # label_vector
 # names(outside_data_counts) <- SRR_details$Label[label_vector]
-names(outside_data_counts) <- c("OA_dmg_3", "MSC-Chond-d14_1", "MSC-Chond-d1_2", "Chond_TCP_P1_2", "MSC-Chond-d3_2",
-                                "Lung_4", "Chond_TCP_P1_3", "Lung_3", "Chond_TCP_P1_1", "bmMSC_1.1", 
-                                "MSC-Chond-d3_1", "Lung_2", "MSC-Chond-d0_1", "Heart_4", "MSC-Chond-d7_1",
-                                "MSC-Chond-d21_3", "MSC-Chond-d3_3", "Heart_1", "iPSC-MSC5_2", "iPSC-MSC9_1",
-                                "Kidney_1", "Heart_2", "iPSC-1", "iPSC-MSC5_1", "bmMSC_2.2", 
-                                "bmMSC_1.2", "OA_dmg_2", "OA_intact_3", "Kidney_3", "Liver_1", 
-                                "Chond_SCM_P1_3", "OA_intact_2", "Liver_3", "Liver_4", "OA_dmg_1", 
-                                "Heart_3", "MSC-Chond-d14_3", "Chond_SCM_P1_1", "iPSC-2", "MSC-Chond-d21_2",
-                                "bmMSC_1.3", "MSC-Chond-d1_1", "MSC-Chond-d0_2", "adMSC", "Kidney_2",
-                                "MSC-Chond-d1_3", "Kidney_4", "Chond_SCM_P1_2", "MSC-Chond-d14_2", "MSC-Chond-d0_3",
-                                "OA_intact_1", "Liver_2", "iPSC-MSC9_2", "MSC-Chond-d21_1", "Lung_1", 
-                                "bmMSC_2.1", "MSC-Chond-d7_3", "MSC-Chond-d7_2")
+names(outside_data_counts) <- c("MSC-Chond-d3_3", "Heart_2", "Chond_TCP_P4_2", "Chond_SCM_P4_3", "MSC-Chond-d21_3", 
+                                "Chond_SCM_P4_1", "MSC-Chond-d1_3", "MSC-Chond-d0_3", "MSC-Chond-d0_1", "MSC-Chond-d0_2", 
+                                "Heart_3", "Lung_3", "Lung_2", "Chond_TCP_P1_1", "MSC-Chond-d7_2",
+                                "iPSC-MSC9_1", "Liver_2", "MSC-Chond-d3_1", "Kidney_4", "OA_dmg_3", 
+                                "Kidney_1", "bmMSC_1.1", "iPSC-MSC5_1", "OA_intact_1", "bmMSC_2.1",
+                                "Liver_1", "iPSC-MSC5_2", "Chond_SCM_P1_2", "Chond_TCP_P4_3", "MSC-Chond-d14_2", 
+                                "MSC-Chond-d3_2", "iPSC_2", "Chond_TCP_P1_2", "MSC-Chond-d14_3", "Lung_4", 
+                                "OA_intact_2", "MSC-Chond-d21_1", "OA_dmg_2", "adMSC", "Heart_1", 
+                                "Kidney_2", "OA_intact_3", "bmMSC_2.2", "Chond_SCM_P4_2", "Chond_SCM_P1_1", 
+                                "MSC-Chond-d1_2", "MSC-Chond-d1_1", "Lung_1", "MSC-Chond-d7_1", "iPSC-MSC9_2", 
+                                "Kidney_3", "OA_dmg_1", "Chond_TCP_P4_1", "bmMSC_1.3", "Chond_TCP_P1_3", 
+                                "Liver_3", "MSC-Chond-d14_1", "Heart_4", "MSC-Chond-d7_3", "Chond_SCM_P1_3", 
+                                "iPSC_1", "MSC-Chond-d21_2", "bmMSC_1.2", "Liver_4")
 
 #remove MSC-chond samples and OA samples
-MSC_chond_samples <- c(2:3, 5, 11, 13, 15:17, 37, 40, 42:43, 46, 49:50, 54, 57:58)
-OA_samples <- c(1, 27:28, 32, 35, 51)
+MSC_chond_samples <- c(1,5,7:10,15,18,30:31,34,37,46:47,49,57,59,62)
+OA_samples <- c(20,24,36,38,42,52)
 outside_data_counts<- outside_data_counts[,-c(MSC_chond_samples, OA_samples)]
 
 #Combine all bulk data together
@@ -341,9 +342,10 @@ plot(cbind(comparisons[2,], c(2:20)))
 ```{r plotting GoM}
 plot_structure_plot <- function(omega, labels){
      annotation <- data.frame(
-          sample_id = rownames(omega),
+          sample_id = paste0("X", c(1:NROW(omega))),
           tissue_label = labels
           )
+     rownames(omega) <- annotation$sample_id
      StructureGGplot(omega = omega,
                      annotation = annotation,
                      order_sample = TRUE,
@@ -380,44 +382,37 @@ annotate_clusters <- function(theta_mat, countmatrix){
 labels <- sapply(strsplit(colnames(merged_raw_data_counts),"_"), `[`, 1)
 
 # k = 4
-#plot_structure_plot(omega = Combined_GoM$clust_4$omega, labels = labels)
+plot_structure_plot(omega = Combined_GoM$clust_4$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_4$omega, labels = labels)
 genes <- annotate_clusters(theta_mat = Combined_GoM$clust_4$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 5
-#plot_structure_plot(omega = Combined_GoM$clust_5$omega, labels = labels)
+plot_structure_plot(omega = Combined_GoM$clust_5$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_5$omega, labels = labels)
 genes <- annotate_clusters(theta_mat = Combined_GoM$clust_5$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 6
-#plot_structure_plot(omega = Combined_GoM$clust_6$omega, labels = labels)
+plot_structure_plot(omega = Combined_GoM$clust_6$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_6$omega, labels = labels)
 genes <- annotate_clusters(theta_mat = Combined_GoM$clust_6$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 7
-#plot_structure_plot(omega = Combined_GoM$clust_7$omega, labels = labels)
+plot_structure_plot(omega = Combined_GoM$clust_7$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_7$omega, labels = labels)
 genes <- annotate_clusters(theta_mat = Combined_GoM$clust_7$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 
 # k = 8
-#plot_structure_plot(omega = Combined_GoM$clust_8$omega, labels = labels)
+plot_structure_plot(omega = Combined_GoM$clust_8$omega, labels = labels)
 make_topic_plots(omega = Combined_GoM$clust_8$omega, labels = labels)
 genes <- annotate_clusters(theta_mat = Combined_GoM$clust_8$theta, countmatrix = merged_raw_data_counts)
-matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
-genes[[2]]
-
-# k = 9
-#plot_structure_plot(omega = Combined_GoM$clust_9$omega, labels = labels)
-make_topic_plots(omega = Combined_GoM$clust_9$omega, labels = labels)
-genes <- annotate_clusters(theta_mat = Combined_GoM$clust_9$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
 ```
@@ -579,6 +574,35 @@ Topic_clus <- classtpx::class_topics(
     tol=0.01)
 save(Topic_clus, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
 Topic_clus <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
+
+omega <- Topic_clus$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+# Perform topic modeling k=8
+Topic_clus <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus, file="data/merged_topic_fit_8_classtpx_omega_fix.rda")
+Topic_clus <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix.rda"))
 
 omega <- Topic_clus$omega
 annotation <- data.frame(
