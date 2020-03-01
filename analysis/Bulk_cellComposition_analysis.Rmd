@@ -533,17 +533,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=6
-Topic_clus <- classtpx::class_topics(
+if (file.exists("data/merged_topic_fit_6_classtpx_omega_fix.rda")){
+     Topic_clus_6 <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_6 <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=6,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+save(Topic_clus_6, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
+}
 
-omega <- Topic_clus$omega
+omega <- Topic_clus_6$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -563,19 +566,21 @@ CountClust::StructureGGplot(omega = omega,
 
 
 
-
 # Perform topic modeling k=7
-Topic_clus <- classtpx::class_topics(
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix.rda")){
+     Topic_clus_7 <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_7 <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=7,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
+save(Topic_clus_7, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
+}
 
-omega <- Topic_clus$omega
+omega <- Topic_clus_7$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -594,17 +599,20 @@ CountClust::StructureGGplot(omega = omega,
 
 
 # Perform topic modeling k=8
-Topic_clus <- classtpx::class_topics(
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix.rda")){
+     Topic_clus_8 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_8 <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_8_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix.rda"))
+save(Topic_clus_8, file="data/merged_topic_fit_8_classtpx_omega_fix.rda")
+}
 
-omega <- Topic_clus$omega
+omega <- Topic_clus_8$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -620,5 +628,6 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = "bold")
                 )
+
 ```
 
