@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-19
+<strong>Last updated:</strong> 2020-03-02
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree605da875aae021b28ea700a7c7af372b50a19dc6targetblank605da87a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/605da875aae021b28ea700a7c7af372b50a19dc6" target="_blank">605da87</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree68e5e33dc85bf6340efc50200e47b0766711c93ctargetblank68e5e33a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/68e5e33dc85bf6340efc50200e47b0766711c93c" target="_blank">68e5e33</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree605da875aae021b28ea700a7c7af372b50a19dc6targetblank605da87a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree68e5e33dc85bf6340efc50200e47b0766711c93ctargetblank68e5e33a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,8 +508,11 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
@@ -526,6 +529,12 @@ Ignored files:
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
+
+Unstaged changes:
+    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -564,6 +573,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/88682cc9e2c11f7ae7ba25b9959dfde687206e29/docs/DE_analysis.html" target="_blank">88682cc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+add additional chondro markers
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1922,9 +1948,11 @@ for (test in tests) {
   results[[test]] &lt;- cbind(results[[test]], lfsr = output_ash$lfsr,
                            lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
                            svalue = output_ash$svalue)
-}
-
-#FDR 0.1
+}</code></pre>
+<pre><code>Warning in estimate_mixprop(data, g, prior, optmethod = optmethod, control
+= control, : Optimization failed to converge. Results may be unreliable. Try
+increasing maxiter and rerunning.</code></pre>
+<pre class="r"><code>#FDR 0.1
 plot_ma(results[[&quot;Unstrain&quot;]], 0.1)</code></pre>
 <p><img src="figure/DE_analysis.Rmd/use%20Functions-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -3493,6 +3521,462 @@ go_table</code></pre>
 49      0.00942
 50      0.00959</code></pre>
 </div>
+<div id="gene-ontology-analysis-with-topgo-separate-up-and-downregulated-genes" class="section level2">
+<h2>Gene ontology analysis with topGO (separate up and downregulated genes)</h2>
+<p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
+<p>First create the gene universe for upregulated genes This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
+<pre class="r"><code>threshold &lt;- 0.05
+gene_universe_up &lt;- as.numeric(results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold &amp; results[[&quot;Unstrain&quot;]]$logFC &gt; 0)
+gene_universe_up &lt;- factor(gene_universe_up)
+names(gene_universe_up) &lt;- rownames(results[[&quot;Unstrain&quot;]])
+head(gene_universe_up)</code></pre>
+<pre><code>ENSG00000225972 ENSG00000225630 ENSG00000237973 ENSG00000248527 ENSG00000198744 
+              0               0               0               0               0 
+ENSG00000228794 
+              0 
+Levels: 0 1</code></pre>
+<p>Create the topGO data object. Only consider “Biological Process” categories and use the Mouse Ensembl database for annotation.</p>
+<pre class="r"><code>go_data &lt;- new(&quot;topGOdata&quot;,
+               ontology = &quot;BP&quot;,
+               allGenes = gene_universe_up,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = &quot;org.Hs.eg.db&quot;,
+               ID = &quot;ensembl&quot;)</code></pre>
+<pre><code>
+Building most specific GOs .....</code></pre>
+<pre><code>    ( 9640 GO terms found. )</code></pre>
+<pre><code>
+Build GO DAG topology ..........</code></pre>
+<pre><code>    ( 13704 GO terms and 31801 relations. )</code></pre>
+<pre><code>
+Annotating nodes ...............</code></pre>
+<pre><code>    ( 9322 genes annotated to the GO terms. )</code></pre>
+<p>Use the weight01 algorithm and score the tests with Fisher’s exact test.</p>
+<pre class="r"><code>go_test &lt;- runTest(go_data, algorithm = &quot;weight01&quot;, statistic = &quot;fisher&quot;)</code></pre>
+<pre><code>
+             -- Weight01 Algorithm -- 
+
+         the algorithm is scoring 4449 nontrivial nodes
+         parameters: 
+             test statistic: fisher</code></pre>
+<pre><code>
+     Level 19:  1 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 18:  2 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 17:  5 nodes to be scored    (10 eliminated genes)</code></pre>
+<pre><code>
+     Level 16:  11 nodes to be scored   (15 eliminated genes)</code></pre>
+<pre><code>
+     Level 15:  30 nodes to be scored   (47 eliminated genes)</code></pre>
+<pre><code>
+     Level 14:  59 nodes to be scored   (143 eliminated genes)</code></pre>
+<pre><code>
+     Level 13:  113 nodes to be scored  (512 eliminated genes)</code></pre>
+<pre><code>
+     Level 12:  194 nodes to be scored  (1158 eliminated genes)</code></pre>
+<pre><code>
+     Level 11:  336 nodes to be scored  (2764 eliminated genes)</code></pre>
+<pre><code>
+     Level 10:  480 nodes to be scored  (3837 eliminated genes)</code></pre>
+<pre><code>
+     Level 9:   600 nodes to be scored  (5443 eliminated genes)</code></pre>
+<pre><code>
+     Level 8:   621 nodes to be scored  (6759 eliminated genes)</code></pre>
+<pre><code>
+     Level 7:   663 nodes to be scored  (7625 eliminated genes)</code></pre>
+<pre><code>
+     Level 6:   604 nodes to be scored  (8336 eliminated genes)</code></pre>
+<pre><code>
+     Level 5:   400 nodes to be scored  (8720 eliminated genes)</code></pre>
+<pre><code>
+     Level 4:   211 nodes to be scored  (8951 eliminated genes)</code></pre>
+<pre><code>
+     Level 3:   96 nodes to be scored   (9073 eliminated genes)</code></pre>
+<pre><code>
+     Level 2:   22 nodes to be scored   (9151 eliminated genes)</code></pre>
+<pre><code>
+     Level 1:   1 nodes to be scored    (9213 eliminated genes)</code></pre>
+<p>Keep the results with a Fisher’s exact test p-value &lt; 0.01.</p>
+<pre class="r"><code>go_table &lt;- GenTable(go_data, weightFisher = go_test,
+                     orderBy = &quot;weightFisher&quot;, ranksOf = &quot;weightFisher&quot;,
+                     topNodes = sum(score(go_test) &lt; .01))
+go_table</code></pre>
+<pre><code>        GO.ID                                        Term Annotated Significant
+1  GO:0030574                  collagen catabolic process        40          12
+2  GO:0030198           extracellular matrix organization       206          41
+3  GO:0030199                collagen fibril organization        31           9
+4  GO:0051639            actin filament network formation         6           4
+5  GO:0006027         glycosaminoglycan catabolic process        40           9
+6  GO:0032964               collagen biosynthetic process        24           5
+7  GO:0006024      glycosaminoglycan biosynthetic process        74          13
+8  GO:0031643          positive regulation of myelination         9           4
+9  GO:0001503                                ossification       238          25
+10 GO:0022617            extracellular matrix disassembly        53          10
+11 GO:0035987             endodermal cell differentiation        32           7
+12 GO:0006768                    biotin metabolic process        10           4
+13 GO:0034341                response to interferon-gamma        68           6
+14 GO:0060638       mesenchymal-epithelial cell signaling         5           3
+15 GO:1900016 negative regulation of cytokine producti...         5           3
+16 GO:0016266                         O-glycan processing        25           6
+17 GO:0070208                 protein heterotrimerization        11           4
+18 GO:0035455                response to interferon-alpha        11           4
+19 GO:0042362    fat-soluble vitamin biosynthetic process         7           3
+20 GO:0051897 positive regulation of protein kinase B ...        69          10
+21 GO:0003009                 skeletal muscle contraction        13           4
+22 GO:0031032           actomyosin structure organization       116          12
+23 GO:0033692 cellular polysaccharide biosynthetic pro...        41           5
+24 GO:0017185               peptidyl-lysine hydroxylation         7           3
+25 GO:0007588                                   excretion        15           4
+26 GO:0035413 positive regulation of catenin import in...         8           3
+27 GO:0007566                         embryo implantation        33           6
+28 GO:0034446 substrate adhesion-dependent cell spread...        62           7
+29 GO:0048592                           eye morphogenesis        81           9
+30 GO:0051450                      myoblast proliferation        10           3
+31 GO:0001938 positive regulation of endothelial cell ...        44           7
+32 GO:0005975              carbohydrate metabolic process       372          35
+   Expected weightFisher
+1      2.15      7.3e-07
+2     11.09      7.4e-06
+3      1.67      2.5e-05
+4      0.32      0.00011
+5      2.15      0.00019
+6      1.29      0.00026
+7      3.98      0.00067
+8      0.48      0.00084
+9     12.82      0.00098
+10     2.85      0.00110
+11     1.72      0.00131
+12     0.54      0.00135
+13     3.66      0.00136
+14     0.27      0.00143
+15     0.27      0.00143
+16     1.35      0.00174
+17     0.59      0.00202
+18     0.59      0.00274
+19     0.38      0.00289
+20     3.72      0.00363
+21     0.70      0.00402
+22     6.25      0.00433
+23     2.21      0.00461
+24     0.38      0.00462
+25     0.81      0.00705
+26     0.43      0.00709
+27     1.78      0.00756
+28     3.34      0.00805
+29     4.36      0.00828
+30     0.54      0.00835
+31     2.37      0.00852
+32    20.03      0.00955</code></pre>
+<pre class="r"><code>go_table[,-1]</code></pre>
+<pre><code>                                          Term Annotated Significant Expected
+1                   collagen catabolic process        40          12     2.15
+2            extracellular matrix organization       206          41    11.09
+3                 collagen fibril organization        31           9     1.67
+4             actin filament network formation         6           4     0.32
+5          glycosaminoglycan catabolic process        40           9     2.15
+6                collagen biosynthetic process        24           5     1.29
+7       glycosaminoglycan biosynthetic process        74          13     3.98
+8           positive regulation of myelination         9           4     0.48
+9                                 ossification       238          25    12.82
+10            extracellular matrix disassembly        53          10     2.85
+11             endodermal cell differentiation        32           7     1.72
+12                    biotin metabolic process        10           4     0.54
+13                response to interferon-gamma        68           6     3.66
+14       mesenchymal-epithelial cell signaling         5           3     0.27
+15 negative regulation of cytokine producti...         5           3     0.27
+16                         O-glycan processing        25           6     1.35
+17                 protein heterotrimerization        11           4     0.59
+18                response to interferon-alpha        11           4     0.59
+19    fat-soluble vitamin biosynthetic process         7           3     0.38
+20 positive regulation of protein kinase B ...        69          10     3.72
+21                 skeletal muscle contraction        13           4     0.70
+22           actomyosin structure organization       116          12     6.25
+23 cellular polysaccharide biosynthetic pro...        41           5     2.21
+24               peptidyl-lysine hydroxylation         7           3     0.38
+25                                   excretion        15           4     0.81
+26 positive regulation of catenin import in...         8           3     0.43
+27                         embryo implantation        33           6     1.78
+28 substrate adhesion-dependent cell spread...        62           7     3.34
+29                           eye morphogenesis        81           9     4.36
+30                      myoblast proliferation        10           3     0.54
+31 positive regulation of endothelial cell ...        44           7     2.37
+32              carbohydrate metabolic process       372          35    20.03
+   weightFisher
+1       7.3e-07
+2       7.4e-06
+3       2.5e-05
+4       0.00011
+5       0.00019
+6       0.00026
+7       0.00067
+8       0.00084
+9       0.00098
+10      0.00110
+11      0.00131
+12      0.00135
+13      0.00136
+14      0.00143
+15      0.00143
+16      0.00174
+17      0.00202
+18      0.00274
+19      0.00289
+20      0.00363
+21      0.00402
+22      0.00433
+23      0.00461
+24      0.00462
+25      0.00705
+26      0.00709
+27      0.00756
+28      0.00805
+29      0.00828
+30      0.00835
+31      0.00852
+32      0.00955</code></pre>
+<p>First create the gene universe for downregulated genes This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
+<pre class="r"><code>threshold &lt;- 0.05
+gene_universe_down &lt;- as.numeric(results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold &amp; results[[&quot;Unstrain&quot;]]$logFC &lt; 0)
+gene_universe_down &lt;- factor(gene_universe_down)
+names(gene_universe_down) &lt;- rownames(results[[&quot;Unstrain&quot;]])
+head(gene_universe_down)</code></pre>
+<pre><code>ENSG00000225972 ENSG00000225630 ENSG00000237973 ENSG00000248527 ENSG00000198744 
+              0               0               0               0               0 
+ENSG00000228794 
+              0 
+Levels: 0 1</code></pre>
+<p>Create the topGO data object. Only consider “Biological Process” categories and use the Mouse Ensembl database for annotation.</p>
+<pre class="r"><code>go_data &lt;- new(&quot;topGOdata&quot;,
+               ontology = &quot;BP&quot;,
+               allGenes = gene_universe_down,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = &quot;org.Hs.eg.db&quot;,
+               ID = &quot;ensembl&quot;)</code></pre>
+<pre><code>
+Building most specific GOs .....</code></pre>
+<pre><code>    ( 9640 GO terms found. )</code></pre>
+<pre><code>
+Build GO DAG topology ..........</code></pre>
+<pre><code>    ( 13704 GO terms and 31801 relations. )</code></pre>
+<pre><code>
+Annotating nodes ...............</code></pre>
+<pre><code>    ( 9322 genes annotated to the GO terms. )</code></pre>
+<p>Use the weight01 algorithm and score the tests with Fisher’s exact test.</p>
+<pre class="r"><code>go_test &lt;- runTest(go_data, algorithm = &quot;weight01&quot;, statistic = &quot;fisher&quot;)</code></pre>
+<pre><code>
+             -- Weight01 Algorithm -- 
+
+         the algorithm is scoring 4805 nontrivial nodes
+         parameters: 
+             test statistic: fisher</code></pre>
+<pre><code>
+     Level 19:  1 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 18:  3 nodes to be scored    (0 eliminated genes)</code></pre>
+<pre><code>
+     Level 17:  10 nodes to be scored   (10 eliminated genes)</code></pre>
+<pre><code>
+     Level 16:  16 nodes to be scored   (16 eliminated genes)</code></pre>
+<pre><code>
+     Level 15:  40 nodes to be scored   (58 eliminated genes)</code></pre>
+<pre><code>
+     Level 14:  90 nodes to be scored   (176 eliminated genes)</code></pre>
+<pre><code>
+     Level 13:  141 nodes to be scored  (464 eliminated genes)</code></pre>
+<pre><code>
+     Level 12:  225 nodes to be scored  (1333 eliminated genes)</code></pre>
+<pre><code>
+     Level 11:  378 nodes to be scored  (2802 eliminated genes)</code></pre>
+<pre><code>
+     Level 10:  522 nodes to be scored  (3840 eliminated genes)</code></pre>
+<pre><code>
+     Level 9:   639 nodes to be scored  (5366 eliminated genes)</code></pre>
+<pre><code>
+     Level 8:   644 nodes to be scored  (6708 eliminated genes)</code></pre>
+<pre><code>
+     Level 7:   716 nodes to be scored  (7647 eliminated genes)</code></pre>
+<pre><code>
+     Level 6:   626 nodes to be scored  (8320 eliminated genes)</code></pre>
+<pre><code>
+     Level 5:   405 nodes to be scored  (8720 eliminated genes)</code></pre>
+<pre><code>
+     Level 4:   229 nodes to be scored  (8954 eliminated genes)</code></pre>
+<pre><code>
+     Level 3:   98 nodes to be scored   (9081 eliminated genes)</code></pre>
+<pre><code>
+     Level 2:   21 nodes to be scored   (9149 eliminated genes)</code></pre>
+<pre><code>
+     Level 1:   1 nodes to be scored    (9213 eliminated genes)</code></pre>
+<p>Keep the results with a Fisher’s exact test p-value &lt; 0.01.</p>
+<pre class="r"><code>go_table &lt;- GenTable(go_data, weightFisher = go_test,
+                     orderBy = &quot;weightFisher&quot;, ranksOf = &quot;weightFisher&quot;,
+                     topNodes = sum(score(go_test) &lt; .01))
+go_table</code></pre>
+<pre><code>        GO.ID                                        Term Annotated Significant
+1  GO:0055114                 oxidation-reduction process       619          47
+2  GO:0006695            cholesterol biosynthetic process        56          14
+3  GO:0046364         monosaccharide biosynthetic process        58           6
+4  GO:0036499     PERK-mediated unfolded protein response        16           5
+5  GO:0006986                response to unfolded protein       147          19
+6  GO:1900034     regulation of cellular response to heat        72          11
+7  GO:0019321                   pentose metabolic process         9           4
+8  GO:0071578            zinc II ion transmembrane import         5           3
+9  GO:0071500     cellular response to nitrosative stress         5           3
+10 GO:0043066    negative regulation of apoptotic process       520          47
+11 GO:2001032 regulation of double-strand break repair...        11           4
+12 GO:0006974    cellular response to DNA damage stimulus       608          42
+13 GO:1905323      telomerase holoenzyme complex assembly         6           3
+14 GO:1903747 regulation of establishment of protein l...        83           6
+15 GO:0045454                      cell redox homeostasis        53           8
+16 GO:0030511 positive regulation of transforming grow...        22           5
+17 GO:0090084 negative regulation of inclusion body as...         7           3
+18 GO:0070389 chaperone cofactor-dependent protein ref...         7           3
+19 GO:0006098                     pentose-phosphate shunt        14           4
+20 GO:0051131 chaperone-mediated protein complex assem...        15           4
+21 GO:0045540 regulation of cholesterol biosynthetic p...        39           7
+22 GO:0019430              removal of superoxide radicals        14           4
+23 GO:0061179 negative regulation of insulin secretion...         8           3
+24 GO:0001946                           lymphangiogenesis         8           3
+25 GO:0002576                      platelet degranulation        71           9
+26 GO:0051898 negative regulation of protein kinase B ...        36           6
+27 GO:1904950 negative regulation of establishment of ...       129          10
+28 GO:0050857 positive regulation of antigen receptor-...        10           3
+29 GO:0050731 positive regulation of peptidyl-tyrosine...        78          12
+30 GO:1901214                  regulation of neuron death       174          18
+31 GO:0032874 positive regulation of stress-activated ...        92          12
+32 GO:0061098 positive regulation of protein tyrosine ...        22           5
+33 GO:0043619 regulation of transcription from RNA pol...         9           3
+34 GO:0001934 positive regulation of protein phosphory...       528          48
+35 GO:0071158    positive regulation of cell cycle arrest        71           6
+36 GO:0008631 intrinsic apoptotic signaling pathway in...        35           6
+37 GO:0046717                              acid secretion        36           6
+38 GO:0008299             isoprenoid biosynthetic process        15           4
+39 GO:0006950                          response to stress      2182         145
+   Expected weightFisher
+1     28.82      1.8e-06
+2      2.61      5.4e-06
+3      2.70      2.2e-05
+4      0.74      0.00014
+5      6.84      0.00026
+6      3.35      0.00045
+7      0.42      0.00048
+8      0.23      0.00093
+9      0.23      0.00093
+10    24.21      0.00113
+11     0.51      0.00118
+12    28.31      0.00136
+13     0.28      0.00180
+14     3.86      0.00216
+15     2.47      0.00290
+16     1.02      0.00291
+17     0.33      0.00305
+18     0.33      0.00305
+19     0.65      0.00319
+20     0.70      0.00420
+21     1.82      0.00432
+22     0.65      0.00469
+23     0.37      0.00471
+24     0.37      0.00471
+25     3.31      0.00542
+26     1.68      0.00583
+27     6.01      0.00623
+28     0.47      0.00627
+29     3.63      0.00640
+30     8.10      0.00650
+31     4.28      0.00660
+32     1.02      0.00676
+33     0.42      0.00682
+34    24.58      0.00692
+35     3.31      0.00846
+36     1.63      0.00930
+37     1.68      0.00931
+38     0.70      0.00937
+39   101.59      0.00947</code></pre>
+<pre class="r"><code>go_table[,-1]</code></pre>
+<pre><code>                                          Term Annotated Significant Expected
+1                  oxidation-reduction process       619          47    28.82
+2             cholesterol biosynthetic process        56          14     2.61
+3          monosaccharide biosynthetic process        58           6     2.70
+4      PERK-mediated unfolded protein response        16           5     0.74
+5                 response to unfolded protein       147          19     6.84
+6      regulation of cellular response to heat        72          11     3.35
+7                    pentose metabolic process         9           4     0.42
+8             zinc II ion transmembrane import         5           3     0.23
+9      cellular response to nitrosative stress         5           3     0.23
+10    negative regulation of apoptotic process       520          47    24.21
+11 regulation of double-strand break repair...        11           4     0.51
+12    cellular response to DNA damage stimulus       608          42    28.31
+13      telomerase holoenzyme complex assembly         6           3     0.28
+14 regulation of establishment of protein l...        83           6     3.86
+15                      cell redox homeostasis        53           8     2.47
+16 positive regulation of transforming grow...        22           5     1.02
+17 negative regulation of inclusion body as...         7           3     0.33
+18 chaperone cofactor-dependent protein ref...         7           3     0.33
+19                     pentose-phosphate shunt        14           4     0.65
+20 chaperone-mediated protein complex assem...        15           4     0.70
+21 regulation of cholesterol biosynthetic p...        39           7     1.82
+22              removal of superoxide radicals        14           4     0.65
+23 negative regulation of insulin secretion...         8           3     0.37
+24                           lymphangiogenesis         8           3     0.37
+25                      platelet degranulation        71           9     3.31
+26 negative regulation of protein kinase B ...        36           6     1.68
+27 negative regulation of establishment of ...       129          10     6.01
+28 positive regulation of antigen receptor-...        10           3     0.47
+29 positive regulation of peptidyl-tyrosine...        78          12     3.63
+30                  regulation of neuron death       174          18     8.10
+31 positive regulation of stress-activated ...        92          12     4.28
+32 positive regulation of protein tyrosine ...        22           5     1.02
+33 regulation of transcription from RNA pol...         9           3     0.42
+34 positive regulation of protein phosphory...       528          48    24.58
+35    positive regulation of cell cycle arrest        71           6     3.31
+36 intrinsic apoptotic signaling pathway in...        35           6     1.63
+37                              acid secretion        36           6     1.68
+38             isoprenoid biosynthetic process        15           4     0.70
+39                          response to stress      2182         145   101.59
+   weightFisher
+1       1.8e-06
+2       5.4e-06
+3       2.2e-05
+4       0.00014
+5       0.00026
+6       0.00045
+7       0.00048
+8       0.00093
+9       0.00093
+10      0.00113
+11      0.00118
+12      0.00136
+13      0.00180
+14      0.00216
+15      0.00290
+16      0.00291
+17      0.00305
+18      0.00305
+19      0.00319
+20      0.00420
+21      0.00432
+22      0.00469
+23      0.00471
+24      0.00471
+25      0.00542
+26      0.00583
+27      0.00623
+28      0.00627
+29      0.00640
+30      0.00650
+31      0.00660
+32      0.00676
+33      0.00682
+34      0.00692
+35      0.00846
+36      0.00930
+37      0.00931
+38      0.00937
+39      0.00947</code></pre>
+</div>
 </div>
 <div id="perform-de-analysis-using-edger" class="section level1">
 <h1>Perform DE analysis using edgeR</h1>
@@ -4139,7 +4623,7 @@ other attached packages:
 [21] BiocParallel_1.12.0        Biobase_2.38.0            
 [23] BiocGenerics_0.24.0        VennDiagram_1.6.20        
 [25] futile.logger_1.4.3        cowplot_0.9.3             
-[27] ggplot2_3.2.1              ashr_2.2-39               
+[27] ggplot2_3.2.1              ashr_2.2-47               
 [29] tidyr_1.0.0                dplyr_0.8.3               
 [31] edgeR_3.20.9               plyr_1.8.4                
 [33] limma_3.34.9              
@@ -4147,36 +4631,35 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
  [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.3          
- [7] bit64_0.9-7            codetools_0.2-15       splines_3.4.3         
-[10] R.methodsS3_1.7.1      pscl_1.5.2             doParallel_1.0.15     
-[13] DESeq_1.30.0           geneplotter_1.56.0     knitr_1.26            
-[16] zeallot_0.1.0          workflowr_1.5.0        annotate_1.56.2       
-[19] R.oo_1.23.0            compiler_3.4.3         httr_1.4.1            
-[22] backports_1.1.5        assertthat_0.2.1       Matrix_1.2-18         
-[25] lazyeval_0.2.2         later_1.0.0            formatR_1.7           
-[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
-[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
-[34] Rcpp_1.0.3             vctrs_0.2.0            rtracklayer_1.38.3    
-[37] iterators_1.0.12       xfun_0.12              stringr_1.4.0         
-[40] lifecycle_0.1.0        statmod_1.4.32         XML_3.98-1.20         
-[43] zlibbioc_1.24.0        MASS_7.3-51.4          scales_1.1.0          
-[46] aroma.light_3.8.0      hms_0.5.2              promises_1.1.0        
-[49] lambda.r_1.2.4         RColorBrewer_1.1-2     yaml_2.2.0            
-[52] memoise_1.1.0          biomaRt_2.34.2         latticeExtra_0.6-28   
-[55] stringi_1.4.3          RSQLite_2.1.4          SQUAREM_2017.10-1     
-[58] genefilter_1.60.0      foreach_1.4.7          RMySQL_0.10.17        
-[61] GenomicFeatures_1.30.3 truncnorm_1.0-8        rlang_0.4.4           
-[64] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
-[67] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
-[70] bit_1.1-14             tidyselect_0.2.5       magrittr_1.5          
-[73] R6_2.4.1               DBI_1.0.0              pillar_1.4.2          
-[76] whisker_0.4            withr_2.1.2            survival_2.41-3       
-[79] RCurl_1.95-4.12        mixsqp_0.2-2           tibble_2.1.3          
-[82] crayon_1.3.4           futile.options_1.0.1   rmarkdown_1.18        
-[85] progress_1.2.2         locfit_1.5-9.1         blob_1.2.0            
-[88] git2r_0.26.1           etrunct_0.1            digest_0.6.23         
-[91] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
-[94] munsell_0.5.0         </code></pre>
+ [7] bit64_0.9-7            splines_3.4.3          R.methodsS3_1.7.1     
+[10] DESeq_1.30.0           geneplotter_1.56.0     knitr_1.26            
+[13] zeallot_0.1.0          workflowr_1.5.0        annotate_1.56.2       
+[16] R.oo_1.23.0            compiler_3.4.3         httr_1.4.1            
+[19] backports_1.1.5        assertthat_0.2.1       Matrix_1.2-18         
+[22] lazyeval_0.2.2         later_1.0.0            formatR_1.7           
+[25] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
+[28] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
+[31] Rcpp_1.0.3             vctrs_0.2.0            rtracklayer_1.38.3    
+[34] xfun_0.12              stringr_1.4.0          lifecycle_0.1.0       
+[37] irlba_2.3.3            statmod_1.4.32         XML_3.98-1.20         
+[40] zlibbioc_1.24.0        MASS_7.3-51.4          scales_1.1.0          
+[43] aroma.light_3.8.0      hms_0.5.2              promises_1.1.0        
+[46] lambda.r_1.2.4         RColorBrewer_1.1-2     yaml_2.2.0            
+[49] memoise_1.1.0          biomaRt_2.34.2         latticeExtra_0.6-28   
+[52] stringi_1.4.3          RSQLite_2.1.4          SQUAREM_2020.2        
+[55] genefilter_1.60.0      RMySQL_0.10.17         GenomicFeatures_1.30.3
+[58] truncnorm_1.0-8        rlang_0.4.4            pkgconfig_2.0.3       
+[61] bitops_1.0-6           evaluate_0.14          lattice_0.20-35       
+[64] invgamma_1.1           purrr_0.3.3            labeling_0.3          
+[67] bit_1.1-14             tidyselect_0.2.5       magrittr_1.5          
+[70] R6_2.4.1               DBI_1.0.0              pillar_1.4.2          
+[73] whisker_0.4            withr_2.1.2            survival_2.41-3       
+[76] RCurl_1.95-4.12        mixsqp_0.3-17          tibble_2.1.3          
+[79] crayon_1.3.4           futile.options_1.0.1   rmarkdown_1.18        
+[82] progress_1.2.2         locfit_1.5-9.1         blob_1.2.0            
+[85] git2r_0.26.1           etrunct_0.1            digest_0.6.23         
+[88] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
+[91] munsell_0.5.0         </code></pre>
 </div>
 </div>
 </div>

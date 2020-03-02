@@ -357,6 +357,100 @@ go_table[,-1]
 
 
 
+## Gene ontology analysis with topGO (separate up and downregulated genes)
+
+Use topGO for GO analysis.
+Essentially, it decreases the redundancy of the results.
+
+
+First create the gene universe for upregulated genes
+This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
+
+```{r gene-universe-up}
+threshold <- 0.05
+gene_universe_up <- as.numeric(results[["Unstrain"]]$qvalue < threshold & results[["Unstrain"]]$logFC > 0)
+gene_universe_up <- factor(gene_universe_up)
+names(gene_universe_up) <- rownames(results[["Unstrain"]])
+head(gene_universe_up)
+```
+
+Create the topGO data object.
+Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
+
+```{r go-data-up}
+go_data <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe_up,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "ensembl")
+```
+
+Use the weight01 algorithm and score the tests with Fisher's exact test.
+
+```{r go-test-up}
+go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher")
+```
+
+Keep the results with a Fisher's exact test p-value < 0.01.
+
+```{r go-table-up}
+go_table <- GenTable(go_data, weightFisher = go_test,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test) < .01))
+go_table
+go_table[,-1]
+```
+
+
+
+
+
+
+First create the gene universe for downregulated genes
+This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
+
+```{r gene-universe-down}
+threshold <- 0.05
+gene_universe_down <- as.numeric(results[["Unstrain"]]$qvalue < threshold & results[["Unstrain"]]$logFC < 0)
+gene_universe_down <- factor(gene_universe_down)
+names(gene_universe_down) <- rownames(results[["Unstrain"]])
+head(gene_universe_down)
+```
+
+Create the topGO data object.
+Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
+
+```{r go-data-down}
+go_data <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe_down,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "ensembl")
+```
+
+Use the weight01 algorithm and score the tests with Fisher's exact test.
+
+```{r go-test-down}
+go_test <- runTest(go_data, algorithm = "weight01", statistic = "fisher")
+```
+
+Keep the results with a Fisher's exact test p-value < 0.01.
+
+```{r go-table-down}
+go_table <- GenTable(go_data, weightFisher = go_test,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test) < .01))
+go_table
+go_table[,-1]
+```
+
+
+
+
 
 
 # Perform DE analysis using edgeR
@@ -473,7 +567,6 @@ table(gene_values@.Data[[1]]$FDR < thresh)
 ## Gene ontology analysis with topGO
 
 Use topGO for GO analysis.
-It accounts for the nested graph structure of GO terms to prune the number of GO categories tested ([Alexa et al. 2006][Alexa2006]).
 Essentially, it decreases the redundancy of the results.
 
 First create the gene universe.

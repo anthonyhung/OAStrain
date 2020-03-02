@@ -492,73 +492,52 @@ annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
 ```
 
 
-# Semi-supervised topic modeling (define some known clusters prior to fitting topic model)
 
-```{r supervised}
+
+
+
+
+
+
+
+
+
+
+# Semi-supervised topic modeling
+
+```{r semi-sup}
 library("classtpx")
 
+counts <- as.matrix(Combined.common.allGenes@assays$RNA@counts)
+labels <- sapply(strsplit(Combined.common.allGenes@meta.data$Cell.Type,"_"), `[`, 1)
+labels <- sapply(strsplit(labels," "), `[`, 1)
+
+
 # labels for "known" clusters
-index_heart <- which(labels=="Heart")
-index_lung <- which(labels=="Lung")
-index_liver <- which(labels=="Liver")
-index_kidney <- which(labels=="Kidney")
+index_hep <- which(labels=="Hepatocyte")
+index_Chondro <- which(labels=="Chondro")
 index_iPSC <- which(labels=="iPSC")
-index_chond <- which(labels=="Chond")
 
-known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond)
+known_samples <- c(index_hep, index_Chondro, index_iPSC)
 
-class_labs <- c(rep("Heart", length(index_heart)),
-                rep("Lung", length(index_lung)),
-                rep("Liver", length(index_liver)),
-                rep("Kidney", length(index_kidney)),
-                rep("iPSC", length(index_iPSC)),
-                rep("Chond", length(index_chond))
+class_labs <- c(rep("Hepatocyte", length(index_hep)),
+                rep("Chondrocyte", length(index_Chondro)),
+                rep("iPSC", length(index_iPSC))
                 )
 
-# Perform topic modeling k=6
+
+# Perform topic modeling k=5
 Topic_clus <- classtpx::class_topics(
-    t(merged_raw_data_counts),
-    K=6,
+    t(counts),
+    K=5,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+save(Topic_clus, file="data/merged_topic_fit_5_classtpx_omega_fix.rda")
+Topic_clus <- get(load(file="data/merged_topic_fit_5_classtpx_omega_fix.rda"))
 
-omega <- Topic_clus$omega
-annotation <- data.frame(
-  sample_id = paste0("X", c(1:NROW(omega))),
-  tissue_label = as.factor(labels))
-rownames(omega) <- annotation$sample_id
-CountClust::StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = "bold")
-                )
-
-
-
-
-
-# Perform topic modeling k=7
-Topic_clus <- classtpx::class_topics(
-    t(merged_raw_data_counts),
-    K=7,
-    known_samples = known_samples,
-    class_labs = class_labs,
-    method="omega.fix",
-    tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
-
-omega <- Topic_clus$omega
+omega <- Topic_clus_8$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
