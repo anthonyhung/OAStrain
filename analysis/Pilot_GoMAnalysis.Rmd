@@ -555,3 +555,155 @@ CountClust::StructureGGplot(omega = omega,
                 )
 ```
 
+
+
+
+
+
+
+
+# Grades of Membership analysis with fastTopics
+
+```{r fit_poisson_nmf function}
+library(fastTopics)
+counts_allgenes <- Combined.common.allGenes@assays$RNA@counts
+fit1 <- fit_poisson_nmf(counts_allgenes,k = 3,numiter = 500,method = "mu")
+fit1_multinomial <- poisson2multinom(fit1)
+```
+
+
+# Analysis of the Topics within the Topic models generated for each dataset
+
+
+```{r functions to visualize GoM fasttopic}
+visualizeGoM <- function(omega, seuratobject, data){
+  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
+  labs_clus <- colnames(omega)[apply(omega,1,which.max)]
+  data_ggplot <- data.frame(labels = labs_clus,
+                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
+                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
+  plot1 <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
+                                     panel.grid.major = element_blank(),
+                                     panel.grid.minor = element_blank(),
+                                     axis.text.y = element_blank(),
+                                     axis.text.x = element_blank(),
+                                     axis.ticks = element_blank(),
+                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = labels), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_color_discrete('')
+  return(plot1)
+}
+
+visualizeGoM_topic_gradients <- function(omega, seuratobject, data){
+  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
+  ntopics <- ncol(omega)
+  for (n in 1:ntopics){
+  data_ggplot <- data.frame(proportion = omega[,n],
+                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
+                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
+  plot.gradient <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
+                                     panel.grid.major = element_blank(),
+                                     panel.grid.minor = element_blank(),
+                                     axis.text.y = element_blank(),
+                                     axis.text.x = element_blank(),
+                                     axis.ticks = element_blank(),
+                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = proportion), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_colour_gradient(low="grey", high="red")
+  plot(plot.gradient)
+  }
+}
+
+
+
+plot_structure_plot <- function(omega, seuratobject){
+     labels <- sapply(strsplit(seuratobject@meta.data$Cell.Type," "), `[`, 1)
+     annotation <- data.frame(
+          sample_id = rownames(omega),
+          tissue_label = labels
+          )
+     StructureGGplot(omega = omega,
+                     annotation = annotation,
+                     #palette = my_color_palette1,
+                     order_sample = TRUE,
+                     axis_tick = list(axis_ticks_length = .1,
+                                      axis_ticks_lwd_y = .1,
+                                      axis_ticks_lwd_x = .1,
+                                      axis_label_size = 7,
+                                      axis_label_face = "bold"))
+     }
+
+
+make_topic_plots <- function(omega, celltypes){
+  omega <- as.data.frame(omega)
+  omega <- cbind(omega,celltypes)
+  for (k in 1:(ncol(omega)-1)) {
+    base_plot <- ggplot(data = omega, mapping = aes(x = celltypes, y = omega[,k])) + labs(y = paste0("Topic ", k, " value"), x = paste0("Cell Type")) + theme(axis.text.x = element_text(angle = -20, hjust = 0, vjust = 0))
+    plot(base_plot + geom_violin(width = 1.5, fill = "skyblue",color = "skyblue") +
+      geom_boxplot(width = 0.1,outlier.shape = NA, alpha = 0.2))
+   }
+}
+```
+
+Use the CountClust::ExtractTopFeatures function to obtain KL measurement scores for the top 100 genes per cluster that best distinguish that cluster from the rest.
+
+```{r cluster annotations function}
+annotate_clusters <- function(theta_mat, countmatrix){
+  top_features <- ExtractTopFeatures(theta_mat,
+                                     top_features=100,
+                                     method="poisson",
+                                     options="min")
+  gene_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) rownames(countmatrix)[top_features[[1]][x,]]))
+  scores_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) top_features[[2]][x,]))
+  print(gene_vector)
+  print(scores_vector)
+}
+```
+
+# Apply Visualization/annotation functions to GoM results
+
+```{r k of 3}
+visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
+```
+
+```{r k of 4}
+visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
+```
+
+```{r k of 5}
+visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
+```
+
+```{r k of 6}
+visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
+```
+
+```{r k of 7}
+visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
+```
+
+```{r k of 8}
+visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
+make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
+annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
+```
+
+

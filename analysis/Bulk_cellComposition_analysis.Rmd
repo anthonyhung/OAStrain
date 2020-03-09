@@ -634,45 +634,51 @@ CountClust::StructureGGplot(omega = omega,
 # Semi-supervised Topic Modeling Genes Analysis
 
 ```{r genes_classtpx}
-#function to plot genes that distinguish topics
-plot_topic_factors <- function(GoM_object){
-     theta <- GoM_object$theta
-          
-     for(topic in 1:ncol(theta)){
-          plot_ratio_factor_by_mean_factor(topic, theta)
-     }
-}
+genes <- annotate_clusters(theta_mat = Topic_clus_7$theta, countmatrix = merged_raw_data_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
+genes[[2]]
 
-plot_ratio_factor_by_mean_factor <- function(topic_n, GoM_theta){
-     factors_topic_n <- GoM_theta[,topic_n]
-     mean_factors_minus_topic_n <- row_means(GoM_theta[, -topic_n])
-     ratio_factors_topic_n <- factors_topic_n/mean_factors_minus_topic_n
-     
-     mean_factors <- row_means(GoM_theta)
-     
-     #get matrix of data to be fed into plot
-     data <- as.data.frame(cbind("factor ratio" = ratio_factors_topic_n, "mean factor" = mean_factors))
-     #identify genes to highlight
-     data <- data %>%
-          mutate(reg = case_when(
-               log(data$`mean factor`) >= -20 & log(data$`factor ratio`) >= 10 ~ "UP",
-               log(data$`mean factor`) >= -20 & log(data$`factor ratio`) <= -10 ~ "DOWN",
-               log(data$`mean factor`) >= -20 & log(data$`factor ratio`) > -10 & log(data$`factor ratio`) < 10~ "no_change",
-               log(data$`mean factor`) < -20 ~ "no_change"
-               ))%>%
-          mutate(reg = factor(reg, levels = c("UP", "no_change","DOWN")))
-     
-     data_subset= data[which(log(data$`mean factor`) >= -20),]
-     data_subset= data[which(log(data$`factor ratio`) <= -10 | log(data$`factor ratio`) >= 10) ,]
-     
-     #plot
-     ggplot(data, aes(x = log(`mean factor`), y = log(`factor ratio`)), label = rownames(data)) +
-          geom_point(aes(color=reg)) +
-          scale_color_manual(name = "Differential \n regulation",
-                     values = c("DOWN" = "#058983",
-                                "no_change" = "grey",
-                                "UP" = "#DEB132"),
-                     labels = c("UP", "No Change", "DOWN"))
+
+
+# #function to plot genes that distinguish topics
+# plot_topic_factors <- function(GoM_object){
+#      theta <- GoM_object$theta
+#           
+#      for(topic in 1:ncol(theta)){
+#           plot_ratio_factor_by_mean_factor(topic, theta)
+#      }
+# }
+# 
+# plot_ratio_factor_by_mean_factor <- function(topic_n, GoM_theta){
+#      factors_topic_n <- GoM_theta[,topic_n]
+#      mean_factors_minus_topic_n <- row_means(GoM_theta[, -topic_n])
+#      ratio_factors_topic_n <- factors_topic_n/mean_factors_minus_topic_n
+#      
+#      mean_factors <- row_means(GoM_theta)
+#      
+#      #get matrix of data to be fed into plot
+#      data <- as.data.frame(cbind("factor ratio" = ratio_factors_topic_n, "mean factor" = mean_factors))
+#      #identify genes to highlight
+#      data <- data %>%
+#           mutate(reg = case_when(
+#                log(data$`mean factor`) >= -20 & log(data$`factor ratio`) >= 10 ~ "UP",
+#                log(data$`mean factor`) >= -20 & log(data$`factor ratio`) <= -10 ~ "DOWN",
+#                log(data$`mean factor`) >= -20 & log(data$`factor ratio`) > -10 & log(data$`factor ratio`) < 10~ "no_change",
+#                log(data$`mean factor`) < -20 ~ "no_change"
+#                ))%>%
+#           mutate(reg = factor(reg, levels = c("UP", "no_change","DOWN")))
+#      
+#      data_subset= data[which(log(data$`mean factor`) >= -20),]
+#      data_subset= data[which(log(data$`factor ratio`) <= -10 | log(data$`factor ratio`) >= 10) ,]
+#      
+#      #plot
+#      ggplot(data, aes(x = log(`mean factor`), y = log(`factor ratio`)), label = rownames(data)) +
+#           geom_point(aes(color=reg)) +
+#           scale_color_manual(name = "Differential \n regulation",
+#                      values = c("DOWN" = "#058983",
+#                                 "no_change" = "grey",
+#                                 "UP" = "#DEB132"),
+#                      labels = c("UP", "No Change", "DOWN"))
 
 ```
 

@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-29
+<strong>Last updated:</strong> 2020-03-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree59b30d0b555983d416401d53765f1863f550e7abtargetblank59b30d0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/59b30d0b555983d416401d53765f1863f550e7ab" target="_blank">59b30d0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreead1e27bd3b051a731c2357fb8d8f981baa35f6aftargetblankad1e27ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/ad1e27bd3b051a731c2357fb8d8f981baa35f6af" target="_blank">ad1e27b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree59b30d0b555983d416401d53765f1863f550e7abtargetblank59b30d0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreead1e27bd3b051a731c2357fb8d8f981baa35f6aftargetblankad1e27ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,10 +508,10 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
@@ -531,6 +531,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/Bulk_cellComposition_analysis.Rmd
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
 
 </code></pre>
 <p>
@@ -569,6 +570,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1e27bd3b051a731c2357fb8d8f981baa35f6af/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">ad1e27b</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-02
+</td>
+<td>
+separate up/down in de analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/68e5e33dc85bf6340efc50200e47b0766711c93c/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">68e5e33</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-01
+</td>
+<td>
+add k = 8 for semi-supervised gom
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/68e5e33dc85bf6340efc50200e47b0766711c93c/docs/Bulk_cellComposition_analysis.html" target="_blank">68e5e33</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-01
+</td>
+<td>
+add k = 8 for semi-supervised gom
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -7811,18 +7863,9 @@ Topic_clus_8 &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_8, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 57 document collection.
-start the fit 
-log posterior increase: 13746634.64, 223647.95, 366480.41, 308985.85, 199126.5, 145107.74, 83443.23, 65258.24, 57388.17, 36799.42, 31880.43, 40428.46, 19271.74, 21984.02, 18008.9, 14374.18, 12557.78, 12668.47, 14801.88, 13004.75, 10590.63, 8568.68, 10327.82, 11490.7, 12895.15, 7623.68, 11824.52, 10072.91, 6761.5, 2653.25, 1152.99, 421.48, 535.22, 107.47, 40.3, 33.64, 56.8, 8.71, 3.5, 0.74, 0.37, 0.3, 0.09, 0.08, 0.06, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 10.6, 1600.69, 582906.81, 341913.11, 52540.04, 97053.67, 339092.41, 288912.81, 349727.9, 35823.16, 12353.98, 9687.02, 12074.87, 19974.21, 30400.55, 20840.05, 13024.14, 11302.97, 10441.83, 10501.49, 10876.9, 10342.95, 9766.13, 10741.46, 10911.67, 7855.34, 4767.11, 3042.95, 2063.75, 1485.48, 1137.75, 902.71, 725.26, 587.71, 479.68, 392.5, 321.12, 264.96, 224.89, 199.81, 188.04, 185.8, 188.68, 192.13, 192.36, 187.44, 177.05, 162.5, 146.01, p 48410 iter 1000 diff 133
-129.97, 116.26, 105.77, 98.78, 95.07, 94.24, 95.89, 99.46, 104.31, 109.73, 114.83, 118.69, 120.61, 120.24, 117.75, 113.66, 108.7, 103.58, 98.76, 94.41, 90.48, 86.76, 83.06, 79.16, 74.99, 70.51, 65.8, 60.98, 56.18, 51.54, 47.15, 43.06, 39.35, 36.12, 33.33, 30.58, 28.41, 26.31, 24.31, 22.46, 20.75, 19.15, 17.67, 16.65, 15.39, 13.91, 12.46, 11.05, 9.69, 8.4, 7.21, 6.14, 5.23, 4.46, 3.82, 3.29, 2.85, 2.48, 2.16, 1.89, 1.67, 1.47, 1.3, 1.15, 1.03, 0.92, 0.82, 0.74, 0.67, 0.6, 0.55, 0.5, 0.45, 0.41, 0.38, 0.35, 0.32, 0.3, 0.28, 0.26, 0.24, 0.23, 0.21, 0.2, 0.19, 0.17, 0.16, 0.15, 0.15, 0.14, 0.13, 0.12, 0.12, 0.11, 0.11, 0.1, 0.1, 0.09, 0.09, 0.09, p 48410 iter 2000 diff 0
-0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.06, 0.06, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_8$omega
+}
+
+omega &lt;- Topic_clus_8$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -7839,6 +7882,368 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-supervised-3">
+Past versions of supervised-3.png
+</button>
+</p>
+<div id="fig-supervised-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/68e5e33dc85bf6340efc50200e47b0766711c93c/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-3.png" target="_blank">68e5e33</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="semi-supervised-topic-modeling-genes-analysis" class="section level1">
+<h1>Semi-supervised Topic Modeling Genes Analysis</h1>
+<pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Topic_clus_7$theta, countmatrix = merged_raw_data_counts)
+matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
+<pre><code>     [,1]     [,2]      [,3]      [,4]     [,5]    [,6]     [,7]     [,8]     
+[1,] &quot;COL3A1&quot; &quot;COL1A2&quot;  &quot;SPARC&quot;   &quot;COL1A1&quot; &quot;FN1&quot;   &quot;IGFBP3&quot; &quot;CHI3L1&quot; &quot;COL12A1&quot;
+[2,] &quot;LIN28A&quot; &quot;KRT8&quot;    &quot;CLDN6&quot;   &quot;CTSV&quot;   &quot;L1TD1&quot; &quot;DNMT3B&quot; &quot;PRTG&quot;   &quot;LRRN1&quot;  
+[3,] &quot;MMP1&quot;   &quot;TERT&quot;    &quot;DYNC1H1&quot; &quot;TFPI2&quot;  &quot;ACTB&quot;  &quot;THBS1&quot;  &quot;DCBLD2&quot; &quot;RGS4&quot;   
+[4,] &quot;SFTPB&quot;  &quot;SFTPC&quot;   &quot;SFTPA1&quot;  &quot;SFTPA2&quot; &quot;AGER&quot;  &quot;A2M&quot;    &quot;CLDN18&quot; &quot;CEACAM6&quot;
+[5,] &quot;UMOD&quot;   &quot;SLC12A1&quot; &quot;GPX3&quot;    &quot;AQP2&quot;   &quot;CDH16&quot; &quot;SPP1&quot;   &quot;ATP1B1&quot; &quot;SLC12A3&quot;
+[6,] &quot;MYH7&quot;   &quot;DES&quot;     &quot;MYL2&quot;    &quot;TNNT2&quot;  &quot;MB&quot;    &quot;CKM&quot;    &quot;MT-ND1&quot; &quot;MT-CO1&quot; 
+[7,] &quot;SAA1&quot;   &quot;ALB&quot;     &quot;SAA2&quot;    &quot;CRP&quot;    &quot;HP&quot;    &quot;FGA&quot;    &quot;APOC3&quot;  &quot;FGB&quot;    
+     [,9]       [,10]    [,11]    [,12]    [,13]     [,14]     [,15]     
+[1,] &quot;COL5A1&quot;   &quot;ITGA11&quot; &quot;SULF1&quot;  &quot;ACAN&quot;   &quot;POSTN&quot;   &quot;COL11A1&quot; &quot;COL4A1&quot;  
+[2,] &quot;GABRP&quot;    &quot;DPPA4&quot;  &quot;MDK&quot;    &quot;ESRG&quot;   &quot;HAND1&quot;   &quot;TRIML2&quot;  &quot;IGDCC3&quot;  
+[3,] &quot;SERPINE1&quot; &quot;MKI67&quot;  &quot;CLDN11&quot; &quot;LDHA&quot;   &quot;SFRP1&quot;   &quot;PRKDC&quot;   &quot;PKM&quot;     
+[4,] &quot;B2M&quot;      &quot;FOS&quot;    &quot;HLA-E&quot;  &quot;JUN&quot;    &quot;ZFP36&quot;   &quot;DEPP1&quot;   &quot;EPAS1&quot;   
+[5,] &quot;HSD11B2&quot;  &quot;PAX8&quot;   &quot;CA12&quot;   &quot;CALB1&quot;  &quot;KCNJ1&quot;   &quot;CLCNKB&quot;  &quot;PDZK1IP1&quot;
+[6,] &quot;MYL3&quot;     &quot;MYBPC3&quot; &quot;TNNI3&quot;  &quot;TTN&quot;    &quot;TCAP&quot;    &quot;HSPB7&quot;   &quot;XIRP1&quot;   
+[7,] &quot;SERPINA1&quot; &quot;FGG&quot;    &quot;ORM1&quot;   &quot;CYP2E1&quot; &quot;PLA2G2A&quot; &quot;C3&quot;      &quot;HAMP&quot;    
+     [,16]    [,17]        [,18]   [,19]     [,20]     [,21]    [,22]    
+[1,] &quot;PENK&quot;   &quot;BGN&quot;        &quot;TIMP1&quot; &quot;CEMIP&quot;   &quot;COL4A2&quot;  &quot;MXRA5&quot;  &quot;LOX&quot;    
+[2,] &quot;POU5F1&quot; &quot;AC064802.1&quot; &quot;VRTN&quot;  &quot;TRIM71&quot;  &quot;RPS19&quot;   &quot;CDH3&quot;   &quot;RPS18&quot;  
+[3,] &quot;ACTG1&quot;  &quot;NOTCH2&quot;     &quot;MYH9&quot;  &quot;PLAT&quot;    &quot;ZFHX4&quot;   &quot;FGF5&quot;   &quot;SAMD9&quot;  
+[4,] &quot;PECAM1&quot; &quot;TMEM100&quot;    &quot;ATF3&quot;  &quot;EGR1&quot;    &quot;FOSB&quot;    &quot;DUSP1&quot;  &quot;SCGB1A1&quot;
+[5,] &quot;KCNJ16&quot; &quot;SLC5A12&quot;    &quot;MIOX&quot;  &quot;TMEM213&quot; &quot;SLC13A3&quot; &quot;CUBN&quot;   &quot;DPEP1&quot;  
+[6,] &quot;LDB3&quot;   &quot;MT-RNR2&quot;    &quot;TNNC1&quot; &quot;MT-CYB&quot;  &quot;ACTC1&quot;   &quot;MT-ND4&quot; &quot;ACTN2&quot;  
+[7,] &quot;APOA2&quot;  &quot;TF&quot;         &quot;MT2A&quot;  &quot;APOB&quot;    &quot;RBP4&quot;    &quot;CPS1&quot;   &quot;APOA1&quot;  
+     [,23]     [,24]     [,25]    [,26]     [,27]     [,28]      [,29]      
+[1,] &quot;LRP1&quot;    &quot;COL6A2&quot;  &quot;COL5A2&quot; &quot;LUM&quot;     &quot;MRC2&quot;    &quot;MMP2&quot;     &quot;COMP&quot;     
+[2,] &quot;KRT19&quot;   &quot;SLC16A1&quot; &quot;RPS24&quot;  &quot;SLC38A1&quot; &quot;ZSCAN10&quot; &quot;LIN28B&quot;   &quot;LINC00678&quot;
+[3,] &quot;MICAL2&quot;  &quot;CORO1C&quot;  &quot;CDCP1&quot;  &quot;HIF1A&quot;   &quot;COTL1&quot;   &quot;AXL&quot;      &quot;EIF4G1&quot;   
+[4,] &quot;SLC34A2&quot; &quot;HLA-B&quot;   &quot;DNAJB1&quot; &quot;HLA-DRA&quot; &quot;CD74&quot;    &quot;PPP1R15A&quot; &quot;RGCC&quot;     
+[5,] &quot;SLC34A1&quot; &quot;SLC22A8&quot; &quot;DEFB1&quot;  &quot;SULT1C2&quot; &quot;ATP1A1&quot;  &quot;TMEM52B&quot;  &quot;RHCG&quot;     
+[6,] &quot;FABP3&quot;   &quot;MT-ND2&quot;  &quot;EEF1A2&quot; &quot;MT-RNR1&quot; &quot;MT-ND5&quot;  &quot;NRAP&quot;     &quot;CKMT2&quot;    
+[7,] &quot;FGL1&quot;    &quot;APOC1&quot;   &quot;TTR&quot;    &quot;APOH&quot;    &quot;AHSG&quot;    &quot;HPX&quot;      &quot;SDS&quot;      
+     [,30]     [,31]       [,32]      [,33]    [,34]      [,35]     [,36]     
+[1,] &quot;SPON2&quot;   &quot;EFEMP1&quot;    &quot;MFGE8&quot;    &quot;FKBP10&quot; &quot;CILP&quot;     &quot;TGFBI&quot;   &quot;NDUFA4L2&quot;
+[2,] &quot;SEPHS1&quot;  &quot;RPL5&quot;      &quot;MARCKSL1&quot; &quot;RPL23&quot;  &quot;RPL3&quot;     &quot;SLC2A3&quot;  &quot;PTPRZ1&quot;  
+[3,] &quot;FGF2&quot;    &quot;KIAA1549L&quot; &quot;LAMC1&quot;    &quot;TLN1&quot;   &quot;ACTN4&quot;    &quot;IL1B&quot;    &quot;ALDH1A3&quot; 
+[4,] &quot;UBC&quot;     &quot;PGC&quot;       &quot;DUOX1&quot;    &quot;EMP2&quot;   &quot;CX3CL1&quot;   &quot;HSPA1B&quot;  &quot;CD93&quot;    
+[5,] &quot;SLC22A6&quot; &quot;SLC22A12&quot;  &quot;SLC3A1&quot;   &quot;CLCNKA&quot; &quot;EMX2OS&quot;   &quot;PAX2&quot;    &quot;SLC47A2&quot; 
+[6,] &quot;CRYAB&quot;   &quot;MYL7&quot;      &quot;HRC&quot;      &quot;PLN&quot;    &quot;COX6A2&quot;   &quot;SLC25A4&quot; &quot;MYOZ2&quot;   
+[7,] &quot;AGXT&quot;    &quot;CLU&quot;       &quot;AMBP&quot;     &quot;PTP4A1&quot; &quot;SERPINF2&quot; &quot;IGFBP1&quot;  &quot;FABP1&quot;   
+     [,37]     [,38]     [,39]    [,40]     [,41]      [,42]   [,43]     
+[1,] &quot;COL6A1&quot;  &quot;LTBP2&quot;   &quot;FSTL1&quot;  &quot;MATN2&quot;   &quot;SERPINE2&quot; &quot;TNC&quot;   &quot;HSPG2&quot;   
+[2,] &quot;STK26&quot;   &quot;RPS3&quot;    &quot;RPL8&quot;   &quot;CTNNB1&quot;  &quot;RPS6&quot;     &quot;FREM2&quot; &quot;DSP&quot;     
+[3,] &quot;MET&quot;     &quot;CCND1&quot;   &quot;PSMD2&quot;  &quot;NEK7&quot;    &quot;SLC7A1&quot;   &quot;DNER&quot;  &quot;TUBB6&quot;   
+[4,] &quot;ICAM1&quot;   &quot;TIMP3&quot;   &quot;CYP4B1&quot; &quot;AQP4&quot;    &quot;RHOB&quot;     &quot;GLUL&quot;  &quot;HLA-DRB1&quot;
+[5,] &quot;SMIM24&quot;  &quot;TFCP2L1&quot; &quot;CYS1&quot;   &quot;SLC6A19&quot; &quot;TMEM72&quot;   &quot;FXYD2&quot; &quot;NPHS1&quot;   
+[6,] &quot;MT-ATP6&quot; &quot;MT-CO2&quot;  &quot;MYH7B&quot;  &quot;COX7A1&quot;  &quot;CMYA5&quot;    &quot;CSRP3&quot; &quot;MYOM2&quot;   
+[7,] &quot;HAL&quot;     &quot;HMGCS2&quot;  &quot;ACSL1&quot;  &quot;AGT&quot;     &quot;MT1M&quot;     &quot;PAH&quot;   &quot;ITIH3&quot;   
+     [,44]     [,45]        [,46]   [,47]     [,48]      [,49]    [,50]   
+[1,] &quot;PDPN&quot;    &quot;AC089987.1&quot; &quot;HTRA1&quot; &quot;CDH11&quot;   &quot;PCDH10&quot;   &quot;CYP1B1&quot; &quot;CCDC80&quot;
+[2,] &quot;RPS5&quot;    &quot;HNRNPC&quot;     &quot;RPS14&quot; &quot;NKX1-2&quot;  &quot;PRDX1&quot;    &quot;RPL37&quot;  &quot;RPL31&quot; 
+[3,] &quot;DUSP4&quot;   &quot;FLNA&quot;       &quot;ITGA5&quot; &quot;ITGA2&quot;   &quot;SMURF2&quot;   &quot;RAB3B&quot;  &quot;HUWE1&quot; 
+[4,] &quot;SLC11A1&quot; &quot;CALCRL&quot;     &quot;AOC3&quot;  &quot;SCEL&quot;    &quot;HLA-DPA1&quot; &quot;JUNB&quot;   &quot;THBD&quot;  
+[5,] &quot;PTGER3&quot;  &quot;SLC4A9&quot;     &quot;NAT8&quot;  &quot;KIF12&quot;   &quot;MAL&quot;      &quot;NPHS2&quot;  &quot;SLC4A1&quot;
+[6,] &quot;PDK4&quot;    &quot;TECRL&quot;      &quot;APOD&quot;  &quot;ADPRHL1&quot; &quot;MYH6&quot;     &quot;SRL&quot;    &quot;TRIM54&quot;
+[7,] &quot;CREB3L3&quot; &quot;VTN&quot;        &quot;RDH16&quot; &quot;ITIH1&quot;   &quot;ADH4&quot;     &quot;LBP&quot;    &quot;MT1G&quot;  
+     [,51]      [,52]      [,53]    [,54]     [,55]       [,56]     [,57]   
+[1,] &quot;DCN&quot;      &quot;FNDC1&quot;    &quot;IGFL2&quot;  &quot;THY1&quot;    &quot;FBLN5&quot;     &quot;EDIL3&quot;   &quot;P4HA2&quot; 
+[2,] &quot;NPPB&quot;     &quot;RPL10A&quot;   &quot;RPS12&quot;  &quot;DSC2&quot;    &quot;TUBB2B&quot;    &quot;SINHCAF&quot; &quot;KIF1A&quot; 
+[3,] &quot;EGFR&quot;     &quot;SLC20A1&quot;  &quot;UHMK1&quot;  &quot;PRPF8&quot;   &quot;FLNB&quot;      &quot;NAV1&quot;    &quot;ADAM19&quot;
+[4,] &quot;SOCS3&quot;    &quot;MTCO1P53&quot; &quot;HOPX&quot;   &quot;FMO2&quot;    &quot;LAMP3&quot;     &quot;LIMCH1&quot;  &quot;MCL1&quot;  
+[5,] &quot;ATP6V0A4&quot; &quot;AOC1&quot;     &quot;EGF&quot;    &quot;SLC22A2&quot; &quot;LINC00982&quot; &quot;PTH1R&quot;   &quot;MMP7&quot;  
+[6,] &quot;RYR2&quot;     &quot;ACTA1&quot;    &quot;MT-TL1&quot; &quot;LMOD2&quot;   &quot;POPDC2&quot;    &quot;CASQ2&quot;   &quot;KCNIP2&quot;
+[7,] &quot;HPD&quot;      &quot;INSIG1&quot;   &quot;C1S&quot;    &quot;ARG1&quot;    &quot;C1R&quot;       &quot;ADH1B&quot;   &quot;TAT&quot;   
+     [,58]       [,59]     [,60]     [,61]      [,62]     [,63]       
+[1,] &quot;CERCAM&quot;    &quot;SEMA3C&quot;  &quot;CHPF&quot;    &quot;ADAM12&quot;   &quot;CDKN2B&quot;  &quot;VIM&quot;       
+[2,] &quot;PLS3&quot;      &quot;RPL13A&quot;  &quot;LAPTM4B&quot; &quot;ARID3A&quot;   &quot;EIF3E&quot;   &quot;AP000459.2&quot;
+[3,] &quot;SACS&quot;      &quot;TRIO&quot;    &quot;PTPN14&quot;  &quot;HHIP&quot;     &quot;GAPDH&quot;   &quot;ANLN&quot;      
+[4,] &quot;RNASE1&quot;    &quot;IGKC&quot;    &quot;FENDRR&quot;  &quot;NKX2-1&quot;   &quot;HLA-C&quot;   &quot;NFKBIA&quot;    
+[5,] &quot;LINC01187&quot; &quot;SLC26A7&quot; &quot;CLDN2&quot;   &quot;SLC22A11&quot; &quot;SLC36A2&quot; &quot;TSPAN1&quot;    
+[6,] &quot;MT-ATP8&quot;   &quot;TRDN&quot;    &quot;TPM1&quot;    &quot;SLC4A3&quot;   &quot;HHATL&quot;   &quot;RPL3L&quot;     
+[7,] &quot;ATF5&quot;      &quot;MT1E&quot;    &quot;HRG&quot;     &quot;ORM2&quot;     &quot;GC&quot;      &quot;SLC39A14&quot;  
+     [,64]     [,65]     [,66]   [,67]     [,68]    [,69]     [,70]    
+[1,] &quot;ISLR&quot;    &quot;ADAMTS5&quot; &quot;MXRA8&quot; &quot;PCOLCE&quot;  &quot;SCRG1&quot;  &quot;CTGF&quot;    &quot;PLOD1&quot;  
+[2,] &quot;HDAC2&quot;   &quot;SNHG14&quot;  &quot;RPS21&quot; &quot;RPS20&quot;   &quot;FAM84B&quot; &quot;VASH2&quot;   &quot;AP1S2&quot;  
+[3,] &quot;PTX3&quot;    &quot;FOSL1&quot;   &quot;FRMD6&quot; &quot;CRIM1&quot;   &quot;ACTR2&quot;  &quot;ZBTB38&quot;  &quot;ANXA2&quot;  
+[4,] &quot;SFTPD&quot;   &quot;TNS1&quot;    &quot;SAT1&quot;  &quot;CCL18&quot;   &quot;BTG2&quot;   &quot;LAMA3&quot;   &quot;VIPR1&quot;  
+[5,] &quot;POU3F3&quot;  &quot;LRP2&quot;    &quot;PROM2&quot; &quot;RAP1GAP&quot; &quot;CLTRN&quot;  &quot;XPNPEP2&quot; &quot;ADGRG1&quot; 
+[6,] &quot;MT-ND4L&quot; &quot;SMPX&quot;    &quot;NMRK2&quot; &quot;NEBL&quot;    &quot;SMYD1&quot;  &quot;SH3RF2&quot;  &quot;UNC45B&quot; 
+[7,] &quot;MAT1A&quot;   &quot;C3P1&quot;    &quot;ALDH2&quot; &quot;RIDA&quot;    &quot;MT1X&quot;   &quot;CYP2C8&quot;  &quot;SLC38A4&quot;
+     [,71]    [,72]     [,73]      [,74]    [,75]       [,76]        [,77]  
+[1,] &quot;CALD1&quot;  &quot;COL8A2&quot;  &quot;ANTXR1&quot;   &quot;MEST&quot;   &quot;ACTA2&quot;     &quot;CD99&quot;       &quot;FBN1&quot; 
+[2,] &quot;NASP&quot;   &quot;RPL41&quot;   &quot;GSTP1&quot;    &quot;HMGB2&quot;  &quot;EEF1A1&quot;    &quot;MSH2&quot;       &quot;RPL19&quot;
+[3,] &quot;PRRC2C&quot; &quot;ASAP1&quot;   &quot;MARCH4&quot;   &quot;HRAS&quot;   &quot;PLAU&quot;      &quot;NAV3&quot;       &quot;TPX2&quot; 
+[4,] &quot;CDH5&quot;   &quot;MTCO1P2&quot; &quot;CD55&quot;     &quot;KLF6&quot;   &quot;TSC22D3&quot;   &quot;MSLN&quot;       &quot;CTSE&quot; 
+[5,] &quot;SCIN&quot;   &quot;EMX1&quot;    &quot;ATP6V0D2&quot; &quot;KCNJ15&quot; &quot;PKHD1&quot;     &quot;CYFIP2&quot;     &quot;OGDHL&quot;
+[6,] &quot;MYOM1&quot;  &quot;NKX2-5&quot;  &quot;APOBEC2&quot;  &quot;KLHL31&quot; &quot;HSPB3&quot;     &quot;RBM24&quot;      &quot;XIRP2&quot;
+[7,] &quot;IL1RN&quot;  &quot;TFR2&quot;    &quot;C9&quot;       &quot;LRG1&quot;   &quot;SERPINA10&quot; &quot;AC008760.2&quot; &quot;AZGP1&quot;
+     [,78]      [,79]    [,80]    [,81]      [,82]       [,83]     [,84]     
+[1,] &quot;SRPX2&quot;    &quot;PITX1&quot;  &quot;ADGRA2&quot; &quot;P4HB&quot;     &quot;ACTG2&quot;     &quot;PTGER2&quot;  &quot;P4HA3&quot;   
+[2,] &quot;SALL4&quot;    &quot;CRABP2&quot; &quot;AMOT&quot;   &quot;SLC2A1&quot;   &quot;CCNG1&quot;     &quot;CBX2&quot;    &quot;MEX3A&quot;   
+[3,] &quot;TRIP12&quot;   &quot;IFIT2&quot;  &quot;ADAM9&quot;  &quot;VGLL3&quot;    &quot;CEP170&quot;    &quot;EIF2AK2&quot; &quot;NCEH1&quot;   
+[4,] &quot;LAPTM5&quot;   &quot;IGHA1&quot;  &quot;MS4A15&quot; &quot;SPARCL1&quot;  &quot;VWF&quot;       &quot;MGP&quot;     &quot;LYZ&quot;     
+[5,] &quot;EMX2&quot;     &quot;USH1C&quot;  &quot;PIGR&quot;   &quot;KCNJ10&quot;   &quot;SLC13A1&quot;   &quot;AQP6&quot;    &quot;ITGB8&quot;   
+[6,] &quot;TRDN-AS1&quot; &quot;NDRG4&quot;  &quot;PERM1&quot;  &quot;DHRS7C&quot;   &quot;LINC00881&quot; &quot;ATP1A2&quot;  &quot;ITGA7&quot;   
+[7,] &quot;CFH&quot;      &quot;F2&quot;     &quot;DCXR&quot;   &quot;SERPINC1&quot; &quot;ASGR1&quot;     &quot;AOX1&quot;    &quot;SERPING1&quot;
+     [,85]         [,86]    [,87]    [,88]    [,89]     [,90]      [,91]     
+[1,] &quot;COL2A1&quot;      &quot;FAP&quot;    &quot;SPTBN2&quot; &quot;LOXL1&quot;  &quot;CD63&quot;    &quot;COL15A1&quot;  &quot;SSC5D&quot;   
+[2,] &quot;CASP3&quot;       &quot;RPS11&quot;  &quot;RPL27&quot;  &quot;RCN2&quot;   &quot;TERF1&quot;   &quot;RPL11&quot;    &quot;USP44&quot;   
+[3,] &quot;POLR2A&quot;      &quot;ELK3&quot;   &quot;DOCK10&quot; &quot;AHNAK&quot;  &quot;ESM1&quot;    &quot;RAI14&quot;    &quot;ARHGAP29&quot;
+[4,] &quot;HSPA1A&quot;      &quot;NR4A1&quot;  &quot;WIF1&quot;   &quot;IGHM&quot;   &quot;ZFP36L2&quot; &quot;HLA-DPB1&quot; &quot;PRX&quot;     
+[5,] &quot;ADAMTS9-AS1&quot; &quot;BICDL1&quot; &quot;CASR&quot;   &quot;SLC4A4&quot; &quot;ITM2B&quot;   &quot;AIF1L&quot;    &quot;FMO1&quot;    
+[6,] &quot;TRIM63&quot;      &quot;MYZAP&quot;  &quot;FBXO40&quot; &quot;MT-CO3&quot; &quot;MYLK3&quot;   &quot;SYNPO2L&quot;  &quot;ASB2&quot;    
+[7,] &quot;MT1F&quot;        &quot;C4BPB&quot;  &quot;BAAT&quot;   &quot;CP&quot;     &quot;C8A&quot;     &quot;CLEC4M&quot;   &quot;MLXIPL&quot;  
+     [,92]        [,93]     [,94]    [,95]      [,96]    [,97]     [,98]   
+[1,] &quot;PTTG1IP&quot;    &quot;TIMP2&quot;   &quot;CPA4&quot;   &quot;ITGB5&quot;    &quot;P3H1&quot;   &quot;MMP14&quot;   &quot;AEBP1&quot; 
+[2,] &quot;XRCC5&quot;      &quot;BAMBI&quot;   &quot;TKT&quot;    &quot;SLC39A10&quot; &quot;DSG2&quot;   &quot;RPS4X&quot;   &quot;HAPLN1&quot;
+[3,] &quot;OASL&quot;       &quot;FOXG1&quot;   &quot;AFAP1&quot;  &quot;INHBA&quot;    &quot;PAPPA&quot;  &quot;SHCBP1&quot;  &quot;MYO10&quot; 
+[4,] &quot;C1QB&quot;       &quot;KLF4&quot;    &quot;MYH11&quot;  &quot;PTGS2&quot;    &quot;CHRDL1&quot; &quot;S100A4&quot;  &quot;ACVRL1&quot;
+[5,] &quot;AC015910.1&quot; &quot;DUSP9&quot;   &quot;BBOX1&quot;  &quot;ENPEP&quot;    &quot;PTPRO&quot;  &quot;RAPGEF3&quot; &quot;ANK2&quot;  
+[6,] &quot;DUSP27&quot;     &quot;MT-TM&quot;   &quot;ATP2A2&quot; &quot;SLC2A4&quot;   &quot;ANKRD2&quot; &quot;SPHKAP&quot;  &quot;PTGDS&quot; 
+[7,] &quot;AFM&quot;        &quot;ST6GAL1&quot; &quot;DHCR24&quot; &quot;TMEM176B&quot; &quot;CYP2C9&quot; &quot;EFNA1&quot;   &quot;FCN2&quot;  
+     [,99]    [,100]   
+[1,] &quot;WNT2&quot;   &quot;PRRX1&quot;  
+[2,] &quot;RPS8&quot;   &quot;RPL35&quot;  
+[3,] &quot;SH3BP4&quot; &quot;NABP1&quot;  
+[4,] &quot;ABCA3&quot;  &quot;DDX5&quot;   
+[5,] &quot;VAV3&quot;   &quot;TINAG&quot;  
+[6,] &quot;ENO3&quot;   &quot;PTP4A3&quot; 
+[7,] &quot;C4BPA&quot;  &quot;ANGPTL3&quot;</code></pre>
+<pre class="r"><code>genes[[2]]</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+[1,] 0.069722308 0.038161143 0.032955315 0.031516495 0.018076023 0.015746146
+[2,] 0.009179686 0.005289333 0.004614258 0.004390562 0.004188507 0.002324347
+[3,] 0.012705492 0.005205446 0.002436652 0.001636462 0.001584343 0.001541394
+[4,] 0.023698208 0.021790432 0.011178622 0.009558638 0.006038901 0.004427312
+[5,] 0.021883047 0.006557721 0.005891634 0.005093161 0.004360336 0.003047482
+[6,] 0.023893376 0.014956116 0.012843042 0.011475187 0.010000311 0.006970328
+[7,] 0.019983739 0.014098812 0.009169308 0.007186070 0.005988479 0.005121170
+            [,7]        [,8]        [,9]       [,10]        [,11]        [,12]
+[1,] 0.011341436 0.006908351 0.005802714 0.004204600 0.0036906705 0.0036201787
+[2,] 0.001973433 0.001928843 0.001621414 0.001401240 0.0012380767 0.0011624708
+[3,] 0.001292888 0.001273561 0.001166349 0.001112217 0.0008604305 0.0008181695
+[4,] 0.002505973 0.002497646 0.002453903 0.002270094 0.0021496122 0.0019851240
+[5,] 0.002577563 0.002332920 0.002050984 0.002005858 0.0017435741 0.0016741690
+[6,] 0.006261642 0.006159695 0.005873463 0.005245702 0.0045579330 0.0044647244
+[7,] 0.003411021 0.003059220 0.002824516 0.002738318 0.0025407707 0.0021174944
+            [,13]        [,14]       [,15]        [,16]        [,17]
+[1,] 0.0033781054 0.0031711105 0.003057712 0.0022562284 0.0022457130
+[2,] 0.0011253645 0.0011181334 0.001099528 0.0010877085 0.0010722234
+[3,] 0.0007700097 0.0007327032 0.000722053 0.0006944208 0.0006466924
+[4,] 0.0018354806 0.0018026056 0.001775218 0.0014635372 0.0014461650
+[5,] 0.0015020670 0.0014394476 0.001353373 0.0012848644 0.0012323402
+[6,] 0.0035188535 0.0033013019 0.002619259 0.0023890849 0.0022882651
+[7,] 0.0017504813 0.0017120099 0.001619618 0.0015855308 0.0015267380
+            [,18]        [,19]        [,20]        [,21]        [,22]
+[1,] 0.0021088736 0.0020524937 0.0019057938 0.0016611876 0.0015018355
+[2,] 0.0010266608 0.0010106019 0.0008913085 0.0008866493 0.0008641761
+[3,] 0.0006337923 0.0005877502 0.0005677742 0.0005236396 0.0005100248
+[4,] 0.0014311421 0.0014115967 0.0013831328 0.0013730206 0.0013228816
+[5,] 0.0012205055 0.0011960484 0.0011615915 0.0011086775 0.0011051294
+[6,] 0.0020903383 0.0020902436 0.0020848391 0.0019715899 0.0018366010
+[7,] 0.0014370497 0.0014201329 0.0013826935 0.0011607074 0.0010856416
+            [,23]        [,24]        [,25]        [,26]        [,27]
+[1,] 0.0013538592 0.0012450473 0.0012040181 0.0011833283 0.0011816160
+[2,] 0.0008011012 0.0007903800 0.0007176968 0.0007108221 0.0007023204
+[3,] 0.0004706989 0.0004639991 0.0004607284 0.0004605657 0.0004600282
+[4,] 0.0012686587 0.0012029934 0.0011714238 0.0011360106 0.0011284156
+[5,] 0.0010775934 0.0010093020 0.0009686788 0.0009509065 0.0008998552
+[6,] 0.0018047342 0.0015836128 0.0014455634 0.0013674445 0.0013457849
+[7,] 0.0010577960 0.0009304717 0.0008984818 0.0008883845 0.0008455420
+            [,28]        [,29]        [,30]        [,31]        [,32]
+[1,] 0.0011160984 0.0011008142 0.0010624865 0.0010525884 0.0009587410
+[2,] 0.0006662720 0.0006590678 0.0006556746 0.0006430757 0.0006242447
+[3,] 0.0004543407 0.0004467696 0.0004159351 0.0004080053 0.0004070205
+[4,] 0.0010343469 0.0010095674 0.0009706622 0.0007828243 0.0007618830
+[5,] 0.0008894501 0.0008635869 0.0008293132 0.0007987063 0.0007910931
+[6,] 0.0013031573 0.0012648328 0.0011801943 0.0010987017 0.0010711138
+[7,] 0.0008276031 0.0008081764 0.0008006604 0.0007970357 0.0007464679
+            [,33]        [,34]        [,35]        [,36]        [,37]
+[1,] 0.0009458167 0.0009182380 0.0008751856 0.0008687881 0.0008564383
+[2,] 0.0005961922 0.0005918241 0.0005656943 0.0005561650 0.0005351477
+[3,] 0.0003900585 0.0003619321 0.0003572625 0.0003497712 0.0003494326
+[4,] 0.0007617824 0.0007494900 0.0007344088 0.0007040533 0.0006944209
+[5,] 0.0007388000 0.0007241049 0.0006919389 0.0006856890 0.0006665485
+[6,] 0.0010394101 0.0010348736 0.0009776490 0.0009151433 0.0008941447
+[7,] 0.0007258917 0.0006827587 0.0006021644 0.0005956105 0.0005834001
+            [,38]        [,39]        [,40]        [,41]        [,42]
+[1,] 0.0008484285 0.0007539671 0.0007443014 0.0007417633 0.0007404169
+[2,] 0.0005160904 0.0005146892 0.0005059955 0.0004993778 0.0004933057
+[3,] 0.0003438431 0.0003235919 0.0003188771 0.0003139529 0.0003052052
+[4,] 0.0006808559 0.0006792323 0.0006791600 0.0006752079 0.0006688055
+[5,] 0.0006661382 0.0006504106 0.0006367432 0.0006364215 0.0006275119
+[6,] 0.0007785186 0.0007276349 0.0006494428 0.0006176286 0.0006088999
+[7,] 0.0005442469 0.0005350147 0.0005344803 0.0005149912 0.0005091422
+            [,43]        [,44]        [,45]        [,46]        [,47]
+[1,] 0.0007097112 0.0006477073 0.0006095871 0.0005451394 0.0005258475
+[2,] 0.0004801973 0.0004777616 0.0004699911 0.0004572686 0.0004464518
+[3,] 0.0002993374 0.0002969835 0.0002969404 0.0002924385 0.0002915517
+[4,] 0.0006637150 0.0006592452 0.0006233204 0.0006211136 0.0006060250
+[5,] 0.0006191084 0.0006171057 0.0006112491 0.0005798493 0.0005765921
+[6,] 0.0006043137 0.0005593692 0.0005581340 0.0005541664 0.0005232225
+[7,] 0.0005060695 0.0004953691 0.0004785838 0.0004678572 0.0004652587
+            [,48]        [,49]        [,50]        [,51]        [,52]
+[1,] 0.0005168237 0.0005125264 0.0004968762 0.0004902123 0.0004822712
+[2,] 0.0004435139 0.0004414705 0.0004388985 0.0004141985 0.0004099559
+[3,] 0.0002908535 0.0002852430 0.0002828596 0.0002641722 0.0002506073
+[4,] 0.0005717971 0.0005598530 0.0005457777 0.0005414588 0.0005049781
+[5,] 0.0005633014 0.0005600049 0.0005427523 0.0005320975 0.0005089658
+[6,] 0.0005121752 0.0005097216 0.0004720185 0.0004674054 0.0004669875
+[7,] 0.0004474350 0.0004367908 0.0004269125 0.0004212905 0.0004002336
+            [,53]        [,54]        [,55]        [,56]        [,57]
+[1,] 0.0004783781 0.0004484316 0.0004447111 0.0004390105 0.0004202248
+[2,] 0.0004061697 0.0003978991 0.0003856844 0.0003811235 0.0003809541
+[3,] 0.0002410114 0.0002379821 0.0002333800 0.0002325971 0.0002272659
+[4,] 0.0005047951 0.0004909739 0.0004778782 0.0004724686 0.0004700605
+[5,] 0.0004713894 0.0004516644 0.0004357355 0.0004322993 0.0004184279
+[6,] 0.0004593006 0.0004587205 0.0004353756 0.0004317961 0.0004261292
+[7,] 0.0003999303 0.0003999170 0.0003953705 0.0003806960 0.0003772971
+            [,58]        [,59]        [,60]        [,61]        [,62]
+[1,] 0.0004144540 0.0004009955 0.0003802741 0.0003788265 0.0003353395
+[2,] 0.0003770560 0.0003731194 0.0003636375 0.0003632131 0.0003610100
+[3,] 0.0002271832 0.0002231589 0.0002198027 0.0002194912 0.0002176465
+[4,] 0.0004676032 0.0004643007 0.0004639993 0.0004631244 0.0004580410
+[5,] 0.0003984158 0.0003939763 0.0003789297 0.0003672538 0.0003671140
+[6,] 0.0004251647 0.0004165531 0.0003979977 0.0003874540 0.0003797531
+[7,] 0.0003760021 0.0003721320 0.0003517792 0.0003415622 0.0003359741
+            [,63]        [,64]        [,65]        [,66]        [,67]
+[1,] 0.0003294763 0.0003267329 0.0003179162 0.0003007825 0.0002961110
+[2,] 0.0003581601 0.0003568052 0.0003519063 0.0003493738 0.0003481400
+[3,] 0.0002154767 0.0002145569 0.0002113237 0.0002097636 0.0002062961
+[4,] 0.0004470395 0.0004369861 0.0004359829 0.0004352905 0.0004351878
+[5,] 0.0003598229 0.0003559666 0.0003520702 0.0003503738 0.0003497526
+[6,] 0.0003633669 0.0003568372 0.0003562741 0.0003555486 0.0003524961
+[7,] 0.0003252084 0.0003230859 0.0003167638 0.0003148505 0.0003096543
+            [,68]        [,69]        [,70]        [,71]        [,72]
+[1,] 0.0002927966 0.0002872830 0.0002867854 0.0002834730 0.0002813866
+[2,] 0.0003461654 0.0003316749 0.0003280340 0.0003266856 0.0003247141
+[3,] 0.0002032743 0.0002012962 0.0001982722 0.0001976969 0.0001974394
+[4,] 0.0004318891 0.0004286217 0.0004261585 0.0004241000 0.0004222801
+[5,] 0.0003446889 0.0003437896 0.0003424515 0.0003323437 0.0003216117
+[6,] 0.0003494878 0.0003315261 0.0003140376 0.0002780384 0.0002777240
+[7,] 0.0003052564 0.0003050253 0.0003027680 0.0002969817 0.0002883001
+            [,73]        [,74]        [,75]        [,76]        [,77]
+[1,] 0.0002774687 0.0002730526 0.0002668855 0.0002622740 0.0002544134
+[2,] 0.0003244637 0.0003188940 0.0003153650 0.0003126511 0.0003103630
+[3,] 0.0001941333 0.0001859535 0.0001849754 0.0001816380 0.0001792976
+[4,] 0.0004156334 0.0004137875 0.0004122278 0.0003938065 0.0003910842
+[5,] 0.0003212455 0.0003120455 0.0002946752 0.0002849484 0.0002715833
+[6,] 0.0002602172 0.0002585070 0.0002327426 0.0002323418 0.0002307967
+[7,] 0.0002813806 0.0002799311 0.0002757897 0.0002753190 0.0002670084
+            [,78]        [,79]        [,80]        [,81]        [,82]
+[1,] 0.0002420404 0.0002336661 0.0002226301 0.0002200900 0.0002075190
+[2,] 0.0003087971 0.0003084370 0.0003071937 0.0003069494 0.0003044961
+[3,] 0.0001779394 0.0001766579 0.0001765257 0.0001764369 0.0001744350
+[4,] 0.0003880383 0.0003764514 0.0003696263 0.0003571663 0.0003558124
+[5,] 0.0002677067 0.0002665375 0.0002651107 0.0002615962 0.0002565499
+[6,] 0.0002232120 0.0002229410 0.0002090842 0.0002079396 0.0001965383
+[7,] 0.0002556551 0.0002540142 0.0002492829 0.0002448667 0.0002441473
+            [,83]        [,84]        [,85]        [,86]        [,87]
+[1,] 0.0002073284 0.0002023123 0.0001928704 0.0001881401 0.0001870090
+[2,] 0.0003007600 0.0002980521 0.0002977421 0.0002884367 0.0002870432
+[3,] 0.0001729898 0.0001724377 0.0001681054 0.0001678697 0.0001628421
+[4,] 0.0003448952 0.0003277893 0.0003221222 0.0003201659 0.0003136907
+[5,] 0.0002554775 0.0002530990 0.0002429099 0.0002426219 0.0002421877
+[6,] 0.0001962172 0.0001959291 0.0001847285 0.0001791076 0.0001704250
+[7,] 0.0002402707 0.0002374176 0.0002336682 0.0002314396 0.0002309319
+            [,88]        [,89]        [,90]        [,91]        [,92]
+[1,] 0.0001861983 0.0001831973 0.0001826156 0.0001822003 0.0001816890
+[2,] 0.0002796565 0.0002788642 0.0002777779 0.0002754016 0.0002735025
+[3,] 0.0001622618 0.0001621815 0.0001596652 0.0001590020 0.0001582683
+[4,] 0.0003125548 0.0003089948 0.0003066485 0.0003058540 0.0003049923
+[5,] 0.0002413065 0.0002410323 0.0002393824 0.0002380235 0.0002320279
+[6,] 0.0001601007 0.0001589656 0.0001588411 0.0001561885 0.0001521351
+[7,] 0.0002307054 0.0002279138 0.0002265155 0.0002235002 0.0002228073
+            [,93]        [,94]        [,95]        [,96]        [,97]
+[1,] 0.0001808447 0.0001807864 0.0001738549 0.0001725401 0.0001702500
+[2,] 0.0002729421 0.0002701957 0.0002662649 0.0002635159 0.0002632873
+[3,] 0.0001571418 0.0001541800 0.0001538914 0.0001520635 0.0001515646
+[4,] 0.0002949728 0.0002896081 0.0002894014 0.0002878591 0.0002818666
+[5,] 0.0002293580 0.0002283026 0.0002229739 0.0002182773 0.0002108509
+[6,] 0.0001517018 0.0001512478 0.0001497948 0.0001428826 0.0001405454
+[7,] 0.0002215475 0.0002135801 0.0002097433 0.0002082065 0.0002067130
+            [,98]        [,99]       [,100]
+[1,] 0.0001663930 0.0001658223 0.0001613358
+[2,] 0.0002578248 0.0002567445 0.0002563700
+[3,] 0.0001512822 0.0001506814 0.0001481899
+[4,] 0.0002778604 0.0002682035 0.0002667148
+[5,] 0.0002071306 0.0002070122 0.0001999264
+[6,] 0.0001386653 0.0001305535 0.0001300696
+[7,] 0.0001986609 0.0001959922 0.0001948521</code></pre>
+<pre class="r"><code># #function to plot genes that distinguish topics
+# plot_topic_factors &lt;- function(GoM_object){
+#      theta &lt;- GoM_object$theta
+#           
+#      for(topic in 1:ncol(theta)){
+#           plot_ratio_factor_by_mean_factor(topic, theta)
+#      }
+# }
+# 
+# plot_ratio_factor_by_mean_factor &lt;- function(topic_n, GoM_theta){
+#      factors_topic_n &lt;- GoM_theta[,topic_n]
+#      mean_factors_minus_topic_n &lt;- row_means(GoM_theta[, -topic_n])
+#      ratio_factors_topic_n &lt;- factors_topic_n/mean_factors_minus_topic_n
+#      
+#      mean_factors &lt;- row_means(GoM_theta)
+#      
+#      #get matrix of data to be fed into plot
+#      data &lt;- as.data.frame(cbind(&quot;factor ratio&quot; = ratio_factors_topic_n, &quot;mean factor&quot; = mean_factors))
+#      #identify genes to highlight
+#      data &lt;- data %&gt;%
+#           mutate(reg = case_when(
+#                log(data$`mean factor`) &gt;= -20 &amp; log(data$`factor ratio`) &gt;= 10 ~ &quot;UP&quot;,
+#                log(data$`mean factor`) &gt;= -20 &amp; log(data$`factor ratio`) &lt;= -10 ~ &quot;DOWN&quot;,
+#                log(data$`mean factor`) &gt;= -20 &amp; log(data$`factor ratio`) &gt; -10 &amp; log(data$`factor ratio`) &lt; 10~ &quot;no_change&quot;,
+#                log(data$`mean factor`) &lt; -20 ~ &quot;no_change&quot;
+#                ))%&gt;%
+#           mutate(reg = factor(reg, levels = c(&quot;UP&quot;, &quot;no_change&quot;,&quot;DOWN&quot;)))
+#      
+#      data_subset= data[which(log(data$`mean factor`) &gt;= -20),]
+#      data_subset= data[which(log(data$`factor ratio`) &lt;= -10 | log(data$`factor ratio`) &gt;= 10) ,]
+#      
+#      #plot
+#      ggplot(data, aes(x = log(`mean factor`), y = log(`factor ratio`)), label = rownames(data)) +
+#           geom_point(aes(color=reg)) +
+#           scale_color_manual(name = &quot;Differential \n regulation&quot;,
+#                      values = c(&quot;DOWN&quot; = &quot;#058983&quot;,
+#                                 &quot;no_change&quot; = &quot;grey&quot;,
+#                                 &quot;UP&quot; = &quot;#DEB132&quot;),
+#                      labels = c(&quot;UP&quot;, &quot;No Change&quot;, &quot;DOWN&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -7883,30 +8288,28 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] nlme_3.1-131           bitops_1.0-6           fs_1.3.1              
  [4] rprojroot_1.3-2        tools_3.4.3            backports_1.1.5       
- [7] irlba_2.3.3            R6_2.4.1               vegan_2.5-6           
-[10] KernSmooth_2.23-15     lazyeval_0.2.2         mgcv_1.8-22           
-[13] colorspace_1.4-1       permute_0.9-5          nnet_7.3-12           
-[16] withr_2.1.2            tidyselect_0.2.5       gridExtra_2.3         
-[19] compiler_3.4.3         git2r_0.26.1           labeling_0.3          
-[22] caTools_1.17.1.3       SQUAREM_2020.2         mixsqp_0.3-17         
-[25] stringr_1.4.0          digest_0.6.23          rmarkdown_1.18        
-[28] XVector_0.18.0         pkgconfig_2.0.3        htmltools_0.4.0       
-[31] invgamma_1.1           rlang_0.4.4            farver_2.0.3          
-[34] gtools_3.8.1           dplyr_0.8.3            RCurl_1.95-4.12       
-[37] magrittr_1.5           modeltools_0.2-22      GenomeInfoDbData_1.0.0
-[40] Matrix_1.2-18          Rcpp_1.0.3             munsell_0.5.0         
-[43] ape_5.3                abind_1.4-5            lifecycle_0.1.0       
-[46] stringi_1.4.3          whisker_0.4            yaml_2.2.0            
-[49] MASS_7.3-51.4          zlibbioc_1.24.0        flexmix_2.3-15        
-[52] plyr_1.8.4             grid_3.4.3             gdata_2.18.0          
-[55] promises_1.1.0         crayon_1.3.4           lattice_0.20-35       
-[58] locfit_1.5-9.1         zeallot_0.1.0          knitr_1.26            
-[61] pillar_1.4.2           picante_1.8            glue_1.3.1            
-[64] evaluate_0.14          data.table_1.12.6      vctrs_0.2.0           
-[67] httpuv_1.5.2           gtable_0.3.0           purrr_0.3.3           
-[70] tidyr_1.0.0            assertthat_0.2.1       ashr_2.2-47           
-[73] xfun_0.12              later_1.0.0            truncnorm_1.0-8       
-[76] tibble_2.1.3           workflowr_1.5.0        cluster_2.0.6         </code></pre>
+ [7] R6_2.4.1               vegan_2.5-6            KernSmooth_2.23-15    
+[10] lazyeval_0.2.2         mgcv_1.8-22            colorspace_1.4-1      
+[13] permute_0.9-5          nnet_7.3-12            withr_2.1.2           
+[16] tidyselect_0.2.5       gridExtra_2.3          compiler_3.4.3        
+[19] git2r_0.26.1           labeling_0.3           caTools_1.17.1.3      
+[22] stringr_1.4.0          digest_0.6.23          rmarkdown_1.18        
+[25] XVector_0.18.0         pkgconfig_2.0.3        htmltools_0.4.0       
+[28] rlang_0.4.4            farver_2.0.3           gtools_3.8.1          
+[31] dplyr_0.8.3            RCurl_1.95-4.12        magrittr_1.5          
+[34] modeltools_0.2-22      GenomeInfoDbData_1.0.0 Matrix_1.2-18         
+[37] Rcpp_1.0.3             munsell_0.5.0          ape_5.3               
+[40] abind_1.4-5            lifecycle_0.1.0        stringi_1.4.3         
+[43] whisker_0.4            yaml_2.2.0             MASS_7.3-51.4         
+[46] zlibbioc_1.24.0        flexmix_2.3-15         plyr_1.8.4            
+[49] grid_3.4.3             gdata_2.18.0           promises_1.1.0        
+[52] crayon_1.3.4           lattice_0.20-35        locfit_1.5-9.1        
+[55] zeallot_0.1.0          knitr_1.26             pillar_1.4.2          
+[58] picante_1.8            glue_1.3.1             evaluate_0.14         
+[61] data.table_1.12.6      vctrs_0.2.0            httpuv_1.5.2          
+[64] gtable_0.3.0           purrr_0.3.3            tidyr_1.0.0           
+[67] assertthat_0.2.1       xfun_0.12              later_1.0.0           
+[70] tibble_2.1.3           workflowr_1.5.0        cluster_2.0.6         </code></pre>
 </div>
 </div>
 
