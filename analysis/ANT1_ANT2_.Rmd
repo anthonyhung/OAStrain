@@ -38,6 +38,7 @@ library(gridExtra)
 library(heplots)
 library(DT)
 library(gplots)
+library(cowplot)
 ```
 
 ## Load in data
