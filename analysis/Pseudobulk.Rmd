@@ -64,7 +64,7 @@ Merged_bulk <- Merged_bulk[,-1]
 
 ## Clustering (PCA)
 
-```{r PCA cell atlas}
+```{r PCA}
 # Perform PCA
 pca_genes <- prcomp(t(Merged_bulk), scale = T)
 
@@ -82,240 +82,86 @@ heatmap.2(cors, scale="none", margins = c(12, 12), trace='none', denscol="white"
           cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Normalization
-
-
-## Normalize raw merged counts: upperquartile Normalization
-
-```{r upperquartile normalization}
-library(edgeR)
-Merged_bulk <- DGEList(Merged_bulk, group = colnames(Merged_bulk))
-upperquartile <- calcNormFactors(Merged_bulk, method = "upperquartile")
-upperquartile <- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
-head(upperquartile)
-
-# Look at density plots
-plotDensities(upperquartile, legend="topright")
-```
-
-## Correlation heatmap of log2upperquartile normalized and unfiltered samples
-
-```{r corr heatmap unfiltered upperquartile}
-cors <- cor(upperquartile, method="spearman", use="pairwise.complete.obs")
-
-labels <- sapply(strsplit(colnames(Merged_bulk),"_"), `[`, 1)
-
-heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
-```
-
-## Boxplots of upperquartile across samples
-
-```{r boxplot upperquartile}
-library(reshape2)
-meltupperquartile <- melt(upperquartile)
-names(meltupperquartile) <- c("gene", "sampleID", "upperquartile")
-p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
-p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
-```
-
-## Filtering for lowly expressed genes (avg log2upperquartile > 2 in at least 10 samples)
-
-```{r filter upperquartile}
-cutoff <- 2
-
-keep <- rowSums( upperquartile > cutoff ) >= 10
-
-counts_upperquartile <- Merged_bulk[keep,]
-filtered_upperquartile <- upperquartile[keep,]
-dim(filtered_upperquartile)
-```
-
-## Boxplots of normalized+filtered counts across samples
-
-```{r boxplot filt upperquartile}
-melt_filt_upperquartile <- melt(filtered_upperquartile)
-names(melt_filt_upperquartile) <- c("gene", "sampleID", "log2upperquartile")
-p1 <- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
-p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
-
-plotDensities(filtered_upperquartile, legend = F)
-```
-
-## Correlation heatmap of log2upperquartile normalized and filtered samples
-
-```{r corr heatmap filtered upperquartile}
-cors <- cor(filtered_upperquartile, method="spearman", use="pairwise.complete.obs")
-
-labels <- sapply(strsplit(colnames(Merged_bulk),"_"), `[`, 1)
-
-heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
-```
-
-## Correlation between Pseudobulk and bulk from same replicate
+## Correlation between Pseudobulk and bulk from same replicate (raw counts)
 
 ```{r corr replicate}
+#spearman
 cors
-data.frame(filtered_upperquartile)  %>% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_upperquartile)  %>% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_upperquartile)  %>% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_upperquartile)  %>% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_upperquartile)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
-```
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     scale_x_log10()+
+     scale_y_log10()
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Normalize raw merged counts: RLE Normalization
-
-```{r RLE normalization}
-library(edgeR)
-Merged_bulk <- DGEList(Merged_bulk, group = colnames(Merged_bulk))
-RLE <- calcNormFactors(Merged_bulk, method = "RLE")
-RLE <- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
-head(RLE)
-
-# Look at density plots
-plotDensities(RLE, legend="topright")
-```
-
-## Correlation heatmap of log2RLE normalized and unfiltered samples
-
-```{r corr heatmap unfiltered RLE}
-cors <- cor(RLE, method="spearman", use="pairwise.complete.obs")
-
-labels <- sapply(strsplit(colnames(Merged_bulk),"_"), `[`, 1)
-
-heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
-```
-
-## Boxplots of RLE across samples
-
-```{r boxplot RLE}
-library(reshape2)
-meltRLE <- melt(RLE)
-names(meltRLE) <- c("gene", "sampleID", "RLE")
-p <- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
-p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
-```
-
-## Filtering for lowly expressed genes (avg log2RLE > 3 in at least 15 samples)
-
-```{r filter RLE}
-cutoff <- 3
-
-keep <- rowSums( RLE > cutoff ) >= 15
-
-counts_RLE <- Merged_bulk[keep,]
-filtered_RLE <- RLE[keep,]
-dim(filtered_RLE)
-```
-
-## Boxplots of normalized+filtered counts across samples
-
-```{r boxplot filt RLE}
-melt_filt_RLE <- melt(filtered_RLE)
-names(melt_filt_RLE) <- c("gene", "sampleID", "log2RLE")
-p1 <- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
-p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
-
-plotDensities(filtered_RLE, legend = F)
-```
-
-## Correlation heatmap of log2RLE normalized and filtered samples
-
-```{r corr heatmap filtered RLE}
-cors <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
-
-labels <- sapply(strsplit(colnames(Merged_bulk),"_"), `[`, 1)
-
-heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
-
-
-```
-
-
-## Correlation between Pseudobulk and bulk from same replicate
-
-```{r corr replicate rle}
-cors
-data.frame(filtered_RLE)  %>% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
+# pearson
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "pearson", cor.coef.name = c("r"))+
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_RLE)  %>% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "pearson", cor.coef.name = c("r"))+
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_RLE)  %>% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "pearson", cor.coef.name = c("r"))+
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_RLE)  %>% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "pearson", cor.coef.name = c("r"))+
+     scale_x_log10()+
+     scale_y_log10()
 
-data.frame(filtered_RLE)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
+data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
-     stat_cor(method = "spearman", cor.coef.name = c("rho"))
+     stat_cor(method = "pearson", cor.coef.name = c("r"))+
+     scale_x_log10()+
+     scale_y_log10()
+
 ```
 

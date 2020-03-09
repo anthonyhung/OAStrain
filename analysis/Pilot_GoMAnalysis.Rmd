@@ -526,18 +526,54 @@ class_labs <- c(rep("Hepatocyte", length(index_hep)),
                 )
 
 
+
+# Perform topic modeling k=4
+Topic_clus_4 <- classtpx::class_topics(
+    t(counts),
+    K=4,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_4, file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda")
+Topic_clus_4 <- get(load(file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda"))
+
+omega <- Topic_clus_4$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+
+
+
+
+
 # Perform topic modeling k=5
-Topic_clus <- classtpx::class_topics(
+Topic_clus_4 <- classtpx::class_topics(
     t(counts),
     K=5,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus, file="data/merged_topic_fit_5_classtpx_omega_fix.rda")
-Topic_clus <- get(load(file="data/merged_topic_fit_5_classtpx_omega_fix.rda"))
+save(Topic_clus_5, file="data/merged_topic_fit_5_classtpx_omega_fix_scRNA.rda")
+Topic_clus_5 <- get(load(file="data/merged_topic_fit_5_classtpx_omega_fix_scRNA.rda"))
 
-omega <- Topic_clus_8$omega
+omega <- Topic_clus_5$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))

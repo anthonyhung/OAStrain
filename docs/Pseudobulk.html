@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-25
+<strong>Last updated:</strong> 2020-03-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee0cb97297da19032063e3627b0cb97dd39a82c15targetblanke0cb972a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e0cb97297da19032063e3627b0cb97dd39a82c15" target="_blank">e0cb972</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a46d6f37799b4f9c74c12be5c41c412f95f2fa3e" target="_blank">a46d6f3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee0cb97297da19032063e3627b0cb97dd39a82c15targetblanke0cb972a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -510,6 +510,8 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
@@ -528,10 +530,10 @@ Ignored files:
     Ignored:    output/ANT1.2.rds
 
 Unstaged changes:
-    Modified:   analysis/ANT1_ANT2_.Rmd
     Modified:   analysis/Bulk_cellComposition_analysis.Rmd
     Modified:   analysis/Pilot_GoMAnalysis.Rmd
     Modified:   analysis/Pseudobulk.Rmd
+    Modified:   data/merged_topic_fit_6_classtpx_omega_fix.rda
 
 </code></pre>
 <p>
@@ -570,6 +572,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/analysis/Pseudobulk.Rmd" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+<td>
+correlation pseudobulk
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/Pseudobulk.html" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+<td>
+correlation pseudobulk
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -697,44 +733,7 @@ pca_genes &lt;- prcomp(t(Merged_bulk), scale = T)
 #Make PCA plots 
 
 autoplot(pca_genes, label = T)</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/PCA%20cell%20atlas-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-PCA-cell-atlas-1">
-Past versions of “PCA cell atlas-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-PCA-cell-atlas-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/PCA cell atlas-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/Pseudobulk.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clustering-corr-heatmap" class="section level2">
 <h2>Clustering (corr heatmap)</h2>
@@ -781,647 +780,438 @@ Anthony Hung
 </div>
 </div>
 </div>
-</div>
-<div id="normalization" class="section level1">
-<h1>Normalization</h1>
-<div id="normalize-raw-merged-counts-upperquartile-normalization" class="section level2">
-<h2>Normalize raw merged counts: upperquartile Normalization</h2>
-<pre class="r"><code>library(edgeR)</code></pre>
-<pre><code>Loading required package: limma</code></pre>
-<pre class="r"><code>Merged_bulk &lt;- DGEList(Merged_bulk, group = colnames(Merged_bulk))
-upperquartile &lt;- calcNormFactors(Merged_bulk, method = &quot;upperquartile&quot;)
-upperquartile &lt;- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
-head(upperquartile)</code></pre>
-<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000000003  7.092329  7.088426  7.389264  7.275076  7.333281  6.304495
-ENSG00000000005 -5.982236 -5.982236 -3.832215 -5.982236 -5.982236 -5.982236
-ENSG00000000419  5.301997  5.494999  5.628075  5.378308  5.385861  5.243366
-ENSG00000000457  2.972313  3.228996  3.078306  2.921343  3.175924  2.747092
-ENSG00000000460  2.228851  2.688643  1.828285  1.417880  1.236883  1.290704
-ENSG00000000938 -5.982236 -5.982236 -3.832215 -5.982236 -5.982236 -5.982236
-                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000000003  7.006204  7.299208  7.079173  6.914533  6.912198  6.968234
-ENSG00000000005 -3.075250 -5.982236 -5.982236 -5.982236 -5.982236 -4.064240
-ENSG00000000419  5.333590  5.527552  5.506201  5.099809  5.537804  5.387681
-ENSG00000000457  3.320513  3.347380  3.545646  3.086332  2.918699  3.448606
-ENSG00000000460  2.423015  1.750198  2.518823  1.609273  1.268073  2.485085
-ENSG00000000938 -3.894689 -5.982236 -5.982236 -5.982236 -5.982236 -5.982236
-                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U PB_NA18856U
-ENSG00000000003  6.577067  7.068867  6.923786  6.786873  7.007466    6.789635
-ENSG00000000005 -3.906679 -5.982236 -5.982236 -5.982236 -5.982236   -2.972108
-ENSG00000000419  5.205071  5.455349  5.371204  5.456704  5.356142    6.772062
-ENSG00000000457  3.439430  3.160989  3.063282  3.116426  3.095223    3.143054
-ENSG00000000460  2.613240  1.936382  1.423996  1.536716  1.640457    3.256930
-ENSG00000000938 -5.982236 -5.982236 -5.982236 -5.982236 -5.982236   -5.982236
-                PB_NA18855U PB_NA18855S PB_NA19160U PB_NA19160S
-ENSG00000000003    6.527500    6.483377    6.478973    6.403728
-ENSG00000000005   -5.982236   -2.421198   -5.982236   -5.982236
-ENSG00000000419    6.124224    6.324805    6.554607    5.994254
-ENSG00000000457    3.305866    3.335981    3.892936    3.950979
-ENSG00000000460    3.896127    2.961803    5.258489    4.410008
-ENSG00000000938   -5.982236   -5.982236   -2.632121   -5.982236</code></pre>
-<pre class="r"><code># Look at density plots
-plotDensities(upperquartile, legend=&quot;topright&quot;)</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/upperquartile%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-1">
-Past versions of “upperquartile normalization-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-upperquartile-normalization-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/upperquartile normalization-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="correlation-heatmap-of-log2upperquartile-normalized-and-unfiltered-samples" class="section level2">
-<h2>Correlation heatmap of log2upperquartile normalized and unfiltered samples</h2>
-<pre class="r"><code>cors &lt;- cor(upperquartile, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
-labels &lt;- sapply(strsplit(colnames(Merged_bulk),&quot;_&quot;), `[`, 1)
-
-heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20heatmap%20unfiltered%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-upperquartile-1">
-Past versions of “corr heatmap unfiltered upperquartile-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-corr-heatmap-unfiltered-upperquartile-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/corr heatmap unfiltered upperquartile-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="boxplots-of-upperquartile-across-samples" class="section level2">
-<h2>Boxplots of upperquartile across samples</h2>
-<pre class="r"><code>library(reshape2)
-meltupperquartile &lt;- melt(upperquartile)
-names(meltupperquartile) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;upperquartile&quot;)
-p &lt;- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
-p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-upperquartile-1">
-Past versions of “boxplot upperquartile-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-boxplot-upperquartile-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/boxplot upperquartile-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="filtering-for-lowly-expressed-genes-avg-log2upperquartile-2-in-at-least-10-samples" class="section level2">
-<h2>Filtering for lowly expressed genes (avg log2upperquartile &gt; 2 in at least 10 samples)</h2>
-<pre class="r"><code>cutoff &lt;- 2
-
-keep &lt;- rowSums( upperquartile &gt; cutoff ) &gt;= 10
-
-counts_upperquartile &lt;- Merged_bulk[keep,]
-filtered_upperquartile &lt;- upperquartile[keep,]
-dim(filtered_upperquartile)</code></pre>
-<pre><code>[1] 10406    22</code></pre>
-</div>
-<div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
-<h2>Boxplots of normalized+filtered counts across samples</h2>
-<pre class="r"><code>melt_filt_upperquartile &lt;- melt(filtered_upperquartile)
-names(melt_filt_upperquartile) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2upperquartile&quot;)
-p1 &lt;- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
-p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20filt%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-upperquartile-1">
-Past versions of “boxplot filt upperquartile-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-boxplot-filt-upperquartile-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/boxplot filt upperquartile-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>plotDensities(filtered_upperquartile, legend = F)</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20filt%20upperquartile-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-upperquartile-2">
-Past versions of “boxplot filt upperquartile-2.png”
-</button>
-</p>
-<div id="fig-no-spaces-boxplot-filt-upperquartile-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/boxplot filt upperquartile-2.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="correlation-heatmap-of-log2upperquartile-normalized-and-filtered-samples" class="section level2">
-<h2>Correlation heatmap of log2upperquartile normalized and filtered samples</h2>
-<pre class="r"><code>cors &lt;- cor(filtered_upperquartile, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
-labels &lt;- sapply(strsplit(colnames(Merged_bulk),&quot;_&quot;), `[`, 1)
-
-heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20heatmap%20filtered%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-upperquartile-1">
-Past versions of “corr heatmap filtered upperquartile-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-corr-heatmap-filtered-upperquartile-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/anthonyhung/OAStrain/blob/e0cb97297da19032063e3627b0cb97dd39a82c15/docs/figure/Pseudobulk.Rmd/corr heatmap filtered upperquartile-1.png" target="_blank">e0cb972</a>
-</td>
-<td>
-Anthony Hung
-</td>
-<td>
-2020-02-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="correlation-between-pseudobulk-and-bulk-from-same-replicate" class="section level2">
-<h2>Correlation between Pseudobulk and bulk from same replicate</h2>
-<pre class="r"><code>cors</code></pre>
+<div id="correlation-between-pseudobulk-and-bulk-from-same-replicate-raw-counts" class="section level2">
+<h2>Correlation between Pseudobulk and bulk from same replicate (raw counts)</h2>
+<pre class="r"><code>#spearman
+cors</code></pre>
 <pre><code>            18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-18855_3_S   1.0000000 0.9366146 0.9525906 0.9372264 0.9900227 0.8993818
-19160_3_S   0.9366146 1.0000000 0.9227717 0.9039728 0.9301742 0.8839510
-18856_3_U   0.9525906 0.9227717 1.0000000 0.9821134 0.9605362 0.9409064
-18856_1_U   0.9372264 0.9039728 0.9821134 1.0000000 0.9409724 0.9253206
-18855_2_S   0.9900227 0.9301742 0.9605362 0.9409724 1.0000000 0.8997129
-18856_2_S   0.8993818 0.8839510 0.9409064 0.9253206 0.8997129 1.0000000
-19160_3_U   0.9236439 0.9903706 0.9082721 0.8896028 0.9142544 0.8706142
-18855_2_U   0.9884731 0.9286946 0.9593945 0.9470033 0.9907010 0.8941934
-19160_2_S   0.9287031 0.9937304 0.9155981 0.8956755 0.9219471 0.8794678
-18855_1_S   0.9893484 0.9355665 0.9511831 0.9493928 0.9820707 0.8996364
-18856_1_S   0.9120678 0.8930599 0.9595204 0.9554640 0.9157378 0.9726261
-19160_1_S   0.9175090 0.9859072 0.9066003 0.9027094 0.9061749 0.8745762
-19160_2_U   0.9075888 0.9756993 0.8887675 0.8807427 0.8949959 0.8618234
-18855_1_U   0.9879613 0.9348536 0.9521167 0.9464724 0.9821007 0.8897730
-18856_3_S   0.9057981 0.8837837 0.9565559 0.9424164 0.9104626 0.9826484
-18856_2_U   0.9482802 0.9179142 0.9858481 0.9744957 0.9515901 0.9471305
-18855_3_U   0.9908929 0.9379818 0.9472437 0.9335052 0.9830458 0.8882767
-PB_NA18856U 0.6676780 0.6554235 0.7141271 0.7114525 0.6764430 0.6607740
-PB_NA18855U 0.6816916 0.6547711 0.6620651 0.6516724 0.6802552 0.6082247
-PB_NA18855S 0.6895329 0.6593606 0.6725077 0.6702138 0.6863654 0.6213176
-PB_NA19160U 0.6090359 0.6754253 0.6106863 0.6116304 0.6011725 0.5737269
-PB_NA19160S 0.6242035 0.6861713 0.6239459 0.6183130 0.6199644 0.5882622
+18855_3_S   1.0000000 0.9467543 0.9534475 0.9514686 0.9665073 0.9407080
+19160_3_S   0.9467543 1.0000000 0.9455168 0.9444856 0.9465143 0.9350036
+18856_3_U   0.9534475 0.9455168 1.0000000 0.9672610 0.9562610 0.9533858
+18856_1_U   0.9514686 0.9444856 0.9672610 1.0000000 0.9540823 0.9517926
+18855_2_S   0.9665073 0.9465143 0.9562610 0.9540823 1.0000000 0.9415706
+18856_2_S   0.9407080 0.9350036 0.9533858 0.9517926 0.9415706 1.0000000
+19160_3_U   0.9416237 0.9670177 0.9416331 0.9406062 0.9409451 0.9305964
+18855_2_U   0.9668017 0.9478936 0.9578388 0.9568450 0.9677577 0.9401842
+19160_2_S   0.9445464 0.9688865 0.9443224 0.9426985 0.9440466 0.9342079
+18855_1_S   0.9677235 0.9483553 0.9558050 0.9552647 0.9672471 0.9432280
+18856_1_S   0.9429382 0.9377649 0.9585531 0.9581025 0.9456551 0.9599965
+19160_1_S   0.9429301 0.9689289 0.9421961 0.9429086 0.9423457 0.9345397
+19160_2_U   0.9398774 0.9665906 0.9384552 0.9387782 0.9378295 0.9293390
+18855_1_U   0.9663581 0.9475794 0.9561178 0.9552177 0.9660730 0.9410679
+18856_3_S   0.9410071 0.9339602 0.9582028 0.9554276 0.9428354 0.9612285
+18856_2_U   0.9523092 0.9434070 0.9664050 0.9652082 0.9538672 0.9536539
+18855_3_U   0.9658654 0.9462178 0.9533004 0.9511181 0.9646844 0.9381072
+PB_NA18856U 0.8417579 0.8353331 0.8568881 0.8544902 0.8442586 0.8409336
+PB_NA18855U 0.8459983 0.8322858 0.8378173 0.8350808 0.8450318 0.8217608
+PB_NA18855S 0.8529313 0.8361428 0.8443071 0.8423768 0.8521429 0.8291576
+PB_NA19160U 0.8227197 0.8468936 0.8240106 0.8225243 0.8213054 0.8124022
+PB_NA19160S 0.8233152 0.8436738 0.8234829 0.8214158 0.8229017 0.8119773
             19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-18855_3_S   0.9236439 0.9884731 0.9287031 0.9893484 0.9120678 0.9175090
-19160_3_S   0.9903706 0.9286946 0.9937304 0.9355665 0.8930599 0.9859072
-18856_3_U   0.9082721 0.9593945 0.9155981 0.9511831 0.9595204 0.9066003
-18856_1_U   0.8896028 0.9470033 0.8956755 0.9493928 0.9554640 0.9027094
-18855_2_S   0.9142544 0.9907010 0.9219471 0.9820707 0.9157378 0.9061749
-18856_2_S   0.8706142 0.8941934 0.8794678 0.8996364 0.9726261 0.8745762
-19160_3_U   1.0000000 0.9186353 0.9915456 0.9230511 0.8730669 0.9844937
-18855_2_U   0.9186353 1.0000000 0.9209435 0.9834083 0.9079529 0.9078090
-19160_2_S   0.9915456 0.9209435 1.0000000 0.9281023 0.8860533 0.9882038
-18855_1_S   0.9230511 0.9834083 0.9281023 1.0000000 0.9158238 0.9272293
-18856_1_S   0.8730669 0.9079529 0.8860533 0.9158238 1.0000000 0.8887341
-19160_1_S   0.9844937 0.9078090 0.9882038 0.9272293 0.8887341 1.0000000
-19160_2_U   0.9873087 0.9045115 0.9787618 0.9150964 0.8559830 0.9783211
-18855_1_U   0.9272877 0.9885304 0.9286103 0.9885583 0.9073025 0.9241328
-18856_3_S   0.8662379 0.9035111 0.8765782 0.9062978 0.9880222 0.8727592
-18856_2_U   0.9067146 0.9541808 0.9099822 0.9483642 0.9509979 0.9009100
-18855_3_U   0.9313655 0.9885114 0.9318009 0.9852185 0.8993307 0.9210809
-PB_NA18856U 0.6425543 0.6790656 0.6578426 0.6639849 0.6973022 0.6599010
-PB_NA18855U 0.6498205 0.6861981 0.6588814 0.6713925 0.6332242 0.6542039
-PB_NA18855S 0.6511624 0.6913211 0.6639319 0.6845251 0.6519966 0.6652848
-PB_NA19160U 0.6814483 0.6103708 0.6873455 0.6108776 0.5976782 0.6970492
-PB_NA19160S 0.6856802 0.6239884 0.6952008 0.6220449 0.6109314 0.6995781
+18855_3_S   0.9416237 0.9668017 0.9445464 0.9677235 0.9429382 0.9429301
+19160_3_S   0.9670177 0.9478936 0.9688865 0.9483553 0.9377649 0.9689289
+18856_3_U   0.9416331 0.9578388 0.9443224 0.9558050 0.9585531 0.9421961
+18856_1_U   0.9406062 0.9568450 0.9426985 0.9552647 0.9581025 0.9429086
+18855_2_S   0.9409451 0.9677577 0.9440466 0.9672471 0.9456551 0.9423457
+18856_2_S   0.9305964 0.9401842 0.9342079 0.9432280 0.9599965 0.9345397
+19160_3_U   1.0000000 0.9443550 0.9683647 0.9438921 0.9313813 0.9676182
+18855_2_U   0.9443550 1.0000000 0.9461227 0.9670722 0.9448377 0.9443060
+19160_2_S   0.9683647 0.9461227 1.0000000 0.9469684 0.9360860 0.9694586
+18855_1_S   0.9438921 0.9670722 0.9469684 1.0000000 0.9455981 0.9469826
+18856_1_S   0.9313813 0.9448377 0.9360860 0.9455981 1.0000000 0.9361027
+19160_1_S   0.9676182 0.9443060 0.9694586 0.9469826 0.9361027 1.0000000
+19160_2_U   0.9686282 0.9422961 0.9675425 0.9432252 0.9294840 0.9688183
+18855_1_U   0.9453221 0.9688853 0.9475499 0.9677677 0.9440499 0.9464009
+18856_3_S   0.9294953 0.9423006 0.9331183 0.9427895 0.9634747 0.9326067
+18856_2_U   0.9399180 0.9561417 0.9422498 0.9541552 0.9553839 0.9410530
+18855_3_U   0.9436869 0.9663629 0.9460205 0.9661748 0.9402407 0.9449210
+PB_NA18856U 0.8330753 0.8452726 0.8366829 0.8427732 0.8487926 0.8361501
+PB_NA18855U 0.8313753 0.8472132 0.8334733 0.8448257 0.8275877 0.8320926
+PB_NA18855S 0.8347985 0.8529037 0.8376927 0.8530891 0.8350766 0.8375234
+PB_NA19160U 0.8500383 0.8246097 0.8499244 0.8245596 0.8167611 0.8512935
+PB_NA19160S 0.8442939 0.8244827 0.8464744 0.8247362 0.8166246 0.8463850
             19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U PB_NA18856U
-18855_3_S   0.9075888 0.9879613 0.9057981 0.9482802 0.9908929   0.6676780
-19160_3_S   0.9756993 0.9348536 0.8837837 0.9179142 0.9379818   0.6554235
-18856_3_U   0.8887675 0.9521167 0.9565559 0.9858481 0.9472437   0.7141271
-18856_1_U   0.8807427 0.9464724 0.9424164 0.9744957 0.9335052   0.7114525
-18855_2_S   0.8949959 0.9821007 0.9104626 0.9515901 0.9830458   0.6764430
-18856_2_S   0.8618234 0.8897730 0.9826484 0.9471305 0.8882767   0.6607740
-19160_3_U   0.9873087 0.9272877 0.8662379 0.9067146 0.9313655   0.6425543
-18855_2_U   0.9045115 0.9885304 0.9035111 0.9541808 0.9885114   0.6790656
-19160_2_S   0.9787618 0.9286103 0.8765782 0.9099822 0.9318009   0.6578426
-18855_1_S   0.9150964 0.9885583 0.9062978 0.9483642 0.9852185   0.6639849
-18856_1_S   0.8559830 0.9073025 0.9880222 0.9509979 0.8993307   0.6973022
-19160_1_S   0.9783211 0.9241328 0.8727592 0.9009100 0.9210809   0.6599010
-19160_2_U   1.0000000 0.9134073 0.8500448 0.8972938 0.9162352   0.6090103
-18855_1_U   0.9134073 1.0000000 0.8971268 0.9463886 0.9919662   0.6849303
-18856_3_S   0.8500448 0.8971268 1.0000000 0.9503284 0.8927790   0.6787904
-18856_2_U   0.8972938 0.9463886 0.9503284 1.0000000 0.9427667   0.6804993
-18855_3_U   0.9162352 0.9919662 0.8927790 0.9427667 1.0000000   0.6703399
-PB_NA18856U 0.6090103 0.6849303 0.6787904 0.6804993 0.6703399   1.0000000
-PB_NA18855U 0.6183483 0.6976954 0.6167025 0.6371574 0.6907546   0.9503511
-PB_NA18855S 0.6207789 0.7051118 0.6323813 0.6429158 0.6956434   0.9613404
-PB_NA19160U 0.6610796 0.6335906 0.5750696 0.5843737 0.6236538   0.9167518
-PB_NA19160S 0.6621708 0.6420042 0.5898315 0.6000562 0.6338581   0.9198727
+18855_3_S   0.9398774 0.9663581 0.9410071 0.9523092 0.9658654   0.8417579
+19160_3_S   0.9665906 0.9475794 0.9339602 0.9434070 0.9462178   0.8353331
+18856_3_U   0.9384552 0.9561178 0.9582028 0.9664050 0.9533004   0.8568881
+18856_1_U   0.9387782 0.9552177 0.9554276 0.9652082 0.9511181   0.8544902
+18855_2_S   0.9378295 0.9660730 0.9428354 0.9538672 0.9646844   0.8442586
+18856_2_S   0.9293390 0.9410679 0.9612285 0.9536539 0.9381072   0.8409336
+19160_3_U   0.9686282 0.9453221 0.9294953 0.9399180 0.9436869   0.8330753
+18855_2_U   0.9422961 0.9688853 0.9423006 0.9561417 0.9663629   0.8452726
+19160_2_S   0.9675425 0.9475499 0.9331183 0.9422498 0.9460205   0.8366829
+18855_1_S   0.9432252 0.9677677 0.9427895 0.9541552 0.9661748   0.8427732
+18856_1_S   0.9294840 0.9440499 0.9634747 0.9553839 0.9402407   0.8487926
+19160_1_S   0.9688183 0.9464009 0.9326067 0.9410530 0.9449210   0.8361501
+19160_2_U   1.0000000 0.9436021 0.9257474 0.9386062 0.9426968   0.8267265
+18855_1_U   0.9436021 1.0000000 0.9397690 0.9537943 0.9667045   0.8444201
+18856_3_S   0.9257474 0.9397690 1.0000000 0.9544389 0.9380325   0.8430169
+18856_2_U   0.9386062 0.9537943 0.9544389 1.0000000 0.9519479   0.8488602
+18855_3_U   0.9426968 0.9667045 0.9380325 0.9519479 1.0000000   0.8414695
+PB_NA18856U 0.8267265 0.8444201 0.8430169 0.8488602 0.8414695   1.0000000
+PB_NA18855U 0.8258878 0.8475001 0.8214072 0.8323048 0.8476338   0.9662948
+PB_NA18855S 0.8292068 0.8535503 0.8296535 0.8381726 0.8530324   0.9684844
+PB_NA19160U 0.8470749 0.8276767 0.8102397 0.8184663 0.8264585   0.9487973
+PB_NA19160S 0.8411193 0.8264957 0.8103467 0.8179757 0.8260270   0.9462990
             PB_NA18855U PB_NA18855S PB_NA19160U PB_NA19160S
-18855_3_S     0.6816916   0.6895329   0.6090359   0.6242035
-19160_3_S     0.6547711   0.6593606   0.6754253   0.6861713
-18856_3_U     0.6620651   0.6725077   0.6106863   0.6239459
-18856_1_U     0.6516724   0.6702138   0.6116304   0.6183130
-18855_2_S     0.6802552   0.6863654   0.6011725   0.6199644
-18856_2_S     0.6082247   0.6213176   0.5737269   0.5882622
-19160_3_U     0.6498205   0.6511624   0.6814483   0.6856802
-18855_2_U     0.6861981   0.6913211   0.6103708   0.6239884
-19160_2_S     0.6588814   0.6639319   0.6873455   0.6952008
-18855_1_S     0.6713925   0.6845251   0.6108776   0.6220449
-18856_1_S     0.6332242   0.6519966   0.5976782   0.6109314
-19160_1_S     0.6542039   0.6652848   0.6970492   0.6995781
-19160_2_U     0.6183483   0.6207789   0.6610796   0.6621708
-18855_1_U     0.6976954   0.7051118   0.6335906   0.6420042
-18856_3_S     0.6167025   0.6323813   0.5750696   0.5898315
-18856_2_U     0.6371574   0.6429158   0.5843737   0.6000562
-18855_3_U     0.6907546   0.6956434   0.6236538   0.6338581
-PB_NA18856U   0.9503511   0.9613404   0.9167518   0.9198727
-PB_NA18855U   1.0000000   0.9857812   0.9304733   0.9431012
-PB_NA18855S   0.9857812   1.0000000   0.9360137   0.9374099
-PB_NA19160U   0.9304733   0.9360137   1.0000000   0.9820767
-PB_NA19160S   0.9431012   0.9374099   0.9820767   1.0000000</code></pre>
-<pre class="r"><code>data.frame(filtered_upperquartile)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
+18855_3_S     0.8459983   0.8529313   0.8227197   0.8233152
+19160_3_S     0.8322858   0.8361428   0.8468936   0.8436738
+18856_3_U     0.8378173   0.8443071   0.8240106   0.8234829
+18856_1_U     0.8350808   0.8423768   0.8225243   0.8214158
+18855_2_S     0.8450318   0.8521429   0.8213054   0.8229017
+18856_2_S     0.8217608   0.8291576   0.8124022   0.8119773
+19160_3_U     0.8313753   0.8347985   0.8500383   0.8442939
+18855_2_U     0.8472132   0.8529037   0.8246097   0.8244827
+19160_2_S     0.8334733   0.8376927   0.8499244   0.8464744
+18855_1_S     0.8448257   0.8530891   0.8245596   0.8247362
+18856_1_S     0.8275877   0.8350766   0.8167611   0.8166246
+19160_1_S     0.8320926   0.8375234   0.8512935   0.8463850
+19160_2_U     0.8258878   0.8292068   0.8470749   0.8411193
+18855_1_U     0.8475001   0.8535503   0.8276767   0.8264957
+18856_3_S     0.8214072   0.8296535   0.8102397   0.8103467
+18856_2_U     0.8323048   0.8381726   0.8184663   0.8179757
+18855_3_U     0.8476338   0.8530324   0.8264585   0.8260270
+PB_NA18856U   0.9662948   0.9684844   0.9487973   0.9462990
+PB_NA18855U   1.0000000   0.9777652   0.9526673   0.9521083
+PB_NA18855S   0.9777652   1.0000000   0.9517512   0.9486305
+PB_NA19160U   0.9526673   0.9517512   1.0000000   0.9669828
+PB_NA19160S   0.9521083   0.9486305   0.9669828   1.0000000</code></pre>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_upperquartile)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-1">
+Past versions of “corr replicate-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-1.png" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_upperquartile)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-2">
+Past versions of “corr replicate-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-2.png" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_upperquartile)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-3">
+Past versions of “corr replicate-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-3.png" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_upperquartile)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-4">
+Past versions of “corr replicate-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-4.png" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-5">
+Past versions of “corr replicate-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-5.png" target="_blank">f9ae4fa</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-27
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="normalize-raw-merged-counts-rle-normalization" class="section level2">
-<h2>Normalize raw merged counts: RLE Normalization</h2>
-<pre class="r"><code>library(edgeR)
-Merged_bulk &lt;- DGEList(Merged_bulk, group = colnames(Merged_bulk))
-RLE &lt;- calcNormFactors(Merged_bulk, method = &quot;RLE&quot;)
-RLE &lt;- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
-head(RLE)</code></pre>
-<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000000003  7.077859  7.123831  7.393616  7.291544  7.324111  6.354327
-ENSG00000000005 -5.972048 -5.972048 -3.826547 -5.972048 -5.972048 -5.972048
-ENSG00000000419  5.287534  5.530398  5.632428  5.394775  5.376697  5.293189
-ENSG00000000457  2.957890  3.264362  3.082668  2.937800  3.166786  2.796839
-ENSG00000000460  2.214462  2.723990  1.832663  1.434313  1.227842  1.340291
-ENSG00000000938 -5.972048 -5.972048 -3.826547 -5.972048 -5.972048 -5.972048
-                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000000003  7.049837  7.302658  7.115392  6.932147  6.963355  7.018154
-ENSG00000000005 -3.036027 -5.972048 -5.972048 -5.972048 -5.972048 -4.024724
-ENSG00000000419  5.377214  5.531003  5.542414  5.117422  5.588954  5.437591
-ENSG00000000457  3.364098  3.350840  3.581833  3.103934  2.969778  3.498474
-ENSG00000000460  2.466555  1.753679  2.554974  1.626850  1.318971  2.534899
-ENSG00000000938 -3.858852 -5.972048 -5.972048 -5.972048 -5.972048 -5.972048
-                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U PB_NA18856U
-ENSG00000000003  6.641319  7.063974  7.006106  6.805331  7.004530    6.687995
-ENSG00000000005 -3.855064 -5.972048 -5.972048 -5.972048 -5.972048   -3.059402
-ENSG00000000419  5.269309  5.450459  5.453506  5.475160  5.353210    6.670421
-ENSG00000000457  3.503613  3.156121  3.145479  3.134870  3.092310    3.041605
-ENSG00000000460  2.677364  1.931550  1.505911  1.555131  1.637587    3.155465
-ENSG00000000938 -5.972048 -5.972048 -5.972048 -5.972048 -5.972048   -5.972048
-                PB_NA18855U PB_NA18855S PB_NA19160U PB_NA19160S
-ENSG00000000003    6.433670    6.405022    6.382297    6.332663
-ENSG00000000005   -5.972048   -2.491852   -5.972048   -5.972048
-ENSG00000000419    6.030400    6.246452    6.457930    5.923194
-ENSG00000000457    3.212190    3.257753    3.796359    3.879983
-ENSG00000000460    3.802393    2.883617    5.161840    4.338989
-ENSG00000000938   -5.972048   -5.972048   -2.717978   -5.972048</code></pre>
-<pre class="r"><code># Look at density plots
-plotDensities(RLE, legend=&quot;topright&quot;)</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/RLE%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="correlation-heatmap-of-log2rle-normalized-and-unfiltered-samples" class="section level2">
-<h2>Correlation heatmap of log2RLE normalized and unfiltered samples</h2>
-<pre class="r"><code>cors &lt;- cor(RLE, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
-labels &lt;- sapply(strsplit(colnames(Merged_bulk),&quot;_&quot;), `[`, 1)
-
-heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20heatmap%20unfiltered%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="boxplots-of-rle-across-samples" class="section level2">
-<h2>Boxplots of RLE across samples</h2>
-<pre class="r"><code>library(reshape2)
-meltRLE &lt;- melt(RLE)
-names(meltRLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;RLE&quot;)
-p &lt;- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
-p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="filtering-for-lowly-expressed-genes-avg-log2rle-3-in-at-least-15-samples" class="section level2">
-<h2>Filtering for lowly expressed genes (avg log2RLE &gt; 3 in at least 15 samples)</h2>
-<pre class="r"><code>cutoff &lt;- 3
-
-keep &lt;- rowSums( RLE &gt; cutoff ) &gt;= 15
-
-counts_RLE &lt;- Merged_bulk[keep,]
-filtered_RLE &lt;- RLE[keep,]
-dim(filtered_RLE)</code></pre>
-<pre><code>[1] 8590   22</code></pre>
-</div>
-<div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
-<h2>Boxplots of normalized+filtered counts across samples</h2>
-<pre class="r"><code>melt_filt_RLE &lt;- melt(filtered_RLE)
-names(melt_filt_RLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2RLE&quot;)
-p1 &lt;- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
-p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20filt%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plotDensities(filtered_RLE, legend = F)</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/boxplot%20filt%20RLE-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="correlation-heatmap-of-log2rle-normalized-and-filtered-samples" class="section level2">
-<h2>Correlation heatmap of log2RLE normalized and filtered samples</h2>
-<pre class="r"><code>cors &lt;- cor(filtered_RLE, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
-labels &lt;- sapply(strsplit(colnames(Merged_bulk),&quot;_&quot;), `[`, 1)
-
-heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(labels))], RowSideColors=pal[as.integer(as.factor(labels))], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20heatmap%20filtered%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="correlation-between-pseudobulk-and-bulk-from-same-replicate-1" class="section level2">
-<h2>Correlation between Pseudobulk and bulk from same replicate</h2>
-<pre class="r"><code>cors</code></pre>
-<pre><code>            18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-18855_3_S   1.0000000 0.9305127 0.9456068 0.9221456 0.9870444 0.8765678
-19160_3_S   0.9305127 1.0000000 0.9110535 0.8826966 0.9229220 0.8611944
-18856_3_U   0.9456068 0.9110535 1.0000000 0.9743517 0.9555671 0.9226863
-18856_1_U   0.9221456 0.8826966 0.9743517 1.0000000 0.9262760 0.8982298
-18855_2_S   0.9870444 0.9229220 0.9555671 0.9262760 1.0000000 0.8768784
-18856_2_S   0.8765678 0.8611944 0.9226863 0.8982298 0.8768784 1.0000000
-19160_3_U   0.9169022 0.9884209 0.8953346 0.8673507 0.9055657 0.8475397
-18855_2_U   0.9852727 0.9200648 0.9539050 0.9349221 0.9878807 0.8692827
-19160_2_S   0.9207214 0.9923965 0.9022517 0.8720022 0.9130744 0.8560880
-18855_1_S   0.9856718 0.9281756 0.9422577 0.9393987 0.9758558 0.8735141
-18856_1_S   0.8905808 0.8709871 0.9463002 0.9397078 0.8946661 0.9636686
-19160_1_S   0.9053329 0.9814407 0.8899380 0.8843244 0.8915217 0.8475627
-19160_2_U   0.8978372 0.9692359 0.8718504 0.8592861 0.8826940 0.8381649
-18855_1_U   0.9842722 0.9274211 0.9447203 0.9361025 0.9761981 0.8627103
-18856_3_S   0.8838321 0.8612588 0.9431450 0.9215973 0.8894035 0.9782188
-18856_2_U   0.9404993 0.9046406 0.9807619 0.9626752 0.9445108 0.9309952
-18855_3_U   0.9887206 0.9316370 0.9392217 0.9185105 0.9782289 0.8628199
-PB_NA18856U 0.6000491 0.5907070 0.6540721 0.6517472 0.6101940 0.5906544
-PB_NA18855U 0.6250518 0.6015300 0.6083377 0.5949113 0.6232919 0.5445655
-PB_NA18855S 0.6267782 0.6021159 0.6144824 0.6124815 0.6229682 0.5520509
-PB_NA19160U 0.5476858 0.6164386 0.5496837 0.5523480 0.5385491 0.5046654
-PB_NA19160S 0.5685010 0.6329312 0.5669266 0.5604834 0.5637575 0.5240663
-            19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-18855_3_S   0.9169022 0.9852727 0.9207214 0.9856718 0.8905808 0.9053329
-19160_3_S   0.9884209 0.9200648 0.9923965 0.9281756 0.8709871 0.9814407
-18856_3_U   0.8953346 0.9539050 0.9022517 0.9422577 0.9463002 0.8899380
-18856_1_U   0.8673507 0.9349221 0.8720022 0.9393987 0.9397078 0.8843244
-18855_2_S   0.9055657 0.9878807 0.9130744 0.9758558 0.8946661 0.8915217
-18856_2_S   0.8475397 0.8692827 0.8560880 0.8735141 0.9636686 0.8475627
-19160_3_U   1.0000000 0.9105577 0.9894452 0.9152795 0.8484632 0.9791361
-18855_2_U   0.9105577 1.0000000 0.9106936 0.9781173 0.8842546 0.8930042
-19160_2_S   0.9894452 0.9106936 1.0000000 0.9186752 0.8624978 0.9836729
-18855_1_S   0.9152795 0.9781173 0.9186752 1.0000000 0.8939216 0.9187613
-18856_1_S   0.8484632 0.8842546 0.8624978 0.8939216 1.0000000 0.8666908
-19160_1_S   0.9791361 0.8930042 0.9836729 0.9187613 0.8666908 1.0000000
-19160_2_U   0.9834351 0.8949405 0.9719918 0.9079344 0.8281810 0.9705599
-18855_1_U   0.9204893 0.9851404 0.9195705 0.9852177 0.8848317 0.9146932
-18856_3_S   0.8423886 0.8797672 0.8526512 0.8818981 0.9841815 0.8468590
-18856_2_U   0.8932943 0.9477697 0.8943199 0.9384825 0.9341368 0.8810814
-18855_3_U   0.9260969 0.9856808 0.9239574 0.9806156 0.8748898 0.9094522
-PB_NA18856U 0.5783692 0.6148688 0.5961340 0.5949504 0.6376395 0.6009091
-PB_NA18855U 0.5982234 0.6319628 0.6088553 0.6113458 0.5752689 0.6038619
-PB_NA18855S 0.5952379 0.6308100 0.6101698 0.6205746 0.5917320 0.6137792
-PB_NA19160U 0.6238902 0.5510395 0.6317731 0.5503223 0.5367825 0.6458171
-PB_NA19160S 0.6327372 0.5695491 0.6451110 0.5654610 0.5538625 0.6518400
-            19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U PB_NA18856U
-18855_3_S   0.8978372 0.9842722 0.8838321 0.9404993 0.9887206   0.6000491
-19160_3_S   0.9692359 0.9274211 0.8612588 0.9046406 0.9316370   0.5907070
-18856_3_U   0.8718504 0.9447203 0.9431450 0.9807619 0.9392217   0.6540721
-18856_1_U   0.8592861 0.9361025 0.9215973 0.9626752 0.9185105   0.6517472
-18855_2_S   0.8826940 0.9761981 0.8894035 0.9445108 0.9782289   0.6101940
-18856_2_S   0.8381649 0.8627103 0.9782188 0.9309952 0.8628199   0.5906544
-19160_3_U   0.9834351 0.9204893 0.8423886 0.8932943 0.9260969   0.5783692
-18855_2_U   0.8949405 0.9851404 0.8797672 0.9477697 0.9856808   0.6148688
-19160_2_S   0.9719918 0.9195705 0.8526512 0.8943199 0.9239574   0.5961340
-18855_1_S   0.9079344 0.9852177 0.8818981 0.9384825 0.9806156   0.5949504
-18856_1_S   0.8281810 0.8848317 0.9841815 0.9341368 0.8748898   0.6376395
-19160_1_S   0.9705599 0.9146932 0.8468590 0.8810814 0.9094522   0.6009091
-19160_2_U   1.0000000 0.9042475 0.8234411 0.8836101 0.9079788   0.5361588
-18855_1_U   0.9042475 1.0000000 0.8718645 0.9365284 0.9896644   0.6252790
-18856_3_S   0.8234411 0.8718645 1.0000000 0.9349614 0.8676262   0.6126482
-18856_2_U   0.8836101 0.9365284 0.9349614 1.0000000 0.9334555   0.6089448
-18855_3_U   0.9079788 0.9896644 0.8676262 0.9334555 1.0000000   0.6059222
-PB_NA18856U 0.5361588 0.6252790 0.6126482 0.6089448 0.6059222   1.0000000
-PB_NA18855U 0.5581362 0.6474303 0.5536444 0.5758340 0.6376729   0.9488515
-PB_NA18855S 0.5565525 0.6501692 0.5652088 0.5747781 0.6365443   0.9620447
-PB_NA19160U 0.5956198 0.5815076 0.5077472 0.5136032 0.5670918   0.9184241
-PB_NA19160S 0.6010054 0.5932410 0.5268715 0.5349071 0.5814721   0.9194719
-            PB_NA18855U PB_NA18855S PB_NA19160U PB_NA19160S
-18855_3_S     0.6250518   0.6267782   0.5476858   0.5685010
-19160_3_S     0.6015300   0.6021159   0.6164386   0.6329312
-18856_3_U     0.6083377   0.6144824   0.5496837   0.5669266
-18856_1_U     0.5949113   0.6124815   0.5523480   0.5604834
-18855_2_S     0.6232919   0.6229682   0.5385491   0.5637575
-18856_2_S     0.5445655   0.5520509   0.5046654   0.5240663
-19160_3_U     0.5982234   0.5952379   0.6238902   0.6327372
-18855_2_U     0.6319628   0.6308100   0.5510395   0.5695491
-19160_2_S     0.6088553   0.6101698   0.6317731   0.6451110
-18855_1_S     0.6113458   0.6205746   0.5503223   0.5654610
-18856_1_S     0.5752689   0.5917320   0.5367825   0.5538625
-19160_1_S     0.6038619   0.6137792   0.6458171   0.6518400
-19160_2_U     0.5581362   0.5565525   0.5956198   0.6010054
-18855_1_U     0.6474303   0.6501692   0.5815076   0.5932410
-18856_3_S     0.5536444   0.5652088   0.5077472   0.5268715
-18856_2_U     0.5758340   0.5747781   0.5136032   0.5349071
-18855_3_U     0.6376729   0.6365443   0.5670918   0.5814721
-PB_NA18856U   0.9488515   0.9620447   0.9184241   0.9194719
-PB_NA18855U   1.0000000   0.9834275   0.9313977   0.9464136
-PB_NA18855S   0.9834275   1.0000000   0.9424121   0.9422183
-PB_NA19160U   0.9313977   0.9424121   1.0000000   0.9794357
-PB_NA19160S   0.9464136   0.9422183   0.9794357   1.0000000</code></pre>
-<pre class="r"><code>data.frame(filtered_RLE)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
+<pre class="r"><code># pearson
+data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate%20rle-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_RLE)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate%20rle-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_RLE)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate%20rle-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_RLE)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate%20rle-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(filtered_RLE)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;))</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate%20rle-5.png" width="672" style="display: block; margin: auto;" /></p>
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-10.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1449,10 +1239,9 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] reshape2_1.4.3     edgeR_3.20.9       limma_3.34.9       ggpubr_0.2.5      
- [5] magrittr_1.5       gplots_3.0.1.1     ggfortify_0.4.8    cowplot_0.9.3     
- [9] ggplot2_3.2.1      scales_1.1.0       RColorBrewer_1.1-2 dplyr_0.8.3       
-[13] slam_0.1-46        Seurat_3.1.1      
+ [1] ggpubr_0.2.5       magrittr_1.5       gplots_3.0.1.1     ggfortify_0.4.8   
+ [5] cowplot_0.9.3      ggplot2_3.2.1      scales_1.1.0       RColorBrewer_1.1-2
+ [9] dplyr_0.8.3        slam_0.1-47        Seurat_3.1.1      
 
 loaded via a namespace (and not attached):
   [1] TH.data_1.0-10      Rtsne_0.15          colorspace_1.4-1   
@@ -1469,27 +1258,27 @@ loaded via a namespace (and not attached):
  [34] Matrix_1.2-18       lazyeval_0.2.2      later_1.0.0        
  [37] htmltools_0.4.0     tools_3.4.3         rsvd_1.0.2         
  [40] igraph_1.2.4.2      gtable_0.3.0        glue_1.3.1         
- [43] RANN_2.6.1          Rcpp_1.0.3          Biobase_2.38.0     
- [46] vctrs_0.2.0         multtest_2.34.0     gdata_2.18.0       
- [49] ape_5.3             nlme_3.1-131        gbRd_0.4-11        
- [52] lmtest_0.9-37       xfun_0.12           stringr_1.4.0      
- [55] globals_0.12.5      lifecycle_0.1.0     irlba_2.3.3        
- [58] gtools_3.8.1        future_1.15.1       MASS_7.3-51.4      
- [61] zoo_1.8-6           promises_1.1.0      parallel_3.4.3     
- [64] sandwich_2.5-1      yaml_2.2.0          gridExtra_2.3      
- [67] reticulate_1.13     pbapply_1.4-2       stringi_1.4.3      
- [70] mutoss_0.1-12       plotrix_3.7-2       caTools_1.17.1.3   
- [73] BiocGenerics_0.24.0 bibtex_0.4.2        Rdpack_0.11-0      
- [76] SDMTools_1.1-221.2  rlang_0.4.4         pkgconfig_2.0.3    
- [79] bitops_1.0-6        evaluate_0.14       lattice_0.20-35    
- [82] ROCR_1.0-7          purrr_0.3.3         labeling_0.3       
- [85] htmlwidgets_1.5.1   tidyselect_0.2.5    RcppAnnoy_0.0.14   
- [88] plyr_1.8.4          R6_2.4.1            multcomp_1.4-8     
- [91] withr_2.1.2         pillar_1.4.2        whisker_0.4        
- [94] sn_1.5-4            fitdistrplus_1.0-14 survival_2.41-3    
- [97] tsne_0.1-3          tibble_2.1.3        future.apply_1.3.0 
-[100] crayon_1.3.4        KernSmooth_2.23-15  plotly_4.9.1       
-[103] rmarkdown_1.18      locfit_1.5-9.1      grid_3.4.3         
+ [43] RANN_2.6.1          reshape2_1.4.3      Rcpp_1.0.3         
+ [46] Biobase_2.38.0      vctrs_0.2.0         multtest_2.34.0    
+ [49] gdata_2.18.0        ape_5.3             nlme_3.1-131       
+ [52] gbRd_0.4-11         lmtest_0.9-37       xfun_0.12          
+ [55] stringr_1.4.0       globals_0.12.5      lifecycle_0.1.0    
+ [58] irlba_2.3.3         gtools_3.8.1        future_1.15.1      
+ [61] MASS_7.3-51.4       zoo_1.8-6           promises_1.1.0     
+ [64] parallel_3.4.3      sandwich_2.5-1      yaml_2.2.0         
+ [67] gridExtra_2.3       reticulate_1.13     pbapply_1.4-2      
+ [70] stringi_1.4.3       mutoss_0.1-12       plotrix_3.7-2      
+ [73] caTools_1.17.1.3    BiocGenerics_0.24.0 bibtex_0.4.2       
+ [76] Rdpack_0.11-0       SDMTools_1.1-221.2  rlang_0.4.4        
+ [79] pkgconfig_2.0.3     bitops_1.0-6        evaluate_0.14      
+ [82] lattice_0.20-35     ROCR_1.0-7          purrr_0.3.3        
+ [85] labeling_0.3        htmlwidgets_1.5.1   tidyselect_0.2.5   
+ [88] RcppAnnoy_0.0.14    plyr_1.8.4          R6_2.4.1           
+ [91] multcomp_1.4-8      withr_2.1.2         pillar_1.4.2       
+ [94] whisker_0.4         sn_1.5-4            fitdistrplus_1.0-14
+ [97] survival_2.41-3     tsne_0.1-3          tibble_2.1.3       
+[100] future.apply_1.3.0  crayon_1.3.4        KernSmooth_2.23-15 
+[103] plotly_4.9.1        rmarkdown_1.18      grid_3.4.3         
 [106] data.table_1.12.6   git2r_0.26.1        metap_1.2          
 [109] digest_0.6.23       tidyr_1.0.0         httpuv_1.5.2       
 [112] numDeriv_2016.8-1.1 R.utils_2.9.2       RcppParallel_4.4.4 

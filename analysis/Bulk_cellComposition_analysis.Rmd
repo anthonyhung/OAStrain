@@ -135,7 +135,8 @@ names(outside_data_counts) <- c("MSC-Chond-d3_3", "Heart_2", "Chond_TCP_P4_2", "
 #remove MSC-chond samples and OA samples
 MSC_chond_samples <- c(1,5,7:10,15,18,30:31,34,37,46:47,49,57,59,62)
 OA_samples <- c(20,24,36,38,42,52)
-outside_data_counts<- outside_data_counts[,-c(MSC_chond_samples, OA_samples)]
+Heart1 <- c(40) #seems to cluster with liver rather than hearts!
+outside_data_counts<- outside_data_counts[,-c(MSC_chond_samples, OA_samples, Heart1)]
 
 #Combine all bulk data together
 merged_raw_data <- merge(raw_counts, outside_data_counts, by = "row.names")
@@ -331,11 +332,7 @@ merged_raw_data_counts <- merged_raw_data$counts
 Combined_counts_celltypes <- sapply(strsplit(as.character(counts_upperquartile$samples$group),"_"), `[`, 1)
 
 #Choosing between values of k
-Combined_GoM <- CountClust::FitGoM(t(merged_raw_data_counts), K=c(2:20), tol = 0.1, control=list(tmax=100))
-#choosing between k
-comparisons <- compGoM(data = t(merged_raw_data_counts), model = Combined_GoM)
-plot(cbind(comparisons[1,], c(2:20)))
-plot(cbind(comparisons[2,], c(2:20)))
+Combined_GoM <- CountClust::FitGoM(t(merged_raw_data_counts), K=c(4:8), tol = 0.1, control=list(tmax=100))
 ```
 
 
@@ -433,7 +430,8 @@ boxplot_gene_sample_type <- function(counts_, info_, gene_, name, y_axis = "log2
      
      ggplot(df, aes(x = labels, y = norm_expr, color = labels)) +
           geom_boxplot() +
-          labs(title=paste0("Expression of ", as.character(name), " by sample type"), x= "Sample Type", y = y_axis)
+          labs(title=paste0("Expression of ", as.character(name), " by sample type"), x= "Sample Type", y = y_axis) +
+          theme(legend.position = "none")
 }
 
 
@@ -637,6 +635,37 @@ CountClust::StructureGGplot(omega = omega,
 genes <- annotate_clusters(theta_mat = Topic_clus_7$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)
 genes[[2]]
+
+
+#Gene boxplot for cluster 1
+#COL11A1
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000060718", "COL11A1")
+
+#Gene boxplot for cluster 2
+#POU5F1
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000204531", "POU5F1")
+
+#Gene boxplot for cluster 3
+#
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000163631", "ALB")
+
+#Gene boxplot for cluster 4
+#SFTPB
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000168878", "SFTPB")
+
+#Gene boxplot for cluster 5
+#UMOD
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000169344", "UMOD")
+
+#Gene boxplot for cluster 6
+#TNNT2
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000118194", "TNNT2")
+
+#Gene boxplot for cluster 7
+#ALB
+boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000163631", "ALB")
+
+
 
 
 
