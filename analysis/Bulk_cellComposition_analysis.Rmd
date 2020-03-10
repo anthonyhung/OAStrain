@@ -671,3 +671,128 @@ boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000163631", "ALB")
 
 ```
 
+
+
+
+# Semi-supervised topic modeling (DEFINE MSCs as a cluster)
+
+```{r supervised}
+library("classtpx")
+
+# labels for "known" clusters
+index_heart <- which(labels=="Heart")
+index_lung <- which(labels=="Lung")
+index_liver <- which(labels=="Liver")
+index_kidney <- which(labels=="Kidney")
+index_iPSC <- which(labels=="iPSC")
+index_chond <- which(labels=="Chond")
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond))
+                )
+
+# Perform topic modeling k=6
+if (file.exists("data/merged_topic_fit_6_classtpx_omega_fix.rda")){
+     Topic_clus_6 <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_6 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=6,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_6, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
+}
+
+omega <- Topic_clus_6$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+
+# Perform topic modeling k=7
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix.rda")){
+     Topic_clus_7 <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_7 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_7, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
+}
+
+omega <- Topic_clus_7$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix.rda")){
+     Topic_clus_8 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix.rda"))
+} else {
+Topic_clus_8 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8, file="data/merged_topic_fit_8_classtpx_omega_fix.rda")
+}
+
+omega <- Topic_clus_8$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+```
+

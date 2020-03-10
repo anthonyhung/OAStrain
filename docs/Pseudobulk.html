@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-09
+<strong>Last updated:</strong> 2020-03-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a46d6f37799b4f9c74c12be5c41c412f95f2fa3e" target="_blank">a46d6f3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree420df284ae0245bac41830c68d8c9fbc9a311a74targetblank420df28a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/420df284ae0245bac41830c68d8c9fbc9a311a74" target="_blank">420df28</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree420df284ae0245bac41830c68d8c9fbc9a311a74targetblank420df28a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,6 +508,7 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
@@ -530,10 +531,8 @@ Ignored files:
     Ignored:    output/ANT1.2.rds
 
 Unstaged changes:
-    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
     Modified:   analysis/Pilot_GoMAnalysis.Rmd
     Modified:   analysis/Pseudobulk.Rmd
-    Modified:   data/merged_topic_fit_6_classtpx_omega_fix.rda
 
 </code></pre>
 <p>
@@ -572,6 +571,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/analysis/Pseudobulk.Rmd" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+<td>
+Revise pseudobulk to use raw counts not normalized
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/Pseudobulk.html" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+<td>
+Revise pseudobulk to use raw counts not normalized
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -684,6 +717,12 @@ Attaching package: &#39;ggpubr&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:cowplot&#39;:
 
     get_legend</code></pre>
+<pre class="r"><code>library(&quot;gridExtra&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;gridExtra&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    combine</code></pre>
 <pre class="r"><code># load gene annotations
 gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
                         sep = &quot;\t&quot;)
@@ -734,6 +773,43 @@ pca_genes &lt;- prcomp(t(Merged_bulk), scale = T)
 
 autoplot(pca_genes, label = T)</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA-1">
+Past versions of PCA-1.png
+</button>
+</p>
+<div id="fig-PCA-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/PCA-1.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="clustering-corr-heatmap" class="section level2">
 <h2>Clustering (corr heatmap)</h2>
@@ -782,114 +858,9 @@ Anthony Hung
 </div>
 <div id="correlation-between-pseudobulk-and-bulk-from-same-replicate-raw-counts" class="section level2">
 <h2>Correlation between Pseudobulk and bulk from same replicate (raw counts)</h2>
-<pre class="r"><code>#spearman
-cors</code></pre>
-<pre><code>            18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-18855_3_S   1.0000000 0.9467543 0.9534475 0.9514686 0.9665073 0.9407080
-19160_3_S   0.9467543 1.0000000 0.9455168 0.9444856 0.9465143 0.9350036
-18856_3_U   0.9534475 0.9455168 1.0000000 0.9672610 0.9562610 0.9533858
-18856_1_U   0.9514686 0.9444856 0.9672610 1.0000000 0.9540823 0.9517926
-18855_2_S   0.9665073 0.9465143 0.9562610 0.9540823 1.0000000 0.9415706
-18856_2_S   0.9407080 0.9350036 0.9533858 0.9517926 0.9415706 1.0000000
-19160_3_U   0.9416237 0.9670177 0.9416331 0.9406062 0.9409451 0.9305964
-18855_2_U   0.9668017 0.9478936 0.9578388 0.9568450 0.9677577 0.9401842
-19160_2_S   0.9445464 0.9688865 0.9443224 0.9426985 0.9440466 0.9342079
-18855_1_S   0.9677235 0.9483553 0.9558050 0.9552647 0.9672471 0.9432280
-18856_1_S   0.9429382 0.9377649 0.9585531 0.9581025 0.9456551 0.9599965
-19160_1_S   0.9429301 0.9689289 0.9421961 0.9429086 0.9423457 0.9345397
-19160_2_U   0.9398774 0.9665906 0.9384552 0.9387782 0.9378295 0.9293390
-18855_1_U   0.9663581 0.9475794 0.9561178 0.9552177 0.9660730 0.9410679
-18856_3_S   0.9410071 0.9339602 0.9582028 0.9554276 0.9428354 0.9612285
-18856_2_U   0.9523092 0.9434070 0.9664050 0.9652082 0.9538672 0.9536539
-18855_3_U   0.9658654 0.9462178 0.9533004 0.9511181 0.9646844 0.9381072
-PB_NA18856U 0.8417579 0.8353331 0.8568881 0.8544902 0.8442586 0.8409336
-PB_NA18855U 0.8459983 0.8322858 0.8378173 0.8350808 0.8450318 0.8217608
-PB_NA18855S 0.8529313 0.8361428 0.8443071 0.8423768 0.8521429 0.8291576
-PB_NA19160U 0.8227197 0.8468936 0.8240106 0.8225243 0.8213054 0.8124022
-PB_NA19160S 0.8233152 0.8436738 0.8234829 0.8214158 0.8229017 0.8119773
-            19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-18855_3_S   0.9416237 0.9668017 0.9445464 0.9677235 0.9429382 0.9429301
-19160_3_S   0.9670177 0.9478936 0.9688865 0.9483553 0.9377649 0.9689289
-18856_3_U   0.9416331 0.9578388 0.9443224 0.9558050 0.9585531 0.9421961
-18856_1_U   0.9406062 0.9568450 0.9426985 0.9552647 0.9581025 0.9429086
-18855_2_S   0.9409451 0.9677577 0.9440466 0.9672471 0.9456551 0.9423457
-18856_2_S   0.9305964 0.9401842 0.9342079 0.9432280 0.9599965 0.9345397
-19160_3_U   1.0000000 0.9443550 0.9683647 0.9438921 0.9313813 0.9676182
-18855_2_U   0.9443550 1.0000000 0.9461227 0.9670722 0.9448377 0.9443060
-19160_2_S   0.9683647 0.9461227 1.0000000 0.9469684 0.9360860 0.9694586
-18855_1_S   0.9438921 0.9670722 0.9469684 1.0000000 0.9455981 0.9469826
-18856_1_S   0.9313813 0.9448377 0.9360860 0.9455981 1.0000000 0.9361027
-19160_1_S   0.9676182 0.9443060 0.9694586 0.9469826 0.9361027 1.0000000
-19160_2_U   0.9686282 0.9422961 0.9675425 0.9432252 0.9294840 0.9688183
-18855_1_U   0.9453221 0.9688853 0.9475499 0.9677677 0.9440499 0.9464009
-18856_3_S   0.9294953 0.9423006 0.9331183 0.9427895 0.9634747 0.9326067
-18856_2_U   0.9399180 0.9561417 0.9422498 0.9541552 0.9553839 0.9410530
-18855_3_U   0.9436869 0.9663629 0.9460205 0.9661748 0.9402407 0.9449210
-PB_NA18856U 0.8330753 0.8452726 0.8366829 0.8427732 0.8487926 0.8361501
-PB_NA18855U 0.8313753 0.8472132 0.8334733 0.8448257 0.8275877 0.8320926
-PB_NA18855S 0.8347985 0.8529037 0.8376927 0.8530891 0.8350766 0.8375234
-PB_NA19160U 0.8500383 0.8246097 0.8499244 0.8245596 0.8167611 0.8512935
-PB_NA19160S 0.8442939 0.8244827 0.8464744 0.8247362 0.8166246 0.8463850
-            19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U PB_NA18856U
-18855_3_S   0.9398774 0.9663581 0.9410071 0.9523092 0.9658654   0.8417579
-19160_3_S   0.9665906 0.9475794 0.9339602 0.9434070 0.9462178   0.8353331
-18856_3_U   0.9384552 0.9561178 0.9582028 0.9664050 0.9533004   0.8568881
-18856_1_U   0.9387782 0.9552177 0.9554276 0.9652082 0.9511181   0.8544902
-18855_2_S   0.9378295 0.9660730 0.9428354 0.9538672 0.9646844   0.8442586
-18856_2_S   0.9293390 0.9410679 0.9612285 0.9536539 0.9381072   0.8409336
-19160_3_U   0.9686282 0.9453221 0.9294953 0.9399180 0.9436869   0.8330753
-18855_2_U   0.9422961 0.9688853 0.9423006 0.9561417 0.9663629   0.8452726
-19160_2_S   0.9675425 0.9475499 0.9331183 0.9422498 0.9460205   0.8366829
-18855_1_S   0.9432252 0.9677677 0.9427895 0.9541552 0.9661748   0.8427732
-18856_1_S   0.9294840 0.9440499 0.9634747 0.9553839 0.9402407   0.8487926
-19160_1_S   0.9688183 0.9464009 0.9326067 0.9410530 0.9449210   0.8361501
-19160_2_U   1.0000000 0.9436021 0.9257474 0.9386062 0.9426968   0.8267265
-18855_1_U   0.9436021 1.0000000 0.9397690 0.9537943 0.9667045   0.8444201
-18856_3_S   0.9257474 0.9397690 1.0000000 0.9544389 0.9380325   0.8430169
-18856_2_U   0.9386062 0.9537943 0.9544389 1.0000000 0.9519479   0.8488602
-18855_3_U   0.9426968 0.9667045 0.9380325 0.9519479 1.0000000   0.8414695
-PB_NA18856U 0.8267265 0.8444201 0.8430169 0.8488602 0.8414695   1.0000000
-PB_NA18855U 0.8258878 0.8475001 0.8214072 0.8323048 0.8476338   0.9662948
-PB_NA18855S 0.8292068 0.8535503 0.8296535 0.8381726 0.8530324   0.9684844
-PB_NA19160U 0.8470749 0.8276767 0.8102397 0.8184663 0.8264585   0.9487973
-PB_NA19160S 0.8411193 0.8264957 0.8103467 0.8179757 0.8260270   0.9462990
-            PB_NA18855U PB_NA18855S PB_NA19160U PB_NA19160S
-18855_3_S     0.8459983   0.8529313   0.8227197   0.8233152
-19160_3_S     0.8322858   0.8361428   0.8468936   0.8436738
-18856_3_U     0.8378173   0.8443071   0.8240106   0.8234829
-18856_1_U     0.8350808   0.8423768   0.8225243   0.8214158
-18855_2_S     0.8450318   0.8521429   0.8213054   0.8229017
-18856_2_S     0.8217608   0.8291576   0.8124022   0.8119773
-19160_3_U     0.8313753   0.8347985   0.8500383   0.8442939
-18855_2_U     0.8472132   0.8529037   0.8246097   0.8244827
-19160_2_S     0.8334733   0.8376927   0.8499244   0.8464744
-18855_1_S     0.8448257   0.8530891   0.8245596   0.8247362
-18856_1_S     0.8275877   0.8350766   0.8167611   0.8166246
-19160_1_S     0.8320926   0.8375234   0.8512935   0.8463850
-19160_2_U     0.8258878   0.8292068   0.8470749   0.8411193
-18855_1_U     0.8475001   0.8535503   0.8276767   0.8264957
-18856_3_S     0.8214072   0.8296535   0.8102397   0.8103467
-18856_2_U     0.8323048   0.8381726   0.8184663   0.8179757
-18855_3_U     0.8476338   0.8530324   0.8264585   0.8260270
-PB_NA18856U   0.9662948   0.9684844   0.9487973   0.9462990
-PB_NA18855U   1.0000000   0.9777652   0.9526673   0.9521083
-PB_NA18855S   0.9777652   1.0000000   0.9517512   0.9486305
-PB_NA19160U   0.9526673   0.9517512   1.0000000   0.9669828
-PB_NA19160S   0.9521083   0.9486305   0.9669828   1.0000000</code></pre>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
-     geom_point() + 
-     geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
-     scale_x_log10()+
-     scale_y_log10()</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_cor).</code></pre>
+<pre class="r"><code>cors_pseudobulk &lt;- cors[18:22,1:17]
+heatmap.2(cors_pseudobulk, scale=&quot;none&quot;, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;,
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-1">
@@ -915,6 +886,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-1.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-1.png" target="_blank">f9ae4fa</a>
 </td>
 <td>
@@ -928,10 +910,11 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
      stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
      scale_x_log10()+
      scale_y_log10()</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
@@ -940,8 +923,12 @@ Anthony Hung
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_cor).
+
+Warning: Removed 7780 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-2">
@@ -967,6 +954,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-2.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-2.png" target="_blank">f9ae4fa</a>
 </td>
 <td>
@@ -980,10 +978,11 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
      stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
      scale_x_log10()+
      scale_y_log10()</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
@@ -992,8 +991,12 @@ Anthony Hung
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8270 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-3">
@@ -1019,6 +1022,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-3.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-3.png" target="_blank">f9ae4fa</a>
 </td>
 <td>
@@ -1032,10 +1046,11 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
      stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
      scale_x_log10()+
      scale_y_log10()</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
@@ -1044,8 +1059,12 @@ Anthony Hung
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8075 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-4">
@@ -1071,6 +1090,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-4.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-4.png" target="_blank">f9ae4fa</a>
 </td>
 <td>
@@ -1084,10 +1114,11 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
      stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
      scale_x_log10()+
      scale_y_log10()</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
@@ -1096,8 +1127,12 @@ Anthony Hung
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_cor).
+
+Warning: Removed 7980 rows containing non-finite values (stat_cor).</code></pre>
 <p><img src="figure/Pseudobulk.Rmd/corr%20replicate-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-5">
@@ -1123,6 +1158,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-5.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f9ae4fada5a4e60b5fc5d1945a443fbc9ce0b200/docs/figure/Pseudobulk.Rmd/corr replicate-5.png" target="_blank">f9ae4fa</a>
 </td>
 <td>
@@ -1136,73 +1182,15 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code># pearson
-data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
-     geom_point() + 
-     geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
-     scale_x_log10()+
-     scale_y_log10()</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 7780 rows containing non-finite values (stat_cor).</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18855_3_U`)) +
-     geom_point() + 
-     geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
-     scale_x_log10()+
-     scale_y_log10()</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8270 rows containing non-finite values (stat_cor).</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X18855_3_S`)) +
-     geom_point() + 
-     geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
-     scale_x_log10()+
-     scale_y_log10()</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8075 rows containing non-finite values (stat_cor).</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X19160_3_U`)) +
-     geom_point() + 
-     geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
-     scale_x_log10()+
-     scale_y_log10()</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 7980 rows containing non-finite values (stat_cor).</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-9.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      geom_point() + 
      geom_smooth(method=&#39;lm&#39;) + 
-     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;))+
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
      scale_x_log10()+
      scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
@@ -1210,8 +1198,216 @@ data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`))
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>Warning: Removed 8706 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_cor).</code></pre>
-<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>Warning: Removed 8706 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8706 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20replicate-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-replicate-6">
+Past versions of “corr replicate-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-replicate-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c9015d5f25785b2ffd97f0119b94015c2cc84498/docs/figure/Pseudobulk.Rmd/corr replicate-6.png" target="_blank">c9015d5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-between-pseudobulk-and-bulk-from-different-individuals-in-the-same-replicate-same-treatment-raw-counts" class="section level2">
+<h2>Correlation between Pseudobulk and bulk from different individuals in the same replicate, same treatment (raw counts)</h2>
+<pre class="r"><code>PB_NA18856U_X18855_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X18855_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+PB_NA18856U_X19160_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18856U`, y = `X19160_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+grid.arrange(PB_NA18856U_X18855_3_U, PB_NA18856U_X19160_3_U)</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8073 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8073 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8073 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7589 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7589 rows containing non-finite values (stat_cor).
+
+Warning: Removed 7589 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20individuals-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>PB_NA18855U_X18856_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X18856_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+PB_NA18855U_X19160_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855U`, y = `X19160_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+grid.arrange(PB_NA18855U_X18856_3_U, PB_NA18855U_X19160_3_U)</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8191 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8191 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8191 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7940 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7940 rows containing non-finite values (stat_cor).
+
+Warning: Removed 7940 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20individuals-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>PB_NA19160U_X18856_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X18856_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+PB_NA19160U_X18855_3_U &lt;- data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160U`, y = `X18855_3_U`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +     
+     scale_x_log10()+
+     scale_y_log10()
+
+grid.arrange(PB_NA18855U_X18856_3_U, PB_NA18855U_X19160_3_U)</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8191 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8191 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8191 rows containing non-finite values (stat_cor).</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 7940 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 7940 rows containing non-finite values (stat_cor).
+
+Warning: Removed 7940 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20individuals-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA18855S`, y = `X19160_3_S`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8047 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8047 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8047 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20individuals-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>data.frame(Merged_bulk)  %&gt;% ggplot(aes(x = `PB_NA19160S`, y = `X18855_3_S`)) +
+     geom_point() + 
+     geom_smooth(method=&#39;lm&#39;) + 
+     stat_cor(method = &quot;spearman&quot;, cor.coef.name = c(&quot;rho&quot;)) +
+     stat_cor(method = &quot;pearson&quot;, cor.coef.name = c(&quot;r&quot;), label.x.npc = &quot;middle&quot;, label.y.npc = &quot;top&quot;) +
+     scale_x_log10()+
+     scale_y_log10()</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>Warning: Removed 8951 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 8951 rows containing non-finite values (stat_cor).
+
+Warning: Removed 8951 rows containing non-finite values (stat_cor).</code></pre>
+<p><img src="figure/Pseudobulk.Rmd/corr%20individuals-5.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1239,9 +1435,9 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggpubr_0.2.5       magrittr_1.5       gplots_3.0.1.1     ggfortify_0.4.8   
- [5] cowplot_0.9.3      ggplot2_3.2.1      scales_1.1.0       RColorBrewer_1.1-2
- [9] dplyr_0.8.3        slam_0.1-47        Seurat_3.1.1      
+ [1] gridExtra_2.3      ggpubr_0.2.5       magrittr_1.5       gplots_3.0.1.1    
+ [5] ggfortify_0.4.8    cowplot_0.9.3      ggplot2_3.2.1      scales_1.1.0      
+ [9] RColorBrewer_1.1-2 dplyr_0.8.3        slam_0.1-47        Seurat_3.1.1      
 
 loaded via a namespace (and not attached):
   [1] TH.data_1.0-10      Rtsne_0.15          colorspace_1.4-1   
@@ -1266,23 +1462,23 @@ loaded via a namespace (and not attached):
  [58] irlba_2.3.3         gtools_3.8.1        future_1.15.1      
  [61] MASS_7.3-51.4       zoo_1.8-6           promises_1.1.0     
  [64] parallel_3.4.3      sandwich_2.5-1      yaml_2.2.0         
- [67] gridExtra_2.3       reticulate_1.13     pbapply_1.4-2      
- [70] stringi_1.4.3       mutoss_0.1-12       plotrix_3.7-2      
- [73] caTools_1.17.1.3    BiocGenerics_0.24.0 bibtex_0.4.2       
- [76] Rdpack_0.11-0       SDMTools_1.1-221.2  rlang_0.4.4        
- [79] pkgconfig_2.0.3     bitops_1.0-6        evaluate_0.14      
- [82] lattice_0.20-35     ROCR_1.0-7          purrr_0.3.3        
- [85] labeling_0.3        htmlwidgets_1.5.1   tidyselect_0.2.5   
- [88] RcppAnnoy_0.0.14    plyr_1.8.4          R6_2.4.1           
- [91] multcomp_1.4-8      withr_2.1.2         pillar_1.4.2       
- [94] whisker_0.4         sn_1.5-4            fitdistrplus_1.0-14
- [97] survival_2.41-3     tsne_0.1-3          tibble_2.1.3       
-[100] future.apply_1.3.0  crayon_1.3.4        KernSmooth_2.23-15 
-[103] plotly_4.9.1        rmarkdown_1.18      grid_3.4.3         
-[106] data.table_1.12.6   git2r_0.26.1        metap_1.2          
-[109] digest_0.6.23       tidyr_1.0.0         httpuv_1.5.2       
-[112] numDeriv_2016.8-1.1 R.utils_2.9.2       RcppParallel_4.4.4 
-[115] stats4_3.4.3        munsell_0.5.0       viridisLite_0.3.0  </code></pre>
+ [67] reticulate_1.13     pbapply_1.4-2       stringi_1.4.3      
+ [70] mutoss_0.1-12       plotrix_3.7-2       caTools_1.17.1.3   
+ [73] BiocGenerics_0.24.0 bibtex_0.4.2        Rdpack_0.11-0      
+ [76] SDMTools_1.1-221.2  rlang_0.4.4         pkgconfig_2.0.3    
+ [79] bitops_1.0-6        evaluate_0.14       lattice_0.20-35    
+ [82] ROCR_1.0-7          purrr_0.3.3         labeling_0.3       
+ [85] htmlwidgets_1.5.1   tidyselect_0.2.5    RcppAnnoy_0.0.14   
+ [88] plyr_1.8.4          R6_2.4.1            multcomp_1.4-8     
+ [91] withr_2.1.2         pillar_1.4.2        whisker_0.4        
+ [94] sn_1.5-4            fitdistrplus_1.0-14 survival_2.41-3    
+ [97] tsne_0.1-3          tibble_2.1.3        future.apply_1.3.0 
+[100] crayon_1.3.4        KernSmooth_2.23-15  plotly_4.9.1       
+[103] rmarkdown_1.18      grid_3.4.3          data.table_1.12.6  
+[106] git2r_0.26.1        metap_1.2           digest_0.6.23      
+[109] tidyr_1.0.0         httpuv_1.5.2        numDeriv_2016.8-1.1
+[112] R.utils_2.9.2       RcppParallel_4.4.4  stats4_3.4.3       
+[115] munsell_0.5.0       viridisLite_0.3.0  </code></pre>
 </div>
 </div>
 </div>

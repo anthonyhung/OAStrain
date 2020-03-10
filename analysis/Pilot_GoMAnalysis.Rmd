@@ -534,7 +534,7 @@ Topic_clus_4 <- classtpx::class_topics(
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
-    tol=0.01)
+    tol=0.1)
 save(Topic_clus_4, file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda")
 Topic_clus_4 <- get(load(file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda"))
 
