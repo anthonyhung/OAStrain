@@ -14,10 +14,9 @@ Code adapted from http://jdblischak.github.io/singleCellSeq/analysis/cv-adjusted
 
 ```{r load libraries and data}
 library(Seurat)
-library(DESeq2)
+library(edgeR)
 library(tidyverse)
 library(ggplot2)
-library(ggfortify)
 library(zoo)
 
 
@@ -34,6 +33,28 @@ counts <- as.matrix(ANT1.2@assays$RNA@counts)
 labels <- ANT1.2@meta.data$labels
 batch <- ANT1.2@meta.data$orig.ident
 anno <- data.frame(cbind(labels, batch))
+```
+
+### Filter genes
+
+Filter lowly expressed genes to avoid heavy weight on the lower end in CV2 analysis (since all of them will be 0 except a few cells with 1, that leads the sd to become very low and throws off the calculations/visualizations)
+
+```{r identify-lower-expression-cutoff}
+molecules_cpm_mean <- rowMeans(cpm(counts, log = TRUE))
+hist(molecules_cpm_mean, xlab = "Mean log2 molecule cpm in single cells",
+     ylab = "Number of genes", main = "Identifying expression cutoff", breaks = c(3:14))
+lower_exp_cutoff <- 3.7
+abline(v = lower_exp_cutoff, col = "red")
+genes_pass_filter <- rownames(counts)[molecules_cpm_mean > lower_exp_cutoff]
+```
+
+`r length(genes_pass_filter)` genes have a mean log~2~ molecule cpm greater than `r lower_exp_cutoff`
+
+Filter the data to only include the subset of `r length(genes_pass_filter)` genes which pass the lower expression cutoff.
+
+```{r filter-genes}
+counts <- counts[rownames(counts) %in% genes_pass_filter, ]
+dim(counts)
 ```
 
 
@@ -56,7 +77,7 @@ molecules_cv_sample <-
                                 cv = sd_per_gene/mean_per_gene)
       rownames(cv_per_gene) <- rownames(cpm_pilot)
   
-      # cv_per_gene <- cv_per_gene[rowSums(is.na(cv_per_gene)) == 0, ]
+      #cv_per_gene <- cv_per_gene[rowSums(is.na(cv_per_gene)) == 0, ]
       cv_per_gene$sample <- unique(anno$labels)[per_sample]
       
       # Add sparsity percent
@@ -131,6 +152,12 @@ ggplot(df_plot, aes(x= factor(sample), y = log10cv2_adj, fill = factor(sample) )
   geom_boxplot(alpha = .01, width = .2, position = position_dodge(width = .9)) +
   labs(xlab = "log10 adjusted Squared coefficient of variation") +
   ggtitle( "log10 CV^2 after adjustment" )
+
+ggplot(df_plot, aes(x= factor(sample), y = log10(cv^2), fill = factor(sample) ) ) +
+  geom_violin(alpha = .5) + 
+  geom_boxplot(alpha = .01, width = .2, position = position_dodge(width = .9)) +
+  labs(xlab = "log10 unadjusted Squared coefficient of variation") +
+  ggtitle( "log10 CV^2 before adjustment" )
 ```
 
 
