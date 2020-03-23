@@ -108,16 +108,6 @@ row.names(outside_data_counts) <- outside_data_counts$Geneid
 # exclude extra data columns
 outside_data_counts <- outside_data_counts[, -c(1:6)]
 
-#rename samples (colnames)
-# SRR_details <- read.csv("data/SRRdetails_for_outsideData.csv")
-# sample_names <- names(outside_data_counts)
-# label_vector <- c(rep(0, length(sample_names)))
-# for(i in SRR_details$Sample.ID){
-#      location <- grepl(i, sample_names)
-#      label_vector[location] <- SRR_details$Label[location]
-# }
-# label_vector
-# names(outside_data_counts) <- SRR_details$Label[label_vector]
 names(outside_data_counts) <- c("MSC-Chond-d3_3", "Heart_2", "Chond_TCP_P4_2", "Chond_SCM_P4_3", "MSC-Chond-d21_3", 
                                 "Chond_SCM_P4_1", "MSC-Chond-d1_3", "MSC-Chond-d0_3", "MSC-Chond-d0_1", "MSC-Chond-d0_2", 
                                 "Heart_3", "Lung_3", "Lung_2", "Chond_TCP_P1_1", "MSC-Chond-d7_2",
@@ -512,7 +502,7 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -546,7 +536,7 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -578,7 +568,7 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -676,9 +666,8 @@ boxplot_gene_sample_type(filtered_RLE, labels, "ENSG00000163631", "ALB")
 
 # Semi-supervised topic modeling (DEFINE MSCs as a cluster)
 
-```{r supervised}
-library("classtpx")
-
+```{r supervised with MSC}
+#Here I define a MSC cluster based on adMSCs and bmMSCs
 # labels for "known" clusters
 index_heart <- which(labels=="Heart")
 index_lung <- which(labels=="Lung")
@@ -686,32 +675,35 @@ index_liver <- which(labels=="Liver")
 index_kidney <- which(labels=="Kidney")
 index_iPSC <- which(labels=="iPSC")
 index_chond <- which(labels=="Chond")
+index_MSCs <- c(40, 32, 42, 30, 49, 55)
 
-known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond)
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
 class_labs <- c(rep("Heart", length(index_heart)),
                 rep("Lung", length(index_lung)),
                 rep("Liver", length(index_liver)),
                 rep("Kidney", length(index_kidney)),
                 rep("iPSC", length(index_iPSC)),
-                rep("Chond", length(index_chond))
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
                 )
 
-# Perform topic modeling k=6
-if (file.exists("data/merged_topic_fit_6_classtpx_omega_fix.rda")){
-     Topic_clus_6 <- get(load(file="data/merged_topic_fit_6_classtpx_omega_fix.rda"))
+
+# Perform topic modeling k=7
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix_allMSC.rda")){
+     Topic_clus_7_allMSC <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix_allMSC.rda"))
 } else {
-Topic_clus_6 <- classtpx::class_topics(
+Topic_clus_7_allMSC <- classtpx::class_topics(
     t(merged_raw_data_counts),
-    K=6,
+    K=7,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_6, file="data/merged_topic_fit_6_classtpx_omega_fix.rda")
+save(Topic_clus_7_allMSC, file="data/merged_topic_fit_7_classtpx_omega_fix_allMSC.rda")
 }
 
-omega <- Topic_clus_6$omega
+omega <- Topic_clus_7_allMSC$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -719,7 +711,38 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")){
+     Topic_clus_8_allMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda"))
+} else {
+Topic_clus_8_allMSC <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_allMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")
+}
+
+omega <- Topic_clus_8_allMSC$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -730,22 +753,39 @@ CountClust::StructureGGplot(omega = omega,
 
 
 
+#Here I define a MSC cluster based on adMSCs
+# labels for "known" clusters
+index_MSCs <- c(40)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+
+
 
 # Perform topic modeling k=7
-if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix.rda")){
-     Topic_clus_7 <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix.rda"))
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda")){
+     Topic_clus_7_adMSC <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda"))
 } else {
-Topic_clus_7 <- classtpx::class_topics(
+Topic_clus_7_adMSC <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=7,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_7, file="data/merged_topic_fit_7_classtpx_omega_fix.rda")
+save(Topic_clus_7_adMSC, file="data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda")
 }
 
-omega <- Topic_clus_7$omega
+omega <- Topic_clus_7_adMSC$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -753,7 +793,7 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -764,20 +804,20 @@ CountClust::StructureGGplot(omega = omega,
 
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix.rda")){
-     Topic_clus_8 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")){
+     Topic_clus_8_adMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda"))
 } else {
-Topic_clus_8 <- classtpx::class_topics(
+Topic_clus_8_adMSC <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8, file="data/merged_topic_fit_8_classtpx_omega_fix.rda")
+save(Topic_clus_8_adMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")
 }
 
-omega <- Topic_clus_8$omega
+omega <- Topic_clus_8_adMSC$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -785,7 +825,7 @@ rownames(omega) <- annotation$sample_id
 CountClust::StructureGGplot(omega = omega,
                 annotation = annotation,
                 palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
+                yaxis_label = "Tissue/Cell Type",
                 order_sample = TRUE,
                 axis_tick = list(axis_ticks_length = .1,
                                  axis_ticks_lwd_y = .1,
@@ -794,5 +834,570 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = "bold")
                 )
 
+
+#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for "known" clusters
+index_MSCs <- c(30, 49, 55)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+
+
+
+# Perform topic modeling k=7
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda")){
+     Topic_clus_7_bmMSC1 <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda"))
+} else {
+Topic_clus_7_bmMSC1 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_7_bmMSC1, file="data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda")
+}
+
+omega <- Topic_clus_7_bmMSC1$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")){
+     Topic_clus_8_bmMSC1 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda"))
+} else {
+Topic_clus_8_bmMSC1 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC1, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")
+}
+
+omega <- Topic_clus_8_bmMSC1$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+
+#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for "known" clusters
+index_MSCs <- c(32,42)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+
+# Perform topic modeling k=7
+if (file.exists("data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2.rda")){
+     Topic_clus_7_bmMSC2 <- get(load(file="data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2.rda"))
+} else {
+Topic_clus_7_bmMSC2 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_7_bmMSC2, file="data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2.rda")
+}
+
+omega <- Topic_clus_7_bmMSC2$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")){
+     Topic_clus_8_bmMSC2 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda"))
+} else {
+Topic_clus_8_bmMSC2 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC2, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")
+}
+
+omega <- Topic_clus_8_bmMSC2$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+```
+
+
+
+
+
+
+
+
+
+
+
+# Semi-supervised topic modeling (DEFINE early chondros separately as a cluster)
+
+```{r supervised with chond early}
+#Here I define the chond cluster based on only early passage chond
+# labels for "known" clusters
+index_MSCs <- c(40, 32, 42, 30, 49, 55)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")){
+     Topic_clus_8_allMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda"))
+} else {
+Topic_clus_8_allMSC <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_allMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")
+}
+
+omega <- Topic_clus_8_allMSC$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+#Here I define a MSC cluster based on adMSCs
+# labels for "known" clusters
+index_MSCs <- c(40)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")){
+     Topic_clus_8_adMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda"))
+} else {
+Topic_clus_8_adMSC <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_adMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")
+}
+
+omega <- Topic_clus_8_adMSC$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for "known" clusters
+index_MSCs <- c(30, 49, 55)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")){
+     Topic_clus_8_bmMSC1 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda"))
+} else {
+Topic_clus_8_bmMSC1 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC1, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")
+}
+
+omega <- Topic_clus_8_bmMSC1$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+
+#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for "known" clusters
+index_MSCs <- c(32,42)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")){
+     Topic_clus_8_bmMSC2 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda"))
+} else {
+Topic_clus_8_bmMSC2 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC2, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")
+}
+
+omega <- Topic_clus_8_bmMSC2$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+```
+
+# Semi-supervised topic modeling (DEFINE late chondros separately as a cluster)
+
+```{r supervised with chond late}
+#Here I define the chond cluster based on only early passage chond
+# labels for "known" clusters
+index_heart <- which(labels=="Heart")
+index_lung <- which(labels=="Lung")
+index_liver <- which(labels=="Liver")
+index_kidney <- which(labels=="Kidney")
+index_iPSC <- which(labels=="iPSC")
+index_chond <- c(19,20,21,36,43,48)
+index_MSCs <- c(40, 32, 42, 30, 49, 55)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")){
+     Topic_clus_8_allMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda"))
+} else {
+Topic_clus_8_allMSC <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_allMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")
+}
+
+omega <- Topic_clus_8_allMSC$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+#Here I define a MSC cluster based on adMSCs
+# labels for "known" clusters
+index_MSCs <- c(40)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")){
+     Topic_clus_8_adMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda"))
+} else {
+Topic_clus_8_adMSC <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_adMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")
+}
+
+omega <- Topic_clus_8_adMSC$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for "known" clusters
+index_MSCs <- c(30, 49, 55)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")){
+     Topic_clus_8_bmMSC1 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda"))
+} else {
+Topic_clus_8_bmMSC1 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC1, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")
+}
+
+omega <- Topic_clus_8_bmMSC1$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
+
+
+
+
+#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for "known" clusters
+index_MSCs <- c(32,42)
+
+known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs <- c(rep("Heart", length(index_heart)),
+                rep("Lung", length(index_lung)),
+                rep("Liver", length(index_liver)),
+                rep("Kidney", length(index_kidney)),
+                rep("iPSC", length(index_iPSC)),
+                rep("Chond", length(index_chond)),
+                rep("MSC", length(index_MSCs))
+                )
+
+# Perform topic modeling k=8
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")){
+     Topic_clus_8_bmMSC2 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda"))
+} else {
+Topic_clus_8_bmMSC2 <- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method="omega.fix",
+    tol=0.01)
+save(Topic_clus_8_bmMSC2, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")
+}
+
+omega <- Topic_clus_8_bmMSC2$omega
+annotation <- data.frame(
+  sample_id = paste0("X", c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) <- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, "Accent"),
+                yaxis_label = "Tissue/Cell Type",
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = "bold")
+                )
 ```
 

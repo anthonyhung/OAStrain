@@ -302,6 +302,17 @@ head(significant_symbols_01)
 significant_anno_01 <- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),]
 ```
 
+## Examining top Differentially expressed genes (FDR 0.05)
+
+```{r DE genes analysis}
+#abs(logFC) > 1
+significant_genes_05_FC1 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05 & abs(results[["Unstrain"]]$logFC) > 1]
+significant_symbols_05_FC1 <- gene_anno$external_gene_name[match(significant_genes_05_FC1, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1 <- gene_anno[match(significant_genes_05_FC1, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1
+```
+
 
 
 ## Gene ontology analysis with topGO
@@ -472,7 +483,6 @@ gene_values <- topTags(lrt, n = nrow(lrt$coefficients), adjust.method="BH", sort
 
 ## Explore top hits
 
-Boxplot function.
 
 ```{r plot functions}
 plot_gene <- function(v, g) {
