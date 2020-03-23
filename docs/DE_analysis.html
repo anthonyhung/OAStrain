@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-02
+<strong>Last updated:</strong> 2020-03-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree68e5e33dc85bf6340efc50200e47b0766711c93ctargetblank68e5e33a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/68e5e33dc85bf6340efc50200e47b0766711c93c" target="_blank">68e5e33</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/925e86dc706803cd69f455e15f93cb6879c77090" target="_blank">925e86d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree68e5e33dc85bf6340efc50200e47b0766711c93ctargetblank68e5e33a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,7 +508,6 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
@@ -530,10 +529,28 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  analysis/coefficients_of_variation.Rmd
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_adMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_adMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_allMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_allMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_earlyChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_lateChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_earlyChond.rda
+    Untracked:  data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda
+
 Unstaged changes:
     Modified:   analysis/Bulk_cellComposition_analysis.Rmd
     Modified:   analysis/DE_analysis.Rmd
-    Modified:   analysis/Pilot_GoMAnalysis.Rmd
     Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
@@ -573,6 +590,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/analysis/DE_analysis.Rmd" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+define early/late passage chondros as a supervised cluster
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1e27bd3b051a731c2357fb8d8f981baa35f6af/analysis/DE_analysis.Rmd" target="_blank">ad1e27b</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-02
+</td>
+<td>
+separate up/down in de analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/ad1e27bd3b051a731c2357fb8d8f981baa35f6af/docs/DE_analysis.html" target="_blank">ad1e27b</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-02
+</td>
+<td>
+separate up/down in de analysis
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -3231,6 +3299,160 @@ head(significant_symbols_01)</code></pre>
 <pre><code>[1] SPSB1      TENT5B     RCC1       SLC6A9     PLK3       ST6GALNAC5
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
 <pre class="r"><code>significant_anno_01 &lt;- gene_anno[match(significant_genes_01, gene_anno$ensembl_gene_id),]</code></pre>
+<div id="examining-top-differentially-expressed-genes-fdr-0.05" class="section level2">
+<h2>Examining top Differentially expressed genes (FDR 0.05)</h2>
+<pre class="r"><code>#abs(logFC) &gt; 1
+significant_genes_05_FC1 &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.05 &amp; abs(results[[&quot;Unstrain&quot;]]$logFC) &gt; 1]
+significant_symbols_05_FC1 &lt;- gene_anno$external_gene_name[match(significant_genes_05_FC1, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1 &lt;- gene_anno[match(significant_genes_05_FC1, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1</code></pre>
+<pre><code>      ensembl_gene_id external_gene_name chromosome_name
+31021 ENSG00000232679          LINC01705               1
+4381  ENSG00000115221              ITGB6               2
+7662  ENSG00000138411              HECW2               2
+28538 ENSG00000229056         AC020571.1               2
+5175  ENSG00000121577             POPDC2               3
+934   ENSG00000065534               MYLK               3
+13727 ENSG00000174640            SLCO2A1               3
+14924 ENSG00000180801               ARSJ               4
+13297 ENSG00000172403             SYNPO2               4
+9313  ENSG00000150630              VEGFC               4
+13332 ENSG00000172548             NIPAL4               5
+28168 ENSG00000228495          LINC01013               6
+3341  ENSG00000106631               MYL7               7
+10067 ENSG00000157168               NRG1               8
+2910  ENSG00000104368               PLAT               8
+457   ENSG00000026508               CD44              11
+46915 ENSG00000261578         AP003119.3              11
+3449  ENSG00000107796              ACTA2              10
+7759  ENSG00000139044           B4GALNT3              12
+11706 ENSG00000165891               E2F7              12
+10325 ENSG00000159251              ACTC1              15
+81    ENSG00000005102              MEOX1              17
+5642  ENSG00000125398               SOX9              17
+2562  ENSG00000101670               LIPG              18
+2248  ENSG00000100292              HMOX1              22
+                                                                                              description
+31021                     long intergenic non-protein coding RNA 1705 [Source:HGNC Symbol;Acc:HGNC:52493]
+4381                                           integrin subunit beta 6 [Source:HGNC Symbol;Acc:HGNC:6161]
+7662  HECT, C2 and WW domain containing E3 ubiquitin protein ligase 2 [Source:HGNC Symbol;Acc:HGNC:29853]
+28538                                                                                                    
+5175                                       popeye domain containing 2 [Source:HGNC Symbol;Acc:HGNC:17648]
+934                                          myosin light chain kinase [Source:HGNC Symbol;Acc:HGNC:7590]
+13727      solute carrier organic anion transporter family member 2A1 [Source:HGNC Symbol;Acc:HGNC:10955]
+14924                                   arylsulfatase family member J [Source:HGNC Symbol;Acc:HGNC:26286]
+13297                                                  synaptopodin 2 [Source:HGNC Symbol;Acc:HGNC:17732]
+9313                             vascular endothelial growth factor C [Source:HGNC Symbol;Acc:HGNC:12682]
+13332                                   NIPA like domain containing 4 [Source:HGNC Symbol;Acc:HGNC:28018]
+28168                     long intergenic non-protein coding RNA 1013 [Source:HGNC Symbol;Acc:HGNC:48987]
+3341                                             myosin light chain 7 [Source:HGNC Symbol;Acc:HGNC:21719]
+10067                                                     neuregulin 1 [Source:HGNC Symbol;Acc:HGNC:7997]
+2910                                plasminogen activator, tissue type [Source:HGNC Symbol;Acc:HGNC:9051]
+457                                 CD44 molecule (Indian blood group) [Source:HGNC Symbol;Acc:HGNC:1681]
+46915                                                                                                    
+3449                               actin, alpha 2, smooth muscle, aorta [Source:HGNC Symbol;Acc:HGNC:130]
+7759                    beta-1,4-N-acetyl-galactosaminyltransferase 3 [Source:HGNC Symbol;Acc:HGNC:24137]
+11706                                      E2F transcription factor 7 [Source:HGNC Symbol;Acc:HGNC:23820]
+10325                                    actin, alpha, cardiac muscle 1 [Source:HGNC Symbol;Acc:HGNC:143]
+81                                               mesenchyme homeobox 1 [Source:HGNC Symbol;Acc:HGNC:7013]
+5642                                                        SRY-box 9 [Source:HGNC Symbol;Acc:HGNC:11204]
+2562                                        lipase G, endothelial type [Source:HGNC Symbol;Acc:HGNC:6623]
+2248                                                  heme oxygenase 1 [Source:HGNC Symbol;Acc:HGNC:5013]
+                                                                                                                                                                                                                                                       phenotype
+31021                                                                                                                                                                                                                                                           
+4381                                                                                                         Alopecia-intellectual disability syndrome;Hypocalcified amelogenesis imperfecta;Hypoplastic amelogenesis imperfecta;AMELOGENESIS IMPERFECTA TYPE IH
+7662                                                                                                                                                                               HECW2;NEURODEVELOPMENTAL DISORDER WITH HYPOTONIA SEIZURES AND ABSENT LANGUAGE
+28538                                                                                                                                                                                                                                                           
+5175                                                                                                                                                                                                                                                            
+934                                                                                                        Megacystis-microcolon-intestinal hypoperistalsis syndrome;Familial thoracic aortic aneurysm and aortic dissection;AORTIC ANEURYSM FAMILIAL THORACIC 7
+13727                                                                                                                         Chronic enteropathy associated with SLCO2A1 gene;Pachydermoperiostosis;HYPERTROPHIC OSTEOARTHROPATHY PRIMARY AUTOSOMAL RECESSIVE 2
+14924                                                                                                                                                                                                                                                           
+13297                                                                                                                                                                                                                                                           
+9313                                                                                                                                                                                                                     Milroy Disease;Lymphedema hereditary id
+13332                                                                                                                                           Congenital nonbullous ichthyosiform erythroderma;Lamellar ichthyosis;ICHTHYOSIS CONGENITAL AUTOSOMAL RECESSIVE 6
+28168                                                                                                                                                                                                                                                           
+3341                                                                                                                                                                                                                                                            
+10067                                                                                                                                                                                                                                            SCHIZOPHRENIA 6
+2910                                                                                                                         Lethal hydranencephaly-diaphragmatic hernia syndrome;THROMBOPHILIA FAMILIAL DUE TO DECREASED RELEASE OF TISSUE PLASMINOGENACTIVATOR
+457                                                                                                                                                                                                                                    BLOOD GROUP INDIAN SYSTEM
+46915                                                                                                                                                                                                                                                           
+3449                                                                            AORTIC ANEURYSM FAMILIAL THORACIC 6;Moyamoya disease 5;Familial thoracic aortic aneurysm and aortic dissection;Moyamoya disease;MULTISYSTEMIC SMOOTH MUSCLE DYSFUNCTION SYNDROME
+7759                                                                                                                                                                                                                                                            
+11706                                                                                                                                                                                                                                                           
+10325                                                 Atrial septal defect ostium secundum type;Familial isolated dilated cardiomyopathy;Left ventricular noncompaction;ATRIAL SEPTAL DEFECT 5;Cardiomyopathy dilated 1R;CARDIOMYOPATHY FAMILIAL HYPERTROPHIC 11
+81                                                                                                                                                               Klippel-Feil Anomaly;Isolated Klippel-Feil syndrome;KLIPPEL-FEIL SYNDROME 2 AUTOSOMAL RECESSIVE
+5642  CAMPOMELIC DYSPLASIA;PIERRE ROBIN SEQUENCE;46XX ovotesticular disorder of sex development;46XX testicular disorder of sex development;46XY complete gonadal dysgenesis;46XY partial gonadal dysgenesis;Isolated Pierre Robin syndrome;46XY SEX REVERSAL 10
+2562                                                                                                                                                                                                                                                            
+2248                                                                                                                                                                                           HEME OXYGENASE 1 DEFICIENCY;PULMONARY DISEASE CHRONIC OBSTRUCTIVE</code></pre>
+</div>
+</div>
+<div id="boxplot-of-expression-levels-of-the-top-de-genes-separated-by-individual-x-treatment" class="section level1">
+<h1>boxplot of expression levels of the top DE genes separated by individual x treatment</h1>
+<pre class="r"><code>plot_gene &lt;- function(v, g) {
+  # v - An EList object containing log2 counts per million
+  # g - character vector of a single gene
+  stopifnot(class(v) == &quot;EList&quot;,
+            is.character(g), length(g) == 1)
+  library(&quot;tidyr&quot;)
+  single_gene &lt;- v$E[g, ]
+  single_gene_long &lt;- as.data.frame(single_gene)
+  colnames(single_gene_long) &lt;- &quot;log2cpm&quot;
+  single_gene_long$sample &lt;- rownames(single_gene_long)
+  single_gene_long &lt;- separate(single_gene_long, col = &quot;sample&quot;, sep = &quot;_&quot;,
+                                into = c(&quot;Individual&quot;, &quot;Replicate&quot;, &quot;Treatment&quot;))
+  single_gene_long &lt;- single_gene_long %&gt;% 
+       mutate(ind_treatment = paste0(Individual, &quot;_&quot;, Treatment))
+  single_gene_long$ind_treatment &lt;- factor(single_gene_long$ind_treatment, levels = c(&quot;18855_U&quot;, &quot;18856_U&quot;, &quot;19160_U&quot;, &quot;18855_S&quot;, &quot;18856_S&quot;, &quot;19160_S&quot;))
+
+  return(ggplot(single_gene_long, aes(x = ind_treatment, y = log2cpm, fill = ind_treatment)) +
+    geom_boxplot() +
+    labs(title = g, x = &quot;Treatment&quot;, y = expression(&quot;Expression level (&quot; * log[2] * &quot; cpm)&quot;))
+  )
+}
+
+for (gene in 1:length(significant_anno_05_FC1[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1[gene,1])))
+}</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ea5b72e6347079882535a1b59ae8b850e48123ac/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-1.png" target="_blank">ea5b72e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-8.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-9.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-10.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-11.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-12.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-13.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-14.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-15.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-16.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-17.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-18.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-19.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-20.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-21.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-22.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-23.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-24.png" width="672" style="display: block; margin: auto;" /><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-25.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="gene-ontology-analysis-with-topgo" class="section level2">
 <h2>Gene ontology analysis with topGO</h2>
 <p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
@@ -3523,7 +3745,7 @@ go_table</code></pre>
 </div>
 <div id="gene-ontology-analysis-with-topgo-separate-up-and-downregulated-genes" class="section level2">
 <h2>Gene ontology analysis with topGO (separate up and downregulated genes)</h2>
-<p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
+<p>Use topGO for GO analysis. Essentially, it decreases the redundancy of the results.</p>
 <p>First create the gene universe for upregulated genes This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
 <pre class="r"><code>threshold &lt;- 0.05
 gene_universe_up &lt;- as.numeric(results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold &amp; results[[&quot;Unstrain&quot;]]$logFC &gt; 0)
@@ -3994,7 +4216,6 @@ lrt &lt;- glmLRT(fit, coef=2)
 gene_values &lt;- topTags(lrt, n = nrow(lrt$coefficients), adjust.method=&quot;BH&quot;, sort.by = &quot;PValue&quot;)</code></pre>
 <div id="explore-top-hits-1" class="section level2">
 <h2>Explore top hits</h2>
-<p>Boxplot function.</p>
 <pre class="r"><code>plot_gene &lt;- function(v, g) {
   # v - An df containing log2 counts per million
   # g - character vector of a single gene
@@ -4248,7 +4469,7 @@ FALSE  TRUE
 </div>
 <div id="gene-ontology-analysis-with-topgo-1" class="section level2">
 <h2>Gene ontology analysis with topGO</h2>
-<p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
+<p>Use topGO for GO analysis. Essentially, it decreases the redundancy of the results.</p>
 <p>First create the gene universe. This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.</p>
 <pre class="r"><code>threshold &lt;- 0.01
 gene_universe &lt;- as.numeric(gene_values@.Data[[1]]$FDR &lt; threshold)

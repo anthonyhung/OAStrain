@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-10
+<strong>Last updated:</strong> 2020-03-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6baf979f9ff594f844a14171435152ff5b0e7081targetblank6baf979a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6baf979f9ff594f844a14171435152ff5b0e7081" target="_blank">6baf979</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/925e86dc706803cd69f455e15f93cb6879c77090" target="_blank">925e86d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6baf979f9ff594f844a14171435152ff5b0e7081targetblank6baf979a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -529,8 +529,20 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  analysis/coefficients_of_variation.Rmd
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda
+    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda
+
 Unstaged changes:
     Modified:   analysis/Bulk_cellComposition_analysis.Rmd
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -569,6 +581,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/925e86dc706803cd69f455e15f93cb6879c77090/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">925e86d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+add printout of psseudobulk correlations
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+define early/late passage chondros as a supervised cluster
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/940b53efe5b3edcac621e238213ebf8d896fd263/docs/Bulk_cellComposition_analysis.html" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+define early/late passage chondros as a supervised cluster
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1244,16 +1307,6 @@ row.names(outside_data_counts) &lt;- outside_data_counts$Geneid
 # exclude extra data columns
 outside_data_counts &lt;- outside_data_counts[, -c(1:6)]
 
-#rename samples (colnames)
-# SRR_details &lt;- read.csv(&quot;data/SRRdetails_for_outsideData.csv&quot;)
-# sample_names &lt;- names(outside_data_counts)
-# label_vector &lt;- c(rep(0, length(sample_names)))
-# for(i in SRR_details$Sample.ID){
-#      location &lt;- grepl(i, sample_names)
-#      label_vector[location] &lt;- SRR_details$Label[location]
-# }
-# label_vector
-# names(outside_data_counts) &lt;- SRR_details$Label[label_vector]
 names(outside_data_counts) &lt;- c(&quot;MSC-Chond-d3_3&quot;, &quot;Heart_2&quot;, &quot;Chond_TCP_P4_2&quot;, &quot;Chond_SCM_P4_3&quot;, &quot;MSC-Chond-d21_3&quot;, 
                                 &quot;Chond_SCM_P4_1&quot;, &quot;MSC-Chond-d1_3&quot;, &quot;MSC-Chond-d0_3&quot;, &quot;MSC-Chond-d0_1&quot;, &quot;MSC-Chond-d0_2&quot;, 
                                 &quot;Heart_3&quot;, &quot;Lung_3&quot;, &quot;Lung_2&quot;, &quot;Chond_TCP_P1_1&quot;, &quot;MSC-Chond-d7_2&quot;,
@@ -7150,6 +7203,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-1.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/420df284ae0245bac41830c68d8c9fbc9a311a74/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-1.png" target="_blank">420df28</a>
 </td>
 <td>
@@ -7229,6 +7293,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-2.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/420df284ae0245bac41830c68d8c9fbc9a311a74/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-2.png" target="_blank">420df28</a>
 </td>
 <td>
@@ -7306,6 +7381,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-3.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/420df284ae0245bac41830c68d8c9fbc9a311a74/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised-3.png" target="_blank">420df28</a>
@@ -7981,17 +8067,9 @@ Topic_clus_7_allMSC &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_allMSC, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 26441265.24, 9902.7, 92.45, 814.14, 100.74, 23262.15, 15708.32, 238450.25, 1135774.5, 924979.36, 432624.4, 284690.46, 99437.2, 158990.19, 90408.71, 44488.53, 30071.97, 21464.46, 14646.35, 10381.53, 7425.88, 5442.86, 4412.59, 4350.25, 4651.54, 4605.16, 3912.97, 3159.5, 2756.73, 2557.33, 2303.98, 1905.18, 1429.88, 1034.31, 773.56, 615.75, 520.54, 459.85, 418.48, 389.79, 368.38, 350.03, 331.22, 309.54, 284.47, 257.02, 229.14, 202.86, 179.5, 159.58, 143.02, 129.39, 118.09, 108.57, 100.42, 93.32, 87.08, 81.65, 77, 73.12, 70, 67.56, 65.72, 64.32, 63.26, 62.42, 61.72, 61.07, 60.41, 59.71, 58.93, 58.04, 57.01, 55.8, 54.38, 52.73, 50.86, 48.81, 46.59, 44.29, 42, 39.77, 37.71, 35.74, 33.79, 31.72, 29.7, 27.72, 25.79, 24.23, 22.71, 20.71, 18.73, 16.87, 15.32, 13.31, 11.58, 10.02, 8.74, 7.97, p 48326 iter 1000 diff 7
-6.9, 5.99, 5.32, 4.76, 4.29, 3.88, 3.52, 3.21, 2.93, 2.68, 2.46, 2.26, 2.09, 1.93, 1.79, 1.67, 1.55, 1.41, 1.29, 1.19, 1.1, 1.01, 0.93, 0.86, 0.8, 0.74, 0.68, 0.63, 0.59, 0.55, 0.51, 0.47, 0.43, 0.4, 0.37, 0.34, 0.32, 0.29, 0.27, 0.25, 0.24, 0.22, 0.2, 0.19, 0.18, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_allMSC$omega
+}
+
+omega &lt;- Topic_clus_7_allMSC$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8008,52 +8086,58 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#Here I define a MSC cluster based on adMSCs
-# labels for &quot;known&quot; clusters
-index_heart &lt;- which(labels==&quot;Heart&quot;)
-index_lung &lt;- which(labels==&quot;Lung&quot;)
-index_liver &lt;- which(labels==&quot;Liver&quot;)
-index_kidney &lt;- which(labels==&quot;Kidney&quot;)
-index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
-index_chond &lt;- which(labels==&quot;Chond&quot;)
-index_MSCs &lt;- c(40)
-
-known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
-
-class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
-                rep(&quot;Lung&quot;, length(index_lung)),
-                rep(&quot;Liver&quot;, length(index_liver)),
-                rep(&quot;Kidney&quot;, length(index_kidney)),
-                rep(&quot;iPSC&quot;, length(index_iPSC)),
-                rep(&quot;Chond&quot;, length(index_chond)),
-                rep(&quot;MSC&quot;, length(index_MSCs))
-                )
-
-
-# Perform topic modeling k=7
-if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;)){
-     Topic_clus_7_adMSC &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;))
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-1">
+Past versions of “supervised with MSC-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-1.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda&quot;)){
+     Topic_clus_8_allMSC &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda&quot;))
 } else {
-Topic_clus_7_adMSC &lt;- classtpx::class_topics(
+Topic_clus_8_allMSC &lt;- classtpx::class_topics(
     t(merged_raw_data_counts),
-    K=7,
+    K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method=&quot;omega.fix&quot;,
     tol=0.01)
-save(Topic_clus_7_adMSC, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+save(Topic_clus_8_allMSC, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda&quot;)
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 30816941.96, 102260.9, 3239.96, 2119.03, 252.45, 31.96, 1029.12, 57692.7, 234914.71, 165727.03, 165731.66, 224307.81, 184272.49, 79713.52, 74537.55, 95037.32, 16874.64, 11851.83, 15647.48, 12925.25, 9535.62, 6944.59, 4929.01, 3602.81, 3303.63, 3801.64, 4317.85, 4103.66, 3300.23, 2635.81, 2312.12, 2100.81, 1817.44, 1428.33, 1038.57, 761.31, 597.69, 505.55, 450.63, 414.1, 387.4, 365.98, 345.85, 324.49, 300.06, 272.58, 243.56, 215.05, 188.8, 165.77, 146.09, 129.46, 115.43, 103.5, 93.27, 84.51, 77.07, 70.82, 65.71, 61.66, 58.61, 56.44, 55.04, 54.25, 53.9, 53.83, 53.92, 54.07, 54.23, 54.34, 54.37, 54.28, 54.07, 53.7, 53.13, 52.33, 51.25, 49.88, 48.25, 46.38, 44.35, 42.22, 40.08, 38.02, 36.16, 34.24, 32.33, 30.34, 28.41, 26.51, 24.71, 23.41, 21.66, 19.7, 17.79, 16.06, 14.45, 12.51, 10.86, 9.4, p 48326 iter 1000 diff 8
-8.29, 7.59, 6.42, 5.65, 5.02, 4.5, 4.05, 3.65, 3.31, 3.01, 2.75, 2.51, 2.3, 2.11, 1.94, 1.79, 1.66, 1.54, 1.41, 1.28, 1.17, 1.08, 0.99, 0.91, 0.84, 0.78, 0.72, 0.66, 0.61, 0.57, 0.53, 0.49, 0.45, 0.41, 0.38, 0.35, 0.33, 0.3, 0.28, 0.26, 0.24, 0.22, 0.21, 0.2, 0.18, 0.17, 0.16, 0.14, 0.13, 0.12, 0.11, 0.11, 0.1, 0.09, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_adMSC$omega
+omega &lt;- Topic_clus_8_allMSC$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8070,15 +8154,46 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-2">
+Past versions of “supervised with MSC-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-2.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
-index_heart &lt;- which(labels==&quot;Heart&quot;)
-index_lung &lt;- which(labels==&quot;Lung&quot;)
-index_liver &lt;- which(labels==&quot;Liver&quot;)
-index_kidney &lt;- which(labels==&quot;Kidney&quot;)
-index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
-index_chond &lt;- which(labels==&quot;Chond&quot;)
-index_MSCs &lt;- c(30, 49, 55)
+index_MSCs &lt;- c(40)
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8092,30 +8207,23 @@ class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
                 )
 
 
+
+
 # Perform topic modeling k=7
-if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;)){
-     Topic_clus_7_bmMSC1 &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;))
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;)){
+     Topic_clus_7_adMSC &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;))
 } else {
-Topic_clus_7_bmMSC1 &lt;- classtpx::class_topics(
+Topic_clus_7_adMSC &lt;- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=7,
     known_samples = known_samples,
     class_labs = class_labs,
     method=&quot;omega.fix&quot;,
     tol=0.01)
-save(Topic_clus_7_bmMSC1, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+save(Topic_clus_7_adMSC, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC.rda&quot;)
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 18454177.17, 77155.72, 949.87, 763.99, 91.08, 22951.32, 6151.37, 30034.84, 109097.11, 209876.47, 217589.82, 255029.21, 253923.13, 281853.07, 146625.12, 127349.5, 120176.43, 175658.3, 406069.7, 938413.25, 638704.12, 361204.31, 334169.28, 147600.8, 99468.48, 55321.63, 18960.54, 13812.07, 8592.16, 7328.87, 9633.39, 12271.06, 12143.73, 8851.49, 4390.46, 2560.3, 1966.89, 1016.42, 993.29, 836.82, 829.99, 907.75, 914.43, 903.49, 767.97, 687.66, 650.11, 592.44, 526.24, 438.96, 346.71, 260.91, 203.82, 173.91, 158.5, 155.62, 160.23, 170.01, 179.9, 189.49, 198.26, 204.21, 205.99, 202.7, 193.85, 180.09, 163.63, 147.04, 131.87, 118.96, 108.35, 99.51, 91.84, 84.87, 78.33, 72.08, 66.15, 60.61, 55.52, 50.97, 46.99, 43.56, 40.75, 38.32, 36.19, 34.2, 32.43, 30.8, 29.32, 28.34, 26.96, 25.27, 23.53, 21.86, 20.27, 18.21, 16.38, 14.66, 13.22, 12.21, p 48326 iter 1000 diff 11
-10.69, 9.53, 8.54, 7.65, 6.86, 6.14, 5.51, 4.94, 4.44, 3.99, 3.6, 3.25, 2.94, 2.67, 2.43, 2.23, 2.02, 1.82, 1.65, 1.5, 1.36, 1.24, 1.13, 1.03, 0.94, 0.85, 0.78, 0.71, 0.65, 0.59, 0.53, 0.48, 0.44, 0.4, 0.36, 0.33, 0.3, 0.27, 0.25, 0.23, 0.21, 0.19, 0.18, 0.16, 0.15, 0.14, 0.12, 0.11, 0.1, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC1$omega
+omega &lt;- Topic_clus_7_adMSC$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8132,14 +8240,193 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-3">
+Past versions of “supervised with MSC-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-3.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda&quot;)){
+     Topic_clus_8_adMSC &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda&quot;))
+} else {
+Topic_clus_8_adMSC &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_adMSC, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_adMSC$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-4">
+Past versions of “supervised with MSC-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-4.png" target="_blank">940b53e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(30, 49, 55)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+
+
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;)){
+     Topic_clus_7_bmMSC1 &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;))
+} else {
+Topic_clus_7_bmMSC1 &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC1, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1.rda&quot;)
+}
+
+omega &lt;- Topic_clus_7_bmMSC1$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda&quot;)){
+     Topic_clus_8_bmMSC1 &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda&quot;))
+} else {
+Topic_clus_8_bmMSC1 &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC1, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC1$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-6.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
-index_heart &lt;- which(labels==&quot;Heart&quot;)
-index_lung &lt;- which(labels==&quot;Lung&quot;)
-index_liver &lt;- which(labels==&quot;Liver&quot;)
-index_kidney &lt;- which(labels==&quot;Kidney&quot;)
-index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
-index_chond &lt;- which(labels==&quot;Chond&quot;)
 index_MSCs &lt;- c(32,42)
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
@@ -8166,18 +8453,9 @@ Topic_clus_7_bmMSC2 &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_bmMSC2, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 38245895.91, 63215.63, 2444.75, 1484.76, 263.69, 31.23, 61.61, 14703.97, 19921.34, 190834.78, 200274.69, 202193.97, 185660.01, 154799.19, 49699.9, 107091.77, 45710.62, 10409.72, 14304.74, 14755.31, 11063.83, 8233.91, 5925.16, 4208.78, 3329.09, 3488.7, 4101.44, 4322.42, 3736.46, 2937.4, 2452.45, 2215.82, 1975.59, 1629.38, 1215.5, 871.12, 651.64, 526.38, 454.35, 409.84, 379.28, 356.98, 338.12, 319.61, 298.91, 274.93, 248.35, 220.95, 194.68, 170.96, 150.37, 132.81, 117.93, 105.26, 94.37, 84.98, 76.94, 70.15, 64.53, 60.03, 56.59, 54.11, 52.47, 51.54, 51.16, 51.13, 51.33, 51.64, 51.97, 52.28, 52.51, 52.63, 52.64, 52.49, 52.16, 51.61, 50.8, 49.68, 48.28, 46.62, 44.75, 42.73, 40.65, 38.6, 36.67, 34.86, 33.02, 31.06, 29.13, 27.24, 25.39, 23.82, 22.46, 20.54, 18.61, 16.77, 15.24, 13.32, 11.58, 10.01, p 48326 iter 1000 diff 9
-8.7, 7.88, 6.91, 5.93, 5.25, 4.68, 4.2, 3.78, 3.42, 3.1, 2.82, 2.57, 2.34, 2.14, 1.97, 1.81, 1.67, 1.55, 1.44, 1.3, 1.19, 1.09, 1, 0.92, 0.84, 0.78, 0.71, 0.66, 0.61, 0.56, 0.52, 0.49, 0.45, 0.41, 0.38, 0.35, 0.32, 0.3, 0.28, 0.26, 0.24, 0.22, 0.21, 0.19, 0.18, 0.17, 0.16, 0.14, 0.13, 0.12, 0.11, 0.1, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC2$omega
+omega &lt;- Topic_clus_7_bmMSC2$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8193,7 +8471,741 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
-<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda&quot;)){
+     Topic_clus_8_bmMSC2 &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda&quot;))
+} else {
+Topic_clus_8_bmMSC2 &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC2, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC2$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="semi-supervised-topic-modeling-define-early-chondros-separately-as-a-cluster" class="section level1">
+<h1>Semi-supervised topic modeling (DEFINE early chondros separately as a cluster)</h1>
+<pre class="r"><code>#Here I define the chond cluster based on only early passage chond
+# labels for &quot;known&quot; clusters
+index_heart &lt;- which(labels==&quot;Heart&quot;)
+index_lung &lt;- which(labels==&quot;Lung&quot;)
+index_liver &lt;- which(labels==&quot;Liver&quot;)
+index_kidney &lt;- which(labels==&quot;Kidney&quot;)
+index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
+index_chond &lt;- c(25,35,38,44,50,53)
+index_MSCs &lt;- c(40, 32, 42, 30, 49, 55)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)){
+     Topic_clus_7_allMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_earlyChond.rda&quot;))
+} else {
+Topic_clus_7_allMSC_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_allMSC_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 17126222.14, 14501.38, 112.44, 7.22, 42.96, 8613.22, 15771.47, 139600.22, 1105573.27, 830560.59, 455578.13, 324993.89, 100927.6, 152647.69, 110688.89, 47012.89, 28529.4, 19465.79, 12344.01, 8443.2, 6179.72, 4821.3, 4042.27, 3967.07, 4189.49, 4108.66, 3390.01, 2580.66, 2188.25, 2099.85, 2009.7, 1772.43, 1404.04, 1049.29, 793.13, 622.61, 504.11, 413.9, 339.87, 279.42, 230.54, 192.32, 163.49, 142.23, 126.91, 116, 108.13, 102.23, 97.44, 93.22, 89.28, 85.47, 81.69, 77.92, 74.22, 70.62, 67.17, 63.95, 61.03, 58.47, 56.32, 54.6, 53.28, 52.32, 51.66, 51.25, 51.04, 50.97, 50.97, 50.99, 50.98, 50.87, 50.62, 50.12, 49.37, 48.34, 47.03, 45.47, 43.68, 41.74, 39.75, 37.77, 35.9, 34.14, 32.35, 30.43, 28.51, 26.62, 24.75, 23.13, 21.78, 19.83, 17.87, 15.98, 14.4, 12.46, 10.67, 9.07, 7.71, 6.83, p 48326 iter 1000 diff 6
+5.88, 4.87, 4.18, 3.6, 3.12, 2.7, 2.35, 2.05, 1.79, 1.57, 1.38, 1.21, 1.08, 0.96, 0.86, 0.78, 0.71, 0.61, 0.54, 0.47, 0.42, 0.38, 0.34, 0.3, 0.27, 0.24, 0.22, 0.2, 0.18, 0.17, 0.15, 0.14, 0.12, 0.11, 0.1, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_allMSC_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)){
+     Topic_clus_8_allMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda&quot;))
+} else {
+Topic_clus_8_allMSC_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_allMSC_earlyChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_allMSC_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on adMSCs
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(40)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)){
+     Topic_clus_7_adMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_earlyChond.rda&quot;))
+} else {
+Topic_clus_7_adMSC_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_adMSC_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 24678473.82, 630168.38, 13466.86, 1390.63, 434.2, 29.86, 8.47, 16.52, 1030.78, 58390.05, 238862.22, 158619.46, 168054.22, 224846.2, 184933.74, 76400.44, 75261.85, 93454.31, 15389.59, 9911.88, 12745.04, 9654.19, 6851.75, 5089.49, 3822.82, 2936.73, 2773.32, 3223.93, 3620.08, 3310.8, 2523.74, 1970.51, 1783.33, 1690.5, 1498.42, 1170.88, 815.79, 553.66, 391.76, 294.76, 232.87, 189.91, 159.84, 139.03, 124.49, 114.28, 106.54, 100.23, 94.79, 89.88, 85.28, 80.89, 76.6, 72.4, 68.33, 64.39, 60.56, 56.91, 53.5, 50.37, 47.6, 45.24, 43.34, 41.92, 40.99, 40.53, 40.44, 40.65, 41.1, 41.72, 42.46, 43.24, 44, 44.7, 45.26, 45.65, 45.78, 45.6, 45.1, 44.26, 43.11, 41.7, 40.06, 38.3, 36.5, 34.75, 33.16, 31.49, 29.8, 28.02, 26.26, 24.53, 22.88, 21.72, 20.07, 18.2, 16.38, 14.74, 13.15, 11.28, p 48326 iter 1000 diff 10
+9.68, 8.26, 7.2, 6.51, 5.37, 4.63, 4.03, 3.52, 3.09, 2.73, 2.41, 2.14, 1.9, 1.69, 1.51, 1.36, 1.22, 1.11, 1.02, 0.94, 0.84, 0.74, 0.67, 0.6, 0.54, 0.49, 0.45, 0.41, 0.37, 0.34, 0.31, 0.29, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_adMSC_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)){
+     Topic_clus_8_adMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda&quot;))
+} else {
+Topic_clus_8_adMSC_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_adMSC_earlyChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_adMSC_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(30, 49, 55)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)){
+     Topic_clus_7_bmMSC1_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC1_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC1_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 16769345.34, 277546.76, 27810.91, 9524.75, 8085.33, 372.16, 120.67, 39.84, 265.33, 43621.82, 7513.89, 51299.26, 248900.93, 695528.71, 1568239.79, 816074.63, 463802.12, 328939.58, 128576.72, 57347.06, 36238.4, 18903.75, 13009.29, 9821.57, 8641.01, 10619.87, 12703.8, 11326.45, 9708.03, 7796.7, 7017.63, 6102.75, 4344.03, 3362.32, 2451, 1843.55, 1406.23, 1180.76, 1086.66, 1036.32, 967.68, 862.68, 738.73, 653.44, 584.7, 496.6, 391.38, 298.33, 226.45, 183.42, 162.82, 158, 160.35, 166.89, 176.58, 187.12, 197.13, 205.27, 210.5, 210.71, 205.53, 194.4, 178.99, 161.08, 143.01, 126.44, 112.23, 100.48, 90.87, 82.93, 76.3, 70.7, 66, 62.1, 58.91, 56.33, 54.23, 52.46, 50.92, 49.47, 48.05, 46.59, 45.07, 43.51, 41.95, 40.4, 38.97, 37.49, 35.96, 34.23, 32.47, 30.68, 28.86, 27.42, 25.73, 23.6, 21.47, 19.42, 17.62, 15.35, p 48326 iter 1000 diff 14
+13.39, 11.61, 10.14, 9.19, 7.83, 6.79, 5.96, 5.26, 4.64, 4.12, 3.66, 3.26, 2.91, 2.61, 2.34, 2.1, 1.89, 1.71, 1.55, 1.42, 1.28, 1.14, 1.02, 0.91, 0.82, 0.74, 0.67, 0.6, 0.54, 0.49, 0.44, 0.4, 0.37, 0.34, 0.3, 0.27, 0.25, 0.22, 0.2, 0.18, 0.17, 0.15, 0.14, 0.13, 0.12, 0.11, 0.11, 0.1, 0.09, 0.08, 0.08, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC1_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)){
+     Topic_clus_8_bmMSC1_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC1_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC1_earlyChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC1_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(32,42)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)){
+     Topic_clus_7_bmMSC2_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC2_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC2_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 29478045.98, 84300.09, 2980.49, 1425.27, 270.84, 35.4, 63.14, 14771.44, 22691.72, 211273.42, 187464.55, 200774.93, 185516.29, 152530.52, 49421.55, 107155.47, 43948.26, 8948.9, 11948.21, 11517.71, 7972.84, 5887.83, 4403.56, 3320.69, 2747.75, 2954.26, 3478.59, 3574.71, 2935.42, 2202.33, 1848.44, 1744.63, 1612.62, 1345.83, 981.69, 661.84, 450.59, 323.58, 245.39, 193.9, 157.82, 133.36, 116.49, 105.01, 96.85, 90.61, 85.54, 81.21, 77.34, 73.75, 70.3, 66.88, 63.51, 60.19, 56.89, 53.63, 50.51, 47.58, 44.92, 42.6, 40.69, 39.23, 38.25, 37.75, 37.65, 37.88, 38.38, 39.07, 39.9, 40.79, 41.7, 42.56, 43.32, 43.92, 44.3, 44.41, 44.19, 43.63, 42.75, 41.57, 40.13, 38.5, 36.78, 35.07, 33.44, 31.89, 30.3, 28.56, 26.83, 25.11, 23.42, 22.01, 20.75, 18.93, 17.09, 15.33, 13.88, 11.99, 10.31, 8.79, p 48326 iter 1000 diff 8
+7.52, 6.75, 5.77, 4.85, 4.19, 3.65, 3.18, 2.79, 2.45, 2.16, 1.91, 1.7, 1.51, 1.35, 1.21, 1.08, 0.98, 0.9, 0.82, 0.72, 0.64, 0.57, 0.52, 0.47, 0.42, 0.38, 0.35, 0.31, 0.29, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.14, 0.12, 0.11, 0.1, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC2_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)){
+     Topic_clus_8_bmMSC2_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC2_earlyChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC2_earlyChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC2_earlyChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="semi-supervised-topic-modeling-define-late-chondros-separately-as-a-cluster" class="section level1">
+<h1>Semi-supervised topic modeling (DEFINE late chondros separately as a cluster)</h1>
+<pre class="r"><code>#Here I define the chond cluster based on only early passage chond
+# labels for &quot;known&quot; clusters
+index_heart &lt;- which(labels==&quot;Heart&quot;)
+index_lung &lt;- which(labels==&quot;Lung&quot;)
+index_liver &lt;- which(labels==&quot;Liver&quot;)
+index_kidney &lt;- which(labels==&quot;Kidney&quot;)
+index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
+index_chond &lt;- c(19,20,21,36,43,48)
+index_MSCs &lt;- c(40, 32, 42, 30, 49, 55)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_lateChond.rda&quot;)){
+     Topic_clus_7_allMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_lateChond.rda&quot;))
+} else {
+Topic_clus_7_allMSC_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_allMSC_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_lateChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 31531347.13, 11446.07, 105.76, 4.79, 64.14, 14584.72, 14507.54, 181992.71, 1140301.29, 917478.43, 435961.93, 317470.01, 100646.05, 155464.39, 99835.31, 46924.96, 31116.52, 22245.64, 14996.87, 10553.55, 7531.89, 5540.95, 4498.11, 4440.51, 4776.87, 4774.26, 4061.29, 3207.8, 2711.4, 2468.16, 2209.24, 1826.96, 1365.63, 971.58, 707.55, 544.28, 442.33, 375.28, 329.13, 298.02, 276.51, 259.73, 243.88, 227.02, 209.41, 192.42, 177.35, 164.74, 154.28, 145.2, 136.76, 128.42, 119.9, 111.25, 102.74, 94.68, 87.37, 81.03, 75.74, 71.49, 68.2, 65.74, 63.93, 62.57, 61.54, 60.69, 59.96, 59.28, 58.58, 57.86, 57.08, 56.23, 55.26, 54.14, 52.82, 51.29, 49.55, 47.62, 45.55, 43.38, 41.22, 39.11, 37.17, 35.34, 33.51, 31.56, 29.64, 27.75, 25.9, 24.36, 22.97, 21.03, 19.08, 17.22, 15.66, 13.68, 11.91, 10.31, 8.96, 8.11, p 48326 iter 1000 diff 7
+7.05, 6.05, 5.32, 4.7, 4.16, 3.7, 3.29, 2.94, 2.62, 2.35, 2.1, 1.88, 1.7, 1.53, 1.39, 1.27, 1.15, 1.02, 0.91, 0.82, 0.74, 0.67, 0.6, 0.54, 0.49, 0.45, 0.41, 0.37, 0.34, 0.31, 0.28, 0.26, 0.23, 0.21, 0.19, 0.18, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_allMSC_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda&quot;)){
+     Topic_clus_8_allMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda&quot;))
+} else {
+Topic_clus_8_allMSC_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_allMSC_lateChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_allMSC_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on adMSCs
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(40)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_lateChond.rda&quot;)){
+     Topic_clus_7_adMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_lateChond.rda&quot;))
+} else {
+Topic_clus_7_adMSC_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_adMSC_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_lateChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 27152802.76, 221021.85, 10308.92, 1461.48, 422.53, 25.21, 7.28, 51.72, 9604.41, 65115.04, 267403.08, 144833.59, 197193.03, 196510.3, 168343.73, 50807.48, 103186.58, 55489.63, 11213.96, 14211.74, 15065.83, 11169.47, 8191.69, 5891.5, 4273.98, 3462.75, 3645, 4260.62, 4467.86, 3818.05, 2903.93, 2329.85, 2066.29, 1842.89, 1531.09, 1143.61, 808.45, 590.53, 463.91, 389.68, 342.31, 308.56, 283.14, 261.35, 240.23, 218.4, 196.19, 175.23, 157.09, 142.45, 131.07, 122.08, 114.47, 107.46, 100.57, 93.61, 86.68, 80.06, 74, 68.72, 64.32, 60.81, 58.13, 56.19, 54.86, 54, 53.44, 53.08, 52.85, 52.69, 52.56, 52.42, 52.25, 52.03, 51.72, 51.28, 50.65, 49.81, 48.69, 47.31, 45.69, 43.86, 41.9, 39.87, 37.87, 36, 34.28, 32.51, 30.63, 28.77, 26.95, 25.15, 23.58, 22.31, 20.43, 18.51, 16.66, 15.09, 13.2, 11.4, p 48326 iter 1000 diff 10
+9.79, 8.41, 7.49, 6.54, 5.48, 4.75, 4.13, 3.61, 3.16, 2.77, 2.43, 2.14, 1.88, 1.66, 1.47, 1.3, 1.16, 1.04, 0.94, 0.85, 0.74, 0.65, 0.57, 0.51, 0.46, 0.41, 0.36, 0.33, 0.29, 0.27, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.13, 0.12, 0.11, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_adMSC_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda&quot;)){
+     Topic_clus_8_adMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda&quot;))
+} else {
+Topic_clus_8_adMSC_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_adMSC_lateChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_adMSC_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(30, 49, 55)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)){
+     Topic_clus_7_bmMSC1_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC1_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC1_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 20184057.92, 68202.85, 2231.27, 86.04, 4.36, 1.89, 0.12, 0.03, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC1_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)){
+     Topic_clus_8_bmMSC1_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC1_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC1_lateChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC1_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- c(32,42)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)){
+     Topic_clus_7_bmMSC2_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC2_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC2_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)
+}</code></pre>
+<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used
+
+Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
+only the first element will be used</code></pre>
+<pre><code>
+Estimating on a 56 document collection.
+start the fit 
+log posterior increase: 39969843.16, 67141.77, 2531.44, 1470.68, 264.4, 30.71, 61.4, 14736.21, 20180.67, 193031.04, 199341.35, 201880.25, 185821.62, 154786.19, 49594.08, 107290.49, 45906.34, 10781.96, 14569.56, 14699.82, 10805.48, 7973.64, 5755.5, 4183.91, 3446.86, 3694.22, 4309.99, 4446.19, 3735.55, 2833.84, 2291.37, 2036.72, 1805.37, 1481.17, 1090.57, 764.19, 555.31, 434.12, 362.83, 317.6, 286.09, 263.02, 243.46, 224.42, 204.34, 183.57, 163.81, 146.71, 133.06, 122.65, 114.65, 108, 101.88, 95.77, 89.44, 82.97, 76.66, 70.8, 65.63, 61.31, 57.85, 55.24, 53.37, 52.14, 51.39, 50.95, 50.72, 50.62, 50.6, 50.6, 50.58, 50.54, 50.44, 50.25, 49.92, 49.4, 48.65, 47.62, 46.32, 44.77, 43.02, 41.12, 39.16, 37.23, 35.42, 33.73, 32, 30.15, 28.31, 26.51, 24.73, 23.22, 21.91, 20.02, 18.1, 16.27, 14.74, 12.8, 11.03, 9.44, p 48326 iter 1000 diff 8
+8.1, 7.24, 6.23, 5.22, 4.51, 3.91, 3.41, 2.97, 2.59, 2.27, 1.99, 1.74, 1.53, 1.35, 1.2, 1.06, 0.95, 0.86, 0.77, 0.67, 0.58, 0.51, 0.46, 0.41, 0.36, 0.32, 0.29, 0.26, 0.23, 0.21, 0.19, 0.18, 0.16, 0.14, 0.13, 0.11, 0.1, 0.1, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
+<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC2_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)){
+     Topic_clus_8_bmMSC2_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC2_lateChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC2_lateChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC2_lateChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-8.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

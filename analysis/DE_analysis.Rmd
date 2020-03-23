@@ -313,6 +313,36 @@ significant_anno_05_FC1 <- gene_anno[match(significant_genes_05_FC1, gene_anno$e
 significant_anno_05_FC1
 ```
 
+# boxplot of expression levels of the top DE genes separated by individual x treatment
+
+```{r}
+plot_gene <- function(v, g) {
+  # v - An EList object containing log2 counts per million
+  # g - character vector of a single gene
+  stopifnot(class(v) == "EList",
+            is.character(g), length(g) == 1)
+  library("tidyr")
+  single_gene <- v$E[g, ]
+  single_gene_long <- as.data.frame(single_gene)
+  colnames(single_gene_long) <- "log2cpm"
+  single_gene_long$sample <- rownames(single_gene_long)
+  single_gene_long <- separate(single_gene_long, col = "sample", sep = "_",
+                                into = c("Individual", "Replicate", "Treatment"))
+  single_gene_long <- single_gene_long %>% 
+       mutate(ind_treatment = paste0(Individual, "_", Treatment))
+  single_gene_long$ind_treatment <- factor(single_gene_long$ind_treatment, levels = c("18855_U", "18856_U", "19160_U", "18855_S", "18856_S", "19160_S"))
+
+  return(ggplot(single_gene_long, aes(x = ind_treatment, y = log2cpm, fill = ind_treatment)) +
+    geom_boxplot() +
+    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
+  )
+}
+
+for (gene in 1:length(significant_anno_05_FC1[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1[gene,1])))
+}
+```
+
 
 
 ## Gene ontology analysis with topGO
