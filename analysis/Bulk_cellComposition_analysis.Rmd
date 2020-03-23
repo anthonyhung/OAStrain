@@ -1012,6 +1012,12 @@ CountClust::StructureGGplot(omega = omega,
 ```{r supervised with chond early}
 #Here I define the chond cluster based on only early passage chond
 # labels for "known" clusters
+index_heart <- which(labels=="Heart")
+index_lung <- which(labels=="Lung")
+index_liver <- which(labels=="Liver")
+index_kidney <- which(labels=="Kidney")
+index_iPSC <- which(labels=="iPSC")
+index_chond <- c(25,35,38,44,50,53)
 index_MSCs <- c(40, 32, 42, 30, 49, 55)
 
 known_samples <- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
@@ -1026,20 +1032,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")){
-     Topic_clus_8_allMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda")){
+     Topic_clus_8_allMSC_earlyChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda"))
 } else {
-Topic_clus_8_allMSC <- classtpx::class_topics(
+Topic_clus_8_allMSC_earlyChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_allMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")
+save(Topic_clus_8_allMSC_earlyChond, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda")
 }
 
-omega <- Topic_clus_8_allMSC$omega
+omega <- Topic_clus_8_allMSC_earlyChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1074,20 +1080,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")){
-     Topic_clus_8_adMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda")){
+     Topic_clus_8_adMSC_earlyChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda"))
 } else {
-Topic_clus_8_adMSC <- classtpx::class_topics(
+Topic_clus_8_adMSC_earlyChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_adMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")
+save(Topic_clus_8_adMSC_earlyChond, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda")
 }
 
-omega <- Topic_clus_8_adMSC$omega
+omega <- Topic_clus_8_adMSC_earlyChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1121,20 +1127,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")){
-     Topic_clus_8_bmMSC1 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda")){
+     Topic_clus_8_bmMSC1_earlyChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda"))
 } else {
-Topic_clus_8_bmMSC1 <- classtpx::class_topics(
+Topic_clus_8_bmMSC1_earlyChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_bmMSC1, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")
+save(Topic_clus_8_bmMSC1_earlyChond, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda")
 }
 
-omega <- Topic_clus_8_bmMSC1$omega
+omega <- Topic_clus_8_bmMSC1_earlyChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1170,20 +1176,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")){
-     Topic_clus_8_bmMSC2 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda")){
+     Topic_clus_8_bmMSC2_earlyChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda"))
 } else {
-Topic_clus_8_bmMSC2 <- classtpx::class_topics(
+Topic_clus_8_bmMSC2_earlyChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_bmMSC2, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")
+save(Topic_clus_8_bmMSC2_earlyChond, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda")
 }
 
-omega <- Topic_clus_8_bmMSC2$omega
+omega <- Topic_clus_8_bmMSC2_earlyChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1226,20 +1232,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")){
-     Topic_clus_8_allMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda")){
+     Topic_clus_8_allMSC_lateChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda"))
 } else {
-Topic_clus_8_allMSC <- classtpx::class_topics(
+Topic_clus_8_allMSC_lateChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_allMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC.rda")
+save(Topic_clus_8_allMSC_lateChond, file="data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda")
 }
 
-omega <- Topic_clus_8_allMSC$omega
+omega <- Topic_clus_8_allMSC_lateChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1274,20 +1280,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")){
-     Topic_clus_8_adMSC <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda")){
+     Topic_clus_8_adMSC_lateChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda"))
 } else {
-Topic_clus_8_adMSC <- classtpx::class_topics(
+Topic_clus_8_adMSC_lateChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_adMSC, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC.rda")
+save(Topic_clus_8_adMSC_lateChond, file="data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda")
 }
 
-omega <- Topic_clus_8_adMSC$omega
+omega <- Topic_clus_8_adMSC_lateChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1321,20 +1327,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")){
-     Topic_clus_8_bmMSC1 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda")){
+     Topic_clus_8_bmMSC1_lateChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda"))
 } else {
-Topic_clus_8_bmMSC1 <- classtpx::class_topics(
+Topic_clus_8_bmMSC1_lateChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_bmMSC1, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda")
+save(Topic_clus_8_bmMSC1_lateChond, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda")
 }
 
-omega <- Topic_clus_8_bmMSC1$omega
+omega <- Topic_clus_8_bmMSC1_lateChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -1370,20 +1376,20 @@ class_labs <- c(rep("Heart", length(index_heart)),
                 )
 
 # Perform topic modeling k=8
-if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")){
-     Topic_clus_8_bmMSC2 <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda"))
+if (file.exists("data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda")){
+     Topic_clus_8_bmMSC2_lateChond <- get(load(file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda"))
 } else {
-Topic_clus_8_bmMSC2 <- classtpx::class_topics(
+Topic_clus_8_bmMSC2_lateChond <- classtpx::class_topics(
     t(merged_raw_data_counts),
     K=8,
     known_samples = known_samples,
     class_labs = class_labs,
     method="omega.fix",
     tol=0.01)
-save(Topic_clus_8_bmMSC2, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda")
+save(Topic_clus_8_bmMSC2_lateChond, file="data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda")
 }
 
-omega <- Topic_clus_8_bmMSC2$omega
+omega <- Topic_clus_8_bmMSC2_lateChond$omega
 annotation <- data.frame(
   sample_id = paste0("X", c(1:NROW(omega))),
   tissue_label = as.factor(labels))

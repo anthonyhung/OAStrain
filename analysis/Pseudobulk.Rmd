@@ -74,23 +74,25 @@ pca_genes <- prcomp(t(Merged_bulk), scale = T)
 autoplot(pca_genes, label = T)
 ```
 
-## Clustering (corr heatmap)
+## Clustering (corr heatmap) Spearman
 
 ```{r corr heatmap}
-#Corr heatmap
+#Corr heatmap Spearman
 cors <- cor(Merged_bulk, method="spearman", use="pairwise.complete.obs")
 heatmap.2(cors, scale="none", margins = c(12, 12), trace='none', denscol="white",
           cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
+
+cors_pseudobulk <- cors[18:22,1:17]
+cors_pseudobulk
+heatmap.2(cors_pseudobulk, scale="none", margins = c(12, 12), trace='none', denscol="white",
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
 ```
+
+
 
 ## Correlation between Pseudobulk and bulk from same replicate (raw counts)
 
-```{r corr replicate}
-cors_pseudobulk <- cors[18:22,1:17]
-heatmap.2(cors_pseudobulk, scale="none", margins = c(12, 12), trace='none', denscol="white",
-          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
-
-
+```{r corr replicate }
 data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA18856U`, y = `X18856_3_U`)) +
      geom_point() + 
      geom_smooth(method='lm') + 
@@ -131,6 +133,7 @@ data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X19160_3_S`)) +
      scale_x_log10()+
      scale_y_log10()
 ```
+
 
 ## Correlation between Pseudobulk and bulk from different individuals in the same replicate, same treatment (raw counts)
 
