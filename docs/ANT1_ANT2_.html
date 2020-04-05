@@ -394,7 +394,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -403,7 +403,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -412,10 +412,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-09
+<strong>Last updated:</strong> 2020-04-05
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -431,12 +431,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a46d6f37799b4f9c74c12be5c41c412f95f2fa3e" target="_blank">a46d6f3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bbb88d4476d841daa9ad37f6068f28d997e6e928" target="_blank">bbb88d4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea46d6f37799b4f9c74c12be5c41c412f95f2fa3etargetblanka46d6f3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -516,7 +516,6 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
@@ -538,15 +537,13 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
-Unstaged changes:
-    Modified:   analysis/ANT1_ANT2_.Rmd
+Untracked files:
+    Untracked:  data/DEgenes_FDR05.rda
 
-Staged changes:
-    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
-    Modified:   analysis/Pilot_GoMAnalysis.Rmd
+Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
     Modified:   analysis/Pseudobulk.Rmd
-    Modified:   data/merged_topic_fit_6_classtpx_omega_fix.rda
-    Modified:   data/merged_topic_fit_7_classtpx_omega_fix.rda
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -585,6 +582,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/analysis/ANT1_ANT2_.Rmd" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+<td>
+tabulate sox9 expression in single cells across samples
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/ANT1_ANT2_.html" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+<td>
+tabulate sox9 expression in single cells across samples
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1044,12 +1075,12 @@ Add Seurat analysis
 <h2>Load libraries</h2>
 <pre class="r"><code>library(data.table)
 library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✔ ggplot2 3.2.1     ✔ purrr   0.3.3
 ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ✔ tidyr   1.0.0     ✔ stringr 1.4.0
 ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::between()   masks data.table::between()
 ✖ dplyr::filter()    masks stats::filter()
 ✖ dplyr::first()     masks data.table::first()
@@ -1431,6 +1462,8 @@ Anthony Hung
 plot1 &lt;- FeatureScatter(ANT1.2, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)
 plot2 &lt;- FeatureScatter(ANT1.2, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)
 CombinePlots(plots = list(plot1, plot2))</code></pre>
+<pre><code>Warning: CombinePlots is being deprecated. Plots should now be combined using
+the patchwork system.</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/QC-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-QC-3">
@@ -1632,8 +1665,11 @@ plot_variable_features(ANT1.2)</code></pre>
 Please use `as_label()` or `as_name()` instead.
 This warning is displayed once per session.</code></pre>
 <pre><code>When using repel, set xnudge and ynudge to 0 for optimal results</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
-<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: CombinePlots is being deprecated. Plots should now be combined using
+the patchwork system.</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis
+
+Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/feature%20selection-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-selection-1">
@@ -2560,6 +2596,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-1.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-1.png" target="_blank">b967c3c</a>
 </td>
 <td>
@@ -2610,6 +2657,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-2.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-2.png" target="_blank">b967c3c</a>
@@ -2664,6 +2722,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-3.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-3.png" target="_blank">b967c3c</a>
 </td>
 <td>
@@ -2714,6 +2783,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-4.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-4.png" target="_blank">b967c3c</a>
@@ -2768,6 +2848,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-5.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-5.png" target="_blank">b967c3c</a>
 </td>
 <td>
@@ -2818,6 +2909,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-6.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-6.png" target="_blank">b967c3c</a>
@@ -2973,6 +3075,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/PC corr-8.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/figure/ANT1_ANT2_.Rmd/PC corr-8.png" target="_blank">b967c3c</a>
 </td>
 <td>
@@ -3020,20 +3133,20 @@ ANT1.2 &lt;- RunUMAP(ANT1.2, dims = 1:num_PCs)</code></pre>
 <pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 This message will be shown once per session</code></pre>
-<pre><code>16:30:28 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>16:30:28 Read 2479 rows and found 50 numeric columns</code></pre>
-<pre><code>16:30:28 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>16:30:28 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>10:52:38 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>10:52:38 Read 2479 rows and found 50 numeric columns</code></pre>
+<pre><code>10:52:38 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>10:52:38 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>**************************************************|
-16:30:29 Writing NN index file to temp file /tmp/RtmpOJAIwP/filec9a217306ef5
-16:30:29 Searching Annoy index using 1 thread, search_k = 3000
-16:30:29 Annoy recall = 100%
-16:30:30 Commencing smooth kNN distance calibration using 1 thread
-16:30:31 Initializing from normalized Laplacian + noise
-16:30:31 Commencing optimization for 500 epochs, with 101632 positive edges
-16:30:37 Optimization finished</code></pre>
+10:52:38 Writing NN index file to temp file /tmp/RtmpCRD5m6/file7c2fa8871e9
+10:52:38 Searching Annoy index using 1 thread, search_k = 3000
+10:52:39 Annoy recall = 100%
+10:52:39 Commencing smooth kNN distance calibration using 1 thread
+10:52:40 Initializing from normalized Laplacian + noise
+10:52:40 Commencing optimization for 500 epochs, with 101632 positive edges
+10:52:46 Optimization finished</code></pre>
 <pre class="r"><code>p1 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;)
 p2 &lt;- DimPlot(ANT1.2, reduction = &quot;umap&quot;, group.by = &quot;labels&quot;)
 grid.arrange(p1, p2, nrow = 2)</code></pre>
@@ -3938,12 +4051,86 @@ ggplot(sox9_expression, aes(fill=type, y=counts, x=sample)) +
   theme(legend.position = &quot;top&quot;, legend.title = element_blank()) + 
   labs(title = &quot;SOX9 expression by sample&quot;, x = &quot;sample&quot;, y = &quot;Number of cells&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/unnamed-chunk-1-1.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(sox9_expression, aes(fill=type, y=counts, x=sample)) + 
   geom_bar(position=&quot;fill&quot;, stat=&quot;identity&quot;) +
   theme_cowplot(12) +
   theme(legend.position = &quot;top&quot;, legend.title = element_blank()) + 
   labs(title = &quot;SOX9 expression by sample&quot;, x = &quot;sample&quot;, y = &quot;Proportion of cells&quot;)</code></pre>
 <p><img src="figure/ANT1_ANT2_.Rmd/unnamed-chunk-1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-2">
+Past versions of unnamed-chunk-1-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/ad1f29c5032de8f140dec26e6a15a45c066fb79e/docs/figure/ANT1_ANT2_.Rmd/unnamed-chunk-1-2.png" target="_blank">ad1f29c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="save-seurat-object" class="section level1">
 <h1>Save seurat object</h1>
@@ -3978,60 +4165,59 @@ attached base packages:
 other attached packages:
  [1] scales_1.1.0       RColorBrewer_1.1-2 cowplot_0.9.3      gplots_3.0.1.1    
  [5] DT_0.10            heplots_1.3-5      car_2.1-6          gridExtra_2.3     
- [9] Seurat_3.1.1       Matrix_1.2-18      plyr_1.8.4         forcats_0.4.0     
+ [9] Seurat_3.1.4       Matrix_1.2-18      plyr_1.8.4         forcats_0.4.0     
 [13] stringr_1.4.0      dplyr_0.8.3        purrr_0.3.3        readr_1.3.1       
 [17] tidyr_1.0.0        tibble_2.1.3       ggplot2_3.2.1      tidyverse_1.3.0   
 [21] data.table_1.12.6 
 
 loaded via a namespace (and not attached):
-  [1] reticulate_1.13     R.utils_2.9.2       tidyselect_0.2.5   
-  [4] lme4_1.1-21         htmlwidgets_1.5.1   grid_3.4.3         
-  [7] Rtsne_0.15          munsell_0.5.0       codetools_0.2-15   
- [10] mutoss_0.1-12       ica_1.0-2           future_1.15.1      
- [13] withr_2.1.2         colorspace_1.4-1    Biobase_2.38.0     
- [16] knitr_1.26          rstudioapi_0.10     stats4_3.4.3       
- [19] ROCR_1.0-7          gbRd_0.4-11         listenv_0.8.0      
- [22] Rdpack_0.11-0       labeling_0.3        git2r_0.26.1       
- [25] mnormt_1.5-5        farver_2.0.3        rprojroot_1.3-2    
- [28] vctrs_0.2.0         generics_0.0.2      TH.data_1.0-10     
- [31] xfun_0.12           R6_2.4.1            rsvd_1.0.2         
- [34] bitops_1.0-6        assertthat_0.2.1    promises_1.1.0     
- [37] SDMTools_1.1-221.2  multcomp_1.4-8      nnet_7.3-12        
- [40] gtable_0.3.0        npsurv_0.4-0        globals_0.12.5     
- [43] sandwich_2.5-1      workflowr_1.5.0     rlang_0.4.4        
- [46] MatrixModels_0.4-1  zeallot_0.1.0       splines_3.4.3      
- [49] lazyeval_0.2.2      broom_0.5.2         yaml_2.2.0         
- [52] reshape2_1.4.3      modelr_0.1.5        crosstalk_1.0.0    
- [55] backports_1.1.5     httpuv_1.5.2        tools_3.4.3        
- [58] ellipsis_0.3.0      BiocGenerics_0.24.0 ggridges_0.5.1     
- [61] TFisher_0.2.0       Rcpp_1.0.3          pbapply_1.4-2      
- [64] zoo_1.8-6           haven_2.2.0         ggrepel_0.8.1      
- [67] cluster_2.0.6       fs_1.3.1            magrittr_1.5       
- [70] RSpectra_0.16-0     SparseM_1.77        lmtest_0.9-37      
- [73] reprex_0.3.0        RANN_2.6.1          mvtnorm_1.0-7      
- [76] whisker_0.4         fitdistrplus_1.0-14 matrixStats_0.55.0 
- [79] hms_0.5.2           lsei_1.2-0          mime_0.8           
- [82] evaluate_0.14       xtable_1.8-4        pbkrtest_0.4-7     
- [85] readxl_1.3.1        compiler_3.4.3      KernSmooth_2.23-15 
- [88] crayon_1.3.4        minqa_1.2.4         R.oo_1.23.0        
- [91] htmltools_0.4.0     mgcv_1.8-22         later_1.0.0        
- [94] RcppParallel_4.4.4  lubridate_1.7.4     DBI_1.0.0          
- [97] dbplyr_1.4.2        MASS_7.3-51.4       boot_1.3-20        
-[100] cli_1.1.0           R.methodsS3_1.7.1   gdata_2.18.0       
-[103] parallel_3.4.3      metap_1.2           igraph_1.2.4.2     
-[106] pkgconfig_2.0.3     sn_1.5-4            numDeriv_2016.8-1.1
-[109] plotly_4.9.1        xml2_1.2.2          multtest_2.34.0    
-[112] bibtex_0.4.2        rvest_0.3.5         digest_0.6.23      
-[115] sctransform_0.2.0   RcppAnnoy_0.0.14    tsne_0.1-3         
-[118] rmarkdown_1.18      cellranger_1.1.0    leiden_0.3.1       
-[121] uwot_0.1.5          shiny_1.4.0         gtools_3.8.1       
-[124] quantreg_5.52       nloptr_1.2.1        lifecycle_0.1.0    
-[127] nlme_3.1-131        jsonlite_1.6        viridisLite_0.3.0  
-[130] pillar_1.4.2        lattice_0.20-35     fastmap_1.0.1      
-[133] httr_1.4.1          plotrix_3.7-2       survival_2.41-3    
-[136] glue_1.3.1          png_0.1-7           stringi_1.4.3      
-[139] caTools_1.17.1.3    irlba_2.3.3         future.apply_1.3.0 
-[142] ape_5.3            </code></pre>
+  [1] readxl_1.3.1        backports_1.1.5     workflowr_1.5.0    
+  [4] sn_1.5-4            igraph_1.2.4.2      lazyeval_0.2.2     
+  [7] splines_3.4.3       crosstalk_1.0.0     listenv_0.8.0      
+ [10] TH.data_1.0-10      digest_0.6.23       htmltools_0.4.0    
+ [13] gdata_2.18.0        magrittr_1.5        cluster_2.0.6      
+ [16] ROCR_1.0-7          globals_0.12.5      modelr_0.1.5       
+ [19] matrixStats_0.55.0  RcppParallel_4.4.4  sandwich_2.5-1     
+ [22] colorspace_1.4-1    rvest_0.3.5         ggrepel_0.8.1      
+ [25] haven_2.2.0         xfun_0.12           crayon_1.3.4       
+ [28] jsonlite_1.6        lme4_1.1-21         zeallot_0.1.0      
+ [31] survival_2.41-3     zoo_1.8-6           ape_5.3            
+ [34] glue_1.3.1          gtable_0.3.0        MatrixModels_0.4-1 
+ [37] leiden_0.3.1        future.apply_1.3.0  BiocGenerics_0.24.0
+ [40] SparseM_1.77        mvtnorm_1.0-7       DBI_1.0.0          
+ [43] bibtex_0.4.2        Rcpp_1.0.3          metap_1.2          
+ [46] plotrix_3.7-2       xtable_1.8-4        viridisLite_0.3.0  
+ [49] reticulate_1.13     rsvd_1.0.2          stats4_3.4.3       
+ [52] tsne_0.1-3          htmlwidgets_1.5.1   httr_1.4.1         
+ [55] ellipsis_0.3.0      TFisher_0.2.0       ica_1.0-2          
+ [58] farver_2.0.3        pkgconfig_2.0.3     nnet_7.3-12        
+ [61] uwot_0.1.5          dbplyr_1.4.2        labeling_0.3       
+ [64] tidyselect_0.2.5    rlang_0.4.4         reshape2_1.4.3     
+ [67] later_1.0.0         munsell_0.5.0       cellranger_1.1.0   
+ [70] tools_3.4.3         cli_1.1.0           generics_0.0.2     
+ [73] broom_0.5.2         ggridges_0.5.1      fastmap_1.0.1      
+ [76] evaluate_0.14       yaml_2.2.0          npsurv_0.4-0       
+ [79] knitr_1.26          fs_1.3.1            fitdistrplus_1.0-14
+ [82] caTools_1.17.1.3    RANN_2.6.1          pbapply_1.4-2      
+ [85] future_1.15.1       nlme_3.1-131        mime_0.8           
+ [88] quantreg_5.52       whisker_0.4         xml2_1.2.2         
+ [91] pbkrtest_0.4-7      compiler_3.4.3      rstudioapi_0.10    
+ [94] plotly_4.9.1        png_0.1-7           lsei_1.2-0         
+ [97] reprex_0.3.0        stringi_1.4.3       RSpectra_0.16-0    
+[100] lattice_0.20-35     nloptr_1.2.1        multtest_2.34.0    
+[103] vctrs_0.2.0         mutoss_0.1-12       pillar_1.4.2       
+[106] lifecycle_0.1.0     Rdpack_0.11-0       lmtest_0.9-37      
+[109] RcppAnnoy_0.0.14    bitops_1.0-6        irlba_2.3.3        
+[112] gbRd_0.4-11         httpuv_1.5.2        patchwork_1.0.0    
+[115] R6_2.4.1            promises_1.1.0      KernSmooth_2.23-15 
+[118] codetools_0.2-15    boot_1.3-20         MASS_7.3-51.4      
+[121] gtools_3.8.1        assertthat_0.2.1    rprojroot_1.3-2    
+[124] withr_2.1.2         sctransform_0.2.0   mnormt_1.5-5       
+[127] multcomp_1.4-8      mgcv_1.8-22         parallel_3.4.3     
+[130] hms_0.5.2           grid_3.4.3          minqa_1.2.4        
+[133] rmarkdown_1.18      Rtsne_0.15          git2r_0.26.1       
+[136] shiny_1.4.0         numDeriv_2016.8-1.1 Biobase_2.38.0     
+[139] lubridate_1.7.4    </code></pre>
 </div>
 </div>
 

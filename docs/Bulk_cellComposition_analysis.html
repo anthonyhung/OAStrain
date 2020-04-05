@@ -386,7 +386,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +395,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,10 +404,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-23
+<strong>Last updated:</strong> 2020-04-05
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -423,12 +423,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/925e86dc706803cd69f455e15f93cb6879c77090" target="_blank">925e86d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bbb88d4476d841daa9ad37f6068f28d997e6e928" target="_blank">bbb88d4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree925e86dc706803cd69f455e15f93cb6879c77090targetblank925e86da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -529,19 +529,8 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
-Untracked files:
-    Untracked:  analysis/coefficients_of_variation.Rmd
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda
-    Untracked:  data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda
-
 Unstaged changes:
-    Modified:   analysis/Bulk_cellComposition_analysis.Rmd
+    Modified:   analysis/DE_analysis.Rmd
     Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
@@ -581,6 +570,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+Add boxplot by sample for top DEGenes; k=7 for supervised definingh early and late chondros
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/Bulk_cellComposition_analysis.html" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+<td>
+Add boxplot by sample for top DEGenes; k=7 for supervised definingh early and late chondros
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -8178,6 +8201,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-2.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-2.png" target="_blank">940b53e</a>
 </td>
 <td>
@@ -8264,6 +8298,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-3.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-3.png" target="_blank">940b53e</a>
 </td>
 <td>
@@ -8332,6 +8377,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-4.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/940b53efe5b3edcac621e238213ebf8d896fd263/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-4.png" target="_blank">940b53e</a>
 </td>
 <td>
@@ -8394,6 +8450,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-5">
+Past versions of “supervised with MSC-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-5.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda&quot;)){
      Topic_clus_8_bmMSC1 &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1.rda&quot;))
@@ -8425,6 +8518,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-6">
+Past versions of “supervised with MSC-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-6.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(32,42)
@@ -8472,6 +8602,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-7">
+Past versions of “supervised with MSC-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-7.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda&quot;)){
      Topic_clus_8_bmMSC2 &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2.rda&quot;))
@@ -8503,6 +8670,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-8">
+Past versions of “supervised with MSC-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-MSC-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with MSC-8.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="semi-supervised-topic-modeling-define-early-chondros-separately-as-a-cluster" class="section level1">
 <h1>Semi-supervised topic modeling (DEFINE early chondros separately as a cluster)</h1>
@@ -8539,17 +8743,9 @@ Topic_clus_7_allMSC_earlyChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_allMSC_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 17126222.14, 14501.38, 112.44, 7.22, 42.96, 8613.22, 15771.47, 139600.22, 1105573.27, 830560.59, 455578.13, 324993.89, 100927.6, 152647.69, 110688.89, 47012.89, 28529.4, 19465.79, 12344.01, 8443.2, 6179.72, 4821.3, 4042.27, 3967.07, 4189.49, 4108.66, 3390.01, 2580.66, 2188.25, 2099.85, 2009.7, 1772.43, 1404.04, 1049.29, 793.13, 622.61, 504.11, 413.9, 339.87, 279.42, 230.54, 192.32, 163.49, 142.23, 126.91, 116, 108.13, 102.23, 97.44, 93.22, 89.28, 85.47, 81.69, 77.92, 74.22, 70.62, 67.17, 63.95, 61.03, 58.47, 56.32, 54.6, 53.28, 52.32, 51.66, 51.25, 51.04, 50.97, 50.97, 50.99, 50.98, 50.87, 50.62, 50.12, 49.37, 48.34, 47.03, 45.47, 43.68, 41.74, 39.75, 37.77, 35.9, 34.14, 32.35, 30.43, 28.51, 26.62, 24.75, 23.13, 21.78, 19.83, 17.87, 15.98, 14.4, 12.46, 10.67, 9.07, 7.71, 6.83, p 48326 iter 1000 diff 6
-5.88, 4.87, 4.18, 3.6, 3.12, 2.7, 2.35, 2.05, 1.79, 1.57, 1.38, 1.21, 1.08, 0.96, 0.86, 0.78, 0.71, 0.61, 0.54, 0.47, 0.42, 0.38, 0.34, 0.3, 0.27, 0.24, 0.22, 0.2, 0.18, 0.17, 0.15, 0.14, 0.12, 0.11, 0.1, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_allMSC_earlyChond$omega
+}
+
+omega &lt;- Topic_clus_7_allMSC_earlyChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8566,6 +8762,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-1">
+Past versions of “supervised with chond early-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-1.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda&quot;)){
      Topic_clus_8_allMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_earlyChond.rda&quot;))
@@ -8597,6 +8830,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-2">
+Past versions of “supervised with chond early-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-2.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(40)
@@ -8624,18 +8894,9 @@ Topic_clus_7_adMSC_earlyChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_adMSC_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 24678473.82, 630168.38, 13466.86, 1390.63, 434.2, 29.86, 8.47, 16.52, 1030.78, 58390.05, 238862.22, 158619.46, 168054.22, 224846.2, 184933.74, 76400.44, 75261.85, 93454.31, 15389.59, 9911.88, 12745.04, 9654.19, 6851.75, 5089.49, 3822.82, 2936.73, 2773.32, 3223.93, 3620.08, 3310.8, 2523.74, 1970.51, 1783.33, 1690.5, 1498.42, 1170.88, 815.79, 553.66, 391.76, 294.76, 232.87, 189.91, 159.84, 139.03, 124.49, 114.28, 106.54, 100.23, 94.79, 89.88, 85.28, 80.89, 76.6, 72.4, 68.33, 64.39, 60.56, 56.91, 53.5, 50.37, 47.6, 45.24, 43.34, 41.92, 40.99, 40.53, 40.44, 40.65, 41.1, 41.72, 42.46, 43.24, 44, 44.7, 45.26, 45.65, 45.78, 45.6, 45.1, 44.26, 43.11, 41.7, 40.06, 38.3, 36.5, 34.75, 33.16, 31.49, 29.8, 28.02, 26.26, 24.53, 22.88, 21.72, 20.07, 18.2, 16.38, 14.74, 13.15, 11.28, p 48326 iter 1000 diff 10
-9.68, 8.26, 7.2, 6.51, 5.37, 4.63, 4.03, 3.52, 3.09, 2.73, 2.41, 2.14, 1.9, 1.69, 1.51, 1.36, 1.22, 1.11, 1.02, 0.94, 0.84, 0.74, 0.67, 0.6, 0.54, 0.49, 0.45, 0.41, 0.37, 0.34, 0.31, 0.29, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_adMSC_earlyChond$omega
+omega &lt;- Topic_clus_7_adMSC_earlyChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8652,6 +8913,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-3">
+Past versions of “supervised with chond early-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-3.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda&quot;)){
      Topic_clus_8_adMSC_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_earlyChond.rda&quot;))
@@ -8683,6 +8981,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-4">
+Past versions of “supervised with chond early-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-4.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(30, 49, 55)
@@ -8710,18 +9045,9 @@ Topic_clus_7_bmMSC1_earlyChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_bmMSC1_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 16769345.34, 277546.76, 27810.91, 9524.75, 8085.33, 372.16, 120.67, 39.84, 265.33, 43621.82, 7513.89, 51299.26, 248900.93, 695528.71, 1568239.79, 816074.63, 463802.12, 328939.58, 128576.72, 57347.06, 36238.4, 18903.75, 13009.29, 9821.57, 8641.01, 10619.87, 12703.8, 11326.45, 9708.03, 7796.7, 7017.63, 6102.75, 4344.03, 3362.32, 2451, 1843.55, 1406.23, 1180.76, 1086.66, 1036.32, 967.68, 862.68, 738.73, 653.44, 584.7, 496.6, 391.38, 298.33, 226.45, 183.42, 162.82, 158, 160.35, 166.89, 176.58, 187.12, 197.13, 205.27, 210.5, 210.71, 205.53, 194.4, 178.99, 161.08, 143.01, 126.44, 112.23, 100.48, 90.87, 82.93, 76.3, 70.7, 66, 62.1, 58.91, 56.33, 54.23, 52.46, 50.92, 49.47, 48.05, 46.59, 45.07, 43.51, 41.95, 40.4, 38.97, 37.49, 35.96, 34.23, 32.47, 30.68, 28.86, 27.42, 25.73, 23.6, 21.47, 19.42, 17.62, 15.35, p 48326 iter 1000 diff 14
-13.39, 11.61, 10.14, 9.19, 7.83, 6.79, 5.96, 5.26, 4.64, 4.12, 3.66, 3.26, 2.91, 2.61, 2.34, 2.1, 1.89, 1.71, 1.55, 1.42, 1.28, 1.14, 1.02, 0.91, 0.82, 0.74, 0.67, 0.6, 0.54, 0.49, 0.44, 0.4, 0.37, 0.34, 0.3, 0.27, 0.25, 0.22, 0.2, 0.18, 0.17, 0.15, 0.14, 0.13, 0.12, 0.11, 0.11, 0.1, 0.09, 0.08, 0.08, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC1_earlyChond$omega
+omega &lt;- Topic_clus_7_bmMSC1_earlyChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8738,6 +9064,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-5">
+Past versions of “supervised with chond early-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-5.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;)){
      Topic_clus_8_bmMSC1_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_earlyChond.rda&quot;))
@@ -8769,6 +9132,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-6">
+Past versions of “supervised with chond early-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-6.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(32,42)
@@ -8796,18 +9196,9 @@ Topic_clus_7_bmMSC2_earlyChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_bmMSC2_earlyChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 29478045.98, 84300.09, 2980.49, 1425.27, 270.84, 35.4, 63.14, 14771.44, 22691.72, 211273.42, 187464.55, 200774.93, 185516.29, 152530.52, 49421.55, 107155.47, 43948.26, 8948.9, 11948.21, 11517.71, 7972.84, 5887.83, 4403.56, 3320.69, 2747.75, 2954.26, 3478.59, 3574.71, 2935.42, 2202.33, 1848.44, 1744.63, 1612.62, 1345.83, 981.69, 661.84, 450.59, 323.58, 245.39, 193.9, 157.82, 133.36, 116.49, 105.01, 96.85, 90.61, 85.54, 81.21, 77.34, 73.75, 70.3, 66.88, 63.51, 60.19, 56.89, 53.63, 50.51, 47.58, 44.92, 42.6, 40.69, 39.23, 38.25, 37.75, 37.65, 37.88, 38.38, 39.07, 39.9, 40.79, 41.7, 42.56, 43.32, 43.92, 44.3, 44.41, 44.19, 43.63, 42.75, 41.57, 40.13, 38.5, 36.78, 35.07, 33.44, 31.89, 30.3, 28.56, 26.83, 25.11, 23.42, 22.01, 20.75, 18.93, 17.09, 15.33, 13.88, 11.99, 10.31, 8.79, p 48326 iter 1000 diff 8
-7.52, 6.75, 5.77, 4.85, 4.19, 3.65, 3.18, 2.79, 2.45, 2.16, 1.91, 1.7, 1.51, 1.35, 1.21, 1.08, 0.98, 0.9, 0.82, 0.72, 0.64, 0.57, 0.52, 0.47, 0.42, 0.38, 0.35, 0.31, 0.29, 0.26, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.14, 0.12, 0.11, 0.1, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC2_earlyChond$omega
+omega &lt;- Topic_clus_7_bmMSC2_earlyChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8824,6 +9215,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-7">
+Past versions of “supervised with chond early-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-7.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;)){
      Topic_clus_8_bmMSC2_earlyChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_earlyChond.rda&quot;))
@@ -8855,6 +9283,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-8">
+Past versions of “supervised with chond early-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-early-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond early-8.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="semi-supervised-topic-modeling-define-late-chondros-separately-as-a-cluster" class="section level1">
 <h1>Semi-supervised topic modeling (DEFINE late chondros separately as a cluster)</h1>
@@ -8891,17 +9356,9 @@ Topic_clus_7_allMSC_lateChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_allMSC_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_lateChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 1) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 31531347.13, 11446.07, 105.76, 4.79, 64.14, 14584.72, 14507.54, 181992.71, 1140301.29, 917478.43, 435961.93, 317470.01, 100646.05, 155464.39, 99835.31, 46924.96, 31116.52, 22245.64, 14996.87, 10553.55, 7531.89, 5540.95, 4498.11, 4440.51, 4776.87, 4774.26, 4061.29, 3207.8, 2711.4, 2468.16, 2209.24, 1826.96, 1365.63, 971.58, 707.55, 544.28, 442.33, 375.28, 329.13, 298.02, 276.51, 259.73, 243.88, 227.02, 209.41, 192.42, 177.35, 164.74, 154.28, 145.2, 136.76, 128.42, 119.9, 111.25, 102.74, 94.68, 87.37, 81.03, 75.74, 71.49, 68.2, 65.74, 63.93, 62.57, 61.54, 60.69, 59.96, 59.28, 58.58, 57.86, 57.08, 56.23, 55.26, 54.14, 52.82, 51.29, 49.55, 47.62, 45.55, 43.38, 41.22, 39.11, 37.17, 35.34, 33.51, 31.56, 29.64, 27.75, 25.9, 24.36, 22.97, 21.03, 19.08, 17.22, 15.66, 13.68, 11.91, 10.31, 8.96, 8.11, p 48326 iter 1000 diff 7
-7.05, 6.05, 5.32, 4.7, 4.16, 3.7, 3.29, 2.94, 2.62, 2.35, 2.1, 1.88, 1.7, 1.53, 1.39, 1.27, 1.15, 1.02, 0.91, 0.82, 0.74, 0.67, 0.6, 0.54, 0.49, 0.45, 0.41, 0.37, 0.34, 0.31, 0.28, 0.26, 0.23, 0.21, 0.19, 0.18, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_allMSC_lateChond$omega
+}
+
+omega &lt;- Topic_clus_7_allMSC_lateChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -8918,6 +9375,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-1">
+Past versions of “supervised with chond late-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-1.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda&quot;)){
      Topic_clus_8_allMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_lateChond.rda&quot;))
@@ -8949,6 +9443,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-2">
+Past versions of “supervised with chond late-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-2.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(40)
@@ -8976,18 +9507,9 @@ Topic_clus_7_adMSC_lateChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_adMSC_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_lateChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 27152802.76, 221021.85, 10308.92, 1461.48, 422.53, 25.21, 7.28, 51.72, 9604.41, 65115.04, 267403.08, 144833.59, 197193.03, 196510.3, 168343.73, 50807.48, 103186.58, 55489.63, 11213.96, 14211.74, 15065.83, 11169.47, 8191.69, 5891.5, 4273.98, 3462.75, 3645, 4260.62, 4467.86, 3818.05, 2903.93, 2329.85, 2066.29, 1842.89, 1531.09, 1143.61, 808.45, 590.53, 463.91, 389.68, 342.31, 308.56, 283.14, 261.35, 240.23, 218.4, 196.19, 175.23, 157.09, 142.45, 131.07, 122.08, 114.47, 107.46, 100.57, 93.61, 86.68, 80.06, 74, 68.72, 64.32, 60.81, 58.13, 56.19, 54.86, 54, 53.44, 53.08, 52.85, 52.69, 52.56, 52.42, 52.25, 52.03, 51.72, 51.28, 50.65, 49.81, 48.69, 47.31, 45.69, 43.86, 41.9, 39.87, 37.87, 36, 34.28, 32.51, 30.63, 28.77, 26.95, 25.15, 23.58, 22.31, 20.43, 18.51, 16.66, 15.09, 13.2, 11.4, p 48326 iter 1000 diff 10
-9.79, 8.41, 7.49, 6.54, 5.48, 4.75, 4.13, 3.61, 3.16, 2.77, 2.43, 2.14, 1.88, 1.66, 1.47, 1.3, 1.16, 1.04, 0.94, 0.85, 0.74, 0.65, 0.57, 0.51, 0.46, 0.41, 0.36, 0.33, 0.29, 0.27, 0.24, 0.22, 0.2, 0.18, 0.16, 0.15, 0.13, 0.12, 0.11, 0.1, 0.09, 0.08, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_adMSC_lateChond$omega
+omega &lt;- Topic_clus_7_adMSC_lateChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -9004,6 +9526,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-3">
+Past versions of “supervised with chond late-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-3.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda&quot;)){
      Topic_clus_8_adMSC_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_lateChond.rda&quot;))
@@ -9035,6 +9594,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-4">
+Past versions of “supervised with chond late-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-4.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(30, 49, 55)
@@ -9062,17 +9658,9 @@ Topic_clus_7_bmMSC1_lateChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_bmMSC1_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 20184057.92, 68202.85, 2231.27, 86.04, 4.36, 1.89, 0.12, 0.03, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC1_lateChond$omega
+omega &lt;- Topic_clus_7_bmMSC1_lateChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -9089,6 +9677,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-5">
+Past versions of “supervised with chond late-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-5.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;)){
      Topic_clus_8_bmMSC1_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_lateChond.rda&quot;))
@@ -9120,6 +9745,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-6">
+Past versions of “supervised with chond late-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-6.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
 index_MSCs &lt;- c(32,42)
@@ -9147,18 +9809,9 @@ Topic_clus_7_bmMSC2_lateChond &lt;- classtpx::class_topics(
     method=&quot;omega.fix&quot;,
     tol=0.01)
 save(Topic_clus_7_bmMSC2_lateChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)
-}</code></pre>
-<pre><code>Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used
+}
 
-Warning in if (shrink &amp; shrink.method == 2) {: the condition has length &gt; 1 and
-only the first element will be used</code></pre>
-<pre><code>
-Estimating on a 56 document collection.
-start the fit 
-log posterior increase: 39969843.16, 67141.77, 2531.44, 1470.68, 264.4, 30.71, 61.4, 14736.21, 20180.67, 193031.04, 199341.35, 201880.25, 185821.62, 154786.19, 49594.08, 107290.49, 45906.34, 10781.96, 14569.56, 14699.82, 10805.48, 7973.64, 5755.5, 4183.91, 3446.86, 3694.22, 4309.99, 4446.19, 3735.55, 2833.84, 2291.37, 2036.72, 1805.37, 1481.17, 1090.57, 764.19, 555.31, 434.12, 362.83, 317.6, 286.09, 263.02, 243.46, 224.42, 204.34, 183.57, 163.81, 146.71, 133.06, 122.65, 114.65, 108, 101.88, 95.77, 89.44, 82.97, 76.66, 70.8, 65.63, 61.31, 57.85, 55.24, 53.37, 52.14, 51.39, 50.95, 50.72, 50.62, 50.6, 50.6, 50.58, 50.54, 50.44, 50.25, 49.92, 49.4, 48.65, 47.62, 46.32, 44.77, 43.02, 41.12, 39.16, 37.23, 35.42, 33.73, 32, 30.15, 28.31, 26.51, 24.73, 23.22, 21.91, 20.02, 18.1, 16.27, 14.74, 12.8, 11.03, 9.44, p 48326 iter 1000 diff 8
-8.1, 7.24, 6.23, 5.22, 4.51, 3.91, 3.41, 2.97, 2.59, 2.27, 1.99, 1.74, 1.53, 1.35, 1.2, 1.06, 0.95, 0.86, 0.77, 0.67, 0.58, 0.51, 0.46, 0.41, 0.36, 0.32, 0.29, 0.26, 0.23, 0.21, 0.19, 0.18, 0.16, 0.14, 0.13, 0.11, 0.1, 0.1, 0.09, 0.08, 0.07, 0.07, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.04, 0.04, 0.04, 0.03, 0.03, 0.03, 0.03, 0.03, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, done.</code></pre>
-<pre class="r"><code>omega &lt;- Topic_clus_7_bmMSC2_lateChond$omega
+omega &lt;- Topic_clus_7_bmMSC2_lateChond$omega
 annotation &lt;- data.frame(
   sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
   tissue_label = as.factor(labels))
@@ -9175,6 +9828,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-7">
+Past versions of “supervised with chond late-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-7.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Perform topic modeling k=8
 if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;)){
      Topic_clus_8_bmMSC2_lateChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda&quot;))
@@ -9206,6 +9896,43 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-8">
+Past versions of “supervised with chond late-8.png”
+</button>
+</p>
+<div id="fig-no-spaces-supervised-with-chond-late-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/Bulk_cellComposition_analysis.Rmd/supervised with chond late-8.png" target="_blank">c0e7c45</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -9250,30 +9977,28 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] nlme_3.1-131           bitops_1.0-6           fs_1.3.1              
  [4] rprojroot_1.3-2        tools_3.4.3            backports_1.1.5       
- [7] irlba_2.3.3            R6_2.4.1               vegan_2.5-6           
-[10] KernSmooth_2.23-15     lazyeval_0.2.2         mgcv_1.8-22           
-[13] colorspace_1.4-1       permute_0.9-5          nnet_7.3-12           
-[16] withr_2.1.2            tidyselect_0.2.5       gridExtra_2.3         
-[19] compiler_3.4.3         git2r_0.26.1           labeling_0.3          
-[22] caTools_1.17.1.3       SQUAREM_2020.2         mixsqp_0.3-17         
-[25] stringr_1.4.0          digest_0.6.23          rmarkdown_1.18        
-[28] XVector_0.18.0         pkgconfig_2.0.3        htmltools_0.4.0       
-[31] invgamma_1.1           rlang_0.4.4            farver_2.0.3          
-[34] gtools_3.8.1           dplyr_0.8.3            RCurl_1.95-4.12       
-[37] magrittr_1.5           modeltools_0.2-22      GenomeInfoDbData_1.0.0
-[40] Matrix_1.2-18          Rcpp_1.0.3             munsell_0.5.0         
-[43] ape_5.3                abind_1.4-5            lifecycle_0.1.0       
-[46] stringi_1.4.3          whisker_0.4            yaml_2.2.0            
-[49] MASS_7.3-51.4          zlibbioc_1.24.0        flexmix_2.3-15        
-[52] plyr_1.8.4             grid_3.4.3             gdata_2.18.0          
-[55] promises_1.1.0         crayon_1.3.4           lattice_0.20-35       
-[58] locfit_1.5-9.1         zeallot_0.1.0          knitr_1.26            
-[61] pillar_1.4.2           picante_1.8            glue_1.3.1            
-[64] evaluate_0.14          data.table_1.12.6      vctrs_0.2.0           
-[67] httpuv_1.5.2           gtable_0.3.0           purrr_0.3.3           
-[70] tidyr_1.0.0            assertthat_0.2.1       ashr_2.2-47           
-[73] xfun_0.12              later_1.0.0            truncnorm_1.0-8       
-[76] tibble_2.1.3           workflowr_1.5.0        cluster_2.0.6         </code></pre>
+ [7] R6_2.4.1               vegan_2.5-6            KernSmooth_2.23-15    
+[10] lazyeval_0.2.2         mgcv_1.8-22            colorspace_1.4-1      
+[13] permute_0.9-5          nnet_7.3-12            withr_2.1.2           
+[16] tidyselect_0.2.5       gridExtra_2.3          compiler_3.4.3        
+[19] git2r_0.26.1           labeling_0.3           caTools_1.17.1.3      
+[22] stringr_1.4.0          digest_0.6.23          rmarkdown_1.18        
+[25] XVector_0.18.0         pkgconfig_2.0.3        htmltools_0.4.0       
+[28] rlang_0.4.4            farver_2.0.3           gtools_3.8.1          
+[31] dplyr_0.8.3            RCurl_1.95-4.12        magrittr_1.5          
+[34] modeltools_0.2-22      GenomeInfoDbData_1.0.0 Matrix_1.2-18         
+[37] Rcpp_1.0.3             munsell_0.5.0          ape_5.3               
+[40] abind_1.4-5            lifecycle_0.1.0        stringi_1.4.3         
+[43] whisker_0.4            yaml_2.2.0             MASS_7.3-51.4         
+[46] zlibbioc_1.24.0        flexmix_2.3-15         plyr_1.8.4            
+[49] grid_3.4.3             gdata_2.18.0           promises_1.1.0        
+[52] crayon_1.3.4           lattice_0.20-35        locfit_1.5-9.1        
+[55] zeallot_0.1.0          knitr_1.26             pillar_1.4.2          
+[58] picante_1.8            glue_1.3.1             evaluate_0.14         
+[61] data.table_1.12.6      vctrs_0.2.0            httpuv_1.5.2          
+[64] gtable_0.3.0           purrr_0.3.3            tidyr_1.0.0           
+[67] assertthat_0.2.1       xfun_0.12              later_1.0.0           
+[70] tibble_2.1.3           workflowr_1.5.0        cluster_2.0.6         </code></pre>
 </div>
 </div>
 

@@ -217,3 +217,39 @@ data.frame(Merged_bulk)  %>% ggplot(aes(x = `PB_NA19160S`, y = `X18855_3_S`)) +
      scale_y_log10()
 ```
 
+# Subset to only DE genes between strain/control bulk samples and re-run correlations
+
+```{r subset DEG}
+DEgenes <- get(load(file="data/DEgenes_FDR05.rda"))
+Merged_bulk_DE <- Merged_bulk[DEgenes,]
+Merged_bulk_DE <- Merged_bulk_DE[complete.cases(Merged_bulk_DE),]
+```
+
+## Clustering (PCA)
+
+```{r PCA DEG}
+# Perform PCA
+pca_genes <- prcomp(t(Merged_bulk_DE), scale = T)
+
+#Make PCA plots 
+
+autoplot(pca_genes, label = T)
+```
+
+## Clustering (corr heatmap) Spearman
+
+```{r corr heatmap DEG}
+#Corr heatmap Spearman
+cors <- cor(Merged_bulk_DE, method="spearman", use="pairwise.complete.obs")
+heatmap.2(cors, scale="none", margins = c(12, 12), trace='none', denscol="white",
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
+
+cors_pseudobulk <- cors[18:22,1:17]
+cors_pseudobulk
+heatmap.2(cors_pseudobulk, scale="none", margins = c(12, 12), trace='none', denscol="white",
+          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
+
+#max in each row
+apply(cors_pseudobulk, 1, function(x) max(x))
+
+```

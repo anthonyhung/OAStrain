@@ -149,10 +149,12 @@ plot_gene <- function(v, g) {
                                 into = c("Individual", "Replicate", "Treatment"))
   single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels = c("S", "U"))
   single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain"))
-
+  
   ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) +
-    geom_boxplot() +
-    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
+       labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) + 
+       geom_dotplot(binaxis = "y", stackdir = "center") + 
+       stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1))
+  
 }
 ```
 
@@ -289,7 +291,7 @@ significant_genes_05 <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$q
 significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)]
 head(significant_symbols_05)
 significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),]
-
+save(significant_genes_05, file="data/DEgenes_FDR05.rda")
 
 #FDR 0.01
 plot_ma(results[["Unstrain"]], 0.01)
@@ -328,19 +330,26 @@ plot_gene <- function(v, g) {
   single_gene_long$sample <- rownames(single_gene_long)
   single_gene_long <- separate(single_gene_long, col = "sample", sep = "_",
                                 into = c("Individual", "Replicate", "Treatment"))
-  single_gene_long <- single_gene_long %>% 
-       mutate(ind_treatment = paste0(Individual, "_", Treatment))
-  single_gene_long$ind_treatment <- factor(single_gene_long$ind_treatment, levels = c("18855_U", "18856_U", "19160_U", "18855_S", "18856_S", "19160_S"))
 
-  return(ggplot(single_gene_long, aes(x = ind_treatment, y = log2cpm, fill = ind_treatment)) +
-    geom_boxplot() +
-    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
-  )
+  single_gene_long$Treatment <- gsub('S', 'Strain', single_gene_long$Treatment)
+  single_gene_long$Treatment <- gsub('U', 'Control', single_gene_long$Treatment)
+  single_gene_long$Treatment <- factor(single_gene_long$Treatment, levels(factor(single_gene_long$Treatment))[c(1,2)])
+  
+  return(ggplot(single_gene_long, aes(x = Individual, y = log2cpm, fill = Individual)) +
+              labs(title = g, y = expression("Expression level (" * log[2] * " cpm)")) + 
+              geom_dotplot(binaxis = "y", stackdir = "center", key_glyph = 'rect', dotsize = 0.75) + 
+              facet_wrap(~Treatment, strip.position = 'bottom') + 
+              stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1)) +
+              theme(axis.title.x=element_blank())
+              )
 }
+
 
 for (gene in 1:length(significant_anno_05_FC1[,1])) {
      print(plot_gene(v2, as.character(significant_anno_05_FC1[gene,1])))
 }
+#SOX9
+plot_gene(v2, "ENSG00000125398")
 ```
 
 
@@ -529,8 +538,10 @@ plot_gene <- function(v, g) {
   single_gene_long$Treatment <- revalue(single_gene_long$Treatment, c("S"="Strain", "U"="No Strain"))
 
   ggplot(single_gene_long, aes(x = Treatment, y = log2cpm, fill = Treatment)) +
-    geom_boxplot() +
-    labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)"))
+       labs(title = g, x = "Treatment", y = expression("Expression level (" * log[2] * " cpm)")) + 
+       geom_dotplot(binaxis = "y", stackdir = "center") + 
+       stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1))
+
 }
 
 plot_volcano <- function(x, qval) {
