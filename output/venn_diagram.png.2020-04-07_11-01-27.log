@@ -1,0 +1,12 @@
+INFO [2020-04-07 11:01:28] $x
+INFO [2020-04-07 11:01:28] list(NA18855_markers, NA19160_markers, NA18856_markers)
+INFO [2020-04-07 11:01:28] 
+INFO [2020-04-07 11:01:28] $category.names
+INFO [2020-04-07 11:01:28] c("0 vs 1", "2 vs 4", "3 vs 5")
+INFO [2020-04-07 11:01:28] 
+INFO [2020-04-07 11:01:28] $filename
+INFO [2020-04-07 11:01:28] [1] "output/venn_diagram.png"
+INFO [2020-04-07 11:01:28] 
+INFO [2020-04-07 11:01:28] $output
+INFO [2020-04-07 11:01:28] [1] TRUE
+INFO [2020-04-07 11:01:28] 

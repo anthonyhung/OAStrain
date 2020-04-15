@@ -404,7 +404,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-04-05
+<strong>Last updated:</strong> 2020-04-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -495,10 +495,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bbb88d4476d841daa9ad37f6068f28d997e6e928" target="_blank">bbb88d4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee6d3fad441ed6c8a115b37f517bc0b3c8a5691f1targetblanke6d3fada"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1" target="_blank">e6d3fad</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee6d3fad441ed6c8a115b37f517bc0b3c8a5691f1targetblanke6d3fada" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,10 +508,11 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
     Ignored:    data/GoMresults.rds
@@ -530,9 +531,19 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  .RDataTmp
+    Untracked:  output/venn_diagram.png
+    Untracked:  output/venn_diagram.png.2020-04-07_11-01-27.log
+    Untracked:  output/venn_diagram.png.2020-04-07_11-03-32.log
+    Untracked:  output/venn_diagram.png.2020-04-07_11-04-29.log
+    Untracked:  output/venn_diagram.png.2020-04-07_11-14-38.log
+    Untracked:  output/venn_diagram.png.2020-04-13_18-18-44.log
+
 Unstaged changes:
+    Modified:   analysis/ANT1_ANT2_.Rmd
     Modified:   analysis/DE_analysis.Rmd
-    Modified:   fig-limma-treatment-hit-1.eps
+    Modified:   analysis/Pilot_GoMAnalysis.Rmd
 
 </code></pre>
 <p>
@@ -571,6 +582,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/analysis/DE_analysis.Rmd" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+<td>
+Subset pseudobulk to 1000 DEG, dotplots instead of boxplots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/DE_analysis.html" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+<td>
+Subset pseudobulk to 1000 DEG, dotplots instead of boxplots
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1694,6 +1739,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/797305a2d5605d72ff27136f96afcfe42a089f7f/docs/figure/DE_analysis.Rmd/treatment-1.png" target="_blank">797305a</a>
@@ -2894,7 +2950,7 @@ head(significant_symbols_05)</code></pre>
 <pre><code>[1] DVL1   MRPL20 MMP23B PEX10  CEP104 ACOT7 
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 A2ML1-AS2 ... ZZEF1</code></pre>
 <pre class="r"><code>significant_anno_05 &lt;- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),]
-
+save(significant_genes_05, file=&quot;data/DEgenes_FDR05.rda&quot;)
 
 #FDR 0.01
 plot_ma(results[[&quot;Unstrain&quot;]], 0.01)</code></pre>
@@ -3407,6 +3463,102 @@ significant_anno_05_FC1</code></pre>
 5642  CAMPOMELIC DYSPLASIA;PIERRE ROBIN SEQUENCE;46XX ovotesticular disorder of sex development;46XX testicular disorder of sex development;46XY complete gonadal dysgenesis;46XY partial gonadal dysgenesis;Isolated Pierre Robin syndrome;46XY SEX REVERSAL 10
 2562                                                                                                                                                                                                                                                            
 2248                                                                                                                                                                                           HEME OXYGENASE 1 DEFICIENCY;PULMONARY DISEASE CHRONIC OBSTRUCTIVE</code></pre>
+<pre class="r"><code>#separate into up and downregulated
+# upregulated
+#logFC &gt; 1
+significant_genes_05_FC1_up &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.05 &amp; results[[&quot;Unstrain&quot;]]$logFC &gt; 1]
+significant_symbols_05_FC1_up &lt;- gene_anno$external_gene_name[match(significant_genes_05_FC1_up, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1_up &lt;- gene_anno[match(significant_genes_05_FC1_up, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1_up</code></pre>
+<pre><code>      ensembl_gene_id external_gene_name chromosome_name
+5175  ENSG00000121577             POPDC2               3
+934   ENSG00000065534               MYLK               3
+14924 ENSG00000180801               ARSJ               4
+13297 ENSG00000172403             SYNPO2               4
+13332 ENSG00000172548             NIPAL4               5
+28168 ENSG00000228495          LINC01013               6
+3341  ENSG00000106631               MYL7               7
+10067 ENSG00000157168               NRG1               8
+3449  ENSG00000107796              ACTA2              10
+10325 ENSG00000159251              ACTC1              15
+81    ENSG00000005102              MEOX1              17
+                                                                          description
+5175                   popeye domain containing 2 [Source:HGNC Symbol;Acc:HGNC:17648]
+934                      myosin light chain kinase [Source:HGNC Symbol;Acc:HGNC:7590]
+14924               arylsulfatase family member J [Source:HGNC Symbol;Acc:HGNC:26286]
+13297                              synaptopodin 2 [Source:HGNC Symbol;Acc:HGNC:17732]
+13332               NIPA like domain containing 4 [Source:HGNC Symbol;Acc:HGNC:28018]
+28168 long intergenic non-protein coding RNA 1013 [Source:HGNC Symbol;Acc:HGNC:48987]
+3341                         myosin light chain 7 [Source:HGNC Symbol;Acc:HGNC:21719]
+10067                                 neuregulin 1 [Source:HGNC Symbol;Acc:HGNC:7997]
+3449           actin, alpha 2, smooth muscle, aorta [Source:HGNC Symbol;Acc:HGNC:130]
+10325                actin, alpha, cardiac muscle 1 [Source:HGNC Symbol;Acc:HGNC:143]
+81                           mesenchyme homeobox 1 [Source:HGNC Symbol;Acc:HGNC:7013]
+                                                                                                                                                                                                       phenotype
+5175                                                                                                                                                                                                            
+934                                                        Megacystis-microcolon-intestinal hypoperistalsis syndrome;Familial thoracic aortic aneurysm and aortic dissection;AORTIC ANEURYSM FAMILIAL THORACIC 7
+14924                                                                                                                                                                                                           
+13297                                                                                                                                                                                                           
+13332                                                                                           Congenital nonbullous ichthyosiform erythroderma;Lamellar ichthyosis;ICHTHYOSIS CONGENITAL AUTOSOMAL RECESSIVE 6
+28168                                                                                                                                                                                                           
+3341                                                                                                                                                                                                            
+10067                                                                                                                                                                                            SCHIZOPHRENIA 6
+3449                            AORTIC ANEURYSM FAMILIAL THORACIC 6;Moyamoya disease 5;Familial thoracic aortic aneurysm and aortic dissection;Moyamoya disease;MULTISYSTEMIC SMOOTH MUSCLE DYSFUNCTION SYNDROME
+10325 Atrial septal defect ostium secundum type;Familial isolated dilated cardiomyopathy;Left ventricular noncompaction;ATRIAL SEPTAL DEFECT 5;Cardiomyopathy dilated 1R;CARDIOMYOPATHY FAMILIAL HYPERTROPHIC 11
+81                                                                                                               Klippel-Feil Anomaly;Isolated Klippel-Feil syndrome;KLIPPEL-FEIL SYNDROME 2 AUTOSOMAL RECESSIVE</code></pre>
+<pre class="r"><code># downregulated
+#logFC &lt; -1
+significant_genes_05_FC1_down &lt;- row.names(results[[&quot;Unstrain&quot;]])[results[[&quot;Unstrain&quot;]]$qvalue &lt; 0.05 &amp; results[[&quot;Unstrain&quot;]]$logFC &lt; -1]
+significant_symbols_05_FC1_down &lt;- gene_anno$external_gene_name[match(significant_genes_05_FC1_down, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1_down &lt;- gene_anno[match(significant_genes_05_FC1_down, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1_down</code></pre>
+<pre><code>      ensembl_gene_id external_gene_name chromosome_name
+31021 ENSG00000232679          LINC01705               1
+4381  ENSG00000115221              ITGB6               2
+7662  ENSG00000138411              HECW2               2
+28538 ENSG00000229056         AC020571.1               2
+13727 ENSG00000174640            SLCO2A1               3
+9313  ENSG00000150630              VEGFC               4
+2910  ENSG00000104368               PLAT               8
+457   ENSG00000026508               CD44              11
+46915 ENSG00000261578         AP003119.3              11
+7759  ENSG00000139044           B4GALNT3              12
+11706 ENSG00000165891               E2F7              12
+5642  ENSG00000125398               SOX9              17
+2562  ENSG00000101670               LIPG              18
+2248  ENSG00000100292              HMOX1              22
+                                                                                              description
+31021                     long intergenic non-protein coding RNA 1705 [Source:HGNC Symbol;Acc:HGNC:52493]
+4381                                           integrin subunit beta 6 [Source:HGNC Symbol;Acc:HGNC:6161]
+7662  HECT, C2 and WW domain containing E3 ubiquitin protein ligase 2 [Source:HGNC Symbol;Acc:HGNC:29853]
+28538                                                                                                    
+13727      solute carrier organic anion transporter family member 2A1 [Source:HGNC Symbol;Acc:HGNC:10955]
+9313                             vascular endothelial growth factor C [Source:HGNC Symbol;Acc:HGNC:12682]
+2910                                plasminogen activator, tissue type [Source:HGNC Symbol;Acc:HGNC:9051]
+457                                 CD44 molecule (Indian blood group) [Source:HGNC Symbol;Acc:HGNC:1681]
+46915                                                                                                    
+7759                    beta-1,4-N-acetyl-galactosaminyltransferase 3 [Source:HGNC Symbol;Acc:HGNC:24137]
+11706                                      E2F transcription factor 7 [Source:HGNC Symbol;Acc:HGNC:23820]
+5642                                                        SRY-box 9 [Source:HGNC Symbol;Acc:HGNC:11204]
+2562                                        lipase G, endothelial type [Source:HGNC Symbol;Acc:HGNC:6623]
+2248                                                  heme oxygenase 1 [Source:HGNC Symbol;Acc:HGNC:5013]
+                                                                                                                                                                                                                                                       phenotype
+31021                                                                                                                                                                                                                                                           
+4381                                                                                                         Alopecia-intellectual disability syndrome;Hypocalcified amelogenesis imperfecta;Hypoplastic amelogenesis imperfecta;AMELOGENESIS IMPERFECTA TYPE IH
+7662                                                                                                                                                                               HECW2;NEURODEVELOPMENTAL DISORDER WITH HYPOTONIA SEIZURES AND ABSENT LANGUAGE
+28538                                                                                                                                                                                                                                                           
+13727                                                                                                                         Chronic enteropathy associated with SLCO2A1 gene;Pachydermoperiostosis;HYPERTROPHIC OSTEOARTHROPATHY PRIMARY AUTOSOMAL RECESSIVE 2
+9313                                                                                                                                                                                                                     Milroy Disease;Lymphedema hereditary id
+2910                                                                                                                         Lethal hydranencephaly-diaphragmatic hernia syndrome;THROMBOPHILIA FAMILIAL DUE TO DECREASED RELEASE OF TISSUE PLASMINOGENACTIVATOR
+457                                                                                                                                                                                                                                    BLOOD GROUP INDIAN SYSTEM
+46915                                                                                                                                                                                                                                                           
+7759                                                                                                                                                                                                                                                            
+11706                                                                                                                                                                                                                                                           
+5642  CAMPOMELIC DYSPLASIA;PIERRE ROBIN SEQUENCE;46XX ovotesticular disorder of sex development;46XX testicular disorder of sex development;46XY complete gonadal dysgenesis;46XY partial gonadal dysgenesis;Isolated Pierre Robin syndrome;46XY SEX REVERSAL 10
+2562                                                                                                                                                                                                                                                            
+2248                                                                                                                                                                                           HEME OXYGENASE 1 DEFICIENCY;PULMONARY DISEASE CHRONIC OBSTRUCTIVE</code></pre>
 </div>
 </div>
 <div id="boxplot-of-expression-levels-of-the-top-de-genes-separated-by-individual-x-treatment" class="section level1">
@@ -3437,7 +3589,7 @@ significant_anno_05_FC1</code></pre>
               )
 }
 
-
+#all top genes
 for (gene in 1:length(significant_anno_05_FC1[,1])) {
      print(plot_gene(v2, as.character(significant_anno_05_FC1[gene,1])))
 }</code></pre>
@@ -3465,6 +3617,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-1.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-1.png" target="_blank">c0e7c45</a>
@@ -3517,6 +3680,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-2.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-2.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3554,6 +3728,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-3.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-3.png" target="_blank">c0e7c45</a>
@@ -3595,6 +3780,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-4.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-4.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3632,6 +3828,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-5.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-5.png" target="_blank">c0e7c45</a>
@@ -3673,6 +3880,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-6.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-6.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3710,6 +3928,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-7.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-7.png" target="_blank">c0e7c45</a>
@@ -3751,6 +3980,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-8.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-8.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3788,6 +4028,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-9.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-9.png" target="_blank">c0e7c45</a>
@@ -3829,6 +4080,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-10.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-10.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3866,6 +4128,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-11.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-11.png" target="_blank">c0e7c45</a>
@@ -3907,6 +4180,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-12.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-12.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -3944,6 +4228,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-13.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-13.png" target="_blank">c0e7c45</a>
@@ -3985,6 +4280,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-14.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-14.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4022,6 +4328,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-15.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-15.png" target="_blank">c0e7c45</a>
@@ -4063,6 +4380,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-16.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-16.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4100,6 +4428,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-17.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-17.png" target="_blank">c0e7c45</a>
@@ -4141,6 +4480,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-18.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-18.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4178,6 +4528,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-19.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-19.png" target="_blank">c0e7c45</a>
@@ -4219,6 +4580,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-20.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-20.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4256,6 +4628,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-21.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-21.png" target="_blank">c0e7c45</a>
@@ -4297,6 +4680,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-22.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-22.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4334,6 +4728,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-23.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-23.png" target="_blank">c0e7c45</a>
@@ -4375,6 +4780,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-24.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-24.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4414,6 +4830,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-25.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c0e7c4535eba85795281a274263a8ddfbe3d3822/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-25.png" target="_blank">c0e7c45</a>
 </td>
 <td>
@@ -4431,6 +4858,103 @@ Anthony Hung
 plot_gene(v2, &quot;ENSG00000125398&quot;)</code></pre>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-26.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-26">
+Past versions of unnamed-chunk-1-26.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-26" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/unnamed-chunk-1-26.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#all top upregulated
+
+for (gene in 1:length(significant_anno_05_FC1_up[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1_up[gene,1])))
+}</code></pre>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-28.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-29.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-30.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-31.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-32.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-33.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-34.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-35.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-36.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-37.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#all top downregulated
+
+for (gene in 1:length(significant_anno_05_FC1_down[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1_down[gene,1])))
+}</code></pre>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-38.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-39.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-40.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-41.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-42.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-43.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-44.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-45.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-46.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-47.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-48.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-49.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-50.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/DE_analysis.Rmd/unnamed-chunk-1-51.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="gene-ontology-analysis-with-topgo" class="section level2">
 <h2>Gene ontology analysis with topGO</h2>
 <p>Use topGO for GO analysis. It accounts for the nested graph structure of GO terms to prune the number of GO categories tested (<a href="http://www.ncbi.nlm.nih.gov/pubmed/16606683">Alexa et al. 2006</a>). Essentially, it decreases the redundancy of the results.</p>
@@ -5295,6 +5819,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/figure/DE_analysis.Rmd/boxplots-1.png" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/797305a2d5605d72ff27136f96afcfe42a089f7f/docs/figure/DE_analysis.Rmd/boxplots-1.png" target="_blank">797305a</a>

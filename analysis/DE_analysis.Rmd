@@ -313,6 +313,24 @@ significant_symbols_05_FC1 <- gene_anno$external_gene_name[match(significant_gen
 significant_anno_05_FC1 <- gene_anno[match(significant_genes_05_FC1, gene_anno$ensembl_gene_id),]
 
 significant_anno_05_FC1
+
+
+#separate into up and downregulated
+# upregulated
+#logFC > 1
+significant_genes_05_FC1_up <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05 & results[["Unstrain"]]$logFC > 1]
+significant_symbols_05_FC1_up <- gene_anno$external_gene_name[match(significant_genes_05_FC1_up, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1_up <- gene_anno[match(significant_genes_05_FC1_up, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1_up
+
+# downregulated
+#logFC < -1
+significant_genes_05_FC1_down <- row.names(results[["Unstrain"]])[results[["Unstrain"]]$qvalue < 0.05 & results[["Unstrain"]]$logFC < -1]
+significant_symbols_05_FC1_down <- gene_anno$external_gene_name[match(significant_genes_05_FC1_down, gene_anno$ensembl_gene_id)]
+significant_anno_05_FC1_down <- gene_anno[match(significant_genes_05_FC1_down, gene_anno$ensembl_gene_id),]
+
+significant_anno_05_FC1_down
 ```
 
 # boxplot of expression levels of the top DE genes separated by individual x treatment
@@ -344,12 +362,28 @@ plot_gene <- function(v, g) {
               )
 }
 
-
+#all top genes
 for (gene in 1:length(significant_anno_05_FC1[,1])) {
      print(plot_gene(v2, as.character(significant_anno_05_FC1[gene,1])))
 }
 #SOX9
 plot_gene(v2, "ENSG00000125398")
+
+
+
+
+#all top upregulated
+
+for (gene in 1:length(significant_anno_05_FC1_up[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1_up[gene,1])))
+}
+
+#all top downregulated
+
+for (gene in 1:length(significant_anno_05_FC1_down[,1])) {
+     print(plot_gene(v2, as.character(significant_anno_05_FC1_down[gene,1])))
+}
+
 ```
 
 

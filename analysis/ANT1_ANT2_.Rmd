@@ -39,6 +39,8 @@ library(heplots)
 library(DT)
 library(gplots)
 library(cowplot)
+library("ggpubr")
+
 ```
 
 ## Load in data
@@ -436,8 +438,52 @@ ANT1.2 <- FindClusters(ANT1.2, resolution = 0.5)
 ANT1.2 <- RunUMAP(ANT1.2, dims = 1:num_PCs)
 p1 <- DimPlot(ANT1.2, reduction = "umap")
 p2 <- DimPlot(ANT1.2, reduction = "umap", group.by = "labels")
-grid.arrange(p1, p2, nrow = 2)
+grid.arrange(p1, p2, nrow = 1)
 ```
+
+```{r}
+ANT1.2 <- BuildClusterTree(ANT1.2)
+PlotClusterTree(ANT1.2)
+
+# Markers of each cluster
+for(i in 0:7){
+     print(FindMarkers(ANT1.2, i, thresh = 2))
+}
+
+#Differential Expression between the clusters that split individuals
+NA18855_markers <- FindMarkers(ANT1.2, ident.1 = 0, ident.2 = 1, thresh = 2, logfc.threshold = 0, min.pct = 0, min.cells.group = 1) #splits 18855
+NA19160_markers <- FindMarkers(ANT1.2, ident.1 = 2, ident.2 = 4, thresh = 2, logfc.threshold = 0, min.pct = 0, min.cells.group = 1) #splits 19160
+NA18856_markers <- FindMarkers(ANT1.2, ident.1 = 5, ident.2 = 3, thresh = 2, logfc.threshold = 0, min.pct = 0, min.cells.group = 1) #splits 18856
+
+dim(NA18855_markers)
+dim(NA19160_markers)
+dim(NA18856_markers)
+
+merged_markers_1 <- base::merge(NA18855_markers, NA19160_markers, by = 0, suffixes = c("_NA18855", "_NA19160"))
+rownames(merged_markers_1) <- merged_markers_1[,1]
+merged_markers_1 <- merged_markers_1[,-1]
+
+merged_markers <- base::merge(merged_markers_1, NA18856_markers, by = 0)
+colnames(merged_markers)[13] <- "avg_logFC_NA18856"
+merged_markers <- merged_markers
+dim(merged_markers)
+
+
+# Plots of correlations between effect sizes of each gene between the three comparisons (doesn't look particularly meaningful)
+ggplot(data=merged_markers, aes(x=avg_logFC_NA18856, y = avg_logFC_NA18855)) +
+     geom_point() + geom_smooth(method='lm') + 
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     stat_cor(method = "pearson", cor.coef.name = c("r"), label.x.npc = "middle", label.y.npc = "top")
+ggplot(data=merged_markers, aes(x=avg_logFC_NA18856, y = avg_logFC_NA19160)) +
+     geom_point() + geom_smooth(method='lm') + 
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     stat_cor(method = "pearson", cor.coef.name = c("r"), label.x.npc = "middle", label.y.npc = "top")
+ggplot(data=merged_markers, aes(x=avg_logFC_NA18855, y = avg_logFC_NA19160)) +
+     geom_point() + geom_smooth(method='lm') + 
+     stat_cor(method = "spearman", cor.coef.name = c("rho")) +
+     stat_cor(method = "pearson", cor.coef.name = c("r"), label.x.npc = "middle", label.y.npc = "top")
+```
+
 
 ```{r expression by individual}
 #Chondrocyte markers

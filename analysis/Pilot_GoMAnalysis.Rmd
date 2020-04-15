@@ -27,6 +27,10 @@ library(ggplot2)
 library(MAST)
 library(RColorBrewer)
 library(ggfortify)
+library(stringi)
+library(stringr)
+library(colorspace)
+library(dplyr)
 ```
 
 # Load in datasets and merge them
@@ -83,6 +87,8 @@ liver <- readRDS("data/humanLiverSubset_hepatocytes.rds")
 liver <- AddMetaData(liver, "Hepatocyte", col.name = "Cell.Type")
 dim(liver)
 
+
+
 # Merge Datasets
 
 # Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.
@@ -94,10 +100,12 @@ Combined.common <- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.
 
 #merge keeping all genes
 Combined.common.allGenes <- Combined.common <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans, liver), project = "Combined.common")
+Combined.common.allGenes_noliver <- Combined.common <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans), project = "Combined.common")
 
 
 saveRDS(Combined.common, "data/Combined_singlecell_data_first.rds")
 saveRDS(Combined.common.allGenes, "data/Combined_singlecell_data_allGenes.rds")
+saveRDS(Combined.common.allGenes_noliver, "data/Combined_singlecell_data_allGenes_noliver.rds")
 
 }
 ```
@@ -160,11 +168,9 @@ Combined.common.allGenes <- readRDS("data/Combined_singlecell_data_allGenes_norm
 Combined.common <- NormalizeData(Combined.common, normalization.method = "LogNormalize", scale.factor = 10000)
 
 # Feature selection
-
 Combined.common <- FindVariableFeatures(Combined.common, selection.method = "vst", nfeatures = 2000)
 
 # Scaling Data
-
 scale_data <- function(seurat.obj){
   all.genes <- rownames(seurat.obj)
   return(ScaleData(seurat.obj, features = all.genes))
@@ -173,9 +179,7 @@ scale_data <- function(seurat.obj){
 Combined.common <- scale_data(Combined.common)
 
 # Dimensionality Reduction
-
 #Using the highly variable features selected above, perform PCA
-
 nPC <- 100
 Combined.common <- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common), npcs = nPC)
 
@@ -280,331 +284,42 @@ ElbowPlot(Combined.common, ndims = nPC) #50 PCs?
 
 #UMAP
 DimPlot(Combined.common, reduction = "umap", group.by = "Cell.Type")
+
 ```
-
-# Grades of Membership analysis
-
-# Run CountClust::FitGoM on the data for k = 3:8
-Make a function to run the CountClust::FitGoM function on the datasets.
-
-```{r fitgom function}
-runfitGoM <- function(datamatrix, tol = 0.1, start, end){
-  listofks <- list()
-  counter <- 1
-  for(i in start:end){
-    listofks[[counter]] <- CountClust::FitGoM(datamatrix, K=i, tol = tol, control=list(tmax=100))
-    counter <- counter + 1
-  }
-  return(listofks)
-}
-```
-
-## Run the function.
-Then run the GoM function on the data
-
-```{r run the function on the datasets}
-Combined_counts <- Combined.common@assays$RNA@counts
-dim(Combined_counts)
-Combined_counts_celltypes <- Combined.common@meta.data$Cell.Type
-length(Combined_counts_celltypes)
-
-if (file.exists("data/GoMresultsk3.rds")){
-  Combined_GoM3 <- readRDS(file = "data/GoMresultsk3.rds")
-} else {
-  Combined_GoM3 <- runfitGoM(t(Combined_counts), start = 3, end = 3)
-  saveRDS(Combined_GoM3, "data/GoMresultsk3.rds")
-}
-if (file.exists("data/GoMresultsk4.rds")){
-  Combined_GoM4 <- readRDS(file = "data/GoMresultsk4.rds")
-} else {
-  Combined_GoM4 <- runfitGoM(t(Combined_counts), start = 4, end = 4)
-  saveRDS(Combined_GoM4, "data/GoMresultsk4.rds")
-}
-if (file.exists("data/GoMresultsk5.rds")){
-  Combined_GoM5 <- readRDS(file = "data/GoMresultsk5.rds")
-} else {
-  Combined_GoM5 <- runfitGoM(t(Combined_counts), start = 5, end = 5)
-  saveRDS(Combined_GoM5, "data/GoMresultsk5.rds")
-}
-if (file.exists("data/GoMresultsk6.rds")){
-  Combined_GoM6 <- readRDS(file = "data/GoMresultsk6.rds")
-} else {
-  Combined_GoM6 <- runfitGoM(t(Combined_counts), start = 6, end = 6)
-  saveRDS(Combined_GoM6, "data/GoMresultsk6.rds")
-}
-if (file.exists("data/GoMresultsk7.rds")){
-  Combined_GoM7 <- readRDS(file = "data/GoMresultsk7.rds")
-} else {
-  Combined_GoM7 <- runfitGoM(t(Combined_counts), start = 7, end = 7)
-  saveRDS(Combined_GoM7, "data/GoMresultsk7.rds")
-}
-if (file.exists("data/GoMresultsk8.rds")){
-  Combined_GoM8 <- readRDS(file = "data/GoMresultsk8.rds")
-} else {
-  Combined_GoM8 <- runfitGoM(t(Combined_counts), start = 8, end = 8)
-  saveRDS(Combined_GoM8, "data/GoMresultsk8.rds")
-     }
-```
-
-# Analysis of the Topics within the Topic models generated for each dataset
-
-Visualizations:
-
-  visualizeGoM plots each cell based on the tSNE1 and tSNE2 embeddings. Colors are determmined based on assignment of each cell to a particular topic based on plurality membership (cells are colored by the topic that constitutes the largest proportion out of all the topics contributing to that cell).
-
-  visualizeGoM_topic_gradients plots each cell based on the tSNE1 and tSNE2 embeddings. Separate plots are created for each topic. In each plot, cells are colored on a gradient according to the proportion of each cell contributed to by the topic.
-
-  plot_structure_plot plots a stacked bar plot for each cell (separated into cell type categories determined by the authors) for the topics that contribute to each cell.
-
-  plot_structure_plot_rare_only plots the same as above but removes the basal and club cell bar plots to allow for better visualization of the rare cell types.
-
-  make_topic_plots plots separate boxplots for each topic. The y axis in each case is proportion contributed by the topic in question, and the x axis is faceted based on the cell types assigned to single cells by the authors.
-  
-```{r functions to visualize GoM}
-visualizeGoM <- function(omega, seuratobject, data){
-  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
-  labs_clus <- colnames(omega)[apply(omega,1,which.max)]
-  data_ggplot <- data.frame(labels = labs_clus,
-                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
-                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
-  plot1 <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
-                                     panel.grid.major = element_blank(),
-                                     panel.grid.minor = element_blank(),
-                                     axis.text.y = element_blank(),
-                                     axis.text.x = element_blank(),
-                                     axis.ticks = element_blank(),
-                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = labels), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_color_discrete('')
-  return(plot1)
-}
-
-visualizeGoM_topic_gradients <- function(omega, seuratobject, data){
-  omega <- omega[match(colnames(seuratobject@assays$RNA), colnames(data)),]
-  ntopics <- ncol(omega)
-  for (n in 1:ntopics){
-  data_ggplot <- data.frame(proportion = omega[,n],
-                          umap1 = seuratobject@reductions$umap@cell.embeddings[, 1],
-                          umap2 = seuratobject@reductions$umap@cell.embeddings[, 2])
-  plot.gradient <- ggplot(data_ggplot) + theme(panel.background = element_rect(colour = "black", size = 1),
-                                     panel.grid.major = element_blank(),
-                                     panel.grid.minor = element_blank(),
-                                     axis.text.y = element_blank(),
-                                     axis.text.x = element_blank(),
-                                     axis.ticks = element_blank(),
-                                     legend.text = element_text(size = 15)) + geom_point(aes(x = umap1, y = umap2, color = proportion), size = 0.5) + labs(x = 'tSNE 1', y = 'tSNE 2', title = '') + scale_colour_gradient(low="grey", high="red")
-  plot(plot.gradient)
-  }
-}
-
-
-
-plot_structure_plot <- function(omega, seuratobject){
-     labels <- sapply(strsplit(seuratobject@meta.data$Cell.Type," "), `[`, 1)
-     annotation <- data.frame(
-          sample_id = rownames(omega),
-          tissue_label = labels
-          )
-     StructureGGplot(omega = omega,
-                     annotation = annotation,
-                     #palette = my_color_palette1,
-                     order_sample = TRUE,
-                     axis_tick = list(axis_ticks_length = .1,
-                                      axis_ticks_lwd_y = .1,
-                                      axis_ticks_lwd_x = .1,
-                                      axis_label_size = 7,
-                                      axis_label_face = "bold"))
-     }
-
-
-make_topic_plots <- function(omega, celltypes){
-  omega <- as.data.frame(omega)
-  omega <- cbind(omega,celltypes)
-  for (k in 1:(ncol(omega)-1)) {
-    base_plot <- ggplot(data = omega, mapping = aes(x = celltypes, y = omega[,k])) + labs(y = paste0("Topic ", k, " value"), x = paste0("Cell Type")) + theme(axis.text.x = element_text(angle = -20, hjust = 0, vjust = 0))
-    plot(base_plot + geom_violin(width = 1.5, fill = "skyblue",color = "skyblue") +
-      geom_boxplot(width = 0.1,outlier.shape = NA, alpha = 0.2))
-   }
-}
-```
-
-Use the CountClust::ExtractTopFeatures function to obtain KL measurement scores for the top 100 genes per cluster that best distinguish that cluster from the rest.
-
-```{r cluster annotations function}
-annotate_clusters <- function(theta_mat, countmatrix){
-  top_features <- ExtractTopFeatures(theta_mat,
-                                     top_features=100,
-                                     method="poisson",
-                                     options="min")
-  gene_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) rownames(countmatrix)[top_features[[1]][x,]]))
-  scores_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) top_features[[2]][x,]))
-  print(gene_vector)
-  print(scores_vector)
-}
-```
-
-# Apply Visualization/annotation functions to GoM results
-
-```{r k of 3}
-visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
-```
-
-```{r k of 4}
-visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
-```
-
-```{r k of 5}
-visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
-```
-
-```{r k of 6}
-visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
-```
-
-```{r k of 7}
-visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
-```
-
-```{r k of 8}
-visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Semi-supervised topic modeling
-
-```{r semi-sup}
-library("classtpx")
-
-counts <- as.matrix(Combined.common.allGenes@assays$RNA@counts)
-labels <- sapply(strsplit(Combined.common.allGenes@meta.data$Cell.Type,"_"), `[`, 1)
-labels <- sapply(strsplit(labels," "), `[`, 1)
-
-
-# labels for "known" clusters
-index_hep <- which(labels=="Hepatocyte")
-index_Chondro <- which(labels=="Chondro")
-index_iPSC <- which(labels=="iPSC")
-
-known_samples <- c(index_hep, index_Chondro, index_iPSC)
-
-class_labs <- c(rep("Hepatocyte", length(index_hep)),
-                rep("Chondrocyte", length(index_Chondro)),
-                rep("iPSC", length(index_iPSC))
-                )
-
-
-
-# Perform topic modeling k=4
-Topic_clus_4 <- classtpx::class_topics(
-    t(counts),
-    K=4,
-    known_samples = known_samples,
-    class_labs = class_labs,
-    method="omega.fix",
-    tol=0.1)
-save(Topic_clus_4, file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda")
-Topic_clus_4 <- get(load(file="data/merged_topic_fit_4_classtpx_omega_fix_scRNA.rda"))
-
-omega <- Topic_clus_4$omega
-annotation <- data.frame(
-  sample_id = paste0("X", c(1:NROW(omega))),
-  tissue_label = as.factor(labels))
-rownames(omega) <- annotation$sample_id
-CountClust::StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = "bold")
-                )
-
-
-
-
-
-
-
-
-# Perform topic modeling k=5
-Topic_clus_4 <- classtpx::class_topics(
-    t(counts),
-    K=5,
-    known_samples = known_samples,
-    class_labs = class_labs,
-    method="omega.fix",
-    tol=0.01)
-save(Topic_clus_5, file="data/merged_topic_fit_5_classtpx_omega_fix_scRNA.rda")
-Topic_clus_5 <- get(load(file="data/merged_topic_fit_5_classtpx_omega_fix_scRNA.rda"))
-
-omega <- Topic_clus_5$omega
-annotation <- data.frame(
-  sample_id = paste0("X", c(1:NROW(omega))),
-  tissue_label = as.factor(labels))
-rownames(omega) <- annotation$sample_id
-CountClust::StructureGGplot(omega = omega,
-                annotation = annotation,
-                palette = RColorBrewer::brewer.pal(8, "Accent"),
-                yaxis_label = "Tissue Type",
-                order_sample = TRUE,
-                axis_tick = list(axis_ticks_length = .1,
-                                 axis_ticks_lwd_y = .1,
-                                 axis_ticks_lwd_x = .1,
-                                 axis_label_size = 7,
-                                 axis_label_face = "bold")
-                )
-```
-
-
-
-
-
-
 
 
 # Grades of Membership analysis with fastTopics
 
 ```{r fit_poisson_nmf function}
 library(fastTopics)
-counts_allgenes <- Combined.common.allGenes@assays$RNA@counts
-fit1 <- fit_poisson_nmf(counts_allgenes,k = 3,numiter = 500,method = "mu")
+library(Seurat)
+Combined.common.allGenes_noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
+dim(Combined.common.allGenes_noliver)
+
+#subset to have 11 cells from each group (to test whether it's a problem with memory or something to do with the code)
+indices <- c(1:10, 2722:2732, 24226:24236, 27216:27226)
+
+# specify the fixed loadings for certain cells (1 = iPSC, 2 = MSC, 3 = chondrocyte)
+counts_allgenes <- Combined.common.allGenes_noliver@assays$RNA@counts[, indices]
+iPSC_vector <- as.numeric(Combined.common.allGenes_noliver@meta.data$Cell.Type[indices] == "iPSC")
+MSC_vector <- as.numeric(Combined.common.allGenes_noliver@meta.data$Cell.Type[indices] == "MSC")
+Chondro_vector <- as.numeric(grepl("Chondro ", Combined.common.allGenes_noliver@meta.data$Cell.Type[indices]))
+L_init <- cbind(iPSC_vector, MSC_vector, Chondro_vector)
+F_init <- matrix(1/nrow(counts_allgenes), nrow=nrow(counts_allgenes), ncol = 3)
+
+#vector (1 for update loadings after initial specificiations, 0 for keep initial specifications fixed)
+fixed_loadings <- 1 - rowSums(L_init)
+
+counts_allgenes <- BiocGenerics::t(counts_allgenes)
+
+fit_init <- init_poisson_nmf(X=counts_allgenes, F=F_init, L=L_init)
+fit1 <- fit_poisson_nmf(X=counts_allgenes, fit0=fit_init, numiter=15, method = "em", update.loadings=fixed_loadings)
+fit1 <- fit_poisson_nmf(counts_allgenes, k = 3, numiter = 15, method = "em")
+fit2 <- fit_poisson_nmf(counts_allgenes, fit0 = fit1, numiter = 15, method = "em")
 fit1_multinomial <- poisson2multinom(fit1)
+
+saveRDS(fit1, "data/fit1.rds")
+saveRDS(fit1_multinomial, "data/fit1_multinomial.rds")
 ```
 
 
@@ -743,3 +458,157 @@ annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Code for loading in cell atlas samples 
+
+First compute correlations between each individual cell in ANT1.2 and each of the primary cell lines in the cell atlas dataset to assign labels. Then use those primary cell lines to compute memberships in clusters
+
+```{r cell atlas assignment}
+###SCRIPTS GOTTEN FROM BINGQING XIE###
+
+###compute correlation matrix between sample and cell lines in cellAtlas
+###object: Seurat object
+###cell.line: cell Atlas expression matrix
+###CorMethod: correlation method to use
+ComputeCorMat <- function(object, cell.line, CorMethod="pearson"){
+
+	data=GetAssayData(object, slot="data", assay="RNA") #additions - added slot and assay info because SCT assay 
+    data_norm <- apply(data, 2, function(x) x/sum(x))
+    data_libsize <- apply(data_norm, 2, function(x) x * 1e+06)
+
+    Data.use <- data_libsize
+
+    gene.id <- rownames(Data.use)
+    gene.ref <- rownames(cell.line)
+    common <- intersect(gene.id, gene.ref)
+    logxx <- apply(Data.use[common, ], 2, function(x) {
+        log(x + 0.1)
+    })
+    selected.cell.line <- apply(cell.line[common, ], 2, function(x) {
+        x - mean(x)
+    })
+    n <- ncol(logxx)
+    m <- ncol(cell.line)
+    cor.mat <- matrix(0, nrow = n, ncol = m)
+    for (j in 1:m) {
+        for (i in 1:n) {
+            cor.mat[i,j] <- cor(logxx[,i], selected.cell.line[,j], method=CorMethod)
+        }
+    }
+    rownames(cor.mat) <- colnames(Data.use)
+    colnames(cor.mat) <- colnames(cell.line)
+	return(cor.mat)
+}
+
+###Assign clustered cell atlas as cell type to all cells in the sample
+###object: seurat object
+###cor.mat: correlation matrix
+###K: number of clusters generated from cell atlas
+###topCorrelation: number of highest correlated cell lines in cell atlas to be assigned, set to 1 to extract only the top correlated cell line
+AssignClusteredLabel <- function (object, cor.mat, K, topCorrelation, dist.method="euclidean", hclust.method="ward.D"){
+	
+	dist_mat <- dist(t(cor.mat), method=dist.method)
+	hclust_avg_cellline <- hclust(dist_mat, method=hclust.method)
+	#plot(hclust_avg_cellline)
+
+	cut_cellline <- cutree(hclust_avg_cellline, k = K)
+	cellline_abstract=sapply(strsplit(as.character(colnames(cor.mat)), "\\_"), "[[", 2)
+	clusteredCellline=rbind(cut_cellline,cellline_abstract)
+	nametable=rep('n',K)
+	for(i in 1:K){
+		indexy=as.character(i)
+		nametable[i]=paste0(names(sort(table(clusteredCellline[2,clusteredCellline[1,]==indexy]),decreasing=TRUE)),collapse='_' )
+	}
+	assignm=apply(cor.mat,1,function(x){
+		indexy=names(which.max(table(clusteredCellline[1,names(sort(x,decreasing=T)[1:topCorrelation])])))
+		y=paste0(names( sort(table(clusteredCellline[2,clusteredCellline[1,]==indexy]),decreasing=TRUE)),collapse='_' )
+		return(y)
+	})
+	object$clusteredCellAtlas=assignm
+	return(object)
+}
+
+#Load cell atlas data matrix (currated by GAH)
+#references: Human Primary Cell Atlas (Mabbott et al., 2013)
+#description: 713 microarray samples processed and normalized as described in Aran et al. (2019); each sample assigned to one of 37 main cell types and 157 subtypes
+#library(SingleR, lib.loc="") #only available on R/3.6.0??? ...BUT able to install on local computer
+#if(!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+#BiocManager::install("SingleR")
+#library(SingleR)
+#hpca.se <- HumanPrimaryCellAtlasData()
+#write.table(hpca.se@assays@data$logcounts, file="G:/My Drive/Documents/University of Chicago/Gilad Lab/project notes/study-human-chimp-bone-cartilage-rna/study-collections/sc-rna/HumanPrimaryCellAtlasData-SingleR")
+#write.csv(as.data.frame(hpca.se@colData),file="G:/My Drive/Documents/University of Chicago/Gilad Lab/project notes/study-human-chimp-bone-cartilage-rna/study-collections/sc-rna/HumanPrimaryCellAtlasLabels-SingleR.csv", row.names=TRUE)
+#manually currated HumanPrimaryCellAtlasLabels-SingleR.csv
+#transferred files to cluster
+hpca <- read.table("/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/HumanPrimaryCellAtlasData-SingleR")
+hpca.names <- read.csv("/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/HumanPrimaryCellAtlasLabels-SingleR.csv", row.names=1)
+hpca.names$label <- paste0(hpca.names$geo.curated,"_",hpca.names$label.curated)
+i=1
+while(i <= length(colnames(hpca))) {
+  colnames(hpca)[i] <- hpca.names$label[rownames(hpca.names)==colnames(hpca)[i]]
+  i=i+1
+}
+
+hpca_subset <- hpca[, grepl(c("iPSC|MSC|Chondrocytes|Osteoblasts|Adipocyte"), colnames(hpca))]
+
+#Compute the correlation matrix use a seurat object and human primary cell atlas matrix as input
+cor.mat.hpca <- ComputeCorMat(ANT1.2,hpca)
+
+cor.mat.hpca_subset <- ComputeCorMat(ANT1.2,hpca_subset)
+
+
+#Add a metadata column "clusteredCellAtlas" to the object
+ANT1.2 <- AssignClusteredLabel(ANT1.2, cor.mat.hpca, K=100, topCorrelation=5)
+
+#Visualize assigned clusters
+DimPlot(ANT1.2, reduction="umap", group.by="clusteredCellAtlas", pt.size=0.5)
+as.data.frame(table(ANT1.2$clusteredCellAtlas))
+df_clusteredCellAtlas <- as.data.frame(cbind(ANT1.2$clusteredCellAtlas, ANT1.2$labels)) 
+df_clusteredCellAtlas <- dplyr::rename(dplyr::count(df_clusteredCellAtlas, `V1`, `V2`), Freq = n) %>% arrange(V2)
+table(df_clusteredCellAtlas$V2)
+
+
+DimPlot(ANT1.2, reduction="umap", group.by="labels", split.by="clusteredCellAtlas", pt.size=0.5, ncol = 3) +
+  theme(plot.title = element_text(size=1)) +
+  labs(x="UMAP1",y="UMAP2")
+
+
+
+#subset data
+#Add a metadata column "clusteredCellAtlas" to the object
+ANT1.2 <- AssignClusteredLabel(ANT1.2, cor.mat.hpca_subset, K=10, topCorrelation=5)
+
+#Visualize assigned clusters
+DimPlot(ANT1.2, reduction="umap", group.by="clusteredCellAtlas", pt.size=0.5)
+as.data.frame(table(ANT1.2$clusteredCellAtlas))
+df_clusteredCellAtlas <- as.data.frame(cbind(ANT1.2$clusteredCellAtlas, ANT1.2$labels)) 
+df_clusteredCellAtlas <- dplyr::rename(dplyr::count(df_clusteredCellAtlas, `V1`, `V2`), Freq = n) %>% arrange(V2)
+table(df_clusteredCellAtlas$V2)
+
+
+DimPlot(ANT1.2, reduction="umap", group.by="labels", split.by="clusteredCellAtlas", pt.size=0.5, ncol = 3) +
+  theme(plot.title = element_text(size=1)) +
+  labs(x="UMAP1",y="UMAP2")
+
+```
