@@ -28,6 +28,14 @@
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
@@ -366,13 +374,6 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
@@ -404,7 +405,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-04-05
+<strong>Last updated:</strong> 2020-04-20
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -414,7 +415,7 @@ div.section {
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.1). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -495,24 +496,33 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/bbb88d4476d841daa9ad37f6068f28d997e6e928" target="_blank">bbb88d4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree507af1a3aa2ec3771a3b2a37ce3a4db895a7773atargetblank507af1aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/507af1a3aa2ec3771a3b2a37ce3a4db895a7773a" target="_blank">507af1a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreebbb88d4476d841daa9ad37f6068f28d997e6e928targetblankbbb88d4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree507af1a3aa2ec3771a3b2a37ce3a4db895a7773atargetblank507af1aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/507af1a3aa2ec3771a3b2a37ce3a4db895a7773a" target="_blank">507af1a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
     Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
     Ignored:    data/GoMresultsk4.rds
@@ -524,14 +534,28 @@ Ignored files:
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
     Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  .RDataTmp
+
 Unstaged changes:
-    Modified:   analysis/DE_analysis.Rmd
-    Modified:   fig-limma-treatment-hit-1.eps
+    Modified:   code/jobname.332468.err
+    Modified:   code/jobname.332468.out
+    Modified:   data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_lateChond.rda
 
 </code></pre>
 <p>
@@ -546,7 +570,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/Bulk_cellComposition_analysis.Rmd</code>) and HTML (<code>docs/Bulk_cellComposition_analysis.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -570,6 +594,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/507af1a3aa2ec3771a3b2a37ce3a4db895a7773a/analysis/Bulk_cellComposition_analysis.Rmd" target="_blank">507af1a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-20
+</td>
+<td>
+add encode data to semisup
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e6d3fad441ed6c8a115b37f517bc0b3c8a5691f1/docs/Bulk_cellComposition_analysis.html" target="_blank">e6d3fad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-04-05
+</td>
+<td>
+Subset pseudobulk to 1000 DEG, dotplots instead of boxplots
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1330,24 +1388,25 @@ row.names(outside_data_counts) &lt;- outside_data_counts$Geneid
 # exclude extra data columns
 outside_data_counts &lt;- outside_data_counts[, -c(1:6)]
 
-names(outside_data_counts) &lt;- c(&quot;MSC-Chond-d3_3&quot;, &quot;Heart_2&quot;, &quot;Chond_TCP_P4_2&quot;, &quot;Chond_SCM_P4_3&quot;, &quot;MSC-Chond-d21_3&quot;, 
-                                &quot;Chond_SCM_P4_1&quot;, &quot;MSC-Chond-d1_3&quot;, &quot;MSC-Chond-d0_3&quot;, &quot;MSC-Chond-d0_1&quot;, &quot;MSC-Chond-d0_2&quot;, 
-                                &quot;Heart_3&quot;, &quot;Lung_3&quot;, &quot;Lung_2&quot;, &quot;Chond_TCP_P1_1&quot;, &quot;MSC-Chond-d7_2&quot;,
-                                &quot;iPSC-MSC9_1&quot;, &quot;Liver_2&quot;, &quot;MSC-Chond-d3_1&quot;, &quot;Kidney_4&quot;, &quot;OA_dmg_3&quot;, 
-                                &quot;Kidney_1&quot;, &quot;bmMSC_1.1&quot;, &quot;iPSC-MSC5_1&quot;, &quot;OA_intact_1&quot;, &quot;bmMSC_2.1&quot;,
-                                &quot;Liver_1&quot;, &quot;iPSC-MSC5_2&quot;, &quot;Chond_SCM_P1_2&quot;, &quot;Chond_TCP_P4_3&quot;, &quot;MSC-Chond-d14_2&quot;, 
-                                &quot;MSC-Chond-d3_2&quot;, &quot;iPSC_2&quot;, &quot;Chond_TCP_P1_2&quot;, &quot;MSC-Chond-d14_3&quot;, &quot;Lung_4&quot;, 
-                                &quot;OA_intact_2&quot;, &quot;MSC-Chond-d21_1&quot;, &quot;OA_dmg_2&quot;, &quot;adMSC&quot;, &quot;Heart_1&quot;, 
-                                &quot;Kidney_2&quot;, &quot;OA_intact_3&quot;, &quot;bmMSC_2.2&quot;, &quot;Chond_SCM_P4_2&quot;, &quot;Chond_SCM_P1_1&quot;, 
-                                &quot;MSC-Chond-d1_2&quot;, &quot;MSC-Chond-d1_1&quot;, &quot;Lung_1&quot;, &quot;MSC-Chond-d7_1&quot;, &quot;iPSC-MSC9_2&quot;, 
-                                &quot;Kidney_3&quot;, &quot;OA_dmg_1&quot;, &quot;Chond_TCP_P4_1&quot;, &quot;bmMSC_1.3&quot;, &quot;Chond_TCP_P1_3&quot;, 
-                                &quot;Liver_3&quot;, &quot;MSC-Chond-d14_1&quot;, &quot;Heart_4&quot;, &quot;MSC-Chond-d7_3&quot;, &quot;Chond_SCM_P1_3&quot;, 
-                                &quot;iPSC_1&quot;, &quot;MSC-Chond-d21_2&quot;, &quot;bmMSC_1.2&quot;, &quot;Liver_4&quot;)
+names(outside_data_counts) &lt;- c(&quot;MSC-Chond-d14_3&quot;, &quot;iPSC-MSC5_2&quot;, &quot;MSC-Chond-d3_3&quot;, &quot;adMSC&quot;, &quot;Heart_4&quot;,
+                                &quot;Chond_enc_2&quot;, &quot;Lung_1&quot;, &quot;Chond_SCM_P4_1&quot;, &quot;bmMSC_2.2&quot;, &quot;MSC-Chond-d21_1&quot;,
+                                &quot;Chond_TCP_P4_2&quot;, &quot;MSC-Chond-d3_1&quot;, &quot;Chond_SCM_P1_1&quot;, &quot;bmMSC_1.2&quot;, &quot;MSC-Chond-d0_2&quot;,
+                                &quot;Chond_TCP_P1_2&quot;, &quot;MSC-Chond-d14_2&quot;, &quot;iPSC-MSC9_1&quot;, &quot;OA_dmg_2&quot;, &quot;Chond_TCP_P1_3&quot;,
+                                &quot;Heart_2&quot;, &quot;MSC-Chond-d14_1&quot;, &quot;MSC-Chond-d1_3&quot;, &quot;Chond_SCM_P4_3&quot;, &quot;Kidney_2&quot;,
+                                &quot;OA_dmg_3&quot;, &quot;Chond_SCM_P1_2&quot;, &quot;Chond_TCP_P1_1&quot;, &quot;MSC-Chond-d7_3&quot;, &quot;Liver_3&quot;,
+                                &quot;Chond_SCM_P4_2&quot;, &quot;OA_dmg_1&quot;, &quot;MSC-Chond-d3_2&quot;, &quot;bmMSC_2.1&quot;, &quot;Kidney_4&quot;,
+                                &quot;bmMSC_1.1&quot;, &quot;Lung_2&quot;, &quot;MSC-Chond-d21_3&quot;, &quot;Liver_2&quot;, &quot;Chond_TCP_P4_1&quot;, 
+                                &quot;Heart_3&quot;, &quot;Lung_4&quot;, &quot;Heart_1&quot;, &quot;Chond_SCM_P1_3&quot;, &quot;Liver_4&quot;,
+                                &quot;OA_intact_2&quot;, &quot;Liver_1&quot;, &quot;MSC-Chond-d1_2&quot;, &quot;Chond_enc_1&quot;, &quot;iPSC_1&quot;,
+                                &quot;MSC-Chond-d1_1&quot;, &quot;MSC-Chond-d21_2&quot;, &quot;iPSC_2&quot;, &quot;iPSC-MSC5_1&quot;, &quot;Lung_3&quot;,
+                                &quot;iPSC-MSC9_2&quot;, &quot;MSC-Chond-d7_1&quot;, &quot;Kidney_1&quot;, &quot;Chond_TCP_P4_3&quot;, &quot;OA_intact_3&quot;,
+                                &quot;Kidney_3&quot;, &quot;OA_intact_1&quot;, &quot;bmMSC_1.3&quot;, &quot;MSC-Chond-d0_1&quot;, &quot;MSC-Chond-d0_3&quot;,
+                                &quot;MSC-Chond-d7_2&quot;)
 
 #remove MSC-chond samples and OA samples
-MSC_chond_samples &lt;- c(1,5,7:10,15,18,30:31,34,37,46:47,49,57,59,62)
-OA_samples &lt;- c(20,24,36,38,42,52)
-Heart1 &lt;- c(40) #seems to cluster with liver rather than hearts!
+MSC_chond_samples &lt;- which(grepl(&quot;MSC-Chond-&quot;, names(outside_data_counts)))
+OA_samples &lt;- which(grepl(&quot;OA_&quot;, names(outside_data_counts)))
+Heart1 &lt;- which(grepl(&quot;Heart_1&quot;, names(outside_data_counts))) #seems to cluster with liver rather than hearts!
 outside_data_counts&lt;- outside_data_counts[,-c(MSC_chond_samples, OA_samples, Heart1)]
 
 #Combine all bulk data together
@@ -1357,10 +1416,17 @@ merged_raw_data &lt;- merged_raw_data[,-1]
 
 #Remove rows with all 0s
 dim(merged_raw_data)</code></pre>
-<pre><code>[1] 58395    56</code></pre>
+<pre><code>[1] 58395    58</code></pre>
 <pre class="r"><code>merged_raw_data &lt;- merged_raw_data[apply(merged_raw_data, 1, function(x) !all(x==0)),]
 dim(merged_raw_data)</code></pre>
-<pre><code>[1] 48326    56</code></pre>
+<pre><code>[1] 49481    58</code></pre>
+<pre class="r"><code>#indices for later
+adMSC_index &lt;- which(grepl(&quot;adMSC&quot;, names(merged_raw_data)))
+bmMSC1_index &lt;- which(grepl(&quot;bmMSC_1.&quot;, names(merged_raw_data)))
+bmMSC2_index &lt;- which(grepl(&quot;bmMSC_2.&quot;, names(merged_raw_data)))
+early_chond &lt;- which(grepl(&quot;Chond_SCM_P1|Chond_TCP_P1&quot;, names(merged_raw_data)))
+late_chond &lt;- which(grepl(&quot;Chond_SCM_P4|Chond_TCP_P4&quot;, names(merged_raw_data)))
+chond_encode &lt;- which(grepl(&quot;Chond_enc&quot;, names(merged_raw_data)))</code></pre>
 <div id="raw-counts-analysis" class="section level2">
 <h2>Raw counts analysis</h2>
 <pre class="r"><code># Perform PCA
@@ -1553,82 +1619,89 @@ upperquartile &lt;- calcNormFactors(merged_raw_data, method = &quot;upperquartil
 upperquartile &lt;- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
 head(upperquartile)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000000003  7.745718  7.720196  8.248460  8.047990  8.002046  7.053276
-ENSG00000000005 -7.014883 -7.014883 -3.232383 -7.014883 -7.014883 -7.014883
-ENSG00000000419  5.955103  6.126537  6.487033  6.150936  6.054346  5.991924
-ENSG00000000457  3.623812  3.859213  3.935626  3.692211  3.843036  3.493665
-ENSG00000000460  2.878997  3.318102  2.682878  2.184790  1.899024  2.033059
-ENSG00000000938 -7.014883 -7.014883 -3.232383 -7.014883 -7.014883 -7.014883
+ENSG00000000003  7.758588  7.712307  8.240573  8.079476  7.976949  7.028176
+ENSG00000000005 -7.165676 -7.165676 -3.250188 -7.165676 -7.165676 -7.165676
+ENSG00000000419  5.967959  6.118638  6.479137  6.182408  6.029238  5.966816
+ENSG00000000457  3.636590  3.851257  3.927673  3.723599  3.817878  3.468489
+ENSG00000000460  2.891709  3.310113  2.674831  2.215989  1.873681  2.007739
+ENSG00000000938 -7.165676 -7.165676 -3.250188 -7.165676 -7.165676 -7.165676
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000000003  7.563215  7.985971  7.732056  7.598055  7.728914  7.528845
-ENSG00000000005 -2.652647 -7.014883 -7.014883 -7.014883 -7.014883 -3.784416
-ENSG00000000419  5.890341  6.214071  6.158854  5.783000  6.354302  5.948049
-ENSG00000000457  3.876116  4.032681  4.197298  3.768116  3.733370  4.007941
-ENSG00000000460  2.977300  2.432330  3.169075  2.287714  2.078063  3.043090
-ENSG00000000938 -3.584151 -7.014883 -7.014883 -7.014883 -7.014883 -7.014883
-                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U    Heart_2
-ENSG00000000003  7.149735  7.603615  7.870063  7.510621  7.556563  2.3074461
-ENSG00000000005 -3.584151 -7.014883 -7.014883 -7.014883 -7.014883 -4.9236530
-ENSG00000000419  5.777484  5.989864  6.317209  6.180232  5.904986  4.0487071
-ENSG00000000457  4.010845  3.694158  4.007661  3.838466  3.642659  1.6826448
-ENSG00000000460  3.183562  2.467287  2.364052  2.255062  2.184790  0.2236282
-ENSG00000000938 -7.014883 -7.014883 -7.014883 -7.014883 -7.014883  4.1194830
-                Chond_TCP_P4_2 Chond_SCM_P4_3 Chond_SCM_P4_1    Heart_3
-ENSG00000000003       4.589423       4.950879       4.630244  2.3220701
-ENSG00000000005      -7.014883      -7.014883      -7.014883 -7.0148827
-ENSG00000000419       5.324304       5.262998       5.415256  3.8231262
-ENSG00000000457       3.327037       3.474892       3.536362  2.2550622
-ENSG00000000460       4.014148       3.346661       3.060524 -0.1882283
-ENSG00000000938      -2.192034      -7.014883      -3.469813  2.3861035
-                    Lung_3     Lung_2 Chond_TCP_P1_1 iPSC-MSC9_1    Liver_2
-ENSG00000000003  3.6777638  2.7530982       5.994437    6.852635  5.2042852
-ENSG00000000005 -7.0148827 -7.0148827      -7.014883   -7.014883 -7.0148827
-ENSG00000000419  3.2246151  3.6405087       4.648028    5.699948  4.1354554
-ENSG00000000457  2.2626630  2.5572739       3.223058    3.058143  2.6646164
-ENSG00000000460  0.2965276  0.4430476       1.367237    4.324247  0.6016225
-ENSG00000000938  5.1938164  5.3428661      -2.652647   -7.014883  4.3489931
-                   Kidney_4  Kidney_1 bmMSC_1.1 iPSC-MSC5_1 bmMSC_2.1   Liver_1
-ENSG00000000003  4.71196623 5.1136895  4.873329    7.286480  5.371637  5.395797
-ENSG00000000005 -2.23545933 2.9408847 -7.014883   -1.206723 -7.014883 -7.014883
-ENSG00000000419  3.65549423 3.4932619  6.080878    5.225933  5.538718  4.601295
-ENSG00000000457  2.15195436 2.3631962  3.470917    4.536844  3.281093  3.737759
-ENSG00000000460 -0.06426703 0.3301265  5.198463    4.314237  1.863475  3.287169
-ENSG00000000938  1.91988371 2.1468688 -3.746994   -4.791846 -7.014883  3.207616
-                iPSC-MSC5_2 Chond_SCM_P1_2 Chond_TCP_P4_3    iPSC_2
-ENSG00000000003    7.813439       5.747326       4.011914  7.113152
-ENSG00000000005   -2.652647      -7.014883      -7.014883  2.428334
-ENSG00000000419    5.821570       4.750071       5.187378  6.536297
-ENSG00000000457    4.635642       3.462570       3.293097  2.941484
-ENSG00000000460    4.886845       1.623365       4.109978  5.195630
-ENSG00000000938   -7.014883      -3.289232      -2.975098 -2.670820
-                Chond_TCP_P1_2     Lung_4     adMSC   Kidney_2 bmMSC_2.2
-ENSG00000000003       5.522091  2.8584727  5.093553  5.4358849  5.149481
-ENSG00000000005      -7.014883 -5.4881076 -4.184103 -1.3609755 -7.014883
-ENSG00000000419       4.496567  3.4696917  5.807024  3.4585672  5.530499
-ENSG00000000457       2.987203  2.4088090  3.942393  2.2532401  3.367840
-ENSG00000000460       1.761488  0.5047284  3.090535 -0.1022582  1.680583
-ENSG00000000938      -2.172473  6.5237887 -7.014883  1.8808869 -7.014883
-                Chond_SCM_P4_2 Chond_SCM_P1_1     Lung_1 iPSC-MSC9_2   Kidney_3
-ENSG00000000003       5.107675       6.202676  3.4044964    7.196099  5.3449586
-ENSG00000000005      -7.014883      -4.258948 -3.5250672   -3.021776 -1.8020774
-ENSG00000000419       5.485734       4.965593  3.6912886    6.415516  3.7749933
-ENSG00000000457       3.490253       3.629751  2.6794785    3.562730  2.8418681
-ENSG00000000460       2.991093       1.663182  0.5295116    4.615296  0.5354383
-ENSG00000000938      -7.014883      -2.823896  5.9513743   -7.014883  0.9014373
-                Chond_TCP_P4_1 bmMSC_1.3 Chond_TCP_P1_3    Liver_3    Heart_4
-ENSG00000000003       4.298378  4.976868       5.489404  6.1722549  2.8078368
-ENSG00000000005      -7.014883 -7.014883      -7.014883 -7.0148827 -4.0944187
-ENSG00000000419       5.114519  5.983293       4.695834  4.3470709  4.5356326
-ENSG00000000457       3.353351  3.435429       3.546694  3.1921171  1.7046339
-ENSG00000000460       4.117089  5.265450       2.553469  0.8187228 -0.1984721
-ENSG00000000938      -3.110284 -4.351228      -2.344817  4.0267154  3.3389348
-                Chond_SCM_P1_3    iPSC_1 bmMSC_1.2   Liver_4
-ENSG00000000003       5.813665  7.138845  4.999209  4.875205
-ENSG00000000005      -3.986572  1.911128 -7.014883 -7.014883
-ENSG00000000419       4.949264  6.504385  5.968548  3.935404
-ENSG00000000457       3.425733  3.037842  3.409452  3.160499
-ENSG00000000460       1.893876  5.180907  5.273113  1.243197
-ENSG00000000938      -1.557051 -2.455579 -3.493563  5.046170</code></pre>
+ENSG00000000003  7.616724  8.039482  7.774070  7.619857  7.824242  7.590621
+ENSG00000000005 -2.608422 -7.165676 -7.165676 -7.165676 -7.165676 -3.743846
+ENSG00000000419  5.943833  6.267568  6.200855  5.804785  6.449618  6.009809
+ENSG00000000457  3.929533  4.086108  4.239243  3.789831  3.828575  4.069630
+ENSG00000000460  3.030630  2.485574  3.210941  2.309264  2.172986  3.104689
+ENSG00000000938 -3.548410 -7.165676 -7.165676 -7.165676 -7.165676 -7.165676
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U iPSC-MSC5_2
+ENSG00000000003  7.203241  7.657124  7.948115  7.535562  7.668964    7.866950
+ENSG00000000005 -3.548410 -7.165676 -7.165676 -7.165676 -7.165676   -2.608422
+ENSG00000000419  5.830974  6.043358  6.395248  6.205162  6.017366    5.875061
+ENSG00000000457  4.064271  3.747561  4.085618  3.863324  3.754921    4.689099
+ENSG00000000460  3.236917  2.520537  2.441793  2.279742  2.296791    4.940312
+ENSG00000000938 -7.165676 -7.165676 -7.165676 -7.165676 -7.165676   -7.165676
+                    adMSC    Heart_4 Chond_enc_2     Lung_1 Chond_SCM_P4_1
+ENSG00000000003  5.111410  2.7694710    4.651789  3.3684210       4.647447
+ENSG00000000005 -4.188762 -4.1470370   -5.356333 -3.5709184      -7.165676
+ENSG00000000419  5.824895  4.4973503    4.499330  3.6552277       5.432481
+ENSG00000000457  3.960206  1.6661308    3.623375  2.6433504       3.553510
+ENSG00000000460  3.108283 -0.2376793    2.350831  0.4929255       3.077630
+ENSG00000000938 -7.165676  3.3006059   -3.703714  5.9153656      -3.466214
+                bmMSC_2.2 Chond_TCP_P4_2 Chond_SCM_P1_1 bmMSC_1.2
+ENSG00000000003  5.151436       4.596668       6.239300  5.073434
+ENSG00000000005 -7.165676      -7.165676      -4.248564 -7.165676
+ENSG00000000419  5.532461       5.331569       5.002192  6.042798
+ENSG00000000457  3.369717       3.334215       3.666284  3.483576
+ENSG00000000460  1.682220       4.021370       1.699396  5.347347
+ENSG00000000938 -7.165676      -2.190040      -2.796909 -3.437552
+                Chond_TCP_P1_2 iPSC-MSC9_1 Chond_TCP_P1_3    Heart_2
+ENSG00000000003       5.548612    6.889267       5.542888  2.2858076
+ENSG00000000005      -7.165676   -7.165676      -7.165676 -4.9744289
+ENSG00000000419       4.523060    5.736565       4.749294  4.0272041
+ENSG00000000457       3.013590    3.094623       3.600084  1.6609015
+ENSG00000000460       1.787657    4.360822       2.606735  0.2013634
+ENSG00000000938      -2.151752   -7.165676      -2.298802  4.0979827
+                Chond_SCM_P4_3   Kidney_2 Chond_SCM_P1_2 Chond_TCP_P1_1
+ENSG00000000003       5.040866  5.3883170       5.765196       6.028824
+ENSG00000000005      -7.165676 -1.4105059      -7.165676      -7.165676
+ENSG00000000419       5.352996  3.4109469       4.767918       4.682382
+ENSG00000000457       3.564781  2.2055283       3.480351       3.257322
+ENSG00000000460       3.436535 -0.1506356       1.640858       1.401124
+ENSG00000000938      -7.165676  1.8331276      -3.283424      -2.626714
+                   Liver_3 Chond_SCM_P4_2 bmMSC_2.1   Kidney_4 bmMSC_1.1
+ENSG00000000003  6.1071182       5.141389  5.413625  4.6782652  4.893251
+ENSG00000000005 -7.1656761      -7.165676 -7.165676 -2.2732293 -7.165676
+ENSG00000000419  4.2819116       5.519458  5.580709  3.6217574  6.100824
+ENSG00000000457  3.1269190       3.523887  3.322970  2.1180908  3.490769
+ENSG00000000460  0.7532304       3.024678  1.905112 -0.0988446  5.218393
+ENSG00000000938  3.9615482      -7.165676 -7.165676  1.8859860 -3.743846
+                    Lung_2    Liver_2 Chond_TCP_P4_1    Heart_3     Lung_4
+ENSG00000000003  2.7193014  5.1913969       4.393626  2.3187862  2.8101304
+ENSG00000000005 -7.1656761 -7.1656761      -7.165676 -7.1656761 -5.5711169
+ENSG00000000419  3.6067712  4.1225368       5.209806  3.8199828  3.4213859
+ENSG00000000457  2.5234583  2.6515953       3.448517  2.2517679  2.3604281
+ENSG00000000460  0.4087398  0.5880913       4.212325 -0.1925326  0.4559521
+ENSG00000000938  5.3091769  4.3360824      -3.030136  2.3828290  6.4755437
+                Chond_SCM_P1_3   Liver_4   Liver_1 Chond_enc_1    iPSC_1
+ENSG00000000003       5.832394  4.835584  5.363136    4.803048  7.137906
+ENSG00000000005      -3.987562 -7.165676 -7.165676   -7.165676  1.909904
+ENSG00000000419       4.967976  3.895757  4.568619    4.440738  6.503442
+ENSG00000000457       3.444370  3.120813  3.705054    3.788320  3.036777
+ENSG00000000460       1.912295  1.203255  3.254439    2.690355  5.179945
+ENSG00000000938      -1.541944  5.006552  3.174881   -5.564166 -2.462560
+                   iPSC_2 iPSC-MSC5_1     Lung_3 iPSC-MSC9_2 Kidney_1
+ENSG00000000003  7.107160    7.269601  3.6095535    7.225360 5.067148
+ENSG00000000005  2.422151   -1.225880 -7.1656761   -3.003177 2.894265
+ENSG00000000419  6.530302    5.209034  3.1563869    6.444770 3.446674
+ENSG00000000457  2.935361    4.519928  2.1943718    3.591889 2.316526
+ENSG00000000460  5.189617    4.297315  0.2278601    4.644512 0.282989
+ENSG00000000938 -2.683605   -4.836376  5.1256376   -7.165676 2.100174
+                Chond_TCP_P4_3   Kidney_3 bmMSC_1.3
+ENSG00000000003       4.050239  5.3112694  5.025102
+ENSG00000000005      -7.165676 -1.8387818 -7.165676
+ENSG00000000419       5.225750  3.7412620  6.031550
+ENSG00000000457       3.331367  2.8080790  3.483576
+ENSG00000000460       4.148309  0.5011702  5.313693
+ENSG00000000938      -2.947510  0.8673038 -4.332596</code></pre>
 <pre class="r"><code># Look at density plots
 plotDensities(upperquartile, legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/upperquartile%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1903,7 +1976,7 @@ keep &lt;- rowSums( upperquartile &gt; cutoff ) &gt;= 10
 counts_upperquartile &lt;- merged_raw_data[keep,]
 filtered_upperquartile &lt;- upperquartile[keep,]
 dim(filtered_upperquartile)</code></pre>
-<pre><code>[1] 13183    56</code></pre>
+<pre><code>[1] 13231    58</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -2265,82 +2338,89 @@ RLE &lt;- calcNormFactors(merged_raw_data, method = &quot;RLE&quot;)
 RLE &lt;- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
 head(RLE)</code></pre>
 <pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
-ENSG00000000003  7.176483  7.217581  7.462904  7.364979  7.415473  6.415842
-ENSG00000000005 -6.652110 -6.652110 -3.895758 -6.652110 -6.652110 -6.652110
-ENSG00000000419  5.385983  5.624010  5.701584  5.468047  5.467888  5.354581
-ENSG00000000457  3.055350  3.357186  3.150912  3.010073  3.257146  2.857137
-ENSG00000000460  2.311090  2.816363  1.899390  1.504343  1.315193  1.398265
-ENSG00000000938 -6.652110 -6.652110 -3.895758 -6.652110 -6.652110 -6.652110
+ENSG00000000003  7.173398  7.215897  7.462430  7.363886  7.411258  6.412557
+ENSG00000000005 -6.781401 -6.781401 -3.914580 -6.781401 -6.781401 -6.781401
+ENSG00000000419  5.382879  5.622310  5.701093  5.466934  5.463654  5.351281
+ENSG00000000457  3.052129  3.355392  3.150307  3.008836  3.252814  2.853701
+ENSG00000000460  2.307772  2.814515  1.898594  1.502827  1.310506  1.394539
+ENSG00000000938 -6.781401 -6.781401 -3.914580 -6.781401 -6.781401 -6.781401
                 19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
-ENSG00000000003  7.155222  7.392982  7.214869  7.003373  7.013402  7.109200
-ENSG00000000005 -3.011973 -6.652110 -6.652110 -6.652110 -6.652110 -4.097463
-ENSG00000000419  5.482440  5.621181  5.641754  5.188455  5.638884  5.528491
-ENSG00000000457  3.468618  3.440291  3.680577  3.174150  3.018732  3.588752
-ENSG00000000460  2.570266  1.841240  2.652886  1.695128  1.365427  2.624375
-ENSG00000000938 -3.900666 -6.652110 -6.652110 -6.652110 -6.652110 -6.652110
-                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U   Heart_2
-ENSG00000000003  6.728647  7.154374  7.042938  6.888038  7.102340  3.024170
-ENSG00000000005 -3.911822 -6.652110 -6.652110 -6.652110 -6.652110 -4.282140
-ENSG00000000419  5.356486  5.540713  5.490203  5.557740  5.450859  4.765776
-ENSG00000000457  3.590200  3.245525  3.181363  3.216587  3.189070  2.399103
-ENSG00000000460  2.763303  2.019526  1.539640  1.634707  1.732389  0.938761
-ENSG00000000938 -6.652110 -6.652110 -6.652110 -6.652110 -6.652110  4.836559
-                Chond_TCP_P4_2 Chond_SCM_P4_3 Chond_SCM_P4_1    Heart_3
-ENSG00000000003       4.244943       4.644172       4.406479  3.2348678
-ENSG00000000005      -6.652110      -6.652110      -6.652110 -6.6521099
-ENSG00000000419       4.979707       4.956250       5.191397  4.7363818
-ENSG00000000457       2.982968       3.168565       3.312854  3.1678261
-ENSG00000000460       3.669812       3.040389       2.837204  0.7212386
-ENSG00000000938      -2.504894      -6.652110      -3.633071  3.2989319
-                   Lung_3    Lung_2 Chond_TCP_P1_1 iPSC-MSC9_1   Liver_2
-ENSG00000000003  4.875456  3.832192       6.033029    6.671840  6.103014
-ENSG00000000005 -6.652110 -6.652110      -6.652110   -6.652110 -6.652110
-ENSG00000000419  4.422166  4.719900       4.686688    5.519206  5.034081
-ENSG00000000457  3.459716  3.636273       3.261907    2.877916  3.562893
-ENSG00000000460  1.490605  1.519572       1.406874    4.143662  1.498162
-ENSG00000000938  6.391758  6.422500      -2.596529   -6.652110  5.247646
-                 Kidney_4 Kidney_1 bmMSC_1.1 iPSC-MSC5_1 bmMSC_2.1   Liver_1
-ENSG00000000003  5.863901 6.275367  4.243392   7.5120926  4.911080  6.142660
-ENSG00000000005 -1.105653 4.102082 -6.652110  -0.9785515 -6.652110 -6.652110
-ENSG00000000419  4.807235 4.654655  5.450727   5.4515681  5.078138  5.348113
-ENSG00000000457  3.303010 3.524089  2.841599   4.7624970  2.821211  4.484489
-ENSG00000000460  1.082924 1.488163  4.568450   4.5398988  1.405068  4.033826
-ENSG00000000938  3.070755 3.307612 -4.236106  -4.5357436 -6.652110  3.954259
-                iPSC-MSC5_2 Chond_SCM_P1_2 Chond_TCP_P4_3    iPSC_2
-ENSG00000000003    7.688291       5.666103       3.651132  7.153509
-ENSG00000000005   -2.749858      -6.652110      -6.652110  2.469189
-ENSG00000000419    5.696481       4.668922       4.826345  6.576664
-ENSG00000000457    4.510654       3.381636       2.932606  2.982184
-ENSG00000000460    4.761828       1.543371       3.749167  5.236043
-ENSG00000000938   -6.652110      -3.331749      -3.280264 -2.612802
-                Chond_TCP_P1_2    Lung_4     adMSC   Kidney_2 bmMSC_2.2
-ENSG00000000003       5.546100  4.061620  4.525168  6.5203138  4.699615
-ENSG00000000005      -6.652110 -4.524384 -4.579642 -0.2877688 -6.652110
-ENSG00000000419       4.520642  4.673073  5.238523  4.5426979  5.080577
-ENSG00000000457       3.011520  3.611707  3.374369  3.3368490  2.918553
-ENSG00000000460       1.786304  1.705078  2.523040  0.9775505  1.233110
-ENSG00000000938      -2.135277  7.727562 -6.652110  2.9642244 -6.652110
-                Chond_SCM_P4_2 Chond_SCM_P1_1    Lung_1 iPSC-MSC9_2   Kidney_3
-ENSG00000000003       4.761844       6.022843  4.747246    7.029789  6.4966797
-ENSG00000000005      -6.652110      -4.344471 -2.246567   -3.148528 -0.6667228
-ENSG00000000419       5.139855       4.785854  5.034132    6.249230  4.9264867
-ENSG00000000457       3.144846       3.450261  4.021889    3.396804  3.9930492
-ENSG00000000460       2.645946       1.484888  1.868964    4.449153  1.6840290
-ENSG00000000938      -6.652110      -2.968170  7.294555   -6.652110  2.0507560
-                Chond_TCP_P4_1 bmMSC_1.3 Chond_TCP_P1_3   Liver_3    Heart_4
-ENSG00000000003       3.947265  4.378423       5.361974  7.078356  3.7297542
-ENSG00000000005      -6.652110 -6.652110      -6.652110 -6.652110 -3.2345995
-ENSG00000000419       4.763249  5.384679       4.568478  5.253048  5.4579077
-ENSG00000000457       3.002574  2.837625       3.419550  4.097883  2.6259627
-ENSG00000000460       3.766025  4.666945       2.426708  1.722886  0.7198359
-ENSG00000000938      -3.401330 -4.748978      -2.449591  4.932650  4.2610100
-                Chond_SCM_P1_3    iPSC_1 bmMSC_1.2   Liver_4
-ENSG00000000003       5.624788  7.208825  4.455966  6.020615
-ENSG00000000005      -4.095430  1.981757 -6.652110 -6.652110
-ENSG00000000419       4.760463  6.574374  5.425156  5.080668
-ENSG00000000457       3.237247  3.108109  2.866821  4.305545
-ENSG00000000460       1.706304  5.250937  4.729817  2.386792
-ENSG00000000938      -1.730810 -2.371913 -3.931244  6.191597</code></pre>
+ENSG00000000003  7.154175  7.387982  7.212963  7.001472  7.014104  7.111655
+ENSG00000000005 -3.022888 -6.781401 -6.781401 -6.781401 -6.781401 -4.116591
+ENSG00000000419  5.481374  5.616164  5.639833  5.186529  5.639571  5.530929
+ENSG00000000457  3.467469  3.435189  3.678586  3.172124  3.019291  3.591112
+ENSG00000000460  2.569022  1.835917  2.650796  1.692862  1.365659  2.626637
+ENSG00000000938 -3.920044 -6.781401 -6.781401 -6.781401 -6.781401 -6.781401
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U iPSC-MSC5_2
+ENSG00000000003  6.724120  7.150652  7.040733  6.884671  7.103599    7.688648
+ENSG00000000005 -3.934338 -6.781401 -6.781401 -6.781401 -6.781401   -2.757812
+ENSG00000000419  5.351941  5.536974  5.487980  5.554357  5.452099    5.696820
+ENSG00000000457  3.585585  3.241685  3.179034  3.213101  3.190203    4.510963
+ENSG00000000460  2.758612  2.015518  1.537028  1.630964  1.733284    4.762146
+ENSG00000000938 -6.781401 -6.781401 -6.781401 -6.781401 -6.781401   -6.781401
+                    adMSC    Heart_4 Chond_enc_2    Lung_1 Chond_SCM_P4_1
+ENSG00000000003  4.525265  3.7278017    5.135950  4.743321       4.408040
+ENSG00000000005 -4.609230 -3.2479205   -4.899954 -2.256126      -6.781401
+ENSG00000000419  5.238641  5.4560190    4.983488  5.030214       5.192982
+ENSG00000000457  3.374402  2.6239052    4.107508  4.017934       3.314349
+ENSG00000000460  2.522977  0.7172383    2.834887  1.864756       2.838649
+ENSG00000000938 -6.781401  4.2590857   -3.228313  7.290666      -3.646972
+                bmMSC_2.2 Chond_TCP_P4_2 Chond_SCM_P1_1 bmMSC_1.2
+ENSG00000000003  4.694543       4.245696       6.021634  4.452596
+ENSG00000000005 -6.781401      -6.781401      -4.370636 -6.781401
+ENSG00000000419  5.075515       4.980486       4.784619  5.421812
+ENSG00000000457  2.913370       2.983629       3.448959  2.863342
+ENSG00000000460  1.227579       3.670533       1.483262  4.726456
+ENSG00000000938 -6.781401      -2.511115      -2.978930 -3.952975
+                Chond_TCP_P1_2 iPSC-MSC9_1 Chond_TCP_P1_3    Heart_2
+ENSG00000000003       5.544340    6.669838       5.360722  3.0213557
+ENSG00000000005      -6.781401   -6.781401      -6.781401 -4.3084507
+ENSG00000000419       4.518856    5.517189       4.567205  4.7630648
+ENSG00000000457       3.009635    2.875761       3.418214  2.3962079
+ENSG00000000460       1.784218    4.141603       2.425260  0.9354655
+ENSG00000000938      -2.142353   -6.781401      -2.457484  4.8338498
+                Chond_SCM_P4_3  Kidney_2 Chond_SCM_P1_2 Chond_TCP_P1_1
+ENSG00000000003       4.645285  6.513148       5.666832       6.034677
+ENSG00000000005      -6.781401 -0.296344      -6.781401      -6.781401
+ENSG00000000419       4.957372  4.535495       4.669627       4.688307
+ENSG00000000457       3.169589  3.329581       3.382271       3.263445
+ENSG00000000460       3.041400  0.969806       1.543700       1.408072
+ENSG00000000938      -6.781401  2.956922      -3.343499      -2.602410
+                  Liver_3 Chond_SCM_P4_2 bmMSC_2.1  Kidney_4 bmMSC_1.1
+ENSG00000000003  7.072768       4.762230  4.909603  5.860739  4.238144
+ENSG00000000005 -6.781401      -6.781401 -6.781401 -1.111382 -6.781401
+ENSG00000000419  5.247438       5.140253  5.076665  4.804051  5.445515
+ENSG00000000457  4.092235       3.145139  2.819603  3.299747  2.836249
+ENSG00000000460  1.716949       2.646181  1.403172  1.079215  4.563215
+ENSG00000000938  4.927032      -6.781401 -6.781401  3.067471 -4.263747
+                   Lung_2   Liver_2 Chond_TCP_P4_1    Heart_3    Lung_4
+ENSG00000000003  3.828484  6.102465       3.945398  3.2326954  4.061140
+ENSG00000000005 -6.781401 -6.781401      -6.781401 -6.7814007 -4.553282
+ENSG00000000419  4.716230  5.033513       4.761416  4.7342927  4.672619
+ENSG00000000457  3.632553  3.562259       3.000634  3.1656477  3.611201
+ENSG00000000460  1.515531  1.497197       3.764147  0.7184601  1.704295
+ENSG00000000938  6.418862  5.247083      -3.415996  3.2967651  7.727150
+                Chond_SCM_P1_3   Liver_4   Liver_1 Chond_enc_1    iPSC_1
+ENSG00000000003       5.624894  6.019869  6.139960    5.252806  7.210588
+ENSG00000000005      -4.116493 -6.781401 -6.781401   -6.781401  1.983213
+ENSG00000000419       4.760548  5.079905  5.345400    4.890491  6.576133
+ENSG00000000457       3.237247  4.304756  4.481752    4.238062  3.109736
+ENSG00000000460       1.706058  2.385831  4.031070    3.140060  5.252676
+ENSG00000000938      -1.734770  6.190854  3.951498   -5.135649 -2.376604
+                   iPSC_2 iPSC-MSC5_1    Lung_3 iPSC-MSC9_2 Kidney_1
+ENSG00000000003  7.151043   7.5131081  4.874715    7.026631 6.266156
+ENSG00000000005  2.466514  -0.9799725 -6.781401   -3.162366 4.092818
+ENSG00000000419  6.574194   5.4525621  4.421409    6.246065 4.645413
+ENSG00000000457  2.979574   4.7634737  3.458905    3.393542 3.514792
+ENSG00000000460  5.233554   4.5408679  1.489470    4.445950 1.478557
+ENSG00000000938 -2.622663  -4.5637477  6.391044   -6.781401 3.298299
+                Chond_TCP_P4_3   Kidney_3 bmMSC_1.3
+ENSG00000000003       3.651668  6.4955100  4.378976
+ENSG00000000005      -6.781401 -0.6698155 -6.781401
+ENSG00000000419       4.826936  4.9252905  5.385262
+ENSG00000000457       2.933079  3.9918165  2.838064
+ENSG00000000460       3.749710  1.6824934  4.667508
+ENSG00000000938      -3.291682  2.0493055 -4.781968</code></pre>
 <pre class="r"><code># Look at density plots
 plotDensities(RLE, legend=&quot;topright&quot;)</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/RLE%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -2615,7 +2695,7 @@ keep &lt;- rowSums( RLE &gt; cutoff ) &gt;= 10
 counts_RLE &lt;- merged_raw_data[keep,]
 filtered_RLE &lt;- RLE[keep,]
 dim(filtered_RLE)</code></pre>
-<pre><code>[1] 13400    56</code></pre>
+<pre><code>[1] 13465    58</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -3035,6 +3115,9 @@ labels &lt;- sapply(strsplit(colnames(merged_raw_data_counts),&quot;_&quot;), `[
 
 # k = 4
 plot_structure_plot(omega = Combined_GoM$clust_4$omega, labels = labels)</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-GoM-1">
@@ -3511,6 +3594,9 @@ Anthony Hung
 
 # k = 5
 plot_structure_plot(omega = Combined_GoM$clust_5$omega, labels = labels)</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-GoM-6">
@@ -4081,6 +4167,9 @@ Anthony Hung
 
 # k = 6
 plot_structure_plot(omega = Combined_GoM$clust_6$omega, labels = labels)</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-GoM-12">
@@ -4745,6 +4834,9 @@ Anthony Hung
 
 # k = 7
 plot_structure_plot(omega = Combined_GoM$clust_7$omega, labels = labels)</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM-19.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-GoM-19">
@@ -5503,6 +5595,9 @@ Anthony Hung
 
 # k = 8
 plot_structure_plot(omega = Combined_GoM$clust_8$omega, labels = labels)</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/plotting%20GoM-27.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-GoM-27">
@@ -7201,6 +7296,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-supervised-1">
@@ -7291,6 +7389,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-supervised-2">
@@ -7381,6 +7482,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-supervised-3">
@@ -7446,287 +7550,287 @@ Anthony Hung
 <h1>Semi-supervised Topic Modeling Genes Analysis</h1>
 <pre class="r"><code>genes &lt;- annotate_clusters(theta_mat = Topic_clus_7$theta, countmatrix = merged_raw_data_counts)
 matrix(gene_anno$external_gene_name[match(genes[[1]], gene_anno$ensembl_gene_id)], ncol = 100)</code></pre>
-<pre><code>     [,1]     [,2]      [,3]      [,4]     [,5]     [,6]       [,7]    
-[1,] &quot;COL3A1&quot; &quot;COL1A2&quot;  &quot;SPARC&quot;   &quot;COL1A1&quot; &quot;FN1&quot;    &quot;IGFBP3&quot;   &quot;CHI3L1&quot;
-[2,] &quot;LIN28A&quot; &quot;KRT8&quot;    &quot;CLDN6&quot;   &quot;CTSV&quot;   &quot;L1TD1&quot;  &quot;DNMT3B&quot;   &quot;PRTG&quot;  
-[3,] &quot;MMP1&quot;   &quot;TERT&quot;    &quot;DYNC1H1&quot; &quot;TFPI2&quot;  &quot;ACTB&quot;   &quot;THBS1&quot;    &quot;DCBLD2&quot;
-[4,] &quot;SFTPB&quot;  &quot;SFTPC&quot;   &quot;SFTPA1&quot;  &quot;SFTPA2&quot; &quot;AGER&quot;   &quot;A2M&quot;      &quot;CLDN18&quot;
-[5,] &quot;UMOD&quot;   &quot;SLC12A1&quot; &quot;GPX3&quot;    &quot;AQP2&quot;   &quot;CDH16&quot;  &quot;SPP1&quot;     &quot;ATP1B1&quot;
-[6,] &quot;ALB&quot;    &quot;HP&quot;      &quot;FGA&quot;     &quot;FGB&quot;    &quot;FGG&quot;    &quot;SERPINA1&quot; &quot;SAA1&quot;  
-[7,] &quot;MYH7&quot;   &quot;DES&quot;     &quot;MYL2&quot;    &quot;TNNT2&quot;  &quot;MT-CO1&quot; &quot;MB&quot;       &quot;MT-ND1&quot;
-     [,8]      [,9]      [,10]      [,11]    [,12]    [,13]    [,14]    
-[1,] &quot;COL12A1&quot; &quot;COL5A1&quot;  &quot;ITGA11&quot;   &quot;SULF1&quot;  &quot;ACAN&quot;   &quot;POSTN&quot;  &quot;COL11A1&quot;
-[2,] &quot;LRRN1&quot;   &quot;GABRP&quot;   &quot;DPPA4&quot;    &quot;MDK&quot;    &quot;ESRG&quot;   &quot;TRIML2&quot; &quot;IGDCC3&quot; 
-[3,] &quot;RGS4&quot;    &quot;MKI67&quot;   &quot;SERPINE1&quot; &quot;CLDN11&quot; &quot;LDHA&quot;   &quot;SFRP1&quot;  &quot;PRKDC&quot;  
-[4,] &quot;CEACAM6&quot; &quot;B2M&quot;     &quot;HLA-E&quot;    &quot;FOS&quot;    &quot;JUN&quot;    &quot;ZFP36&quot;  &quot;DEPP1&quot;  
-[5,] &quot;SLC12A3&quot; &quot;HSD11B2&quot; &quot;PAX8&quot;     &quot;CA12&quot;   &quot;CALB1&quot;  &quot;KCNJ1&quot;  &quot;CLCNKB&quot; 
-[6,] &quot;ORM1&quot;    &quot;CRP&quot;     &quot;TF&quot;       &quot;APOC3&quot;  &quot;AMBP&quot;   &quot;CYP2E1&quot; &quot;APOB&quot;   
-[7,] &quot;CKM&quot;     &quot;MT-RNR2&quot; &quot;MYL3&quot;     &quot;MT-ND4&quot; &quot;MYBPC3&quot; &quot;TTN&quot;    &quot;TNNI3&quot;  
-     [,15]      [,16]        [,17]     [,18]    [,19]     [,20]     [,21]    
-[1,] &quot;COL4A1&quot;   &quot;PENK&quot;       &quot;BGN&quot;     &quot;TIMP1&quot;  &quot;CEMIP&quot;   &quot;COL4A2&quot;  &quot;MXRA5&quot;  
-[2,] &quot;POU5F1&quot;   &quot;AC064802.1&quot; &quot;VRTN&quot;    &quot;HAND1&quot;  &quot;TRIM71&quot;  &quot;RPS19&quot;   &quot;CDH3&quot;   
-[3,] &quot;PKM&quot;      &quot;ACTG1&quot;      &quot;NOTCH2&quot;  &quot;MYH9&quot;   &quot;PLAT&quot;    &quot;ZFHX4&quot;   &quot;FGF5&quot;   
-[4,] &quot;EPAS1&quot;    &quot;ATF3&quot;       &quot;TMEM100&quot; &quot;FOSB&quot;   &quot;PECAM1&quot;  &quot;DUSP1&quot;   &quot;SCGB1A1&quot;
-[5,] &quot;PDZK1IP1&quot; &quot;KCNJ16&quot;     &quot;SLC5A12&quot; &quot;MIOX&quot;   &quot;TMEM213&quot; &quot;SLC13A3&quot; &quot;CUBN&quot;   
-[6,] &quot;APOA2&quot;    &quot;APOH&quot;       &quot;APOA1&quot;   &quot;SAA2&quot;   &quot;RBP4&quot;    &quot;HPX&quot;     &quot;TTR&quot;    
-[7,] &quot;MT-CYB&quot;   &quot;TCAP&quot;       &quot;HSPB7&quot;   &quot;MT-ND2&quot; &quot;XIRP1&quot;   &quot;MT-ND5&quot;  &quot;LDB3&quot;   
-     [,22]   [,23]     [,24]     [,25]    [,26]     [,27]     [,28]     
-[1,] &quot;LOX&quot;   &quot;LRP1&quot;    &quot;COL6A2&quot;  &quot;COL5A2&quot; &quot;LUM&quot;     &quot;MRC2&quot;    &quot;MMP2&quot;    
-[2,] &quot;RPS18&quot; &quot;KRT19&quot;   &quot;SLC16A1&quot; &quot;RPS24&quot;  &quot;SLC38A1&quot; &quot;ZSCAN10&quot; &quot;LIN28B&quot;  
-[3,] &quot;SAMD9&quot; &quot;CORO1C&quot;  &quot;CDCP1&quot;   &quot;HIF1A&quot;  &quot;MICAL2&quot;  &quot;COTL1&quot;   &quot;AXL&quot;     
-[4,] &quot;EGR1&quot;  &quot;SLC34A2&quot; &quot;HLA-B&quot;   &quot;DNAJB1&quot; &quot;HLA-DRA&quot; &quot;CD74&quot;    &quot;PPP1R15A&quot;
-[5,] &quot;DPEP1&quot; &quot;SLC34A1&quot; &quot;SLC22A8&quot; &quot;DEFB1&quot;  &quot;SULT1C2&quot; &quot;ATP1A1&quot;  &quot;TMEM52B&quot; 
-[6,] &quot;FGL1&quot;  &quot;CYP3A4&quot;  &quot;C3&quot;      &quot;AGXT&quot;   &quot;AHSG&quot;    &quot;MAT1A&quot;   &quot;CPS1&quot;    
-[7,] &quot;ACTC1&quot; &quot;MT-RNR1&quot; &quot;MT-CO2&quot;  &quot;TNNC1&quot;  &quot;MT-ATP6&quot; &quot;FABP3&quot;   &quot;ACTN2&quot;   
-     [,29]       [,30]      [,31]      [,32]       [,33]    [,34]    [,35]    
-[1,] &quot;COMP&quot;      &quot;SPON2&quot;    &quot;EFEMP1&quot;   &quot;FKBP10&quot;    &quot;TGFBI&quot;  &quot;COL6A1&quot; &quot;LTBP2&quot;  
-[2,] &quot;LINC00678&quot; &quot;SEPHS1&quot;   &quot;RPL5&quot;     &quot;MARCKSL1&quot;  &quot;RPL23&quot;  &quot;RPL3&quot;   &quot;SLC2A3&quot; 
-[3,] &quot;EIF4G1&quot;    &quot;FGF2&quot;     &quot;LAMC1&quot;    &quot;KIAA1549L&quot; &quot;TLN1&quot;   &quot;ACTN4&quot;  &quot;IL1B&quot;   
-[4,] &quot;UBC&quot;       &quot;RGCC&quot;     &quot;EMP2&quot;     &quot;PGC&quot;       &quot;DUOX1&quot;  &quot;CX3CL1&quot; &quot;ICAM1&quot;  
-[5,] &quot;RHCG&quot;      &quot;SLC22A6&quot;  &quot;SLC22A12&quot; &quot;SLC3A1&quot;    &quot;CLCNKA&quot; &quot;PAX2&quot;   &quot;SLC47A2&quot;
-[6,] &quot;VTN&quot;       &quot;SERPINC1&quot; &quot;GC&quot;       &quot;TAT&quot;       &quot;ITIH1&quot;  &quot;ADH4&quot;   &quot;ORM2&quot;   
-[7,] &quot;CRYAB&quot;     &quot;EEF1A2&quot;   &quot;NRAP&quot;     &quot;CKMT2&quot;     &quot;MT-CO3&quot; &quot;MYL7&quot;   &quot;PLN&quot;    
-     [,36]    [,37]     [,38]      [,39]      [,40]     [,41]    [,42]   
-[1,] &quot;CILP&quot;   &quot;FSTL1&quot;   &quot;NDUFA4L2&quot; &quot;SERPINE2&quot; &quot;TNC&quot;     &quot;MATN2&quot;  &quot;MFGE8&quot; 
-[2,] &quot;PTPRZ1&quot; &quot;STK26&quot;   &quot;RPS3&quot;     &quot;RPL8&quot;     &quot;CTNNB1&quot;  &quot;RPS6&quot;   &quot;FREM2&quot; 
-[3,] &quot;MET&quot;    &quot;ALDH1A3&quot; &quot;CCND1&quot;    &quot;PSMD2&quot;    &quot;SLC7A1&quot;  &quot;NEK7&quot;   &quot;DNER&quot;  
-[4,] &quot;TIMP3&quot;  &quot;RHOB&quot;    &quot;GLUL&quot;     &quot;HLA-DRB1&quot; &quot;SLC11A1&quot; &quot;HSPA1B&quot; &quot;AQP4&quot;  
-[5,] &quot;SMIM24&quot; &quot;TFCP2L1&quot; &quot;EMX2OS&quot;   &quot;CYS1&quot;     &quot;SLC6A19&quot; &quot;TMEM72&quot; &quot;FXYD2&quot; 
-[6,] &quot;ITIH3&quot;  &quot;APOC1&quot;   &quot;C9&quot;       &quot;CYP2C8&quot;   &quot;APCS&quot;    &quot;F2&quot;     &quot;CYP2C9&quot;
-[7,] &quot;HRC&quot;    &quot;SLC25A4&quot; &quot;COX6A2&quot;   &quot;MYOZ2&quot;    &quot;MT-ND4L&quot; &quot;TPM1&quot;   &quot;MYH7B&quot; 
-     [,43]     [,44]    [,45]        [,46]    [,47]    [,48]      [,49]   
-[1,] &quot;HSPG2&quot;   &quot;PDPN&quot;   &quot;AC089987.1&quot; &quot;HTRA1&quot;  &quot;CDH11&quot;  &quot;PCDH10&quot;   &quot;CYP1B1&quot;
-[2,] &quot;DSP&quot;     &quot;RPS5&quot;   &quot;HNRNPC&quot;     &quot;RPS14&quot;  &quot;NKX1-2&quot; &quot;PRDX1&quot;    &quot;RPL37&quot; 
-[3,] &quot;TUBB6&quot;   &quot;DUSP4&quot;  &quot;ITGA2&quot;      &quot;FLNA&quot;   &quot;SMURF2&quot; &quot;ITGA5&quot;    &quot;RAB3B&quot; 
-[4,] &quot;CALCRL&quot;  &quot;AOC3&quot;   &quot;SCEL&quot;       &quot;CYP4B1&quot; &quot;CD93&quot;   &quot;HLA-DPA1&quot; &quot;SOCS3&quot; 
-[5,] &quot;NPHS1&quot;   &quot;PTGER3&quot; &quot;SLC4A9&quot;     &quot;NAT8&quot;   &quot;KIF12&quot;  &quot;MAL&quot;      &quot;NPHS2&quot; 
-[6,] &quot;SDS&quot;     &quot;HAMP&quot;   &quot;ITIH2&quot;      &quot;ARG1&quot;   &quot;TFR2&quot;   &quot;IGFBP1&quot;   &quot;HRG&quot;   
-[7,] &quot;MT-ATP8&quot; &quot;PDK4&quot;   &quot;COX7A1&quot;     &quot;CMYA5&quot;  &quot;APOD&quot;   &quot;MYOM2&quot;    &quot;CSRP3&quot; 
-     [,50]      [,51]      [,52]     [,53]     [,54]      [,55]     [,56]    
-[1,] &quot;CCDC80&quot;   &quot;DCN&quot;      &quot;IGFL2&quot;   &quot;THY1&quot;    &quot;FBLN5&quot;    &quot;EDIL3&quot;   &quot;FNDC1&quot;  
-[2,] &quot;RPL31&quot;    &quot;KIF1A&quot;    &quot;NPPB&quot;    &quot;RPL10A&quot;  &quot;RPS12&quot;    &quot;DSC2&quot;    &quot;TUBB2B&quot; 
-[3,] &quot;HUWE1&quot;    &quot;EGFR&quot;     &quot;SLC20A1&quot; &quot;UHMK1&quot;   &quot;PRPF8&quot;    &quot;NAV1&quot;    &quot;FLNB&quot;   
-[4,] &quot;MTCO1P53&quot; &quot;HOPX&quot;     &quot;NKX2-1&quot;  &quot;JUNB&quot;    &quot;THBD&quot;     &quot;LAMP3&quot;   &quot;MCL1&quot;   
-[5,] &quot;SLC4A1&quot;   &quot;ATP6V0A4&quot; &quot;AOC1&quot;    &quot;EGF&quot;     &quot;SLC22A2&quot;  &quot;PTH1R&quot;   &quot;MMP7&quot;   
-[6,] &quot;LRG1&quot;     &quot;RDH16&quot;    &quot;BAAT&quot;    &quot;LBP&quot;     &quot;SERPINF2&quot; &quot;SLC22A1&quot; &quot;SULT2A1&quot;
-[7,] &quot;MT-ND3&quot;   &quot;TECRL&quot;    &quot;MT-TL1&quot;  &quot;ADPRHL1&quot; &quot;SRL&quot;      &quot;ACTA1&quot;   &quot;RYR2&quot;   
-     [,57]       [,58]     [,59]    [,60]       [,61]      [,62]    
-[1,] &quot;P4HA2&quot;     &quot;CERCAM&quot;  &quot;SEMA3C&quot; &quot;CHPF&quot;      &quot;ADAM12&quot;   &quot;CDKN2B&quot; 
-[2,] &quot;SINHCAF&quot;   &quot;PLS3&quot;    &quot;RPL13A&quot; &quot;LAPTM4B&quot;   &quot;ARID3A&quot;   &quot;EIF3E&quot;  
-[3,] &quot;SACS&quot;      &quot;ADAM19&quot;  &quot;TRIO&quot;   &quot;PTPN14&quot;    &quot;HHIP&quot;     &quot;ANLN&quot;   
-[4,] &quot;IGKC&quot;      &quot;FENDRR&quot;  &quot;HLA-C&quot;  &quot;LIMCH1&quot;    &quot;NFKBIA&quot;   &quot;SFTPD&quot;  
-[5,] &quot;LINC01187&quot; &quot;SLC26A7&quot; &quot;CLDN2&quot;  &quot;LINC00982&quot; &quot;SLC22A11&quot; &quot;SLC36A2&quot;
-[6,] &quot;AOX1&quot;      &quot;UGT2B4&quot;  &quot;CYP2A6&quot; &quot;CPB2&quot;      &quot;AGT&quot;      &quot;ASGR1&quot;  
-[7,] &quot;MYH6&quot;      &quot;LMOD2&quot;   &quot;TRIM54&quot; &quot;CASQ2&quot;     &quot;POPDC2&quot;   &quot;NEBL&quot;   
-     [,63]        [,64]    [,65]     [,66]   [,67]     [,68]     [,69]    
-[1,] &quot;VIM&quot;        &quot;ISLR&quot;   &quot;ADAMTS5&quot; &quot;MXRA8&quot; &quot;PCOLCE&quot;  &quot;CTGF&quot;    &quot;SCRG1&quot;  
-[2,] &quot;AP000459.2&quot; &quot;HDAC2&quot;  &quot;SNHG14&quot;  &quot;RPS21&quot; &quot;RPS20&quot;   &quot;FAM84B&quot;  &quot;VASH2&quot;  
-[3,] &quot;GAPDH&quot;      &quot;PTX3&quot;   &quot;FOSL1&quot;   &quot;FRMD6&quot; &quot;CRIM1&quot;   &quot;ACTR2&quot;   &quot;ZBTB38&quot; 
-[4,] &quot;TNS1&quot;       &quot;SAT1&quot;   &quot;CCL18&quot;   &quot;LAMA3&quot; &quot;VIPR1&quot;   &quot;MTCO1P2&quot; &quot;CD55&quot;   
-[5,] &quot;TSPAN1&quot;     &quot;POU3F3&quot; &quot;LRP2&quot;    &quot;PROM2&quot; &quot;RAP1GAP&quot; &quot;CLTRN&quot;   &quot;XPNPEP2&quot;
-[6,] &quot;C3P1&quot;       &quot;ASGR2&quot;  &quot;ATF5&quot;    &quot;F9&quot;    &quot;SLC13A5&quot; &quot;C4BPA&quot;   &quot;AZGP1&quot;  
-[7,] &quot;KCNIP2&quot;     &quot;TRDN&quot;   &quot;SLC4A3&quot;  &quot;HHATL&quot; &quot;NMRK2&quot;   &quot;RPL3L&quot;   &quot;SMPX&quot;   
-     [,70]     [,71]     [,72]    [,73]      [,74]      [,75]    [,76]      
-[1,] &quot;CALD1&quot;   &quot;PLOD1&quot;   &quot;COL8A2&quot; &quot;ANTXR1&quot;   &quot;MEST&quot;     &quot;ACTA2&quot;  &quot;CD99&quot;     
-[2,] &quot;RPL41&quot;   &quot;NASP&quot;    &quot;GSTP1&quot;  &quot;HMGB2&quot;    &quot;EEF1A1&quot;   &quot;MSH2&quot;   &quot;CRABP2&quot;   
-[3,] &quot;PRRC2C&quot;  &quot;ASAP1&quot;   &quot;ANXA2&quot;  &quot;MARCH4&quot;   &quot;HRAS&quot;     &quot;PLAU&quot;   &quot;TPX2&quot;     
-[4,] &quot;KLF6&quot;    &quot;TSC22D3&quot; &quot;BTG2&quot;   &quot;MSLN&quot;     &quot;CTSE&quot;     &quot;LAPTM5&quot; &quot;FMO2&quot;     
-[5,] &quot;ADGRG1&quot;  &quot;SCIN&quot;    &quot;EMX1&quot;   &quot;ATP6V0D2&quot; &quot;KCNJ15&quot;   &quot;PKHD1&quot;  &quot;CYFIP2&quot;   
-[6,] &quot;PLA2G2A&quot; &quot;C8A&quot;     &quot;MT2A&quot;   &quot;CES1&quot;     &quot;ACSL1&quot;    &quot;HAL&quot;    &quot;SERPINA10&quot;
-[7,] &quot;SMYD1&quot;   &quot;SH3RF2&quot;  &quot;UNC45B&quot; &quot;MYOM1&quot;    &quot;MTATP6P1&quot; &quot;MT-ND6&quot; &quot;NKX2-5&quot;   
-     [,77]    [,78]     [,79]    [,80]     [,81]      [,82]     [,83]   
-[1,] &quot;FBN1&quot;   &quot;SRPX2&quot;   &quot;PITX1&quot;  &quot;ADGRA2&quot;  &quot;P4HB&quot;     &quot;ACTG2&quot;   &quot;PTGER2&quot;
-[2,] &quot;RPL19&quot;  &quot;SALL4&quot;   &quot;SLC2A1&quot; &quot;AMOT&quot;    &quot;CCNG1&quot;    &quot;CBX2&quot;    &quot;MEX3A&quot; 
-[3,] &quot;NAV3&quot;   &quot;TRIP12&quot;  &quot;IFIT2&quot;  &quot;VGLL3&quot;   &quot;ADAM9&quot;    &quot;FOXG1&quot;   &quot;CEP170&quot;
-[4,] &quot;IGHA1&quot;  &quot;MS4A15&quot;  &quot;RNASE1&quot; &quot;MGP&quot;     &quot;MTCO1P40&quot; &quot;LYZ&quot;     &quot;CDH5&quot;  
-[5,] &quot;OGDHL&quot;  &quot;EMX2&quot;    &quot;USH1C&quot;  &quot;PIGR&quot;    &quot;KCNJ10&quot;   &quot;SLC13A1&quot; &quot;AQP6&quot;  
-[6,] &quot;CYP1A2&quot; &quot;CREB3L3&quot; &quot;CFHR1&quot;  &quot;SLC27A5&quot; &quot;CLU&quot;      &quot;CYP8B1&quot;  &quot;C4BPB&quot; 
-[7,] &quot;KLHL31&quot; &quot;NDRG4&quot;   &quot;ANKRD1&quot; &quot;APOBEC2&quot; &quot;ATP2A2&quot;   &quot;RBM24&quot;   &quot;XIRP2&quot; 
-     [,84]     [,85]         [,86]    [,87]     [,88]      [,89]    [,90]   
-[1,] &quot;P4HA3&quot;   &quot;COL2A1&quot;      &quot;FAP&quot;    &quot;SPTBN2&quot;  &quot;LOXL1&quot;    &quot;CD63&quot;   &quot;SSC5D&quot; 
-[2,] &quot;CASP3&quot;   &quot;RPS11&quot;       &quot;RPL27&quot;  &quot;AP1S2&quot;   &quot;RCN2&quot;     &quot;TERF1&quot;  &quot;RPL11&quot; 
-[3,] &quot;EIF2AK2&quot; &quot;NCEH1&quot;       &quot;ELK3&quot;   &quot;POLR2A&quot;  &quot;AHNAK&quot;    &quot;ESM1&quot;   &quot;DOCK10&quot;
-[4,] &quot;HSPA1A&quot;  &quot;WIF1&quot;        &quot;IGHM&quot;   &quot;ZFP36L2&quot; &quot;HLA-DPB1&quot; &quot;PRX&quot;    &quot;C1QB&quot;  
-[5,] &quot;ITGB8&quot;   &quot;ADAMTS9-AS1&quot; &quot;BICDL1&quot; &quot;CASR&quot;    &quot;SLC4A4&quot;   &quot;ITM2B&quot;  &quot;AIF1L&quot; 
-[6,] &quot;CYP2B6&quot;  &quot;C6&quot;          &quot;HMGCS2&quot; &quot;C8B&quot;     &quot;C1S&quot;      &quot;C5&quot;     &quot;PON1&quot;  
-[7,] &quot;HSPB3&quot;   &quot;TRDN-AS1&quot;    &quot;ATP1A2&quot; &quot;PERM1&quot;   &quot;ITGA7&quot;    &quot;DHRS7C&quot; &quot;MYZAP&quot; 
-     [,91]       [,92]        [,93]    [,94]      [,95]      [,96]     [,97]   
-[1,] &quot;PTTG1IP&quot;   &quot;TIMP2&quot;      &quot;CPA4&quot;   &quot;ITGB5&quot;    &quot;P3H1&quot;     &quot;MMP14&quot;   &quot;AEBP1&quot; 
-[2,] &quot;USP44&quot;     &quot;BAMBI&quot;      &quot;XRCC5&quot;  &quot;TKT&quot;      &quot;SLC39A10&quot; &quot;DSG2&quot;    &quot;RPS4X&quot; 
-[3,] &quot;ARHGAP29&quot;  &quot;OASL&quot;       &quot;RAI14&quot;  &quot;SHCBP1&quot;   &quot;MYO10&quot;    &quot;PAPPA&quot;   &quot;AFAP1&quot; 
-[4,] &quot;PTGS2&quot;     &quot;CHRDL1&quot;     &quot;S100A4&quot; &quot;ABCA3&quot;    &quot;DDX5&quot;     &quot;MSR1&quot;    &quot;SLC6A4&quot;
-[5,] &quot;FMO1&quot;      &quot;AC015910.1&quot; &quot;DUSP9&quot;  &quot;BBOX1&quot;    &quot;ENPEP&quot;    &quot;PTPRO&quot;   &quot;VAV3&quot;  
-[6,] &quot;FABP1&quot;     &quot;PLG&quot;        &quot;C1R&quot;    &quot;CP&quot;       &quot;SLC38A4&quot;  &quot;CFHR3&quot;   &quot;ADH1A&quot; 
-[7,] &quot;LINC00881&quot; &quot;TRIM63&quot;     &quot;MT-TM&quot;  &quot;MTND2P28&quot; &quot;FBXO40&quot;   &quot;SYNPO2L&quot; &quot;MYLK3&quot; 
-     [,98]    [,99]    [,100]   
-[1,] &quot;WNT2&quot;   &quot;PRRX1&quot;  &quot;SHISAL1&quot;
-[2,] &quot;HAPLN1&quot; &quot;RPS8&quot;   &quot;RPL35&quot;  
-[3,] &quot;SH3BP4&quot; &quot;INHBA&quot;  &quot;CLTC&quot;   
-[4,] &quot;SUSD2&quot;  &quot;RTKN2&quot;  &quot;SFTA3&quot;  
-[5,] &quot;TINAG&quot;  &quot;CLDN16&quot; &quot;CCDC198&quot;
-[6,] &quot;EPHX1&quot;  &quot;MBL2&quot;   &quot;HPD&quot;    
-[7,] &quot;ASB2&quot;   &quot;PTP4A3&quot; &quot;PTGDS&quot;  </code></pre>
+<pre><code>     [,1]     [,2]     [,3]      [,4]      [,5]      [,6]       [,7]      
+[1,] &quot;COL3A1&quot; &quot;SPARC&quot;  &quot;COL1A1&quot;  &quot;FN1&quot;     &quot;SFTPB&quot;   &quot;SFTPC&quot;    &quot;COL4A1&quot;  
+[2,] &quot;RN7SL2&quot; &quot;IGFBP3&quot; &quot;CHI3L1&quot;  &quot;ACAN&quot;    &quot;COL12A1&quot; &quot;SULF1&quot;    &quot;POSTN&quot;   
+[3,] &quot;MMP1&quot;   &quot;TERT&quot;   &quot;TFPI2&quot;   &quot;DYNC1H1&quot; &quot;DCBLD2&quot;  &quot;POLR3G&quot;   &quot;HSP90AA1&quot;
+[4,] &quot;UMOD&quot;   &quot;GPX3&quot;   &quot;SLC12A1&quot; &quot;AQP2&quot;    &quot;CDH16&quot;   &quot;SLC12A3&quot;  &quot;SPP1&quot;    
+[5,] &quot;ALB&quot;    &quot;HP&quot;     &quot;FGA&quot;     &quot;FGB&quot;     &quot;FGG&quot;     &quot;SERPINA1&quot; &quot;SAA1&quot;    
+[6,] &quot;KRT8&quot;   &quot;CTSV&quot;   &quot;PRTG&quot;    &quot;SLC2A3&quot;  &quot;KRT19&quot;   &quot;GABRP&quot;    &quot;HAND1&quot;   
+[7,] &quot;MYH7&quot;   &quot;DES&quot;    &quot;MYL2&quot;    &quot;MB&quot;      &quot;TNNT2&quot;   &quot;MT-CO1&quot;   &quot;CKM&quot;     
+     [,8]     [,9]     [,10]     [,11]      [,12]     [,13]    [,14]   
+[1,] &quot;COL4A2&quot; &quot;SFTPA1&quot; &quot;TIMP3&quot;   &quot;TIMP1&quot;    &quot;SFTPA2&quot;  &quot;FBLN5&quot;  &quot;SPON2&quot; 
+[2,] &quot;EFEMP1&quot; &quot;CEMIP&quot;  &quot;MALAT1&quot;  &quot;BGN&quot;      &quot;TGFBI&quot;   &quot;CCDC80&quot; &quot;PENK&quot;  
+[3,] &quot;RGS4&quot;   &quot;MKI67&quot;  &quot;ACTB&quot;    &quot;DNMT3B&quot;   &quot;CLDN11&quot;  &quot;IL1B&quot;   &quot;POU5F1&quot;
+[4,] &quot;PAX8&quot;   &quot;ATP1B1&quot; &quot;HSD11B2&quot; &quot;PDZK1IP1&quot; &quot;KCNJ1&quot;   &quot;CLCNKB&quot; &quot;CALB1&quot; 
+[5,] &quot;ORM1&quot;   &quot;TF&quot;     &quot;CRP&quot;     &quot;APOC3&quot;    &quot;AMBP&quot;    &quot;CYP2E1&quot; &quot;APOB&quot;  
+[6,] &quot;MDK&quot;    &quot;DSP&quot;    &quot;LRRN1&quot;   &quot;FREM2&quot;    &quot;SLC38A1&quot; &quot;ANXA3&quot;  &quot;NPPB&quot;  
+[7,] &quot;MT-ND1&quot; &quot;MYL3&quot;   &quot;MYBPC3&quot;  &quot;TNNI3&quot;    &quot;MT-ND4&quot;  &quot;TTN&quot;    &quot;TCAP&quot;  
+     [,15]     [,16]    [,17]    [,18]     [,19]    [,20]     [,21]    
+[1,] &quot;CILP&quot;    &quot;AGER&quot;   &quot;ACTG2&quot;  &quot;MATN2&quot;   &quot;ACTA2&quot;  &quot;MFAP4&quot;   &quot;COL5A1&quot; 
+[2,] &quot;TNC&quot;     &quot;DCN&quot;    &quot;VIM&quot;    &quot;COL6A1&quot;  &quot;LUM&quot;    &quot;ADAMTS5&quot; &quot;COL6A3&quot; 
+[3,] &quot;EIF4G1&quot;  &quot;CDCP1&quot;  &quot;SFRP1&quot;  &quot;FGF5&quot;    &quot;HSPA8&quot;  &quot;LDHA&quot;    &quot;ZFHX4&quot;  
+[4,] &quot;TMEM213&quot; &quot;MIOX&quot;   &quot;CUBN&quot;   &quot;SLC22A8&quot; &quot;KCNJ16&quot; &quot;SLC5A12&quot; &quot;SLC34A1&quot;
+[5,] &quot;APOA2&quot;   &quot;APOH&quot;   &quot;APOA1&quot;  &quot;SAA2&quot;    &quot;CYP3A4&quot; &quot;TTR&quot;     &quot;RBP4&quot;   
+[6,] &quot;CDH3&quot;    &quot;AMOT&quot;   &quot;FAM84B&quot; &quot;SLC2A1&quot;  &quot;CTNNB1&quot; &quot;DSC2&quot;    &quot;UBE2J1&quot; 
+[7,] &quot;MT-RNR2&quot; &quot;MT-CYB&quot; &quot;HSPB7&quot;  &quot;TNNC1&quot;   &quot;XIRP1&quot;  &quot;MT-ND2&quot;  &quot;LDB3&quot;   
+     [,22]     [,23]       [,24]       [,25]        [,26]      [,27]   
+[1,] &quot;WNT2&quot;    &quot;COL11A1&quot;   &quot;COL1A2&quot;    &quot;AC089987.1&quot; &quot;CDKN2B&quot;   &quot;FLT1&quot;  
+[2,] &quot;CYP1B1&quot;  &quot;PDGFRA&quot;    &quot;NDUFA4L2&quot;  &quot;SEMA3C&quot;     &quot;COL6A2&quot;   &quot;PRUNE2&quot;
+[3,] &quot;PLAT&quot;    &quot;LINC00678&quot; &quot;KIAA1549L&quot; &quot;IPO5&quot;       &quot;ESRG&quot;     &quot;SEPHS1&quot;
+[4,] &quot;TFCP2L1&quot; &quot;DPEP1&quot;     &quot;TMEM52B&quot;   &quot;SLC13A3&quot;    &quot;RHCG&quot;     &quot;CA12&quot;  
+[5,] &quot;HPX&quot;     &quot;C3&quot;        &quot;FGL1&quot;      &quot;AGXT&quot;       &quot;SERPINC1&quot; &quot;APOC1&quot; 
+[6,] &quot;KRT18&quot;   &quot;BAMBI&quot;     &quot;CLDN6&quot;     &quot;ARID3A&quot;     &quot;NES&quot;      &quot;PCAT14&quot;
+[7,] &quot;ACTN2&quot;   &quot;MT-ND5&quot;    &quot;MT-CO2&quot;    &quot;MT-ATP6&quot;    &quot;FABP3&quot;    &quot;NRAP&quot;  
+     [,28]     [,29]      [,30]    [,31]     [,32]     [,33]        [,34]   
+[1,] &quot;ITGA11&quot;  &quot;PCDH10&quot;   &quot;CLDN18&quot; &quot;IGFL2&quot;   &quot;CEACAM6&quot; &quot;SERPINE2&quot;   &quot;P4HA2&quot; 
+[2,] &quot;SCARNA7&quot; &quot;ISLR&quot;     &quot;LRP1&quot;   &quot;FBN1&quot;    &quot;AEBP1&quot;   &quot;ABI3BP&quot;     &quot;LTBP2&quot; 
+[3,] &quot;SLC7A1&quot;  &quot;CAV1&quot;     &quot;HHIP&quot;   &quot;PRKDC&quot;   &quot;OASL&quot;    &quot;AC064802.1&quot; &quot;COTL1&quot; 
+[4,] &quot;SLC22A6&quot; &quot;SLC22A12&quot; &quot;DEFB1&quot;  &quot;SULT1C2&quot; &quot;CLCNKA&quot;  &quot;MAL&quot;        &quot;PTGER3&quot;
+[5,] &quot;AHSG&quot;    &quot;MAT1A&quot;    &quot;GC&quot;     &quot;ADH4&quot;    &quot;CPS1&quot;    &quot;TAT&quot;        &quot;VTN&quot;   
+[6,] &quot;HAPLN1&quot;  &quot;ITM2C&quot;    &quot;PERP&quot;   &quot;IGDCC3&quot;  &quot;DOK4&quot;    &quot;PKDCC&quot;      &quot;DACT1&quot; 
+[7,] &quot;PDK4&quot;    &quot;ACTC1&quot;    &quot;EEF1A2&quot; &quot;PLN&quot;     &quot;HRC&quot;     &quot;CRYAB&quot;      &quot;MYOZ2&quot; 
+     [,35]    [,36]    [,37]     [,38]    [,39]     [,40]    [,41]   
+[1,] &quot;LRRC32&quot; &quot;SPTBN2&quot; &quot;CDKN1A&quot;  &quot;SRPX2&quot;  &quot;PDPN&quot;    &quot;HOPX&quot;   &quot;FIBIN&quot; 
+[2,] &quot;FSTL1&quot;  &quot;AHNAK&quot;  &quot;FNDC1&quot;   &quot;DST&quot;    &quot;CD109&quot;   &quot;PCOLCE&quot; &quot;PIEZO2&quot;
+[3,] &quot;RAB3B&quot;  &quot;DNER&quot;   &quot;ALDH1A3&quot; &quot;IFIT2&quot;  &quot;USP44&quot;   &quot;DUSP4&quot;  &quot;NCL&quot;   
+[4,] &quot;SMIM24&quot; &quot;CYS1&quot;   &quot;TMEM72&quot;  &quot;NPHS1&quot;  &quot;PAX2&quot;    &quot;SLC4A9&quot; &quot;SLC3A1&quot;
+[5,] &quot;ITIH1&quot;  &quot;CYP2C8&quot; &quot;ORM2&quot;    &quot;ITIH3&quot;  &quot;C9&quot;      &quot;APCS&quot;   &quot;F2&quot;    
+[6,] &quot;DSG2&quot;   &quot;ANXA1&quot;  &quot;VTCN1&quot;   &quot;ATP2B1&quot; &quot;CDH1&quot;    &quot;SESN3&quot;  &quot;CRABP2&quot;
+[7,] &quot;CKMT2&quot;  &quot;MT-CO3&quot; &quot;APOD&quot;    &quot;MYOM2&quot;  &quot;SLC25A4&quot; &quot;COX6A2&quot; &quot;CSRP3&quot; 
+     [,42]      [,43]    [,44]     [,45]    [,46]     [,47]     [,48]   
+[1,] &quot;TPM2&quot;     &quot;OGFRL1&quot; &quot;SCGB1A1&quot; &quot;NEDD9&quot;  &quot;TMEM100&quot; &quot;CD55&quot;    &quot;DKK2&quot;  
+[2,] &quot;MXRA8&quot;    &quot;ARID5B&quot; &quot;IGFBP5&quot;  &quot;PRRX1&quot;  &quot;CLMP&quot;    &quot;IGFBP4&quot;  &quot;DDR2&quot;  
+[3,] &quot;SOX2&quot;     &quot;DPPA4&quot;  &quot;PTPRZ1&quot;  &quot;DDX21&quot;  &quot;HSPD1&quot;   &quot;KPNB1&quot;   &quot;CORO1C&quot;
+[4,] &quot;ITM2B&quot;    &quot;NPHS2&quot;  &quot;ATP1A1&quot;  &quot;TSPAN1&quot; &quot;ADGRG1&quot;  &quot;SLC6A19&quot; &quot;FXYD2&quot; 
+[5,] &quot;CYP2C9&quot;   &quot;ITIH2&quot;  &quot;SDS&quot;     &quot;ARG1&quot;   &quot;CES1&quot;    &quot;HAMP&quot;    &quot;C4BPA&quot; 
+[6,] &quot;ADAMTS18&quot; &quot;ISL1&quot;   &quot;PSTPIP2&quot; &quot;MSX2&quot;   &quot;SPINT2&quot;  &quot;ISYNA1&quot;  &quot;WLS&quot;   
+[7,] &quot;ACTA1&quot;    &quot;MYL7&quot;   &quot;MT-ND4L&quot; &quot;MYH7B&quot;  &quot;MYH6&quot;    &quot;RYR2&quot;    &quot;CASQ2&quot; 
+     [,49]     [,50]     [,51]      [,52]     [,53]     [,54]     [,55]   
+[1,] &quot;FOSB&quot;    &quot;ADGRA2&quot;  &quot;CRISPLD2&quot; &quot;SPON1&quot;   &quot;AQP1&quot;    &quot;LZTS1&quot;   &quot;LMCD1&quot; 
+[2,] &quot;TRPS1&quot;   &quot;HMOX1&quot;   &quot;EDIL3&quot;    &quot;SHISAL1&quot; &quot;SLC38A2&quot; &quot;NT5E&quot;    &quot;FAT1&quot;  
+[3,] &quot;ANLN&quot;    &quot;CSE1L&quot;   &quot;VASH2&quot;    &quot;SFRP2&quot;   &quot;DOCK10&quot;  &quot;TPX2&quot;    &quot;PKM&quot;   
+[4,] &quot;SLC47A2&quot; &quot;NAT8&quot;    &quot;KIF12&quot;    &quot;KCNJ15&quot;  &quot;MMP7&quot;    &quot;SLC26A7&quot; &quot;SLC4A1&quot;
+[5,] &quot;TFR2&quot;    &quot;CYP2A6&quot;  &quot;ADH1B&quot;    &quot;LRG1&quot;    &quot;IGFBP1&quot;  &quot;CPB2&quot;    &quot;HRG&quot;   
+[6,] &quot;ANKS1A&quot;  &quot;EZR&quot;     &quot;CDX2&quot;     &quot;RPS19&quot;   &quot;DAG1&quot;    &quot;SLC7A5&quot;  &quot;OSBPL9&quot;
+[7,] &quot;SRL&quot;     &quot;MT-ATP8&quot; &quot;LMOD2&quot;    &quot;COX7A1&quot;  &quot;ADPRHL1&quot; &quot;CMYA5&quot;   &quot;TECRL&quot; 
+     [,56]       [,57]      [,58]    [,59]     [,60]     [,61]      [,62]   
+[1,] &quot;ATF3&quot;      &quot;CHPF&quot;     &quot;DEPP1&quot;  &quot;PGC&quot;     &quot;SLC6A17&quot; &quot;HLA-E&quot;    &quot;EGFL6&quot; 
+[2,] &quot;COL14A1&quot;   &quot;TBL1XR1&quot;  &quot;REV3L&quot;  &quot;ATL3&quot;    &quot;NEAT1&quot;   &quot;WNT5A&quot;    &quot;HSPG2&quot; 
+[3,] &quot;FOXG1&quot;     &quot;ETV4&quot;     &quot;PSIP1&quot;  &quot;SLC20A1&quot; &quot;ESM1&quot;    &quot;NEK7&quot;     &quot;ZBTB38&quot;
+[4,] &quot;LINC01187&quot; &quot;ATP6V0A4&quot; &quot;AOC1&quot;   &quot;PIGR&quot;    &quot;EMX2OS&quot;  &quot;SCIN&quot;     &quot;POU3F3&quot;
+[5,] &quot;SULT2A1&quot;   &quot;RDH16&quot;    &quot;BAAT&quot;   &quot;SLC22A1&quot; &quot;LBP&quot;     &quot;SERPINF2&quot; &quot;ASGR1&quot; 
+[6,] &quot;TCEAL9&quot;    &quot;RPS11&quot;    &quot;TRIM55&quot; &quot;APLNR&quot;   &quot;ID1&quot;     &quot;ARSI&quot;     &quot;SDK1&quot;  
+[7,] &quot;MT-ND3&quot;    &quot;NDRG4&quot;    &quot;NEBL&quot;   &quot;MT-TL1&quot;  &quot;HHATL&quot;   &quot;POPDC2&quot;   &quot;LPL&quot;   
+     [,63]    [,64]      [,65]    [,66]     [,67]     [,68]     [,69]      
+[1,] &quot;RFLNA&quot;  &quot;SLC34A2&quot;  &quot;FSTL3&quot;  &quot;JUN&quot;     &quot;FKBP10&quot;  &quot;PTGER2&quot;  &quot;DUOX1&quot;    
+[2,] &quot;LMNA&quot;   &quot;ADAMTS1&quot;  &quot;AHNAK2&quot; &quot;GPC6&quot;    &quot;MEG8&quot;    &quot;TNFAIP6&quot; &quot;ELL2&quot;     
+[3,] &quot;PMAIP1&quot; &quot;PAICS&quot;    &quot;SH2B3&quot;  &quot;NAA15&quot;   &quot;HMGA1&quot;   &quot;RRM2&quot;    &quot;LNCPRESS2&quot;
+[4,] &quot;PTH1R&quot;  &quot;SLC22A11&quot; &quot;PROM2&quot;  &quot;SCNN1A&quot;  &quot;SLC36A2&quot; &quot;SLC22A2&quot; &quot;EMX1&quot;     
+[5,] &quot;AOX1&quot;   &quot;UGT2B4&quot;   &quot;AGT&quot;    &quot;C1S&quot;     &quot;ASGR2&quot;   &quot;C3P1&quot;    &quot;CYP1A2&quot;   
+[6,] &quot;LYPD6&quot;  &quot;GREB1L&quot;   &quot;IGSF3&quot;  &quot;COL18A1&quot; &quot;RPL3&quot;    &quot;FLRT3&quot;   &quot;STMN2&quot;    
+[7,] &quot;RPL3L&quot;  &quot;TRIM54&quot;   &quot;TRDN&quot;   &quot;UNC45B&quot;  &quot;NMRK2&quot;   &quot;KCNIP2&quot;  &quot;KLHL31&quot;   
+     [,70]      [,71]      [,72]       [,73]     [,74]     [,75]      [,76]    
+[1,] &quot;SMYD3&quot;    &quot;KCTD16&quot;   &quot;FENDRR&quot;    &quot;SCEL&quot;    &quot;PAG1&quot;    &quot;PPP1R15A&quot; &quot;NALCN&quot;  
+[2,] &quot;NFIX&quot;     &quot;COL8A1&quot;   &quot;NEGR1&quot;     &quot;ELN&quot;     &quot;CSPG4&quot;   &quot;PSD3&quot;     &quot;PCSK1&quot;  
+[3,] &quot;NOP56&quot;    &quot;PDZD4&quot;    &quot;HRAS&quot;      &quot;LAMC1&quot;   &quot;NANOG&quot;   &quot;CEP170&quot;   &quot;ASAP1&quot;  
+[4,] &quot;XPNPEP2&quot;  &quot;CLDN2&quot;    &quot;LINC00982&quot; &quot;WFDC2&quot;   &quot;EGF&quot;     &quot;DDX17&quot;    &quot;RAP1GAP&quot;
+[5,] &quot;ATF5&quot;     &quot;SERPING1&quot; &quot;F9&quot;        &quot;SLC13A5&quot; &quot;CLU&quot;     &quot;AZGP1&quot;    &quot;C8A&quot;    
+[6,] &quot;PLEKHG4B&quot; &quot;ADGRL2&quot;   &quot;FBN3&quot;      &quot;CPE&quot;     &quot;CAPN6&quot;   &quot;SLITRK6&quot;  &quot;RHOU&quot;   
+[7,] &quot;SMYD1&quot;    &quot;ATP2A2&quot;   &quot;SLC4A3&quot;    &quot;CD36&quot;    &quot;APOBEC2&quot; &quot;MYZAP&quot;    &quot;XIRP2&quot;  
+     [,77]       [,78]       [,79]    [,80]     [,81]   [,82]       [,83]     
+[1,] &quot;SERPINH1&quot;  &quot;NKX2-1&quot;    &quot;STXBP6&quot; &quot;STARD4&quot;  &quot;RGCC&quot;  &quot;BMP6&quot;      &quot;SCUBE2&quot;  
+[2,] &quot;LOXL3&quot;     &quot;RN7SL660P&quot; &quot;CHI3L2&quot; &quot;TRAM1&quot;   &quot;MEGF6&quot; &quot;MMP14&quot;     &quot;EMILIN1&quot; 
+[3,] &quot;FOXD3-AS1&quot; &quot;GLB1L3&quot;    &quot;SAMD9&quot;  &quot;ADAR&quot;    &quot;FOSL1&quot; &quot;MDN1&quot;      &quot;FGF2&quot;    
+[4,] &quot;VAV3&quot;      &quot;AQP6&quot;      &quot;CLTRN&quot;  &quot;CYFIP2&quot;  &quot;PTPRO&quot; &quot;BICDL1&quot;    &quot;SLC13A1&quot; 
+[5,] &quot;PLA2G2A&quot;   &quot;MT2A&quot;      &quot;ACSL1&quot;  &quot;HAL&quot;     &quot;C8B&quot;   &quot;SERPINA10&quot; &quot;CREB3L3&quot; 
+[6,] &quot;CDH10&quot;     &quot;MYH10&quot;     &quot;PLS3&quot;   &quot;LRRN4&quot;   &quot;BMP4&quot;  &quot;RPS9&quot;      &quot;PTPRF&quot;   
+[7,] &quot;SMPX&quot;      &quot;SH3RF2&quot;    &quot;PTP4A3&quot; &quot;MT-RNR1&quot; &quot;MYOM1&quot; &quot;ATP1A2&quot;    &quot;MTATP6P1&quot;
+     [,84]        [,85]      [,86]         [,87]    [,88]      [,89]    
+[1,] &quot;IGFL3&quot;      &quot;CLEC3A&quot;   &quot;LAMP3&quot;       &quot;ZFP36&quot;  &quot;MEST&quot;     &quot;TSC22D3&quot;
+[2,] &quot;HIST1H1B&quot;   &quot;ZBTB20&quot;   &quot;SPOCK1&quot;      &quot;CYBRD1&quot; &quot;GPNMB&quot;    &quot;STXBP5&quot; 
+[3,] &quot;AL117378.1&quot; &quot;UTP20&quot;    &quot;HSPA9&quot;       &quot;PLAU&quot;   &quot;SHCBP1&quot;   &quot;AMD1&quot;   
+[4,] &quot;AC015910.1&quot; &quot;ATP6V0D2&quot; &quot;PKHD1&quot;       &quot;FMO1&quot;   &quot;CTSH&quot;     &quot;DUSP9&quot;  
+[5,] &quot;CFHR1&quot;      &quot;SLC27A5&quot;  &quot;C4BPB&quot;       &quot;EPHX1&quot;  &quot;CYP8B1&quot;   &quot;PON1&quot;   
+[6,] &quot;EFNB2&quot;      &quot;HEPH&quot;     &quot;LRRC75A-AS1&quot; &quot;CHD7&quot;   &quot;MARCKSL1&quot; &quot;RPS3&quot;   
+[7,] &quot;HSPB3&quot;      &quot;TRDN-AS1&quot; &quot;MT-ND6&quot;      &quot;FBXO40&quot; &quot;ASB2&quot;     &quot;PERM1&quot;  
+     [,90]       [,91]     [,92]       [,93]     [,94]     [,95]      [,96]   
+[1,] &quot;AQP4&quot;      &quot;ICAM1&quot;   &quot;PALLD&quot;     &quot;OTULINL&quot; &quot;FILIP1L&quot; &quot;CALD1&quot;    &quot;CCL18&quot; 
+[2,] &quot;RN7SL364P&quot; &quot;STAT1&quot;   &quot;B4GALT1&quot;   &quot;NFATC4&quot;  &quot;PLEC&quot;    &quot;ADAMTSL1&quot; &quot;TRAM2&quot; 
+[3,] &quot;SCRN1&quot;     &quot;YWHAG&quot;   &quot;DDX58&quot;     &quot;MICAL2&quot;  &quot;MYO10&quot;   &quot;HSPA4&quot;    &quot;PRDM14&quot;
+[4,] &quot;CLDN8&quot;     &quot;AIF1L&quot;   &quot;OGDHL&quot;     &quot;USH1C&quot;   &quot;KCNJ10&quot;  &quot;ADGRF1&quot;   &quot;TINAG&quot; 
+[5,] &quot;CYP2B6&quot;    &quot;C6&quot;      &quot;HMGCS2&quot;    &quot;ADH1A&quot;   &quot;UGT2B10&quot; &quot;C1R&quot;      &quot;FABP1&quot; 
+[6,] &quot;RAB31&quot;     &quot;SUCO&quot;    &quot;LAPTM4A&quot;   &quot;NECTIN2&quot; &quot;SEPT8&quot;   &quot;RAD23B&quot;   &quot;MEX3A&quot; 
+[7,] &quot;NKX2-5&quot;    &quot;SYNPO2L&quot; &quot;LINC00881&quot; &quot;HSPB8&quot;   &quot;RBM24&quot;   &quot;PPP1R12B&quot; &quot;GSN&quot;   
+     [,97]     [,98]    [,99]     [,100]  
+[1,] &quot;FBLN2&quot;   &quot;COL5A2&quot; &quot;COL15A1&quot; &quot;THBD&quot;  
+[2,] &quot;LAMA4&quot;   &quot;CRLF1&quot;  &quot;LHFPL2&quot;  &quot;DPYSL2&quot;
+[3,] &quot;KIF1A&quot;   &quot;TDGF1&quot;  &quot;CDH4&quot;    &quot;CCND1&quot; 
+[4,] &quot;TMEM174&quot; &quot;CASR&quot;   &quot;SLC4A4&quot;  &quot;MUC1&quot;  
+[5,] &quot;PLG&quot;     &quot;FMO3&quot;   &quot;HSD17B6&quot; &quot;MBL2&quot;  
+[6,] &quot;GRHL2&quot;   &quot;RPLP0&quot;  &quot;F2RL1&quot;   &quot;TMEM88&quot;
+[7,] &quot;ITGA7&quot;   &quot;SPHKAP&quot; &quot;SORBS1&quot;  &quot;DHRS7C&quot;</code></pre>
 <pre class="r"><code>genes[[2]]</code></pre>
-<pre><code>            [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
-[1,] 0.069713411 0.038211474 0.032937472 0.031671786 0.018433702 0.015700254
-[2,] 0.009177174 0.005294249 0.004612971 0.004389133 0.004187272 0.002323472
-[3,] 0.012801712 0.005242384 0.002449337 0.001646465 0.001569825 0.001448502
-[4,] 0.023698163 0.021790473 0.011178605 0.009558630 0.006038909 0.004427344
-[5,] 0.021883016 0.006557708 0.005891701 0.005093153 0.004360327 0.003047806
-[6,] 0.148447224 0.048067834 0.046203563 0.034286559 0.030617302 0.027152265
-[7,] 0.034896410 0.022063635 0.018775006 0.016761211 0.015114078 0.014692060
-            [,7]        [,8]        [,9]       [,10]        [,11]        [,12]
-[1,] 0.011339840 0.006894910 0.005791885 0.004206575 0.0036900881 0.0036197124
-[2,] 0.001972678 0.001928346 0.001620891 0.001401284 0.0012380891 0.0011621645
-[3,] 0.001288872 0.001249977 0.001122633 0.001115923 0.0008661454 0.0008168399
-[4,] 0.002505981 0.002497642 0.002453896 0.002149606 0.0020257592 0.0019851321
-[5,] 0.002577579 0.002332925 0.002050978 0.002005850 0.0017429954 0.0016743428
-[6,] 0.023595683 0.021776356 0.016311338 0.015524831 0.0147500230 0.0135540367
-[7,] 0.012584546 0.010016972 0.008893278 0.008544886 0.0085012993 0.0077212829
-            [,13]       [,14]        [,15]        [,16]        [,17]
-[1,] 0.0034144016 0.003175118 0.0030603820 0.0022559356 0.0022454362
-[2,] 0.0011177694 0.001099179 0.0010872644 0.0010715626 0.0010264297
-[3,] 0.0007808734 0.000740572 0.0007201052 0.0006821768 0.0006496101
-[4,] 0.0018354751 0.001802604 0.0017757531 0.0014311637 0.0014256483
-[5,] 0.0015020619 0.001439442 0.0013533705 0.0012848601 0.0012323480
-[6,] 0.0130611662 0.012862881 0.0123584332 0.0108816774 0.0101526704
-[7,] 0.0066650500 0.006554995 0.0064964757 0.0051895367 0.0049243229
-            [,18]        [,19]        [,20]        [,21]        [,22]
-[1,] 0.0021087057 0.0020524494 0.0019078029 0.0016609335 0.0015001775
-[2,] 0.0010117446 0.0010102768 0.0008917705 0.0008860663 0.0008641577
-[3,] 0.0006224498 0.0005871834 0.0005704622 0.0005223891 0.0005139016
-[4,] 0.0013933258 0.0013900686 0.0013730385 0.0013228828 0.0012801850
-[5,] 0.0012205006 0.0011960443 0.0011615900 0.0011086784 0.0011051556
-[6,] 0.0097874233 0.0094514632 0.0094019451 0.0093240607 0.0075225090
-[7,] 0.0046526828 0.0037604349 0.0036975664 0.0035045832 0.0034281050
-            [,23]        [,24]        [,25]        [,26]        [,27]
-[1,] 0.0013556502 0.0012472609 0.0012022021 0.0011830393 0.0011815877
-[2,] 0.0008009056 0.0007883469 0.0007176063 0.0007075906 0.0007021197
-[3,] 0.0004659865 0.0004627636 0.0004607030 0.0004606655 0.0004604999
-[4,] 0.0012686578 0.0012029915 0.0011714354 0.0011360044 0.0011284101
-[5,] 0.0010775916 0.0010092985 0.0009686768 0.0009632688 0.0009000655
-[6,] 0.0069471215 0.0066219925 0.0065463462 0.0060774472 0.0057293043
-[7,] 0.0033389578 0.0031652696 0.0031642534 0.0031565442 0.0027677069
-            [,28]        [,29]        [,30]        [,31]        [,32]
-[1,] 0.0011165531 0.0011006474 0.0010622825 0.0010523695 0.0009456679
-[2,] 0.0006636473 0.0006588961 0.0006554331 0.0006429366 0.0006242472
-[3,] 0.0004561391 0.0004489252 0.0004172413 0.0004053238 0.0004042397
-[4,] 0.0010343514 0.0009701514 0.0008690974 0.0008101721 0.0007828231
-[5,] 0.0008894434 0.0008635821 0.0008293117 0.0007986950 0.0007910918
-[6,] 0.0055567122 0.0054902856 0.0053304610 0.0051052367 0.0050064130
-[7,] 0.0027616864 0.0021762290 0.0021249211 0.0018927551 0.0018659915
-            [,33]        [,34]        [,35]        [,36]        [,37]
-[1,] 0.0008753123 0.0008597538 0.0008487463 0.0008280522 0.0007549572
-[2,] 0.0005961593 0.0005913374 0.0005653215 0.0005559381 0.0005350089
-[3,] 0.0003864693 0.0003619283 0.0003603799 0.0003507765 0.0003506068
-[4,] 0.0007618811 0.0007494897 0.0006956023 0.0006806127 0.0006752140
-[5,] 0.0007387927 0.0006916185 0.0006856925 0.0006665444 0.0006661484
-[6,] 0.0048166293 0.0045481162 0.0042053509 0.0041592106 0.0040066004
-[7,] 0.0017473386 0.0016727517 0.0016028688 0.0015670885 0.0015463182
-            [,38]        [,39]        [,40]        [,41]        [,42]
-[1,] 0.0007442724 0.0007379651 0.0007355034 0.0007269730 0.0007192042
-[2,] 0.0005159227 0.0005147261 0.0005053842 0.0004992195 0.0004930988
-[3,] 0.0003449601 0.0003254838 0.0003142367 0.0003102818 0.0003076091
-[4,] 0.0006688015 0.0006637070 0.0006592509 0.0006526643 0.0006290464
-[5,] 0.0006650458 0.0006504149 0.0006367450 0.0006364200 0.0006275101
-[6,] 0.0039390475 0.0039193584 0.0037708621 0.0036793347 0.0031213249
-[7,] 0.0014656962 0.0013518941 0.0013299418 0.0011144301 0.0010790902
-            [,43]        [,44]        [,45]        [,46]        [,47]
-[1,] 0.0007097017 0.0006477561 0.0006095124 0.0005450105 0.0005258729
-[2,] 0.0004865231 0.0004777867 0.0004682761 0.0004572844 0.0004463287
-[3,] 0.0003009907 0.0002996948 0.0002925200 0.0002917879 0.0002916229
-[4,] 0.0006233153 0.0006211177 0.0006060241 0.0005886619 0.0005785410
-[5,] 0.0006191067 0.0006171086 0.0006112515 0.0005798483 0.0005765911
-[6,] 0.0030865977 0.0026982294 0.0026561911 0.0024171809 0.0023536922
-[7,] 0.0010628604 0.0010253823 0.0009969585 0.0009498408 0.0009447167
-            [,48]        [,49]        [,50]        [,51]        [,52]
-[1,] 0.0005151098 0.0005124243 0.0005024416 0.0004899473 0.0004783175
-[2,] 0.0004435016 0.0004414384 0.0004389996 0.0004306038 0.0004140753
-[3,] 0.0002879835 0.0002864195 0.0002856813 0.0002670194 0.0002501955
-[4,] 0.0005717940 0.0005414527 0.0005339166 0.0005048775 0.0004963301
-[5,] 0.0005633005 0.0005600040 0.0005427514 0.0005319866 0.0005089659
-[6,] 0.0022288441 0.0021795133 0.0021535709 0.0020642359 0.0019502216
-[7,] 0.0009366916 0.0009194068 0.0009057109 0.0008275400 0.0007959406
-            [,53]        [,54]        [,55]        [,56]        [,57]
-[1,] 0.0004485633 0.0004445311 0.0004392448 0.0004275195 0.0004204849
-[2,] 0.0004097753 0.0004061820 0.0003977774 0.0003855601 0.0003810501
-[3,] 0.0002432185 0.0002403277 0.0002337336 0.0002324820 0.0002283282
-[4,] 0.0004930956 0.0004798857 0.0004776960 0.0004690544 0.0004643000
-[5,] 0.0004707198 0.0004516943 0.0004322972 0.0004184293 0.0003984152
-[6,] 0.0019348857 0.0019255806 0.0018413578 0.0018328574 0.0017838950
-[7,] 0.0007728881 0.0007585278 0.0007574093 0.0007543255 0.0007339165
-            [,58]        [,59]        [,60]        [,61]        [,62]
-[1,] 0.0004151371 0.0003992637 0.0003802660 0.0003798322 0.0003353041
-[2,] 0.0003767234 0.0003730908 0.0003639893 0.0003633209 0.0003608578
-[3,] 0.0002263737 0.0002224719 0.0002215734 0.0002213604 0.0002192209
-[4,] 0.0004640261 0.0004580403 0.0004525627 0.0004470451 0.0004369860
-[5,] 0.0003939800 0.0003789263 0.0003784977 0.0003672536 0.0003671114
-[6,] 0.0017591771 0.0017336122 0.0017326901 0.0017240411 0.0017170435
-[7,] 0.0006865357 0.0006798649 0.0006695755 0.0006513104 0.0006330947
-            [,63]        [,64]        [,65]        [,66]        [,67]
-[1,] 0.0003278933 0.0003266543 0.0003178639 0.0003009795 0.0002960860
-[2,] 0.0003579323 0.0003556223 0.0003518969 0.0003494443 0.0003481428
-[3,] 0.0002159781 0.0002148534 0.0002126592 0.0002084895 0.0002058100
-[4,] 0.0004359895 0.0004352903 0.0004351875 0.0004281397 0.0004261515
-[5,] 0.0003598262 0.0003586856 0.0003521275 0.0003503733 0.0003497528
-[6,] 0.0016941527 0.0016903191 0.0016024452 0.0015918565 0.0015872628
-[7,] 0.0006206428 0.0006046328 0.0005993457 0.0005539770 0.0005443099
-            [,68]        [,69]        [,70]        [,71]        [,72]
-[1,] 0.0002938375 0.0002927558 0.0002894287 0.0002869840 0.0002813389
-[2,] 0.0003461658 0.0003315799 0.0003255897 0.0003248274 0.0003245211
-[3,] 0.0002036553 0.0002022503 0.0002001835 0.0001984603 0.0001981455
-[4,] 0.0004223428 0.0004156843 0.0004137916 0.0004122321 0.0004090318
-[5,] 0.0003446871 0.0003437866 0.0003424529 0.0003323437 0.0003216108
-[6,] 0.0015626140 0.0015480549 0.0014684801 0.0014684347 0.0014363263
-[7,] 0.0005230442 0.0005117819 0.0005026036 0.0005024660 0.0004645358
-            [,73]        [,74]        [,75]        [,76]        [,77]
-[1,] 0.0002774910 0.0002734493 0.0002667435 0.0002622799 0.0002524311
-[2,] 0.0003168535 0.0003150565 0.0003112721 0.0003094456 0.0003092670
-[3,] 0.0001932116 0.0001870540 0.0001842719 0.0001820540 0.0001812711
-[4,] 0.0003938060 0.0003910837 0.0003880417 0.0003832493 0.0003764504
-[5,] 0.0003212446 0.0003120485 0.0002946743 0.0002849778 0.0002715837
-[6,] 0.0014260017 0.0014079982 0.0013805089 0.0013310613 0.0013154306
-[7,] 0.0004354753 0.0004311740 0.0004064202 0.0004054469 0.0003889443
-            [,78]        [,79]        [,80]        [,81]        [,82]
-[1,] 0.0002413255 0.0002326412 0.0002225653 0.0002212995 0.0002074727
-[2,] 0.0003087145 0.0003075062 0.0003070520 0.0003044523 0.0003006607
-[3,] 0.0001792876 0.0001783666 0.0001765943 0.0001761176 0.0001757241
-[4,] 0.0003696264 0.0003696190 0.0003448919 0.0003419880 0.0003277888
-[5,] 0.0002679189 0.0002665366 0.0002651089 0.0002615965 0.0002565494
-[6,] 0.0012838464 0.0012209629 0.0012033985 0.0011683682 0.0011424909
-[7,] 0.0003885023 0.0003792343 0.0003785644 0.0003739041 0.0003698281
-            [,83]        [,84]        [,85]        [,86]        [,87]
-[1,] 0.0002072950 0.0002022817 0.0001929161 0.0001881849 0.0001869558
-[2,] 0.0002972648 0.0002971524 0.0002883777 0.0002872070 0.0002826859
-[3,] 0.0001756392 0.0001744796 0.0001739879 0.0001692100 0.0001685677
-[4,] 0.0003260276 0.0003221277 0.0003137154 0.0003125536 0.0003089933
-[5,] 0.0002554760 0.0002530984 0.0002429079 0.0002426172 0.0002421829
-[6,] 0.0011126494 0.0010946810 0.0010875248 0.0010819311 0.0010590555
-[7,] 0.0003430547 0.0003411770 0.0003155315 0.0003094391 0.0003076962
-            [,88]        [,89]        [,90]        [,91]        [,92]
-[1,] 0.0001860524 0.0001832022 0.0001821626 0.0001817027 0.0001809147
-[2,] 0.0002795534 0.0002788643 0.0002776843 0.0002752815 0.0002730303
-[3,] 0.0001658799 0.0001637776 0.0001625544 0.0001613500 0.0001597848
-[4,] 0.0003066466 0.0003058548 0.0003049919 0.0002894214 0.0002878581
-[5,] 0.0002413045 0.0002410343 0.0002395200 0.0002380244 0.0002320285
-[6,] 0.0010181949 0.0010099912 0.0010047406 0.0009802772 0.0009720860
-[7,] 0.0003026312 0.0002888936 0.0002873506 0.0002788392 0.0002782299
-            [,93]        [,94]        [,95]        [,96]        [,97]
-[1,] 0.0001807100 0.0001738561 0.0001723012 0.0001719198 0.0001663196
-[2,] 0.0002711692 0.0002691644 0.0002651189 0.0002635874 0.0002631856
-[3,] 0.0001595225 0.0001532319 0.0001530438 0.0001529704 0.0001524310
-[4,] 0.0002819307 0.0002682035 0.0002667161 0.0002650547 0.0002627607
-[5,] 0.0002293668 0.0002283033 0.0002229724 0.0002182785 0.0002070131
-[6,] 0.0009318479 0.0009274390 0.0008589545 0.0008473271 0.0008431582
-[7,] 0.0002629582 0.0002611733 0.0002541220 0.0002505643 0.0002435198
-            [,98]        [,99]       [,100]
-[1,] 0.0001657887 0.0001616257 0.0001611425
-[2,] 0.0002575803 0.0002556975 0.0002555558
-[3,] 0.0001506129 0.0001490815 0.0001486766
-[4,] 0.0002597099 0.0002571737 0.0002555783
-[5,] 0.0001999261 0.0001986548 0.0001967817
-[6,] 0.0007955332 0.0007910709 0.0007900110
-[7,] 0.0002385616 0.0002333254 0.0002318979</code></pre>
+<pre><code>            [,1]        [,2]        [,3]        [,4]         [,5]        [,6]
+[1,] 0.021825104 0.016537241 0.007709330 0.006212573 0.0052201338 0.004906711
+[2,] 0.084734796 0.026676302 0.021340268 0.011791839 0.0090897219 0.009015172
+[3,] 0.008554176 0.007538613 0.001321305 0.001086288 0.0008409766 0.000733597
+[4,] 0.027903744 0.009986872 0.008265194 0.006687326 0.0057289514 0.003087330
+[5,] 0.149622278 0.048025703 0.046162691 0.034254539 0.0307277803 0.030190394
+[6,] 0.006403934 0.004974635 0.003505534 0.003401739 0.0031502482 0.002898689
+[7,] 0.049764496 0.032193312 0.026725854 0.021409347 0.0178075575 0.015047113
+            [,7]         [,8]        [,9]        [,10]        [,11]
+[1,] 0.004582384 0.0033514339 0.002514186 0.0025116518 0.0022580675
+[2,] 0.008081491 0.0069979738 0.006168069 0.0054832501 0.0046847420
+[3,] 0.000578746 0.0005615462 0.000533221 0.0005128261 0.0005034014
+[4,] 0.002348549 0.0023336433 0.002281399 0.0022723147 0.0020109132
+[5,] 0.023582778 0.0217573572 0.016616594 0.0162949360 0.0147382608
+[6,] 0.001831383 0.0013090040 0.001126257 0.0010587682 0.0009412233
+[7,] 0.013528846 0.0125681714 0.011500031 0.0113016440 0.0088753684
+            [,12]        [,13]        [,14]        [,15]        [,16]
+[1,] 0.0021324990 0.0017901344 0.0017640148 0.0012228832 0.0011745618
+[2,] 0.0042616498 0.0039809203 0.0034684899 0.0034609852 0.0032429481
+[3,] 0.0004751552 0.0004259303 0.0003951467 0.0003467127 0.0003343050
+[4,] 0.0019371049 0.0018588332 0.0018445313 0.0015893146 0.0015817622
+[5,] 0.0143257732 0.0130639655 0.0128495848 0.0123424475 0.0121330615
+[6,] 0.0008730130 0.0008722652 0.0008329767 0.0006824984 0.0006376898
+[7,] 0.0084942735 0.0078863951 0.0075671804 0.0071708580 0.0064734126
+            [,17]        [,18]        [,19]        [,20]        [,21]
+[1,] 0.0010985629 0.0010832805 0.0010657597 0.0009262985 0.0008646501
+[2,] 0.0026364631 0.0020971853 0.0017869391 0.0015634478 0.0013996726
+[3,] 0.0003342128 0.0003249762 0.0003127213 0.0003091273 0.0003025950
+[4,] 0.0014129627 0.0013384980 0.0012814807 0.0012544423 0.0012391852
+[5,] 0.0101422830 0.0097937284 0.0096570112 0.0095836304 0.0094557221
+[6,] 0.0006138530 0.0006052091 0.0005670472 0.0005590154 0.0005490160
+[7,] 0.0054117628 0.0047888066 0.0046821956 0.0046703064 0.0045496679
+            [,22]        [,23]        [,24]        [,25]        [,26]
+[1,] 0.0008429472 0.0007733435 0.0007347303 0.0007038013 0.0005899387
+[2,] 0.0013559187 0.0013467552 0.0011397532 0.0010374186 0.0010278529
+[3,] 0.0003020841 0.0002940397 0.0002937638 0.0002822903 0.0002795728
+[4,] 0.0012263902 0.0011927942 0.0011806676 0.0011594775 0.0011391254
+[5,] 0.0094042151 0.0081654245 0.0075158651 0.0065499225 0.0061607990
+[6,] 0.0005141411 0.0004734702 0.0004579324 0.0004341187 0.0004216588
+[7,] 0.0042863993 0.0036848414 0.0031508005 0.0031411425 0.0027823779
+            [,27]        [,28]        [,29]        [,30]        [,31]
+[1,] 0.0005564933 0.0005477390 0.0005448356 0.0005405469 0.0005197751
+[2,] 0.0010250386 0.0009483568 0.0008778577 0.0008606731 0.0007929356
+[3,] 0.0002692509 0.0002600602 0.0002542371 0.0002402740 0.0002396066
+[4,] 0.0011140978 0.0010968673 0.0010550063 0.0009659756 0.0009604997
+[5,] 0.0060985708 0.0060709160 0.0057235478 0.0056480286 0.0056006693
+[6,] 0.0004106549 0.0003918036 0.0003679634 0.0003672176 0.0003613290
+[7,] 0.0026870539 0.0025957640 0.0024345177 0.0023783395 0.0023407002
+            [,32]        [,33]        [,34]        [,35]        [,36]
+[1,] 0.0005121895 0.0004658419 0.0004445176 0.0003868936 0.0003524071
+[2,] 0.0007927572 0.0007666858 0.0007550613 0.0007502080 0.0007261559
+[3,] 0.0002281568 0.0002205917 0.0002157365 0.0002146591 0.0002099080
+[4,] 0.0009416902 0.0009144551 0.0008751122 0.0008652483 0.0008419725
+[5,] 0.0053436139 0.0050037367 0.0049669693 0.0048130498 0.0045688860
+[6,] 0.0003608689 0.0003345777 0.0003293307 0.0003163590 0.0003146090
+[7,] 0.0022465827 0.0021887099 0.0019872710 0.0018746179 0.0017319343
+            [,37]        [,38]        [,39]        [,40]        [,41]
+[1,] 0.0003431629 0.0003430909 0.0003261807 0.0003255797 0.0002974177
+[2,] 0.0006932400 0.0006529085 0.0006186688 0.0005967782 0.0005911342
+[3,] 0.0002074280 0.0002061398 0.0002059575 0.0002043666 0.0002039065
+[4,] 0.0008281892 0.0008251698 0.0008098151 0.0008091930 0.0007890196
+[5,] 0.0042016702 0.0041582890 0.0040485393 0.0037981273 0.0036772031
+[6,] 0.0003074534 0.0003055421 0.0002970700 0.0002925365 0.0002918306
+[7,] 0.0016686313 0.0015640987 0.0015452245 0.0015138311 0.0014414590
+            [,42]        [,43]        [,44]        [,45]        [,46]
+[1,] 0.0002872956 0.0002777363 0.0002763680 0.0002600812 0.0002491809
+[2,] 0.0005842789 0.0005271438 0.0005251579 0.0005195768 0.0005190550
+[3,] 0.0001960947 0.0001892250 0.0001860221 0.0001850854 0.0001836828
+[4,] 0.0007430984 0.0007281969 0.0007020758 0.0006870549 0.0006764122
+[5,] 0.0033350223 0.0031542763 0.0030859431 0.0028209263 0.0028121817
+[6,] 0.0002739100 0.0002730152 0.0002688237 0.0002651514 0.0002471811
+[7,] 0.0014023364 0.0013808373 0.0013203828 0.0012778914 0.0012576974
+            [,47]        [,48]        [,49]        [,50]        [,51]
+[1,] 0.0002485871 0.0002456934 0.0002365247 0.0002325957 0.0002253652
+[2,] 0.0004992131 0.0004930957 0.0004478132 0.0004164504 0.0004123575
+[3,] 0.0001794416 0.0001769426 0.0001665452 0.0001625045 0.0001614018
+[4,] 0.0006350275 0.0006258576 0.0006235135 0.0005780850 0.0005756445
+[5,] 0.0026950202 0.0023991530 0.0023517149 0.0023238100 0.0023223054
+[6,] 0.0002452541 0.0002444196 0.0002373764 0.0002302624 0.0002291655
+[7,] 0.0011844099 0.0011501752 0.0011495488 0.0010556161 0.0010553138
+            [,52]        [,53]        [,54]        [,55]        [,56]
+[1,] 0.0002158383 0.0002156144 0.0001968928 0.0001849266 0.0001840905
+[2,] 0.0004097581 0.0003952724 0.0003777601 0.0003758807 0.0003709869
+[3,] 0.0001590493 0.0001521236 0.0001498290 0.0001476964 0.0001456165
+[4,] 0.0005640905 0.0005463118 0.0005432124 0.0005411957 0.0005317293
+[5,] 0.0022572292 0.0022267936 0.0021961468 0.0021812699 0.0020963545
+[6,] 0.0002285325 0.0002218878 0.0002200332 0.0002090206 0.0002089556
+[7,] 0.0010453463 0.0009583566 0.0009531616 0.0009525753 0.0009052890
+            [,57]        [,58]        [,59]        [,60]        [,61]
+[1,] 0.0001831597 0.0001730311 0.0001728963 0.0001719671 0.0001705543
+[2,] 0.0003598870 0.0003498376 0.0003478979 0.0003325717 0.0003226229
+[3,] 0.0001441405 0.0001420625 0.0001403150 0.0001365675 0.0001359717
+[4,] 0.0005132940 0.0005075738 0.0004735688 0.0004490096 0.0004487926
+[5,] 0.0020638170 0.0019499470 0.0019486456 0.0019322918 0.0019254956
+[6,] 0.0002083463 0.0002076651 0.0001932390 0.0001923841 0.0001910734
+[7,] 0.0008149208 0.0008088153 0.0007955886 0.0007843247 0.0007724917
+            [,62]        [,63]        [,64]        [,65]        [,66]
+[1,] 0.0001682034 0.0001659809 0.0001658239 0.0001648165 0.0001631576
+[2,] 0.0003107147 0.0002812035 0.0002705157 0.0002698501 0.0002674329
+[3,] 0.0001337704 0.0001306444 0.0001305300 0.0001301441 0.0001298207
+[4,] 0.0004485467 0.0004326371 0.0004206634 0.0004199263 0.0004181681
+[5,] 0.0018073425 0.0017856487 0.0017603199 0.0017206270 0.0017130194
+[6,] 0.0001817603 0.0001803411 0.0001790988 0.0001767177 0.0001765014
+[7,] 0.0007432703 0.0007006584 0.0006980464 0.0006980449 0.0006837111
+            [,67]        [,68]        [,69]        [,70]        [,71]
+[1,] 0.0001573175 0.0001416509 0.0001393480 0.0001326777 0.0001296361
+[2,] 0.0002655971 0.0002653823 0.0002518832 0.0002494583 0.0002490892
+[3,] 0.0001262849 0.0001257738 0.0001242324 0.0001223121 0.0001204680
+[4,] 0.0004051586 0.0004020051 0.0003850366 0.0003800100 0.0003778727
+[5,] 0.0017098304 0.0016929635 0.0016644593 0.0016016274 0.0015907226
+[6,] 0.0001753560 0.0001719480 0.0001718652 0.0001714835 0.0001707253
+[7,] 0.0006309924 0.0006226195 0.0005563003 0.0005455108 0.0005431937
+            [,72]        [,73]        [,74]        [,75]        [,76]
+[1,] 0.0001267936 0.0001245616 0.0001194320 0.0001160665 0.0001135407
+[2,] 0.0002463203 0.0002456776 0.0002419061 0.0002401867 0.0002328947
+[3,] 0.0001188029 0.0001183572 0.0001179844 0.0001163802 0.0001161620
+[4,] 0.0003770805 0.0003708623 0.0003667669 0.0003536303 0.0003498626
+[5,] 0.0015905809 0.0015860853 0.0015798087 0.0015502273 0.0014678396
+[6,] 0.0001693842 0.0001684362 0.0001652907 0.0001615332 0.0001591128
+[7,] 0.0005383147 0.0005378746 0.0005259845 0.0005253856 0.0005093965
+            [,77]        [,78]        [,79]        [,80]        [,81]
+[1,] 0.0001126467 0.0001085288 0.0001079663 0.0001068811 0.0001064648
+[2,] 0.0002324271 0.0002307244 0.0002230300 0.0002222025 0.0002181444
+[3,] 0.0001147019 0.0001144538 0.0001134532 0.0001130324 0.0001129265
+[4,] 0.0003478309 0.0003458074 0.0003445506 0.0003378857 0.0003347802
+[5,] 0.0014641625 0.0014380595 0.0014096872 0.0013804765 0.0013378899
+[6,] 0.0001568157 0.0001511464 0.0001479836 0.0001478977 0.0001477228
+[7,] 0.0005057191 0.0004994261 0.0004660732 0.0004640633 0.0004355087
+            [,82]        [,83]        [,84]        [,85]        [,86]
+[1,] 0.0001059608 0.0001046176 0.0001037930 0.0001035381 0.0001019756
+[2,] 0.0002158133 0.0002141311 0.0002127803 0.0002110480 0.0002018342
+[3,] 0.0001122747 0.0001121109 0.0001095385 0.0001092562 0.0001074087
+[4,] 0.0003337614 0.0003308536 0.0003097516 0.0002968503 0.0002938386
+[5,] 0.0013295496 0.0012817361 0.0012673107 0.0012031291 0.0011912556
+[6,] 0.0001459826 0.0001459180 0.0001451234 0.0001442586 0.0001415410
+[7,] 0.0004327310 0.0004294944 0.0004158267 0.0004033116 0.0004030161
+            [,87]        [,88]        [,89]        [,90]        [,91]
+[1,] 9.876953e-05 9.870192e-05 9.777762e-05 9.757241e-05 9.610905e-05
+[2,] 1.991761e-04 1.978447e-04 1.976136e-04 1.959800e-04 1.930092e-04
+[3,] 1.073900e-04 1.073406e-04 1.062564e-04 1.054404e-04 1.049324e-04
+[4,] 2.900339e-04 2.881258e-04 2.877974e-04 2.864165e-04 2.779995e-04
+[5,] 1.150784e-03 1.143253e-03 1.138622e-03 1.095397e-03 1.086368e-03
+[6,] 1.414498e-04 1.406702e-04 1.338888e-04 1.302205e-04 1.291365e-04
+[7,] 3.879292e-04 3.855449e-04 3.841038e-04 3.640621e-04 3.377762e-04
+            [,92]        [,93]        [,94]        [,95]        [,96]
+[1,] 9.557062e-05 9.469119e-05 9.399902e-05 9.232479e-05 9.157678e-05
+[2,] 1.869430e-04 1.863738e-04 1.858462e-04 1.855943e-04 1.836730e-04
+[3,] 1.043709e-04 1.030077e-04 1.020395e-04 1.006374e-04 9.893372e-05
+[4,] 2.714777e-04 2.659815e-04 2.612673e-04 2.579661e-04 2.508860e-04
+[5,] 1.083361e-03 1.071028e-03 1.024391e-03 1.000511e-03 9.819323e-04
+[6,] 1.289537e-04 1.288331e-04 1.286600e-04 1.284899e-04 1.229693e-04
+[7,] 3.370224e-04 3.326332e-04 3.197540e-04 3.035110e-04 3.002230e-04
+            [,97]        [,98]        [,99]       [,100]
+[1,] 8.868488e-05 8.837695e-05 8.798181e-05 8.686654e-05
+[2,] 1.822866e-04 1.815244e-04 1.685941e-04 1.648436e-04
+[3,] 9.810065e-05 9.742211e-05 9.729296e-05 9.550909e-05
+[4,] 2.463778e-04 2.418817e-04 2.405755e-04 2.393767e-04
+[5,] 9.737093e-04 9.702176e-04 9.508956e-04 9.366931e-04
+[6,] 1.204797e-04 1.200348e-04 1.196755e-04 1.190108e-04
+[7,] 2.976940e-04 2.949740e-04 2.938082e-04 2.897018e-04</code></pre>
 <pre class="r"><code>#Gene boxplot for cluster 1
 #COL11A1
 boxplot_gene_sample_type(filtered_RLE, labels, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
@@ -8017,19 +8121,19 @@ Anthony Hung
 <pre class="r"><code># #function to plot genes that distinguish topics
 # plot_topic_factors &lt;- function(GoM_object){
 #      theta &lt;- GoM_object$theta
-#           
+#
 #      for(topic in 1:ncol(theta)){
 #           plot_ratio_factor_by_mean_factor(topic, theta)
 #      }
 # }
-# 
+#
 # plot_ratio_factor_by_mean_factor &lt;- function(topic_n, GoM_theta){
 #      factors_topic_n &lt;- GoM_theta[,topic_n]
 #      mean_factors_minus_topic_n &lt;- row_means(GoM_theta[, -topic_n])
 #      ratio_factors_topic_n &lt;- factors_topic_n/mean_factors_minus_topic_n
-#      
+#
 #      mean_factors &lt;- row_means(GoM_theta)
-#      
+#
 #      #get matrix of data to be fed into plot
 #      data &lt;- as.data.frame(cbind(&quot;factor ratio&quot; = ratio_factors_topic_n, &quot;mean factor&quot; = mean_factors))
 #      #identify genes to highlight
@@ -8041,10 +8145,10 @@ Anthony Hung
 #                log(data$`mean factor`) &lt; -20 ~ &quot;no_change&quot;
 #                ))%&gt;%
 #           mutate(reg = factor(reg, levels = c(&quot;UP&quot;, &quot;no_change&quot;,&quot;DOWN&quot;)))
-#      
+#
 #      data_subset= data[which(log(data$`mean factor`) &gt;= -20),]
 #      data_subset= data[which(log(data$`factor ratio`) &lt;= -10 | log(data$`factor ratio`) &gt;= 10) ,]
-#      
+#
 #      #plot
 #      ggplot(data, aes(x = log(`mean factor`), y = log(`factor ratio`)), label = rownames(data)) +
 #           geom_point(aes(color=reg)) +
@@ -8064,7 +8168,7 @@ index_liver &lt;- which(labels==&quot;Liver&quot;)
 index_kidney &lt;- which(labels==&quot;Kidney&quot;)
 index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
 index_chond &lt;- which(labels==&quot;Chond&quot;)
-index_MSCs &lt;- c(40, 32, 42, 30, 49, 55)
+index_MSCs &lt;- c(adMSC_index, bmMSC1_index, bmMSC2_index)
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8108,6 +8212,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-1">
@@ -8176,6 +8283,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-2">
@@ -8227,7 +8337,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(40)
+index_MSCs &lt;- adMSC_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8273,6 +8383,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-3">
@@ -8352,6 +8465,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-4">
@@ -8403,7 +8519,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(30, 49, 55)
+index_MSCs &lt;- bmMSC1_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8449,6 +8565,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-5">
@@ -8517,6 +8636,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-6">
@@ -8557,7 +8679,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(32,42)
+index_MSCs &lt;- bmMSC2_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8601,6 +8723,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-7">
@@ -8669,6 +8794,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20MSC-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-MSC-8">
@@ -8717,8 +8845,8 @@ index_lung &lt;- which(labels==&quot;Lung&quot;)
 index_liver &lt;- which(labels==&quot;Liver&quot;)
 index_kidney &lt;- which(labels==&quot;Kidney&quot;)
 index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
-index_chond &lt;- c(25,35,38,44,50,53)
-index_MSCs &lt;- c(40, 32, 42, 30, 49, 55)
+index_chond &lt;- early_chond
+index_MSCs &lt;- c(adMSC_index, bmMSC1_index, bmMSC2_index)
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8761,6 +8889,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-1">
@@ -8829,6 +8960,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-2">
@@ -8869,7 +9003,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(40)
+index_MSCs &lt;- adMSC_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -8912,6 +9046,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-3">
@@ -8980,6 +9117,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-4">
@@ -9020,7 +9160,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(30, 49, 55)
+index_MSCs &lt;- bmMSC1_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9063,6 +9203,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-5">
@@ -9131,6 +9274,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-6">
@@ -9171,7 +9317,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(32,42)
+index_MSCs &lt;- bmMSC2_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9214,6 +9360,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-7">
@@ -9282,6 +9431,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20early-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-early-8">
@@ -9323,15 +9475,15 @@ Anthony Hung
 </div>
 <div id="semi-supervised-topic-modeling-define-late-chondros-separately-as-a-cluster" class="section level1">
 <h1>Semi-supervised topic modeling (DEFINE late chondros separately as a cluster)</h1>
-<pre class="r"><code>#Here I define the chond cluster based on only early passage chond
+<pre class="r"><code>#Here I define the chond cluster based on only late passage chond
 # labels for &quot;known&quot; clusters
 index_heart &lt;- which(labels==&quot;Heart&quot;)
 index_lung &lt;- which(labels==&quot;Lung&quot;)
 index_liver &lt;- which(labels==&quot;Liver&quot;)
 index_kidney &lt;- which(labels==&quot;Kidney&quot;)
 index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
-index_chond &lt;- c(19,20,21,36,43,48)
-index_MSCs &lt;- c(40, 32, 42, 30, 49, 55)
+index_chond &lt;- late_chond
+index_MSCs &lt;- c(adMSC_index, bmMSC1_index, bmMSC2_index)
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9374,6 +9526,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-1">
@@ -9442,6 +9597,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-2">
@@ -9482,7 +9640,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on adMSCs
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(40)
+index_MSCs &lt;- adMSC_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9525,6 +9683,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-3">
@@ -9593,6 +9754,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-4">
@@ -9633,7 +9797,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(30, 49, 55)
+index_MSCs &lt;- bmMSC1_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9676,6 +9840,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-5">
@@ -9744,6 +9911,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-6">
@@ -9784,7 +9954,7 @@ Anthony Hung
 </div>
 <pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
 # labels for &quot;known&quot; clusters
-index_MSCs &lt;- c(32,42)
+index_MSCs &lt;- bmMSC2_index
 
 known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
 
@@ -9827,6 +9997,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-7">
@@ -9895,6 +10068,9 @@ CountClust::StructureGGplot(omega = omega,
                                  axis_label_size = 7,
                                  axis_label_face = &quot;bold&quot;)
                 )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
 <p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20late-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-supervised-with-chond-late-8">
@@ -9933,6 +10109,347 @@ Anthony Hung
 </table>
 </div>
 </div>
+</div>
+<div id="semi-supervised-topic-modeling-define-encode-chondros-separately-as-a-cluster" class="section level1">
+<h1>Semi-supervised topic modeling (DEFINE ENCODE chondros separately as a cluster)</h1>
+<pre class="r"><code>#Here I define the chond cluster based on only early passage chond
+# labels for &quot;known&quot; clusters
+index_heart &lt;- which(labels==&quot;Heart&quot;)
+index_lung &lt;- which(labels==&quot;Lung&quot;)
+index_liver &lt;- which(labels==&quot;Liver&quot;)
+index_kidney &lt;- which(labels==&quot;Kidney&quot;)
+index_iPSC &lt;- which(labels==&quot;iPSC&quot;)
+index_chond &lt;- chond_encode ######## for ENCODE
+index_MSCs &lt;- c(adMSC_index, bmMSC1_index, bmMSC2_index)
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;)){
+     Topic_clus_7_allMSC_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_7_allMSC_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_allMSC_ENCODEChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_7_allMSC_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;)){
+     Topic_clus_8_allMSC_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_8_allMSC_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_allMSC_ENCODEChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_allMSC_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on adMSCs
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- adMSC_index
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;)){
+     Topic_clus_7_adMSC_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_7_adMSC_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_adMSC_ENCODEChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_7_adMSC_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;)){
+     Topic_clus_8_adMSC_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_8_adMSC_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_adMSC_ENCODEChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_adMSC_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Aref et al 2020)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- bmMSC1_index
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;)){
+     Topic_clus_7_bmMSC1_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC1_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC1_ENCODEChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_7_bmMSC1_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;)){
+     Topic_clus_8_bmMSC1_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC1_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC1_ENCODEChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC1_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Here I define a MSC cluster based on bmMSCs (from Carrow et al 2018)
+# labels for &quot;known&quot; clusters
+index_MSCs &lt;- bmMSC2_index
+
+known_samples &lt;- c(index_heart, index_lung, index_liver, index_kidney, index_iPSC, index_chond, index_MSCs)
+
+class_labs &lt;- c(rep(&quot;Heart&quot;, length(index_heart)),
+                rep(&quot;Lung&quot;, length(index_lung)),
+                rep(&quot;Liver&quot;, length(index_liver)),
+                rep(&quot;Kidney&quot;, length(index_kidney)),
+                rep(&quot;iPSC&quot;, length(index_iPSC)),
+                rep(&quot;Chond&quot;, length(index_chond)),
+                rep(&quot;MSC&quot;, length(index_MSCs))
+                )
+
+# Perform topic modeling k=7
+if (file.exists(&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;)){
+     Topic_clus_7_bmMSC2_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_7_bmMSC2_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=7,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_7_bmMSC2_ENCODEChond, file=&quot;data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_7_bmMSC2_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(7, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Perform topic modeling k=8
+if (file.exists(&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;)){
+     Topic_clus_8_bmMSC2_ENCODEChond &lt;- get(load(file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;))
+} else {
+Topic_clus_8_bmMSC2_ENCODEChond &lt;- classtpx::class_topics(
+    t(merged_raw_data_counts),
+    K=8,
+    known_samples = known_samples,
+    class_labs = class_labs,
+    method=&quot;omega.fix&quot;,
+    tol=0.01)
+save(Topic_clus_8_bmMSC2_ENCODEChond, file=&quot;data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda&quot;)
+}
+
+omega &lt;- Topic_clus_8_bmMSC2_ENCODEChond$omega
+annotation &lt;- data.frame(
+  sample_id = paste0(&quot;X&quot;, c(1:NROW(omega))),
+  tissue_label = as.factor(labels))
+rownames(omega) &lt;- annotation$sample_id
+CountClust::StructureGGplot(omega = omega,
+                annotation = annotation,
+                palette = RColorBrewer::brewer.pal(8, &quot;Accent&quot;),
+                yaxis_label = &quot;Tissue/Cell Type&quot;,
+                order_sample = TRUE,
+                axis_tick = list(axis_ticks_length = .1,
+                                 axis_ticks_lwd_y = .1,
+                                 axis_ticks_lwd_x = .1,
+                                 axis_label_size = 7,
+                                 axis_label_face = &quot;bold&quot;)
+                )</code></pre>
+<pre><code>Warning: Use of `df_mlt$document` is discouraged. Use `document` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$value` is discouraged. Use `value` instead.</code></pre>
+<pre><code>Warning: Use of `df_mlt$topic` is discouraged. Use `topic` instead.</code></pre>
+<p><img src="figure/Bulk_cellComposition_analysis.Rmd/supervised%20with%20chond%20ENCODE-8.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -9961,44 +10478,45 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] classtpx_0.99.0            reshape2_1.4.3            
+ [1] classtpx_0.99.0            reshape2_1.4.4            
  [3] edgeR_3.20.9               limma_3.34.9              
- [5] gplots_3.0.1.1             ggfortify_0.4.8           
+ [5] gplots_3.0.3               ggfortify_0.4.9           
  [7] MAST_1.4.1                 SummarizedExperiment_1.8.1
- [9] DelayedArray_0.4.1         matrixStats_0.55.0        
+ [9] DelayedArray_0.4.1         matrixStats_0.56.0        
 [11] Biobase_2.38.0             GenomicRanges_1.30.3      
 [13] GenomeInfoDb_1.14.0        IRanges_2.12.0            
 [15] S4Vectors_0.16.0           BiocGenerics_0.24.0       
 [17] maptpx_1.9-2               slam_0.1-47               
 [19] CountClust_1.4.1           cowplot_0.9.3             
-[21] ggplot2_3.2.1              scales_1.1.0              
+[21] ggplot2_3.3.0              scales_1.1.0              
 [23] RColorBrewer_1.1-2        
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-131           bitops_1.0-6           fs_1.3.1              
- [4] rprojroot_1.3-2        tools_3.4.3            backports_1.1.5       
- [7] R6_2.4.1               vegan_2.5-6            KernSmooth_2.23-15    
-[10] lazyeval_0.2.2         mgcv_1.8-22            colorspace_1.4-1      
-[13] permute_0.9-5          nnet_7.3-12            withr_2.1.2           
-[16] tidyselect_0.2.5       gridExtra_2.3          compiler_3.4.3        
-[19] git2r_0.26.1           labeling_0.3           caTools_1.17.1.3      
-[22] stringr_1.4.0          digest_0.6.23          rmarkdown_1.18        
+ [1] nlme_3.1-147           bitops_1.0-6           fs_1.4.1              
+ [4] rprojroot_1.3-2        tools_3.4.3            backports_1.1.6       
+ [7] R6_2.4.1               vegan_2.5-6            KernSmooth_2.23-16    
+[10] mgcv_1.8-31            colorspace_1.4-1       permute_0.9-5         
+[13] nnet_7.3-13            withr_2.1.2            tidyselect_1.0.0      
+[16] gridExtra_2.3          compiler_3.4.3         git2r_0.26.1          
+[19] cli_2.0.2              labeling_0.3           caTools_1.17.1.3      
+[22] stringr_1.4.0          digest_0.6.25          rmarkdown_2.1         
 [25] XVector_0.18.0         pkgconfig_2.0.3        htmltools_0.4.0       
-[28] rlang_0.4.4            farver_2.0.3           gtools_3.8.1          
-[31] dplyr_0.8.3            RCurl_1.95-4.12        magrittr_1.5          
-[34] modeltools_0.2-22      GenomeInfoDbData_1.0.0 Matrix_1.2-18         
-[37] Rcpp_1.0.3             munsell_0.5.0          ape_5.3               
-[40] abind_1.4-5            lifecycle_0.1.0        stringi_1.4.3         
-[43] whisker_0.4            yaml_2.2.0             MASS_7.3-51.4         
-[46] zlibbioc_1.24.0        flexmix_2.3-15         plyr_1.8.4            
-[49] grid_3.4.3             gdata_2.18.0           promises_1.1.0        
-[52] crayon_1.3.4           lattice_0.20-35        locfit_1.5-9.1        
-[55] zeallot_0.1.0          knitr_1.26             pillar_1.4.2          
-[58] picante_1.8            glue_1.3.1             evaluate_0.14         
-[61] data.table_1.12.6      vctrs_0.2.0            httpuv_1.5.2          
-[64] gtable_0.3.0           purrr_0.3.3            tidyr_1.0.0           
-[67] assertthat_0.2.1       xfun_0.12              later_1.0.0           
-[70] tibble_2.1.3           workflowr_1.5.0        cluster_2.0.6         </code></pre>
+[28] rlang_0.4.5            farver_2.0.3           gtools_3.8.2          
+[31] dplyr_0.8.5            RCurl_1.98-1.2         magrittr_1.5          
+[34] modeltools_0.2-23      GenomeInfoDbData_1.0.0 Matrix_1.2-18         
+[37] Rcpp_1.0.4.6           munsell_0.5.0          fansi_0.4.1           
+[40] ape_5.3                abind_1.4-5            lifecycle_0.2.0       
+[43] stringi_1.4.6          whisker_0.4            yaml_2.2.1            
+[46] MASS_7.3-51.5          zlibbioc_1.24.0        flexmix_2.3-15        
+[49] plyr_1.8.6             grid_3.4.3             gdata_2.18.0          
+[52] promises_1.1.0         crayon_1.3.4           lattice_0.20-41       
+[55] splines_3.4.3          locfit_1.5-9.1         knitr_1.28            
+[58] pillar_1.4.3           picante_1.8.1          glue_1.4.0            
+[61] evaluate_0.14          data.table_1.12.8      vctrs_0.2.4           
+[64] httpuv_1.5.2           gtable_0.3.0           purrr_0.3.4           
+[67] tidyr_1.0.2            assertthat_0.2.1       xfun_0.13             
+[70] later_1.0.0            tibble_3.0.0           workflowr_1.6.1       
+[73] cluster_2.1.0          ellipsis_0.3.0        </code></pre>
 </div>
 </div>
 
