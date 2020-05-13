@@ -1,0 +1,115 @@
+---
+title: "Pairwise correlations"
+author: "Anthony Hung"
+date: "2020-05-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# plot boxplots of pairwise correlations between samples
+
+```{r load}
+library(dplyr)
+library(textshape)
+library(dplyr)
+library(stringr)
+library(reshape2)
+library(ggplot2)
+
+#load data
+raw_counts <- readRDS("data/raw_counts_relabeled.rds")
+upper_quartile <- readRDS("data/norm_filtered_counts.rds")
+filtered_RLE <- readRDS("data/norm_filtered_counts_RLE.rds")
+```
+
+# Calculate cor matrices
+
+```{r cors}
+#raw
+cors_raw_spear <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
+cors_raw_pearson <- cor(raw_counts, method="pearson", use="pairwise.complete.obs")
+
+#uq
+cors_uq_spear <- cor(upper_quartile, method="spearman", use="pairwise.complete.obs")
+cors_uq_pearson <- cor(upper_quartile, method="pearson", use="pairwise.complete.obs")
+
+#rle
+cors_rle_spear <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
+cors_rle_pearson <- cor(filtered_RLE, method="pearson", use="pairwise.complete.obs")
+```
+
+# Convert cor matrices into useful format
+
+```{r convert}
+#takes as input a correlation matrix and outputs a tidy version
+convert_cor <- function(cor_matrix){
+     tidy <- tidy_matrix(cor_matrix)
+     #remove identities
+     tidy <- tidy %>% filter(value < 0.999)
+     tidy$ind1 <- sapply(strsplit(tidy$row,"_"), `[`, 1)
+     tidy$ind2 <- sapply(strsplit(tidy$col,"_"), `[`, 1)
+     tidy$rep1 <- sapply(strsplit(tidy$row,"_"), `[`, 2)
+     tidy$rep2 <- sapply(strsplit(tidy$col,"_"), `[`, 2)
+     tidy$treat1 <- sapply(strsplit(tidy$row,"_"), `[`, 3)
+     tidy$treat2 <- sapply(strsplit(tidy$col,"_"), `[`, 3)
+     return(as.data.frame(tidy))
+}
+
+#raw
+tidy_cors_raw_spear <- convert_cor(cors_raw_spear)
+tidy_cors_raw_pearson <- convert_cor(cors_raw_pearson)
+
+#uq
+tidy_cors_uq_spear <- convert_cor(cors_uq_spear)
+tidy_cors_uq_pearson <- convert_cor(cors_uq_pearson)
+
+#rle
+tidy_cors_rle_spear <- convert_cor(cors_rle_spear)
+tidy_cors_rle_pearson <- convert_cor(cors_rle_pearson)
+```
+
+# Make plots
+
+```{r plots}
+make_plot <- function(tidy_cors){
+     all <- tidy_cors$value
+     same_ind <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2]
+     same_rep <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2]
+     same_treat <- tidy_cors$value[tidy_cors$treat1 == tidy_cors$treat2]
+
+     same_ind_rep <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$rep1 == tidy_cors$rep2]
+     same_rep_treat <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 & tidy_cors$treat1 == tidy_cors$treat2]
+     same_ind_treat <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$treat1 == tidy_cors$treat2]
+     
+     n <- length(all)
+     
+     length(same_ind) <- n
+     length(same_rep) <- n
+     length(same_treat) <- n
+     length(same_ind_rep) <- n
+     length(same_ind_treat) <- n
+     length(same_rep_treat) <- n
+     
+     #combine all into a df
+     combined <- as.data.frame(cbind(all, same_ind, same_treat, same_rep, same_ind_treat, same_ind_rep, same_rep_treat))
+     #melt
+     combined_melt <- melt(combined)
+     
+     #plot
+     return(ggplot(combined_melt, aes(x = variable, y = value)) +
+          geom_boxplot() + 
+          labs(y = "correlation", x = ""))
+}
+
+#raw
+make_plot(tidy_cors_raw_spear) + labs(title="Raw Data, Spearman")
+make_plot(tidy_cors_raw_pearson) + labs(title="Raw Data, Pearson")
+#uq
+make_plot(tidy_cors_uq_spear) + labs(title="UQ Normalization, Spearman")
+make_plot(tidy_cors_uq_pearson) + labs(title="UQ Normalization, Pearson")
+#rle
+make_plot(tidy_cors_rle_spear) + labs(title="RLE Normalization, Spearman")
+make_plot(tidy_cors_rle_pearson) + labs(title="RLE Normalization, Pearson")
+```
+

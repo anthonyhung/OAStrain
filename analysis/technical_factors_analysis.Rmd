@@ -14,7 +14,7 @@ library("gplots")
 library("ggplot2")
 library("reshape")
 library("edgeR")
-library("RColorBrewer")
+library("RColorBrewer")  
 library("scales")
 library("cowplot")
 library("DT")
@@ -256,3 +256,4 @@ pca_heat
 ```{r}
 saveRDS(set1, "data/RUVsOut.rds")
 ```
+

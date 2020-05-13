@@ -434,6 +434,8 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 ```{r save}
 saveRDS(counts_upperquartile, "data/filtered_counts.rds")
 saveRDS(filtered_upperquartile, "data/norm_filtered_counts.rds")
+
+saveRDS(filtered_RLE, "data/norm_filtered_counts_RLE.rds")
 ```
 
 # Correlation heatmap of filtered Raw counts data (unnormalized)

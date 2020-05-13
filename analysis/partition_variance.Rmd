@@ -1,0 +1,147 @@
+---
+title: "Partition Variance"
+author: "Anthony Hung"
+date: "2020-04-26"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+# Use the variancePartition package to quantify the percent of variance in the data explained by biological/technical factors
+
+# Load packages and normalized data
+
+```{r load}
+library(variancePartition)
+library(RUVSeq)
+library(edgeR)
+library(dplyr)
+
+#raw(filtered)
+counts_upperquartile <- readRDS("data/filtered_counts.rds")
+#normalized
+filtered_upperquartile <- readRDS("data/norm_filtered_counts.rds")
+filtered_RLE <- readRDS("data/norm_filtered_counts_RLE.rds")
+#metadata
+sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
+```
+
+# Additional RUVseq analysis: Using top 100 LEAST variable genes as control genes to get an output of W variables
+
+```{r identify least variable genes}
+RLE <- calcNormFactors(counts_upperquartile, method = "RLE")
+RLE <- cpm(RLE, log=FALSE, normalized.lib.sizes = T)
+
+#compute CV (stdev/mean) and rank from least to most; pick 100 least variable
+cv <- apply(RLE, 1, function(x) sd(x)/mean(x))
+least_var_genes <- names(head(sort(cv), 100))
+
+
+
+# upperquartile <- calcNormFactors(counts_upperquartile, method = "upperquartile")
+# upperquartile <- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
+# 
+# #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
+# cv <- apply(upperquartile, 1, function(x) sd(x)/mean(abs(x)))
+# least_var_genes <- names(head(sort(cv), 100))
+```
+
+```{r RUVSeq least variable genes}
+#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVg. 
+
+#Use RUVg
+#load data into expressionset
+set <- newSeqExpressionSet(as.matrix(counts_upperquartile$counts),phenoData = data.frame(sampleinfo, row.names=colnames(counts_upperquartile$counts)))
+set
+#normalization
+set <- betweenLaneNormalization(x = set, which = "upper")
+#run RUVg
+set1 <- RUVg(set, least_var_genes, k=1)
+sample_info <- pData(set1)
+sample_info$Replicate <- as.factor(sample_info$Replicate)
+sample_info$LibraryPrepBatch <- as.factor(sample_info$LibraryPrepBatch)
+
+
+
+
+#fit with W1 and W2
+set1_W2 <- RUVg(set, least_var_genes, k=2)
+sample_info_W2 <- pData(set1_W2)
+sample_info_W2$Replicate <- as.factor(sample_info_W2$Replicate)
+sample_info_W2$LibraryPrepBatch <- as.factor(sample_info_W2$LibraryPrepBatch)
+```
+
+# Specify variables to consider
+
+```{r variables}
+# Specify variables to consider
+form <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + (1|Individual:treatment) + W_1
+form_no_interaction <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + W_1
+
+
+
+
+# W2
+form_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + (1|Individual:treatment) + W_1 + W_2
+form_no_interaction_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + W_1 + W_2
+```
+
+# Run function
+
+```{r function}
+# Fit model and extract results
+# 1) fit linear mixed model on gene expression
+# If categorical variables are specified,
+# a linear mixed model is used
+# If all variables are modeled as fixed effects,
+# a linear model is used
+# each entry in results is a regression model fit on a single gene
+# 2) extract variance fractions from each model fit
+# for each gene, returns fraction of variation attributable
+# to each variable
+# Interpretation: the variance explained by each variables
+# after correcting for all other variables
+varPart <- fitExtractVarPartModel( filtered_RLE, form, sample_info )
+# sort variables (i.e. columns) by median fraction
+# of variance explained
+vp <- sortCols(varPart)
+# Bar plot of variance fractions for the first 10 genes
+plotPercentBars( vp[1:10,] )
+# violin plot of contribution of each variable to total variance
+plotVarPart( vp )
+
+#no interaction
+varPart <- fitExtractVarPartModel( filtered_RLE, form_no_interaction, sample_info )
+vp <- sortCols(varPart)
+plotVarPart( vp )
+
+
+
+
+
+#W2
+varPart <- fitExtractVarPartModel( filtered_RLE, form_W2, sample_info_W2 )
+vp <- sortCols(varPart)
+plotVarPart( vp )
+#no interaction
+varPart <- fitExtractVarPartModel( filtered_RLE, form_no_interaction_W2, sample_info_W2 )
+vp <- sortCols(varPart)
+plotVarPart( vp )
+```
+
+# Looking at treatment
+
+```{r}
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
+
+# looking at genes that have majority var explained by treatment
+sorted_treatment <- varPart[order(varPart$treatment, decreasing=TRUE),]
+plotPercentBars(sorted_treatment[1:10,])
+treatment_genes <- rownames(sorted_treatment)
+
+treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
+head(treatment_symbols)
+treatment_anno <- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
+head(treatment_anno)
+```

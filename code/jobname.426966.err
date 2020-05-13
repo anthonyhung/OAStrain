@@ -1,4 +1,8 @@
-Loading required package: ggplot2
+Loading .Rprofile for the current workflowr project
+This is workflowr version 1.6.1
+Run ?workflowr for help getting started
+Loading required package: slam
+Loading required package: methods
 
 Attaching package: ‘cowplot’
 
@@ -6,9 +10,14 @@ The following object is masked from ‘package:ggplot2’:
 
     ggsave
 
-Loading required package: slam
+
+Attaching package: ‘maptpx’
+
+The following objects are masked from ‘package:classtpx’:
+
+    expit, logit, rdir, stm_tfidf
+
 Loading required package: SummarizedExperiment
-Loading required package: methods
 Loading required package: GenomicRanges
 Loading required package: stats4
 Loading required package: BiocGenerics
@@ -77,6 +86,13 @@ The following object is masked from ‘package:base’:
     apply
 
 
+Attaching package: ‘SummarizedExperiment’
+
+The following object is masked from ‘package:Seurat’:
+
+    Assays
+
+
 Attaching package: ‘MAST’
 
 The following object is masked from ‘package:stats’:
@@ -98,38 +114,11 @@ The following object is masked from ‘package:stats’:
 
     lowess
 
-Loading required package: limma
-
-Attaching package: ‘limma’
-
-The following object is masked from ‘package:BiocGenerics’:
-
-    plotMA
-
-
-Attaching package: ‘classtpx’
-
-The following objects are masked from ‘package:maptpx’:
-
-    expit, logit, rdir, stm_tfidf
-
-Warning messages:
+Error in (-npoint):0 : NA/NaN argument
+Calls: <Anonymous> -> thetaSelect -> do.call -> lapply -> FUN
+In addition: Warning messages:
 1: In if (shrink & shrink.method == 2) { :
   the condition has length > 1 and only the first element will be used
 2: In if (shrink & shrink.method == 1) { :
   the condition has length > 1 and only the first element will be used
-Warning messages:
-1: In if (shrink & shrink.method == 2) { :
-  the condition has length > 1 and only the first element will be used
-2: In if (shrink & shrink.method == 1) { :
-  the condition has length > 1 and only the first element will be used
-Warning messages:
-1: In if (shrink & shrink.method == 2) { :
-  the condition has length > 1 and only the first element will be used
-2: In if (shrink & shrink.method == 1) { :
-  the condition has length > 1 and only the first element will be used
-Warning messages:
-1: In if (shrink & shrink.method == 2) { :
-  the condition has length > 1 and only the first element will be used
-2: In if (shrink & shrink.method == 1) { :
-  the condition has length > 1 and only the first element will be used
+Execution halted

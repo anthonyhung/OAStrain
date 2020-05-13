@@ -32,16 +32,50 @@ class.labs <- c(rep("iPSC", length(idx.ips)),
 
 #Perform topic modeling k=3
 #Save GoM data
+# k=3
+# print(k)
+# tpx.clust <- classtpx::class_topics(
+#      t(counts_allgenes),
+#      K=k,
+#      known_samples=kwn.smp,
+#      class_labs=class.labs,
+#      method="omega.fix",
+#      tol=1)
+# saveRDS(tpx.clust, file=paste0("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/gom_sup_",k,".rda"))
+# 
+# omega <- tpx.clust$omega
+# annotation <- data.frame(
+#      sample_id = paste0("X", c(1:NROW(omega))),
+#      tissue_label = as.factor(labels))
+# rownames(omega) <- annotation$sample_id
+# CountClust::StructureGGplot(omega = omega,
+#                             annotation = annotation,
+#                             palette = RColorBrewer::brewer.pal(8, "Accent"),
+#                             yaxis_label = "Tissue/Cell Type",
+#                             order_sample = TRUE,
+#                             axis_tick = list(axis_ticks_length = .1,
+#                                              axis_ticks_lwd_y = .1,
+#                                              axis_ticks_lwd_x = .1,
+#                                              axis_label_size = 7,
+#                                              axis_label_face = "bold")
+# )
+# 
+# ggsave("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/structureplot.png")
+
+
+
+counts_allgenes <- counts_allgenes[,kwn.smp]
+
 k=3
 print(k)
 tpx.clust <- classtpx::class_topics(
      t(counts_allgenes),
      K=k,
-     known_samples=kwn.smp,
+     known_samples=rep(1,ncol(counts_allgenes)),
      class_labs=class.labs,
      method="omega.fix",
      tol=1)
-saveRDS(tpx.clust, file=paste0("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/gom_sup_",k,".rda"))
+saveRDS(tpx.clust, file=paste0("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/gom_sup_noiPSCChond_",k,".rda"))
 
 
 omega <- tpx.clust$omega
@@ -61,5 +95,4 @@ CountClust::StructureGGplot(omega = omega,
                                              axis_label_face = "bold")
 )
 
-ggsave("output/structureplot.png")
-
+ggsave("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/structureplot.png")

@@ -1,0 +1,6 @@
+Note that the current default version of R is 3.6.1.
+Loading .Rprofile for the current workflowr project
+This is workflowr version 1.5.0
+Run ?workflowr for help getting started
+Error in library(classtpx) : there is no package called ‘classtpx’
+Execution halted
