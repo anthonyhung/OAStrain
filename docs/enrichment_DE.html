@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-05-18" />
+
+<title>Enrichment of genes of interest amongst DE genes</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Enrichment of genes of interest amongst DE genes</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-05-18</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-05-18
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree51cceef198e21d0b03dbcb95ee86fd6a6d88b406targetblank51cceefa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/51cceef198e21d0b03dbcb95ee86fd6a6d88b406" target="_blank">51cceef</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree51cceef198e21d0b03dbcb95ee86fd6a6d88b406targetblank51cceefa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/51cceef198e21d0b03dbcb95ee86fd6a6d88b406" target="_blank">51cceef</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
+    Ignored:    output/ANT1.2.rds
+
+Untracked files:
+    Untracked:  .RDataTmp
+    Untracked:  analysis/enrichment_DE.Rmd
+
+Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   data/DEgenes_FDR05.rda
+    Modified:   fig-limma-treatment-hit-1.eps
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packagesdata" class="section level1">
+<h1>Load packages/data</h1>
+<pre class="r"><code># load gene annotations
+gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
+                        sep = &quot;\t&quot;)
+
+DE_results &lt;- readRDS(&quot;data/DE_results.rds&quot;)
+threshold &lt;- 0.05
+DE_genes &lt;- rownames(DE_results[[&quot;Unstrain&quot;]])[DE_results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold]
+DE_genes &lt;- gene_anno$external_gene_name[match(DE_genes, gene_anno$ensembl_gene_id)]
+other_genes &lt;- rownames(DE_results[[&quot;Unstrain&quot;]])[DE_results[[&quot;Unstrain&quot;]]$qvalue &gt;= threshold]
+other_genes &lt;- gene_anno$external_gene_name[match(other_genes, gene_anno$ensembl_gene_id)]
+
+
+
+
+#Genes from https://www.nature.com/articles/s41588-018-0327-1#Sec3 (supp table 6)
+#Genes for which OAGWAS signals share an association eQTL signal in at least one tissue (coloc/metaxcan).
+genes_GWAS_share_eQTL &lt;- c(&quot;SLC39A8&quot;, &quot;TGFA&quot;, &quot;CCDC97&quot;, &quot;KIF12&quot;, &quot;COL27A1&quot;, &quot;AC011475.1&quot;, &quot;LTBP1&quot;, &quot;CSK&quot;, &quot;RP11-10A14.8&quot;, &quot;RBM6&quot;, &quot;DPEP1&quot;,
+                           &quot;DYNC1I1&quot;, &quot;RP11-21L23.2&quot;, &quot;CRADD&quot;, &quot;RAPH1&quot;,  &quot;ANAPC4&quot;, &quot;HIST1H2AC&quot;, &quot;RABGAP1L&quot;, &quot;GLIS3&quot;, &quot;RP5-1024C24.1&quot;, &quot;DCDC1&quot;, &quot;MAPT&quot;,
+                           &quot;CPSF6&quot;, &quot;KIF26B&quot;, &quot;SCUBE1&quot;, &quot;TMEM241&quot;, &quot;RNU2-17P&quot;, &quot;CDC5L-RP3-449H6.1&quot;, &quot;RN7SKP15-RP11-993B23.1&quot;, &quot;RP11-415D17.4&quot;, &quot;COL11A1&quot;, &quot;ITIH1&quot;,
+                           &quot;ASTN2&quot;, &quot;IL11&quot;, &quot;RUNX2&quot;, &quot;LMX1B&quot;, &quot;MAPT&quot;, &quot;RP11-22A3.1-RNU6-962P&quot;, &quot;ERG-LINC00114&quot;, &quot;SMAD3&quot;, &quot;TBX4&quot;, &quot;NACA2&quot;, &quot;TNC&quot;,
+                           &quot;MLXIP&quot;, &quot;COLGALT2&quot;, &quot;LRIG3&quot;, &quot;BMP5&quot;, &quot;LTBP3&quot;, &quot;GSDMC&quot;, &quot;SPTBN2&quot;, &quot;GDF5&quot;, &quot;NFAT5&quot;, &quot;SBNO1&quot;, 
+                           &quot;POLR2M-ALDH1A2&quot;, &quot;SMG6&quot;, &quot;LOC124685-AC005152.3&quot;, &quot;AP3B1&quot;, &quot;AC098872.3&quot;, &quot;USP8&quot;, &quot;RP11-95P13.2-ZC3H11B&quot;, &quot;RP11-115J23.1&quot;, &quot;HLA-DPB1&quot;, &quot;NF1&quot;,
+                           &quot;SLBP&quot;, &quot;FTO&quot;, &quot;FGF18&quot;, &quot;RP11-654D12.2&quot;
+                           )
+
+#nearest gene symbol(s) to established osteoarthritis loci (Fig S3)
+OA_GWAS_genes &lt;- c(&quot;SLC30A10&quot;, &quot;LYPLAL1&quot;, &quot;TGFA&quot;, &quot;COL6A4P1&quot;, &quot;GLT8D1&quot;, &quot;TP63&quot;, &quot;ANXA3&quot;, &quot;BTNL2&quot;, &quot;HLA-DQB1&quot;, &quot;SUPT3H&quot;,
+                   &quot;FILIP1&quot;, &quot;SENP6&quot;, &quot;COG5&quot;, &quot;DUS4L&quot;, &quot;LINC01006&quot;, &quot;PLEC&quot;, &quot;GLIS3&quot;, &quot;MOB3B&quot;, &quot;EQTN&quot;, &quot;ASTN2&quot;,
+                   &quot;MGP&quot;, &quot;ERP27&quot;, &quot;KLHL42&quot;, &quot;PTHLH&quot;, &quot;CHST11&quot;, &quot;MCF2L&quot;, &quot;ALDH1A2&quot;, &quot;ALDH1A2&quot;, &quot;SMAD3&quot;, &quot;FTO&quot;,
+                   &quot;JPH3&quot;, &quot;MAP2K6&quot;, &quot;DOT1L&quot;, &quot;COMP&quot;, &quot;ZNF345&quot;, &quot;GDF5&quot;, &quot;ZMYND8&quot;, &quot;NCOA3&quot;, &quot;RWDD2B&quot;, &quot;USP16&quot;, 
+                   &quot;LTN1&quot;, &quot;CHADL&quot;
+)
+
+#Table S4: Functional genomics annotations for all genes within 500kb of the osteoarthritis-associated variants. (subset to those with any evidence)
+fungenomic &lt;- c(&quot;COL11A1&quot;, &quot;RP11-403I13.10&quot;, &quot;FCGR1A&quot;, &quot;OTUD7B&quot;, &quot;VPS45&quot;, &quot;PLEKHO1&quot;, &quot;APH1A&quot;, &quot;CIART&quot;, &quot;RPRD2&quot;, &quot;TARS2&quot;, &quot;ECM1&quot;, &quot;ENSA&quot;, &quot;CTSS&quot;, &quot;CTSK&quot;, &quot;ANXA9&quot;, &quot;MINDY1&quot;, &quot;MLLT11&quot;, &quot;CENPL&quot;, &quot;DARS2&quot;, &quot;RC3H1&quot;, &quot;RP11-160H22.5&quot;, &quot;RABGAP1L&quot;, &quot;LAMC1&quot;, &quot;LAMC2&quot;, &quot;NCF2&quot;, &quot;COLGALT2&quot;, &quot;TSEN15&quot;, &quot;LYPLAL1&quot;, &quot;RP11-392O17.1&quot;, &quot;MARK1&quot;, &quot;COX20&quot;, &quot;SMYD3&quot;, &quot;TTC27&quot;, &quot;LTBP1&quot;, &quot;FAM98A&quot;, &quot;MXD1&quot;, &quot;ASPRV1&quot;, &quot;TIA1&quot;, &quot;PCYOX1&quot;, &quot;SNRPG&quot;, &quot;FAM136A&quot;, &quot;TGFA&quot;, &quot;ATP6V1B1&quot;, &quot;NAGK&quot;, &quot;DYSF&quot;, &quot;GLS&quot;, &quot;STAT1&quot;, &quot;STAT4&quot;, &quot;BMPR2&quot;, &quot;FAM117B&quot;, &quot;ICA1L&quot;, &quot;CARF&quot;, &quot;WDR12&quot;, &quot;RAPH1&quot;, &quot;CTLA4&quot;, &quot;P4HTM&quot;, &quot;WDR6&quot;, &quot;IMPDH2&quot;, &quot;LAMB2&quot;, &quot;AMT&quot;, &quot;NICN1&quot;, &quot;DAG1&quot;, &quot;RNF123&quot;, &quot;GMPPB&quot;, &quot;IP6K1&quot;, &quot;FAM212A&quot;, &quot;UBA7&quot;, &quot;CAMKV&quot;, &quot;ACTBP13&quot;, &quot;MST1R&quot;, &quot;CTD-2330K9.3&quot;, &quot;RBM6&quot;, &quot;RBM5&quot;, &quot;SEMA3F&quot;, &quot;GNAI2&quot;, &quot;IFRD2&quot;, &quot;HYAL1&quot;, &quot;HYAL2&quot;, &quot;TMEM115&quot;, &quot;CACNA2D2&quot;, &quot;CISH&quot;, &quot;RRP9&quot;, &quot;PCBP4&quot;, &quot;ABHD14A&quot;, &quot;ABHD14B&quot;, &quot;ABHD14A-ACY1&quot;, &quot;RPL29&quot;, &quot;POC1A&quot;, &quot;TWF2&quot;, &quot;PPM1M&quot;, &quot;WDR82&quot;, &quot;GLYCTK&quot;, &quot;RP11-168J18.6&quot;, &quot;PHF7&quot;, &quot;NISCH&quot;, &quot;NT5DC2&quot;, &quot;PBRM1&quot;, &quot;GNL3&quot;, &quot;GLT8D1&quot;, &quot;SPCS1&quot;, &quot;RP5-966M1.5&quot;, &quot;NEK4&quot;, &quot;ITIH1&quot;, &quot;ITIH3&quot;, &quot;ITIH4&quot;, &quot;MUSTN1&quot;, &quot;SFMBT1&quot;, &quot;PRKCD&quot;, &quot;TKT&quot;, &quot;IDUA&quot;, &quot;FGFRL1&quot;, &quot;RNF212&quot;, &quot;CTBP1&quot;, &quot;UVSSA&quot;, &quot;RP11-1398P2.1&quot;, &quot;FAM53A&quot;, &quot;SLBP&quot;, &quot;RP11-572O17.1&quot;, &quot;TMEM129&quot;, &quot;TACC3&quot;, &quot;FGFR3&quot;, &quot;LETM1&quot;, &quot;NSD2&quot;, &quot;POLN&quot;, &quot;ZFYVE28&quot;, &quot;RAB28&quot;, &quot;NKX3-2&quot;, &quot;DHX15&quot;, &quot;HNRNPA1P65&quot;, &quot;SOD3&quot;, &quot;CCDC149&quot;, &quot;ZCCHC4&quot;, &quot;ANAPC4&quot;, &quot;SEL1L3&quot;, &quot;PPP3CA&quot;, &quot;SLC39A8&quot;, &quot;NFKB1&quot;, &quot;UBE2D3&quot;, &quot;CISD2&quot;, &quot;BDH2&quot;, &quot;CTD-2179L22.1&quot;, &quot;AP3B1&quot;, &quot;ARSB&quot;, &quot;BHMT2&quot;, &quot;BHMT&quot;, &quot;DMGDH&quot;, &quot;FGF18&quot;, &quot;SH3PXD2B&quot;, &quot;CARMIL1&quot;, &quot;U91328.19&quot;, &quot;U91328.22&quot;, &quot;HIST1H1C&quot;, &quot;HFE&quot;, &quot;HIST1H2APS3&quot;, &quot;BTN2A2&quot;, &quot;BTN3A3&quot;, &quot;BTN2A1&quot;, &quot;HIST1H2BJ&quot;, &quot;HIST1H2AG&quot;, &quot;HIST1H2BK&quot;, &quot;AGER&quot;, &quot;PBX2&quot;, &quot;GPSM3&quot;, &quot;HLA-DRB5&quot;, &quot;RPL32P1&quot;, &quot;HLA-DPB1&quot;, &quot;COL11A2&quot;, &quot;RING1&quot;, &quot;BAK1&quot;, &quot;ITPR3&quot;, &quot;IP6K3&quot;, &quot;LEMD2&quot;, &quot;YIPF3&quot;, &quot;POLR1C&quot;, &quot;VEGFA&quot;, &quot;C6orf223&quot;, &quot;TMEM63B&quot;, &quot;SLC29A1&quot;, &quot;NFKBIE&quot;, &quot;SUPT3H&quot;, &quot;RP1-244F24.1&quot;, &quot;RUNX2&quot;, &quot;SUPT3H&quot;, &quot;RUNX2&quot;, &quot;RP1-244F24.1&quot;, &quot;CLIC5&quot;, &quot;RCAN2&quot;, &quot;BMP5&quot;, &quot;COL12A1&quot;, &quot;TMEM30A&quot;, &quot;FILIP1&quot;, &quot;MYO6&quot;, &quot;PON3&quot;, &quot;PDK4&quot;, &quot;DYNC1I1&quot;, &quot;SLC25A13&quot;, &quot;DLX6&quot;, &quot;DLX5&quot;, &quot;ALG1L13P&quot;, &quot;FAM86B3P&quot;, &quot;ERI1&quot;, &quot;PPP1R3B&quot;, &quot;RP11-10A14.5&quot;, &quot;MSRA&quot;, &quot;GSDMC&quot;, &quot;FAM49B&quot;, &quot;SLC1A1&quot;, &quot;JAK2&quot;, &quot;SLC31A2&quot;, &quot;FKBP15&quot;, &quot;CDC26&quot;, &quot;POLE3&quot;, &quot;C9orf43&quot;, &quot;ZNF618&quot;, &quot;COL27A1&quot;, &quot;ORM1&quot;, &quot;ORM2&quot;, &quot;TNFSF15&quot;, &quot;TNFSF8&quot;, &quot;TNC&quot;, &quot;COL27A1&quot;, &quot;ORM1&quot;, &quot;ORM2&quot;, &quot;TNFSF15&quot;, &quot;TNFSF8&quot;, &quot;TNC&quot;, &quot;PAPPA&quot;, &quot;TLR4&quot;, &quot;PBX3&quot;, &quot;LMX1B&quot;, &quot;ZBTB43&quot;, &quot;ANGPTL2&quot;, &quot;FAM129B&quot;, &quot;MPPED2&quot;, &quot;EHD1&quot;, &quot;PPP2R5B&quot;, &quot;SNX15&quot;, &quot;NAALADL1&quot;, &quot;TM7SF2&quot;, &quot;SYVN1&quot;, &quot;CAPN1&quot;, &quot;SLC25A45&quot;, &quot;FRMD8&quot;, &quot;NEAT1&quot;, &quot;MALAT1&quot;, &quot;SCYL1&quot;, &quot;LTBP3&quot;, &quot;SSSCA1-AS1&quot;, &quot;FAM89B&quot;, &quot;KCNK7&quot;, &quot;MAP3K11&quot;, &quot;RELA&quot;, &quot;RNASEH2C&quot;, &quot;EFEMP2&quot;, &quot;FOSL1&quot;, &quot;DRAP1&quot;, &quot;BANF1&quot;, &quot;TMEM151A&quot;, &quot;B4GAT1&quot;, &quot;NPAS4&quot;, &quot;MRPL11&quot;, &quot;PELI3&quot;, &quot;ZDHHC24&quot;, &quot;EFEMP2&quot;, &quot;FOSL1&quot;, &quot;DRAP1&quot;, &quot;BANF1&quot;, &quot;TMEM151A&quot;, &quot;B4GAT1&quot;, &quot;NPAS4&quot;, &quot;MRPL11&quot;, &quot;PELI3&quot;, &quot;ZDHHC24&quot;, &quot;RBM4B&quot;, &quot;SPTBN2&quot;, &quot;PC&quot;, &quot;C11orf86&quot;, &quot;RHOD&quot;, &quot;ANKRD13D&quot;, &quot;RAD9A&quot;, &quot;GPR152&quot;, &quot;TBX10&quot;, &quot;THAP12&quot;, &quot;GUCY2EP&quot;, &quot;RP11-21L23.4&quot;, &quot;RP11-21L23.3&quot;, &quot;TSKU&quot;, &quot;RP11-21L23.2&quot;, &quot;ACER3&quot;, &quot;PAK1&quot;, &quot;FTH1P16&quot;, &quot;RSF1&quot;, &quot;INTS13&quot;, &quot;FGFR1OP2&quot;, &quot;PPFIBP1&quot;, &quot;REP15&quot;, &quot;HMGB1P49&quot;, &quot;MRPS35&quot;, &quot;PTHLH&quot;, &quot;LRIG3&quot;, &quot;SLC16A7&quot;, &quot;RP11-813P10.2&quot;, &quot;NUP107&quot;, &quot;SLC35E3&quot;, &quot;MDM2&quot;, &quot;CPSF6&quot;, &quot;LYZ&quot;, &quot;FRS2&quot;, &quot;CCT2&quot;, &quot;RAB3IP&quot;, &quot;MYRFL&quot;, &quot;DUSP6&quot;, &quot;ATP2B1&quot;, &quot;UBE2N&quot;, &quot;SOCS2&quot;, &quot;RP11-887P2.5&quot;, &quot;CRADD&quot;, &quot;CEP83&quot;, &quot;P2RX7&quot;, &quot;P2RX4&quot;, &quot;TMEM120B&quot;, &quot;AC156455.1&quot;, &quot;DIABLO&quot;, &quot;DIABLO&quot;, &quot;CCDC150P1&quot;, &quot;DENR&quot;, &quot;HIP1R&quot;, &quot;VPS37B&quot;, &quot;PITPNM2&quot;, &quot;DENR&quot;, &quot;HIP1R&quot;, &quot;VPS37B&quot;, &quot;ABCB9&quot;, &quot;PITPNM2&quot;, &quot;MPHOSPH9&quot;, &quot;C12orf65&quot;, &quot;RP11-282O18.3&quot;, &quot;CDK2AP1&quot;, &quot;SBNO1&quot;, &quot;RILPL2&quot;, &quot;SNRNP35&quot;, &quot;DDX55&quot;, &quot;DNAH10OS&quot;, &quot;RFLNA&quot;, &quot;NCOR2&quot;, &quot;FGF7&quot;, &quot;USP8&quot;, &quot;RP11-562A8.1&quot;, &quot;RP11-562A8.5&quot;, &quot;AP4E1&quot;, &quot;TNFAIP8L3&quot;, &quot;CYP19A1&quot;, &quot;CGNL1&quot;, &quot;ALDH1A2&quot;, &quot;ADAM10&quot;, &quot;MAP2K1&quot;, &quot;LCTL&quot;, &quot;SMAD3&quot;, &quot;PIAS1&quot;, &quot;LOXL1&quot;, &quot;ISLR2&quot;, &quot;ISLR&quot;, &quot;STRA6&quot;, &quot;CCDC33&quot;, &quot;SEMA7A&quot;, &quot;EDC3&quot;, &quot;CYP1A1&quot;, &quot;CSK&quot;, &quot;LMAN1L&quot;, &quot;ULK3&quot;, &quot;SCAMP2&quot;, &quot;MPI&quot;, &quot;COX5A&quot;, &quot;RPP25&quot;, &quot;NEIL1&quot;, &quot;MAN2C1&quot;, &quot;PTPN9&quot;, &quot;IMP3&quot;, &quot;SNX33&quot;, &quot;CSPG4&quot;, &quot;RP11-467J12.4&quot;, &quot;RBL2&quot;, &quot;AKTIP&quot;, &quot;RPGRIP1L&quot;, &quot;FTO&quot;, &quot;IRX3&quot;, &quot;CDH3&quot;, &quot;TANGO6&quot;, &quot;PDF&quot;, &quot;NFAT5&quot;, &quot;WWP2&quot;, &quot;CLEC18A&quot;, &quot;PDXDC2P&quot;, &quot;FUK&quot;, &quot;COG4&quot;, &quot;SF3B3&quot;, &quot;IL34&quot;, &quot;CYBA&quot;, &quot;CDT1&quot;, &quot;GALNS&quot;, &quot;ANKRD11&quot;, &quot;SPG7&quot;, &quot;DPEP1&quot;, &quot;CHMP1A&quot;, &quot;SPATA2L&quot;, &quot;ZNF276&quot;)
+fungenomic1 &lt;- c(&quot;FANCA&quot;, &quot;MC1R&quot;, &quot;TUBB3&quot;, &quot;AFG3L1P&quot;, &quot;MYO1C&quot;, &quot;SERPINF1&quot;, &quot;RPA1&quot;, &quot;DPH1&quot;, &quot;HIC1&quot;, &quot;SMG6&quot;, &quot;HNRNPA1P16&quot;, &quot;TSR1&quot;, &quot;MNT&quot;, &quot;METTL16&quot;, &quot;BLMH&quot;, &quot;CTD-2349P21.5&quot;, &quot;CTD-2349P21.9&quot;, &quot;RNF135&quot;, &quot;RP11-271K11.5&quot;, &quot;NF1&quot;, &quot;OMG&quot;, &quot;EVI2B&quot;, &quot;EVI2A&quot;, &quot;RAB11FIP4&quot;, &quot;UTP6&quot;, &quot;SUZ12&quot;, &quot;RHOT1&quot;, &quot;DCAKD&quot;, &quot;FMNL1&quot;, &quot;ARHGAP27&quot;, &quot;PLEKHM1&quot;, &quot;RP11-798G7.8&quot;, &quot;LRRC37A4P&quot;, &quot;DND1P1&quot;, &quot;RPS26P8&quot;, &quot;CRHR1&quot;, &quot;SPPL2C&quot;, &quot;MAPT&quot;, &quot;RP11-259G18.3&quot;, &quot;RP11-259G18.1&quot;, &quot;RP11-995C19.2&quot;, &quot;LRRC37A2&quot;, &quot;ARL17A&quot;, &quot;NSF&quot;, &quot;WNT3&quot;, &quot;GOSR2&quot;, &quot;DCAKD&quot;, &quot;NMT1&quot;, &quot;FMNL1&quot;, &quot;PLEKHM1&quot;, &quot;GOSR2&quot;, &quot;BCAS3&quot;, &quot;TBX2&quot;, &quot;TBX4&quot;, &quot;LINC01152&quot;, &quot;SOX9&quot;, &quot;TMEM241&quot;, &quot;RIOK3&quot;, &quot;NPC1&quot;, &quot;LAMA3&quot;, &quot;OSBPL1A&quot;, &quot;OLFM2&quot;, &quot;COL5A3&quot;, &quot;ANGPTL6&quot;, &quot;PPAN&quot;, &quot;P2RY11&quot;, &quot;DNMT1&quot;, &quot;S1PR2&quot;, &quot;ICAM1&quot;, &quot;ICAM5&quot;, &quot;ZGLP1&quot;, &quot;CTD-2369P2.12&quot;, &quot;TYK2&quot;, &quot;PDE4A&quot;, &quot;SLC44A2&quot;, &quot;ILF3-AS1&quot;, &quot;ILF3&quot;, &quot;DNM2&quot;, &quot;TMED1&quot;, &quot;SMARCA4&quot;, &quot;KANK2&quot;, &quot;TMEM205&quot;, &quot;RGL3&quot;, &quot;CCDC151&quot;, &quot;CNN1&quot;, &quot;ACP5&quot;, &quot;PLD3&quot;, &quot;CTC-492K19.4&quot;, &quot;BLVRB&quot;, &quot;LTBP4&quot;, &quot;NUMBL&quot;, &quot;ITPKC&quot;, &quot;SNRPA&quot;, &quot;MIA&quot;, &quot;CYP2T1P&quot;, &quot;AXL&quot;, &quot;TGFB1&quot;, &quot;CEACAM5&quot;, &quot;DEDD2&quot;, &quot;GSK3A&quot;, &quot;ERF&quot;, &quot;PAFAH1B3&quot;, &quot;TMEM145&quot;, &quot;MEGF8&quot;, &quot;DNAAF3&quot;, &quot;PTPRH&quot;, &quot;COX6B2&quot;, &quot;IL11&quot;, &quot;SHISA7&quot;, &quot;NAT14&quot;, &quot;SSC5D&quot;, &quot;ZNF524&quot;, &quot;ZSCAN5A&quot;, &quot;ITCH&quot;, &quot;MAP1LC3A&quot;, &quot;PIGU&quot;, &quot;ACSS2&quot;, &quot;MYH7B&quot;, &quot;TRPC4AP&quot;, &quot;EDEM2&quot;, &quot;PROCR&quot;, &quot;EIF6&quot;, &quot;UQCC1&quot;, &quot;GDF5&quot;, &quot;CEP250&quot;, &quot;ERGIC3&quot;, &quot;FER1L4&quot;, &quot;RBM12&quot;, &quot;PHF20&quot;, &quot;SCAND1&quot;, &quot;SPATA20P1&quot;, &quot;KCNJ15&quot;, &quot;ERG&quot;, &quot;PSMG1&quot;, &quot;HMGN1&quot;, &quot;RRP7A&quot;, &quot;RRP7BP&quot;, &quot;CYB5R3&quot;, &quot;A4GALT&quot;, &quot;RP1-47A17.1&quot;, &quot;PACSIN2&quot;, &quot;MCAT&quot;, &quot;TSPO&quot;, &quot;TTLL12&quot;, &quot;SCUBE1&quot;, &quot;SAMM50&quot;, &quot;PARVB&quot;)
+fungenomic &lt;- c(fungenomic, fungenomic1)
+
+
+
+#doi: https://doi.org/10.1101/835850
+#Supplementary Table 2. Genes with significant cross-omics differences between high-grade and low-grade cartilage. (transcriptomic, proteomic both were significant)
+s2 &lt;- c(&quot;ABCE1&quot;, &quot;ABHD12&quot;, &quot;ABI3BP&quot;, &quot;ACLY&quot;, &quot;ACSL4&quot;, &quot;ACTR3B&quot;, &quot;ADD3&quot;, &quot;ADPRH&quot;, &quot;ADSS&quot;, &quot;AEBP1&quot;, &quot;AGFG1&quot;, &quot;AGTRAP&quot;, &quot;AHCY&quot;, &quot;AK2&quot;, &quot;AKR1B1&quot;, &quot;AKR1C1&quot;, &quot;AKR1C2&quot;, &quot;ALDH18A1&quot;, &quot;ALDH1A2&quot;, &quot;ALDH1A3&quot;, &quot;AMPD2&quot;, &quot;ANAPC7&quot;, &quot;ANK3&quot;, &quot;ANPEP&quot;, &quot;APOD&quot;, &quot;APP&quot;, &quot;ARHGAP17&quot;, &quot;ARMC9&quot;, &quot;ARSA&quot;, &quot;ASAH1&quot;, &quot;ATAD3B&quot;, &quot;ATP6AP1&quot;, &quot;BAIAP2L1&quot;, &quot;BCCIP&quot;, &quot;BCL2L13&quot;, &quot;BLOC1S6&quot;, &quot;BOLA2&quot;, &quot;BRIX1&quot;, &quot;C17orf58&quot;, &quot;C1GALT1&quot;, &quot;C1QTNF5&quot;, &quot;C1R&quot;, &quot;C4BPA&quot;, &quot;CA5B&quot;, &quot;CAPG&quot;, &quot;CAPS&quot;, &quot;CARHSP1&quot;, &quot;CASP3&quot;, &quot;CASP4&quot;, &quot;CCDC124&quot;, &quot;CCDC50&quot;, &quot;CCDC85A&quot;, &quot;CCDC86&quot;, &quot;CCL20&quot;, &quot;CCPG1&quot;, &quot;CFH&quot;, &quot;CHDH&quot;, &quot;CHMP1B&quot;, &quot;CHMP2A&quot;, &quot;CHRDL2&quot;, &quot;CLEC3B&quot;, &quot;CLIC3&quot;, &quot;CLIC6&quot;, &quot;CMAS&quot;, &quot;CMBL&quot;, &quot;CNN2&quot;, &quot;CNN3&quot;, &quot;COG7&quot;, &quot;COL15A1&quot;, &quot;COL18A1&quot;, &quot;COL1A2&quot;, &quot;COL3A1&quot;, &quot;COL4A1&quot;, &quot;COL4A2&quot;, &quot;COL5A1&quot;, &quot;COL9A1&quot;, &quot;COPB2&quot;, &quot;COPG1&quot;, &quot;CPSF4&quot;, &quot;CPT1A&quot;, &quot;CPT2&quot;, &quot;CRISPLD1&quot;, &quot;CRLF1&quot;, &quot;CRTAC1&quot;, &quot;CSTB&quot;, &quot;CTBP1&quot;, &quot;CTBS&quot;, &quot;CTSA&quot;, &quot;CTSD&quot;, &quot;CYLD&quot;, &quot;CYP1B1&quot;, &quot;CYP27A1&quot;, &quot;DCPS&quot;, &quot;DDAH1&quot;, &quot;DDR2&quot;, &quot;DDRGK1&quot;, &quot;DDX19A&quot;, &quot;DDX21&quot;, &quot;DDX46&quot;, &quot;DDX47&quot;, &quot;DERA&quot;, &quot;DFNA5&quot;, &quot;DGKA&quot;, &quot;DHODH&quot;, &quot;DNAJC2&quot;, &quot;DPP4&quot;, &quot;DPP7&quot;, &quot;DPYD&quot;, &quot;DSC2&quot;, &quot;EARS2&quot;, &quot;EFEMP1&quot;, &quot;EHHADH&quot;, &quot;EIF2B4&quot;, &quot;EIF2B5&quot;, &quot;ELMO1&quot;, &quot;ENO1&quot;, &quot;EPB41&quot;, &quot;EPB41L3&quot;, &quot;EPS8L2&quot;, &quot;ERG&quot;, &quot;ERP44&quot;, &quot;EXD2&quot;, &quot;EXOSC4&quot;, &quot;EXOSC8&quot;, &quot;FABP5&quot;, &quot;FAM98A&quot;, &quot;FAP&quot;, &quot;FARSB&quot;, &quot;FBLN1&quot;, &quot;FDFT1&quot;, &quot;FDPS&quot;, &quot;FGD5&quot;, &quot;FGF1&quot;, &quot;FLOT2&quot;, &quot;FN1&quot;, &quot;FRZB&quot;, &quot;FST&quot;, &quot;FSTL1&quot;, &quot;FTL&quot;, &quot;GADD45GIP1&quot;, &quot;GALE&quot;, &quot;GALNT10&quot;, &quot;GALNT15&quot;, &quot;GALNT16&quot;, &quot;GCLM&quot;, &quot;GFPT2&quot;, &quot;GGCT&quot;, &quot;GGH&quot;, &quot;GLB1&quot;, &quot;GLO1&quot;, &quot;GLRX&quot;, &quot;GLRX3&quot;, &quot;GLRX5&quot;, &quot;GNL3&quot;, &quot;GNPDA1&quot;, &quot;GNPNAT1&quot;, &quot;GNS&quot;, &quot;GPHN&quot;, &quot;GPT2&quot;, &quot;GPX8&quot;, &quot;GRN&quot;, &quot;GRWD1&quot;, &quot;GSK3B&quot;, &quot;GSTZ1&quot;, &quot;GTF2F2&quot;, &quot;GULP1&quot;, &quot;HBA1&quot;, &quot;HBB&quot;, &quot;HINT3&quot;)
+s2.1 &lt;- c(&quot;HNRNPA3&quot;, &quot;HNRNPD&quot;, &quot;HSPA4L&quot;, &quot;HSPB8&quot;, &quot;HTRA1&quot;, &quot;HTRA3&quot;, &quot;IARS&quot;, &quot;IGFBP7&quot;, &quot;IL16&quot;, &quot;IL17D&quot;, &quot;IMPDH1&quot;, &quot;INTS10&quot;, &quot;IRAK4&quot;, &quot;IRS1&quot;, &quot;ISG20&quot;, &quot;ITM2B&quot;, &quot;ITSN1&quot;, &quot;KANK2&quot;, &quot;KATNAL1&quot;, &quot;KCNMA1&quot;, &quot;KIAA2013&quot;, &quot;KPNA3&quot;, &quot;LAMC1&quot;, &quot;LAMP1&quot;, &quot;LDHB&quot;, &quot;LDHD&quot;, &quot;LGALS8&quot;, &quot;LIG3&quot;, &quot;LIMA1&quot;, &quot;LMNB2&quot;, &quot;LSM12&quot;, &quot;LSM7&quot;, &quot;LTBP2&quot;, &quot;LTBP3&quot;, &quot;LUM&quot;, &quot;LYPLA2&quot;, &quot;MAP1A&quot;, &quot;MAP1B&quot;, &quot;MAP2K6&quot;, &quot;MARCKS&quot;, &quot;MATN4&quot;, &quot;METTL7A&quot;, &quot;MFAP4&quot;, &quot;MGAT1&quot;, &quot;MGST1&quot;, &quot;MMP19&quot;, &quot;MPDZ&quot;, &quot;MPP6&quot;, &quot;MPRIP&quot;, &quot;MRC2&quot;, &quot;MRPS26&quot;, &quot;MRPS27&quot;, &quot;MRTO4&quot;, &quot;MTAP&quot;, &quot;MTMR12&quot;, &quot;MYBBP1A&quot;, &quot;MYH14&quot;, &quot;MYO6&quot;, &quot;MYOF&quot;, &quot;NAMPT&quot;, &quot;NANS&quot;, &quot;NDP&quot;, &quot;NDRG1&quot;, &quot;NDUFB8&quot;, &quot;NEDD4L&quot;, &quot;NFIA&quot;, &quot;NME1&quot;, &quot;NME2&quot;, &quot;NMI&quot;, &quot;NMT2&quot;, &quot;NOP58&quot;, &quot;NOVA1&quot;, &quot;NPC2&quot;, &quot;NPEPL1&quot;, &quot;NPLOC4&quot;, &quot;NPR2&quot;, &quot;NQO1&quot;, &quot;NR2C2AP&quot;, &quot;NRBF2&quot;, &quot;NTN1&quot;, &quot;NUDC&quot;, &quot;NUDT15&quot;, &quot;NXT1&quot;, &quot;ODF2&quot;, &quot;OMD&quot;, &quot;OPLAH&quot;, &quot;OSBPL1A&quot;, &quot;OSBPL3&quot;, &quot;OSBPL9&quot;, &quot;P4HA3&quot;, &quot;PA2G4&quot;, &quot;PAK1IP1&quot;, &quot;PBXIP1&quot;)
+s2.2 &lt;- c(&quot;PCBP3&quot;, &quot;PDCD11&quot;, &quot;PDK3&quot;, &quot;PDLIM1&quot;, &quot;PDLIM4&quot;, &quot;PEX5&quot;, &quot;PFAS&quot;, &quot;PFKL&quot;, &quot;PGAM5&quot;, &quot;PGRMC1&quot;, &quot;PHKA1&quot;, &quot;PHLDA1&quot;, &quot;PHOSPHO1&quot;, &quot;PID1&quot;, &quot;PIR&quot;, &quot;PKN1&quot;, &quot;PLA2G2A&quot;, &quot;PLCG1&quot;, &quot;PNP&quot;, &quot;POLR2C&quot;, &quot;PON2&quot;, &quot;POSTN&quot;, &quot;PPFIA1&quot;, &quot;PPIA&quot;, &quot;PPP2R5A&quot;, &quot;PRELP&quot;, &quot;PRMT1&quot;, &quot;PRMT5&quot;, &quot;PRPF4&quot;, &quot;PRPS1&quot;, &quot;PSMG3&quot;, &quot;PTBP2&quot;, &quot;PTGES&quot;, &quot;PTGFRN&quot;, &quot;PTGIS&quot;, &quot;PTPN1&quot;, &quot;PTPRA&quot;, &quot;PTPRM&quot;, &quot;PTPRS&quot;, &quot;PTTG1IP&quot;, &quot;PUS1&quot;, &quot;PXN&quot;, &quot;PYCR1&quot;, &quot;PYGL&quot;, &quot;QSOX1&quot;, &quot;RAB23&quot;, &quot;RAN&quot;, &quot;RANBP1&quot;, &quot;RARRES2&quot;, &quot;RARS&quot;, &quot;RCAN1&quot;, &quot;RFC3&quot;, &quot;RHOC&quot;, &quot;RPS6KA3&quot;, &quot;RRAGC&quot;, &quot;RRAS2&quot;, &quot;RRP9&quot;, &quot;RSPO2&quot;, &quot;RTN3&quot;, &quot;S100A4&quot;, &quot;SAMD9L&quot;, &quot;SCFD2&quot;, &quot;SCIN&quot;, &quot;SDF2&quot;, &quot;SDHB&quot;, &quot;SDR39U1&quot;, &quot;SEC13&quot;, &quot;SEC31A&quot;, &quot;SEMA3C&quot;, &quot;SEPT11&quot;, &quot;SERPINB8&quot;, &quot;SERPINE2&quot;, &quot;SH3D19&quot;, &quot;SH3KBP1&quot;, &quot;SH3PXD2B&quot;, &quot;SLC39A14&quot;, &quot;SMS&quot;, &quot;SMYD5&quot;, &quot;SNCA&quot;, &quot;SNRPA&quot;, &quot;SNTB1&quot;, &quot;SNUPN&quot;, &quot;SNX21&quot;, &quot;SNX5&quot;, &quot;SORBS1&quot;, &quot;SPECC1&quot;, &quot;SPTBN1&quot;, &quot;SRI&quot;, &quot;SRP54&quot;, &quot;SRPX2&quot;, &quot;SRSF9&quot;, &quot;SSR3&quot;, &quot;STBD1&quot;, &quot;STK4&quot;, &quot;STOML2&quot;, &quot;STRAP&quot;, &quot;SYMPK&quot;, &quot;SYNJ1&quot;, &quot;TBC1D4&quot;, &quot;TBL2&quot;, &quot;TCEAL2&quot;, &quot;TCEAL5&quot;, &quot;TCEAL6&quot;, &quot;TGFBI&quot;, &quot;THBS3&quot;, &quot;THOC3&quot;, &quot;THOC5&quot;, &quot;TIMM10&quot;, &quot;TIMM50&quot;, &quot;TIMP2&quot;, &quot;TINAGL1&quot;, &quot;TLR2&quot;, &quot;TM9SF2&quot;, &quot;TMEM2&quot;, &quot;TMOD1&quot;, &quot;TMOD3&quot;, &quot;TNFAIP6&quot;, &quot;TOLLIP&quot;, &quot;TOMM34&quot;, &quot;TP53BP1&quot;, &quot;TRA2B&quot;, &quot;TRAFD1&quot;, &quot;TRAP1&quot;, &quot;TRIM47&quot;, &quot;TTC9C&quot;, &quot;TUBA1B&quot;, &quot;TUBA8&quot;, &quot;TYMP&quot;, &quot;UCHL1&quot;, &quot;UCHL3&quot;, &quot;UNK&quot;, &quot;UPP1&quot;, &quot;USP48&quot;, &quot;VAV2&quot;, &quot;VCAM1&quot;, &quot;VDAC1&quot;, &quot;VPS36&quot;, &quot;VPS37B&quot;, &quot;WDR12&quot;, &quot;WDR3&quot;, &quot;WDR5&quot;, &quot;XRCC6&quot;, &quot;YARS2&quot;, &quot;YBX1&quot;, &quot;ZFHX3&quot;, &quot;ZFYVE21&quot;, &quot;ZPR1&quot;)
+cross_omic &lt;- c(s2, s2.1, s2.2)</code></pre>
+</div>
+<div id="enrichment-function" class="section level1">
+<h1>Enrichment Function</h1>
+<p>Use fisher’s exact test to compute significant enrichment.</p>
+<pre class="r"><code>enrich &lt;- function(genes_of_interest, DEgenes, backgroundgenes){
+     #fill contingency table
+     DE_interest &lt;- length(intersect(genes_of_interest, DEgenes))
+     background_interest &lt;- length(intersect(genes_of_interest, backgroundgenes))
+     DE_non_interest &lt;- length(DEgenes) - DE_interest
+     background_non_interest &lt;- length(backgroundgenes) - background_interest
+     contingency_table &lt;- matrix(c(DE_interest, background_interest, DE_non_interest, background_non_interest), nrow = 2, ncol = 2, byrow = TRUE)
+     
+     #perform test
+     print(contingency_table)
+     return(fisher.test(contingency_table, alternative=&quot;greater&quot;))
+}
+
+
+
+enrich(genes_GWAS_share_eQTL, DE_genes, other_genes)</code></pre>
+<pre><code>     [,1] [,2]
+[1,]    5   31
+[2,] 1004 9407</code></pre>
+<pre><code>
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.2647
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 0.5584656       Inf
+sample estimates:
+odds ratio 
+  1.511132 </code></pre>
+<pre class="r"><code>enrich(OA_GWAS_genes, DE_genes, other_genes)</code></pre>
+<pre><code>     [,1] [,2]
+[1,]    4   20
+[2,] 1005 9418</code></pre>
+<pre><code>
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.1967
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 0.586544      Inf
+sample estimates:
+odds ratio 
+  1.874003 </code></pre>
+<pre class="r"><code>enrich(fungenomic, DE_genes, other_genes)</code></pre>
+<pre><code>     [,1] [,2]
+[1,]   49  289
+[2,]  960 9149</code></pre>
+<pre><code>
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.002425
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 1.223359      Inf
+sample estimates:
+odds ratio 
+  1.615751 </code></pre>
+<pre class="r"><code>enrich(cross_omic, DE_genes, other_genes)</code></pre>
+<pre><code>     [,1] [,2]
+[1,]   44  291
+[2,]  965 9147</code></pre>
+<pre><code>
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.02135
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 1.07039     Inf
+sample estimates:
+odds ratio 
+  1.433151 </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.6.2 Rcpp_1.0.4.6    rprojroot_1.3-2 digest_0.6.25  
+ [5] later_1.0.0     R6_2.4.1        backports_1.1.7 git2r_0.26.1   
+ [9] magrittr_1.5    evaluate_0.14   stringi_1.4.6   rlang_0.4.6    
+[13] fs_1.3.1        promises_1.1.0  rmarkdown_1.13  tools_3.6.1    
+[17] stringr_1.4.0   glue_1.4.1      httpuv_1.5.1    xfun_0.8       
+[21] yaml_2.2.1      compiler_3.6.1  htmltools_0.4.0 knitr_1.23     </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

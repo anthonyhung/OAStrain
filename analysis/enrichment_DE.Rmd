@@ -1,0 +1,87 @@
+---
+title: "Enrichment of genes of interest amongst DE genes"
+author: "Anthony Hung"
+date: "2020-05-18"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Load packages/data
+
+```{r load}
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
+
+DE_results <- readRDS("data/DE_results.rds")
+threshold <- 0.05
+DE_genes <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue < threshold]
+DE_genes <- gene_anno$external_gene_name[match(DE_genes, gene_anno$ensembl_gene_id)]
+other_genes <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue >= threshold]
+other_genes <- gene_anno$external_gene_name[match(other_genes, gene_anno$ensembl_gene_id)]
+
+
+
+
+#Genes from https://www.nature.com/articles/s41588-018-0327-1#Sec3 (supp table 6)
+#Genes for which OAGWAS signals share an association eQTL signal in at least one tissue (coloc/metaxcan).
+genes_GWAS_share_eQTL <- c("SLC39A8", "TGFA", "CCDC97", "KIF12", "COL27A1", "AC011475.1", "LTBP1", "CSK", "RP11-10A14.8", "RBM6", "DPEP1",
+                           "DYNC1I1", "RP11-21L23.2", "CRADD", "RAPH1",  "ANAPC4", "HIST1H2AC", "RABGAP1L", "GLIS3", "RP5-1024C24.1", "DCDC1", "MAPT",
+                           "CPSF6", "KIF26B", "SCUBE1", "TMEM241", "RNU2-17P", "CDC5L-RP3-449H6.1", "RN7SKP15-RP11-993B23.1", "RP11-415D17.4", "COL11A1", "ITIH1",
+                           "ASTN2", "IL11", "RUNX2", "LMX1B", "MAPT", "RP11-22A3.1-RNU6-962P", "ERG-LINC00114", "SMAD3", "TBX4", "NACA2", "TNC",
+                           "MLXIP", "COLGALT2", "LRIG3", "BMP5", "LTBP3", "GSDMC", "SPTBN2", "GDF5", "NFAT5", "SBNO1", 
+                           "POLR2M-ALDH1A2", "SMG6", "LOC124685-AC005152.3", "AP3B1", "AC098872.3", "USP8", "RP11-95P13.2-ZC3H11B", "RP11-115J23.1", "HLA-DPB1", "NF1",
+                           "SLBP", "FTO", "FGF18", "RP11-654D12.2"
+                           )
+
+#nearest gene symbol(s) to established osteoarthritis loci (Fig S3)
+OA_GWAS_genes <- c("SLC30A10", "LYPLAL1", "TGFA", "COL6A4P1", "GLT8D1", "TP63", "ANXA3", "BTNL2", "HLA-DQB1", "SUPT3H",
+                   "FILIP1", "SENP6", "COG5", "DUS4L", "LINC01006", "PLEC", "GLIS3", "MOB3B", "EQTN", "ASTN2",
+                   "MGP", "ERP27", "KLHL42", "PTHLH", "CHST11", "MCF2L", "ALDH1A2", "ALDH1A2", "SMAD3", "FTO",
+                   "JPH3", "MAP2K6", "DOT1L", "COMP", "ZNF345", "GDF5", "ZMYND8", "NCOA3", "RWDD2B", "USP16", 
+                   "LTN1", "CHADL"
+)
+
+#Table S4: Functional genomics annotations for all genes within 500kb of the osteoarthritis-associated variants. (subset to those with any evidence)
+fungenomic <- c("COL11A1", "RP11-403I13.10", "FCGR1A", "OTUD7B", "VPS45", "PLEKHO1", "APH1A", "CIART", "RPRD2", "TARS2", "ECM1", "ENSA", "CTSS", "CTSK", "ANXA9", "MINDY1", "MLLT11", "CENPL", "DARS2", "RC3H1", "RP11-160H22.5", "RABGAP1L", "LAMC1", "LAMC2", "NCF2", "COLGALT2", "TSEN15", "LYPLAL1", "RP11-392O17.1", "MARK1", "COX20", "SMYD3", "TTC27", "LTBP1", "FAM98A", "MXD1", "ASPRV1", "TIA1", "PCYOX1", "SNRPG", "FAM136A", "TGFA", "ATP6V1B1", "NAGK", "DYSF", "GLS", "STAT1", "STAT4", "BMPR2", "FAM117B", "ICA1L", "CARF", "WDR12", "RAPH1", "CTLA4", "P4HTM", "WDR6", "IMPDH2", "LAMB2", "AMT", "NICN1", "DAG1", "RNF123", "GMPPB", "IP6K1", "FAM212A", "UBA7", "CAMKV", "ACTBP13", "MST1R", "CTD-2330K9.3", "RBM6", "RBM5", "SEMA3F", "GNAI2", "IFRD2", "HYAL1", "HYAL2", "TMEM115", "CACNA2D2", "CISH", "RRP9", "PCBP4", "ABHD14A", "ABHD14B", "ABHD14A-ACY1", "RPL29", "POC1A", "TWF2", "PPM1M", "WDR82", "GLYCTK", "RP11-168J18.6", "PHF7", "NISCH", "NT5DC2", "PBRM1", "GNL3", "GLT8D1", "SPCS1", "RP5-966M1.5", "NEK4", "ITIH1", "ITIH3", "ITIH4", "MUSTN1", "SFMBT1", "PRKCD", "TKT", "IDUA", "FGFRL1", "RNF212", "CTBP1", "UVSSA", "RP11-1398P2.1", "FAM53A", "SLBP", "RP11-572O17.1", "TMEM129", "TACC3", "FGFR3", "LETM1", "NSD2", "POLN", "ZFYVE28", "RAB28", "NKX3-2", "DHX15", "HNRNPA1P65", "SOD3", "CCDC149", "ZCCHC4", "ANAPC4", "SEL1L3", "PPP3CA", "SLC39A8", "NFKB1", "UBE2D3", "CISD2", "BDH2", "CTD-2179L22.1", "AP3B1", "ARSB", "BHMT2", "BHMT", "DMGDH", "FGF18", "SH3PXD2B", "CARMIL1", "U91328.19", "U91328.22", "HIST1H1C", "HFE", "HIST1H2APS3", "BTN2A2", "BTN3A3", "BTN2A1", "HIST1H2BJ", "HIST1H2AG", "HIST1H2BK", "AGER", "PBX2", "GPSM3", "HLA-DRB5", "RPL32P1", "HLA-DPB1", "COL11A2", "RING1", "BAK1", "ITPR3", "IP6K3", "LEMD2", "YIPF3", "POLR1C", "VEGFA", "C6orf223", "TMEM63B", "SLC29A1", "NFKBIE", "SUPT3H", "RP1-244F24.1", "RUNX2", "SUPT3H", "RUNX2", "RP1-244F24.1", "CLIC5", "RCAN2", "BMP5", "COL12A1", "TMEM30A", "FILIP1", "MYO6", "PON3", "PDK4", "DYNC1I1", "SLC25A13", "DLX6", "DLX5", "ALG1L13P", "FAM86B3P", "ERI1", "PPP1R3B", "RP11-10A14.5", "MSRA", "GSDMC", "FAM49B", "SLC1A1", "JAK2", "SLC31A2", "FKBP15", "CDC26", "POLE3", "C9orf43", "ZNF618", "COL27A1", "ORM1", "ORM2", "TNFSF15", "TNFSF8", "TNC", "COL27A1", "ORM1", "ORM2", "TNFSF15", "TNFSF8", "TNC", "PAPPA", "TLR4", "PBX3", "LMX1B", "ZBTB43", "ANGPTL2", "FAM129B", "MPPED2", "EHD1", "PPP2R5B", "SNX15", "NAALADL1", "TM7SF2", "SYVN1", "CAPN1", "SLC25A45", "FRMD8", "NEAT1", "MALAT1", "SCYL1", "LTBP3", "SSSCA1-AS1", "FAM89B", "KCNK7", "MAP3K11", "RELA", "RNASEH2C", "EFEMP2", "FOSL1", "DRAP1", "BANF1", "TMEM151A", "B4GAT1", "NPAS4", "MRPL11", "PELI3", "ZDHHC24", "EFEMP2", "FOSL1", "DRAP1", "BANF1", "TMEM151A", "B4GAT1", "NPAS4", "MRPL11", "PELI3", "ZDHHC24", "RBM4B", "SPTBN2", "PC", "C11orf86", "RHOD", "ANKRD13D", "RAD9A", "GPR152", "TBX10", "THAP12", "GUCY2EP", "RP11-21L23.4", "RP11-21L23.3", "TSKU", "RP11-21L23.2", "ACER3", "PAK1", "FTH1P16", "RSF1", "INTS13", "FGFR1OP2", "PPFIBP1", "REP15", "HMGB1P49", "MRPS35", "PTHLH", "LRIG3", "SLC16A7", "RP11-813P10.2", "NUP107", "SLC35E3", "MDM2", "CPSF6", "LYZ", "FRS2", "CCT2", "RAB3IP", "MYRFL", "DUSP6", "ATP2B1", "UBE2N", "SOCS2", "RP11-887P2.5", "CRADD", "CEP83", "P2RX7", "P2RX4", "TMEM120B", "AC156455.1", "DIABLO", "DIABLO", "CCDC150P1", "DENR", "HIP1R", "VPS37B", "PITPNM2", "DENR", "HIP1R", "VPS37B", "ABCB9", "PITPNM2", "MPHOSPH9", "C12orf65", "RP11-282O18.3", "CDK2AP1", "SBNO1", "RILPL2", "SNRNP35", "DDX55", "DNAH10OS", "RFLNA", "NCOR2", "FGF7", "USP8", "RP11-562A8.1", "RP11-562A8.5", "AP4E1", "TNFAIP8L3", "CYP19A1", "CGNL1", "ALDH1A2", "ADAM10", "MAP2K1", "LCTL", "SMAD3", "PIAS1", "LOXL1", "ISLR2", "ISLR", "STRA6", "CCDC33", "SEMA7A", "EDC3", "CYP1A1", "CSK", "LMAN1L", "ULK3", "SCAMP2", "MPI", "COX5A", "RPP25", "NEIL1", "MAN2C1", "PTPN9", "IMP3", "SNX33", "CSPG4", "RP11-467J12.4", "RBL2", "AKTIP", "RPGRIP1L", "FTO", "IRX3", "CDH3", "TANGO6", "PDF", "NFAT5", "WWP2", "CLEC18A", "PDXDC2P", "FUK", "COG4", "SF3B3", "IL34", "CYBA", "CDT1", "GALNS", "ANKRD11", "SPG7", "DPEP1", "CHMP1A", "SPATA2L", "ZNF276")
+fungenomic1 <- c("FANCA", "MC1R", "TUBB3", "AFG3L1P", "MYO1C", "SERPINF1", "RPA1", "DPH1", "HIC1", "SMG6", "HNRNPA1P16", "TSR1", "MNT", "METTL16", "BLMH", "CTD-2349P21.5", "CTD-2349P21.9", "RNF135", "RP11-271K11.5", "NF1", "OMG", "EVI2B", "EVI2A", "RAB11FIP4", "UTP6", "SUZ12", "RHOT1", "DCAKD", "FMNL1", "ARHGAP27", "PLEKHM1", "RP11-798G7.8", "LRRC37A4P", "DND1P1", "RPS26P8", "CRHR1", "SPPL2C", "MAPT", "RP11-259G18.3", "RP11-259G18.1", "RP11-995C19.2", "LRRC37A2", "ARL17A", "NSF", "WNT3", "GOSR2", "DCAKD", "NMT1", "FMNL1", "PLEKHM1", "GOSR2", "BCAS3", "TBX2", "TBX4", "LINC01152", "SOX9", "TMEM241", "RIOK3", "NPC1", "LAMA3", "OSBPL1A", "OLFM2", "COL5A3", "ANGPTL6", "PPAN", "P2RY11", "DNMT1", "S1PR2", "ICAM1", "ICAM5", "ZGLP1", "CTD-2369P2.12", "TYK2", "PDE4A", "SLC44A2", "ILF3-AS1", "ILF3", "DNM2", "TMED1", "SMARCA4", "KANK2", "TMEM205", "RGL3", "CCDC151", "CNN1", "ACP5", "PLD3", "CTC-492K19.4", "BLVRB", "LTBP4", "NUMBL", "ITPKC", "SNRPA", "MIA", "CYP2T1P", "AXL", "TGFB1", "CEACAM5", "DEDD2", "GSK3A", "ERF", "PAFAH1B3", "TMEM145", "MEGF8", "DNAAF3", "PTPRH", "COX6B2", "IL11", "SHISA7", "NAT14", "SSC5D", "ZNF524", "ZSCAN5A", "ITCH", "MAP1LC3A", "PIGU", "ACSS2", "MYH7B", "TRPC4AP", "EDEM2", "PROCR", "EIF6", "UQCC1", "GDF5", "CEP250", "ERGIC3", "FER1L4", "RBM12", "PHF20", "SCAND1", "SPATA20P1", "KCNJ15", "ERG", "PSMG1", "HMGN1", "RRP7A", "RRP7BP", "CYB5R3", "A4GALT", "RP1-47A17.1", "PACSIN2", "MCAT", "TSPO", "TTLL12", "SCUBE1", "SAMM50", "PARVB")
+fungenomic <- c(fungenomic, fungenomic1)
+
+
+
+#doi: https://doi.org/10.1101/835850
+#Supplementary Table 2. Genes with significant cross-omics differences between high-grade and low-grade cartilage. (transcriptomic, proteomic both were significant)
+s2 <- c("ABCE1", "ABHD12", "ABI3BP", "ACLY", "ACSL4", "ACTR3B", "ADD3", "ADPRH", "ADSS", "AEBP1", "AGFG1", "AGTRAP", "AHCY", "AK2", "AKR1B1", "AKR1C1", "AKR1C2", "ALDH18A1", "ALDH1A2", "ALDH1A3", "AMPD2", "ANAPC7", "ANK3", "ANPEP", "APOD", "APP", "ARHGAP17", "ARMC9", "ARSA", "ASAH1", "ATAD3B", "ATP6AP1", "BAIAP2L1", "BCCIP", "BCL2L13", "BLOC1S6", "BOLA2", "BRIX1", "C17orf58", "C1GALT1", "C1QTNF5", "C1R", "C4BPA", "CA5B", "CAPG", "CAPS", "CARHSP1", "CASP3", "CASP4", "CCDC124", "CCDC50", "CCDC85A", "CCDC86", "CCL20", "CCPG1", "CFH", "CHDH", "CHMP1B", "CHMP2A", "CHRDL2", "CLEC3B", "CLIC3", "CLIC6", "CMAS", "CMBL", "CNN2", "CNN3", "COG7", "COL15A1", "COL18A1", "COL1A2", "COL3A1", "COL4A1", "COL4A2", "COL5A1", "COL9A1", "COPB2", "COPG1", "CPSF4", "CPT1A", "CPT2", "CRISPLD1", "CRLF1", "CRTAC1", "CSTB", "CTBP1", "CTBS", "CTSA", "CTSD", "CYLD", "CYP1B1", "CYP27A1", "DCPS", "DDAH1", "DDR2", "DDRGK1", "DDX19A", "DDX21", "DDX46", "DDX47", "DERA", "DFNA5", "DGKA", "DHODH", "DNAJC2", "DPP4", "DPP7", "DPYD", "DSC2", "EARS2", "EFEMP1", "EHHADH", "EIF2B4", "EIF2B5", "ELMO1", "ENO1", "EPB41", "EPB41L3", "EPS8L2", "ERG", "ERP44", "EXD2", "EXOSC4", "EXOSC8", "FABP5", "FAM98A", "FAP", "FARSB", "FBLN1", "FDFT1", "FDPS", "FGD5", "FGF1", "FLOT2", "FN1", "FRZB", "FST", "FSTL1", "FTL", "GADD45GIP1", "GALE", "GALNT10", "GALNT15", "GALNT16", "GCLM", "GFPT2", "GGCT", "GGH", "GLB1", "GLO1", "GLRX", "GLRX3", "GLRX5", "GNL3", "GNPDA1", "GNPNAT1", "GNS", "GPHN", "GPT2", "GPX8", "GRN", "GRWD1", "GSK3B", "GSTZ1", "GTF2F2", "GULP1", "HBA1", "HBB", "HINT3")
+s2.1 <- c("HNRNPA3", "HNRNPD", "HSPA4L", "HSPB8", "HTRA1", "HTRA3", "IARS", "IGFBP7", "IL16", "IL17D", "IMPDH1", "INTS10", "IRAK4", "IRS1", "ISG20", "ITM2B", "ITSN1", "KANK2", "KATNAL1", "KCNMA1", "KIAA2013", "KPNA3", "LAMC1", "LAMP1", "LDHB", "LDHD", "LGALS8", "LIG3", "LIMA1", "LMNB2", "LSM12", "LSM7", "LTBP2", "LTBP3", "LUM", "LYPLA2", "MAP1A", "MAP1B", "MAP2K6", "MARCKS", "MATN4", "METTL7A", "MFAP4", "MGAT1", "MGST1", "MMP19", "MPDZ", "MPP6", "MPRIP", "MRC2", "MRPS26", "MRPS27", "MRTO4", "MTAP", "MTMR12", "MYBBP1A", "MYH14", "MYO6", "MYOF", "NAMPT", "NANS", "NDP", "NDRG1", "NDUFB8", "NEDD4L", "NFIA", "NME1", "NME2", "NMI", "NMT2", "NOP58", "NOVA1", "NPC2", "NPEPL1", "NPLOC4", "NPR2", "NQO1", "NR2C2AP", "NRBF2", "NTN1", "NUDC", "NUDT15", "NXT1", "ODF2", "OMD", "OPLAH", "OSBPL1A", "OSBPL3", "OSBPL9", "P4HA3", "PA2G4", "PAK1IP1", "PBXIP1")
+s2.2 <- c("PCBP3", "PDCD11", "PDK3", "PDLIM1", "PDLIM4", "PEX5", "PFAS", "PFKL", "PGAM5", "PGRMC1", "PHKA1", "PHLDA1", "PHOSPHO1", "PID1", "PIR", "PKN1", "PLA2G2A", "PLCG1", "PNP", "POLR2C", "PON2", "POSTN", "PPFIA1", "PPIA", "PPP2R5A", "PRELP", "PRMT1", "PRMT5", "PRPF4", "PRPS1", "PSMG3", "PTBP2", "PTGES", "PTGFRN", "PTGIS", "PTPN1", "PTPRA", "PTPRM", "PTPRS", "PTTG1IP", "PUS1", "PXN", "PYCR1", "PYGL", "QSOX1", "RAB23", "RAN", "RANBP1", "RARRES2", "RARS", "RCAN1", "RFC3", "RHOC", "RPS6KA3", "RRAGC", "RRAS2", "RRP9", "RSPO2", "RTN3", "S100A4", "SAMD9L", "SCFD2", "SCIN", "SDF2", "SDHB", "SDR39U1", "SEC13", "SEC31A", "SEMA3C", "SEPT11", "SERPINB8", "SERPINE2", "SH3D19", "SH3KBP1", "SH3PXD2B", "SLC39A14", "SMS", "SMYD5", "SNCA", "SNRPA", "SNTB1", "SNUPN", "SNX21", "SNX5", "SORBS1", "SPECC1", "SPTBN1", "SRI", "SRP54", "SRPX2", "SRSF9", "SSR3", "STBD1", "STK4", "STOML2", "STRAP", "SYMPK", "SYNJ1", "TBC1D4", "TBL2", "TCEAL2", "TCEAL5", "TCEAL6", "TGFBI", "THBS3", "THOC3", "THOC5", "TIMM10", "TIMM50", "TIMP2", "TINAGL1", "TLR2", "TM9SF2", "TMEM2", "TMOD1", "TMOD3", "TNFAIP6", "TOLLIP", "TOMM34", "TP53BP1", "TRA2B", "TRAFD1", "TRAP1", "TRIM47", "TTC9C", "TUBA1B", "TUBA8", "TYMP", "UCHL1", "UCHL3", "UNK", "UPP1", "USP48", "VAV2", "VCAM1", "VDAC1", "VPS36", "VPS37B", "WDR12", "WDR3", "WDR5", "XRCC6", "YARS2", "YBX1", "ZFHX3", "ZFYVE21", "ZPR1")
+cross_omic <- c(s2, s2.1, s2.2)
+
+```
+
+# Enrichment Function
+
+Use fisher's exact test to compute significant enrichment.
+
+```{r function}
+enrich <- function(genes_of_interest, DEgenes, backgroundgenes){
+     #fill contingency table
+     DE_interest <- length(intersect(genes_of_interest, DEgenes))
+     background_interest <- length(intersect(genes_of_interest, backgroundgenes))
+     DE_non_interest <- length(DEgenes) - DE_interest
+     background_non_interest <- length(backgroundgenes) - background_interest
+     contingency_table <- matrix(c(DE_interest, background_interest, DE_non_interest, background_non_interest), nrow = 2, ncol = 2, byrow = TRUE)
+     
+     #perform test
+     print(contingency_table)
+     return(fisher.test(contingency_table, alternative="greater"))
+}
+
+
+
+enrich(genes_GWAS_share_eQTL, DE_genes, other_genes)
+enrich(OA_GWAS_genes, DE_genes, other_genes)
+enrich(fungenomic, DE_genes, other_genes)
+enrich(cross_omic, DE_genes, other_genes)
+```
+

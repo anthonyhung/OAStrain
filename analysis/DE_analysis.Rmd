@@ -400,6 +400,7 @@ First create the gene universe.
 This is all the genes tested for differential expression assigned a 1 for differentially expressed and 0 if not.
 
 ```{r gene-universe}
+saveRDS(results, "data/DE_results.rds")
 threshold <- 0.05
 gene_universe <- as.numeric(results[["Unstrain"]]$qvalue < threshold)
 gene_universe <- factor(gene_universe)
