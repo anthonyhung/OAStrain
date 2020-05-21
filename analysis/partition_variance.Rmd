@@ -31,7 +31,7 @@ sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 #input data consists of raw filtered data (filtered for lowly expressed genes)
 #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
 cv <- apply(counts_upperquartile, 1, function(x) sd(x)/mean(x))
-least_var_genes <- names(head(sort(cv), 200))
+least_var_genes <- names(head(sort(cv), 100))
 ```
 
 ```{r RUVSeq least variable genes}

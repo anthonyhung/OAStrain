@@ -817,7 +817,7 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 <pre class="r"><code>#input data consists of raw filtered data (filtered for lowly expressed genes)
 #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
 cv &lt;- apply(counts_upperquartile, 1, function(x) sd(x)/mean(x))
-least_var_genes &lt;- names(head(sort(cv), 100))</code></pre>
+least_var_genes &lt;- names(head(sort(cv), 200))</code></pre>
 <pre class="r"><code>#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVg. 
 
 #Use RUVg
@@ -913,6 +913,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-1.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/function-1.png" target="_blank">51cceef</a>
 </td>
 <td>
@@ -953,6 +964,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-2.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/function-2.png" target="_blank">51cceef</a>
 </td>
 <td>
@@ -970,7 +992,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_no_interaction, sample_info )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 29 s</code></pre>
+Total: 30 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -998,6 +1020,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-3.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/function-3.png" target="_blank">51cceef</a>
 </td>
 <td>
@@ -1015,7 +1048,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_W2, sample_info_W2 )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 29 s</code></pre>
+Total: 34 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-4.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1043,6 +1076,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-4.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/function-4.png" target="_blank">51cceef</a>
 </td>
 <td>
@@ -1060,7 +1104,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_no_interaction_W2, sample_info_W2 )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 29 s</code></pre>
+Total: 31 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-5.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1086,6 +1130,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-5.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/function-5.png" target="_blank">51cceef</a>
@@ -1136,6 +1191,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/unnamed-chunk-1-1.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/partition_variance.Rmd/unnamed-chunk-1-1.png" target="_blank">51cceef</a>
 </td>
 <td>
@@ -1153,31 +1219,31 @@ Anthony Hung
 
 treatment_symbols &lt;- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
 head(treatment_symbols)</code></pre>
-<pre><code>[1] EOGT     RBM3     HSP90AA1 TGS1     UNKL     ZNF185  
+<pre><code>[1] EOGT    RBM3    GLE1    TEP1    E2F7    GADD45B
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 ... ZZEF1</code></pre>
 <pre class="r"><code>treatment_anno &lt;- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
 head(treatment_anno)</code></pre>
 <pre><code>      ensembl_gene_id external_gene_name chromosome_name
 10988 ENSG00000163378               EOGT               3
 2662  ENSG00000102317               RBM3               X
-1510  ENSG00000080824           HSP90AA1              14
-7495  ENSG00000137574               TGS1               8
-797   ENSG00000059145               UNKL              16
-8961  ENSG00000147394             ZNF185               X
+4893  ENSG00000119392               GLE1               9
+6158  ENSG00000129566               TEP1              14
+11706 ENSG00000165891               E2F7              12
+2125  ENSG00000099860            GADD45B              19
                                                                                            description
 10988 EGF domain specific O-linked N-acetylglucosamine transferase [Source:HGNC Symbol;Acc:HGNC:28526]
 2662                                    RNA binding motif protein 3 [Source:HGNC Symbol;Acc:HGNC:9900]
-1510            heat shock protein 90 alpha family class A member 1 [Source:HGNC Symbol;Acc:HGNC:5253]
-7495                                 trimethylguanosine synthase 1 [Source:HGNC Symbol;Acc:HGNC:17843]
-797                                unkempt family like zinc finger [Source:HGNC Symbol;Acc:HGNC:14184]
-8961                       zinc finger protein 185 with LIM domain [Source:HGNC Symbol;Acc:HGNC:12976]
-                                                                phenotype
-10988 Adams Oliver syndrome;Adams-Oliver syndrome;ADAMS-OLIVER SYNDROME 4
-2662                                                                     
-1510                                                                     
-7495                                                                     
-797                                                                      
-8961                                                                     </code></pre>
+4893                                      GLE1, RNA export mediator [Source:HGNC Symbol;Acc:HGNC:4315]
+6158                               telomerase associated protein 1 [Source:HGNC Symbol;Acc:HGNC:11726]
+11706                                   E2F transcription factor 7 [Source:HGNC Symbol;Acc:HGNC:23820]
+2125                    growth arrest and DNA damage inducible beta [Source:HGNC Symbol;Acc:HGNC:4096]
+                                                                                                                                                                                                                                                                                       phenotype
+10988                                                                                                                                                                                                                        Adams Oliver syndrome;Adams-Oliver syndrome;ADAMS-OLIVER SYNDROME 4
+2662                                                                                                                                                                                                                                                                                            
+4893  Arthrogryposis lethal with anterior horn cell disease;Amyotrophic lateral sclerosis;Lethal arthrogryposis-anterior horn cell disease syndrome;Lethal congenital contracture syndrome type 1;LETHAL ARTHROGRYPOSIS WITH ANTERIOR HORN CELL DISEASE;LETHAL CONGENITAL CONTRACTURE SYNDROME 1
+6158                                                                                                                                                                                                                                                                                            
+11706                                                                                                                                                                                                                                                                                           
+2125                                                                                                                                                                                                                                                                                            </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
