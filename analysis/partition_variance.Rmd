@@ -25,24 +25,13 @@ filtered_RLE <- readRDS("data/norm_filtered_counts_RLE.rds")
 sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
 ```
 
-# Additional RUVseq analysis: Using top 100 LEAST variable genes as control genes to get an output of W variables
+# Additional RUVseq analysis: Using top 100 (~1% of the genes considered) LEAST variable genes as control genes to get an output of W variables
 
 ```{r identify least variable genes}
-RLE <- calcNormFactors(counts_upperquartile, method = "RLE")
-RLE <- cpm(RLE, log=FALSE, normalized.lib.sizes = T)
-
+#input data consists of raw filtered data (filtered for lowly expressed genes)
 #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
-cv <- apply(RLE, 1, function(x) sd(x)/mean(x))
-least_var_genes <- names(head(sort(cv), 100))
-
-
-
-# upperquartile <- calcNormFactors(counts_upperquartile, method = "upperquartile")
-# upperquartile <- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
-# 
-# #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
-# cv <- apply(upperquartile, 1, function(x) sd(x)/mean(abs(x)))
-# least_var_genes <- names(head(sort(cv), 100))
+cv <- apply(counts_upperquartile, 1, function(x) sd(x)/mean(x))
+least_var_genes <- names(head(sort(cv), 200))
 ```
 
 ```{r RUVSeq least variable genes}

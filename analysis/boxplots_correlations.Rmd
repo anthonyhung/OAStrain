@@ -12,15 +12,21 @@ editor_options:
 ```{r load}
 library(dplyr)
 library(textshape)
-library(dplyr)
 library(stringr)
 library(reshape2)
 library(ggplot2)
+library(RUVSeq)
 
 #load data
-raw_counts <- readRDS("data/raw_counts_relabeled.rds")
-upper_quartile <- readRDS("data/norm_filtered_counts.rds")
-filtered_RLE <- readRDS("data/norm_filtered_counts_RLE.rds")
+raw_counts <- cpm(readRDS("data/raw_counts_relabeled.rds"))
+
+uq <- readRDS("data/norm_filtered_counts.rds")
+
+#RUVs output for what the var partition looks like after normalization
+set1 <- readRDS("data/RUVsOut.rds")
+anno <- pData(set1) #unwanted factors
+
+uq_ruv <- t(lm(t(uq) ~ anno$W_1 + anno$W_2)$residuals)
 ```
 
 # Calculate cor matrices
@@ -31,12 +37,12 @@ cors_raw_spear <- cor(raw_counts, method="spearman", use="pairwise.complete.obs"
 cors_raw_pearson <- cor(raw_counts, method="pearson", use="pairwise.complete.obs")
 
 #uq
-cors_uq_spear <- cor(upper_quartile, method="spearman", use="pairwise.complete.obs")
-cors_uq_pearson <- cor(upper_quartile, method="pearson", use="pairwise.complete.obs")
+cors_uq_spear <- cor(uq, method="spearman", use="pairwise.complete.obs")
+cors_uq_pearson <- cor(uq, method="pearson", use="pairwise.complete.obs")
 
-#rle
-cors_rle_spear <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
-cors_rle_pearson <- cor(filtered_RLE, method="pearson", use="pairwise.complete.obs")
+#uq_ruv
+cors_uq_ruv_spear <- cor(uq_ruv, method="spearman", use="pairwise.complete.obs")
+cors_uq_ruv_pearson <- cor(uq_ruv, method="pearson", use="pairwise.complete.obs")
 ```
 
 # Convert cor matrices into useful format
@@ -64,9 +70,9 @@ tidy_cors_raw_pearson <- convert_cor(cors_raw_pearson)
 tidy_cors_uq_spear <- convert_cor(cors_uq_spear)
 tidy_cors_uq_pearson <- convert_cor(cors_uq_pearson)
 
-#rle
-tidy_cors_rle_spear <- convert_cor(cors_rle_spear)
-tidy_cors_rle_pearson <- convert_cor(cors_rle_pearson)
+#uq_ruv
+tidy_cors_uq_ruv_spear <- convert_cor(cors_uq_ruv_spear)
+tidy_cors_uq_ruv_pearson <- convert_cor(cors_uq_ruv_pearson)
 ```
 
 # Make plots
@@ -77,39 +83,62 @@ make_plot <- function(tidy_cors){
      same_ind <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2]
      same_rep <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2]
      same_treat <- tidy_cors$value[tidy_cors$treat1 == tidy_cors$treat2]
+     
+     same_ind_rest_diff <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$rep1 != tidy_cors$rep2 & tidy_cors$treat1 != tidy_cors$treat2]
+     same_rep_rest_diff <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 & tidy_cors$ind1 != tidy_cors$ind2 & tidy_cors$treat1 != tidy_cors$treat2]
+     same_treat_rest_diff <- tidy_cors$value[tidy_cors$treat1 == tidy_cors$treat2 & tidy_cors$ind1 != tidy_cors$ind2 & tidy_cors$rep1 != tidy_cors$rep2]
 
      same_ind_rep <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$rep1 == tidy_cors$rep2]
      same_rep_treat <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 & tidy_cors$treat1 == tidy_cors$treat2]
      same_ind_treat <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$treat1 == tidy_cors$treat2]
+     
+     same_ind_rep_diff_treat <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$rep1 == tidy_cors$rep2 & tidy_cors$treat1 != tidy_cors$treat2]
+     same_rep_treat_diff_ind <- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 & tidy_cors$treat1 == tidy_cors$treat2 & tidy_cors$ind1 != tidy_cors$ind2]
+     same_ind_treat_diff_rep <- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 & tidy_cors$treat1 == tidy_cors$treat2 & tidy_cors$rep1 != tidy_cors$rep2]
+     
+     diff_all <- tidy_cors$value[tidy_cors$ind1 != tidy_cors$ind2 & tidy_cors$rep1 != tidy_cors$rep2 & tidy_cors$treat1 != tidy_cors$treat2]
      
      n <- length(all)
      
      length(same_ind) <- n
      length(same_rep) <- n
      length(same_treat) <- n
+     length(same_ind_rest_diff) <- n
+     length(same_rep_rest_diff) <- n
+     length(same_treat_rest_diff) <- n
      length(same_ind_rep) <- n
      length(same_ind_treat) <- n
      length(same_rep_treat) <- n
+     length(same_ind_rep_diff_treat) <- n
+     length(same_rep_treat_diff_ind) <- n
+     length(same_ind_treat_diff_rep) <- n
+     length(diff_all) <- n
      
      #combine all into a df
-     combined <- as.data.frame(cbind(all, same_ind, same_treat, same_rep, same_ind_treat, same_ind_rep, same_rep_treat))
+     combined <- as.data.frame(cbind(all, 
+                                     #same_ind, same_treat, same_rep, 
+                                     same_ind_rest_diff, same_treat_rest_diff, same_rep_rest_diff,
+                                     #same_ind_treat, same_ind_rep, same_rep_treat,
+                                     same_ind_treat_diff_rep, same_ind_rep_diff_treat, same_rep_treat_diff_ind,
+                                     diff_all))
      #melt
      combined_melt <- melt(combined)
      
      #plot
      return(ggplot(combined_melt, aes(x = variable, y = value)) +
-          geom_boxplot() + 
-          labs(y = "correlation", x = ""))
+                 geom_boxplot() +
+                 geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.2) +
+                 labs(y = "correlation", x = ""))
 }
 
 #raw
-make_plot(tidy_cors_raw_spear) + labs(title="Raw Data, Spearman")
-make_plot(tidy_cors_raw_pearson) + labs(title="Raw Data, Pearson")
+make_plot(tidy_cors_raw_spear) + labs(title="Raw Data (cpm), Spearman")
+make_plot(tidy_cors_raw_pearson) + labs(title="Raw Data (cpm), Pearson")
 #uq
-make_plot(tidy_cors_uq_spear) + labs(title="UQ Normalization, Spearman")
-make_plot(tidy_cors_uq_pearson) + labs(title="UQ Normalization, Pearson")
-#rle
-make_plot(tidy_cors_rle_spear) + labs(title="RLE Normalization, Spearman")
-make_plot(tidy_cors_rle_pearson) + labs(title="RLE Normalization, Pearson")
+make_plot(tidy_cors_uq_spear) + labs(title="UQ normalized Data, Spearman")
+make_plot(tidy_cors_uq_pearson) + labs(title="UQ normalized Data, Pearson")
+#uq_ruv
+make_plot(tidy_cors_uq_ruv_spear) + labs(title="uq_ruv normalized Data, Spearman")
+make_plot(tidy_cors_uq_ruv_pearson) + labs(title="uq_ruv normalized Data, Pearson")
 ```
 
