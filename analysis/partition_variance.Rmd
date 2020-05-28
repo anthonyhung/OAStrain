@@ -89,18 +89,18 @@ form_no_interaction_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|
 # to each variable
 # Interpretation: the variance explained by each variables
 # after correcting for all other variables
-varPart <- fitExtractVarPartModel( filtered_RLE, form, sample_info )
+varPart_1_int <- fitExtractVarPartModel( filtered_RLE, form, sample_info )
 # sort variables (i.e. columns) by median fraction
 # of variance explained
-vp <- sortCols(varPart)
+vp <- sortCols(varPart_1_int)
 # Bar plot of variance fractions for the first 10 genes
 plotPercentBars( vp[1:10,] )
 # violin plot of contribution of each variable to total variance
 plotVarPart( vp )
 
 #no interaction
-varPart <- fitExtractVarPartModel( filtered_RLE, form_no_interaction, sample_info )
-vp <- sortCols(varPart)
+varPart_1 <- fitExtractVarPartModel( filtered_RLE, form_no_interaction, sample_info )
+vp <- sortCols(varPart_1)
 plotVarPart( vp )
 
 
@@ -124,8 +124,11 @@ plotVarPart( vp )
 gene_anno <- read.delim("data/gene-annotation.txt",
                         sep = "\t")
 
-# looking at genes that have majority var explained by treatment
-sorted_treatment <- varPart[order(varPart$treatment, decreasing=TRUE),]
+
+#for W1, interaction term included
+# looking at genes that have majority var explained by treatment or interaction term
+#treatment
+sorted_treatment <- varPart_1_int[order(varPart_1_int$treatment, decreasing=TRUE),]
 plotPercentBars(sorted_treatment[1:10,])
 treatment_genes <- rownames(sorted_treatment)
 
@@ -133,4 +136,28 @@ treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_an
 head(treatment_symbols)
 treatment_anno <- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
 head(treatment_anno)
+
+#int term
+sorted_treatment <- varPart_1_int[order(varPart_1_int$`Individual:treatment`, decreasing=TRUE),]
+plotPercentBars(sorted_treatment[1:10,])
+treatment_genes <- rownames(sorted_treatment)
+
+treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
+head(treatment_symbols)
+treatment_anno <- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
+head(treatment_anno)
+
+
+
+
+#for W1, no interaction term
+# looking at genes that have majority var explained by treatment
+sorted_treatment <- varPart_1[order(varPart$treatment, decreasing=TRUE),]
+plotPercentBars(sorted_treatment[1:10,])
+treatment_genes <- rownames(sorted_treatment)
+
+treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
+head(treatment_symbols)
+treatment_anno <- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
+head(treatment_anno, 100)
 ```

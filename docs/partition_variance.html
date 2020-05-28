@@ -420,7 +420,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -429,7 +429,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -438,10 +438,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-21
+<strong>Last updated:</strong> 2020-05-27
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -457,12 +457,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -590,10 +590,7 @@ Untracked files:
     Untracked:  .RDataTmp
 
 Unstaged changes:
-    Modified:   analysis/boxplots_correlations.Rmd
     Modified:   analysis/enrichment_DE.Rmd
-    Modified:   analysis/partition_variance.Rmd
-    Modified:   data/Sample.info.RNAseq.reordered.csv
 
 </code></pre>
 <p>
@@ -632,6 +629,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/analysis/partition_variance.Rmd" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+top 100 least variable genes
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f67c530e28c716d21836cc7ec59639bf42505212/docs/partition_variance.html" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+top 100 least variable genes
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/analysis/partition_variance.Rmd" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+change RUVg to use least variable genes found through raw unnormalized data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/022f905186e6ab8f784b7266671f2729d9200c6c/docs/partition_variance.html" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+change RUVg to use least variable genes found through raw unnormalized data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -817,7 +882,7 @@ sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</cod
 <pre class="r"><code>#input data consists of raw filtered data (filtered for lowly expressed genes)
 #compute CV (stdev/mean) and rank from least to most; pick 100 least variable
 cv &lt;- apply(counts_upperquartile, 1, function(x) sd(x)/mean(x))
-least_var_genes &lt;- names(head(sort(cv), 200))</code></pre>
+least_var_genes &lt;- names(head(sort(cv), 100))</code></pre>
 <pre class="r"><code>#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVg. 
 
 #Use RUVg
@@ -882,7 +947,7 @@ form_no_interaction_W2 &lt;- ~ (1|Individual) + (1|treatment) + (1|Replicate) + 
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form, sample_info )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 33 s</code></pre>
+Total: 28 s</code></pre>
 <pre class="r"><code># sort variables (i.e. columns) by median fraction
 # of variance explained
 vp &lt;- sortCols(varPart)
@@ -911,6 +976,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/function-1.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-1.png" target="_blank">022f905</a>
@@ -964,6 +1040,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/function-2.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-2.png" target="_blank">022f905</a>
 </td>
 <td>
@@ -992,7 +1079,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_no_interaction, sample_info )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 30 s</code></pre>
+Total: 27 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1018,6 +1105,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/function-3.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-3.png" target="_blank">022f905</a>
@@ -1048,7 +1146,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_W2, sample_info_W2 )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 34 s</code></pre>
+Total: 28 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-4.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1074,6 +1172,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/function-4.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-4.png" target="_blank">022f905</a>
@@ -1104,7 +1213,7 @@ Anthony Hung
 varPart &lt;- fitExtractVarPartModel( filtered_RLE, form_no_interaction_W2, sample_info_W2 )</code></pre>
 <pre><code>Dividing work into 100 chunks...
 
-Total: 31 s</code></pre>
+Total: 23 s</code></pre>
 <pre class="r"><code>vp &lt;- sortCols(varPart)
 plotVarPart( vp )</code></pre>
 <p><img src="figure/partition_variance.Rmd/function-5.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1130,6 +1239,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/function-5.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/function-5.png" target="_blank">022f905</a>
@@ -1191,6 +1311,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f67c530e28c716d21836cc7ec59639bf42505212/docs/figure/partition_variance.Rmd/unnamed-chunk-1-1.png" target="_blank">f67c530</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/partition_variance.Rmd/unnamed-chunk-1-1.png" target="_blank">022f905</a>
 </td>
 <td>
@@ -1219,31 +1350,31 @@ Anthony Hung
 
 treatment_symbols &lt;- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
 head(treatment_symbols)</code></pre>
-<pre><code>[1] EOGT    RBM3    GLE1    TEP1    E2F7    GADD45B
+<pre><code>[1] EOGT     RBM3     HSP90AA1 TGS1     UNKL     ZNF185  
 56858 Levels: A1BG A1BG-AS1 A1CF A2M A2M-AS1 A2ML1 A2ML1-AS1 ... ZZEF1</code></pre>
 <pre class="r"><code>treatment_anno &lt;- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
 head(treatment_anno)</code></pre>
 <pre><code>      ensembl_gene_id external_gene_name chromosome_name
 10988 ENSG00000163378               EOGT               3
 2662  ENSG00000102317               RBM3               X
-4893  ENSG00000119392               GLE1               9
-6158  ENSG00000129566               TEP1              14
-11706 ENSG00000165891               E2F7              12
-2125  ENSG00000099860            GADD45B              19
+1510  ENSG00000080824           HSP90AA1              14
+7495  ENSG00000137574               TGS1               8
+797   ENSG00000059145               UNKL              16
+8961  ENSG00000147394             ZNF185               X
                                                                                            description
 10988 EGF domain specific O-linked N-acetylglucosamine transferase [Source:HGNC Symbol;Acc:HGNC:28526]
 2662                                    RNA binding motif protein 3 [Source:HGNC Symbol;Acc:HGNC:9900]
-4893                                      GLE1, RNA export mediator [Source:HGNC Symbol;Acc:HGNC:4315]
-6158                               telomerase associated protein 1 [Source:HGNC Symbol;Acc:HGNC:11726]
-11706                                   E2F transcription factor 7 [Source:HGNC Symbol;Acc:HGNC:23820]
-2125                    growth arrest and DNA damage inducible beta [Source:HGNC Symbol;Acc:HGNC:4096]
-                                                                                                                                                                                                                                                                                       phenotype
-10988                                                                                                                                                                                                                        Adams Oliver syndrome;Adams-Oliver syndrome;ADAMS-OLIVER SYNDROME 4
-2662                                                                                                                                                                                                                                                                                            
-4893  Arthrogryposis lethal with anterior horn cell disease;Amyotrophic lateral sclerosis;Lethal arthrogryposis-anterior horn cell disease syndrome;Lethal congenital contracture syndrome type 1;LETHAL ARTHROGRYPOSIS WITH ANTERIOR HORN CELL DISEASE;LETHAL CONGENITAL CONTRACTURE SYNDROME 1
-6158                                                                                                                                                                                                                                                                                            
-11706                                                                                                                                                                                                                                                                                           
-2125                                                                                                                                                                                                                                                                                            </code></pre>
+1510            heat shock protein 90 alpha family class A member 1 [Source:HGNC Symbol;Acc:HGNC:5253]
+7495                                 trimethylguanosine synthase 1 [Source:HGNC Symbol;Acc:HGNC:17843]
+797                                unkempt family like zinc finger [Source:HGNC Symbol;Acc:HGNC:14184]
+8961                       zinc finger protein 185 with LIM domain [Source:HGNC Symbol;Acc:HGNC:12976]
+                                                                phenotype
+10988 Adams Oliver syndrome;Adams-Oliver syndrome;ADAMS-OLIVER SYNDROME 4
+2662                                                                     
+1510                                                                     
+7495                                                                     
+797                                                                      
+8961                                                                     </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

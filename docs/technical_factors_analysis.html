@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Anthony Hung" />
@@ -29,12 +29,20 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="site_libs/datatables-binding-0.10/datatables.js"></script>
-<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="site_libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="site_libs/datatables-binding-0.13/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -96,6 +104,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -244,7 +253,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -257,9 +265,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -273,12 +320,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -374,13 +415,6 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
@@ -394,7 +428,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -403,7 +437,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -412,17 +446,17 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-06
+<strong>Last updated:</strong> 2020-05-27
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -431,12 +465,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -503,21 +537,34 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e1229a05fec914deb0447add85f8f485f5d99f7f" target="_blank">e1229a0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee1229a05fec914deb0447add85f8f485f5d99f7ftargetblanke1229a0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
     Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
     Ignored:    data/GoMresultsk4.rds
@@ -529,14 +576,29 @@ Ignored files:
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
     Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
     Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
 
+Untracked files:
+    Untracked:  .RDataTmp
+
 Unstaged changes:
-    Modified:   analysis/Pilot_GoMAnalysis.Rmd
-    Modified:   analysis/technical_factors_analysis.Rmd
+    Modified:   analysis/enrichment_DE.Rmd
 
 </code></pre>
 <p>
@@ -551,7 +613,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/technical_factors_analysis.Rmd</code>) and HTML (<code>docs/technical_factors_analysis.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -577,6 +639,57 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/analysis/technical_factors_analysis.Rmd" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+<td>
+box plot of pairwise correlations
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2bbbdad15237735154e8db0270272fefd55760a9/analysis/technical_factors_analysis.Rmd" target="_blank">2bbbdad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-11
+</td>
+<td>
+Update html
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/2bbbdad15237735154e8db0270272fefd55760a9/docs/technical_factors_analysis.html" target="_blank">2bbbdad</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-11
+</td>
+<td>
+Update html
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
@@ -586,7 +699,7 @@ html
 Anthony Hung
 </td>
 <td>
-2020-01-19
+2020-01-18
 </td>
 <td>
 include Individual as a FE
@@ -705,7 +818,7 @@ Rmd
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 <td>
 Use quant_normalization
@@ -722,7 +835,7 @@ html
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 <td>
 Use quant_normalization
@@ -892,7 +1005,7 @@ html
 Anthony Hung
 </td>
 <td>
-2019-12-17
+2019-12-16
 </td>
 <td>
 Build site.
@@ -909,7 +1022,7 @@ Rmd
 Anthony Hung
 </td>
 <td>
-2019-12-17
+2019-12-16
 </td>
 <td>
 wflow_publish(files = c(“analysis/preprocessing.Rmd”,
@@ -1002,14 +1115,21 @@ Attaching package: &#39;gplots&#39;</code></pre>
 library(&quot;reshape&quot;)
 library(&quot;edgeR&quot;)</code></pre>
 <pre><code>Loading required package: limma</code></pre>
-<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)  
 library(&quot;scales&quot;)
 library(&quot;cowplot&quot;)</code></pre>
 <pre><code>
+********************************************************</code></pre>
+<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
+<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
+<pre><code>  behavior, execute:
+  theme_set(theme_cowplot())</code></pre>
+<pre><code>********************************************************</code></pre>
+<pre><code>
 Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
 
-    ggsave</code></pre>
+    stamp</code></pre>
 <pre class="r"><code>library(&quot;DT&quot;)
 library(&quot;tidyr&quot;)</code></pre>
 <pre><code>
@@ -1036,12 +1156,13 @@ Attaching package: &#39;BiocGenerics&#39;</code></pre>
     IQR, mad, sd, var, xtabs</code></pre>
 <pre><code>The following objects are masked from &#39;package:base&#39;:
 
-    anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
-    colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
-    mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
-    table, tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
+    anyDuplicated, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter,
+    Find, get, grep, grepl, intersect, is.unsorted, lapply, Map,
+    mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, Position, rank, rbind, Reduce, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min</code></pre>
 <pre><code>Welcome to Bioconductor
 
     Vignettes contain introductory material; view with
@@ -1094,9 +1215,9 @@ Attaching package: &#39;DelayedArray&#39;</code></pre>
 <pre><code>The following object is masked from &#39;package:Biostrings&#39;:
 
     type</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
+<pre><code>The following objects are masked from &#39;package:base&#39;:
 
-    apply</code></pre>
+    aperm, apply, rowsum</code></pre>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;dplyr&#39;</code></pre>
@@ -1346,7 +1467,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -1401,7 +1522,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2019-12-17
+2019-12-16
 </td>
 </tr>
 </tbody>
@@ -1457,7 +1578,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -1512,7 +1633,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2019-12-17
+2019-12-16
 </td>
 </tr>
 </tbody>
@@ -1561,7 +1682,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -1616,7 +1737,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2019-12-17
+2019-12-16
 </td>
 </tr>
 </tbody>
@@ -1665,7 +1786,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 </tbody>
@@ -1691,8 +1812,8 @@ for (pc in p_comps) {
   } 
 } 
 datatable(pc_cov_cor) </code></pre>
-<div id="htmlwidget-87098e04a2cc41d4cd6e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.937228077639086,0.012899748018467,0.0058540386525592,0.0131477134223357,0.379545181902798,0.00163891093223698,0.342995060146532],[0.76507519687444,0.72314930628686,0.00282821963541058,0.14254767046418,0.141599583602183,0.000466214578389932,0.0202194451692655],[0.121357303753474,0.113417972850561,0.298593975451343,0.133677231500241,0.002841735342827,0.084320706702587,0.0556430900947729],[0.0949190484431932,0.0848709094819577,0.0836910330415082,0.311513833969581,0.0252154836152721,0.00152507083815938,0.00248155794863567],[0.0519940357997541,0.0514511583390728,0.169158613857535,2.1835093199424e-05,0.00138233077074412,0.165035084411511,0.299547291113071],[0.00628575388746606,0.00246335789934122,0.0416949054631134,0.288018144066067,0.0563919132547236,0.0530300238400473,0.0154618430618555]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0c9a476e309710ae11e9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0c9a476e309710ae11e9">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.937228077639086,0.0128997480184668,0.0058540386525592,0.0131477134223356,0.379545181902797,0.00163891093223698,0.342995060146532],[0.76507519687444,0.72314930628686,0.00282821963541056,0.14254767046418,0.141599583602183,0.000466214578389926,0.0202194451692656],[0.121357303753474,0.113417972850562,0.298593975451342,0.133677231500241,0.00284173534282695,0.0843207067025867,0.0556430900947727],[0.0949190484431928,0.0848709094819573,0.0836910330415088,0.31151383396958,0.0252154836152721,0.00152507083815934,0.00248155794863571],[0.0519940357997539,0.0514511583390726,0.169158613857536,2.18350931994213e-05,0.00138233077074414,0.165035084411512,0.299547291113072],[0.00628575388746607,0.00246335789934117,0.0416949054631132,0.288018144066067,0.0563919132547233,0.0530300238400473,0.0154618430618555]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
@@ -1771,7 +1892,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -1896,7 +2017,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -1994,7 +2115,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -2048,42 +2169,42 @@ Anthony Hung
 <pre class="r"><code># 
 set1 &lt;- RUVs(x=set, cIdx = rownames(filt_counts), k=2, scIdx = replicates, round = F)
 pData(set1)</code></pre>
-<pre><code>          Sample_ID Individual Sex Replicate treatment  RIN LibraryPrepBatch
-18855_3_S 18855_3_S   NA18855    F         3    Strain 10.0                2
-19160_3_S 19160_3_S   NA19160    M         3    Strain 10.0                2
-18856_3_U 18856_3_U   NA18856    M         3  Unstrain 10.0                2
-18856_1_U 18856_1_U   NA18856    M         1  Unstrain  9.9                1
-18855_2_S 18855_2_S   NA18855    F         2    Strain 10.0                1
-18856_2_S 18856_2_S   NA18856    M         2    Strain  9.6                1
-19160_3_U 19160_3_U   NA19160    M         3  Unstrain 10.0                2
-18855_2_U 18855_2_U   NA18855    F         2  Unstrain 10.0                1
-19160_2_S 19160_2_S   NA19160    M         2    Strain 10.0                1
-18855_1_S 18855_1_S   NA18855    F         1    Strain  9.9                1
-18856_1_S 18856_1_S   NA18856    M         1    Strain  8.5                1
-19160_1_S 19160_1_S   NA19160    M         1    Strain  9.9                1
-19160_2_U 19160_2_U   NA19160    M         2  Unstrain 10.0                1
-18855_1_U 18855_1_U   NA18855    F         1  Unstrain 10.0                1
-18856_3_S 18856_3_S   NA18856    M         3    Strain  9.6                2
-18856_2_U 18856_2_U   NA18856    M         2  Unstrain  9.5                1
-18855_3_U 18855_3_U   NA18855    F         3  Unstrain 10.0                2
-           LibSize       W_1        W_2
-18855_3_S 15419569 0.6403178 -1.0334196
-19160_3_S 15177653 0.4887528 -1.3355831
-18856_3_U 13722909 0.9502388 -0.7892404
-18856_1_U 18647599 1.2228123 -1.4496449
-18855_2_S 18256163 0.8233400 -0.6748150
-18856_2_S 16782764 0.0515988 -1.2784836
-19160_3_U 19839604 0.3406102 -1.4859733
-18855_2_U 18618691 0.7609177 -0.8596946
-19160_2_S 16622407 0.4247172 -1.4414851
-18855_1_S 19712744 0.7356719 -1.4499412
-18856_1_S 13571439 1.1409773 -1.1686123
-19160_1_S 20979958 0.5909682 -1.9538068
-19160_2_U 20924281 0.1295380 -1.8537818
-18855_1_U 20146697 0.7569979 -1.3228202
-18856_3_S 15807863 0.8205467 -0.8981659
-18856_2_U 15142152 0.4572116 -1.0041098
-18855_3_U 18157918 0.5909283 -1.1455295</code></pre>
+<pre><code>          Sample_ID Individual Sex Replicate treatment  RIN
+18855_3_S 18855_3_S   NA18855    F         3    Strain 10.0
+19160_3_S 19160_3_S   NA19160    M         3    Strain 10.0
+18856_3_U 18856_3_U   NA18856    M         3  Unstrain 10.0
+18856_1_U 18856_1_U   NA18856    M         1  Unstrain  9.9
+18855_2_S 18855_2_S   NA18855    F         2    Strain 10.0
+18856_2_S 18856_2_S   NA18856    M         2    Strain  9.6
+19160_3_U 19160_3_U   NA19160    M         3  Unstrain 10.0
+18855_2_U 18855_2_U   NA18855    F         2  Unstrain 10.0
+19160_2_S 19160_2_S   NA19160    M         2    Strain 10.0
+18855_1_S 18855_1_S   NA18855    F         1    Strain  9.9
+18856_1_S 18856_1_S   NA18856    M         1    Strain  8.5
+19160_1_S 19160_1_S   NA19160    M         1    Strain  9.9
+19160_2_U 19160_2_U   NA19160    M         2  Unstrain 10.0
+18855_1_U 18855_1_U   NA18855    F         1  Unstrain 10.0
+18856_3_S 18856_3_S   NA18856    M         3    Strain  9.6
+18856_2_U 18856_2_U   NA18856    M         2  Unstrain  9.5
+18855_3_U 18855_3_U   NA18855    F         3  Unstrain 10.0
+          LibraryPrepBatch  LibSize       W_1        W_2
+18855_3_S                2 15419569 0.6403178 -1.0334196
+19160_3_S                2 15177653 0.4887528 -1.3355831
+18856_3_U                2 13722909 0.9502388 -0.7892404
+18856_1_U                1 18647599 1.2228123 -1.4496449
+18855_2_S                1 18256163 0.8233400 -0.6748150
+18856_2_S                1 16782764 0.0515988 -1.2784836
+19160_3_U                2 19839604 0.3406102 -1.4859733
+18855_2_U                1 18618691 0.7609177 -0.8596946
+19160_2_S                1 16622407 0.4247172 -1.4414851
+18855_1_S                1 19712744 0.7356719 -1.4499412
+18856_1_S                1 13571439 1.1409773 -1.1686123
+19160_1_S                1 20979958 0.5909682 -1.9538068
+19160_2_U                1 20924281 0.1295380 -1.8537818
+18855_1_U                1 20146697 0.7569979 -1.3228202
+18856_3_S                2 15807863 0.8205467 -0.8981659
+18856_2_U                1 15142152 0.4572116 -1.0041098
+18855_3_U                2 18157918 0.5909283 -1.1455295</code></pre>
 <pre class="r"><code>#Plots after correcting RUV
 plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
 <p><img src="figure/technical_factors_analysis.Rmd/RUV-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -2139,7 +2260,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -2244,7 +2365,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 <tr>
@@ -2320,7 +2441,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 </tbody>
@@ -2411,7 +2532,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 </tbody>
@@ -2482,7 +2603,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 </tbody>
@@ -2505,8 +2626,8 @@ for (pc in p_comps) {
   } 
 } 
 datatable(pc_cov_cor) </code></pre>
-<div id="htmlwidget-529320416cb9ecc26f04" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-529320416cb9ecc26f04">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.942423350263047,0.00668853490335259,0.0131384245059351,0.00991989728634208,0.360152438073828,0.00652946944654194,0.287523347602405],[0.769917707954355,0.737388446965364,0.00343860005650638,0.152831524598535,0.160631002359226,0.00170955367296787,0.0353045119613478],[0.249299897087026,0.232409132934963,0.00117716205454385,0.426508309999629,0.0112572091229939,0.0154782383649311,2.69693770910183e-05],[0.0228456288560086,0.0182119551249913,0.00225753035572014,0.0155684514488491,0.00125319628274228,0.0132824492887433,0.114059598899647],[0.00105169957782928,1.53715013657428e-05,0.0374723286708531,0.328271897748881,0.0493089596231795,0.051752050913323,0.0531747215441056],[0.00282652703469329,0.000506447634392042,0.0416013868698146,0.0426959451070644,0.147399837512512,0.116786929159431,0.0645922262080098]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-69e05b0782e67294644f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-69e05b0782e67294644f">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","treatment","RIN","LibraryPrepBatch","LibSize"],[0.942423350263046,0.00668853490335315,0.013138424505935,0.00991989728634239,0.36015243807383,0.00652946944654191,0.287523347602406],[0.769917707954356,0.737388446965363,0.00343860005650645,0.152831524598534,0.160631002359224,0.00170955367296791,0.0353045119613469],[0.249299897087026,0.232409132934962,0.00117716205454386,0.426508309999628,0.0112572091229938,0.0154782383649311,2.69693770910216e-05],[0.0228456288560085,0.0182119551249912,0.00225753035572013,0.0155684514488493,0.00125319628274225,0.0132824492887433,0.114059598899647],[0.00105169957782929,1.53715013657476e-05,0.0374723286708525,0.328271897748881,0.0493089596231799,0.051752050913322,0.0531747215441057],[0.00282652703469331,0.00050644763439204,0.0416013868698152,0.0426959451070654,0.147399837512511,0.116786929159432,0.0645922262080093]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>#Convert to long format to plot in ggplot2
 pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
 pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
@@ -2585,7 +2706,7 @@ Anthony Hung
 Anthony Hung
 </td>
 <td>
-2020-01-16
+2020-01-15
 </td>
 </tr>
 </tbody>
@@ -2604,7 +2725,7 @@ Anthony Hung
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.4.3 (2017-11-30)
+<pre><code>R version 3.6.1 (2019-07-05)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Scientific Linux 7.4 (Nitrogen)
 
@@ -2624,53 +2745,51 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] dplyr_0.8.3                RUVSeq_1.12.0             
- [3] EDASeq_2.12.0              ShortRead_1.36.1          
- [5] GenomicAlignments_1.14.2   SummarizedExperiment_1.8.1
- [7] DelayedArray_0.4.1         matrixStats_0.55.0        
- [9] Rsamtools_1.30.0           GenomicRanges_1.30.3      
-[11] GenomeInfoDb_1.14.0        Biostrings_2.46.0         
-[13] XVector_0.18.0             IRanges_2.12.0            
-[15] S4Vectors_0.16.0           BiocParallel_1.12.0       
-[17] Biobase_2.38.0             BiocGenerics_0.24.0       
-[19] tidyr_1.0.0                DT_0.10                   
-[21] cowplot_0.9.3              scales_1.1.0              
-[23] RColorBrewer_1.1-2         edgeR_3.20.9              
-[25] limma_3.34.9               reshape_0.8.8             
-[27] ggplot2_3.2.1              gplots_3.0.1.1            
+ [1] dplyr_0.8.5                 RUVSeq_1.18.0              
+ [3] EDASeq_2.18.0               ShortRead_1.42.0           
+ [5] GenomicAlignments_1.20.1    SummarizedExperiment_1.14.1
+ [7] DelayedArray_0.10.0         matrixStats_0.55.0         
+ [9] Rsamtools_2.0.0             GenomicRanges_1.36.1       
+[11] GenomeInfoDb_1.20.0         Biostrings_2.52.0          
+[13] XVector_0.24.0              IRanges_2.18.3             
+[15] S4Vectors_0.22.1            BiocParallel_1.18.1        
+[17] Biobase_2.44.0              BiocGenerics_0.30.0        
+[19] tidyr_1.0.3                 DT_0.13                    
+[21] cowplot_1.0.0               scales_1.1.1               
+[23] RColorBrewer_1.1-2          edgeR_3.26.8               
+[25] limma_3.40.6                reshape_0.8.8              
+[27] ggplot2_3.3.0               gplots_3.0.1.1             
 
 loaded via a namespace (and not attached):
- [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
+ [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.1        
  [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.3          
- [7] bit64_0.9-7            AnnotationDbi_1.40.0   splines_3.4.3         
-[10] R.methodsS3_1.7.1      DESeq_1.30.0           geneplotter_1.56.0    
-[13] knitr_1.26             zeallot_0.1.0          jsonlite_1.6          
-[16] workflowr_1.5.0        annotate_1.56.2        R.oo_1.23.0           
-[19] shiny_1.4.0            compiler_3.4.3         httr_1.4.1            
-[22] backports_1.1.5        fastmap_1.0.1          assertthat_0.2.1      
-[25] Matrix_1.2-18          lazyeval_0.2.2         later_1.0.0           
-[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
-[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
-[34] Rcpp_1.0.3             vctrs_0.2.0            gdata_2.18.0          
-[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.12             
-[40] stringr_1.4.0          mime_0.8               lifecycle_0.1.0       
-[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.24.0       
-[46] MASS_7.3-51.4          aroma.light_3.8.0      hms_0.5.2             
-[49] promises_1.1.0         yaml_2.2.0             memoise_1.1.0         
-[52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
-[55] RSQLite_2.1.4          genefilter_1.60.0      RMySQL_0.10.17        
-[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.4           
-[61] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
-[64] lattice_0.20-35        purrr_0.3.3            labeling_0.3          
-[67] htmlwidgets_1.5.1      bit_1.1-14             tidyselect_0.2.5      
-[70] plyr_1.8.4             magrittr_1.5           R6_2.4.1              
-[73] DBI_1.0.0              pillar_1.4.2           whisker_0.4           
-[76] withr_2.1.2            survival_2.41-3        RCurl_1.95-4.12       
-[79] tibble_2.1.3           crayon_1.3.4           KernSmooth_2.23-15    
-[82] rmarkdown_1.18         progress_1.2.2         locfit_1.5-9.1        
-[85] grid_3.4.3             blob_1.2.0             git2r_0.26.1          
-[88] digest_0.6.23          xtable_1.8-4           httpuv_1.5.2          
-[91] R.utils_2.9.2          munsell_0.5.0         </code></pre>
+ [7] bit64_0.9-7            AnnotationDbi_1.46.0   splines_3.6.1         
+[10] R.methodsS3_1.7.1      DESeq_1.36.0           geneplotter_1.62.0    
+[13] knitr_1.23             jsonlite_1.6.1         workflowr_1.6.2       
+[16] annotate_1.62.0        R.oo_1.23.0            compiler_3.6.1        
+[19] httr_1.4.1             backports_1.1.7        assertthat_0.2.1      
+[22] Matrix_1.2-18          later_1.0.0            htmltools_0.4.0       
+[25] prettyunits_1.1.1      tools_3.6.1            gtable_0.3.0          
+[28] glue_1.4.1             GenomeInfoDbData_1.2.1 Rcpp_1.0.4.6          
+[31] vctrs_0.3.0            gdata_2.18.0           rtracklayer_1.44.0    
+[34] crosstalk_1.1.0.1      xfun_0.8               stringr_1.4.0         
+[37] lifecycle_0.2.0        gtools_3.8.1           XML_3.98-1.20         
+[40] zlibbioc_1.30.0        MASS_7.3-51.6          aroma.light_3.14.0    
+[43] hms_0.5.3              promises_1.1.0         yaml_2.2.1            
+[46] memoise_1.1.0          biomaRt_2.40.1         latticeExtra_0.6-28   
+[49] stringi_1.4.6          RSQLite_2.1.1          genefilter_1.66.0     
+[52] GenomicFeatures_1.36.3 caTools_1.17.1.2       rlang_0.4.6           
+[55] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
+[58] lattice_0.20-41        purrr_0.3.4            htmlwidgets_1.5.1     
+[61] labeling_0.3           bit_1.1-14             tidyselect_1.1.0      
+[64] plyr_1.8.6             magrittr_1.5           R6_2.4.1              
+[67] DBI_1.0.0              pillar_1.4.4           whisker_0.3-2         
+[70] withr_2.2.0            survival_2.44-1.1      RCurl_1.98-1.1        
+[73] tibble_3.0.1           crayon_1.3.4           KernSmooth_2.23-15    
+[76] rmarkdown_1.13         progress_1.2.2         locfit_1.5-9.1        
+[79] grid_3.6.1             blob_1.2.0             git2r_0.26.1          
+[82] digest_0.6.25          xtable_1.8-4           httpuv_1.5.1          
+[85] R.utils_2.9.2          munsell_0.5.0         </code></pre>
 </div>
 </div>
 
@@ -2704,49 +2823,6 @@ $(document).ready(function () {
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

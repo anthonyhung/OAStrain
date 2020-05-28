@@ -438,7 +438,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-19
+<strong>Last updated:</strong> 2020-05-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -529,22 +529,23 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
@@ -589,9 +590,8 @@ Untracked files:
     Untracked:  .RDataTmp
 
 Unstaged changes:
-    Modified:   analysis/boxplots_correlations.Rmd
     Modified:   analysis/enrichment_DE.Rmd
-    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   analysis/partition_variance.Rmd
 
 </code></pre>
 <p>
@@ -630,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/analysis/enrichment_DE.Rmd" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+change RUVg to use least variable genes found through raw unnormalized data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/022f905186e6ab8f784b7266671f2729d9200c6c/docs/enrichment_DE.html" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+change RUVg to use least variable genes found through raw unnormalized data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -773,6 +807,12 @@ odds ratio
   1.423059 </code></pre>
 <pre class="r"><code>#enrich(genes_GWAS_share_eQTL, DE_genes, other_genes)
 #enrich(OA_GWAS_genes, DE_genes, other_genes)</code></pre>
+</div>
+<div id="store-the-overlapping-genes-for-futher-analysis" class="section level1">
+<h1>Store the overlapping genes for futher analysis</h1>
+<pre class="r"><code>overlap_fungenomic &lt;- intersect(fungenomic, DE_genes_ensg)
+
+overlap_crossomic &lt;- intersect(cross_omic, DE_genes_ensg)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

@@ -1,0 +1,51 @@
+"","Gene.name","Ensembl.ID","lead.SNP","Trait","Other.Traits.GWAS.significant.in.meta.analysis","chr","Variant_posa","Entrez.ID","Biotype","Distanceb","X.500kbpc","GWAS.Hitd","All_evidencee","MostSevereConsequencef","PPC_Gene_MODERATEandHIGHg","EO_OAh","bone.diseases..developmentali","Coloc_Tissuesj","Piccolo_Tissuesk","MetaXcan_Tissuesl","Animal_Skeletonm","Prot_logFCn","Prot_FDRo","RNASeq_logFCp","RNASeq_FDRq","msh_Mendelr"
+"1","COL11A1","ENSG00000060718","rs4338381","OA_hip","OA;OA_kneehip",1,103572927,1301,"protein_coding",0,1,"1","_EO-OA_Animal-skeletal_",NA,NA,"yes",NA,"-","-","-","abnormal costal cartilage morphology; abnormal long bone epiphyseal plate proliferative zone; increased diameter of long bones; abnormal epiphyseal plate morphology; small Meckel's cartilage; abnormal trabecular bone morphology; abnormal joint morphology; abnormal hyaline cartilage morphology; abnormal long bone metaphysis morphology; abnormal long bone diaphysis morphology; decreased bone mineralization; osteoarthritis; abnormal bone marrow cavity morphology; abnormal long bone epiphyseal plate morphology; abnormal joint mobility; decreased length of long bones; abnormal tracheal cartilage morphology; abnormal chondrocyte morphology; short mandible; abnormal endochondral bone ossification",NA,NA,NA,NA,"intervertebral disc degeneration|osteochondrodysplasias|vitreous detachment|collagen diseases|myopia|osteochondrodysplasias|abnormalities, multiple|vitreous detachment|dwarfism"
+"NA",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.1",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.2",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.3",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.4",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.5",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"17","IMPDH2","ENSG00000178035","rs62262139","OA",NA,3,50022049,3615,"protein_coding",955208,0,"11","_DEGProt_",NA,NA,NA,NA,"-","-","-",NA,-0.237015091,0.010277587,NA,NA,NA
+"NA.6",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.7",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.8",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.9",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"36","TMEM129","ENSG00000168936","rs11732213","OA_kneehip","OA;OA_hip",4,1704244,92305,"protein_coding",-18841,1,"13","_coloc_piccolo_",NA,NA,NA,NA,"gtex7_brain_putamen_basal_ganglia","Mono-naive","-",NA,NA,NA,NA,NA,"0"
+"38","NSD2","ENSG00000109685","rs11732213","OA_kneehip","OA;OA_hip",4,1704244,7468,"protein_coding",-279690,1,"13","_Animal-skeletal_",NA,NA,NA,NA,"-","-","-","malocclusion; abnormal sternum ossification; failure of sternum ossification",NA,NA,NA,NA,NA
+"NA.10",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.11",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.12",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.13",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.14",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.15",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"59","COL12A1","ENSG00000111799","rs12209223","OA_hip",NA,6,76164589,1303,"protein_coding",248822,1,"24","_Animal-skeletal_",NA,NA,NA,NA,"-","-","-","abnormal vertebral column morphology; kyphosis; abnormal vertebral spinous process morphology; abnormal skeleton development; kyphoscoliosis; decreased diameter of femur; abnormal compact bone morphology; short femur; decreased bone mineralization; decreased bone ossification; abnormal skeleton physiology; abnormal femur morphology; abnormal osteoblast physiology; abnormal bone structure; abnormal osteoblast morphology; abnormal skeleton morphology; decreased bone strength; abnormal cartilage development",NA,NA,NA,NA,"muscular dystrophies|contracture|contracture"
+"NA.16",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"75","TNC","ENSG00000041982","rs919642","OA","OA_kneehip;OA_knee",9,116911147,3371,"protein_coding",-969389,0,"29,30","_DEGProt_DEGmRNA",NA,NA,NA,NA,"-","-","-",NA,0.324901301,0.040538403,0.55699123,0.006797149,"hearing loss, sensorineural|deafness"
+"NA.17",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"84","LTBP3","ENSG00000168056","rs10896015","OA_hip",NA,11,65323725,4054,"protein_coding",0,1,"35","_coloc_piccolo_Animal-skeletal_DEGProt_DEGmRNA",NA,NA,NA,NA,"gtex7_pituitary;gtex7_nerve_tibial","gtex7_nerve_tibial;CD4;Mono;Mono-naive","-","abnormal bone remodeling; abnormal basioccipital bone morphology; ectopic cranial bone; abnormal long bone metaphysis morphology; abnormal neurocranium morphology; abnormal craniofacial bone morphology; reduced enamel thickness; abnormal basicranium morphology; abnormal enamel organ morphology; kyphosis; abnormal synchondrosis; domed cranium; premature bone ossification; abnormal enamel morphology; malocclusion; increased width of hypertrophic chondrocyte zone; round orbits; abnormal cervical vertebrae morphology; short maxilla; misaligned incisors; abnormal long bone epiphyseal plate proliferative zone; prognathia; abnormal cranium morphology; osteoarthritis; abnormal thoracic cage shape; increased trabecular bone mass; abnormal basisphenoid bone morphology; occipital bossing; short basicranium; decreased length of long bones; abnormal foramen magnum morphology; abnormal trabecular bone morphology; abnormal joint morphology; abnormal frontal bone morphology; osteosclerosis; abnormal thoracic vertebrae morphology",0.318754008,0.038721103,0.464875484,0.010669547,"osteochondrodysplasias|tooth abnormalities"
+"91","EFEMP2","ENSG00000172638","rs10896015","OA_hip",NA,11,65323725,30008,"protein_coding",-317338,1,"35,36","_Animal-skeletal_",NA,NA,NA,NA,"-","-","-","abnormal tendon collagen fibril morphology",NA,NA,NA,NA,"skin diseases, genetic|cutis laxa|vascular calcification"
+"NA.18",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.19",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"128","HIP1R","ENSG00000130787","rs11059094","OA_hip",NA,12,122606837,9026,"protein_coding",-740670,0,"43,44","_Animal-skeletal_DEGmRNA",NA,NA,NA,NA,"-","-","-","abnormal spine curvature; abnormal bone marrow cavity morphology",NA,NA,-0.30298263,0.007908288,"0"
+"133","CDK2AP1","ENSG00000111328","rs56116847","OA_knee","OA;OA_kneehip",12,123835233,8099,"protein_coding",78352,1,"44","_coloc_MetaXcan_DEGmRNA",NA,NA,NA,NA,"gtex7_thyroid;gtex7_skin_not_sun_exposed_suprapubic;gtex7_colon_transverse;gtex7_cells_transformed_fibroblasts;gtex7_skin_sun_exposed_lower_leg;gtex7_esophagus_muscularis;gtex7_breast_mammary_tissue;gtex7_adipose_visceral_omentum;gtex7_esophagus_mucosa;gtex7_nerve_tibial;gtex7_lung;gtex7_artery_aorta;gtex7_adipose_subcutaneous","-","gtex7_adipose_visceral_omentum;gtex7_breast_mammary_tissue;gtex7_colon_transverse;gtex7_esophagus_mucosa;gtex7_small_intestine_terminal_ileum;gtex7_spleen",NA,NA,NA,-0.153367358,0.047895161,"0"
+"134","SBNO1","ENSG00000139697","rs56116847","OA_knee","OA;OA_kneehip",12,123835233,55206,"protein_coding",0,1,"44","_MetaXcan_",NA,NA,NA,NA,"-","-","gtex7_brain_substantia_nigra",NA,NA,NA,NA,NA,"0"
+"NA.20",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.21",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.22",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"147","FTO","ENSG00000140718","rs9930333","OA_kneehip",NA,16,53799977,79068,"protein_coding",0,1,"49","_Animal-skeletal_",NA,NA,NA,NA,"-","-","-","decreased bone mineral density",NA,NA,NA,NA,"obesity|dwarfism"
+"NA.23",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"150","CYBA","ENSG00000051523","rs1126464","OA",NA,16,89704365,1535,"protein_coding",986805,0,"51","_Animal-skeletal_DEGmRNA",NA,NA,NA,NA,"-","-","-","increased bone mineral content",NA,NA,0.621756036,5.24e-05,"granulomatous disease, chronic|granulomatous disease, chronic"
+"NA.24",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.25",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.26",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.27",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.28",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.29",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.30",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.31",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.32",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.33",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.34",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.35",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"NA.36",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
