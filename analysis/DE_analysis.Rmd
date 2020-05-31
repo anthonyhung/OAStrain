@@ -97,6 +97,8 @@ corfit2$consensus.correlation
 fit <- lmFit(v2, design, block = x,
              correlation = corfit2$consensus.correlation)
 fit <- eBayes(fit)
+
+saveRDS(v2, "output/voom_results.rds")
 ```
 
 
@@ -697,3 +699,79 @@ go_table[,-1]
 
 There are `r nrow(go_table)` significant results.
 
+
+
+
+
+
+
+
+
+
+
+<!-- # Looking at treatment x individual interactions -->
+
+<!-- ```{r design-matrix_interaction} -->
+<!-- design2 <- model.matrix(~treatment + Individual + treatment:Individual + W_1 + W_2 + RIN, -->
+<!--                        data = anno) -->
+<!-- colnames(design2) -->
+<!-- ``` -->
+
+<!-- ```{r fit-model, fig.width=8} -->
+<!-- #TMM Normalization -->
+<!-- y <- DGEList(single_filt_counts) -->
+<!-- y <- calcNormFactors(y, method = "TMM") -->
+<!-- anno <- pData(RUVsOut) -->
+<!-- x <- paste0(anno$Individual, anno$treatment) -->
+<!-- #Voom for differential expression -->
+<!-- v1_interaction <- voom(y, design2) -->
+<!-- corfit1_interaction <- duplicateCorrelation(v1_interaction, design2, block = x) -->
+<!-- corfit1_interaction$consensus.correlation -->
+<!-- v2_interaction <- voom(y, design2, block = x, correlation = corfit1_interaction$consensus.correlation) -->
+<!-- corfit2_interaction <- duplicateCorrelation(v2_interaction, design2, block = x) -->
+<!-- corfit2_interaction$consensus.correlation -->
+<!-- fit_interaction <- lmFit(v2_interaction, design2, block = x, -->
+<!--              correlation = corfit2_interaction$consensus.correlation) -->
+<!-- fit_interaction <- eBayes(fit_interaction) -->
+<!-- ``` -->
+
+
+<!-- ## Assess model results -->
+
+<!-- ```{r model-results-interaction} -->
+<!-- tests_interaction <- colnames(fit_interaction$coefficients) -->
+<!-- results_interaction <- vector(length = length(tests_interaction), mode = "list") -->
+<!-- names(results_interaction) <- tests_interaction -->
+
+<!-- for (test in tests_interaction) { -->
+<!--   # Extract limma results -->
+<!--   results_interaction[[test]] <- get_results(fit_interaction, coef = test) -->
+<!--   # Add mutliple testing correction with ASH -->
+<!--   output_ash <- run_ash(fit_interaction, coef = test)$result -->
+<!--   results_interaction[[test]] <- cbind(results_interaction[[test]], lfsr = output_ash$lfsr, -->
+<!--                            lfdr = output_ash$lfdr, qvalue = output_ash$qvalue, -->
+<!--                            svalue = output_ash$svalue) -->
+<!-- } -->
+
+
+<!-- #FDR 0.05 -->
+<!-- #interaction term 1 -->
+<!-- plot_ma(results_interaction[["treatmentUnstrain:IndividualNA18856 "]], 0.05) -->
+<!-- plot_volcano(results_interaction[["treatmentUnstrain:IndividualNA18856 "]], 0.05) -->
+<!-- plot_pval_hist(results_interaction[["treatmentUnstrain:IndividualNA18856 "]], 0.05) -->
+<!-- table(results_interaction[["treatmentUnstrain:IndividualNA18856 "]]$qvalue < 0.05) -->
+<!-- significant_genes_05 <- row.names(results_interaction[["treatmentUnstrain:IndividualNA18856 "]])[results_interaction[["treatmentUnstrain:IndividualNA18856 "]]$qvalue < 0.05] -->
+<!-- significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)] -->
+<!-- head(significant_symbols_05) -->
+<!-- significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),] -->
+
+<!-- #interaction term 2 -->
+<!-- plot_ma(results_interaction[["treatmentUnstrain:IndividualNA19160 "]], 0.05) -->
+<!-- plot_volcano(results_interaction[["treatmentUnstrain:IndividualNA19160 "]], 0.05) -->
+<!-- plot_pval_hist(results_interaction[["treatmentUnstrain:IndividualNA19160 "]], 0.05) -->
+<!-- table(results_interaction[["treatmentUnstrain:IndividualNA19160 "]]$qvalue < 0.05) -->
+<!-- significant_genes_05 <- row.names(results_interaction[["treatmentUnstrain:IndividualNA19160 "]])[results_interaction[["treatmentUnstrain:IndividualNA19160 "]]$qvalue < 0.05] -->
+<!-- significant_symbols_05 <- gene_anno$external_gene_name[match(significant_genes_05, gene_anno$ensembl_gene_id)] -->
+<!-- head(significant_symbols_05) -->
+<!-- significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),] -->
+<!-- ``` -->

@@ -92,9 +92,11 @@ enrich(cross_omic, DE_genes_ensg, other_genes_ensg)
 
 ```{r overlap}
 overlap_fungenomic <- intersect(fungenomic, DE_genes_ensg)
-GWAS_descriptions <- read.csv("data/GWAS_genes_within_500kb.csv")
-GWAS_descriptions <- GWAS_descriptions[match(overlap_fungenomic, GWAS_descriptions$Ensembl.ID), ]
+GWAS_descriptions <- read.csv("data/GWAS_genes_within_500kb.csv", stringsAsFactors = FALSE)
+GWAS_descriptions <- GWAS_descriptions[match(overlap_fungenomic, GWAS_descriptions$Ensembl.ID), ] %>% 
+     select(-c(Biotype, MostSevereConsequencef, PPC_Gene_MODERATEandHIGHg, Prot_logFCn, Prot_FDRo, RNASeq_logFCp, RNASeq_FDRq))
 write.csv(GWAS_descriptions, "output/GWAS_descriptions.csv")
+saveRDS(overlap_fungenomic, "output/overlap_fungenomic.rds")
 
 
 overlap_crossomic <- intersect(cross_omic, DE_genes_ensg)
