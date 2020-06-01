@@ -13,12 +13,15 @@ editor_options:
 library(ggplot2)
 
 overlap_fungenomic <- readRDS("output/overlap_fungenomic.rds")
+overlap_crossomic <- readRDS("output/overlap_crossomic.rds")
 DE_results <- readRDS("data/DE_results.rds")
 #load in V2
 v2 <- readRDS("output/voom_results.rds")
 
 interaction_genes <- readRDS("output/interaction_genes.rds")
-overlap_interaction <- intersect(interaction_genes, overlap_fungenomic)
+overlap_fungenomic_interaction <- intersect(interaction_genes, overlap_fungenomic)
+overlap_crossomic_interaction <- intersect(interaction_genes, overlap_crossomic)
+
 ```
 
 ```{r plotting function}
@@ -53,9 +56,14 @@ for (gene in 1:length(overlap_fungenomic)) {
      print(plot_gene(v2, as.character(overlap_fungenomic[gene])))
 }
 
-#overlap interaction genes
-for (gene in 1:length(overlap_interaction)) {
-     print(plot_gene(v2, as.character(overlap_interaction[gene])))
+#overlap interaction genes w/fungenomic
+for (gene in 1:length(overlap_fungenomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
+}
+
+#overlap interaction genes w/cross omic
+for (gene in 1:length(overlap_crossomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
 }
 
 ```

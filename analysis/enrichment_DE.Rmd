@@ -100,5 +100,6 @@ saveRDS(overlap_fungenomic, "output/overlap_fungenomic.rds")
 
 
 overlap_crossomic <- intersect(cross_omic, DE_genes_ensg)
+saveRDS(overlap_crossomic, "output/overlap_crossomic.rds")
 ```
 

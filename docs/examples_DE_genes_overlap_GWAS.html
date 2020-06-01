@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree78b9cc0d4cf785e7da03f2db950df97b103f8104targetblank78b9cc0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/78b9cc0d4cf785e7da03f2db950df97b103f8104" target="_blank">78b9cc0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree2cb3b3fb0a677b2709df71fa7da9d0e7969409fbtargetblank2cb3b3fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb" target="_blank">2cb3b3f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree78b9cc0d4cf785e7da03f2db950df97b103f8104targetblank78b9cc0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree2cb3b3fb0a677b2709df71fa7da9d0e7969409fbtargetblank2cb3b3fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/78b9cc0d4cf785e7da03f2db950df97b103f8104" target="_blank">78b9cc0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb" target="_blank">2cb3b3f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -586,6 +586,7 @@ Ignored files:
     Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
     Ignored:    output/interaction_genes.rds
+    Ignored:    output/overlap_crossomic.rds
     Ignored:    output/overlap_fungenomic.rds
     Ignored:    output/voom_results.rds
 
@@ -595,8 +596,7 @@ Untracked files:
 Unstaged changes:
     Modified:   analysis/enrichment_DE.Rmd
     Modified:   analysis/examples_DE_genes_overlap_GWAS.Rmd
-    Modified:   analysis/partition_variance.Rmd
-    Modified:   data/DEgenes_FDR05.rda
+    Modified:   output/GWAS_descriptions.csv
 
 </code></pre>
 <p>
@@ -635,6 +635,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/analysis/examples_DE_genes_overlap_GWAS.Rmd" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+<td>
+add interaction term genes and plotting
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/examples_DE_genes_overlap_GWAS.html" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+<td>
+add interaction term genes and plotting
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -681,12 +715,14 @@ add dotplots of 50 overlap genes
 <pre class="r"><code>library(ggplot2)
 
 overlap_fungenomic &lt;- readRDS(&quot;output/overlap_fungenomic.rds&quot;)
+overlap_crossomic &lt;- readRDS(&quot;output/overlap_crossomic.rds&quot;)
 DE_results &lt;- readRDS(&quot;data/DE_results.rds&quot;)
 #load in V2
 v2 &lt;- readRDS(&quot;output/voom_results.rds&quot;)
 
 interaction_genes &lt;- readRDS(&quot;output/interaction_genes.rds&quot;)
-overlap_interaction &lt;- intersect(interaction_genes, overlap_fungenomic)</code></pre>
+overlap_fungenomic_interaction &lt;- intersect(interaction_genes, overlap_fungenomic)
+overlap_crossomic_interaction &lt;- intersect(interaction_genes, overlap_crossomic)</code></pre>
 <pre class="r"><code>plot_gene &lt;- function(v, g) {
   # v - An EList object containing log2 counts per million
   # g - character vector of a single gene
@@ -2668,22 +2704,256 @@ Anthony Hung
 </table>
 </div>
 </div>
-<pre class="r"><code>#overlap interaction genes
-for (gene in 1:length(overlap_interaction)) {
-     print(plot_gene(v2, as.character(overlap_interaction[gene])))
+<pre class="r"><code>#overlap interaction genes w/fungenomic
+for (gene in 1:length(overlap_fungenomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
 }</code></pre>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-51.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-51">
+Past versions of “plotting function-51.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-51" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-51.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-52.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-52">
+Past versions of “plotting function-52.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-52" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-52.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-53.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-53">
+Past versions of “plotting function-53.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-53" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-53.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-54.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-54">
+Past versions of “plotting function-54.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-54" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-54.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-55.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-55">
+Past versions of “plotting function-55.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-55" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-55.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-56.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plotting-function-56">
+Past versions of “plotting function-56.png”
+</button>
+</p>
+<div id="fig-no-spaces-plotting-function-56" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/docs/figure/examples_DE_genes_overlap_GWAS.Rmd/plotting function-56.png" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#overlap interaction genes w/cross omic
+for (gene in 1:length(overlap_crossomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
+}</code></pre>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-57.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-58.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-59.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="figure/examples_DE_genes_overlap_GWAS.Rmd/plotting%20function-60.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
