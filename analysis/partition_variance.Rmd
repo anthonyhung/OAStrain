@@ -141,6 +141,9 @@ head(treatment_anno)
 sorted_treatment <- varPart_1_int[order(varPart_1_int$`Individual:treatment`, decreasing=TRUE),]
 plotPercentBars(sorted_treatment[1:10,])
 treatment_genes <- rownames(sorted_treatment)
+#genes with interaction term explaining at least 60% of the variation
+interaction_genes <- rownames(sorted_treatment)[sorted_treatment$`Individual:treatment` > 0.6]
+saveRDS(interaction_genes, "output/interaction_genes.rds")
 
 treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_anno$ensembl_gene_id)]
 head(treatment_symbols)

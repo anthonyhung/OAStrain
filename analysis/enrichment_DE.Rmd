@@ -21,7 +21,7 @@ DE_genes <- gene_anno$external_gene_name[match(DE_genes_ensg, gene_anno$ensembl_
 other_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue >= threshold]
 other_genes <- gene_anno$external_gene_name[match(other_genes_ensg, gene_anno$ensembl_gene_id)]
 
-
+interaction_genes <- readRDS("output/interaction_genes.rds")
 
 
 
