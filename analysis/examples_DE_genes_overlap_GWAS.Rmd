@@ -56,6 +56,11 @@ for (gene in 1:length(overlap_fungenomic)) {
      print(plot_gene(v2, as.character(overlap_fungenomic[gene])))
 }
 
+#all interaction genes
+for (gene in 1:length(interaction_genes)) {
+     print(plot_gene(v2, as.character(interaction_genes[gene])))
+}
+
 #overlap interaction genes w/fungenomic
 for (gene in 1:length(overlap_fungenomic_interaction)) {
      print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
