@@ -53,32 +53,48 @@ plot_gene <- function(v, g) {
               )
 }
 
-#all top genes
-for (gene in 1:length(overlap_fungenomic)) {
-     print(plot_gene(v2, as.character(overlap_fungenomic[gene])))
-}
-
-#all interaction genes
-for (gene in 1:length(interaction_genes)) {
-     print(plot_gene(v2, as.character(interaction_genes[gene])))
-}
-
-#overlap interaction genes w/fungenomic
-for (gene in 1:length(overlap_fungenomic_interaction)) {
-     print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
-}
-
-#overlap interaction genes w/cross omic
-for (gene in 1:length(overlap_crossomic_interaction)) {
-     print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
-}
-
-#candidates (based on variation between ctls and treated samples)
-for (gene in 1:length(least_var_ctl_most_var_treat)) {
-     print(plot_gene(v2, as.character(least_var_ctl_most_var_treat[gene])))
-}
 
 ```
 
+#all top genes
+
+```{r}
+for (gene in 1:length(overlap_fungenomic)) {
+     print(plot_gene(v2, as.character(overlap_fungenomic[gene])))
+}
+```
+
+#all interaction genes
+
+```{r}
+for (gene in 1:length(interaction_genes)) {
+     print(plot_gene(v2, as.character(interaction_genes[gene])))
+}
+```
+
+#overlap interaction genes w/fungenomic
+
+```{r}
+for (gene in 1:length(overlap_fungenomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
+}
+```
+
+
+#overlap interaction genes w/cross omic
+
+```{r}
+for (gene in 1:length(overlap_crossomic_interaction)) {
+     print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
+}
+```
+
+#candidates (based on variation between ctls and treated samples)
+
+```{r}
+for (gene in 1:length(least_var_ctl_most_var_treat)) {
+     print(plot_gene(v2, as.character(least_var_ctl_most_var_treat[gene])))
+}
+```
 
 
