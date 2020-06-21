@@ -776,3 +776,116 @@ There are `r nrow(go_table)` significant results.
 <!-- significant_anno_05 <- gene_anno[match(significant_genes_05, gene_anno$ensembl_gene_id),] -->
 <!-- ``` -->
 
+
+# Volcano plots broken down by individual
+
+```{r individual volcano plots}
+single_filt_counts <- filt_counts
+anno <- pData(RUVsOut)
+
+NA18855_index <- which(anno$Individual == "NA18855 ")
+NA18855 <- single_filt_counts[, NA18855_index]
+NA18855_anno <- anno[NA18855_index, ]
+     
+NA18856_index <- which(anno$Individual == "NA18856 ")
+NA18856 <- single_filt_counts[, NA18856_index]
+NA18856_anno <- anno[NA18856_index, ]
+     
+NA19160_index <- which(anno$Individual == "NA19160 ")
+NA19160 <- single_filt_counts[, NA19160_index]
+NA19160_anno <- anno[NA19160_index, ]
+
+
+plot_volcano <- function(x, qval) {
+  # Create volcano plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, P.Value, and qvalue)
+  # qval - qvalue cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "P.Value", "qvalue") %in% colnames(x),
+            is.numeric(qval), qval <= 1, qval >= 0)
+  x$highlight <- ifelse(x$qvalue < qval, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) +
+    geom_point(shape = 1) +
+    labs(x = "Log fold change",
+         y = expression(-log[10] * " p-value")) +
+    scale_color_identity(drop = FALSE) +
+    theme(legend.position = "none")
+}
+
+volcano_plot_ind <- function(annotation, filtered_counts){
+     design <- model.matrix(~treatment + W_1 + W_2 + RIN,
+                            data = annotation)
+     colnames(design) <- gsub("treatment", "", colnames(design))
+     
+     #TMM Normalization
+     y <- DGEList(filtered_counts)
+     y <- calcNormFactors(y, method = "TMM")
+     #Voom for differential expression
+     v1 <- voom(y, design)
+     fit <- lmFit(v1, design, block = annotation$treatment,
+                  correlation = corfit2$consensus.correlation)
+     fit <- eBayes(fit)
+     
+     #extract results and run ash
+     tests <- colnames(fit$coefficients)
+     results <- vector(length = length(tests), mode = "list")
+     names(results) <- tests
+     
+     for (test in tests) {
+          # Extract limma results
+          results[[test]] <- get_results(fit, coef = test)
+          # Add mutliple testing correction with ASH
+          output_ash <- run_ash(fit, coef = test)$result
+          results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+                                   lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                                   svalue = output_ash$svalue)
+          }
+
+     #FDR 0.05
+     plot_volcano(results[["Unstrain"]], 0.05)
+}
+
+
+#make plots
+volcano_plot_ind(NA18855_anno, NA18855)
+volcano_plot_ind(NA18856_anno, NA18856)
+#volcano_plot_ind(NA19160_anno, NA19160)
+
+#19160
+design <- model.matrix(~treatment + W_1 + W_2,
+                            data = NA19160_anno)
+colnames(design) <- gsub("treatment", "", colnames(design))
+     
+#TMM Normalization
+y <- DGEList(NA19160)
+y <- calcNormFactors(y, method = "TMM")
+#Voom for differential expression
+v1 <- voom(y, design)
+fit <- lmFit(v1, design, block = NA19160_anno$treatment,
+                  correlation = corfit2$consensus.correlation)
+fit <- eBayes(fit)
+     
+#extract results and run ash
+tests <- colnames(fit$coefficients)
+results <- vector(length = length(tests), mode = "list")
+names(results) <- tests
+     
+for (test in tests) {
+     # Extract limma results
+     results[[test]] <- get_results(fit, coef = test)
+     # Add mutliple testing correction with ASH
+     output_ash <- run_ash(fit, coef = test)$result
+     results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+                              lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                              svalue = output_ash$svalue)
+     }
+
+#FDR 0.05
+plot_volcano(results[["Unstrain"]], 0.05)
+
+```
+
+
