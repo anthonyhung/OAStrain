@@ -11,4 +11,4 @@ analysis/*_cache
 analysis/site_libs
 *.rds
 *.rda
-
+*.csv
