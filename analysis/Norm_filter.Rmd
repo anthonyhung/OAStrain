@@ -17,6 +17,7 @@ library("edgeR")
 library("RColorBrewer")
 library("scales")
 library("cowplot")
+theme_set(theme_cowplot())
 library("dplyr")
 
 # Load colors 

@@ -17,7 +17,7 @@ library(edgeR)
 library(dplyr)
 
 #raw(filtered)
-counts_upperquartile <- readRDS("data/filtered_counts.rds")
+counts_upperquartile <- readRDS("data/filtered_counts.rds")$counts
 #normalized
 filtered_upperquartile <- readRDS("data/norm_filtered_counts.rds")
 filtered_RLE <- readRDS("data/norm_filtered_counts_RLE.rds")
@@ -39,7 +39,7 @@ least_var_genes <- names(head(sort(cv), 100))
 
 #Use RUVg
 #load data into expressionset
-set <- newSeqExpressionSet(as.matrix(counts_upperquartile$counts),phenoData = data.frame(sampleinfo, row.names=colnames(counts_upperquartile$counts)))
+set <- newSeqExpressionSet(as.matrix(counts_upperquartile),phenoData = data.frame(sampleinfo, row.names=colnames(counts_upperquartile)))
 set
 #normalization
 set <- betweenLaneNormalization(x = set, which = "upper")
@@ -61,7 +61,7 @@ sample_info_W2$LibraryPrepBatch <- as.factor(sample_info_W2$LibraryPrepBatch)
 
 # Specify variables to consider
 
-```{r variables}
+```{r variables_to_consider}
 # Specify variables to consider
 form <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + (1|Individual:treatment) + W_1
 form_no_interaction <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + W_1
@@ -76,7 +76,7 @@ form_no_interaction_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|
 
 # Run function
 
-```{r function}
+```{r function_1}
 # Fit model and extract results
 # 1) fit linear mixed model on gene expression
 # If categorical variables are specified,
@@ -163,4 +163,22 @@ treatment_symbols <- gene_anno$external_gene_name[match(treatment_genes, gene_an
 head(treatment_symbols)
 treatment_anno <- gene_anno[match(treatment_genes, gene_anno$ensembl_gene_id),]
 head(treatment_anno, 100)
+```
+
+
+# Raw data analysis
+
+# Specify variables to consider
+
+```{r variables}
+# Specify variables to consider
+form_no_interaction <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch)
+```
+
+# Run function
+
+```{r function}
+varPart_1 <- fitExtractVarPartModel( counts_upperquartile, form_no_interaction, sample_info )
+vp <- sortCols(varPart_1)
+plotVarPart( vp )
 ```

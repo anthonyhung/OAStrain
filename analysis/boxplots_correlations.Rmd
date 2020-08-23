@@ -16,6 +16,8 @@ library(stringr)
 library(reshape2)
 library(ggplot2)
 library(RUVSeq)
+library(cowplot)
+theme_set(theme_cowplot())
 
 #load data
 raw_counts <- cpm(readRDS("data/raw_counts_relabeled.rds"))
@@ -140,5 +142,42 @@ make_plot(tidy_cors_uq_pearson) + labs(title="UQ normalized Data, Pearson")
 #uq_ruv
 make_plot(tidy_cors_uq_ruv_spear) + labs(title="uq_ruv normalized Data, Spearman")
 make_plot(tidy_cors_uq_ruv_pearson) + labs(title="uq_ruv normalized Data, Pearson")
+```
+
+# Make plots comparing 18856 correlations to others
+
+```{r NA18856}
+make_plot_18856 <- function(tidy_cors){
+     all <- tidy_cors$value
+     NA18856_treated <- tidy_cors$value[tidy_cors$ind1 == "18856" & tidy_cors$ind2 == "18856" & tidy_cors$treat1 == "S" & tidy_cors$treat2 == "S"]
+     NA18856_untreated <- tidy_cors$value[tidy_cors$ind1 == "18856" & tidy_cors$ind2 == "18856" & tidy_cors$treat1 == "U" & tidy_cors$treat2 == "U"]
+     NA18855_treated <- tidy_cors$value[tidy_cors$ind1 == "18855" & tidy_cors$ind2 == "18855" & tidy_cors$treat1 == "S" & tidy_cors$treat2 == "S"]
+     NA18855_untreated <- tidy_cors$value[tidy_cors$ind1 == "18855" & tidy_cors$ind2 == "18855" & tidy_cors$treat1 == "U" & tidy_cors$treat2 == "U"] 
+     NA19160_treated <- tidy_cors$value[tidy_cors$ind1 == "19160" & tidy_cors$ind2 == "19160" & tidy_cors$treat1 == "S" & tidy_cors$treat2 == "S"]
+     NA19160_untreated <- tidy_cors$value[tidy_cors$ind1 == "19160" & tidy_cors$ind2 == "19160" & tidy_cors$treat1 == "U" & tidy_cors$treat2 == "U"]
+     
+     n <- 6
+     
+     length(NA18856_treated) <- n
+     length(NA18856_untreated) <- n
+     length(NA18855_treated) <- n
+     length(NA18855_untreated) <- n
+     length(NA19160_treated) <- n
+     length(NA19160_untreated) <- n
+     
+     #combine all into a df
+     combined <- as.data.frame(cbind(NA18856_treated, NA18856_untreated, NA18855_treated, NA18855_untreated, NA19160_treated, NA19160_untreated))
+     #melt
+     combined_melt <- melt(combined) %>% distinct()
+     
+     #plot
+     return(ggplot(combined_melt, aes(x = variable, y = value)) +
+                 geom_boxplot() +
+                 geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.5) +
+                 labs(y = "correlation", x = ""))
+}
+
+make_plot_18856(tidy_cors_raw_spear) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+make_plot_18856(tidy_cors_uq_spear) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 

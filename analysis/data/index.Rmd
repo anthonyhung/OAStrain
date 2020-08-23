@@ -1,0 +1,38 @@
+---
+title: "Home"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+# Analysis of bulkRNA/scRNA sequencing data for Osteoarthritis Strain project.
+
+
+## PILOT (n=3):
+
+__single-cell data__
+
+* [Analysis of single-cell pilot experiment data](ANT1_ANT2_.html)
+
+__Bulk Data__
+
+Working with raw data
+
+* [Preprocessing](preprocessing.html)
+
+* [Analysis of Raw bulkRNAseq pilot data](raw_counts_analysis.html)
+
+* [Normalization and filtering for lowly expressed genes](Norm_filter.html)
+
+* [Download Gene Annotations](download_gene_annotation.html)
+
+Analyses of bulk RNAseq data
+
+* [Accounting for technical factors](technical_factors_analysis.html)
+
+* [Checking expression of individual genes of interest](check_expression.html)
+
+* [Differential expression using Limma/Voom](DE_analysis.html)

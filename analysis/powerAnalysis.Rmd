@@ -1,0 +1,498 @@
+---
+title: "Power Analysis"
+author: "Anthony Hung"
+date: "2020-07-23"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Load libraries
+
+```{r}
+library(dplyr)
+library(biomaRt)
+library(eQTLpipeline)
+library(MatrixEQTL)
+library(ggplot2)
+library(mashr)
+library(tidyverse)
+
+library(RNOmni)
+```
+
+
+# Get input files for MatrixEQTL
+geneloc
+GE
+Covariates
+
+SNP
+snpsloc
+
+```{r get GE info}
+#GE (average over replicates)
+#normalized counts
+filtered_upperquartile <- data.frame(readRDS("data/norm_filtered_counts.rds"))
+filtered_RLE <- data.frame(readRDS("data/norm_filtered_counts_RLE.rds"))
+filtered_RLE_average <- filtered_RLE %>% 
+     dplyr::mutate(NA18855_Unstrain = rowMeans(dplyr::select(filtered_RLE, X18855_3_U, X18855_1_U, X18855_2_U)),
+            NA19160_Unstrain = rowMeans(dplyr::select(filtered_RLE, X19160_3_U, X19160_2_U)),
+            NA18856_Unstrain = rowMeans(dplyr::select(filtered_RLE, X18856_3_U, X18856_1_U, X18856_2_U)),
+            NA18855_Strain = rowMeans(dplyr::select(filtered_RLE, X18855_3_S, X18855_1_S, X18855_2_S)),
+            NA19160_Strain = rowMeans(dplyr::select(filtered_RLE, X19160_3_S, X19160_2_S, X19160_1_S)),
+            NA18856_Strain = rowMeans(dplyr::select(filtered_RLE, X18856_3_S, X18856_1_S, X18856_2_S))) %>% 
+     dplyr::select(contains("NA1"))
+rownames(filtered_RLE_average) <- rownames(filtered_RLE)
+
+
+filtered_RLE_average_INT <- as.data.frame(t(apply(filtered_RLE_average, 1, rankNorm)))
+
+
+#save files
+filtered_RLE_unstrain <- filtered_RLE_average_INT %>% dplyr::select(contains("Unstrain"))
+filtered_RLE_unstrain <- filtered_RLE_unstrain %>% 
+     tibble::rownames_to_column(var = "id")
+write.table(filtered_RLE_unstrain, "data/MatrixEQTL/GE_unstrain.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+
+filtered_RLE_strain <- filtered_RLE_average_INT %>% dplyr::select(contains("Unstrain"))
+filtered_RLE_strain <- filtered_RLE_strain %>% 
+     tibble::rownames_to_column(var = "id")
+write.table(filtered_RLE_strain, "data/MatrixEQTL/GE_strain.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+
+
+
+#genelocations
+# load gene annotations
+gene_anno <- read.delim("data/gene-annotation.txt",
+                        sep = "\t")
+geneloc <- gene_anno %>% 
+     mutate(chr_name = paste0("chr", chromosome_name)) %>% 
+     dplyr::select(geneid = ensembl_gene_id, chr = chr_name, s1 = start_position, s2 = end_position) %>% 
+     dplyr::filter(geneid %in% filtered_RLE_unstrain$id)
+write.table(geneloc, "data/MatrixEQTL/geneloc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+
+
+```
+
+
+```{r SNPs info}
+#SNP
+vcf.file <- "data/human.vcf"
+SNP_file <- convert.vcf(vcf.file, which = "GT", map = FALSE, snp.pos = FALSE,  genotype_file_name = NULL)
+SNP_file$id <- rownames(SNP_file)
+SNP_file_filtered <- SNP_file %>% 
+     filter(NA19160 != NA18855 | NA19160 != NA18856 | NA18856 != NA18855) %>% 
+     filter(!is.na(NA19160) & !is.na(NA18856) & !is.na(NA18855))
+SNP_file_filtered <- SNP_file_filtered[c(4, 1:3)]
+write.table(SNP_file_filtered, "data/MatrixEQTL/SNP.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+
+#snpsloc
+SNP_names <-SNP_file_filtered$snp
+write.csv(SNP_names, "output/SNPs.csv") # take the list of SNPs and input onto http://www.ensembl.org/biomart/martview/84b35f47d80a1a629c9e275bdb573cf3 to get locations of the SNPs
+snpsloc <- read.table("data/martquery_0723182801_352.txt.gz", sep = "\t", header = TRUE)
+snpsloc <- snpsloc %>%
+     dplyr::mutate(chrnum = paste0("chr", Chromosome.scaffold.name)) %>% 
+     dplyr::select(snp = Variant.name, chr = chrnum, pos = Chromosome.scaffold.position.start..bp.)
+write.table(snpsloc, "data/MatrixEQTL/snpsloc.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+# Running MatrixEQTL
+
+```{r matrixeqtl unstrain}
+useModel <- modelLINEAR
+
+base.dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/"
+
+# Genotype file name
+SNP_file_name <- paste(base.dir, "data/MatrixEQTL/SNP.txt", sep="")
+snps_location_file_name <- paste(base.dir, "data/MatrixEQTL/snpsloc.txt", sep="")
+
+# Gene expression file name
+expression_file_name <- paste(base.dir, "data/MatrixEQTL/GE_unstrain.txt", sep="")
+gene_location_file_name <- paste(base.dir, "data/MatrixEQTL/geneloc.txt", sep="")
+
+# Covariates file name
+covariates_file_name <- character()
+
+# Output file name
+output_file_name_cis <- tempfile()
+output_file_name_tra <- tempfile()
+
+# Only associations significant at this level will be saved
+pvOutputThreshold_cis <- 1
+pvOutputThreshold_tra <- 1e-2
+
+# Error covariance matrix
+# Set to numeric() for identity.
+errorCovariance <- numeric()
+# errorCovariance <- read.table("Sample_Data/errorCovariance.txt")
+
+# Distance for local gene-SNP pairs
+cisDist <- 1e6
+
+## Load genotype data
+
+snps <- SlicedData$new()
+snps$fileDelimiter <- "\t"      # the TAB character
+snps$fileOmitCharacters <- "NA" # denote missing values
+snps$fileSkipRows <- 1           # one row of column labels
+snps$fileSkipColumns <- 1       # one column of row labels
+snps$fileSliceSize <- 2000      # read file in slices of 2,000 rows
+snps$LoadFile(SNP_file_name)
+
+## Load gene expression data
+
+gene <- SlicedData$new()
+gene$fileDelimiter <- "\t"      # the TAB character
+gene$fileOmitCharacters <- "NA" # denote missing values
+gene$fileSkipRows <- 1          # one row of column labels
+gene$fileSkipColumns <- 1       # one column of row labels
+gene$fileSliceSize <- 2000      # read file in slices of 2,000 rows
+gene$LoadFile(expression_file_name)
+
+## Load covariates
+
+cvrt <- SlicedData$new()
+cvrt$fileDelimiter <- "\t"      # the TAB character
+cvrt$fileOmitCharacters <- "NA" # denote missing values
+cvrt$fileSkipRows <- 1          # one row of column labels
+cvrt$fileSkipColumns <- 1       # one column of row labels
+if(length(covariates_file_name)>0) {
+     cvrt$LoadFile(covariates_file_name)
+}
+
+## Run the analysis
+snpspos <- read.table(snps_location_file_name, header = TRUE, stringsAsFactors = FALSE)
+genepos <- read.table(gene_location_file_name, header = TRUE, stringsAsFactors = FALSE)
+
+me_unstrain <- Matrix_eQTL_main(
+     snps = snps,
+     gene = gene,
+     cvrt = cvrt,
+     output_file_name     = output_file_name_tra,
+     pvOutputThreshold     = 0,
+     useModel = useModel,
+     errorCovariance = errorCovariance,
+     verbose = TRUE,
+     output_file_name.cis = output_file_name_cis,
+     pvOutputThreshold.cis = pvOutputThreshold_cis,
+     snpspos = snpspos,
+     genepos = genepos,
+     cisDist = cisDist,
+     pvalue.hist = FALSE,
+     min.pv.by.genesnp = FALSE,
+     noFDRsaveMemory = FALSE)
+
+unlink(output_file_name_tra)
+unlink(output_file_name_cis)
+
+## Results:
+
+cat('Analysis done in: ', me_unstrain$time.in.sec, ' seconds', '\n')
+cat('Detected local eQTLs:', '\n')
+me_unstrain$cis$eqtls$beta_se <- me_unstrain$cis$eqtls$beta / me_unstrain$cis$eqtls$statistic
+me_unstrain$cis$eqtls$sd <- me_unstrain$cis$eqtls$beta_se * sqrt(3)
+me_unstrain$cis$eqtls$standard_beta <- me_unstrain$cis$eqtls$beta/me_unstrain$cis$eqtls$sd 
+show(me_unstrain$cis$eqtls)
+
+write.csv(me_unstrain$cis$eqtls, "output/eQTL_output_unstrain.csv")
+```
+
+```{r matrixeqtl strain}
+useModel <- modelLINEAR
+
+base.dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/"
+
+# Genotype file name
+SNP_file_name <- paste(base.dir, "data/MatrixEQTL/SNP.txt", sep="")
+snps_location_file_name <- paste(base.dir, "data/MatrixEQTL/snpsloc.txt", sep="")
+
+# Gene expression file name
+expression_file_name <- paste(base.dir, "data/MatrixEQTL/GE_strain.txt", sep="")
+gene_location_file_name <- paste(base.dir, "data/MatrixEQTL/geneloc.txt", sep="")
+
+# Covariates file name
+covariates_file_name <- character()
+
+# Output file name
+output_file_name_cis <- tempfile()
+output_file_name_tra <- tempfile()
+
+# Only associations significant at this level will be saved
+pvOutputThreshold_cis <- 1
+pvOutputThreshold_tra <- 1e-2
+
+# Error covariance matrix
+# Set to numeric() for identity.
+errorCovariance <- numeric()
+# errorCovariance <- read.table("Sample_Data/errorCovariance.txt")
+
+# Distance for local gene-SNP pairs
+cisDist <- 1e6
+
+## Load genotype data
+
+snps <- SlicedData$new()
+snps$fileDelimiter <- "\t"      # the TAB character
+snps$fileOmitCharacters <- "NA" # denote missing values
+snps$fileSkipRows <- 1           # one row of column labels
+snps$fileSkipColumns <- 1       # one column of row labels
+snps$fileSliceSize <- 2000      # read file in slices of 2,000 rows
+snps$LoadFile(SNP_file_name)
+
+## Load gene expression data
+
+gene <- SlicedData$new()
+gene$fileDelimiter <- "\t"      # the TAB character
+gene$fileOmitCharacters <- "NA" # denote missing values
+gene$fileSkipRows <- 1          # one row of column labels
+gene$fileSkipColumns <- 1       # one column of row labels
+gene$fileSliceSize <- 2000      # read file in slices of 2,000 rows
+gene$LoadFile(expression_file_name)
+
+## Load covariates
+
+cvrt <- SlicedData$new()
+cvrt$fileDelimiter <- "\t"      # the TAB character
+cvrt$fileOmitCharacters <- "NA" # denote missing values
+cvrt$fileSkipRows <- 1          # one row of column labels
+cvrt$fileSkipColumns <- 1       # one column of row labels
+if(length(covariates_file_name)>0) {
+     cvrt$LoadFile(covariates_file_name)
+}
+
+## Run the analysis
+snpspos <- read.table(snps_location_file_name, header = TRUE, stringsAsFactors = FALSE)
+genepos <- read.table(gene_location_file_name, header = TRUE, stringsAsFactors = FALSE)
+
+me_strain <- Matrix_eQTL_main(
+     snps = snps,
+     gene = gene,
+     cvrt = cvrt,
+     output_file_name     = output_file_name_tra,
+     pvOutputThreshold     = 0,
+     useModel = useModel,
+     errorCovariance = errorCovariance,
+     verbose = TRUE,
+     output_file_name.cis = output_file_name_cis,
+     pvOutputThreshold.cis = pvOutputThreshold_cis,
+     snpspos = snpspos,
+     genepos = genepos,
+     cisDist = cisDist,
+     pvalue.hist = FALSE,
+     min.pv.by.genesnp = FALSE,
+     noFDRsaveMemory = FALSE)
+
+unlink(output_file_name_tra)
+unlink(output_file_name_cis)
+
+## Results:
+
+cat('Analysis done in: ', me_strain$time.in.sec, ' seconds', '\n')
+cat('Detected local eQTLs:', '\n')
+me_strain$cis$eqtls$beta_se <- me_strain$cis$eqtls$beta / me_strain$cis$eqtls$statistic
+me_strain$cis$eqtls$sd <- me_strain$cis$eqtls$beta_se * sqrt(3)
+me_strain$cis$eqtls$standard_beta <- me_strain$cis$eqtls$beta/me_strain$cis$eqtls$sd 
+show(me_strain$cis$eqtls)
+write.csv(me_strain$cis$eqtls, "output/eQTL_output_strain.csv")
+```
+
+# Analyze the effect sizes from eqtl
+
+They look like they overlap
+
+```{r analyze effect sizes}
+qqnorm(me_strain$cis$eqtls$beta)
+qqline(me_strain$cis$eqtls$beta)
+
+qqnorm(me_unstrain$cis$eqtls$beta)
+qqline(me_unstrain$cis$eqtls$beta)
+
+unstrain_eqtls <- me_unstrain$cis$eqtls
+quantile(unstrain_eqtls$standard_beta, seq(0, 1, 0.1))
+unstrain_betas <- hist(unstrain_eqtls$standard_beta, breaks = 20)
+unstrain_betas$counts <- log10(unstrain_betas$counts + 1)
+unstrain_eqtls_top_hits <- unstrain_eqtls %>% 
+     group_by(gene) %>% 
+     arrange(desc(abs(statistic))) %>% 
+     dplyr::slice(1)
+
+strain_eqtls <- me_strain$cis$eqtls
+quantile(strain_eqtls$standard_beta, seq(0, 1, 0.1))
+strain_betas <- hist(strain_eqtls$standard_beta, breaks = 20)
+strain_betas$counts <- log10(strain_betas$counts + 1)
+strain_eqtls_top_hits <- strain_eqtls %>% 
+     group_by(gene) %>% 
+     arrange(desc(abs(statistic))) %>% 
+     dplyr::slice(1)
+
+plot(unstrain_betas, col = alpha("red", 0.3))
+plot(strain_betas, col = alpha("blue", 0.3), add = TRUE)
+```
+
+
+# Power Curve based on Abhishek Sarkar's derivations
+
+```{r power curve}
+heritability <- 0.16 # median cis-heritability based on Gusev et al. 2016, Wheeler et al. 2016
+lambda <- sqrt(heritability / (1-heritability))
+```
+
+## Plot the curve
+
+```{r curve}
+colors <- cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+samp_size <- c(3, 10, 20, 40, 58)
+alpha <- 5e-6 #for FWER of 0.05
+
+power_function <- function(x, n){ 
+     pnorm(qnorm(alpha/2) + x * sqrt(n))
+}
+
+FPR_function <- function(x, n){ 
+     1 - pnorm(qnorm(0.025) + x * sqrt(n))
+}
+
+p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
+     stat_function(fun = power_function, args = list(n = 3),
+                      aes(colour = "3", linetype = "Power"), size = 1.5) +
+     stat_function(fun = FPR_function, args = list(n = 3),
+                      aes(colour = "3", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+     stat_function(fun = power_function, args = list(n = 10),
+                      aes(colour = "10", linetype = "Power"), size = 1.5) +
+     stat_function(fun = FPR_function, args = list(n = 10),
+                      aes(colour = "10", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+     stat_function(fun = power_function, args = list(n = 30),
+                      aes(colour = "30", linetype = "Power"), size = 1.5) +
+     stat_function(fun = FPR_function, args = list(n = 30),
+                      aes(colour = "30", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+     stat_function(fun = power_function, args = list(n = 58),
+                      aes(colour = "58", linetype = "Power"), size = 1.5) +
+     stat_function(fun = FPR_function, args = list(n = 58),
+                      aes(colour = "58", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+     # stat_function(fun = function(x) x^2/(1+x^2),
+     #                  aes(colour = "heritability"), size = 1, alpha = 0.5) +
+     scale_x_continuous(name = "Standardized Effect Size",
+                              limits=c(0, 2)) +
+     scale_y_continuous(name = "Power",
+                           limits = c(0,1)) +
+     ggtitle("eQTL Power Curves") +
+     scale_colour_manual("Sample Size", breaks = c("3", "10", "30", "58"), values = colors) +
+     scale_linetype_manual("Curve Type", breaks = c("Power", "csQTL FPR"), values = c("csQTL FPR" = "dotted", "Power" = "solid")) +
+     theme_bw() +
+     geom_hline(yintercept = .8, linetype = "dashed", color = "red")
+p
+```
+
+
+
+# mashr to estimate eQTL effect sizes for both conditions
+
+```{r mashr}
+library(dplyr)
+library(mashr)
+library(tidyverse)
+
+setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
+
+# #load eqtl results
+# unstrain_eqtls <- read.csv("output/eQTL_output_unstrain.csv")
+# strain_eqtls <- read.csv("output/eQTL_output_strain.csv")
+
+# #combine into one dataset
+# strain_eqtls_join <- strain_eqtls %>%
+#      mutate(test_number = paste0(snps, " ", gene)) %>%
+#      dplyr::select(test_number, beta, beta_se)
+# unstrain_eqtls_join <- unstrain_eqtls %>%
+#      mutate(test_number = paste0(snps, " ", gene)) %>%
+#      dplyr::select(test_number, beta, beta_se)
+
+# joined_data <- full_join(strain_eqtls_join, unstrain_eqtls_join, by = "test_number", suffix = c(".strain", ".unstrain"))
+# 
+# joined_data <- joined_data %>%
+#      remove_rownames() %>%
+#      column_to_rownames(var = "test_number")
+# 
+# # load the matrices into a mash data set
+# Bhat <- as.matrix(joined_data[,c(1,3)])
+# colnames(Bhat) <- c("strain", "unstrain")
+
+# Shat <- as.matrix(joined_data[,c(2,4)])
+# colnames(Shat) <- c("strain", "unstrain")
+# 
+# data <- mash_set_data(Bhat, Shat)
+# saveRDS(data, "output/mash_full_data_INT.rds")
+# data <- readRDS("output/mash_full_data_INT.rds")
+# 
+# # identify strong subset of tests
+# m.1by1 <- mash_1by1(mash_set_data(data$Bhat,data$Shat))
+# strong.subset <- get_significant_results(m.1by1,0.05)
+# saveRDS(strong.subset, "output/strong_subset.rds")
+# strong.subset<- readRDS("output/strong_subset.rds")
+# 
+# # identify a random subset of subset_num tests
+# subset_num <- 5e5
+# random.subset <- sample(1:nrow(data$Bhat), subset_num)
+# 
+# 
+# # estimate correlation structure in null tests in random data
+# data.temp <- mash_set_data(data$Bhat[random.subset,],data$Shat[random.subset,])
+# Vhat <- estimate_null_correlation_simple(data.temp)
+# rm(data.temp)
+# 
+# 
+# # use the estimated correlation structure to adjust the random/strong subsets
+# data.random <- mash_set_data(data$Bhat[random.subset,],data$Shat[random.subset,],V=Vhat)
+# data.strong <- mash_set_data(data$Bhat[strong.subset,],data$Shat[strong.subset,], V=Vhat)
+# 
+# 
+# 
+# # generate cov matrices using data-driven and cannonical methods and compare
+# # data-driven covariance matrix
+# U.pca = cov_pca(data.strong,2)
+# U.ed = cov_ed(data.strong, U.pca)
+# 
+# ## Also use cannonical cov method to generate cov matrix (to allow us to compare between the data-driven and cannonical cov to see which does better job)
+# U.c <- cov_canonical(data.random)
+# 
+# # run mash
+# m <- mash(data.random, Ulist = c(U.ed,U.c), outputlevel = 1)
+# saveRDS(m, "output/mash_500k_INT.rds")
+
+#ran mash using R script from command line, subsetting to 500k tests instead of the whole thing
+m <- readRDS("output/mash_500k.rds")
+print(get_loglik(m),digits = 10)
+
+
+#load results from fitting (piecewise) on all the tests
+m_INT_1 <- readRDS("output/mash_all_refit_500k_INT_1.rds")
+m_INT_2 <- readRDS("output/mash_all_refit_500k_INT_2.rds")
+m_INT_3 <- readRDS("output/mash_all_refit_500k_INT_3.rds")
+m_INT_4 <- readRDS("output/mash_all_refit_500k_INT_4.rds")
+m_INT_5 <- readRDS("output/mash_all_refit_500k_INT_5.rds")
+m_INT_6 <- readRDS("output/mash_all_refit_500k_INT_6.rds")
+m_INT_7 <- readRDS("output/mash_all_refit_500k_INT_7.rds")
+m_INT_8 <- readRDS("output/mash_all_refit_500k_INT_8.rds")
+
+
+m_1 <- readRDS("output/mash_all_refit_500k_1.rds")
+
+#merge results to one object
+
+
+# analysis of results
+print(length(get_significant_results(m_INT_2))) # number of signfiicant tests (Use get_significant_results to find the indices of effects that are “significant”, which here means they have lfsr less than t in at least one condition, where t is a threshold you specify (default 0.05). The output is ordered from most significant to least significant.)
+print(get_pairwise_sharing(m_INT_2)) #amount of sharing of significant tests (sharing defined as in both conditions, effect is of same sign and within factor of 0.5 of each other)
+print(get_pairwise_sharing(m_INT_2, factor = 0)) #amount of sharing of significant tests (sharing defined as share the same sign)
+
+#estimated mixture proportions
+print(get_estimated_pi(m_INT_2))
+graphics::barplot(get_estimated_pi(m_INT_2),las = 2)
+
+#metaplot
+mash_plot_meta(m_INT_1,get_significant_results(m_INT_1)[1])
+```
+
+
+

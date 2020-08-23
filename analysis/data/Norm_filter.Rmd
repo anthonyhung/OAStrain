@@ -1,0 +1,462 @@
+---
+title: "Normalization and filtering of bulkRNA Count data"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Perform normalization of raw count data using different normalization methods and filter out lowly expressed genes
+
+```{r load libraries and data}
+library("gplots")
+library("ggplot2")
+library("reshape")
+library("edgeR")
+library("RColorBrewer")
+library("scales")
+library("cowplot")
+theme_set(theme_cowplot())
+library("dplyr")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+
+# load in relabeled counts
+raw_counts <- readRDS("data/raw_counts_relabeled.rds")
+# Create DGEList object to allow for easier application of different normalization methods
+raw_counts <- DGEList(raw_counts, group = colnames(raw_counts))
+
+# load in reordered sample information
+sampleinfo <- readRDS("data/Sample.info.RNAseq.reordered.csv")
+```
+
+# Correlation heatmap of Raw Data
+
+```{r corr heatmap raw}
+#Spearman
+cors <- cor(raw_counts$counts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(raw_counts$counts, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+# Perform cpm normalization on all counts and plot density plots
+
+```{r cpm normalization}
+cpm <- cpm(raw_counts, log=TRUE)
+head(cpm)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(cpm[,strained], col=col[strained, ], legend="topright")
+plotDensities(cpm[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(cpm[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(cpm[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(cpm[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+## Correlation heatmap of log2CPM normalized and unfiltered samples
+
+```{r corr heatmap unfiltered CPM}
+#Spearman
+cors <- cor(cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(cpm, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of cpm across samples
+
+```{r boxplot cpm}
+meltcpm <- melt(cpm)
+names(meltcpm) <- c("gene", "sampleID", "cpm")
+p <- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2CPM > 2.5 in at least 4 samples)
+
+```{r filter CPM}
+cutoff <- 2.5
+
+keep <- rowSums(cpm > cutoff ) >=4
+
+counts_cpm <- raw_counts[keep,]
+filtered_cpm <- cpm[keep,]
+dim(filtered_cpm)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt cpm}
+melt_filt_cpm <- melt(filtered_cpm)
+names(melt_filt_cpm) <- c("gene", "sampleID", "log2cpm")
+p1 <- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2CPM normalized and filtered samples
+
+```{r corr heatmap filtered CPM}
+#Spearman
+cors <- cor(filtered_cpm, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(filtered_cpm, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+# TMM Normalization
+
+```{r TMM normalization}
+TMM <- calcNormFactors(raw_counts, method = "TMM")
+TMM <- cpm(TMM, log=TRUE, normalized.lib.sizes = T)
+head(TMM)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(TMM[,strained], col=col[strained, ], legend="topright")
+plotDensities(TMM[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(TMM[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(TMM[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(TMM[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+## Correlation heatmap of log2TMM normalized and unfiltered samples
+
+```{r corr heatmap unfiltered TMM}
+#Spearman
+cors <- cor(TMM, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(TMM, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of TMM across samples
+
+```{r boxplot TMM}
+meltTMM <- melt(TMM)
+names(meltTMM) <- c("gene", "sampleID", "TMM")
+p <- ggplot(meltTMM, aes(factor(sampleID), TMM)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2TMM > 2.5 in at least 4 samples)
+
+```{r filter TMM}
+cutoff <- 2.5
+
+keep <- rowSums( TMM > cutoff ) >=4
+
+counts_TMM <- raw_counts[keep,]
+filtered_TMM <- TMM[keep,]
+dim(filtered_TMM)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt TMM}
+melt_filt_TMM <- melt(filtered_TMM)
+names(melt_filt_TMM) <- c("gene", "sampleID", "log2TMM")
+p1 <- ggplot(melt_filt_TMM, aes(factor(sampleID), log2TMM)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2TMM normalized and filtered samples
+
+```{r corr heatmap filtered TMM}
+#Spearman
+cors <- cor(filtered_TMM, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(filtered_TMM, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+
+
+# RLE Normalization
+
+```{r RLE normalization}
+RLE <- calcNormFactors(raw_counts, method = "RLE")
+RLE <- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
+head(RLE)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(RLE[,strained], col=col[strained, ], legend="topright")
+plotDensities(RLE[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(RLE[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(RLE[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(RLE[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+## Correlation heatmap of log2RLE normalized and unfiltered samples
+
+```{r corr heatmap unfiltered RLE}
+#Spearman
+cors <- cor(RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(RLE, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of RLE across samples
+
+```{r boxplot RLE}
+meltRLE <- melt(RLE)
+names(meltRLE) <- c("gene", "sampleID", "RLE")
+p <- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2RLE > 2.5 in at least 4 samples)
+
+```{r filter RLE}
+cutoff <- 2.5
+
+keep <- rowSums( RLE > cutoff ) >=4
+
+counts_RLE <- raw_counts[keep,]
+filtered_RLE <- RLE[keep,]
+dim(filtered_RLE)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt RLE}
+melt_filt_RLE <- melt(filtered_RLE)
+names(melt_filt_RLE) <- c("gene", "sampleID", "log2RLE")
+p1 <- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Correlation heatmap of log2RLE normalized and filtered samples
+
+```{r corr heatmap filtered RLE}
+#Spearman
+cors <- cor(filtered_RLE, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(filtered_RLE, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+
+
+
+
+
+# upperquartile Normalization
+
+```{r upperquartile normalization}
+upperquartile <- calcNormFactors(raw_counts, method = "upperquartile")
+upperquartile <- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
+head(upperquartile)
+
+strained <- sampleinfo$treatment == "Strain"
+unstrained <- sampleinfo$treatment == "Unstrain"
+ind_1 <- sampleinfo$Individual == "NA18855 "
+ind_2 <- sampleinfo$Individual == "NA18856 "
+ind_3 <- sampleinfo$Individual == "NA19160 "
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(upperquartile[,strained], col=col[strained, ], legend="topright")
+plotDensities(upperquartile[,unstrained], col=col[unstrained, ], legend="topright")
+
+# Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(upperquartile[,ind_1], col=col[ind_1, ], legend="topright")
+plotDensities(upperquartile[,ind_2], col=col[ind_2, ], legend="topright")
+plotDensities(upperquartile[,ind_3], col=col[ind_3, ], legend="topright")
+```
+
+## Correlation heatmap of log2upperquartile normalized and unfiltered samples
+
+```{r corr heatmap unfiltered upperquartile}
+#Spearman
+cors <- cor(upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(upperquartile, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+## Boxplots of upperquartile across samples
+
+```{r boxplot upperquartile}
+meltupperquartile <- melt(upperquartile)
+names(meltupperquartile) <- c("gene", "sampleID", "upperquartile")
+p <- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
+
+## Filtering for lowly expressed genes (avg log2upperquartile > 2.5 in at least 4 samples)
+
+```{r filter upperquartile}
+cutoff <- 2.5
+
+keep <- rowSums( upperquartile > cutoff ) >=4
+
+counts_upperquartile <- raw_counts[keep,]
+filtered_upperquartile <- upperquartile[keep,]
+dim(filtered_upperquartile)
+```
+
+## Boxplots of normalized+filtered counts across samples
+
+```{r boxplot filt upperquartile}
+melt_filt_upperquartile <- melt(filtered_upperquartile)
+names(melt_filt_upperquartile) <- c("gene", "sampleID", "log2upperquartile")
+p1 <- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+
+plotDensities(filtered_upperquartile, legend = F)
+```
+
+## Correlation heatmap of log2upperquartile normalized and filtered samples
+
+```{r corr heatmap filtered upperquartile}
+#Spearman
+cors <- cor(filtered_upperquartile, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+
+#pearson
+cors <- cor(filtered_upperquartile, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+
+
+## Save normalized/filtered count matrix and filtered count matrix
+
+```{r save}
+saveRDS(counts_upperquartile, "data/filtered_counts.rds")
+saveRDS(filtered_upperquartile, "data/norm_filtered_counts.rds")
+
+saveRDS(filtered_RLE, "data/norm_filtered_counts_RLE.rds")
+```
+
+# Correlation heatmap of filtered Raw counts data (unnormalized)
+
+```{r corr heatmap filtered raw}
+#Spearman
+cors <- cor(counts_upperquartile$counts, method="spearman", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(counts_upperquartile$counts, method="pearson", use="pairwise.complete.obs")
+
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+Conclusions about normalizations:
+     1) There isn't much of a difference between the outputs of each normalization method in terms of correlation heatmaps or number of genes kept after filtering for lowly expressed genes.
+     2) The driver for the differences between correlation heatmaps between the raw and filtered data comes down to the filtering of lowly expressed genes. In all cases, simply performing normalization and plotting the heatmap (without filtering out any genes) leads to a correlation heatmap that resembles the raw data's heatmap quite closely (and in the case of pearson correlation, one that is even better matched up to desired structure between samples).
+
+

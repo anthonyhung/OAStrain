@@ -1,0 +1,132 @@
+---
+title: "Analysis of Raw Data"
+author: "Anthony Hung"
+date: "2019-12-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r config}
+#configuration
+proj_dir <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/"
+
+#order of samples to relabel count matrix (sample ID in format 18855_1_S)
+#NOTE: NEED TO CHANGE THIS TO MATCH ACTUAL SAMPLE ORDERS
+samplenames <- c("18855_3_S","19160_3_S", "18856_3_U",
+                 "18856_1_U","18855_2_S", "18856_2_S",
+                 "19160_3_U","18855_2_U", "19160_2_S",
+                 "18855_1_S","18856_1_S", "19160_1_S",
+                 "19160_2_U","19160_1_U", "18855_1_U",
+                 "18856_3_S","18856_2_U", "18855_3_U"
+                 )
+```
+
+# Overview:
+
+Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual. Based on QC metrics (only 38.4% aligned reads for sample 02), I removed this sample from further analyses.
+
+# Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples 
+
+```{r load libraries and data}
+library("gplots")
+library("ggplot2")
+library("RColorBrewer")
+library("scales")
+library("edgeR")
+
+# Load colors 
+colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
+pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
+
+# load in counts
+raw_counts <- read.table(paste0(proj_dir, "bulkRNAseq/out/counts/counts.txt"), header = T)
+
+# assign row.names
+row.names(raw_counts) <- raw_counts$Geneid
+
+# exclude extra data columns
+raw_counts <- raw_counts[, -c(1:6)] 
+
+# assign col.names
+names(raw_counts) <- samplenames
+
+# remove 02 sample that does not pass QC
+raw_counts <- raw_counts[, -14] 
+
+# save relabeled raw count data matrix
+saveRDS(raw_counts, "data/raw_counts_relabeled.rds")
+
+# Check that there's no "NAs" in the data
+summary(apply(raw_counts, 1, var) == 0) 
+
+
+
+#Sample information
+sampleinfo <- read.csv("data/Sample.info.RNAseq.csv")
+head(sampleinfo)
+#Re-order sample information to match the columns of count matrix
+sampleinfo <- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
+#remove 02 sample that does not pass QC
+sampleinfo <- sampleinfo[-14,]
+# save reorganized sample information
+saveRDS(sampleinfo, "data/Sample.info.RNAseq.reordered.csv")
+```
+
+# Perform PCA and hierarchical clustering on raw data
+
+```{r corr heatmap}
+labels <- paste(sampleinfo$Individual, sampleinfo$treatment, sep=" ")
+
+#load PCA function
+source("code/PCA_fn.R")
+
+#spearman
+cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
+
+
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+
+#Pearson
+cors <- cor(raw_counts, method="pearson", use="pairwise.complete.obs")
+
+
+heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
+```
+
+
+#Perform PCA and color by factors to look for any potential correlations
+
+```{r PCA raw}
+# Perform PCA
+pca_genes <- prcomp(t(raw_counts), scale = F)
+scores <- pca_genes$x
+
+
+#Make PCA plots with the factors colored by individual
+
+### PCA Raw Data
+for (n in 1:3){
+  col.v <- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+
+
+#Make PCA plots with the factors colored by treatment
+
+for (n in 1:3){
+  col.v <- pal[as.integer(sampleinfo$treatment)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
+```
+
+# Library size by individual x treatment
+
+```{r lib size}
+# Plot library size
+raw_counts <- DGEList(raw_counts, group = colnames(raw_counts))
+
+boxplot_library_size <- ggplot(raw_counts$samples, aes(x = sampleinfo$Individual, y = raw_counts$samples$lib.size, fill = sampleinfo$treatment)) + geom_boxplot()
+ 
+boxplot_library_size + labs(title = "Library size by Individual") + labs(y = "Library size") + labs(x = "Individual") + guides(fill=guide_legend(title="Treatment"))
+```

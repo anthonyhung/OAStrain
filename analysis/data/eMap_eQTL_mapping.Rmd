@@ -1,0 +1,17 @@
+---
+title: "eMap eQTL Mapping"
+author: "Anthony Hung"
+date: "2020-08-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Install and load eMap R package and use it to run eQTL analysis on bulk pilot data to estimate betas and error terms
+
+```{r}
+# Downloaded source file for eMap from https://webcache.googleusercontent.com/search?q=cache:zOUaCTyuhEAJ:https://www.mybiosoftware.com/emap-1-2-eqtl-analysis.html+&cd=2&hl=en&ct=clnk&gl=us
+#install.packages("/project2/gilad/anthonyhung/Projects/OAStrain_project/eMap_1.2.tar.gz", repos=NULL, type = "source")
+library(eMap)
+```
+

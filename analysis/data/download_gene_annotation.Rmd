@@ -1,0 +1,98 @@
+---
+title: "Download Gene Annotations"
+author: "Anthony Hung"
+date: "2020-01-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+Download gene annotations and create reference table to interpret results
+
+# Load data
+
+```{r load}
+library(biomaRt)
+library(dplyr)
+
+#load count data
+counts <- readRDS("data/raw_counts_relabeled.rds")
+genes <- rownames(counts)
+```
+
+# Download from Ensembl
+
+# Download human exons (Ensembl 93, Jul 2018, grch38.p12, hg38)
+
+```{r download}
+ensembl <- useMart(host = "jul2018.archive.ensembl.org/",
+                   biomart = "ENSEMBL_MART_ENSEMBL",
+                   dataset = "hsapiens_gene_ensembl")
+# attributePages(ensembl)
+# [1] "feature_page" "structure" "homologs" "sequences" "snp" "snp_somatic"
+atts <- listAttributes(ensembl, page = "feature_page")
+
+# For speed purposes, perform separate queries. Otherwise the query multiplies
+# with each new column that maps many to one.
+
+
+# Obtain annotation results that are one per gene
+basic <- getBM(attributes = c("ensembl_gene_id",
+                            "external_gene_name",
+                            "chromosome_name",
+                            "description",
+                            "start_position",
+                            "end_position"),
+             filters = "ensembl_gene_id",
+             values = genes,
+             mart = ensembl)
+stopifnot(sort(genes) == sort(basic$ensembl_gene_id))
+
+# Obtain phenotype descriptions
+pheno <- getBM(attributes = c("ensembl_gene_id",
+                              "phenotype_description"),
+               filters = "ensembl_gene_id",
+               values = genes,
+               mart = ensembl)
+stopifnot(genes %in% unique(pheno$ensembl_gene_id))
+
+# Obtain GO categories
+go <- getBM(attributes = c("ensembl_gene_id",
+                           "go_id",
+                           "name_1006"),
+            filters = "ensembl_gene_id",
+            values = genes,
+            mart = ensembl)
+# Not all genes have GO annotations
+# stopifnot(genes %in% unique(go$ensembl_gene_id))
+
+```
+
+# Combine annotation per gene
+
+```{r combine annotations}
+
+basic_gene <- basic %>% arrange(ensembl_gene_id)
+pheno_gene <- pheno %>% group_by(ensembl_gene_id) %>%
+  summarize(phenotype = paste(phenotype_description, collapse = ";")) %>%
+  arrange(ensembl_gene_id)
+stopifnot(basic_gene$ensembl_gene_id == pheno_gene$ensembl_gene_id)
+basic_pheno <- cbind(basic_gene, pheno_gene[, "phenotype"])
+
+go_gene <- go %>% group_by(ensembl_gene_id) %>%
+  summarize(go_id = paste(go_id, collapse = ";"),
+            go_descrip = paste(name_1006, collapse = ";")) %>%
+  arrange(ensembl_gene_id)
+
+combined <- merge(basic_pheno, go_gene, by = "ensembl_gene_id",
+                  sort = TRUE, all.x = TRUE)
+stopifnot(sort(genes) == combined$ensembl_gene_id)
+```
+
+
+# Save gene annotations
+
+```{r save}
+write.table(combined, file.path("data/gene-annotation.txt"),
+            quote = FALSE, sep = "\t", row.names = FALSE)
+```

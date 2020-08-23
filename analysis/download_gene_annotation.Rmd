@@ -40,7 +40,9 @@ atts <- listAttributes(ensembl, page = "feature_page")
 basic <- getBM(attributes = c("ensembl_gene_id",
                             "external_gene_name",
                             "chromosome_name",
-                            "description"),
+                            "description",
+                            "start_position",
+                            "end_position"),
              filters = "ensembl_gene_id",
              values = genes,
              mart = ensembl)

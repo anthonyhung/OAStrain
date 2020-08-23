@@ -848,6 +848,8 @@ volcano_plot_ind <- function(annotation, filtered_counts){
      print(plot_volcano(results[["Unstrain"]], 0.05))
      
      print(table(results[["Unstrain"]]$logFC > 0))
+     print(table(results[["Unstrain"]]$logFC > 0.25))
+     print(table(results[["Unstrain"]]$logFC < -0.25))
 }
 
 
@@ -889,7 +891,6 @@ for (test in tests) {
 plot_volcano(results[["Unstrain"]], 0.05)
 
 table(results[["Unstrain"]]$logFC > 0)
-
+table(results[["Unstrain"]]$logFC > 0.25)
+table(results[["Unstrain"]]$logFC < -0.25)
 ```
-
-
