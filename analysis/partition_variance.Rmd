@@ -72,6 +72,11 @@ form_no_interaction <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|Lib
 # W2
 form_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + (1|Individual:treatment) + W_1 + W_2
 form_no_interaction_W2 <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch) + W_1 + W_2
+
+
+
+# No ruv
+form_no_ruv <- ~ (1|Individual) + (1|treatment) + (1|Replicate) + (1|LibraryPrepBatch)
 ```
 
 # Run function
@@ -115,6 +120,12 @@ plotVarPart( vp )
 varPart <- fitExtractVarPartModel( filtered_RLE, form_no_interaction_W2, sample_info_W2 )
 vp <- sortCols(varPart)
 plotVarPart( vp )
+
+
+#noRuv
+VarPart_noRUV <- fitExtractVarPartModel( filtered_RLE, form_no_ruv, sample_info )
+vp_noRUV <- sortCols(VarPart_noRUV)
+plotVarPart( vp_noRUV )
 ```
 
 # Looking at treatment

@@ -90,22 +90,44 @@ for (n in 1:3){
 # Check that technical factors do not correlate with PCs
 
 ```{r corr PC}
-# Calculate the relationship between each recorded covariate and the top 6 PCs. 
-p_comps <- 1:6
+# Calculate the relationship between each recorded covariate and the top 5 PCs. 
+p_comps <- 1:5
 info <- sampleinfo %>% 
      dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch, LibSize)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
                       dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+
+PC_pvalues <- matrix(data = NA, nrow = 5, ncol = 7, dimnames = list(c("PC1", "PC2", "PC3", "PC4", "PC5"), c("Individual", "Sex", "Replicate", "Treatment", "RIN", "LibraryPrepBatch", "LibSize")))
+
 for (pc in p_comps) { 
   for (covariate in 1:ncol(info)) { 
         lm_result <- lm(pca_genes$x[, pc] ~ info[, covariate]) 
     r2 <- summary(lm_result)$r.squared 
+    fstat <- as.data.frame(summary(lm_result)$fstatistic)
+    p_fstat <- 1-pf(fstat[1,], fstat[2,], fstat[3,])
+    PC_pvalues[pc, covariate] <- p_fstat
     pc_cov_cor[covariate, pc] <- r2 
   } 
 } 
 datatable(pc_cov_cor) 
+
+#BH adjust for multiple testing for the p-values for correlation
+#Distribution of p-values adjusted by FDR
+fdr_val <- p.adjust(PC_pvalues, method = "fdr", n = length(PC_pvalues))
+fdr_val_order <- fdr_val[order(fdr_val)]
+hist(fdr_val_order, ylab = "BH-adjusted p-values", main = "Distribution of Benjamini and Hochberg adjusted p-values", breaks = 10)
+fdr_val <- matrix(fdr_val, nrow = 5, ncol = 7)
+matrix_fdr_val <- matrix(fdr_val, nrow = 5, ncol = 7, dimnames = list(c("PC1", "PC2", "PC3", "PC4", "PC5"), c("Individual", "Sex", "Replicate", "Treatment", "RIN", "LibraryPrepBatch", "LibSize")))
+
+#Get the coordinates of which variables/PC combinations are significant at FDR 5%
+
+TorF_matrix_fdr <- matrix_fdr_val <=0.05
+coor_to_check <- which(matrix_fdr_val <= 0.05, arr.ind=T)
+coor_to_check <- as.data.frame(coor_to_check)
+matrix_fdr_val
+coor_to_check # Individual has most significant correlation with pc1 and 2, and sex correlates with pc2 (probably due to the individual effect)
 
 #Convert to long format to plot in ggplot2
 pc_cov_cor_2 <- as.data.frame(pc_cov_cor) 
@@ -127,7 +149,6 @@ pca_heat <- ggplot(d_heatmap, aes(x = pc, y = variable)) +
        title = "Correlation between principal components and experimental variables") 
 pca_heat
 ```
-
 
 # Remove unwanted variation using RUVSeq
 
@@ -211,22 +232,44 @@ explained <- variances / sum(variances)
 plot(pca_genes, main = "Variance per PC")
 
 
-# Calculate the relationship between each recorded covariate and the top 6 PCs. 
-p_comps <- 1:6
+# Calculate the relationship between each recorded covariate and the top 5 PCs. 
+p_comps <- 1:5
 info <- sampleinfo %>% 
      dplyr::select(c(Individual, Sex, Replicate, treatment, RIN, LibraryPrepBatch, LibSize)) #subset sample info for technical/biological variables
 
 #Calculate correlations
 pc_cov_cor <- matrix(nrow = ncol(info), ncol = length(p_comps), 
                       dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+
+PC_pvalues <- matrix(data = NA, nrow = 5, ncol = 7, dimnames = list(c("PC1", "PC2", "PC3", "PC4", "PC5"), c("Individual", "Sex", "Replicate", "Treatment", "RIN", "LibraryPrepBatch", "LibSize")))
+
 for (pc in p_comps) { 
   for (covariate in 1:ncol(info)) { 
         lm_result <- lm(pca_genes$x[, pc] ~ info[, covariate]) 
     r2 <- summary(lm_result)$r.squared 
+    fstat <- as.data.frame(summary(lm_result)$fstatistic)
+    p_fstat <- 1-pf(fstat[1,], fstat[2,], fstat[3,])
+    PC_pvalues[pc, covariate] <- p_fstat
     pc_cov_cor[covariate, pc] <- r2 
   } 
 } 
 datatable(pc_cov_cor) 
+
+#BH adjust for multiple testing for the p-values for correlation
+#Distribution of p-values adjusted by FDR
+fdr_val <- p.adjust(PC_pvalues, method = "fdr", n = length(PC_pvalues))
+fdr_val_order <- fdr_val[order(fdr_val)]
+hist(fdr_val_order, ylab = "BH-adjusted p-values", main = "Distribution of Benjamini and Hochberg adjusted p-values", breaks = 10)
+fdr_val <- matrix(fdr_val, nrow = 5, ncol = 7)
+matrix_fdr_val <- matrix(fdr_val, nrow = 5, ncol = 7, dimnames = list(c("PC1", "PC2", "PC3", "PC4", "PC5"), c("Individual", "Sex", "Replicate", "Treatment", "RIN", "LibraryPrepBatch", "LibSize")))
+
+#Get the coordinates of which variables/PC combinations are significant at FDR 5%
+
+TorF_matrix_fdr <- matrix_fdr_val <=0.05
+coor_to_check <- which(matrix_fdr_val <= 0.05, arr.ind=T)
+coor_to_check <- as.data.frame(coor_to_check)
+matrix_fdr_val
+coor_to_check # Individual has most significant correlation with pc1 and 2, and sex correlates with pc2 (probably due to the individual effect)
 
 #Convert to long format to plot in ggplot2
 pc_cov_cor_2 <- as.data.frame(pc_cov_cor) 

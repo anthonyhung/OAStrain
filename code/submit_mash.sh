@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=mash    # Job name
+#SBATCH --job-name=mash8    # Job name
 #SBATCH --output=jobname.%j.out # Stdout (%j expands to jobId)
 #SBATCH --error=jobname.%j.err # Stderr (%j expands to jobId)
 #SBATCH --time=2-00:00:00   # walltime
@@ -15,4 +15,4 @@
 cd /project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/code
 
 module load R
-Rscript mash.R
+Rscript mash8.R

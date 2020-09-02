@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -22,6 +22,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -83,6 +91,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -231,7 +240,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -243,6 +251,18 @@ $(document).ready(function () {
   display: none;
 }
 </style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
 
 <!-- code folding -->
 
@@ -288,13 +308,6 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
@@ -324,7 +337,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-09
+<strong>Last updated:</strong> 2020-09-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -334,7 +347,7 @@ div.section {
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -355,27 +368,122 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f98f498bbd9ef5e2069900b48e940b7273549dee" target="_blank">f98f498</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3ab1948e4a06fdf9971d62be9e58fe2154eef52btargetblank3ab1948a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3ab1948e4a06fdf9971d62be9e58fe2154eef52b" target="_blank">3ab1948</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef98f498bbd9ef5e2069900b48e940b7273549deetargetblankf98f498a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3ab1948e4a06fdf9971d62be9e58fe2154eef52btargetblank3ab1948a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/3ab1948e4a06fdf9971d62be9e58fe2154eef52b" target="_blank">3ab1948</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
     Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
+    Ignored:    output/ANT1.2.rds
+    Ignored:    output/SNPs.csv
+    Ignored:    output/bhat.rds
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash_500k.rds
+    Ignored:    output/mash_500k_INT.rds
+    Ignored:    output/mash_all_refit_500k_1.rds
+    Ignored:    output/mash_all_refit_500k_2.rds
+    Ignored:    output/mash_all_refit_500k_3.rds
+    Ignored:    output/mash_all_refit_500k_4.rds
+    Ignored:    output/mash_all_refit_500k_5.rds
+    Ignored:    output/mash_all_refit_500k_6.rds
+    Ignored:    output/mash_all_refit_500k_7.rds
+    Ignored:    output/mash_all_refit_500k_8.rds
+    Ignored:    output/mash_all_refit_500k_INT_1.rds
+    Ignored:    output/mash_all_refit_500k_INT_2.rds
+    Ignored:    output/mash_all_refit_500k_INT_3.rds
+    Ignored:    output/mash_all_refit_500k_INT_4.rds
+    Ignored:    output/mash_all_refit_500k_INT_5.rds
+    Ignored:    output/mash_all_refit_500k_INT_6.rds
+    Ignored:    output/mash_all_refit_500k_INT_7.rds
+    Ignored:    output/mash_all_refit_500k_INT_8.rds
+    Ignored:    output/mash_full_data.rds
+    Ignored:    output/mash_full_data_INT.rds
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/shat.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
+
+Untracked files:
+    Untracked:  code/read_pickle.py
 
 Unstaged changes:
+    Modified:   analysis/ANT1_ANT2_.Rmd
     Modified:   analysis/DE_analysis.Rmd
-    Modified:   analysis/check_expression.Rmd
     Modified:   analysis/index.Rmd
+    Modified:   analysis/partition_variance.Rmd
+    Modified:   analysis/powerAnalysis.Rmd
+    Modified:   analysis/technical_factors_analysis.Rmd
+    Deleted:    code/jobname.372680.err
+    Deleted:    code/jobname.372680.out
+    Deleted:    code/jobname.426937.err
+    Deleted:    code/jobname.426937.out
+    Deleted:    code/jobname.426966.err
+    Deleted:    code/jobname.426966.out
+    Modified:   code/mash.R
+    Modified:   code/submit_mash.sh
+    Modified:   data/MatrixEQTL/GE_strain.txt
+    Modified:   data/MatrixEQTL/GE_unstrain.txt
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -390,7 +498,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -414,6 +522,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/63f57609e4da02fa5677e35c7caa4672b85a3c0f/analysis/index.Rmd" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/63f57609e4da02fa5677e35c7caa4672b85a3c0f/docs/index.html" target="_blank">63f5760</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-09
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -559,25 +701,25 @@ Start workflowr project.
 </div>
 <div id="analysis-of-bulkrnascrna-sequencing-data-for-osteoarthritis-strain-project." class="section level1">
 <h1>Analysis of bulkRNA/scRNA sequencing data for Osteoarthritis Strain project.</h1>
-<div id="pilot-n3" class="section level2">
-<h2>PILOT (n=3):</h2>
+<p>LCL-derived iPSCs from 3 Yoruba individuals were differentiated into mesenchymal stem cells and subsequently into chondrocytes. iPSC-derived chondrocytes were either placed under control conditions or treated with cyclic tensile strain for 24 hours (Total of 6 individual x treatment pairs). 3 technical replicates of the MSC-chond differentiation + strain/control treatment were conducted. Bulk RNA sequencing was conducted for all 3 technical replicates. Single cell RNAseq using the 10x platform was conducted for one replicate of the experiment (collection of one sample failed, meaning only 5 samples were single-cell sequenced).</p>
+<div id="pilot-n3-na18856-na18855-na19160" class="section level2">
+<h2>PILOT (n=3; NA18856, NA18855, NA19160):</h2>
 <p><strong>single-cell data</strong></p>
 <ul>
 <li><a href="ANT1_ANT2_.html">Analysis of single-cell pilot experiment data</a></li>
 </ul>
 <p><strong>Bulk Data</strong></p>
-<p>Working with raw data</p>
 <ul>
-<li><p><a href="preprocessing.html">Preprocessing</a></p></li>
 <li><p><a href="raw_counts_analysis.html">Analysis of Raw bulkRNAseq pilot data</a></p></li>
 <li><p><a href="Norm_filter.html">Normalization and filtering for lowly expressed genes</a></p></li>
 <li><p><a href="download_gene_annotation.html">Download Gene Annotations</a></p></li>
-</ul>
-<p>Analyses of bulk RNAseq data</p>
-<ul>
-<li><p><a href="technical_factors_analysis.html">Accounting for technical factors</a></p></li>
+<li><p><a href="technical_factors_analysis.html">Measuring impact of and accounting for technical factors</a></p></li>
 <li><p><a href="check_expression.html">Checking expression of individual genes of interest</a></p></li>
+<li><p><a href="partition_variance.html">Variance partitioning</a></p></li>
 <li><p><a href="DE_analysis.html">Differential expression using Limma/Voom</a></p></li>
+<li><p><a href="enrichment_DE.html">Looking for enrichment of DE genes amongst OA-related gene sets</a></p></li>
+<li><p><a href="finding_interaction_example.html">Finding visual example of interaction between individual and treatment</a></p></li>
+<li><p><a href="powerAnalysis.html">Conducting power analysis for eQTL mapping</a></p></li>
 </ul>
 </div>
 </div>
@@ -611,23 +753,6 @@ $(document).ready(function () {
 
 
 </script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -72,7 +72,7 @@ x <- paste0(anno$Individual, anno$treatment)
 anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
 anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
 
-design <- model.matrix(~treatment + Individual + W_1 + W_2 + RIN,
+design <- model.matrix(~treatment + Sex + Individual + W_1 + W_2 + RIN,
                        data = anno)
 colnames(design) <- gsub("treatment", "", colnames(design))
 colnames(design)

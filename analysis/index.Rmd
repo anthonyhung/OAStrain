@@ -9,9 +9,9 @@ editor_options:
 ---
 
 # Analysis of bulkRNA/scRNA sequencing data for Osteoarthritis Strain project.
+LCL-derived iPSCs from 3 Yoruba individuals were differentiated into mesenchymal stem cells and subsequently into chondrocytes. iPSC-derived chondrocytes were either placed under control conditions or treated with cyclic tensile strain for 24 hours (Total of 6 individual x treatment pairs). 3 technical replicates of the MSC-chond differentiation + strain/control treatment were conducted. Bulk RNA sequencing was conducted for all 3 technical replicates. Single cell RNAseq using the 10x platform was conducted for one replicate of the experiment (collection of one sample failed, meaning only 5 samples were single-cell sequenced).
 
-
-## PILOT (n=3):
+## PILOT (n=3; NA18856, NA18855, NA19160):
 
 __single-cell data__
 
@@ -19,20 +19,22 @@ __single-cell data__
 
 __Bulk Data__
 
-Working with raw data
-
-* [Preprocessing](preprocessing.html)
-
 * [Analysis of Raw bulkRNAseq pilot data](raw_counts_analysis.html)
 
 * [Normalization and filtering for lowly expressed genes](Norm_filter.html)
 
 * [Download Gene Annotations](download_gene_annotation.html)
 
-Analyses of bulk RNAseq data
-
-* [Accounting for technical factors](technical_factors_analysis.html)
+* [Measuring impact of and accounting for technical factors](technical_factors_analysis.html)
 
 * [Checking expression of individual genes of interest](check_expression.html)
 
+* [Variance partitioning](partition_variance.html)
+
 * [Differential expression using Limma/Voom](DE_analysis.html)
+
+* [Looking for enrichment of DE genes amongst OA-related gene sets](enrichment_DE.html)
+
+* [Finding visual example of interaction between individual and treatment](finding_interaction_example.html)
+
+* [Conducting power analysis for eQTL mapping](powerAnalysis.html)
