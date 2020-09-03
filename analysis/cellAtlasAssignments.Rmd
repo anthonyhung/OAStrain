@@ -142,6 +142,7 @@ library(scran)
 Convert to DGE (Keep all genes and use raw unnormalized counts).
 
 ```{r DGE}
+SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
 metadata <- SCT_integrated@meta.data # keep metadata handy
 sce <- as.SingleCellExperiment(SCT_integrated, assay="RNA")
 dge<- convertTo(sce, type= "edgeR")
