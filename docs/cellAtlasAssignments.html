@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Anthony Hung" />
 
 <meta name="date" content="2020-01-24" />
 
-<title>cell Atlas Assignments</title>
+<title>cell Atlas or Human Cell Landscape Assignments</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,6 +27,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -88,6 +96,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,7 +245,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -249,9 +257,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -265,12 +312,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -366,18 +407,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
 
-<h1 class="title toc-ignore">cell Atlas Assignments</h1>
+<h1 class="title toc-ignore">cell Atlas or Human Cell Landscape Assignments</h1>
 <h4 class="author">Anthony Hung</h4>
 <h4 class="date">2020-01-24</h4>
 
@@ -386,7 +420,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -395,7 +429,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -404,17 +438,17 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-28
+<strong>Last updated:</strong> 2020-09-03
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -423,12 +457,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -495,31 +529,104 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1ba1f2a57d04da14b6b8abffec8b714a98e27c64targetblank1ba1f2aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/1ba1f2a57d04da14b6b8abffec8b714a98e27c64" target="_blank">1ba1f2a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee3ee7ee16d345b8aa6e8f87d418a6933955590aatargetblanke3ee7eea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e3ee7ee16d345b8aa6e8f87d418a6933955590aa" target="_blank">e3ee7ee</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1ba1f2a57d04da14b6b8abffec8b714a98e27c64targetblank1ba1f2aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee3ee7ee16d345b8aa6e8f87d418a6933955590aatargetblanke3ee7eea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/e3ee7ee16d345b8aa6e8f87d418a6933955590aa" target="_blank">e3ee7ee</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
     Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
-
-Untracked files:
-    Untracked:  analysis/Bulk_cellComposition_analysis.Rmd
+    Ignored:    output/SNPs.csv
+    Ignored:    output/bhat.rds
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash_500k.rds
+    Ignored:    output/mash_500k_INT.rds
+    Ignored:    output/mash_all_refit_500k_1.rds
+    Ignored:    output/mash_all_refit_500k_2.rds
+    Ignored:    output/mash_all_refit_500k_3.rds
+    Ignored:    output/mash_all_refit_500k_4.rds
+    Ignored:    output/mash_all_refit_500k_5.rds
+    Ignored:    output/mash_all_refit_500k_6.rds
+    Ignored:    output/mash_all_refit_500k_7.rds
+    Ignored:    output/mash_all_refit_500k_8.rds
+    Ignored:    output/mash_all_refit_500k_INT_1.rds
+    Ignored:    output/mash_all_refit_500k_INT_2.rds
+    Ignored:    output/mash_all_refit_500k_INT_3.rds
+    Ignored:    output/mash_all_refit_500k_INT_4.rds
+    Ignored:    output/mash_all_refit_500k_INT_5.rds
+    Ignored:    output/mash_all_refit_500k_INT_6.rds
+    Ignored:    output/mash_all_refit_500k_INT_7.rds
+    Ignored:    output/mash_all_refit_500k_INT_8.rds
+    Ignored:    output/mash_full_data.rds
+    Ignored:    output/mash_full_data_INT.rds
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/shat.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
 
 Unstaged changes:
-    Modified:   code/cellAtlas_assignment.R
+    Modified:   analysis/cellAtlasAssignments.Rmd
+    Modified:   analysis/powerAnalysis.Rmd
 
 </code></pre>
 <p>
@@ -534,7 +641,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/cellAtlasAssignments.Rmd</code>) and HTML (<code>docs/cellAtlasAssignments.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -558,6 +665,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/26132157c6605eb09d8628dff14a004a6a374809/analysis/cellAtlasAssignments.Rmd" target="_blank">2613215</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-01
+</td>
+<td>
+outside bulk datasets comparison to my pilot bulk data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/26132157c6605eb09d8628dff14a004a6a374809/docs/cellAtlasAssignments.html" target="_blank">2613215</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-01
+</td>
+<td>
+outside bulk datasets comparison to my pilot bulk data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -738,750 +879,731 @@ Add cell atlas assignment
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 </div>
-<div id="load-correlation-functions" class="section level1">
-<h1>Load correlation functions</h1>
+<div id="cell-atlas-from-mengie-chens-lab-uchicago" class="section level1">
+<h1>Cell atlas from Mengie Chen’s lab (UChicago)</h1>
+<p>Compute correlation between reference set of samples and individual cells (input is seurat object.) Load correlation functions</p>
 <pre class="r"><code>library(Seurat)
 
 #load correlation functions
 source(&quot;code/cellAtlas_assignment.R&quot;)
 
 #load single-cell data from pilot
-ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)</code></pre>
-</div>
-<div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type" class="section level1">
-<h1>Apply functions to single cell data to label them with assigned cell type</h1>
-<pre class="r"><code>#Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat &lt;- ComputeCorMat(ANT1.2,cell.line)</code></pre>
+#ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)
+SCT_integrated &lt;- readRDS(&quot;data/SCT_ANT12_integrated.rds&quot;)</code></pre>
+<div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type" class="section level2">
+<h2>Apply functions to single cell data to label them with assigned cell type</h2>
+<pre class="r"><code>#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT_integrated) &lt;- &quot;RNA&quot;
+cor.mat &lt;- ComputeCorMat(SCT_integrated,cell.line)</code></pre>
 <pre><code>[1] &quot;There are 4134genes in common between the two sets&quot;</code></pre>
 <pre class="r"><code>head(cor.mat)</code></pre>
-<pre><code>                         L1_ESC    L2_ESC    L3_ESC    L4_ESC    L5_ESC
-ANT1_AAACCCAAGTAGGAAG 0.1920874 0.2103660 0.2469438 0.2624036 0.2815602
-ANT1_AAACCCATCTCGGGAC 0.2042120 0.2228802 0.2750716 0.2900762 0.2992497
-ANT1_AAACGAAGTAACTGCT 0.2358359 0.2447730 0.3012684 0.3035295 0.3261708
-ANT1_AAAGAACTCGTGCAGC 0.1952080 0.2062875 0.2404722 0.2444308 0.2671523
-ANT1_AAAGGATGTCTCAAGT 0.1787665 0.1954038 0.2282494 0.2404633 0.2555660
-ANT1_AAAGGGCTCTTACGGA 0.2183755 0.2295944 0.2759084 0.2880684 0.3079908
-                         L6_ESC L7_Neuroepithelial L8_Astrocyte L9_Astrocyte
-ANT1_AAACCCAAGTAGGAAG 0.3559770          0.3182579    0.2663018    0.2402536
-ANT1_AAACCCATCTCGGGAC 0.3794486          0.3407269    0.3073810    0.2889670
-ANT1_AAACGAAGTAACTGCT 0.3911858          0.3440802    0.3040218    0.2859600
-ANT1_AAAGAACTCGTGCAGC 0.3425386          0.2972742    0.2482714    0.2298648
-ANT1_AAAGGATGTCTCAAGT 0.3280505          0.2869772    0.2554770    0.2342232
-ANT1_AAAGGGCTCTTACGGA 0.3773120          0.3421008    0.2862920    0.2822868
-                      L10_Neural_Precursor L11_Neural_Precursor  L12_iPSC
-ANT1_AAACCCAAGTAGGAAG            0.3169165            0.3070343 0.4226163
-ANT1_AAACCCATCTCGGGAC            0.3327228            0.3198618 0.4587258
-ANT1_AAACGAAGTAACTGCT            0.3551569            0.3339570 0.4794157
-ANT1_AAAGAACTCGTGCAGC            0.3033836            0.2937887 0.4278563
-ANT1_AAAGGATGTCTCAAGT            0.2862350            0.2793174 0.4106399
-ANT1_AAAGGGCTCTTACGGA            0.3374439            0.3216104 0.4630733
-                       L13_iPSC  L14_iPSC  L15_iPSC   L16_MSC   L17_MSC
-ANT1_AAACCCAAGTAGGAAG 0.4583380 0.2563571 0.4357921 0.4220246 0.3888792
-ANT1_AAACCCATCTCGGGAC 0.4727337 0.2914952 0.4627628 0.4560419 0.4238129
-ANT1_AAACGAAGTAACTGCT 0.5065123 0.3045873 0.4921757 0.4803698 0.4492096
-ANT1_AAAGAACTCGTGCAGC 0.4585100 0.2489255 0.4512325 0.4364185 0.4027784
-ANT1_AAAGGATGTCTCAAGT 0.4450058 0.2396872 0.4371829 0.4100760 0.3734624
-ANT1_AAAGGGCTCTTACGGA 0.4838470 0.2916883 0.4671197 0.4567743 0.4217686
-                        L18_MSC   L19_MSC   L20_MSC L21_Mesodermal_Stem.Cell
-ANT1_AAACCCAAGTAGGAAG 0.3610596 0.4185547 0.4225257                0.3419472
-ANT1_AAACCCATCTCGGGAC 0.3912199 0.4394098 0.4476675                0.3445404
-ANT1_AAACGAAGTAACTGCT 0.4109835 0.4667239 0.4783305                0.3611638
-ANT1_AAAGAACTCGTGCAGC 0.3673792 0.4355304 0.4397927                0.3284269
-ANT1_AAAGGATGTCTCAAGT 0.3430586 0.4036114 0.4118715                0.3108350
-ANT1_AAAGGGCTCTTACGGA 0.3826888 0.4460201 0.4568707                0.3614831
-                      L22_Epithelial_Bladder L23_Epithelial_Bladder
-ANT1_AAACCCAAGTAGGAAG              0.2063957              0.2439009
-ANT1_AAACCCATCTCGGGAC              0.2674313              0.3070259
-ANT1_AAACGAAGTAACTGCT              0.2954026              0.3402283
-ANT1_AAAGAACTCGTGCAGC              0.2348124              0.2721694
-ANT1_AAAGGATGTCTCAAGT              0.1961639              0.2322465
-ANT1_AAAGGGCTCTTACGGA              0.2682770              0.3043328
-                      L24_Epithelial_Bronchial L25_Epithelial_Bronchial
-ANT1_AAACCCAAGTAGGAAG                0.1592952                0.1583027
-ANT1_AAACCCATCTCGGGAC                0.1994673                0.1979506
-ANT1_AAACGAAGTAACTGCT                0.2235144                0.2210527
-ANT1_AAAGAACTCGTGCAGC                0.1727319                0.1695139
-ANT1_AAAGGATGTCTCAAGT                0.1463286                0.1520185
-ANT1_AAAGGGCTCTTACGGA                0.2090560                0.2079048
-                      L26_Fibroblast_Foreskin L27_Fibroblast_Breast.Tissue
-ANT1_AAACCCAAGTAGGAAG               0.4115144                    0.4432690
-ANT1_AAACCCATCTCGGGAC               0.4292114                    0.4729451
-ANT1_AAACGAAGTAACTGCT               0.4642361                    0.4997033
-ANT1_AAAGAACTCGTGCAGC               0.4209167                    0.4513621
-ANT1_AAAGGATGTCTCAAGT               0.3972554                    0.4427169
-ANT1_AAAGGGCTCTTACGGA               0.4444572                    0.4824277
-                      L28_Endothelial_Humbilical.Vein
-ANT1_AAACCCAAGTAGGAAG                       0.2938416
-ANT1_AAACCCATCTCGGGAC                       0.3196242
-ANT1_AAACGAAGTAACTGCT                       0.3334108
-ANT1_AAAGAACTCGTGCAGC                       0.3039765
-ANT1_AAAGGATGTCTCAAGT                       0.2635749
-ANT1_AAAGGGCTCTTACGGA                       0.3376865
-                      L29_Endothelial_Humbilical.Vein
-ANT1_AAACCCAAGTAGGAAG                       0.3134732
-ANT1_AAACCCATCTCGGGAC                       0.3324284
-ANT1_AAACGAAGTAACTGCT                       0.3487090
-ANT1_AAAGAACTCGTGCAGC                       0.3150768
-ANT1_AAAGGATGTCTCAAGT                       0.2750370
-ANT1_AAAGGGCTCTTACGGA                       0.3552963
-                      L30_Endothelial_Humbilical.Vein
-ANT1_AAACCCAAGTAGGAAG                       0.3365422
-ANT1_AAACCCATCTCGGGAC                       0.3484714
-ANT1_AAACGAAGTAACTGCT                       0.3665920
-ANT1_AAAGAACTCGTGCAGC                       0.3386068
-ANT1_AAAGGATGTCTCAAGT                       0.3023418
-ANT1_AAAGGGCTCTTACGGA                       0.3776661
-                      L31_Endothelial_Lymph.Vessel L32_Endothelial_Blood.Vessel
-ANT1_AAACCCAAGTAGGAAG                    0.2661320                    0.2784352
-ANT1_AAACCCATCTCGGGAC                    0.2877111                    0.2992965
-ANT1_AAACGAAGTAACTGCT                    0.3057572                    0.3217977
-ANT1_AAAGAACTCGTGCAGC                    0.2858641                    0.2945523
-ANT1_AAAGGATGTCTCAAGT                    0.2363375                    0.2542095
-ANT1_AAAGGGCTCTTACGGA                    0.3130629                    0.3270423
-                      L33_Endothelial_Humbilical.Vein L34_Endothelial_Lymphatic
-ANT1_AAACCCAAGTAGGAAG                       0.3098282                 0.2922762
-ANT1_AAACCCATCTCGGGAC                       0.3315149                 0.3217722
-ANT1_AAACGAAGTAACTGCT                       0.3414130                 0.3316602
-ANT1_AAAGAACTCGTGCAGC                       0.3185087                 0.3010946
-ANT1_AAAGGATGTCTCAAGT                       0.2758480                 0.2704555
-ANT1_AAAGGGCTCTTACGGA                       0.3544618                 0.3409345
-                      L35_Chondrocyte L36_Chondrocyte L37_Osteoblast
-ANT1_AAACCCAAGTAGGAAG       0.4216124       0.3870292      0.4387067
-ANT1_AAACCCATCTCGGGAC       0.4470628       0.4196876      0.4537848
-ANT1_AAACGAAGTAACTGCT       0.4388458       0.4256345      0.4612311
-ANT1_AAAGAACTCGTGCAGC       0.4280540       0.3862508      0.4290852
-ANT1_AAAGGATGTCTCAAGT       0.4250081       0.3761137      0.4322535
-ANT1_AAAGGGCTCTTACGGA       0.4349195       0.4135942      0.4442654
-                      L38_Osteoblast L39_Adipocyte L40_Hepatocyte
-ANT1_AAACCCAAGTAGGAAG      0.4097361     0.3764274      0.1266464
-ANT1_AAACCCATCTCGGGAC      0.4376844     0.3984940      0.1326947
-ANT1_AAACGAAGTAACTGCT      0.4741168     0.4098530      0.1635722
-ANT1_AAAGAACTCGTGCAGC      0.4215323     0.3619534      0.1209699
-ANT1_AAAGGATGTCTCAAGT      0.3994920     0.3755465      0.1323811
-ANT1_AAAGGGCTCTTACGGA      0.4424693     0.3924328      0.1386111
-                      L41_Epithelial_Keratinocyte L42_Schwann.cell
-ANT1_AAACCCAAGTAGGAAG                   0.1154062        0.3211536
-ANT1_AAACCCATCTCGGGAC                   0.1504579        0.3728931
-ANT1_AAACGAAGTAACTGCT                   0.1687402        0.3844365
-ANT1_AAAGAACTCGTGCAGC                   0.1253835        0.3391706
-ANT1_AAAGGATGTCTCAAGT                   0.1199089        0.3239053
-ANT1_AAAGGGCTCTTACGGA                   0.1537468        0.3636533
-                      L43_Smooth.muscle.cell_Bronchial L44_HSC_Bone.Marrow
-ANT1_AAACCCAAGTAGGAAG                        0.4061870          0.08716465
-ANT1_AAACCCATCTCGGGAC                        0.4336675          0.10337344
-ANT1_AAACGAAGTAACTGCT                        0.4256966          0.12170185
-ANT1_AAAGAACTCGTGCAGC                        0.4072674          0.08106202
-ANT1_AAAGGATGTCTCAAGT                        0.3932974          0.07976262
-ANT1_AAAGGGCTCTTACGGA                        0.4242803          0.10049516
-                      L45_CMP_Bone.Marrow L46_GMP_Bone.Marrow
-ANT1_AAACCCAAGTAGGAAG          0.09129472          0.06948740
-ANT1_AAACCCATCTCGGGAC          0.10119725          0.08783455
-ANT1_AAACGAAGTAACTGCT          0.12699845          0.10532268
-ANT1_AAAGAACTCGTGCAGC          0.09464365          0.07787039
-ANT1_AAAGGATGTCTCAAGT          0.09316261          0.07426819
-ANT1_AAAGGGCTCTTACGGA          0.10732533          0.08399113
-                      L47_MEP_Bone.Marrow L48_Myelocyte_Bone.Marrow
-ANT1_AAACCCAAGTAGGAAG          0.10510740                0.02101613
-ANT1_AAACCCATCTCGGGAC          0.11121276                0.04209733
-ANT1_AAACGAAGTAACTGCT          0.14745924                0.05775426
-ANT1_AAAGAACTCGTGCAGC          0.09605260                0.03736572
-ANT1_AAAGGATGTCTCAAGT          0.09917789                0.02147653
-ANT1_AAAGGGCTCTTACGGA          0.12331302                0.03500779
-                      L49_Myelocyte_Bone.Marrow L50_CFU_Bone.Marrow
-ANT1_AAACCCAAGTAGGAAG                0.04713411          0.09924221
-ANT1_AAACCCATCTCGGGAC                0.05886975          0.10388898
-ANT1_AAACGAAGTAACTGCT                0.08049785          0.13364933
-ANT1_AAAGAACTCGTGCAGC                0.04550748          0.08899266
-ANT1_AAAGGATGTCTCAAGT                0.04649777          0.09053682
-ANT1_AAAGGGCTCTTACGGA                0.05723447          0.11553377
-                      L51_B.Cell_Bone.Marrow L52_Platelet L53_Erythroblast_Late
-ANT1_AAACCCAAGTAGGAAG             0.03517731   0.06803292            0.09846321
-ANT1_AAACCCATCTCGGGAC             0.05322226   0.07111524            0.09272537
-ANT1_AAACGAAGTAACTGCT             0.07214553   0.10575229            0.11805864
-ANT1_AAAGAACTCGTGCAGC             0.03981836   0.07802197            0.09331930
-ANT1_AAAGGATGTCTCAAGT             0.02757804   0.06856148            0.09421794
-ANT1_AAAGGGCTCTTACGGA             0.04659663   0.07883280            0.09537901
-                      L54_Erythroblast_Pro L55_MSC_Fetal.Blood
-ANT1_AAACCCAAGTAGGAAG           0.09846323           0.4416268
-ANT1_AAACCCATCTCGGGAC           0.10552092           0.4791857
-ANT1_AAACGAAGTAACTGCT           0.13607297           0.5046911
-ANT1_AAAGAACTCGTGCAGC           0.09210916           0.4530517
-ANT1_AAAGGATGTCTCAAGT           0.09504448           0.4233793
-ANT1_AAAGGGCTCTTACGGA           0.11707584           0.4840849
-                      L56_MSC_Fetal.Bone.Marrow L57_MSC_Fetal.Liver
-ANT1_AAACCCAAGTAGGAAG                 0.4392856           0.4268325
-ANT1_AAACCCATCTCGGGAC                 0.4802454           0.4647695
-ANT1_AAACGAAGTAACTGCT                 0.4949848           0.4947340
-ANT1_AAAGAACTCGTGCAGC                 0.4431862           0.4448929
-ANT1_AAAGGATGTCTCAAGT                 0.4189051           0.4124072
-ANT1_AAAGGGCTCTTACGGA                 0.4850631           0.4773818
-                      L58_Monocyte L59_Monocyte_CD14 L60_Monocyte_CD16
-ANT1_AAACCCAAGTAGGAAG   0.04745932        0.03099891        0.01855211
-ANT1_AAACCCATCTCGGGAC   0.07825568        0.05603053        0.04338959
-ANT1_AAACGAAGTAACTGCT   0.09676780        0.06603885        0.04423658
-ANT1_AAAGAACTCGTGCAGC   0.07389328        0.04166914        0.03836722
-ANT1_AAAGGATGTCTCAAGT   0.04847048        0.03088844        0.01767710
-ANT1_AAAGGGCTCTTACGGA   0.06417484        0.03331686        0.02185222
-                      L61_Monocyte_CD16 L62_Monocyte
-ANT1_AAACCCAAGTAGGAAG        0.04291719   0.05070054
-ANT1_AAACCCATCTCGGGAC        0.06807787   0.06159661
-ANT1_AAACGAAGTAACTGCT        0.07840119   0.08347323
-ANT1_AAAGAACTCGTGCAGC        0.06091100   0.06119386
-ANT1_AAAGGATGTCTCAAGT        0.04259362   0.05205474
-ANT1_AAAGGGCTCTTACGGA        0.04899225   0.05294897
-                      L63_Macrophage_Monocyte.derived
-ANT1_AAACCCAAGTAGGAAG                      0.07077806
-ANT1_AAACCCATCTCGGGAC                      0.10199021
-ANT1_AAACGAAGTAACTGCT                      0.14186505
-ANT1_AAAGAACTCGTGCAGC                      0.08544343
-ANT1_AAAGGATGTCTCAAGT                      0.07758599
-ANT1_AAAGGGCTCTTACGGA                      0.09084611
-                      L64_Macrophage_Monocyte.derived
-ANT1_AAACCCAAGTAGGAAG                      0.05789114
-ANT1_AAACCCATCTCGGGAC                      0.09901118
-ANT1_AAACGAAGTAACTGCT                      0.10806085
-ANT1_AAAGAACTCGTGCAGC                      0.07478847
-ANT1_AAAGGATGTCTCAAGT                      0.06392195
-ANT1_AAAGGGCTCTTACGGA                      0.06861812
-                      L65_Macrophage_Monocyte.derived
-ANT1_AAACCCAAGTAGGAAG                      0.06724389
-ANT1_AAACCCATCTCGGGAC                      0.09283952
-ANT1_AAACGAAGTAACTGCT                      0.13556837
-ANT1_AAAGAACTCGTGCAGC                      0.08591706
-ANT1_AAAGGATGTCTCAAGT                      0.07501336
-ANT1_AAAGGGCTCTTACGGA                      0.08862430
-                      L66_Macrophage_Monocyte.derived L67_Macrophage_Alveolar
-ANT1_AAACCCAAGTAGGAAG                      0.07814729              0.07199246
-ANT1_AAACCCATCTCGGGAC                      0.10789950              0.10009617
-ANT1_AAACGAAGTAACTGCT                      0.14408627              0.13715647
-ANT1_AAAGAACTCGTGCAGC                      0.09685999              0.09201140
-ANT1_AAAGGATGTCTCAAGT                      0.08362763              0.07790385
-ANT1_AAAGGGCTCTTACGGA                      0.09829586              0.09833571
-                      L68_Dendritic.Cell_Monocyte.derived
-ANT1_AAACCCAAGTAGGAAG                          0.03910208
-ANT1_AAACCCATCTCGGGAC                          0.06982536
-ANT1_AAACGAAGTAACTGCT                          0.10408713
-ANT1_AAAGAACTCGTGCAGC                          0.05929000
-ANT1_AAAGGATGTCTCAAGT                          0.03767994
-ANT1_AAAGGGCTCTTACGGA                          0.06040601
-                      L69_Dendritic.Cell_Monocyte.derived
-ANT1_AAACCCAAGTAGGAAG                          0.07440046
-ANT1_AAACCCATCTCGGGAC                          0.10959003
-ANT1_AAACGAAGTAACTGCT                          0.14626267
-ANT1_AAAGAACTCGTGCAGC                          0.07977359
-ANT1_AAAGGATGTCTCAAGT                          0.06841662
-ANT1_AAAGGGCTCTTACGGA                          0.09281405
-                      L70_Dendritic.Cell_CD16 L71_Dendritic.Cell_Plasmacytoid
-ANT1_AAACCCAAGTAGGAAG              0.04671393                      0.07049261
-ANT1_AAACCCATCTCGGGAC              0.06478774                      0.08440935
-ANT1_AAACGAAGTAACTGCT              0.07552675                      0.11280359
-ANT1_AAAGAACTCGTGCAGC              0.06332004                      0.08326322
-ANT1_AAAGGATGTCTCAAGT              0.04703907                      0.06823294
-ANT1_AAAGGGCTCTTACGGA              0.04752876                      0.08489656
-                      L72_Dendritic.Cell_Plasmacytoid L73_T.Cell_CD4.Naive
-ANT1_AAACCCAAGTAGGAAG                      0.06659847           0.06231357
-ANT1_AAACCCATCTCGGGAC                      0.07884620           0.07353373
-ANT1_AAACGAAGTAACTGCT                      0.11062965           0.08781740
-ANT1_AAAGAACTCGTGCAGC                      0.08801975           0.05921860
-ANT1_AAAGGATGTCTCAAGT                      0.07007643           0.05371742
-ANT1_AAAGGGCTCTTACGGA                      0.08050451           0.05924577
-                      L74_T.Cell_CD4.Centr..Memory L75_T.Cell_CD4.Centr..Memory
-ANT1_AAACCCAAGTAGGAAG                   0.04985165                   0.05613416
-ANT1_AAACCCATCTCGGGAC                   0.05724846                   0.06416271
-ANT1_AAACGAAGTAACTGCT                   0.06929333                   0.08068682
-ANT1_AAAGAACTCGTGCAGC                   0.05181586                   0.05668285
-ANT1_AAAGGATGTCTCAAGT                   0.03403957                   0.04342023
-ANT1_AAAGGGCTCTTACGGA                   0.04254876                   0.05134015
-                      L76_T.Cell_CD4.Eff..Memory L77_T.Cell_CD8.Centr..Memory
-ANT1_AAACCCAAGTAGGAAG                 0.05372036                   0.07305991
-ANT1_AAACCCATCTCGGGAC                 0.06112582                   0.08308136
-ANT1_AAACGAAGTAACTGCT                 0.07894010                   0.09654824
-ANT1_AAAGAACTCGTGCAGC                 0.05903296                   0.08102119
-ANT1_AAAGGATGTCTCAAGT                 0.03841272                   0.05574656
-ANT1_AAAGGGCTCTTACGGA                 0.04957146                   0.07535119
-                      L78_T.Cell_CD8 L79_T.Cell_CD4 L80_T.Cell_CD8.Eff..Memory
-ANT1_AAACCCAAGTAGGAAG    0.014927644    0.021610145                 0.07412479
-ANT1_AAACCCATCTCGGGAC    0.012444154    0.021982399                 0.07614061
-ANT1_AAACGAAGTAACTGCT    0.026255231    0.037233787                 0.08823995
-ANT1_AAAGAACTCGTGCAGC    0.019568781    0.033501155                 0.06976934
-ANT1_AAAGGATGTCTCAAGT    0.004188533    0.009853266                 0.05931027
-ANT1_AAAGGGCTCTTACGGA    0.010419038    0.015115566                 0.06912989
-                      L81_T.Cell_CD8.Naive L82_T.Cell_CD8 L83_T.Cell_CD4
-ANT1_AAACCCAAGTAGGAAG           0.06641592     0.04041056     0.08074819
-ANT1_AAACCCATCTCGGGAC           0.07429735     0.04308891     0.08812996
-ANT1_AAACGAAGTAACTGCT           0.08570822     0.06957644     0.11183480
-ANT1_AAAGAACTCGTGCAGC           0.07001532     0.04947334     0.08186049
-ANT1_AAAGGATGTCTCAAGT           0.05123232     0.02382837     0.06413582
-ANT1_AAAGGGCTCTTACGGA           0.06606370     0.04201978     0.07771388
-                      L84_T.Cell_CD4.Naive L85_NK.Cell_CD56Hi
-ANT1_AAACCCAAGTAGGAAG           0.09412553         0.08450525
-ANT1_AAACCCATCTCGGGAC           0.10985348         0.09692374
-ANT1_AAACGAAGTAACTGCT           0.12487616         0.12430625
-ANT1_AAAGAACTCGTGCAGC           0.09050717         0.09152054
-ANT1_AAAGGATGTCTCAAGT           0.08666493         0.07548689
-ANT1_AAAGGGCTCTTACGGA           0.09427924         0.09199726
-                      L86_NK.Cell_CD56Lo L87_Neutrophil L88_Neutrophil
-ANT1_AAACCCAAGTAGGAAG         0.08430003     0.01748359     0.02952957
-ANT1_AAACCCATCTCGGGAC         0.09390097     0.04473147     0.05755667
-ANT1_AAACGAAGTAACTGCT         0.12450213     0.04526820     0.06594230
-ANT1_AAAGAACTCGTGCAGC         0.09383318     0.03346901     0.04231077
-ANT1_AAAGGATGTCTCAAGT         0.07577921     0.01892092     0.02832623
-ANT1_AAAGGGCTCTTACGGA         0.08919930     0.01632841     0.03204031
-                       L89_B.Cell L90_B.Cell_Naive L91_B.Cell L92_B.Cell_Memory
-ANT1_AAACCCAAGTAGGAAG 0.007631369       0.05125337 0.04647569        0.04461040
-ANT1_AAACCCATCTCGGGAC 0.011083579       0.06334359 0.05450280        0.05388163
-ANT1_AAACGAAGTAACTGCT 0.026276330       0.08310134 0.07564319        0.08029028
-ANT1_AAAGAACTCGTGCAGC 0.017495017       0.05341786 0.04066500        0.04818408
-ANT1_AAAGGATGTCTCAAGT 0.001236601       0.03862831 0.03299156        0.03444290
-ANT1_AAAGGGCTCTTACGGA 0.015150955       0.06105770 0.05577655        0.05337941
-                      L93_B.Cell_Plasma.Cell L94_Oocyte L95_Spermatocyte
-ANT1_AAACCCAAGTAGGAAG             0.07544571 0.07348020     -0.002541635
-ANT1_AAACCCATCTCGGGAC             0.06765097 0.09908740      0.026340365
-ANT1_AAACGAAGTAACTGCT             0.09729672 0.10627892      0.040904095
-ANT1_AAAGAACTCGTGCAGC             0.07595730 0.08467504      0.007091050
-ANT1_AAAGGATGTCTCAAGT             0.06703200 0.07151289      0.019156830
-ANT1_AAAGGGCTCTTACGGA             0.07533958 0.08422058      0.030256802</code></pre>
+<pre><code>                    L1_ESC    L2_ESC    L3_ESC    L4_ESC    L5_ESC
+AAACCCAAGTAGGAAG 0.2127661 0.2280576 0.2576776 0.2665538 0.2852950
+AAACCCATCTCGGGAC 0.2325975 0.2522491 0.2847764 0.2895341 0.2969894
+AAACGAAGTAACTGCT 0.2709670 0.2806276 0.3119574 0.3056133 0.3225022
+AAAGAACTCGTGCAGC 0.2213311 0.2332478 0.2543673 0.2498685 0.2729095
+AAAGGATGTCTCAAGT 0.2161640 0.2314025 0.2501461 0.2512007 0.2635432
+AAAGGGCTCTTACGGA 0.2438220 0.2615535 0.2826236 0.2885744 0.3113105
+                    L6_ESC L7_Neuroepithelial L8_Astrocyte L9_Astrocyte
+AAACCCAAGTAGGAAG 0.3651657          0.3221773    0.2644856    0.2366720
+AAACCCATCTCGGGAC 0.3833672          0.3366648    0.3086319    0.2840851
+AAACGAAGTAACTGCT 0.3966474          0.3408116    0.2992926    0.2704224
+AAAGAACTCGTGCAGC 0.3557359          0.2994689    0.2493521    0.2303603
+AAAGGATGTCTCAAGT 0.3349858          0.2928124    0.2579703    0.2347415
+AAAGGGCTCTTACGGA 0.3906065          0.3448182    0.2922450    0.2787903
+                 L10_Neural_Precursor L11_Neural_Precursor  L12_iPSC
+AAACCCAAGTAGGAAG            0.3205696            0.3106295 0.4412213
+AAACCCATCTCGGGAC            0.3273081            0.3169374 0.4730965
+AAACGAAGTAACTGCT            0.3450115            0.3253898 0.4985778
+AAAGAACTCGTGCAGC            0.3033935            0.2949636 0.4431311
+AAAGGATGTCTCAAGT            0.2860495            0.2814570 0.4368565
+AAAGGGCTCTTACGGA            0.3341364            0.3190007 0.4895454
+                  L13_iPSC  L14_iPSC  L15_iPSC   L16_MSC   L17_MSC
+AAACCCAAGTAGGAAG 0.4737592 0.2642885 0.4579575 0.4450518 0.4089045
+AAACCCATCTCGGGAC 0.4902393 0.2971788 0.4871561 0.4796679 0.4370790
+AAACGAAGTAACTGCT 0.5268932 0.3121624 0.5209353 0.5080193 0.4723240
+AAAGAACTCGTGCAGC 0.4666426 0.2597496 0.4718939 0.4534033 0.4225432
+AAAGGATGTCTCAAGT 0.4700325 0.2556880 0.4615746 0.4403018 0.3929940
+AAAGGGCTCTTACGGA 0.5047001 0.2994724 0.4998121 0.4898813 0.4491311
+                   L18_MSC   L19_MSC   L20_MSC L21_Mesodermal_Stem.Cell
+AAACCCAAGTAGGAAG 0.3815813 0.4471752 0.4518252                0.3542508
+AAACCCATCTCGGGAC 0.4067208 0.4691416 0.4789260                0.3522645
+AAACGAAGTAACTGCT 0.4382410 0.5069705 0.5174162                0.3676749
+AAAGAACTCGTGCAGC 0.3891178 0.4598642 0.4638207                0.3463360
+AAAGGATGTCTCAAGT 0.3671689 0.4459976 0.4522972                0.3298743
+AAAGGGCTCTTACGGA 0.4128713 0.4875941 0.4988265                0.3754376
+                 L22_Epithelial_Bladder L23_Epithelial_Bladder
+AAACCCAAGTAGGAAG              0.2316352              0.2671622
+AAACCCATCTCGGGAC              0.2877353              0.3286498
+AAACGAAGTAACTGCT              0.3321162              0.3706654
+AAAGAACTCGTGCAGC              0.2577582              0.2948993
+AAAGGATGTCTCAAGT              0.2289472              0.2640708
+AAAGGGCTCTTACGGA              0.2983314              0.3367303
+                 L24_Epithelial_Bronchial L25_Epithelial_Bronchial
+AAACCCAAGTAGGAAG                0.1838736                0.1822692
+AAACCCATCTCGGGAC                0.2257487                0.2268387
+AAACGAAGTAACTGCT                0.2664858                0.2642978
+AAAGAACTCGTGCAGC                0.1983332                0.1966023
+AAAGGATGTCTCAAGT                0.1843270                0.1892689
+AAAGGGCTCTTACGGA                0.2417999                0.2411382
+                 L26_Fibroblast_Foreskin L27_Fibroblast_Breast.Tissue
+AAACCCAAGTAGGAAG               0.4329908                    0.4624092
+AAACCCATCTCGGGAC               0.4558441                    0.4903512
+AAACGAAGTAACTGCT               0.4969899                    0.5200754
+AAAGAACTCGTGCAGC               0.4373219                    0.4678355
+AAAGGATGTCTCAAGT               0.4314800                    0.4636499
+AAAGGGCTCTTACGGA               0.4751569                    0.5122947
+                 L28_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3100539
+AAACCCATCTCGGGAC                       0.3271866
+AAACGAAGTAACTGCT                       0.3552835
+AAAGAACTCGTGCAGC                       0.3174467
+AAAGGATGTCTCAAGT                       0.2728890
+AAAGGGCTCTTACGGA                       0.3599641
+                 L29_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3335253
+AAACCCATCTCGGGAC                       0.3454137
+AAACGAAGTAACTGCT                       0.3719869
+AAAGAACTCGTGCAGC                       0.3315706
+AAAGGATGTCTCAAGT                       0.2877973
+AAAGGGCTCTTACGGA                       0.3801740
+                 L30_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3590146
+AAACCCATCTCGGGAC                       0.3700965
+AAACGAAGTAACTGCT                       0.3985975
+AAAGAACTCGTGCAGC                       0.3585557
+AAAGGATGTCTCAAGT                       0.3317444
+AAAGGGCTCTTACGGA                       0.4076300
+                 L31_Endothelial_Lymph.Vessel L32_Endothelial_Blood.Vessel
+AAACCCAAGTAGGAAG                    0.2891486                    0.3014286
+AAACCCATCTCGGGAC                    0.3072357                    0.3244661
+AAACGAAGTAACTGCT                    0.3366871                    0.3583441
+AAAGAACTCGTGCAGC                    0.3044000                    0.3177784
+AAAGGATGTCTCAAGT                    0.2612912                    0.2794534
+AAAGGGCTCTTACGGA                    0.3444807                    0.3602949
+                 L33_Endothelial_Humbilical.Vein L34_Endothelial_Lymphatic
+AAACCCAAGTAGGAAG                       0.3255503                 0.3063615
+AAACCCATCTCGGGAC                       0.3429656                 0.3336868
+AAACGAAGTAACTGCT                       0.3606642                 0.3535497
+AAAGAACTCGTGCAGC                       0.3299209                 0.3094668
+AAAGGATGTCTCAAGT                       0.2894251                 0.2863140
+AAAGGGCTCTTACGGA                       0.3736863                 0.3626130
+                 L35_Chondrocyte L36_Chondrocyte L37_Osteoblast
+AAACCCAAGTAGGAAG       0.4443542       0.4128319      0.4554819
+AAACCCATCTCGGGAC       0.4768039       0.4508199      0.4799630
+AAACGAAGTAACTGCT       0.4665734       0.4602453      0.4885063
+AAAGAACTCGTGCAGC       0.4454958       0.4078837      0.4461702
+AAAGGATGTCTCAAGT       0.4532327       0.4133727      0.4623004
+AAAGGGCTCTTACGGA       0.4673211       0.4490568      0.4743739
+                 L38_Osteoblast L39_Adipocyte L40_Hepatocyte
+AAACCCAAGTAGGAAG      0.4288885     0.3973992      0.1404015
+AAACCCATCTCGGGAC      0.4539705     0.4265490      0.1625652
+AAACGAAGTAACTGCT      0.4958842     0.4328301      0.1856851
+AAAGAACTCGTGCAGC      0.4394513     0.3863947      0.1492740
+AAAGGATGTCTCAAGT      0.4247691     0.4101849      0.1573037
+AAAGGGCTCTTACGGA      0.4682938     0.4195391      0.1552834
+                 L41_Epithelial_Keratinocyte L42_Schwann.cell
+AAACCCAAGTAGGAAG                   0.1317285        0.3399465
+AAACCCATCTCGGGAC                   0.1700799        0.3926095
+AAACGAAGTAACTGCT                   0.2037107        0.4079090
+AAAGAACTCGTGCAGC                   0.1499551        0.3589414
+AAAGGATGTCTCAAGT                   0.1470710        0.3493402
+AAAGGGCTCTTACGGA                   0.1794205        0.3866526
+                 L43_Smooth.muscle.cell_Bronchial L44_HSC_Bone.Marrow
+AAACCCAAGTAGGAAG                        0.4112326          0.09177966
+AAACCCATCTCGGGAC                        0.4450729          0.13141009
+AAACGAAGTAACTGCT                        0.4437330          0.13800687
+AAAGAACTCGTGCAGC                        0.4110590          0.09927104
+AAAGGATGTCTCAAGT                        0.4106680          0.09298633
+AAAGGGCTCTTACGGA                        0.4434619          0.10338167
+                 L45_CMP_Bone.Marrow L46_GMP_Bone.Marrow
+AAACCCAAGTAGGAAG           0.1020825          0.08289062
+AAACCCATCTCGGGAC           0.1269503          0.11389655
+AAACGAAGTAACTGCT           0.1485444          0.12938490
+AAAGAACTCGTGCAGC           0.1161569          0.09975551
+AAAGGATGTCTCAAGT           0.1090988          0.09403200
+AAAGGGCTCTTACGGA           0.1111755          0.09226560
+                 L47_MEP_Bone.Marrow L48_Myelocyte_Bone.Marrow
+AAACCCAAGTAGGAAG           0.1098459                0.02468094
+AAACCCATCTCGGGAC           0.1295484                0.05701652
+AAACGAAGTAACTGCT           0.1640709                0.07299742
+AAAGAACTCGTGCAGC           0.1148460                0.04778671
+AAAGGATGTCTCAAGT           0.1142347                0.03988963
+AAAGGGCTCTTACGGA           0.1219098                0.04417893
+                 L49_Myelocyte_Bone.Marrow L50_CFU_Bone.Marrow
+AAACCCAAGTAGGAAG                0.05765211           0.1090757
+AAACCCATCTCGGGAC                0.08256149           0.1234394
+AAACGAAGTAACTGCT                0.10396944           0.1554019
+AAAGAACTCGTGCAGC                0.06178092           0.1054661
+AAAGGATGTCTCAAGT                0.06919351           0.1113522
+AAAGGGCTCTTACGGA                0.06902595           0.1174252
+                 L51_B.Cell_Bone.Marrow L52_Platelet L53_Erythroblast_Late
+AAACCCAAGTAGGAAG             0.03920281   0.06453785            0.10064393
+AAACCCATCTCGGGAC             0.06544178   0.09299309            0.11959534
+AAACGAAGTAACTGCT             0.08329355   0.11096482            0.15198434
+AAAGAACTCGTGCAGC             0.05354244   0.08810920            0.10117482
+AAAGGATGTCTCAAGT             0.03904266   0.07599502            0.12153049
+AAAGGGCTCTTACGGA             0.04963729   0.08176423            0.09548154
+                 L54_Erythroblast_Pro L55_MSC_Fetal.Blood
+AAACCCAAGTAGGAAG            0.1053904           0.4619908
+AAACCCATCTCGGGAC            0.1212415           0.4939485
+AAACGAAGTAACTGCT            0.1548096           0.5266282
+AAAGAACTCGTGCAGC            0.1062466           0.4661060
+AAAGGATGTCTCAAGT            0.1151713           0.4476693
+AAAGGGCTCTTACGGA            0.1149825           0.5058889
+                 L56_MSC_Fetal.Bone.Marrow L57_MSC_Fetal.Liver
+AAACCCAAGTAGGAAG                 0.4605339           0.4497178
+AAACCCATCTCGGGAC                 0.4961010           0.4840106
+AAACGAAGTAACTGCT                 0.5186203           0.5203435
+AAAGAACTCGTGCAGC                 0.4564124           0.4617801
+AAAGGATGTCTCAAGT                 0.4434417           0.4402316
+AAAGGGCTCTTACGGA                 0.5090683           0.5010826
+                 L58_Monocyte L59_Monocyte_CD14 L60_Monocyte_CD16
+AAACCCAAGTAGGAAG   0.05173794        0.03593747        0.02697876
+AAACCCATCTCGGGAC   0.09946028        0.07746175        0.06824645
+AAACGAAGTAACTGCT   0.11546377        0.08737047        0.06796966
+AAAGAACTCGTGCAGC   0.09408212        0.06078943        0.05822294
+AAAGGATGTCTCAAGT   0.07123376        0.05466978        0.04865763
+AAAGGGCTCTTACGGA   0.08037198        0.05014720        0.04145187
+                 L61_Monocyte_CD16 L62_Monocyte
+AAACCCAAGTAGGAAG        0.04296360   0.05542529
+AAACCCATCTCGGGAC        0.08259408   0.08359650
+AAACGAAGTAACTGCT        0.09048492   0.10304389
+AAAGAACTCGTGCAGC        0.07334547   0.07906865
+AAAGGATGTCTCAAGT        0.05826452   0.07186702
+AAAGGGCTCTTACGGA        0.05875617   0.06609767
+                 L63_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                       0.0824440
+AAACCCATCTCGGGAC                       0.1234566
+AAACGAAGTAACTGCT                       0.1572033
+AAAGAACTCGTGCAGC                       0.1045270
+AAAGGATGTCTCAAGT                       0.1019106
+AAAGGGCTCTTACGGA                       0.1036298
+                 L64_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                      0.05901435
+AAACCCATCTCGGGAC                      0.11278058
+AAACGAAGTAACTGCT                      0.12115702
+AAAGAACTCGTGCAGC                      0.09090508
+AAAGGATGTCTCAAGT                      0.08200592
+AAAGGGCTCTTACGGA                      0.07713344
+                 L65_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                       0.0811060
+AAACCCATCTCGGGAC                       0.1148498
+AAACGAAGTAACTGCT                       0.1538604
+AAAGAACTCGTGCAGC                       0.1044641
+AAAGGATGTCTCAAGT                       0.1016540
+AAAGGGCTCTTACGGA                       0.1082500
+                 L66_Macrophage_Monocyte.derived L67_Macrophage_Alveolar
+AAACCCAAGTAGGAAG                      0.09301521              0.08299623
+AAACCCATCTCGGGAC                      0.12786528              0.12110815
+AAACGAAGTAACTGCT                      0.16068865              0.15484259
+AAAGAACTCGTGCAGC                      0.11696518              0.11135814
+AAAGGATGTCTCAAGT                      0.10897967              0.10349510
+AAAGGGCTCTTACGGA                      0.11753404              0.11445564
+                 L68_Dendritic.Cell_Monocyte.derived
+AAACCCAAGTAGGAAG                          0.05573460
+AAACCCATCTCGGGAC                          0.09897222
+AAACGAAGTAACTGCT                          0.12846718
+AAAGAACTCGTGCAGC                          0.07941838
+AAAGGATGTCTCAAGT                          0.07212239
+AAAGGGCTCTTACGGA                          0.08306194
+                 L69_Dendritic.Cell_Monocyte.derived
+AAACCCAAGTAGGAAG                          0.08524724
+AAACCCATCTCGGGAC                          0.13063159
+AAACGAAGTAACTGCT                          0.16164048
+AAAGAACTCGTGCAGC                          0.09841075
+AAAGGATGTCTCAAGT                          0.09033391
+AAAGGGCTCTTACGGA                          0.10643921
+                 L70_Dendritic.Cell_CD16 L71_Dendritic.Cell_Plasmacytoid
+AAACCCAAGTAGGAAG              0.04651195                      0.08093629
+AAACCCATCTCGGGAC              0.07966604                      0.10395546
+AAACGAAGTAACTGCT              0.08988058                      0.13094716
+AAAGAACTCGTGCAGC              0.07183364                      0.09787005
+AAAGGATGTCTCAAGT              0.06182741                      0.07553312
+AAAGGGCTCTTACGGA              0.05652148                      0.08458535
+                 L72_Dendritic.Cell_Plasmacytoid L73_T.Cell_CD4.Naive
+AAACCCAAGTAGGAAG                      0.07599686           0.06216039
+AAACCCATCTCGGGAC                      0.09844140           0.08698866
+AAACGAAGTAACTGCT                      0.13177897           0.09857947
+AAAGAACTCGTGCAGC                      0.10203538           0.06888272
+AAAGGATGTCTCAAGT                      0.07928447           0.06215743
+AAAGGGCTCTTACGGA                      0.08288808           0.06061962
+                 L74_T.Cell_CD4.Centr..Memory L75_T.Cell_CD4.Centr..Memory
+AAACCCAAGTAGGAAG                   0.04953319                   0.05494155
+AAACCCATCTCGGGAC                   0.07249161                   0.07883242
+AAACGAAGTAACTGCT                   0.08588006                   0.09324688
+AAAGAACTCGTGCAGC                   0.06405441                   0.06554876
+AAAGGATGTCTCAAGT                   0.04726033                   0.05453517
+AAAGGGCTCTTACGGA                   0.05015015                   0.05516487
+                 L76_T.Cell_CD4.Eff..Memory L77_T.Cell_CD8.Centr..Memory
+AAACCCAAGTAGGAAG                 0.05390077                   0.06432035
+AAACCCATCTCGGGAC                 0.07878613                   0.09232980
+AAACGAAGTAACTGCT                 0.09427484                   0.11002129
+AAAGAACTCGTGCAGC                 0.06983914                   0.09340385
+AAAGGATGTCTCAAGT                 0.05298160                   0.06210662
+AAAGGGCTCTTACGGA                 0.05456320                   0.08069680
+                 L78_T.Cell_CD8 L79_T.Cell_CD4 L80_T.Cell_CD8.Eff..Memory
+AAACCCAAGTAGGAAG     0.01880585     0.02762185                 0.06512476
+AAACCCATCTCGGGAC     0.03308793     0.04201755                 0.09030937
+AAACGAAGTAACTGCT     0.04606601     0.05656105                 0.10417355
+AAAGAACTCGTGCAGC     0.03554590     0.04852084                 0.08439920
+AAAGGATGTCTCAAGT     0.02201421     0.02836940                 0.06822748
+AAAGGGCTCTTACGGA     0.02050169     0.02546175                 0.07278221
+                 L81_T.Cell_CD8.Naive L82_T.Cell_CD8 L83_T.Cell_CD4
+AAACCCAAGTAGGAAG           0.05691919     0.04676661     0.06706488
+AAACCCATCTCGGGAC           0.08847197     0.06096056     0.09516055
+AAACGAAGTAACTGCT           0.10229245     0.08465174     0.10939437
+AAAGAACTCGTGCAGC           0.08549343     0.06475892     0.07809166
+AAAGGATGTCTCAAGT           0.06414804     0.03902209     0.05558493
+AAAGGGCTCTTACGGA           0.07319977     0.05327473     0.07406548
+                 L84_T.Cell_CD4.Naive L85_NK.Cell_CD56Hi
+AAACCCAAGTAGGAAG           0.08209967         0.08125768
+AAACCCATCTCGGGAC           0.11352514         0.10851064
+AAACGAAGTAACTGCT           0.12374505         0.13441205
+AAAGAACTCGTGCAGC           0.08855340         0.10816652
+AAAGGATGTCTCAAGT           0.07454126         0.08271360
+AAAGGGCTCTTACGGA           0.08607345         0.09443548
+                 L86_NK.Cell_CD56Lo L87_Neutrophil L88_Neutrophil
+AAACCCAAGTAGGAAG         0.07899103     0.01575484     0.02818251
+AAACCCATCTCGGGAC         0.10779893     0.05660629     0.07162125
+AAACGAAGTAACTGCT         0.13621195     0.05845380     0.07950457
+AAAGAACTCGTGCAGC         0.11036089     0.04358736     0.05844867
+AAAGGATGTCTCAAGT         0.08532550     0.03330101     0.04488609
+AAAGGGCTCTTACGGA         0.09151158     0.01757654     0.04095760
+                 L89_B.Cell L90_B.Cell_Naive L91_B.Cell L92_B.Cell_Memory
+AAACCCAAGTAGGAAG 0.01348786       0.05039954 0.04384330        0.04289718
+AAACCCATCTCGGGAC 0.03213743       0.07595001 0.06207980        0.06974403
+AAACGAAGTAACTGCT 0.04723777       0.09253198 0.08399226        0.08845356
+AAAGAACTCGTGCAGC 0.03218967       0.06448139 0.04903087        0.06132907
+AAAGGATGTCTCAAGT 0.01986525       0.04389510 0.03810033        0.04565663
+AAAGGGCTCTTACGGA 0.02222625       0.06396337 0.05294153        0.05423905
+                 L93_B.Cell_Plasma.Cell L94_Oocyte L95_Spermatocyte
+AAACCCAAGTAGGAAG             0.08167834 0.06857847     -0.004409334
+AAACCCATCTCGGGAC             0.08942042 0.08437433      0.019012178
+AAACGAAGTAACTGCT             0.12011594 0.11193538      0.052030198
+AAAGAACTCGTGCAGC             0.09265843 0.09064305      0.017412677
+AAAGGATGTCTCAAGT             0.08814670 0.07783627      0.020392316
+AAAGGGCTCTTACGGA             0.08164909 0.08967909      0.024580861</code></pre>
 <pre class="r"><code>#Add a metadata column &quot;clusteredCellAtlas&quot; to the object
-ANT1.2 &lt;- AssignClusteredLabel(ANT1.2,cor.mat, K=25, topCorrelation=5)
+SCT_integrated &lt;- AssignClusteredLabel(SCT_integrated,cor.mat, K=20, topCorrelation=5)
 
 #Table of assigned cell labels
-table(ANT1.2$clusteredCellAtlas)</code></pre>
+table(SCT_integrated$clusteredCellAtlas)</code></pre>
 <pre><code>
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 </code></pre>
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 </code></pre>
 </div>
-<div id="exploring-different-values-of-k-clusters-of-cellatlas-populations" class="section level1">
-<h1>Exploring different values of K (clusters of cellatlas populations)</h1>
+<div id="exploring-different-values-of-k-clusters-of-cellatlas-populations" class="section level2">
+<h2>Exploring different values of K (clusters of cellatlas populations)</h2>
 <p>Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types</p>
 <pre class="r"><code>for(kval in 11:95){
      print(kval)
-     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
+     print(table(AssignClusteredLabel(SCT_integrated,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
 }</code></pre>
 <pre><code>[1] 11
 
-MSC_iPSC_Fibroblast_Osteoblast_Chondrocyte_Smooth.muscle.cell 
-                                                         2479 
+MSC_iPSC_Fibroblast_Osteoblast_Chondrocyte 
+                                      1815 
 [1] 12
 
-                                          iPSC_MSC_Fibroblast 
-                                                         2426 
-MSC_Osteoblast_Chondrocyte_Fibroblast_iPSC_Smooth.muscle.cell 
-                                                           53 
+MSC_iPSC_Fibroblast_Osteoblast_Chondrocyte 
+                                      1815 
 [1] 13
 
-                                          iPSC_MSC_Fibroblast 
-                                                         2426 
-MSC_Osteoblast_Chondrocyte_Fibroblast_iPSC_Smooth.muscle.cell 
-                                                           53 
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
 [1] 14
 
-                                          iPSC_MSC_Fibroblast 
-                                                         2426 
-MSC_Osteoblast_Chondrocyte_Fibroblast_iPSC_Smooth.muscle.cell 
-                                                           53 
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
 [1] 15
 
-                                          iPSC_MSC_Fibroblast 
-                                                         2426 
-MSC_Osteoblast_Chondrocyte_Fibroblast_iPSC_Smooth.muscle.cell 
-                                                           53 
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
 [1] 16
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
 [1] 17
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
 [1] 18
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
 [1] 19
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
 [1] 20
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
 [1] 21
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
 [1] 22
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
 [1] 23
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 24
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 25
 
-            iPSC_MSC_Fibroblast MSC_Chondrocyte_iPSC_Osteoblast 
-                           2428                              51 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 26
 
-                iPSC_Fibroblast                             MSC 
-                           1817                             533 
-MSC_Chondrocyte_iPSC_Osteoblast 
-                            129 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 27
 
-                iPSC_Fibroblast                             MSC 
-                           1817                             533 
-MSC_Chondrocyte_iPSC_Osteoblast 
-                            129 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 28
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 29
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 30
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 31
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 32
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 33
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 34
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    30                   1834                    531 
-              MSC_iPSC 
-                    84 
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
 [1] 35
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    28                   1835                    615 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 36
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    28                   1835                    615 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 37
 
-Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
-                    28                   1835                    615 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 38
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 39
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 40
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
 [1] 41
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                    46                      1                   1079 
+                   MSC 
+                   689 
 [1] 42
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
 [1] 43
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
 [1] 44
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
 [1] 45
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                    MSC 
-                    28                   1842                    608 
-              MSC_iPSC 
-                     1 
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
 [1] 46
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                   iPSC 
-                    28                   1822                     20 
-                   MSC               MSC_iPSC 
-                   608                      1 
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
 [1] 47
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                   iPSC 
-                    28                   1822                     20 
-                   MSC               MSC_iPSC 
-                   608                      1 
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
 [1] 48
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                   iPSC 
-                    28                   1822                     13 
-                   MSC               MSC_iPSC 
-                   592                     24 
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
 [1] 49
 
-Chondrocyte_Osteoblast        Fibroblast_iPSC                   iPSC 
-                    28                   1822                     13 
-                   MSC               MSC_iPSC 
-                   592                     24 
+Fibroblast_iPSC_MSC     iPSC_Fibroblast                 MSC 
+                  5                1503                 307 
 [1] 50
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+iPSC_Fibroblast             MSC 
+           1506             309 
 [1] 51
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+iPSC_Fibroblast             MSC 
+           1506             309 
 [1] 52
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+iPSC_Fibroblast             MSC 
+           1506             309 
 [1] 53
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+iPSC_Fibroblast             MSC 
+           1506             309 
 [1] 54
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 55
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 56
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 57
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 58
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 59
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 60
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 61
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 62
 
-Fibroblast_iPSC            iPSC             MSC        MSC_iPSC 
-           1822              39             594              24 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 63
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 64
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 65
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 66
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 67
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 68
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 69
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 70
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
 [1] 71
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1117              77             621 
 [1] 72
 
-Fibroblast_iPSC            iPSC        iPSC_MSC             MSC 
-           1822              40               7             610 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 73
 
-    iPSC iPSC_MSC      MSC 
-    1051       52     1376 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 74
 
-    iPSC iPSC_MSC      MSC 
-    1051       52     1376 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 75
 
-    iPSC iPSC_MSC      MSC 
-    1051       52     1376 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 76
 
-    iPSC iPSC_MSC      MSC 
-    1051       52     1376 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 77
 
-iPSC  MSC 
-1103 1376 
+Fibroblast_iPSC            iPSC             MSC 
+           1113              80             622 
 [1] 78
 
 iPSC  MSC 
-1103 1376 
+ 722 1093 
 [1] 79
 
 iPSC  MSC 
-1103 1376 
+ 722 1093 
 [1] 80
 
 iPSC  MSC 
-1103 1376 
+ 722 1093 
 [1] 81
 
 iPSC  MSC 
-1103 1376 
+ 722 1093 
 [1] 82
 
 iPSC  MSC 
-1103 1376 
+1258  557 
 [1] 83
 
 iPSC  MSC 
-1103 1376 
+1258  557 
 [1] 84
 
 iPSC  MSC 
-2293  186 
+1258  557 
 [1] 85
 
 iPSC  MSC 
-2474    5 
+1258  557 
 [1] 86
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 87
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 88
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 89
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 90
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 91
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 92
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 93
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 94
 
 iPSC  MSC 
-2474    5 
+1794   21 
 [1] 95
 
 iPSC  MSC 
-2474    5 </code></pre>
+1794   21 </code></pre>
 </div>
-<div id="crude-analyses-of-correlation-matrix" class="section level1">
-<h1>Crude analyses of correlation matrix</h1>
+<div id="crude-analyses-of-correlation-matrix" class="section level2">
+<h2>Crude analyses of correlation matrix</h2>
 <pre class="r"><code># see which cell lines are highest correlated (sum over all cells) in the data with the summed values
 colSums(cor.mat)[colSums(cor.mat) &gt; 800]</code></pre>
-<pre><code>                        L12_iPSC                         L13_iPSC 
-                        925.2322                        1003.8866 
-                        L15_iPSC                          L16_MSC 
-                        971.0174                         931.8518 
-                         L17_MSC                          L19_MSC 
-                        848.3917                         931.9304 
-                         L20_MSC          L26_Fibroblast_Foreskin 
-                        940.7790                         895.0013 
-    L27_Fibroblast_Breast.Tissue                  L35_Chondrocyte 
-                        978.2214                         925.9770 
-                 L36_Chondrocyte                   L37_Osteoblast 
-                        842.2880                         946.8134 
-                  L38_Osteoblast                    L39_Adipocyte 
-                        903.9756                         821.5032 
-L43_Smooth.muscle.cell_Bronchial              L55_MSC_Fetal.Blood 
-                        877.5111                         969.6336 
-       L56_MSC_Fetal.Bone.Marrow              L57_MSC_Fetal.Liver 
-                        958.1726                         939.2849 </code></pre>
+<pre><code>named numeric(0)</code></pre>
 </div>
-<div id="clustering-analysis-of-cell-atlas-data-pca" class="section level1">
-<h1>clustering Analysis of cell atlas data (PCA)</h1>
-<pre class="r"><code>library(&quot;RColorBrewer&quot;)
-library(&quot;scales&quot;)
-library(&quot;ggplot2&quot;)
+<div id="clustering-analysis-of-cell-atlas-data-pca" class="section level2">
+<h2>clustering Analysis of cell atlas data (PCA)</h2>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
 library(&quot;ggfortify&quot;)
 
 # Perform PCA
@@ -1492,9 +1614,13 @@ cell.line.relabeled &lt;- as.data.frame(t(cell.line))
 cell.line.relabeled$celltype &lt;- sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2)
 rownames(cell.line.relabeled) &lt;- paste0(sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 1), &quot; &quot;, sapply(strsplit(as.character(rownames(cell.line.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2))
 
-#Make PCA plots with the factors colored by individual
+#Make PCA plots
 
 autoplot(pca_genes, data = cell.line.relabeled, colour = &#39;celltype&#39;)</code></pre>
+<pre><code>Warning: `select_()` is deprecated as of dplyr 0.7.0.
+Please use `select()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-clustering-of-cell-atlas-alone-1">
@@ -1582,7 +1708,7 @@ cell.line.sperm.relabeled &lt;- as.data.frame(t(cell.line.sperm))
 cell.line.sperm.relabeled$celltype &lt;- sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2)
 rownames(cell.line.sperm.relabeled) &lt;- paste0(sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 1), &quot; &quot;, sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), &quot;\\_&quot;), &quot;[[&quot;, 2))
 
-#Make PCA plots with the factors colored by individual
+#Make PCA plots
 
 autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = &#39;celltype&#39;)</code></pre>
 <p><img src="figure/cellAtlasAssignments.Rmd/clustering%20of%20cell%20atlas%20alone-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1741,8 +1867,8 @@ Anthony Hung
 </div>
 </div>
 </div>
-<div id="clustering-analysis-of-cell-atlas-data-corr-heatmap" class="section level1">
-<h1>clustering Analysis of cell atlas data (Corr Heatmap)</h1>
+<div id="clustering-analysis-of-cell-atlas-data-corr-heatmap" class="section level2">
+<h2>clustering Analysis of cell atlas data (Corr Heatmap)</h2>
 <pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
 <pre><code>
 Attaching package: &#39;gplots&#39;</code></pre>
@@ -1800,6 +1926,16 @@ Anthony Hung
 </table>
 </div>
 </div>
+</div>
+</div>
+<div id="human-cell-landscape-httpbis.zju.edu.cnhclblast.html" class="section level1">
+<h1>Human cell Landscape (<a href="http://bis.zju.edu.cn/HCL/blast.html" class="uri">http://bis.zju.edu.cn/HCL/blast.html</a>)</h1>
+<p>This is a similar method, but uses DGE objects and a different reference set (the reference set comes from single cell rather than bulk data). Computes correlations between cells in a test sample and the reference set samples and assigns best correlation identity.</p>
+<pre class="r"><code>#This require devtools  
+#install.packages(&#39;devtools&#39;)
+#library(devtools)
+# scHCL requires ggplot2/reshape2/plotly/shiny/shinythemes/shiny
+#install_github(&quot;ggjlab/scHCL&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1808,7 +1944,7 @@ Anthony Hung
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.4.3 (2017-11-30)
+<pre><code>R version 3.6.1 (2019-07-05)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Scientific Linux 7.4 (Nitrogen)
 
@@ -1827,50 +1963,44 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] gplots_3.0.1.1     ggfortify_0.4.8    ggplot2_3.2.1      scales_1.1.0      
-[5] RColorBrewer_1.1-2 Seurat_3.1.1      
+[1] scales_1.1.1       RColorBrewer_1.1-2 gplots_3.0.1.1    
+[4] ggfortify_0.4.10   ggplot2_3.3.2      Seurat_3.1.3      
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.0-10      Rtsne_0.15          colorspace_1.4-1   
-  [4] ggridges_0.5.1      rprojroot_1.3-2     fs_1.3.1           
-  [7] farver_2.0.1        leiden_0.3.1        listenv_0.8.0      
- [10] npsurv_0.4-0        ggrepel_0.8.1       mvtnorm_1.0-7      
- [13] codetools_0.2-15    splines_3.4.3       R.methodsS3_1.7.1  
- [16] mnormt_1.5-5        lsei_1.2-0          knitr_1.26         
- [19] TFisher_0.2.0       zeallot_0.1.0       jsonlite_1.6       
- [22] workflowr_1.5.0     ica_1.0-2           cluster_2.0.6      
- [25] png_0.1-7           R.oo_1.23.0         uwot_0.1.5         
- [28] sctransform_0.2.0   compiler_3.4.3      httr_1.4.1         
- [31] backports_1.1.5     assertthat_0.2.1    Matrix_1.2-18      
- [34] lazyeval_0.2.2      later_1.0.0         htmltools_0.4.0    
- [37] tools_3.4.3         rsvd_1.0.2          igraph_1.2.4.2     
- [40] gtable_0.3.0        glue_1.3.1          RANN_2.6.1         
- [43] reshape2_1.4.3      dplyr_0.8.3         Rcpp_1.0.3         
- [46] Biobase_2.38.0      vctrs_0.2.0         multtest_2.34.0    
- [49] gdata_2.18.0        ape_5.3             nlme_3.1-131       
- [52] gbRd_0.4-11         lmtest_0.9-37       xfun_0.11          
- [55] stringr_1.4.0       globals_0.12.5      lifecycle_0.1.0    
- [58] irlba_2.3.3         gtools_3.8.1        future_1.15.1      
- [61] MASS_7.3-51.4       zoo_1.8-6           promises_1.1.0     
- [64] parallel_3.4.3      sandwich_2.5-1      yaml_2.2.0         
- [67] gridExtra_2.3       reticulate_1.13     pbapply_1.4-2      
- [70] stringi_1.4.3       mutoss_0.1-12       plotrix_3.7-2      
- [73] caTools_1.17.1.3    BiocGenerics_0.24.0 bibtex_0.4.2       
- [76] Rdpack_0.11-0       SDMTools_1.1-221.2  rlang_0.4.2        
- [79] pkgconfig_2.0.3     bitops_1.0-6        evaluate_0.14      
- [82] lattice_0.20-35     ROCR_1.0-7          purrr_0.3.3        
- [85] labeling_0.3        htmlwidgets_1.5.1   cowplot_0.9.3      
- [88] tidyselect_0.2.5    RcppAnnoy_0.0.14    plyr_1.8.4         
- [91] magrittr_1.5        R6_2.4.1            multcomp_1.4-8     
- [94] withr_2.1.2         pillar_1.4.2        whisker_0.4        
- [97] sn_1.5-4            fitdistrplus_1.0-14 survival_2.41-3    
-[100] tsne_0.1-3          tibble_2.1.3        future.apply_1.3.0 
-[103] crayon_1.3.4        KernSmooth_2.23-15  plotly_4.9.1       
-[106] rmarkdown_1.18      grid_3.4.3          data.table_1.12.6  
-[109] git2r_0.26.1        metap_1.2           digest_0.6.23      
-[112] tidyr_1.0.0         httpuv_1.5.2        numDeriv_2016.8-1.1
-[115] R.utils_2.9.2       RcppParallel_4.4.4  stats4_3.4.3       
-[118] munsell_0.5.0       viridisLite_0.3.0  </code></pre>
+  [1] tsne_0.1-3          nlme_3.1-140        bitops_1.0-6       
+  [4] fs_1.3.1            RcppAnnoy_0.0.12    httr_1.4.2         
+  [7] rprojroot_1.3-2     sctransform_0.2.0   tools_3.6.1        
+ [10] backports_1.1.4     R6_2.4.1            irlba_2.3.3        
+ [13] KernSmooth_2.23-15  uwot_0.1.5          lazyeval_0.2.2     
+ [16] colorspace_1.4-1    withr_2.2.0         npsurv_0.4-0       
+ [19] gridExtra_2.3       tidyselect_1.1.0    compiler_3.6.1     
+ [22] git2r_0.26.1        plotly_4.9.2.1      labeling_0.3       
+ [25] caTools_1.17.1.2    lmtest_0.9-37       ggridges_0.5.1     
+ [28] pbapply_1.4-0       rappdirs_0.3.1      stringr_1.4.0      
+ [31] digest_0.6.25       rmarkdown_1.13      pkgconfig_2.0.3    
+ [34] htmltools_0.5.0     bibtex_0.4.2        htmlwidgets_1.5.1  
+ [37] rlang_0.4.7         farver_2.0.3        generics_0.0.2     
+ [40] zoo_1.8-8           jsonlite_1.7.0      ica_1.0-2          
+ [43] gtools_3.8.1        dplyr_1.0.1         magrittr_1.5       
+ [46] Matrix_1.2-18       Rcpp_1.0.5          munsell_0.5.0      
+ [49] ape_5.3             reticulate_1.16     lifecycle_0.2.0    
+ [52] stringi_1.4.6       whisker_0.3-2       yaml_2.2.1         
+ [55] gbRd_0.4-11         MASS_7.3-51.6       Rtsne_0.15         
+ [58] plyr_1.8.6          grid_3.6.1          parallel_3.6.1     
+ [61] gdata_2.18.0        listenv_0.8.0       promises_1.1.1     
+ [64] ggrepel_0.8.1       crayon_1.3.4        lattice_0.20-41    
+ [67] cowplot_1.0.0       splines_3.6.1       knitr_1.23         
+ [70] pillar_1.4.6        igraph_1.2.4.1      reshape2_1.4.3     
+ [73] future.apply_1.3.0  codetools_0.2-16    leiden_0.3.1       
+ [76] glue_1.4.1          evaluate_0.14       lsei_1.2-0         
+ [79] metap_1.1           RcppParallel_4.4.3  data.table_1.13.0  
+ [82] png_0.1-7           vctrs_0.3.2         httpuv_1.5.1       
+ [85] Rdpack_0.11-0       gtable_0.3.0        RANN_2.6.1         
+ [88] purrr_0.3.4         tidyr_1.0.3         future_1.18.0      
+ [91] xfun_0.8            rsvd_1.0.1          later_1.1.0.1      
+ [94] viridisLite_0.3.0   survival_2.44-1.1   tibble_3.0.3       
+ [97] workflowr_1.6.2     cluster_2.1.0       globals_0.12.5     
+[100] fitdistrplus_1.0-14 ellipsis_0.3.1      ROCR_1.0-7         </code></pre>
 </div>
 </div>
 
@@ -1904,49 +2034,6 @@ $(document).ready(function () {
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

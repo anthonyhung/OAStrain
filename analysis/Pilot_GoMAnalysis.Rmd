@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Applying topic modeling approaches on sc pilot data
+# Applying topic modeling approaches on sc pilot data (first analysis with my data and outside data from other cell types)
 
 Include data from:
      Pilot (iPSC-derived chondrocytes from 3 individuals x 2 treatment conditions; 10x)
@@ -16,7 +16,7 @@ Include data from:
      Hepatocytes (from liver homogenate; 10x)
      Chondrocytes (from OA patients; STRT protocol)
      
-# Load Libraries
+## Load Libraries
 
 ```{r load libraries}
 library(Seurat)
@@ -33,7 +33,7 @@ library(colorspace)
 library(dplyr)
 ```
 
-# Load in datasets and merge them
+## Load in datasets and merge them
 
 Load in datasets and create Seurat objects for each of them. Add metadata about the cell type they were assigned in their original contexts. Merge the Seurat object into one large object.
 
@@ -110,7 +110,7 @@ saveRDS(Combined.common.allGenes_noliver, "data/Combined_singlecell_data_allGene
 }
 ```
 
-# Check Expression of chondrocyte markers in chondrocyte data and pilot data
+## Check Expression of chondrocyte markers in chondrocyte data and pilot data
 
 ```{r}
 #Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
@@ -146,7 +146,7 @@ VlnPlot(object=ANT1.2, features = c("TGFB3"))
 ![Cell Type Clusters from original paper](../analysis/figures/scviz1.png)
 ![Subsetting gate drawn in scViz](../analysis/figures/scviz2.png)
 
-# Analysis of combined dataset in Seurat
+## Analysis of combined dataset in Seurat
 
 Now we can look at the cells in Seurat, including PCA and UMAP
 
@@ -287,39 +287,9 @@ DimPlot(Combined.common, reduction = "umap", group.by = "Cell.Type")
 
 ```
 
+## Semi-supervised clustering with classtpx
 
-# Grades of Membership analysis with fastTopics
-
-```{r fit_poisson_nmf function}
-# library(fastTopics)
-# library(Seurat)
-# Combined.common.allGenes_noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
-# dim(Combined.common.allGenes_noliver)
-# 
-# # specify the fixed loadings for certain cells (1 = iPSC, 2 = MSC, 3 = chondrocyte)
-# counts_allgenes <- Combined.common.allGenes_noliver@assays$RNA@counts[, indices]
-# iPSC_vector <- as.numeric(Combined.common.allGenes_noliver@meta.data$Cell.Type[indices] == "iPSC")
-# MSC_vector <- as.numeric(Combined.common.allGenes_noliver@meta.data$Cell.Type[indices] == "MSC")
-# Chondro_vector <- as.numeric(grepl("Chondro ", Combined.common.allGenes_noliver@meta.data$Cell.Type[indices]))
-# L_init <- cbind(iPSC_vector, MSC_vector, Chondro_vector)
-# F_init <- matrix(1/nrow(counts_allgenes), nrow=nrow(counts_allgenes), ncol = 3)
-# 
-# #vector (1 for update loadings after initial specificiations, 0 for keep initial specifications fixed)
-# fixed_loadings <- 1 - rowSums(L_init)
-# 
-# counts_allgenes <- BiocGenerics::t(counts_allgenes)
-# 
-# fit_init <- init_poisson_nmf(X=counts_allgenes, F=F_init, L=L_init)
-# fit1 <- fit_poisson_nmf(X=counts_allgenes, fit0=fit_init, numiter=15, method = "em", update.loadings=fixed_loadings)
-# fit1 <- fit_poisson_nmf(counts_allgenes, k = 3, numiter = 15, method = "em")
-# fit2 <- fit_poisson_nmf(counts_allgenes, fit0 = fit1, numiter = 15, method = "em")
-# fit1_multinomial <- poisson2multinom(fit1)
-# 
-# saveRDS(fit1, "data/fit1.rds")
-# saveRDS(fit1_multinomial, "data/fit1_multinomial.rds")
-```
-
-```{r}
+```{r classtpx}
 # Grades of Membership analysis with classtpx
 
 library(classtpx)
@@ -395,7 +365,7 @@ ggsave("output/structureplot.png")
 
 
 
-# Analysis of the Topics within the Topic models generated for each dataset
+## Analysis of the Topics within the Topic models generated for each dataset
 
 
 ```{r functions to visualize GoM }
@@ -479,7 +449,7 @@ annotate_clusters <- function(theta_mat, countmatrix){
 }
 ```
 
-# Apply Visualization/annotation functions to GoM results
+## Apply Visualization/annotation functions to GoM results
 
 ```{r k of 3}
 visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
@@ -552,7 +522,7 @@ annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
 
 
 
-# Code for loading in cell atlas samples 
+## Code for loading in cell atlas samples 
 
 First compute correlations between each individual cell in ANT1.2 and each of the primary cell lines in the cell atlas dataset to assign labels. Then use those primary cell lines to compute memberships in clusters
 
@@ -684,3 +654,12 @@ DimPlot(ANT1.2, reduction="umap", group.by="labels", split.by="clusteredCellAtla
   labs(x="UMAP1",y="UMAP2")
 
 ```
+
+
+# Run FastTopics on only my pilot data (iPSC-chondrocytes)
+
+```{r FastTopics only pilot}
+SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
+
+```
+

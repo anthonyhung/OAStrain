@@ -1,5 +1,5 @@
 ---
-title: "cell Atlas Assignments"
+title: "cell Atlas or Human Cell Landscape Assignments"
 author: "Anthony Hung"
 date: "2020-01-24"
 output: workflowr::wflow_html
@@ -9,7 +9,9 @@ editor_options:
 
 # Introduction
 
-# Load correlation functions
+# Cell atlas from Mengie Chen's lab (UChicago)
+Compute correlation between reference set of samples and individual cells (input is seurat object.)
+Load correlation functions
 
 ```{r load functions}
 library(Seurat)
@@ -18,38 +20,39 @@ library(Seurat)
 source("code/cellAtlas_assignment.R")
 
 #load single-cell data from pilot
-ANT1.2 <- readRDS("data/ANT1_2.rds")
-
+#ANT1.2 <- readRDS("data/ANT1_2.rds")
+SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
 ```
 
-# Apply functions to single cell data to label them with assigned cell type
+## Apply functions to single cell data to label them with assigned cell type
 
 ```{r assign metadata}
-#Compute the correlation matrix use a seurat object and cell line matrix as input
-cor.mat <- ComputeCorMat(ANT1.2,cell.line)
+#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT_integrated) <- "RNA"
+cor.mat <- ComputeCorMat(SCT_integrated,cell.line)
 head(cor.mat)
 
 #Add a metadata column "clusteredCellAtlas" to the object
-ANT1.2 <- AssignClusteredLabel(ANT1.2,cor.mat, K=25, topCorrelation=5)
+SCT_integrated <- AssignClusteredLabel(SCT_integrated,cor.mat, K=20, topCorrelation=5)
 
 #Table of assigned cell labels
-table(ANT1.2$clusteredCellAtlas)
+table(SCT_integrated$clusteredCellAtlas)
 ```
 
-# Exploring different values of K (clusters of cellatlas populations)
+## Exploring different values of K (clusters of cellatlas populations)
 
 Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types
 
 ```{r try K}
 for(kval in 11:95){
      print(kval)
-     print(table(AssignClusteredLabel(ANT1.2,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
+     print(table(AssignClusteredLabel(SCT_integrated,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
 }
 
 ```
 
 
-# Crude analyses of correlation matrix
+## Crude analyses of correlation matrix
 
 ```{r crude}
 # see which cell lines are highest correlated (sum over all cells) in the data with the summed values
@@ -57,7 +60,7 @@ colSums(cor.mat)[colSums(cor.mat) > 800]
 
 ```
 
-# clustering Analysis of cell atlas data (PCA)
+## clustering Analysis of cell atlas data (PCA)
 
 ```{r clustering of cell atlas alone}
 library("ggplot2")
@@ -99,7 +102,7 @@ autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype',
 
 ```
 
-# clustering Analysis of cell atlas data (Corr Heatmap)
+## clustering Analysis of cell atlas data (Corr Heatmap)
 
 ```{r corr heatmap}
 library("gplots")
@@ -117,5 +120,39 @@ heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', d
           RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
           cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
 
+```
+
+
+
+# Human cell Landscape (http://bis.zju.edu.cn/HCL/blast.html)
+
+This is a similar method, but uses DGE objects and a different reference set (the reference set comes from single cell rather than bulk data). Computes correlations between cells in a test sample and the reference set samples and assigns best correlation identity.
+
+```{r HCL prep}
+#This require devtools  
+#install.packages('devtools')
+#library(devtools)
+# scHCL requires ggplot2/reshape2/plotly/shiny/shinythemes/shiny
+#install_github("ggjlab/scHCL")
+library(scHCL)
+library(Seurat)
+library(scran)
+```
+
+Convert to DGE (Keep all genes and use raw unnormalized counts).
+
+```{r DGE}
+metadata <- SCT_integrated@meta.data # keep metadata handy
+sce <- as.SingleCellExperiment(SCT_integrated, assay="RNA")
+dge<- convertTo(sce, type= "edgeR")
+remove(sce)
+dge$samples<- cbind(dge$samples, metadata)
+```
+
+Run scHCL and visualize
+
+```{r hcl_result}
+hcl_result <- scHCL(scdata = dge$counts, numbers_plot = 3)
+scHCL_vis(hcl_result)
 ```
 

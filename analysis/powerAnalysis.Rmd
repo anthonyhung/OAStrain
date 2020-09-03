@@ -9,7 +9,7 @@ editor_options:
 
 # Load libraries
 
-```{r}
+```{r load libraries}
 library(dplyr)
 library(biomaRt)
 library(eQTLpipeline)
@@ -339,7 +339,7 @@ heritability <- 0.16 # median cis-heritability based on Gusev et al. 2016, Wheel
 lambda <- sqrt(heritability / (1-heritability))
 ```
 
-## Plot the curve
+## Plot the power curve
 
 ```{r curve}
 colors <- cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -383,11 +383,20 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
      theme_bw() +
      geom_hline(yintercept = .8, linetype = "dashed", color = "red")
 p
+
+#for Power = 0.8, what is the SES?
+#n = 58
+n58_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(58)
+#n = 30
+n30_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(30)
+#n = 10
+n10_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(10)
 ```
 
 
 
 # mashr to estimate eQTL effect sizes for both conditions
+This analysis is exploratory.
 
 ```{r mashr}
 library(dplyr)
@@ -465,92 +474,92 @@ setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
 # print(get_loglik(m),digits = 10)
 
 
-#load results from fitting (piecewise) on all the tests
-m_INT_1 <- readRDS("output/mash_all_refit_500k_INT_1.rds")
-m_INT_2 <- readRDS("output/mash_all_refit_500k_INT_2.rds")
-m_INT_3 <- readRDS("output/mash_all_refit_500k_INT_3.rds")
-m_INT_4 <- readRDS("output/mash_all_refit_500k_INT_4.rds")
-m_INT_5 <- readRDS("output/mash_all_refit_500k_INT_5.rds")
-m_INT_6 <- readRDS("output/mash_all_refit_500k_INT_6.rds")
-m_INT_7 <- readRDS("output/mash_all_refit_500k_INT_7.rds")
-m_INT_8 <- readRDS("output/mash_all_refit_500k_INT_8.rds")
-
-m_1 <- readRDS("output/mash_all_refit_500k_1.rds")
-m_2 <- readRDS("output/mash_all_refit_500k_2.rds")
-m_3 <- readRDS("output/mash_all_refit_500k_3.rds")
-m_4 <- readRDS("output/mash_all_refit_500k_4.rds")
-m_5 <- readRDS("output/mash_all_refit_500k_5.rds")
-m_6 <- readRDS("output/mash_all_refit_500k_6.rds")
-m_7 <- readRDS("output/mash_all_refit_500k_7.rds")
-m_8 <- readRDS("output/mash_all_refit_500k_8.rds")
-
-
-# Merge
-m_INT_merged <- m_INT_1
-m_INT_merged$result$PosteriorMean <- rbind(m_INT_1$result$PosteriorMean, m_INT_2$result$PosteriorMean, m_INT_3$result$PosteriorMean, m_INT_4$result$PosteriorMean, m_INT_5$result$PosteriorMean, m_INT_6$result$PosteriorMean, m_INT_7$result$PosteriorMean, m_INT_8$result$PosteriorMean)
-m_INT_merged$result$PosteriorSD <- rbind(m_INT_1$result$PosteriorSD, m_INT_2$result$PosteriorSD, m_INT_3$result$PosteriorSD, m_INT_4$result$PosteriorSD, m_INT_5$result$PosteriorSD, m_INT_6$result$PosteriorSD, m_INT_7$result$PosteriorSD, m_INT_8$result$PosteriorSD)
-m_INT_merged$result$lfdr <- rbind(m_INT_1$result$lfdr, m_INT_2$result$lfdr, m_INT_3$result$lfdr, m_INT_4$result$lfdr, m_INT_5$result$lfdr, m_INT_6$result$lfdr, m_INT_7$result$lfdr, m_INT_8$result$lfdr)
-m_INT_merged$result$lfsr <- rbind(m_INT_1$result$lfsr, m_INT_2$result$lfsr, m_INT_3$result$lfsr, m_INT_4$result$lfsr, m_INT_5$result$lfsr, m_INT_6$result$lfsr, m_INT_7$result$lfsr, m_INT_8$result$lfsr)
-m_INT_merged$result$NegativeProb <- rbind(m_INT_1$result$NegativeProb, m_INT_2$result$NegativeProb, m_INT_3$result$NegativeProb, m_INT_4$result$NegativeProb, m_INT_5$result$NegativeProb, m_INT_6$result$NegativeProb, m_INT_7$result$NegativeProb, m_INT_8$result$NegativeProb)
-
-m_INT_merged$null_loglik <- c(m_INT_1$null_loglik, m_INT_2$null_loglik, m_INT_3$null_loglik, m_INT_4$null_loglik, m_INT_5$null_loglik, m_INT_6$null_loglik, m_INT_7$null_loglik, m_INT_8$null_loglik)
-m_INT_merged$vloglik <- rbind(m_INT_1$vloglik, m_INT_2$vloglik, m_INT_3$vloglik, m_INT_4$vloglik, m_INT_5$vloglik, m_INT_6$vloglik, m_INT_7$vloglik, m_INT_8$vloglik)
-m_INT_merged$alt_loglik <- rbind(m_INT_1$alt_loglik, m_INT_2$alt_loglik, m_INT_3$alt_loglik, m_INT_4$alt_loglik, m_INT_5$alt_loglik, m_INT_6$alt_loglik, m_INT_7$alt_loglik, m_INT_8$alt_loglik)
-m_INT_merged$posterior_weights <- rbind(m_INT_1$posterior_weights, m_INT_2$posterior_weights, m_INT_3$posterior_weights, m_INT_4$posterior_weights, m_INT_5$posterior_weights, m_INT_6$posterior_weights, m_INT_7$posterior_weights, m_INT_8$posterior_weights)
-
-
-
-m_merged <- m_1
-m_merged$result$PosteriorMean <- rbind(m_1$result$PosteriorMean, m_2$result$PosteriorMean, m_3$result$PosteriorMean, m_4$result$PosteriorMean, m_5$result$PosteriorMean, m_6$result$PosteriorMean, m_7$result$PosteriorMean, m_8$result$PosteriorMean)
-m_merged$result$PosteriorSD <- rbind(m_1$result$PosteriorSD, m_2$result$PosteriorSD, m_3$result$PosteriorSD, m_4$result$PosteriorSD, m_5$result$PosteriorSD, m_6$result$PosteriorSD, m_7$result$PosteriorSD, m_8$result$PosteriorSD)
-m_merged$result$lfdr <- rbind(m_1$result$lfdr, m_2$result$lfdr, m_3$result$lfdr, m_4$result$lfdr, m_5$result$lfdr, m_6$result$lfdr, m_7$result$lfdr, m_8$result$lfdr)
-m_merged$result$lfsr <- rbind(m_1$result$lfsr, m_2$result$lfsr, m_3$result$lfsr, m_4$result$lfsr, m_5$result$lfsr, m_6$result$lfsr, m_7$result$lfsr, m_8$result$lfsr)
-m_merged$result$NegativeProb <- rbind(m_1$result$NegativeProb, m_2$result$NegativeProb, m_3$result$NegativeProb, m_4$result$NegativeProb, m_5$result$NegativeProb, m_6$result$NegativeProb, m_7$result$NegativeProb, m_8$result$NegativeProb)
-
-m_merged$null_loglik <- c(m_1$null_loglik, m_2$null_loglik, m_3$null_loglik, m_4$null_loglik, m_5$null_loglik, m_6$null_loglik, m_7$null_loglik, m_8$null_loglik)
-m_merged$vloglik <- rbind(m_1$vloglik, m_2$vloglik, m_3$vloglik, m_4$vloglik, m_5$vloglik, m_6$vloglik, m_7$vloglik, m_8$vloglik)
-m_merged$alt_loglik <- rbind(m_1$alt_loglik, m_2$alt_loglik, m_3$alt_loglik, m_4$alt_loglik, m_5$alt_loglik, m_6$alt_loglik, m_7$alt_loglik, m_8$alt_loglik)
-m_merged$posterior_weights <- rbind(m_1$posterior_weights, m_2$posterior_weights, m_3$posterior_weights, m_4$posterior_weights, m_5$posterior_weights, m_6$posterior_weights, m_7$posterior_weights, m_8$posterior_weights)
-
-
-# analysis of results
-print(length(get_significant_results(m_INT_merged))) # number of signfiicant tests (Use get_significant_results to find the indices of effects that are “significant”, which here means they have lfsr less than t in at least one condition, where t is a threshold you specify (default 0.05). The output is ordered from most significant to least significant.)
-print(get_pairwise_sharing(m_INT_merged)) #amount of sharing of significant tests (sharing defined as in both conditions, effect is of same sign and within factor of 0.5 of each other)
-print(get_pairwise_sharing(m_INT_merged, factor = 0)) #amount of sharing of significant tests (sharing defined as share the same sign)
-
-#estimated mixture proportions
-print(get_estimated_pi(m_INT_merged))
-graphics::barplot(get_estimated_pi(m_INT_merged),las = 2)
-
-quantile(m_INT_merged$result$PosteriorMean, 0:10/10)
-quantile(m_INT_merged$result$PosteriorMean/m_INT_merged$result$PosteriorSD, 0:10/10)
-hist(m_INT_merged$result$PosteriorMean)
-hist(m_INT_merged$result$PosteriorMean/m_INT_merged$result$PosteriorSD)
-
-
-
-
-print(length(get_significant_results(m_merged))) # number of signfiicant tests (Use get_significant_results to find the indices of effects that are “significant”, which here means they have lfsr less than t in at least one condition, where t is a threshold you specify (default 0.05). The output is ordered from most significant to least significant.)
-print(get_pairwise_sharing(m_merged)) #amount of sharing of significant tests (sharing defined as in both conditions, effect is of same sign and within factor of 0.5 of each other)
-print(get_pairwise_sharing(m_merged, factor = 0)) #amount of sharing of significant tests (sharing defined as share the same sign)
-
-#estimated mixture proportions
-print(get_estimated_pi(m_merged))
-graphics::barplot(get_estimated_pi(m_merged),las = 2)
-
-quantile(m_merged$result$PosteriorMean, 0:10/10)
-quantile(m_merged$result$PosteriorMean/m_merged$result$PosteriorSD, 0:10/10)
-hist(m_merged$result$PosteriorMean)
-hist(m_merged$result$PosteriorMean/m_merged$result$PosteriorSD)
-
-
-#metaplot
-mash_plot_meta(m_INT_1,get_significant_results(m_INT_1)[1])
+# #load results from fitting (piecewise) on all the tests
+# m_INT_1 <- readRDS("output/mash_all_refit_500k_INT_1.rds")
+# m_INT_2 <- readRDS("output/mash_all_refit_500k_INT_2.rds")
+# m_INT_3 <- readRDS("output/mash_all_refit_500k_INT_3.rds")
+# m_INT_4 <- readRDS("output/mash_all_refit_500k_INT_4.rds")
+# m_INT_5 <- readRDS("output/mash_all_refit_500k_INT_5.rds")
+# m_INT_6 <- readRDS("output/mash_all_refit_500k_INT_6.rds")
+# m_INT_7 <- readRDS("output/mash_all_refit_500k_INT_7.rds")
+# m_INT_8 <- readRDS("output/mash_all_refit_500k_INT_8.rds")
+# 
+# m_1 <- readRDS("output/mash_all_refit_500k_1.rds")
+# m_2 <- readRDS("output/mash_all_refit_500k_2.rds")
+# m_3 <- readRDS("output/mash_all_refit_500k_3.rds")
+# m_4 <- readRDS("output/mash_all_refit_500k_4.rds")
+# m_5 <- readRDS("output/mash_all_refit_500k_5.rds")
+# m_6 <- readRDS("output/mash_all_refit_500k_6.rds")
+# m_7 <- readRDS("output/mash_all_refit_500k_7.rds")
+# m_8 <- readRDS("output/mash_all_refit_500k_8.rds")
+# 
+# 
+# # Merge
+# m_INT_merged <- m_INT_1
+# m_INT_merged$result$PosteriorMean <- rbind(m_INT_1$result$PosteriorMean, m_INT_2$result$PosteriorMean, m_INT_3$result$PosteriorMean, m_INT_4$result$PosteriorMean, m_INT_5$result$PosteriorMean, m_INT_6$result$PosteriorMean, m_INT_7$result$PosteriorMean, m_INT_8$result$PosteriorMean)
+# m_INT_merged$result$PosteriorSD <- rbind(m_INT_1$result$PosteriorSD, m_INT_2$result$PosteriorSD, m_INT_3$result$PosteriorSD, m_INT_4$result$PosteriorSD, m_INT_5$result$PosteriorSD, m_INT_6$result$PosteriorSD, m_INT_7$result$PosteriorSD, m_INT_8$result$PosteriorSD)
+# m_INT_merged$result$lfdr <- rbind(m_INT_1$result$lfdr, m_INT_2$result$lfdr, m_INT_3$result$lfdr, m_INT_4$result$lfdr, m_INT_5$result$lfdr, m_INT_6$result$lfdr, m_INT_7$result$lfdr, m_INT_8$result$lfdr)
+# m_INT_merged$result$lfsr <- rbind(m_INT_1$result$lfsr, m_INT_2$result$lfsr, m_INT_3$result$lfsr, m_INT_4$result$lfsr, m_INT_5$result$lfsr, m_INT_6$result$lfsr, m_INT_7$result$lfsr, m_INT_8$result$lfsr)
+# m_INT_merged$result$NegativeProb <- rbind(m_INT_1$result$NegativeProb, m_INT_2$result$NegativeProb, m_INT_3$result$NegativeProb, m_INT_4$result$NegativeProb, m_INT_5$result$NegativeProb, m_INT_6$result$NegativeProb, m_INT_7$result$NegativeProb, m_INT_8$result$NegativeProb)
+# 
+# m_INT_merged$null_loglik <- c(m_INT_1$null_loglik, m_INT_2$null_loglik, m_INT_3$null_loglik, m_INT_4$null_loglik, m_INT_5$null_loglik, m_INT_6$null_loglik, m_INT_7$null_loglik, m_INT_8$null_loglik)
+# m_INT_merged$vloglik <- rbind(m_INT_1$vloglik, m_INT_2$vloglik, m_INT_3$vloglik, m_INT_4$vloglik, m_INT_5$vloglik, m_INT_6$vloglik, m_INT_7$vloglik, m_INT_8$vloglik)
+# m_INT_merged$alt_loglik <- rbind(m_INT_1$alt_loglik, m_INT_2$alt_loglik, m_INT_3$alt_loglik, m_INT_4$alt_loglik, m_INT_5$alt_loglik, m_INT_6$alt_loglik, m_INT_7$alt_loglik, m_INT_8$alt_loglik)
+# m_INT_merged$posterior_weights <- rbind(m_INT_1$posterior_weights, m_INT_2$posterior_weights, m_INT_3$posterior_weights, m_INT_4$posterior_weights, m_INT_5$posterior_weights, m_INT_6$posterior_weights, m_INT_7$posterior_weights, m_INT_8$posterior_weights)
+# 
+# 
+# 
+# m_merged <- m_1
+# m_merged$result$PosteriorMean <- rbind(m_1$result$PosteriorMean, m_2$result$PosteriorMean, m_3$result$PosteriorMean, m_4$result$PosteriorMean, m_5$result$PosteriorMean, m_6$result$PosteriorMean, m_7$result$PosteriorMean, m_8$result$PosteriorMean)
+# m_merged$result$PosteriorSD <- rbind(m_1$result$PosteriorSD, m_2$result$PosteriorSD, m_3$result$PosteriorSD, m_4$result$PosteriorSD, m_5$result$PosteriorSD, m_6$result$PosteriorSD, m_7$result$PosteriorSD, m_8$result$PosteriorSD)
+# m_merged$result$lfdr <- rbind(m_1$result$lfdr, m_2$result$lfdr, m_3$result$lfdr, m_4$result$lfdr, m_5$result$lfdr, m_6$result$lfdr, m_7$result$lfdr, m_8$result$lfdr)
+# m_merged$result$lfsr <- rbind(m_1$result$lfsr, m_2$result$lfsr, m_3$result$lfsr, m_4$result$lfsr, m_5$result$lfsr, m_6$result$lfsr, m_7$result$lfsr, m_8$result$lfsr)
+# m_merged$result$NegativeProb <- rbind(m_1$result$NegativeProb, m_2$result$NegativeProb, m_3$result$NegativeProb, m_4$result$NegativeProb, m_5$result$NegativeProb, m_6$result$NegativeProb, m_7$result$NegativeProb, m_8$result$NegativeProb)
+# 
+# m_merged$null_loglik <- c(m_1$null_loglik, m_2$null_loglik, m_3$null_loglik, m_4$null_loglik, m_5$null_loglik, m_6$null_loglik, m_7$null_loglik, m_8$null_loglik)
+# m_merged$vloglik <- rbind(m_1$vloglik, m_2$vloglik, m_3$vloglik, m_4$vloglik, m_5$vloglik, m_6$vloglik, m_7$vloglik, m_8$vloglik)
+# m_merged$alt_loglik <- rbind(m_1$alt_loglik, m_2$alt_loglik, m_3$alt_loglik, m_4$alt_loglik, m_5$alt_loglik, m_6$alt_loglik, m_7$alt_loglik, m_8$alt_loglik)
+# m_merged$posterior_weights <- rbind(m_1$posterior_weights, m_2$posterior_weights, m_3$posterior_weights, m_4$posterior_weights, m_5$posterior_weights, m_6$posterior_weights, m_7$posterior_weights, m_8$posterior_weights)
+# 
+# 
+# # analysis of results
+# print(length(get_significant_results(m_INT_merged))) # number of signfiicant tests (Use get_significant_results to find the indices of effects that are “significant”, which here means they have lfsr less than t in at least one condition, where t is a threshold you specify (default 0.05). The output is ordered from most significant to least significant.)
+# print(get_pairwise_sharing(m_INT_merged)) #amount of sharing of significant tests (sharing defined as in both conditions, effect is of same sign and within factor of 0.5 of each other)
+# print(get_pairwise_sharing(m_INT_merged, factor = 0)) #amount of sharing of significant tests (sharing defined as share the same sign)
+# 
+# #estimated mixture proportions
+# print(get_estimated_pi(m_INT_merged))
+# graphics::barplot(get_estimated_pi(m_INT_merged),las = 2)
+# 
+# quantile(m_INT_merged$result$PosteriorMean, 0:10/10)
+# quantile(m_INT_merged$result$PosteriorMean/m_INT_merged$result$PosteriorSD, 0:10/10)
+# hist(m_INT_merged$result$PosteriorMean)
+# hist(m_INT_merged$result$PosteriorMean/m_INT_merged$result$PosteriorSD)
+# 
+# 
+# 
+# 
+# print(length(get_significant_results(m_merged))) # number of signfiicant tests (Use get_significant_results to find the indices of effects that are “significant”, which here means they have lfsr less than t in at least one condition, where t is a threshold you specify (default 0.05). The output is ordered from most significant to least significant.)
+# print(get_pairwise_sharing(m_merged)) #amount of sharing of significant tests (sharing defined as in both conditions, effect is of same sign and within factor of 0.5 of each other)
+# print(get_pairwise_sharing(m_merged, factor = 0)) #amount of sharing of significant tests (sharing defined as share the same sign)
+# 
+# #estimated mixture proportions
+# print(get_estimated_pi(m_merged))
+# graphics::barplot(get_estimated_pi(m_merged),las = 2)
+# 
+# quantile(m_merged$result$PosteriorMean, 0:10/10)
+# quantile(m_merged$result$PosteriorMean/m_merged$result$PosteriorSD, 0:10/10)
+# hist(m_merged$result$PosteriorMean)
+# hist(m_merged$result$PosteriorMean/m_merged$result$PosteriorSD)
+# 
+# 
+# #metaplot
+# mash_plot_meta(m_INT_1,get_significant_results(m_INT_1)[1])
 ```
 
 Import outside data on eQTLs to see distributions of standardized effect sizes
 https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3 for code to get effect sizes from Abishek Sarkar
-```{r}
+```{r hypoxia}
 #michelle hypoxia reQTL study
 Afile <- gzfile('/project2/gilad/mcward/eqtls/A-adjust.txt.gz','rt')
 Bfile <- gzfile('/project2/gilad/mcward/eqtls/B-adjust.txt.gz','rt')
@@ -567,43 +576,78 @@ hypoxia <- as_tibble(read.table(zz, fill = TRUE, stringsAsFactors = FALSE))
 library(tidyverse)
 
 names(hypoxia) <- hypoxia %>% 
-     slice(1) %>% 
+     dplyr::slice(1) %>% 
      unlist()
 hypoxia <- hypoxia %>% 
-     slice(-1)
+     dplyr::slice(-1)
 
 
-# compute effect sizes from the output files
-get_effect_size <- function(df, index){
-     v = df[index]
-     
-     return(sign(v['ALPHA'] - v['BETA']))
-}
+# # compute effect sizes from the output files
+# get_effect_size <- function(df, index){
+#      v = df[index,]
+#      
+#      return(sign(v$ALPHA - v$BETA) * sqrt(qchisq(p = v$p_adjusted + 1e-30, df = 1))) # add the pseudocount to account for 0 values
+# }
 
-# find SNP-gene pairs that were tested in all conditions
-common <- sort(Reduce(intersect, list(paste0(conditionA$TEST.SNP.ID, " ", conditionA$PHENO),
-                           paste0(conditionB$TEST.SNP.ID, " ", conditionB$PHENO),
-                           paste0(conditionC$TEST.SNP.ID, " ", conditionC$PHENO),
-                           paste0(conditionD$TEST.SNP.ID, " ", conditionD$PHENO)
+## find SNP-gene pairs that were tested in all conditions and compute z score
+common <- sort(Reduce(intersect, list(paste0(conditionA$TEST.SNP.CHROM, conditionA$TEST.SNP.POS, " ", conditionA$PHENO),
+                           paste0(conditionB$TEST.SNP.CHROM, conditionB$TEST.SNP.POS, " ", conditionB$PHENO),
+                           paste0(conditionC$TEST.SNP.CHROM, conditionC$TEST.SNP.POS, " ", conditionC$PHENO),
+                           paste0(conditionD$TEST.SNP.CHROM, conditionD$TEST.SNP.POS, " ", conditionD$PHENO)
                            )))
 length(common)
 
 conditionA <- conditionA %>% 
-     mutate(temp = paste0(TEST.SNP.ID, " ", PHENO)) %>% 
-     filter(temp %in% common) %>% 
+     dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
+     dplyr::filter(temp %in% common) %>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionB <- conditionB %>% 
-     mutate(temp = paste0(TEST.SNP.ID, " ", PHENO)) %>% 
-     filter(temp %in% common) %>% 
+     dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
+     dplyr::filter(temp %in% common) %>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionC <- conditionC %>% 
-     mutate(temp = paste0(TEST.SNP.ID, " ", PHENO)) %>% 
-     filter(temp %in% common) %>% 
+     dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
+     dplyr::filter(temp %in% common) %>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionD <- conditionD %>% 
-     mutate(temp = paste0(TEST.SNP.ID, " ", PHENO)) %>% 
-     filter(temp %in% common) %>% 
+     dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
+     dplyr::filter(temp %in% common) %>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
+dim(conditionA)
+dim(conditionB)
+dim(conditionC)
+dim(conditionD)
+
+# Plot Z scores
+hist(conditionA$zscore)
+hist(conditionB$zscore)
+hist(conditionC$zscore)
+hist(conditionD$zscore)
+
+# Plot standardized effect sizes (adjust for the sqrt(n) term in the SE equation)
+hist(conditionA$zscore/sqrt(15))
+hist(conditionB$zscore/sqrt(15))
+hist(conditionC$zscore/sqrt(15))
+hist(conditionD$zscore/sqrt(15))
+
+# See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
+n_egenes <- matrix(NA, nrow = 4, ncol = 3)
+colnames(n_egenes) <- c("n=58", "n=30", "n=10")
+rownames(n_egenes) <- c("conditionA", "conditionB", "conditionC", "conditionD")
+i <- 1
+for(condition in list(conditionA, conditionB, conditionC, conditionD)){
+     j <- 1
+     for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes[i,j] <- length(unique(condition %>% filter(zscore/sqrt(15) > threshold | zscore/sqrt(15) < -threshold) %>% pull(PHENO)))
+         j <- j + 1
+     }
+     i <- i + 1
+}
+n_egenes
 ```
 
 
