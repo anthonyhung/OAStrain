@@ -151,6 +151,7 @@ dge$samples<- cbind(dge$samples, metadata)
 ```
 
 Run scHCL and visualize
+No chondrocytes in the data, so maybe it could be added?
 
 ```{r hcl_result}
 hcl_result <- scHCL(scdata = dge$counts, numbers_plot = 3)
