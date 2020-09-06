@@ -431,8 +431,8 @@ setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
 # colnames(Shat) <- c("strain", "unstrain")
 # 
 # data <- mash_set_data(Bhat, Shat)
-# saveRDS(data, "output/mash_full_data_INT.rds")
-# data <- readRDS("output/mash_full_data_INT.rds")
+# saveRDS(data, "output/mash/mash_full_data_INT.rds")
+# data <- readRDS("output/mash/mash_full_data_INT.rds")
 # 
 # # identify strong subset of tests
 # m.1by1 <- mash_1by1(mash_set_data(data$Bhat,data$Shat))
@@ -467,31 +467,31 @@ setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
 # 
 # # run mash
 # m <- mash(data.random, Ulist = c(U.ed,U.c), outputlevel = 1)
-# saveRDS(m, "output/mash_500k_INT.rds")
+# saveRDS(m, "output/mash/mash_500k_INT.rds")
 
 #ran mash using R script from command line, subsetting to 500k tests instead of the whole thing
-# m <- readRDS("output/mash_500k.rds")
+# m <- readRDS("output/mash/mash_500k.rds")
 # print(get_loglik(m),digits = 10)
 
 
 # #load results from fitting (piecewise) on all the tests
-# m_INT_1 <- readRDS("output/mash_all_refit_500k_INT_1.rds")
-# m_INT_2 <- readRDS("output/mash_all_refit_500k_INT_2.rds")
-# m_INT_3 <- readRDS("output/mash_all_refit_500k_INT_3.rds")
-# m_INT_4 <- readRDS("output/mash_all_refit_500k_INT_4.rds")
-# m_INT_5 <- readRDS("output/mash_all_refit_500k_INT_5.rds")
-# m_INT_6 <- readRDS("output/mash_all_refit_500k_INT_6.rds")
-# m_INT_7 <- readRDS("output/mash_all_refit_500k_INT_7.rds")
-# m_INT_8 <- readRDS("output/mash_all_refit_500k_INT_8.rds")
+# m_INT_1 <- readRDS("output/mash/mash_all_refit_500k_INT_1.rds")
+# m_INT_2 <- readRDS("output/mash/mash_all_refit_500k_INT_2.rds")
+# m_INT_3 <- readRDS("output/mash/mash_all_refit_500k_INT_3.rds")
+# m_INT_4 <- readRDS("output/mash/mash_all_refit_500k_INT_4.rds")
+# m_INT_5 <- readRDS("output/mash/mash_all_refit_500k_INT_5.rds")
+# m_INT_6 <- readRDS("output/mash/mash_all_refit_500k_INT_6.rds")
+# m_INT_7 <- readRDS("output/mash/mash_all_refit_500k_INT_7.rds")
+# m_INT_8 <- readRDS("output/mash/mash_all_refit_500k_INT_8.rds")
 # 
-# m_1 <- readRDS("output/mash_all_refit_500k_1.rds")
-# m_2 <- readRDS("output/mash_all_refit_500k_2.rds")
-# m_3 <- readRDS("output/mash_all_refit_500k_3.rds")
-# m_4 <- readRDS("output/mash_all_refit_500k_4.rds")
-# m_5 <- readRDS("output/mash_all_refit_500k_5.rds")
-# m_6 <- readRDS("output/mash_all_refit_500k_6.rds")
-# m_7 <- readRDS("output/mash_all_refit_500k_7.rds")
-# m_8 <- readRDS("output/mash_all_refit_500k_8.rds")
+# m_1 <- readRDS("output/mash/mash_all_refit_500k_1.rds")
+# m_2 <- readRDS("output/mash/mash_all_refit_500k_2.rds")
+# m_3 <- readRDS("output/mash/mash_all_refit_500k_3.rds")
+# m_4 <- readRDS("output/mash/mash_all_refit_500k_4.rds")
+# m_5 <- readRDS("output/mash/mash_all_refit_500k_5.rds")
+# m_6 <- readRDS("output/mash/mash_all_refit_500k_6.rds")
+# m_7 <- readRDS("output/mash/mash_all_refit_500k_7.rds")
+# m_8 <- readRDS("output/mash/mash_all_refit_500k_8.rds")
 # 
 # 
 # # Merge
@@ -557,18 +557,16 @@ setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
 # mash_plot_meta(m_INT_1,get_significant_results(m_INT_1)[1])
 ```
 
-Import outside data on eQTLs to see distributions of standardized effect sizes
+# Import outside data on eQTLs to see distributions of standardized effect sizes
+
+## Michelle Ward's Hypoxia study 
 https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3 for code to get effect sizes from Abishek Sarkar
 ```{r hypoxia}
 #michelle hypoxia reQTL study
-Afile <- gzfile('/project2/gilad/mcward/eqtls/A-adjust.txt.gz','rt')
-Bfile <- gzfile('/project2/gilad/mcward/eqtls/B-adjust.txt.gz','rt')
-Cfile <- gzfile('/project2/gilad/mcward/eqtls/C-adjust.txt.gz','rt')
-Dfile <- gzfile('/project2/gilad/mcward/eqtls/D-adjust.txt.gz','rt')
-conditionA <- as_tibble(read.table(Afile, fill = TRUE, stringsAsFactors = FALSE))
-conditionB <- as_tibble(read.table(Bfile, fill = TRUE, stringsAsFactors = FALSE))
-conditionC <- as_tibble(read.table(Cfile, fill = TRUE, stringsAsFactors = FALSE))
-conditionD <- as_tibble(read.table(Dfile, fill = TRUE, stringsAsFactors = FALSE))
+conditionA <- as_tibble(read.table('/project2/gilad/mcward/eqtls/A-adjust.txt.gz', fill = TRUE, stringsAsFactors = FALSE))
+conditionB <- as_tibble(read.table('/project2/gilad/mcward/eqtls/B-adjust.txt.gz', fill = TRUE, stringsAsFactors = FALSE))
+conditionC <- as_tibble(read.table('/project2/gilad/mcward/eqtls/C-adjust.txt.gz', fill = TRUE, stringsAsFactors = FALSE))
+conditionD <- as_tibble(read.table('/project2/gilad/mcward/eqtls/D-adjust.txt.gz', fill = TRUE, stringsAsFactors = FALSE))
 
 
 zz <- gzfile('/project2/gilad/mcward/eqtls/reqtls.txt.gz','rt')  
@@ -635,19 +633,77 @@ hist(conditionC$zscore/sqrt(15))
 hist(conditionD$zscore/sqrt(15))
 
 # See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
-n_egenes <- matrix(NA, nrow = 4, ncol = 3)
-colnames(n_egenes) <- c("n=58", "n=30", "n=10")
-rownames(n_egenes) <- c("conditionA", "conditionB", "conditionC", "conditionD")
+n_egenes_ward <- matrix(NA, nrow = 4, ncol = 3)
+colnames(n_egenes_ward) <- c("n=58", "n=30", "n=10")
+rownames(n_egenes_ward) <- c("conditionA", "conditionB", "conditionC", "conditionD")
 i <- 1
 for(condition in list(conditionA, conditionB, conditionC, conditionD)){
      j <- 1
      for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
-         n_egenes[i,j] <- length(unique(condition %>% filter(zscore/sqrt(15) > threshold | zscore/sqrt(15) < -threshold) %>% pull(PHENO)))
+         n_egenes_ward[i,j] <- length(unique(condition %>% filter(zscore/sqrt(15) > threshold | zscore/sqrt(15) < -threshold) %>% pull(PHENO)))
          j <- j + 1
      }
      i <- i + 1
 }
-n_egenes
+n_egenes_ward
 ```
 
+## Alasoo et al 2019 IFN gamma and salmonella reQTL study
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6548559/#FN5
+data on Zenodo: https://zenodo.org/record/1158560
+
+```{r ifn_salmonella}
+#load in data from eQTL analysis downloaded using wget from zenodo (wget https://zenodo.org/record/1158560/files/RNA_FastQTL_SL1344_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_SL1344_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_naive_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_naive_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_SL1344_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_SL1344_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_500kb_permuted.txt.gz)
+
+n_sorted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_naive_500kb_pvalues.sorted.txt.gz"))
+#n_permuted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_naive_500kb_permuted.txt.gz"))
+
+sal_sorted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_SL1344_500kb_pvalues.sorted.txt.gz"))
+#sal_permuted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_SL1344_500kb_permuted.txt.gz"))
+
+IFN_sorted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_IFNg_500kb_pvalues.sorted.txt.gz"))
+#IFN_permuted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_IFNg_500kb_permuted.txt.gz"))
+
+salIFN_sorted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_IFNg_SL1344_500kb_pvalues.sorted.txt.gz"))
+#salIFN_permuted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_IFNg_SL1344_500kb_permuted.txt.gz"))
+
+#seems like the permuted basically takes only the top hit per gene
+
+#for sorted data, 
+#V1 = gene 
+#V2 = chromosome
+#V3 = location of SNP
+#V4 = SNP
+#V5 = distance to gene from SNP?
+#V6 = p-value
+#v7 = slope of regression
+head(n_sorted)
+
+#We can use the p-value to obtain the SES (pvalue -> Zscore -> SES)
+n_sorted <- n_sorted %>% 
+     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+sal_sorted <- sal_sorted %>% 
+     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+IFN_sorted <- IFN_sorted %>% 
+     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+salIFN_sorted <- salIFN_sorted %>% 
+     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+
+
+# See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
+n_egenes_alasoo <- matrix(NA, nrow = 4, ncol = 3)
+colnames(n_egenes_alasoo) <- c("n=58", "n=30", "n=10")
+rownames(n_egenes_alasoo) <- c("naive", "IFN", "salmonella", "IFN + salmonella")
+i <- 1
+for(condition in list(n_sorted, IFN_sorted, sal_sorted, salIFN_sorted)){
+     j <- 1
+     for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes_alasoo[i,j] <- length(unique(condition %>% filter(SES > threshold | SES < -threshold) %>% pull(V1)))
+         j <- j + 1
+     }
+     i <- i + 1
+}
+n_egenes_alasoo
+```
 
