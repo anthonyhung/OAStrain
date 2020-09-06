@@ -438,7 +438,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-02
+<strong>Last updated:</strong> 2020-09-05
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
@@ -553,16 +553,16 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee3ee7ee16d345b8aa6e8f87d418a6933955590aatargetblanke3ee7eea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/e3ee7ee16d345b8aa6e8f87d418a6933955590aa" target="_blank">e3ee7ee</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dabtargetblank6d7177aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dab" target="_blank">6d7177a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreee3ee7ee16d345b8aa6e8f87d418a6933955590aatargetblanke3ee7eea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dabtargetblank6d7177aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/e3ee7ee16d345b8aa6e8f87d418a6933955590aa" target="_blank">e3ee7ee</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dab" target="_blank">6d7177a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -572,7 +572,6 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
@@ -618,6 +617,13 @@ Ignored files:
     Ignored:    output/eQTL_output_strain_INT.csv
     Ignored:    output/eQTL_output_unstrain.csv
     Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/fasttopics_k=2.rds
+    Ignored:    output/fasttopics_k=3.rds
+    Ignored:    output/fasttopics_k=4.rds
+    Ignored:    output/fasttopics_k=5.rds
+    Ignored:    output/fasttopics_k=6.rds
+    Ignored:    output/fasttopics_k=7.rds
+    Ignored:    output/fasttopics_k=8.rds
     Ignored:    output/interaction_genes.rds
     Ignored:    output/least_var_ctl_most_var_treat.rds
     Ignored:    output/mash_500k.rds
@@ -649,7 +655,11 @@ Ignored files:
     Ignored:    output/unstrain_top.rds
     Ignored:    output/voom_results.rds
 
+Untracked files:
+    Untracked:  data/alasoo_etal/
+
 Unstaged changes:
+    Modified:   .gitignore
     Modified:   analysis/powerAnalysis.Rmd
 
 </code></pre>
@@ -689,6 +699,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/analysis/powerAnalysis.Rmd" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+<td>
+add scHCL code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/5189cd4c20cebd4952d7850c386d90356a280959/docs/powerAnalysis.html" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+<td>
+add scHCL code
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -819,7 +863,7 @@ library(mashr)</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✓ tibble  3.0.3     ✓ purrr   0.3.4
-✓ tidyr   1.0.3     ✓ stringr 1.4.0
+✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
 <pre><code>── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 x data.table::between() masks dplyr::between()
@@ -1175,13 +1219,13 @@ me_unstrain &lt;- Matrix_eQTL_main(
 <pre><code>Matching data files and location files</code></pre>
 <pre><code>10441 of 10441 genes matched</code></pre>
 <pre><code>113868 of 114901 SNPs matched</code></pre>
-<pre><code>Task finished in 0.035 seconds</code></pre>
+<pre><code>Task finished in 0.094 seconds</code></pre>
 <pre><code>Reordering SNPs</code></pre>
-<pre><code>Task finished in 2.523 seconds</code></pre>
+<pre><code>Task finished in 2.389 seconds</code></pre>
 <pre><code>Reordering genes</code></pre>
-<pre><code>Task finished in 1.967 seconds</code></pre>
+<pre><code>Task finished in 2.006 seconds</code></pre>
 <pre><code>Processing covariates</code></pre>
-<pre><code>Task finished in 0.001 seconds</code></pre>
+<pre><code>Task finished in 0.002 seconds</code></pre>
 <pre><code>Processing gene expression data (imputation, residualization)</code></pre>
 <pre><code>Task finished in 0.004 seconds</code></pre>
 <pre><code>Creating output file(s)</code></pre>
@@ -1249,7 +1293,7 @@ me_unstrain &lt;- Matrix_eQTL_main(
 <pre><code>96.26% done, 1,559,905 cis-eQTLs</code></pre>
 <pre><code>97.98% done, 1,586,628 cis-eQTLs</code></pre>
 <pre><code>98.27% done, 1,592,240 cis-eQTLs</code></pre>
-<pre><code>Task finished in 15.79 seconds</code></pre>
+<pre><code>Task finished in 18.614 seconds</code></pre>
 <pre><code></code></pre>
 <pre class="r"><code>unlink(output_file_name_tra)
 unlink(output_file_name_cis)
@@ -1257,7 +1301,7 @@ unlink(output_file_name_cis)
 ## Results:
 
 cat(&#39;Analysis done in: &#39;, me_unstrain$time.in.sec, &#39; seconds&#39;, &#39;\n&#39;)</code></pre>
-<pre><code>Analysis done in:  9.958  seconds </code></pre>
+<pre><code>Analysis done in:  11.955  seconds </code></pre>
 <pre class="r"><code>cat(&#39;Detected local eQTLs:&#39;, &#39;\n&#39;)</code></pre>
 <pre><code>Detected local eQTLs: </code></pre>
 <pre class="r"><code>me_unstrain$cis$eqtls$beta_se &lt;- me_unstrain$cis$eqtls$beta / me_unstrain$cis$eqtls$statistic
@@ -23638,17 +23682,17 @@ me_strain &lt;- Matrix_eQTL_main(
 <pre><code>Matching data files and location files</code></pre>
 <pre><code>10441 of 10441 genes matched</code></pre>
 <pre><code>113868 of 114901 SNPs matched</code></pre>
-<pre><code>Task finished in 0.033 seconds</code></pre>
+<pre><code>Task finished in 0.154 seconds</code></pre>
 <pre><code>Reordering SNPs</code></pre>
-<pre><code>Task finished in 2.495 seconds</code></pre>
+<pre><code>Task finished in 2.448 seconds</code></pre>
 <pre><code>Reordering genes</code></pre>
-<pre><code>Task finished in 2.099 seconds</code></pre>
+<pre><code>Task finished in 2.117 seconds</code></pre>
 <pre><code>Processing covariates</code></pre>
 <pre><code>Task finished in 0.001 seconds</code></pre>
 <pre><code>Processing gene expression data (imputation, residualization)</code></pre>
-<pre><code>Task finished in 0.004 seconds</code></pre>
+<pre><code>Task finished in 0.005 seconds</code></pre>
 <pre><code>Creating output file(s)</code></pre>
-<pre><code>Task finished in 0.006 seconds</code></pre>
+<pre><code>Task finished in 0.005 seconds</code></pre>
 <pre><code>Performing eQTL analysis</code></pre>
 <pre><code> 0.28% done, 37,162 cis-eQTLs</code></pre>
 <pre><code> 2.01% done, 74,322 cis-eQTLs</code></pre>
@@ -23712,7 +23756,7 @@ me_strain &lt;- Matrix_eQTL_main(
 <pre><code>96.26% done, 1,559,905 cis-eQTLs</code></pre>
 <pre><code>97.98% done, 1,586,628 cis-eQTLs</code></pre>
 <pre><code>98.27% done, 1,592,240 cis-eQTLs</code></pre>
-<pre><code>Task finished in 19.209 seconds</code></pre>
+<pre><code>Task finished in 17.772 seconds</code></pre>
 <pre><code></code></pre>
 <pre class="r"><code>unlink(output_file_name_tra)
 unlink(output_file_name_cis)
@@ -23720,7 +23764,7 @@ unlink(output_file_name_cis)
 ## Results:
 
 cat(&#39;Analysis done in: &#39;, me_strain$time.in.sec, &#39; seconds&#39;, &#39;\n&#39;)</code></pre>
-<pre><code>Analysis done in:  13.589  seconds </code></pre>
+<pre><code>Analysis done in:  12.142  seconds </code></pre>
 <pre class="r"><code>cat(&#39;Detected local eQTLs:&#39;, &#39;\n&#39;)</code></pre>
 <pre><code>Detected local eQTLs: </code></pre>
 <pre class="r"><code>me_strain$cis$eqtls$beta_se &lt;- me_strain$cis$eqtls$beta / me_strain$cis$eqtls$statistic
@@ -46470,16 +46514,17 @@ setwd(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/&quot
 # 
 # #metaplot
 # mash_plot_meta(m_INT_1,get_significant_results(m_INT_1)[1])</code></pre>
-<p>Import outside data on eQTLs to see distributions of standardized effect sizes <a href="https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3" class="uri">https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3</a> for code to get effect sizes from Abishek Sarkar</p>
+</div>
+<div id="import-outside-data-on-eqtls-to-see-distributions-of-standardized-effect-sizes" class="section level1">
+<h1>Import outside data on eQTLs to see distributions of standardized effect sizes</h1>
+<div id="michelle-wards-hypoxia-study" class="section level2">
+<h2>Michelle Ward’s Hypoxia study</h2>
+<p><a href="https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3" class="uri">https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3</a> for code to get effect sizes from Abishek Sarkar</p>
 <pre class="r"><code>#michelle hypoxia reQTL study
-Afile &lt;- gzfile(&#39;/project2/gilad/mcward/eqtls/A-adjust.txt.gz&#39;,&#39;rt&#39;)
-Bfile &lt;- gzfile(&#39;/project2/gilad/mcward/eqtls/B-adjust.txt.gz&#39;,&#39;rt&#39;)
-Cfile &lt;- gzfile(&#39;/project2/gilad/mcward/eqtls/C-adjust.txt.gz&#39;,&#39;rt&#39;)
-Dfile &lt;- gzfile(&#39;/project2/gilad/mcward/eqtls/D-adjust.txt.gz&#39;,&#39;rt&#39;)
-conditionA &lt;- as_tibble(read.table(Afile, fill = TRUE, stringsAsFactors = FALSE))
-conditionB &lt;- as_tibble(read.table(Bfile, fill = TRUE, stringsAsFactors = FALSE))
-conditionC &lt;- as_tibble(read.table(Cfile, fill = TRUE, stringsAsFactors = FALSE))
-conditionD &lt;- as_tibble(read.table(Dfile, fill = TRUE, stringsAsFactors = FALSE))
+conditionA &lt;- as_tibble(read.table(&#39;/project2/gilad/mcward/eqtls/A-adjust.txt.gz&#39;, fill = TRUE, stringsAsFactors = FALSE))
+conditionB &lt;- as_tibble(read.table(&#39;/project2/gilad/mcward/eqtls/B-adjust.txt.gz&#39;, fill = TRUE, stringsAsFactors = FALSE))
+conditionC &lt;- as_tibble(read.table(&#39;/project2/gilad/mcward/eqtls/C-adjust.txt.gz&#39;, fill = TRUE, stringsAsFactors = FALSE))
+conditionD &lt;- as_tibble(read.table(&#39;/project2/gilad/mcward/eqtls/D-adjust.txt.gz&#39;, fill = TRUE, stringsAsFactors = FALSE))
 
 
 zz &lt;- gzfile(&#39;/project2/gilad/mcward/eqtls/reqtls.txt.gz&#39;,&#39;rt&#39;)  
@@ -46539,40 +46584,404 @@ dim(conditionA)</code></pre>
 <pre class="r"><code># Plot Z scores
 hist(conditionA$zscore)</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-1">
+Past versions of hypoxia-1.png
+</button>
+</p>
+<div id="fig-hypoxia-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-1.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionB$zscore)</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-2">
+Past versions of hypoxia-2.png
+</button>
+</p>
+<div id="fig-hypoxia-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-2.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionC$zscore)</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-3">
+Past versions of hypoxia-3.png
+</button>
+</p>
+<div id="fig-hypoxia-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-3.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionD$zscore)</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-4">
+Past versions of hypoxia-4.png
+</button>
+</p>
+<div id="fig-hypoxia-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-4.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Plot standardized effect sizes (adjust for the sqrt(n) term in the SE equation)
 hist(conditionA$zscore/sqrt(15))</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-5">
+Past versions of hypoxia-5.png
+</button>
+</p>
+<div id="fig-hypoxia-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-5.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionB$zscore/sqrt(15))</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-6">
+Past versions of hypoxia-6.png
+</button>
+</p>
+<div id="fig-hypoxia-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-6.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionC$zscore/sqrt(15))</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-7">
+Past versions of hypoxia-7.png
+</button>
+</p>
+<div id="fig-hypoxia-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-7.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hist(conditionD$zscore/sqrt(15))</code></pre>
 <p><img src="figure/powerAnalysis.Rmd/hypoxia-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hypoxia-8">
+Past versions of hypoxia-8.png
+</button>
+</p>
+<div id="fig-hypoxia-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/docs/figure/powerAnalysis.Rmd/hypoxia-8.png" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
-n_egenes &lt;- matrix(NA, nrow = 4, ncol = 3)
-colnames(n_egenes) &lt;- c(&quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
-rownames(n_egenes) &lt;- c(&quot;conditionA&quot;, &quot;conditionB&quot;, &quot;conditionC&quot;, &quot;conditionD&quot;)
+n_egenes_ward &lt;- matrix(NA, nrow = 4, ncol = 3)
+colnames(n_egenes_ward) &lt;- c(&quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
+rownames(n_egenes_ward) &lt;- c(&quot;conditionA&quot;, &quot;conditionB&quot;, &quot;conditionC&quot;, &quot;conditionD&quot;)
 i &lt;- 1
 for(condition in list(conditionA, conditionB, conditionC, conditionD)){
      j &lt;- 1
      for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
-         n_egenes[i,j] &lt;- length(unique(condition %&gt;% filter(zscore/sqrt(15) &gt; threshold | zscore/sqrt(15) &lt; -threshold) %&gt;% pull(PHENO)))
+         n_egenes_ward[i,j] &lt;- length(unique(condition %&gt;% filter(zscore/sqrt(15) &gt; threshold | zscore/sqrt(15) &lt; -threshold) %&gt;% pull(PHENO)))
          j &lt;- j + 1
      }
      i &lt;- i + 1
 }
-n_egenes</code></pre>
+n_egenes_ward</code></pre>
 <pre><code>           n=58 n=30 n=10
 conditionA 2854  151    0
 conditionB 2867  157    0
 conditionC 2846  168    1
 conditionD 2960  165    0</code></pre>
+</div>
+<div id="alasoo-et-al-2019-ifn-gamma-and-salmonella-reqtl-study" class="section level2">
+<h2>Alasoo et al 2019 IFN gamma and salmonella reQTL study</h2>
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6548559/#FN5" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6548559/#FN5</a> data on Zenodo: <a href="https://zenodo.org/record/1158560" class="uri">https://zenodo.org/record/1158560</a></p>
+<pre class="r"><code>#load in data from eQTL analysis downloaded using wget from zenodo (wget https://zenodo.org/record/1158560/files/RNA_FastQTL_SL1344_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_SL1344_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_naive_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_naive_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_SL1344_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_SL1344_500kb_permuted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_500kb_pvalues.sorted.txt.gz https://zenodo.org/record/1158560/files/RNA_FastQTL_IFNg_500kb_permuted.txt.gz)
+
+n_sorted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_naive_500kb_pvalues.sorted.txt.gz&quot;))
+#n_permuted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_naive_500kb_permuted.txt.gz&quot;))
+
+sal_sorted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_SL1344_500kb_pvalues.sorted.txt.gz&quot;))
+#sal_permuted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_SL1344_500kb_permuted.txt.gz&quot;))
+
+IFN_sorted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_IFNg_500kb_pvalues.sorted.txt.gz&quot;))
+#IFN_permuted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_IFNg_500kb_permuted.txt.gz&quot;))
+
+salIFN_sorted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_IFNg_SL1344_500kb_pvalues.sorted.txt.gz&quot;))
+#salIFN_permuted &lt;- as_tibble(read.table(&quot;data/alasoo_etal/RNA_FastQTL_IFNg_SL1344_500kb_permuted.txt.gz&quot;))
+
+#seems like the permuted basically takes only the top hit per gene
+
+#for sorted data, 
+#V1 = gene 
+#V2 = chromosome
+#V3 = location of SNP
+#V4 = SNP
+#V5 = distance to gene from SNP?
+#V6 = p-value
+#v7 = slope of regression
+head(n_sorted)</code></pre>
+<pre><code># A tibble: 6 x 7
+  V1              V2        V3 V4               V5     V6      V7
+  &lt;fct&gt;           &lt;fct&gt;  &lt;int&gt; &lt;fct&gt;         &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 ENSG00000237094 1      97269 rs199687009 -268121 0.387   0.121 
+2 ENSG00000279457 1      97269 rs199687009  -87655 0.171  -0.122 
+3 ENSG00000078808 1     727242 rs61769339  -489667 0.180   0.0365
+4 ENSG00000131591 1     727242 rs61769339  -354577 0.0758 -0.0676
+5 ENSG00000186827 1     727242 rs61769339  -484085 0.724  -0.0594
+6 ENSG00000186891 1     727242 rs61769339  -476267 0.0289  0.508 </code></pre>
+<pre class="r"><code>#We can use the p-value to obtain the SES (pvalue -&gt; Zscore -&gt; SES)
+n_sorted &lt;- n_sorted %&gt;% 
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+sal_sorted &lt;- sal_sorted %&gt;% 
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+IFN_sorted &lt;- IFN_sorted %&gt;% 
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+salIFN_sorted &lt;- salIFN_sorted %&gt;% 
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+
+
+# See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
+n_egenes_alasoo &lt;- matrix(NA, nrow = 4, ncol = 3)
+colnames(n_egenes_alasoo) &lt;- c(&quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
+rownames(n_egenes_alasoo) &lt;- c(&quot;naive&quot;, &quot;IFN&quot;, &quot;salmonella&quot;, &quot;IFN + salmonella&quot;)
+i &lt;- 1
+for(condition in list(n_sorted, IFN_sorted, sal_sorted, salIFN_sorted)){
+     j &lt;- 1
+     for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes_alasoo[i,j] &lt;- length(unique(condition %&gt;% filter(SES &gt; threshold | SES &lt; -threshold) %&gt;% pull(V1)))
+         j &lt;- j + 1
+     }
+     i &lt;- i + 1
+}
+n_egenes_alasoo</code></pre>
+<pre><code>                 n=58 n=30 n=10
+naive             558  165  125
+IFN               576  159  124
+salmonella        438  115   95
+IFN + salmonella  364   90   73</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -46606,24 +47015,24 @@ other attached packages:
  [5] Rsamtools_2.0.0             Biostrings_2.52.0          
  [7] XVector_0.24.0              SummarizedExperiment_1.14.1
  [9] DelayedArray_0.10.0         BiocParallel_1.18.1        
-[11] matrixStats_0.55.0          Biobase_2.44.0             
+[11] matrixStats_0.56.0          Biobase_2.44.0             
 [13] GenomicRanges_1.36.0        GenomeInfoDb_1.20.0        
 [15] IRanges_2.18.3              S4Vectors_0.22.1           
 [17] BiocGenerics_0.30.0         RNOmni_0.7.1               
 [19] forcats_0.4.0               stringr_1.4.0              
 [21] purrr_0.3.4                 readr_1.3.1                
-[23] tidyr_1.0.3                 tibble_3.0.3               
+[23] tidyr_1.1.2                 tibble_3.0.3               
 [25] tidyverse_1.3.0             mashr_0.2.38               
 [27] ashr_2.2-47                 ggplot2_3.3.2              
 [29] eQTLpipeline_0.1            BatchJobs_1.8              
 [31] BBmisc_1.11                 data.table_1.13.0          
 [33] MatrixEQTL_2.3              biomaRt_2.40.1             
-[35] dplyr_1.0.1                
+[35] dplyr_1.0.2                
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.4-1         ellipsis_0.3.1          
  [3] rprojroot_1.3-2          base64enc_0.1-3         
- [5] fs_1.3.1                 rstudioapi_0.10         
+ [5] fs_1.3.1                 rstudioapi_0.11         
  [7] farver_2.0.3             bit64_0.9-7             
  [9] AnnotationDbi_1.46.0     fansi_0.4.1             
 [11] mvtnorm_1.0-11           lubridate_1.7.9         
@@ -46631,13 +47040,13 @@ loaded via a namespace (and not attached):
 [15] knitr_1.23               jsonlite_1.7.0          
 [17] workflowr_1.6.2          broom_0.7.0             
 [19] dbplyr_1.4.2             compiler_3.6.1          
-[21] httr_1.4.2               backports_1.1.4         
+[21] httr_1.4.2               backports_1.1.9         
 [23] assertthat_0.2.1         cli_2.0.2               
 [25] later_1.1.0.1            htmltools_0.5.0         
 [27] prettyunits_1.1.1        tools_3.6.1             
-[29] gtable_0.3.0             glue_1.4.1              
+[29] gtable_0.3.0             glue_1.4.2              
 [31] GenomeInfoDbData_1.2.1   Rcpp_1.0.5              
-[33] cellranger_1.1.0         vctrs_0.3.2             
+[33] cellranger_1.1.0         vctrs_0.3.4             
 [35] rtracklayer_1.44.0       xfun_0.8                
 [37] rvest_0.3.6              lifecycle_0.2.0         
 [39] irlba_2.3.3              XML_3.98-1.20           
@@ -46645,7 +47054,7 @@ loaded via a namespace (and not attached):
 [43] BSgenome_1.52.0          hms_0.5.3               
 [45] promises_1.1.1           yaml_2.2.1              
 [47] memoise_1.1.0            stringi_1.4.6           
-[49] RSQLite_2.1.1            SQUAREM_2020.3          
+[49] RSQLite_2.1.1            SQUAREM_2020.4          
 [51] rmeta_3.0                highr_0.8               
 [53] checkmate_1.9.4          GenomicFeatures_1.36.3  
 [55] truncnorm_1.0-8          rlang_0.4.7             
@@ -46661,12 +47070,13 @@ loaded via a namespace (and not attached):
 [75] withr_2.2.0              abind_1.4-5             
 [77] RCurl_1.98-1.1           mixsqp_0.3-43           
 [79] modelr_0.1.8             crayon_1.3.4            
-[81] rmarkdown_1.13           progress_1.2.2          
-[83] grid_3.6.1               readxl_1.3.1            
-[85] blob_1.2.0               git2r_0.26.1            
-[87] reprex_0.3.0             digest_0.6.25           
-[89] httpuv_1.5.1             brew_1.0-6              
-[91] munsell_0.5.0           </code></pre>
+[81] utf8_1.1.4               rmarkdown_1.13          
+[83] progress_1.2.2           grid_3.6.1              
+[85] readxl_1.3.1             blob_1.2.0              
+[87] git2r_0.26.1             reprex_0.3.0            
+[89] digest_0.6.25            httpuv_1.5.1            
+[91] brew_1.0-6               munsell_0.5.0           </code></pre>
+</div>
 </div>
 </div>
 
