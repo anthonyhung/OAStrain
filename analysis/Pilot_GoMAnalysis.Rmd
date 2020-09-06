@@ -656,6 +656,16 @@ DimPlot(ANT1.2, reduction="umap", group.by="labels", split.by="clusteredCellAtla
 ```
 
 
+
+
+
+
+
+
+
+
+
+
 # Run FastTopics on only my pilot data (iPSC-chondrocytes)
 
 ```{r FastTopics only pilot all}
@@ -706,6 +716,7 @@ Visualize
 ```{r visualize gom All}
 plot_UMAP_GoM <- function(seurat.obj, fit){
      k <- ncol(fit$F)
+     seurat.obj@meta.data <- cbind(seurat.obj@meta.data, fit$F)
      for(topic in 1:k){
           plot(FeaturePlot(seurat.obj, paste0("k", topic)))
      }
@@ -723,43 +734,53 @@ Exploratory: Fit fastTopics GoM model to a single sample, then use the semi-supe
 
 ```{r fit fasttopics gom 1 sample}
 #subset
-NA18855_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA18855_Unstrain"]
+NA18855_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA18855_Unstrain",]
 NA18855_unstrain_only <- NA18855_unstrain_only[,colSums(NA18855_unstrain_only > 0) > 0]
-NA18856_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA18856_Unstrain"]
+NA18856_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA18856_Unstrain",]
 NA18856_unstrain_only <- NA18856_unstrain_only[,colSums(NA18856_unstrain_only > 0) > 0]
-NA19160_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA19160_Unstrain"]
+NA19160_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA19160_Unstrain",]
 NA19160_unstrain_only <- NA19160_unstrain_only[,colSums(NA19160_unstrain_only > 0) > 0]
 
 #Fit GoM with k=2 (and k=3,4 in case that is more interpretable)
-fit18855_2 <- fit_poisson_nmf(NA18855_unstrain_only, k = 2, numiter = 200)
-fit18855.multinom_2 <- poisson2multinom(fit18855_2)
-saveRDS(fit18855.multinom_2, "output/fasttopics/fasttopics_NA18855_only_k=2.rds")
-fit18855_3 <- fit_poisson_nmf(NA18855_unstrain_only, k = 3, numiter = 200)
-fit18855.multinom_3 <- poisson2multinom(fit18855_3)
-saveRDS(fit18855.multinom_3, "output/fasttopics/fasttopics_NA18855_only_k=3.rds")
-fit18855_4 <- fit_poisson_nmf(NA18855_unstrain_only, k = 4, numiter = 200)
-fit18855.multinom_4 <- poisson2multinom(fit18855_4)
-saveRDS(fit18855.multinom_4, "output/fasttopics/fasttopics_NA18855_only_k=4.rds")
+# fit18855_2 <- fit_poisson_nmf(NA18855_unstrain_only, k = 2, numiter = 200)
+# fit18855.multinom_2 <- poisson2multinom(fit18855_2)
+# saveRDS(fit18855.multinom_2, "output/fasttopics/fasttopics_NA18855_only_k=2.rds")
+# fit18855_3 <- fit_poisson_nmf(NA18855_unstrain_only, k = 3, numiter = 200)
+# fit18855.multinom_3 <- poisson2multinom(fit18855_3)
+# saveRDS(fit18855.multinom_3, "output/fasttopics/fasttopics_NA18855_only_k=3.rds")
+# fit18855_4 <- fit_poisson_nmf(NA18855_unstrain_only, k = 4, numiter = 200)
+# fit18855.multinom_4 <- poisson2multinom(fit18855_4)
+# saveRDS(fit18855.multinom_4, "output/fasttopics/fasttopics_NA18855_only_k=4.rds")
+# 
+# fit18856_2 <- fit_poisson_nmf(NA18856_unstrain_only, k = 2, numiter = 200)
+# fit18856.multinom_2 <- poisson2multinom(fit18856_2)
+# saveRDS(fit18856.multinom_2, "output/fasttopics/fasttopics_NA18856_only_k=2.rds")
+# fit18856_3 <- fit_poisson_nmf(NA18856_unstrain_only, k = 3, numiter = 200)
+# fit18856.multinom_3 <- poisson2multinom(fit18856_3)
+# saveRDS(fit18856.multinom_3, "output/fasttopics/fasttopics_NA18856_only_k=3.rds")
+# fit18856_4 <- fit_poisson_nmf(NA18856_unstrain_only, k = 4, numiter = 200)
+# fit18856.multinom_4 <- poisson2multinom(fit18856_4)
+# saveRDS(fit18856.multinom_4, "output/fasttopics/fasttopics_NA18856_only_k=4.rds")
+# 
+# fit19160_2 <- fit_poisson_nmf(NA19160_unstrain_only, k = 2, numiter = 200)
+# fit19160.multinom_2 <- poisson2multinom(fit19160_2)
+# saveRDS(fit19160.multinom_2, "output/fasttopics/fasttopics_NA19160_only_k=2.rds")
+# fit19160_3 <- fit_poisson_nmf(NA19160_unstrain_only, k = 3, numiter = 200)
+# fit19160.multinom_3 <- poisson2multinom(fit19160_3)
+# saveRDS(fit19160.multinom_3, "output/fasttopics/fasttopics_NA19160_only_k=3.rds")
+# fit19160_4 <- fit_poisson_nmf(NA19160_unstrain_only, k = 4, numiter = 200)
+# fit19160.multinom_4 <- poisson2multinom(fit19160_4)
+# saveRDS(fit19160.multinom_4, "output/fasttopics/fasttopics_NA19160_only_k=4.rds")
 
-fit18856_2 <- fit_poisson_nmf(NA18856_unstrain_only, k = 2, numiter = 200)
-fit18856.multinom_2 <- poisson2multinom(fit18856_2)
-saveRDS(fit18856.multinom_2, "output/fasttopics/fasttopics_NA18856_only_k=2.rds")
-fit18856_3 <- fit_poisson_nmf(NA18856_unstrain_only, k = 3, numiter = 200)
-fit18856.multinom_3 <- poisson2multinom(fit18856_3)
-saveRDS(fit18856.multinom_3, "output/fasttopics/fasttopics_NA18856_only_k=3.rds")
-fit18856_4 <- fit_poisson_nmf(NA18856_unstrain_only, k = 4, numiter = 200)
-fit18856.multinom_4 <- poisson2multinom(fit18856_4)
-saveRDS(fit18856.multinom_4, "output/fasttopics/fasttopics_NA18856_only_k=4.rds")
-
-fit19160_2 <- fit_poisson_nmf(NA19160_unstrain_only, k = 2, numiter = 200)
-fit19160.multinom_2 <- poisson2multinom(fit19160_2)
-saveRDS(fit19160.multinom_2, "output/fasttopics/fasttopics_NA19160_only_k=2.rds")
-fit19160_3 <- fit_poisson_nmf(NA19160_unstrain_only, k = 3, numiter = 200)
-fit19160.multinom_3 <- poisson2multinom(fit19160_3)
-saveRDS(fit19160.multinom_3, "output/fasttopics/fasttopics_NA19160_only_k=3.rds")
-fit19160_4 <- fit_poisson_nmf(NA19160_unstrain_only, k = 4, numiter = 200)
-fit19160.multinom_4 <- poisson2multinom(fit19160_4)
-saveRDS(fit19160.multinom_4, "output/fasttopics/fasttopics_NA19160_only_k=4.rds")
+fit18855.multinom_2 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=2.rds")
+fit18855.multinom_3 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=3.rds")
+fit18855.multinom_4 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=4.rds")
+fit18856.multinom_2 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=2.rds")
+fit18856.multinom_3 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=3.rds")
+fit18856.multinom_4 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=4.rds")
+fit19160.multinom_2 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=2.rds")
+fit19160.multinom_3 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=3.rds")
+fit19160.multinom_4 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=4.rds")
 ```
 
 Now, use the models that have been fit to fit the remaining samples
