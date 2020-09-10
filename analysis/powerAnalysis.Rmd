@@ -351,7 +351,7 @@ power_function <- function(x, n){
 }
 
 FPR_function <- function(x, n){ 
-     1 - pnorm(qnorm(0.025) + x * sqrt(n))
+     1 - pnorm(qnorm(alpha/2) + x * sqrt(n))
 }
 
 p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +

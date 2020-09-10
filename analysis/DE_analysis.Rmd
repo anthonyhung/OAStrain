@@ -437,6 +437,8 @@ go_table <- GenTable(go_data, weightFisher = go_test,
                      topNodes = sum(score(go_test) < .01))
 go_table
 go_table[,-1]
+
+write.csv(go_table, "output/GO_terms_enriched.csv")
 ```
 
 

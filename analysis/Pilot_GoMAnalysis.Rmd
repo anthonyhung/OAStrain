@@ -306,59 +306,61 @@ library("ggfortify")
 library("gplots")
 
 
-if (file.exists("data/gom_sup_3.rda")){
-     tpx.clust <- readRDS(file="data/gom_sup_3.rda")
-} else {
+tpx.clust <- readRDS(file="data/gom_sup_3.rda")
 
-Combined.common_noliver <- readRDS("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/Combined_singlecell_data_noliver.rds")
-dim(Combined.common_noliver)
-
-# specify the fixed loadings for certain cells (1 = iPSC, 2 = MSC, 3 = chondrocyte)
-counts_allgenes <- as.matrix(Combined.common_noliver@assays$RNA@counts)
-labels <- Combined.common_noliver@meta.data$Cell.Type
-
-#labels for "known" clusters
-idx.ips <- which(labels=="iPSC")
-idx.msc <- which(labels=="MSC")
-idx.cho <- which(grepl("Chondro ", labels))
-kwn.smp <- c(idx.ips,idx.msc,idx.cho)
-
-class.labs <- c(rep("iPSC", length(idx.ips)),
-                rep("MSC", length(idx.msc)),
-                rep("Chondrocyte", length(idx.cho)))
-
-#Perform topic modeling k=3
-#Save GoM data
-k=3
-print(k)
-tpx.clust <- classtpx::class_topics(
-     t(counts_allgenes),
-     K=k,
-     known_samples=kwn.smp,
-     class_labs=class.labs,
-     method="omega.fix",
-     tol=1)
-saveRDS(tpx.clust, file=paste0("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/gom_sup_",k,".rda"))
-}
-
-omega <- tpx.clust$omega
-annotation <- data.frame(
-     sample_id = paste0("X", c(1:NROW(omega))),
-     tissue_label = as.factor(labels))
-rownames(omega) <- annotation$sample_id
-CountClust::StructureGGplot(omega = omega,
-                            annotation = annotation,
-                            palette = RColorBrewer::brewer.pal(8, "Accent"),
-                            yaxis_label = "Tissue/Cell Type",
-                            order_sample = TRUE,
-                            axis_tick = list(axis_ticks_length = .1,
-                                             axis_ticks_lwd_y = .1,
-                                             axis_ticks_lwd_x = .1,
-                                             axis_label_size = 7,
-                                             axis_label_face = "bold")
-)
-
-ggsave("output/structureplot.png")
+# if (file.exists("data/gom_sup_3.rda")){
+#      tpx.clust <- readRDS(file="data/gom_sup_3.rda")
+# } else {
+# 
+# Combined.common_noliver <- readRDS("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/Combined_singlecell_data_noliver.rds")
+# dim(Combined.common_noliver)
+# 
+# # specify the fixed loadings for certain cells (1 = iPSC, 2 = MSC, 3 = chondrocyte)
+# counts_allgenes <- as.matrix(Combined.common_noliver@assays$RNA@counts)
+# labels <- Combined.common_noliver@meta.data$Cell.Type
+# 
+# #labels for "known" clusters
+# idx.ips <- which(labels=="iPSC")
+# idx.msc <- which(labels=="MSC")
+# idx.cho <- which(grepl("Chondro ", labels))
+# kwn.smp <- c(idx.ips,idx.msc,idx.cho)
+# 
+# class.labs <- c(rep("iPSC", length(idx.ips)),
+#                 rep("MSC", length(idx.msc)),
+#                 rep("Chondrocyte", length(idx.cho)))
+# 
+# #Perform topic modeling k=3
+# #Save GoM data
+# k=3
+# print(k)
+# tpx.clust <- classtpx::class_topics(
+#      t(counts_allgenes),
+#      K=k,
+#      known_samples=kwn.smp,
+#      class_labs=class.labs,
+#      method="omega.fix",
+#      tol=1)
+# saveRDS(tpx.clust, file=paste0("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/gom_sup_",k,".rda"))
+# }
+# 
+# omega <- tpx.clust$omega
+# annotation <- data.frame(
+#      sample_id = paste0("X", c(1:NROW(omega))),
+#      tissue_label = as.factor(labels))
+# rownames(omega) <- annotation$sample_id
+# CountClust::StructureGGplot(omega = omega,
+#                             annotation = annotation,
+#                             palette = RColorBrewer::brewer.pal(8, "Accent"),
+#                             yaxis_label = "Tissue/Cell Type",
+#                             order_sample = TRUE,
+#                             axis_tick = list(axis_ticks_length = .1,
+#                                              axis_ticks_lwd_y = .1,
+#                                              axis_ticks_lwd_x = .1,
+#                                              axis_label_size = 7,
+#                                              axis_label_face = "bold")
+# )
+# 
+# ggsave("output/structureplot.png")
 
 ```
 
@@ -452,51 +454,51 @@ annotate_clusters <- function(theta_mat, countmatrix){
 ## Apply Visualization/annotation functions to GoM results
 
 ```{r k of 3}
-visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM3[[1]]$clust_3$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM3[[1]]$clust_3$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM3[[1]]$clust_3$theta, Combined_counts)
 ```
 
 ```{r k of 4}
-visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM4[[1]]$clust_4$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM4[[1]]$clust_4$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM4[[1]]$clust_4$theta, Combined_counts)
 ```
 
 ```{r k of 5}
-visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM5[[1]]$clust_5$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM5[[1]]$clust_5$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM5[[1]]$clust_5$theta, Combined_counts)
 ```
 
 ```{r k of 6}
-visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM6[[1]]$clust_6$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM6[[1]]$clust_6$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM6[[1]]$clust_6$theta, Combined_counts)
 ```
 
 ```{r k of 7}
-visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM7[[1]]$clust_7$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM7[[1]]$clust_7$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM7[[1]]$clust_7$theta, Combined_counts)
 ```
 
 ```{r k of 8}
-visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
-visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
-#plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
-make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
-annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
+# visualizeGoM(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+# visualizeGoM_topic_gradients(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common, data=Combined_counts)
+# #plot_structure_plot(omega=Combined_GoM8[[1]]$clust_8$omega, seuratobject=Combined.common)
+# make_topic_plots(Combined_GoM8[[1]]$clust_8$omega, Combined_counts_celltypes)
+# annotate_clusters(Combined_GoM8[[1]]$clust_8$theta, Combined_counts)
 ```
 
 
@@ -673,34 +675,50 @@ library(fastTopics)
 SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
 counts <- SCT_integrated@assays$RNA@counts
 counts <- counts[,colSums(counts > 0) > 0]
+counts <- t(counts)
 
 # fitall_2 <- fit_poisson_nmf(counts,k = 2,numiter = 200)
 # fitall.multinom_2 <- poisson2multinom(fitall_2)
 # saveRDS(fitall.multinom_2, "output/fasttopics/fasttopics_k=2.rds")
+# saveRDS(fitall_2, "output/fasttopics/fasttopics_k=2_nmf.rds")
 # 
 # fitall_3 <- fit_poisson_nmf(counts,k = 3,numiter = 200)
 # fitall.multinom_3 <- poisson2multinom(fitall_3)
 # saveRDS(fitall.multinom_3, "output/fasttopics/fasttopics_k=3.rds")
+# saveRDS(fitall_3, "output/fasttopics/fasttopics_k=3_nmf.rds")
 # 
 # fitall_4 <- fit_poisson_nmf(counts,k = 4,numiter = 200)
 # fitall.multinom_4 <- poisson2multinom(fitall_4)
 # saveRDS(fitall.multinom_4, "output/fasttopics/fasttopics_k=4.rds")
+# saveRDS(fitall_4, "output/fasttopics/fasttopics_k=4_nmf.rds")
 # 
 # fitall_5 <- fit_poisson_nmf(counts,k = 5,numiter = 200)
 # fitall.multinom_5 <- poisson2multinom(fitall_5)
 # saveRDS(fitall.multinom_5, "output/fasttopics/fasttopics_k=5.rds")
+# saveRDS(fitall_5, "output/fasttopics/fasttopics_k=5_nmf.rds")
 # 
 # fitall_6 <- fit_poisson_nmf(counts,k = 6,numiter = 200)
 # fitall.multinom_6 <- poisson2multinom(fitall_6)
 # saveRDS(fitall.multinom_6, "output/fasttopics/fasttopics_k=6.rds")
+# saveRDS(fitall_6, "output/fasttopics/fasttopics_k=6_nmf.rds")
 # 
 # fitall_7 <- fit_poisson_nmf(counts,k = 7,numiter = 200)
 # fitall.multinom_7 <- poisson2multinom(fitall_7)
 # saveRDS(fitall.multinom_7, "output/fasttopics/fasttopics_k=7.rds")
+# saveRDS(fitall_7, "output/fasttopics/fasttopics_k=7_nmf.rds")
 # 
 # fitall_8 <- fit_poisson_nmf(counts,k = 8,numiter = 200)
 # fitall.multinom_8 <- poisson2multinom(fitall_8)
 # saveRDS(fitall.multinom_8, "output/fasttopics/fasttopics_k=8.rds")
+# saveRDS(fitall_8, "output/fasttopics/fasttopics_k=8_nmf.rds")
+
+fitall_2 <- readRDS("output/fasttopics/fasttopics_k=2_nmf.rds")
+fitall_3 <- readRDS("output/fasttopics/fasttopics_k=3_nmf.rds")
+fitall_4 <- readRDS("output/fasttopics/fasttopics_k=4_nmf.rds")
+fitall_5 <- readRDS("output/fasttopics/fasttopics_k=5_nmf.rds")
+fitall_6 <- readRDS("output/fasttopics/fasttopics_k=6_nmf.rds")
+fitall_7 <- readRDS("output/fasttopics/fasttopics_k=7_nmf.rds")
+fitall_8 <- readRDS("output/fasttopics/fasttopics_k=8_nmf.rds")
 
 fitall.multinom_2 <- readRDS("output/fasttopics/fasttopics_k=2.rds")
 fitall.multinom_3 <- readRDS("output/fasttopics/fasttopics_k=3.rds")
@@ -715,15 +733,17 @@ Visualize
 
 ```{r visualize gom All}
 plot_UMAP_GoM <- function(seurat.obj, fit){
-     k <- ncol(fit$F)
-     seurat.obj@meta.data <- cbind(seurat.obj@meta.data, fit$F)
+     k <- ncol(fit$L)
+     seurat.obj@meta.data <- cbind(seurat.obj@meta.data, fit$L)
      for(topic in 1:k){
           plot(FeaturePlot(seurat.obj, paste0("k", topic)))
+          plot(VlnPlot(seurat.obj, features = paste0("k", topic), ncol = 1, group.by = "labels")
+)
      }
 }
 
 for(fit in list(fitall.multinom_2, fitall.multinom_3, fitall.multinom_4, fitall.multinom_5, fitall.multinom_6, fitall.multinom_7, fitall.multinom_8)){
-     print(ncol(fit$F))
+     print(ncol(fit$L))
      plot(DimPlot(SCT_integrated, reduction = "umap", group.by = "labels"))
      plot(DimPlot(SCT_integrated, reduction = "umap", group.by = "seurat_clusters"))
      plot_UMAP_GoM(SCT_integrated, fit)
@@ -741,36 +761,64 @@ NA18856_unstrain_only <- NA18856_unstrain_only[,colSums(NA18856_unstrain_only > 
 NA19160_unstrain_only <- counts[SCT_integrated@meta.data$labels == "NA19160_Unstrain",]
 NA19160_unstrain_only <- NA19160_unstrain_only[,colSums(NA19160_unstrain_only > 0) > 0]
 
+#only keep genes with non zero counts in each of the three individuals
+gene_overlap <- intersect(intersect(colnames(NA18855_unstrain_only), colnames(NA18856_unstrain_only)), colnames(NA19160_unstrain_only))
+NA18855_unstrain_only <- NA18855_unstrain_only[,gene_overlap]
+NA18856_unstrain_only <- NA18856_unstrain_only[,gene_overlap]
+NA19160_unstrain_only <- NA19160_unstrain_only[,gene_overlap]
+counts_gene_overlap <- counts[,gene_overlap]
+
 #Fit GoM with k=2 (and k=3,4 in case that is more interpretable)
 # fit18855_2 <- fit_poisson_nmf(NA18855_unstrain_only, k = 2, numiter = 200)
 # fit18855.multinom_2 <- poisson2multinom(fit18855_2)
 # saveRDS(fit18855.multinom_2, "output/fasttopics/fasttopics_NA18855_only_k=2.rds")
+# saveRDS(fit18855_2, "output/fasttopics/fasttopics_NA18855_only_k=2_nmf.rds")
 # fit18855_3 <- fit_poisson_nmf(NA18855_unstrain_only, k = 3, numiter = 200)
 # fit18855.multinom_3 <- poisson2multinom(fit18855_3)
 # saveRDS(fit18855.multinom_3, "output/fasttopics/fasttopics_NA18855_only_k=3.rds")
+# saveRDS(fit18855_3, "output/fasttopics/fasttopics_NA18855_only_k=3_nmf.rds")
 # fit18855_4 <- fit_poisson_nmf(NA18855_unstrain_only, k = 4, numiter = 200)
 # fit18855.multinom_4 <- poisson2multinom(fit18855_4)
 # saveRDS(fit18855.multinom_4, "output/fasttopics/fasttopics_NA18855_only_k=4.rds")
+# saveRDS(fit18855_4, "output/fasttopics/fasttopics_NA18855_only_k=4_nmf.rds")
 # 
 # fit18856_2 <- fit_poisson_nmf(NA18856_unstrain_only, k = 2, numiter = 200)
 # fit18856.multinom_2 <- poisson2multinom(fit18856_2)
 # saveRDS(fit18856.multinom_2, "output/fasttopics/fasttopics_NA18856_only_k=2.rds")
+# saveRDS(fit18856_2, "output/fasttopics/fasttopics_NA18856_only_k=2_nmf.rds")
 # fit18856_3 <- fit_poisson_nmf(NA18856_unstrain_only, k = 3, numiter = 200)
 # fit18856.multinom_3 <- poisson2multinom(fit18856_3)
 # saveRDS(fit18856.multinom_3, "output/fasttopics/fasttopics_NA18856_only_k=3.rds")
+# saveRDS(fit18856_3, "output/fasttopics/fasttopics_NA18856_only_k=3_nmf.rds")
 # fit18856_4 <- fit_poisson_nmf(NA18856_unstrain_only, k = 4, numiter = 200)
 # fit18856.multinom_4 <- poisson2multinom(fit18856_4)
 # saveRDS(fit18856.multinom_4, "output/fasttopics/fasttopics_NA18856_only_k=4.rds")
+# saveRDS(fit18856_4, "output/fasttopics/fasttopics_NA18856_only_k=4_nmf.rds")
 # 
+# #
 # fit19160_2 <- fit_poisson_nmf(NA19160_unstrain_only, k = 2, numiter = 200)
 # fit19160.multinom_2 <- poisson2multinom(fit19160_2)
 # saveRDS(fit19160.multinom_2, "output/fasttopics/fasttopics_NA19160_only_k=2.rds")
+# saveRDS(fit19160_2, "output/fasttopics/fasttopics_NA19160_only_k=2_nmf.rds")
 # fit19160_3 <- fit_poisson_nmf(NA19160_unstrain_only, k = 3, numiter = 200)
 # fit19160.multinom_3 <- poisson2multinom(fit19160_3)
 # saveRDS(fit19160.multinom_3, "output/fasttopics/fasttopics_NA19160_only_k=3.rds")
+# saveRDS(fit19160_3, "output/fasttopics/fasttopics_NA19160_only_k=3_nmf.rds")
 # fit19160_4 <- fit_poisson_nmf(NA19160_unstrain_only, k = 4, numiter = 200)
 # fit19160.multinom_4 <- poisson2multinom(fit19160_4)
 # saveRDS(fit19160.multinom_4, "output/fasttopics/fasttopics_NA19160_only_k=4.rds")
+# saveRDS(fit19160_4, "output/fasttopics/fasttopics_NA19160_only_k=4_nmf.rds")
+
+
+fit18855_2 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=2_nmf.rds")
+fit18855_3 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=3_nmf.rds")
+fit18855_4 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=4_nmf.rds")
+fit18856_2 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=2_nmf.rds")
+fit18856_3 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=3_nmf.rds")
+fit18856_4 <- readRDS("output/fasttopics/fasttopics_NA18856_only_k=4_nmf.rds")
+fit19160_2 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=2_nmf.rds")
+fit19160_3 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=3_nmf.rds")
+fit19160_4 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=4_nmf.rds")
 
 fit18855.multinom_2 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=2.rds")
 fit18855.multinom_3 <- readRDS("output/fasttopics/fasttopics_NA18855_only_k=3.rds")
@@ -786,6 +834,103 @@ fit19160.multinom_4 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=4.rd
 Now, use the models that have been fit to fit the remaining samples
 
 ```{r apply fit model to all samples}
+init.fit_18855_2 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18855_2$F,
+                 init.method = "random")
+refit_18855_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18855_2,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_18855_3 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18855_3$F,
+                 init.method = "random")
+refit_18855_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18855_3,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_18855_4 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18855_4$F,
+                 init.method = "random")
+refit_18855_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18855_4,
+                numiter = 200,
+                update.factors = NULL)
 
+init.fit_18856_2 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18856_2$F,
+                 init.method = "random")
+refit_18856_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18856_2,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_18856_3 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18856_3$F,
+                 init.method = "random")
+refit_18856_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18856_3,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_18856_4 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit18856_4$F,
+                 init.method = "random")
+refit_18856_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_18856_4,
+                numiter = 200,
+                update.factors = NULL)
+
+init.fit_19160_2 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit19160_2$F,
+                 init.method = "random")
+refit_19160_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_19160_2,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_19160_3 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit19160_3$F,
+                 init.method = "random")
+refit_19160_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_19160_3,
+                numiter = 200,
+                update.factors = NULL)
+init.fit_19160_4 <- init_poisson_nmf(X = counts_gene_overlap,
+                 F = fit19160_4$F,
+                 init.method = "random")
+refit_19160_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+                fit0 = init.fit_19160_4,
+                numiter = 200,
+                update.factors = NULL)
 ```
+
+Visualize
+
+```{r viz_refit semisupervised}
+plot_UMAP_GoM_adjust <- function(seurat.obj, fit){
+     k <- ncol(fit$L)
+     L <- fit$L
+     rowsums <- rowSums(L)
+     L_adjusted <- L
+     for(column in 1:k){
+          L_adjusted[,column] <- L_adjusted[,column]/rowsums # make it so the membership in each topic adds up to a total of 1
+     }
+
+     seurat.obj@meta.data <- cbind(seurat.obj@meta.data, L_adjusted)
+     for(topic in 1:k){
+          plot(FeaturePlot(seurat.obj, paste0("k", topic)))
+          plot(VlnPlot(seurat.obj, features = paste0("k", topic), ncol = 1, group.by = "labels")
+)
+     }
+}
+
+#visualize
+for(fit in list(refit_18855_2, refit_18855_3, refit_18855_4, refit_18856_2, refit_18856_3, refit_18856_4, refit_19160_2, refit_19160_3, refit_19160_4)){
+     print(ncol(fit$L))
+     plot(DimPlot(SCT_integrated, reduction = "umap", group.by = "labels"))
+     plot(DimPlot(SCT_integrated, reduction = "umap", group.by = "seurat_clusters"))
+     plot_UMAP_GoM_adjust(SCT_integrated, fit)
+}
+```
+
+
+
+
 

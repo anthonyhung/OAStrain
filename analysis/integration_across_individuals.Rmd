@@ -1,0 +1,22 @@
+---
+title: "Integrate single cell data across individuals"
+author: "Anthony Hung"
+date: "2020-09-08"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+I would like to analyze all the samples together in order to determine cell type heterogeneity between samples jointly. However, they cluster by individual currently. Treat each individual as a separate sample and perform integration to solve this problem for this analysis.
+
+Per tips from Kenneth Barr for integration, first detect variable features within each sample you are integrating separately, then integrate across the individuals using the union of both sets of variable features.
+
+```{r split single cell data}
+#split data into each individual/sample
+
+#load single-cell data from pilot
+#ANT1.2 <- readRDS("data/ANT1_2.rds")
+SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
+```
+
