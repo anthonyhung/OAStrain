@@ -438,7 +438,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-05
+<strong>Last updated:</strong> 2020-09-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
@@ -553,25 +553,25 @@ relative
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dabtargetblank6d7177aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dab" target="_blank">6d7177a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea9f89f712c943b594ae14c5ccccd692f4d10da1ctargetblanka9f89f7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a9f89f712c943b594ae14c5ccccd692f4d10da1c" target="_blank">a9f89f7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dabtargetblank6d7177aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea9f89f712c943b594ae14c5ccccd692f4d10da1ctargetblanka9f89f7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dab" target="_blank">6d7177a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/a9f89f712c943b594ae14c5ccccd692f4d10da1c" target="_blank">a9f89f7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
@@ -592,6 +592,8 @@ Ignored files:
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
     Ignored:    data/SCT_ANT12_integrated.rds
+    Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/alasoo_etal/
     Ignored:    data/filtered_counts.rds
     Ignored:    data/gom_sup3.rds
     Ignored:    data/gom_sup_3.rda
@@ -611,55 +613,26 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
+    Ignored:    output/GO_terms_enriched.csv
     Ignored:    output/SNPs.csv
-    Ignored:    output/bhat.rds
     Ignored:    output/eQTL_output_strain.csv
     Ignored:    output/eQTL_output_strain_INT.csv
     Ignored:    output/eQTL_output_unstrain.csv
     Ignored:    output/eQTL_output_unstrain_INT.csv
-    Ignored:    output/fasttopics_k=2.rds
-    Ignored:    output/fasttopics_k=3.rds
-    Ignored:    output/fasttopics_k=4.rds
-    Ignored:    output/fasttopics_k=5.rds
-    Ignored:    output/fasttopics_k=6.rds
-    Ignored:    output/fasttopics_k=7.rds
-    Ignored:    output/fasttopics_k=8.rds
+    Ignored:    output/fasttopics/
     Ignored:    output/interaction_genes.rds
     Ignored:    output/least_var_ctl_most_var_treat.rds
-    Ignored:    output/mash_500k.rds
-    Ignored:    output/mash_500k_INT.rds
-    Ignored:    output/mash_all_refit_500k_1.rds
-    Ignored:    output/mash_all_refit_500k_2.rds
-    Ignored:    output/mash_all_refit_500k_3.rds
-    Ignored:    output/mash_all_refit_500k_4.rds
-    Ignored:    output/mash_all_refit_500k_5.rds
-    Ignored:    output/mash_all_refit_500k_6.rds
-    Ignored:    output/mash_all_refit_500k_7.rds
-    Ignored:    output/mash_all_refit_500k_8.rds
-    Ignored:    output/mash_all_refit_500k_INT_1.rds
-    Ignored:    output/mash_all_refit_500k_INT_2.rds
-    Ignored:    output/mash_all_refit_500k_INT_3.rds
-    Ignored:    output/mash_all_refit_500k_INT_4.rds
-    Ignored:    output/mash_all_refit_500k_INT_5.rds
-    Ignored:    output/mash_all_refit_500k_INT_6.rds
-    Ignored:    output/mash_all_refit_500k_INT_7.rds
-    Ignored:    output/mash_all_refit_500k_INT_8.rds
-    Ignored:    output/mash_full_data.rds
-    Ignored:    output/mash_full_data_INT.rds
+    Ignored:    output/mash/
     Ignored:    output/overlap_crossomic.rds
     Ignored:    output/overlap_fungenomic.rds
-    Ignored:    output/shat.rds
     Ignored:    output/strain_top.rds
     Ignored:    output/strong_subset.rds
     Ignored:    output/strong_subset_INT.rds
     Ignored:    output/unstrain_top.rds
     Ignored:    output/voom_results.rds
 
-Untracked files:
-    Untracked:  data/alasoo_etal/
-
 Unstaged changes:
-    Modified:   .gitignore
+    Modified:   analysis/cellAtlasAssignments.Rmd
     Modified:   analysis/powerAnalysis.Rmd
 
 </code></pre>
@@ -699,6 +672,91 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a9f89f712c943b594ae14c5ccccd692f4d10da1c/analysis/powerAnalysis.Rmd" target="_blank">a9f89f7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+add additonal n=100 to pwr analysis; dream DE between clusters in sc; cross-analysis of seurat clusters with HCA correlations
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a9f89f712c943b594ae14c5ccccd692f4d10da1c/docs/powerAnalysis.html" target="_blank">a9f89f7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+add additonal n=100 to pwr analysis; dream DE between clusters in sc; cross-analysis of seurat clusters with HCA correlations
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/0aa15d4ab7bf4f8337f7c635ed74f9224fa54c49/analysis/powerAnalysis.Rmd" target="_blank">0aa15d4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-10
+</td>
+<td>
+normalize the topic memberships to add up to 1 for each cell
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/8bd9f05037a210f4d7a7a4013f5256114e06a848/docs/powerAnalysis.html" target="_blank">8bd9f05</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-05
+</td>
+<td>
+knit analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/04257e77b0763649e596a35db22689ffda42b4fd/analysis/powerAnalysis.Rmd" target="_blank">04257e7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-05
+</td>
+<td>
+add fasttopics on all cells at once in pilot
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -861,11 +919,11 @@ library(ggplot2)
 library(mashr)</code></pre>
 <pre><code>Loading required package: ashr</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>── Attaching packages ────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✓ tibble  3.0.3     ✓ purrr   0.3.4
 ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
-<pre><code>── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>── Conflicts ───────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 x data.table::between() masks dplyr::between()
 x BBmisc::coalesce()    masks dplyr::coalesce()
 x BBmisc::collapse()    masks dplyr::collapse()
@@ -1055,8 +1113,8 @@ Attaching package: &#39;Matrix&#39;</code></pre>
 <pre><code>Warning in .local(x, ...): non-diploid variants are set to NA</code></pre>
 <pre class="r"><code>SNP_file$id &lt;- rownames(SNP_file)
 SNP_file_filtered &lt;- SNP_file %&gt;% 
-     filter(NA19160 != NA18855 | NA19160 != NA18856 | NA18856 != NA18855) %&gt;% 
-     filter(!is.na(NA19160) &amp; !is.na(NA18856) &amp; !is.na(NA18855))
+     dplyr::filter(NA19160 != NA18855 | NA19160 != NA18856 | NA18856 != NA18855) %&gt;% 
+     dplyr::filter(!is.na(NA19160) &amp; !is.na(NA18856) &amp; !is.na(NA18855))
 SNP_file_filtered &lt;- SNP_file_filtered[c(4, 1:3)]
 write.table(SNP_file_filtered, &quot;data/MatrixEQTL/SNP.txt&quot;, sep = &quot;\t&quot;, row.names = FALSE, quote = FALSE)
 
@@ -1219,15 +1277,15 @@ me_unstrain &lt;- Matrix_eQTL_main(
 <pre><code>Matching data files and location files</code></pre>
 <pre><code>10441 of 10441 genes matched</code></pre>
 <pre><code>113868 of 114901 SNPs matched</code></pre>
-<pre><code>Task finished in 0.094 seconds</code></pre>
+<pre><code>Task finished in 0.035 seconds</code></pre>
 <pre><code>Reordering SNPs</code></pre>
-<pre><code>Task finished in 2.389 seconds</code></pre>
+<pre><code>Task finished in 2.631 seconds</code></pre>
 <pre><code>Reordering genes</code></pre>
-<pre><code>Task finished in 2.006 seconds</code></pre>
+<pre><code>Task finished in 1.987 seconds</code></pre>
 <pre><code>Processing covariates</code></pre>
-<pre><code>Task finished in 0.002 seconds</code></pre>
+<pre><code>Task finished in 0.001 seconds</code></pre>
 <pre><code>Processing gene expression data (imputation, residualization)</code></pre>
-<pre><code>Task finished in 0.004 seconds</code></pre>
+<pre><code>Task finished in 0.005 seconds</code></pre>
 <pre><code>Creating output file(s)</code></pre>
 <pre><code>Task finished in 0.007 seconds</code></pre>
 <pre><code>Performing eQTL analysis</code></pre>
@@ -1293,7 +1351,7 @@ me_unstrain &lt;- Matrix_eQTL_main(
 <pre><code>96.26% done, 1,559,905 cis-eQTLs</code></pre>
 <pre><code>97.98% done, 1,586,628 cis-eQTLs</code></pre>
 <pre><code>98.27% done, 1,592,240 cis-eQTLs</code></pre>
-<pre><code>Task finished in 18.614 seconds</code></pre>
+<pre><code>Task finished in 17 seconds</code></pre>
 <pre><code></code></pre>
 <pre class="r"><code>unlink(output_file_name_tra)
 unlink(output_file_name_cis)
@@ -1301,7 +1359,7 @@ unlink(output_file_name_cis)
 ## Results:
 
 cat(&#39;Analysis done in: &#39;, me_unstrain$time.in.sec, &#39; seconds&#39;, &#39;\n&#39;)</code></pre>
-<pre><code>Analysis done in:  11.955  seconds </code></pre>
+<pre><code>Analysis done in:  11.464  seconds </code></pre>
 <pre class="r"><code>cat(&#39;Detected local eQTLs:&#39;, &#39;\n&#39;)</code></pre>
 <pre><code>Detected local eQTLs: </code></pre>
 <pre class="r"><code>me_unstrain$cis$eqtls$beta_se &lt;- me_unstrain$cis$eqtls$beta / me_unstrain$cis$eqtls$statistic
@@ -23682,17 +23740,17 @@ me_strain &lt;- Matrix_eQTL_main(
 <pre><code>Matching data files and location files</code></pre>
 <pre><code>10441 of 10441 genes matched</code></pre>
 <pre><code>113868 of 114901 SNPs matched</code></pre>
-<pre><code>Task finished in 0.154 seconds</code></pre>
+<pre><code>Task finished in 0.033 seconds</code></pre>
 <pre><code>Reordering SNPs</code></pre>
-<pre><code>Task finished in 2.448 seconds</code></pre>
+<pre><code>Task finished in 2.681 seconds</code></pre>
 <pre><code>Reordering genes</code></pre>
-<pre><code>Task finished in 2.117 seconds</code></pre>
+<pre><code>Task finished in 2.129 seconds</code></pre>
 <pre><code>Processing covariates</code></pre>
-<pre><code>Task finished in 0.001 seconds</code></pre>
+<pre><code>Task finished in 0.002 seconds</code></pre>
 <pre><code>Processing gene expression data (imputation, residualization)</code></pre>
-<pre><code>Task finished in 0.005 seconds</code></pre>
+<pre><code>Task finished in 0.004 seconds</code></pre>
 <pre><code>Creating output file(s)</code></pre>
-<pre><code>Task finished in 0.005 seconds</code></pre>
+<pre><code>Task finished in 0.008 seconds</code></pre>
 <pre><code>Performing eQTL analysis</code></pre>
 <pre><code> 0.28% done, 37,162 cis-eQTLs</code></pre>
 <pre><code> 2.01% done, 74,322 cis-eQTLs</code></pre>
@@ -23756,7 +23814,7 @@ me_strain &lt;- Matrix_eQTL_main(
 <pre><code>96.26% done, 1,559,905 cis-eQTLs</code></pre>
 <pre><code>97.98% done, 1,586,628 cis-eQTLs</code></pre>
 <pre><code>98.27% done, 1,592,240 cis-eQTLs</code></pre>
-<pre><code>Task finished in 17.772 seconds</code></pre>
+<pre><code>Task finished in 19.452 seconds</code></pre>
 <pre><code></code></pre>
 <pre class="r"><code>unlink(output_file_name_tra)
 unlink(output_file_name_cis)
@@ -23764,7 +23822,7 @@ unlink(output_file_name_cis)
 ## Results:
 
 cat(&#39;Analysis done in: &#39;, me_strain$time.in.sec, &#39; seconds&#39;, &#39;\n&#39;)</code></pre>
-<pre><code>Analysis done in:  12.142  seconds </code></pre>
+<pre><code>Analysis done in:  13.768  seconds </code></pre>
 <pre class="r"><code>cat(&#39;Detected local eQTLs:&#39;, &#39;\n&#39;)</code></pre>
 <pre><code>Detected local eQTLs: </code></pre>
 <pre class="r"><code>me_strain$cis$eqtls$beta_se &lt;- me_strain$cis$eqtls$beta / me_strain$cis$eqtls$statistic
@@ -46268,7 +46326,7 @@ lambda &lt;- sqrt(heritability / (1-heritability))</code></pre>
 <div id="plot-the-power-curve" class="section level2">
 <h2>Plot the power curve</h2>
 <pre class="r"><code>colors &lt;- cbPalette &lt;- c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;, &quot;#F0E442&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;)
-samp_size &lt;- c(3, 10, 20, 40, 58)
+samp_size &lt;- c(3, 10, 20, 40, 58, 100)
 alpha &lt;- 5e-6 #for FWER of 0.05
 
 power_function &lt;- function(x, n){ 
@@ -46276,7 +46334,7 @@ power_function &lt;- function(x, n){
 }
 
 FPR_function &lt;- function(x, n){ 
-     1 - pnorm(qnorm(0.025) + x * sqrt(n))
+     1 - pnorm(qnorm(alpha/2) + x * sqrt(n))
 }
 
 p &lt;- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
@@ -46296,6 +46354,8 @@ p &lt;- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
                       aes(colour = &quot;58&quot;, linetype = &quot;Power&quot;), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 58),
                       aes(colour = &quot;58&quot;, linetype = &quot;csQTL FPR&quot;), size = 1, alpha = 0.9) +
+          stat_function(fun = FPR_function, args = list(n = 100),
+                      aes(colour = &quot;100&quot;, linetype = &quot;csQTL FPR&quot;), size = 1, alpha = 0.9) +
      # stat_function(fun = function(x) x^2/(1+x^2),
      #                  aes(colour = &quot;heritability&quot;), size = 1, alpha = 0.5) +
      scale_x_continuous(name = &quot;Standardized Effect Size&quot;,
@@ -46333,6 +46393,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a9f89f712c943b594ae14c5ccccd692f4d10da1c/docs/figure/powerAnalysis.Rmd/curve-1.png" target="_blank">a9f89f7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-22
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/32d620f611337f95ed5c0855229138a67491a6ef/docs/figure/powerAnalysis.Rmd/curve-1.png" target="_blank">32d620f</a>
 </td>
 <td>
@@ -46347,6 +46418,8 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code>#for Power = 0.8, what is the SES?
+#n = 100
+n100_ses_threshold &lt;- (qnorm(.8) - qnorm(alpha/2))/sqrt(100)
 #n = 58
 n58_ses_threshold &lt;- (qnorm(.8) - qnorm(alpha/2))/sqrt(58)
 #n = 30
@@ -46390,8 +46463,8 @@ setwd(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/&quot
 # colnames(Shat) &lt;- c(&quot;strain&quot;, &quot;unstrain&quot;)
 # 
 # data &lt;- mash_set_data(Bhat, Shat)
-# saveRDS(data, &quot;output/mash_full_data_INT.rds&quot;)
-# data &lt;- readRDS(&quot;output/mash_full_data_INT.rds&quot;)
+# saveRDS(data, &quot;output/mash/mash_full_data_INT.rds&quot;)
+# data &lt;- readRDS(&quot;output/mash/mash_full_data_INT.rds&quot;)
 # 
 # # identify strong subset of tests
 # m.1by1 &lt;- mash_1by1(mash_set_data(data$Bhat,data$Shat))
@@ -46426,31 +46499,31 @@ setwd(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/&quot
 # 
 # # run mash
 # m &lt;- mash(data.random, Ulist = c(U.ed,U.c), outputlevel = 1)
-# saveRDS(m, &quot;output/mash_500k_INT.rds&quot;)
+# saveRDS(m, &quot;output/mash/mash_500k_INT.rds&quot;)
 
 #ran mash using R script from command line, subsetting to 500k tests instead of the whole thing
-# m &lt;- readRDS(&quot;output/mash_500k.rds&quot;)
+# m &lt;- readRDS(&quot;output/mash/mash_500k.rds&quot;)
 # print(get_loglik(m),digits = 10)
 
 
 # #load results from fitting (piecewise) on all the tests
-# m_INT_1 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_1.rds&quot;)
-# m_INT_2 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_2.rds&quot;)
-# m_INT_3 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_3.rds&quot;)
-# m_INT_4 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_4.rds&quot;)
-# m_INT_5 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_5.rds&quot;)
-# m_INT_6 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_6.rds&quot;)
-# m_INT_7 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_7.rds&quot;)
-# m_INT_8 &lt;- readRDS(&quot;output/mash_all_refit_500k_INT_8.rds&quot;)
+# m_INT_1 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_1.rds&quot;)
+# m_INT_2 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_2.rds&quot;)
+# m_INT_3 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_3.rds&quot;)
+# m_INT_4 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_4.rds&quot;)
+# m_INT_5 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_5.rds&quot;)
+# m_INT_6 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_6.rds&quot;)
+# m_INT_7 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_7.rds&quot;)
+# m_INT_8 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_INT_8.rds&quot;)
 # 
-# m_1 &lt;- readRDS(&quot;output/mash_all_refit_500k_1.rds&quot;)
-# m_2 &lt;- readRDS(&quot;output/mash_all_refit_500k_2.rds&quot;)
-# m_3 &lt;- readRDS(&quot;output/mash_all_refit_500k_3.rds&quot;)
-# m_4 &lt;- readRDS(&quot;output/mash_all_refit_500k_4.rds&quot;)
-# m_5 &lt;- readRDS(&quot;output/mash_all_refit_500k_5.rds&quot;)
-# m_6 &lt;- readRDS(&quot;output/mash_all_refit_500k_6.rds&quot;)
-# m_7 &lt;- readRDS(&quot;output/mash_all_refit_500k_7.rds&quot;)
-# m_8 &lt;- readRDS(&quot;output/mash_all_refit_500k_8.rds&quot;)
+# m_1 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_1.rds&quot;)
+# m_2 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_2.rds&quot;)
+# m_3 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_3.rds&quot;)
+# m_4 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_4.rds&quot;)
+# m_5 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_5.rds&quot;)
+# m_6 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_6.rds&quot;)
+# m_7 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_7.rds&quot;)
+# m_8 &lt;- readRDS(&quot;output/mash/mash_all_refit_500k_8.rds&quot;)
 # 
 # 
 # # Merge
@@ -46896,24 +46969,24 @@ Anthony Hung
 </div>
 </div>
 <pre class="r"><code># See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
-n_egenes_ward &lt;- matrix(NA, nrow = 4, ncol = 3)
-colnames(n_egenes_ward) &lt;- c(&quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
+n_egenes_ward &lt;- matrix(NA, nrow = 4, ncol = 4)
+colnames(n_egenes_ward) &lt;- c(&quot;n=100&quot;, &quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
 rownames(n_egenes_ward) &lt;- c(&quot;conditionA&quot;, &quot;conditionB&quot;, &quot;conditionC&quot;, &quot;conditionD&quot;)
 i &lt;- 1
 for(condition in list(conditionA, conditionB, conditionC, conditionD)){
      j &lt;- 1
-     for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
-         n_egenes_ward[i,j] &lt;- length(unique(condition %&gt;% filter(zscore/sqrt(15) &gt; threshold | zscore/sqrt(15) &lt; -threshold) %&gt;% pull(PHENO)))
+     for(threshold in c(n100_ses_threshold, n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes_ward[i,j] &lt;- length(unique(condition %&gt;% dplyr::filter(zscore/sqrt(15) &gt; threshold | zscore/sqrt(15) &lt; -threshold) %&gt;% pull(PHENO)))
          j &lt;- j + 1
      }
      i &lt;- i + 1
 }
 n_egenes_ward</code></pre>
-<pre><code>           n=58 n=30 n=10
-conditionA 2854  151    0
-conditionB 2867  157    0
-conditionC 2846  168    1
-conditionD 2960  165    0</code></pre>
+<pre><code>           n=100 n=58 n=30 n=10
+conditionA  7140 2854  151    0
+conditionB  7171 2867  157    0
+conditionC  7119 2846  168    1
+conditionD  7179 2960  165    0</code></pre>
 </div>
 <div id="alasoo-et-al-2019-ifn-gamma-and-salmonella-reqtl-study" class="section level2">
 <h2>Alasoo et al 2019 IFN gamma and salmonella reQTL study</h2>
@@ -46954,34 +47027,80 @@ head(n_sorted)</code></pre>
 6 ENSG00000186891 1     727242 rs61769339  -476267 0.0289  0.508 </code></pre>
 <pre class="r"><code>#We can use the p-value to obtain the SES (pvalue -&gt; Zscore -&gt; SES)
 n_sorted &lt;- n_sorted %&gt;% 
-     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
 sal_sorted &lt;- sal_sorted %&gt;% 
-     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
 IFN_sorted &lt;- IFN_sorted %&gt;% 
-     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
 salIFN_sorted &lt;- salIFN_sorted %&gt;% 
-     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86)))
+     mutate(SES = if_else(V7 &lt; 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
 
 
 # See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
-n_egenes_alasoo &lt;- matrix(NA, nrow = 4, ncol = 3)
-colnames(n_egenes_alasoo) &lt;- c(&quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
+n_egenes_alasoo &lt;- matrix(NA, nrow = 4, ncol = 4)
+colnames(n_egenes_alasoo) &lt;- c(&quot;n=100&quot;, &quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
 rownames(n_egenes_alasoo) &lt;- c(&quot;naive&quot;, &quot;IFN&quot;, &quot;salmonella&quot;, &quot;IFN + salmonella&quot;)
 i &lt;- 1
 for(condition in list(n_sorted, IFN_sorted, sal_sorted, salIFN_sorted)){
      j &lt;- 1
-     for(threshold in c(n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
-         n_egenes_alasoo[i,j] &lt;- length(unique(condition %&gt;% filter(SES &gt; threshold | SES &lt; -threshold) %&gt;% pull(V1)))
+     for(threshold in c(n100_ses_threshold, n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes_alasoo[i,j] &lt;- length(unique(condition %&gt;% dplyr::filter(SES &gt; threshold | SES &lt; -threshold) %&gt;% pull(V1)))
          j &lt;- j + 1
      }
      i &lt;- i + 1
 }
 n_egenes_alasoo</code></pre>
-<pre><code>                 n=58 n=30 n=10
-naive             558  165  125
-IFN               576  159  124
-salmonella        438  115   95
-IFN + salmonella  364   90   73</code></pre>
+<pre><code>                 n=100 n=58 n=30 n=10
+naive             1410  583  165  125
+IFN               1432  589  159  124
+salmonella        1122  445  115   95
+IFN + salmonella  1101  377   90   73</code></pre>
+</div>
+<div id="caliskan-et-al-2015-rhinovirus-reqtl-study" class="section level2">
+<h2>Caliskan et al 2015 Rhinovirus reQTL study</h2>
+<p>Data output from MatrixeQTL kindly provided by Dr. Minal Caliskan</p>
+<pre class="r"><code>rhinovirus_data &lt;- as.tibble(read.table(&quot;data/caliskan_etal/eQTL_results_cis_response.txt&quot;, 
+                              sep = &quot;\t&quot;,
+                              header = TRUE))</code></pre>
+<pre><code>Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
+Please use `as_tibble()` instead.
+The signature and semantics have changed, see `?as_tibble`.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<pre class="r"><code>#convert t.stat into the SES by adjusting for the sample size (sqrt(98-2))
+rhinovirus_data &lt;- rhinovirus_data %&gt;% 
+     mutate(SES = t.stat/sqrt(98-2))
+
+#add column to denote which condition the association comes from
+rhinovirus_data &lt;- rhinovirus_data %&gt;% 
+     mutate(condition = ifelse(grepl(&quot;_f&quot;, SNP), &quot;f&quot;, &quot;r&quot;))
+
+rhinovirus_data_f &lt;- rhinovirus_data %&gt;% 
+     dplyr::filter(condition == &quot;f&quot;)
+
+rhinovirus_data_r &lt;- rhinovirus_data %&gt;% 
+     dplyr::filter(condition == &quot;r&quot;)
+
+rhinovirus_data_r_prelim &lt;- rhinovirus_data_r %&gt;% 
+     mutate(SES_prelim = if_else(beta &lt; 0, true = qnorm(p.value/2)/sqrt(98), false = qnorm(1-p.value/2)/sqrt(86)))
+
+# See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
+n_egenes_caliskan &lt;- matrix(NA, nrow = 2, ncol = 4)
+colnames(n_egenes_caliskan) &lt;- c(&quot;n=100&quot;, &quot;n=58&quot;, &quot;n=30&quot;, &quot;n=10&quot;)
+rownames(n_egenes_caliskan) &lt;- c(&quot;f&quot;, &quot;r&quot;)
+i &lt;- 1
+for(condition in list(rhinovirus_data_f, rhinovirus_data_r)){
+     j &lt;- 1
+     for(threshold in c(n100_ses_threshold, n58_ses_threshold, n30_ses_threshold, n10_ses_threshold)){
+         n_egenes_caliskan[i,j] &lt;- length(unique(condition %&gt;% dplyr::filter(SES &gt; threshold | SES &lt; -threshold) %&gt;% pull(gene)))
+         j &lt;- j + 1
+     }
+     i &lt;- i + 1
+}
+n_egenes_caliskan</code></pre>
+<pre><code>  n=100 n=58 n=30 n=10
+f    26    5    2    0
+r    28    8    1    0</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

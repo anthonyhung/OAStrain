@@ -15,6 +15,8 @@ Load correlation functions
 
 ```{r load functions}
 library(Seurat)
+library(SingleCellExperiment)
+library(Matrix.utils)
 
 #load correlation functions
 source("code/cellAtlas_assignment.R")
@@ -44,7 +46,7 @@ table(SCT_integrated$clusteredCellAtlas)
 Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types
 
 ```{r try K}
-for(kval in 11:95){
+for(kval in 17:57){
      print(kval)
      print(table(AssignClusteredLabel(SCT_integrated,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
 }
@@ -59,70 +61,6 @@ for(kval in 11:95){
 colSums(cor.mat)[colSums(cor.mat) > 800]
 
 ```
-
-## clustering Analysis of cell atlas data (PCA)
-
-```{r clustering of cell atlas alone}
-library("ggplot2")
-library("ggfortify")
-
-# Perform PCA
-pca_genes <- prcomp(t(cell.line), scale = T)
-
-#relabel cell.line with cell types
-cell.line.relabeled <- as.data.frame(t(cell.line))
-cell.line.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2)
-rownames(cell.line.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.relabeled)), "\\_"), "[[", 2))
-
-#Make PCA plots
-
-autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype')
-autoplot(pca_genes, data = cell.line.relabeled, colour = 'celltype', label=T)
-
-
-
-
-
-#Trying PCA after removing spermatocyte
-cell.line.sperm <- cell.line[, -95]
-# Perform PCA
-pca_genes.sperm <- prcomp(t(cell.line.sperm), scale = T)
-
-#relabel cell.line with cell types
-cell.line.sperm.relabeled <- as.data.frame(t(cell.line.sperm))
-cell.line.sperm.relabeled$celltype <- sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2)
-rownames(cell.line.sperm.relabeled) <- paste0(sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 1), " ", sapply(strsplit(as.character(rownames(cell.line.sperm.relabeled)), "\\_"), "[[", 2))
-
-#Make PCA plots
-
-autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype')
-autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T) + theme(legend.position = "none")
-autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T, x=2, y=3) + theme(legend.position = "none")
-autoplot(pca_genes.sperm, data = cell.line.sperm.relabeled, colour = 'celltype', label=T, x=3, y=4) + theme(legend.position = "none")
-
-```
-
-## clustering Analysis of cell atlas data (Corr Heatmap)
-
-```{r corr heatmap}
-library("gplots")
-library("RColorBrewer")
-library("scales")
-# Load colors 
-colors <- colorRampPalette(c(brewer.pal(9, "Blues")[1],brewer.pal(9, "Blues")[9]))(100)
-pal <- c(brewer.pal(9, "Set1"), brewer.pal(8, "Set2"), brewer.pal(12, "Set3"))
-
-
-#Corr heatmap
-cors <- cor(cell.line, method="spearman", use="pairwise.complete.obs")
-heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=cell.line.relabeled$celltype,
-          ColSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
-          RowSideColors=pal[as.integer(as.factor(cell.line.relabeled$celltype))],
-          cexCol = 0.1 + 1/log10(15), cexRow = 0.1 + 1/log10(15))
-
-```
-
-
 
 # Human cell Landscape (http://bis.zju.edu.cn/HCL/blast.html)
 
@@ -154,7 +92,96 @@ Run scHCL and visualize
 No chondrocytes in the data, so maybe it could be added?
 
 ```{r hcl_result}
-hcl_result <- scHCL(scdata = dge$counts, numbers_plot = 3)
-scHCL_vis(hcl_result)
+# hcl_result <- scHCL(scdata = dge$counts, numbers_plot = 3)
+# scHCL_vis(hcl_result)
 ```
 
+
+
+
+
+
+# Run HCA correlation analysis on the data integrated across individual
+Goal is to see whether the cluster 2 coincides with the cells that are more highly correlated with chondrocytes/osteoblasts
+
+```{r individual}
+SCT.integrated_individual <- readRDS("data/SCT_integrated_by_individual.rds")
+
+#psuedobulk
+data <- SCT.integrated_individual@assays$SCT@counts
+metadata <- SCT.integrated_individual@meta.data
+
+# Set up metadata as desired for aggregation and DE analysis
+metadata$seurat_clusters <- factor(metadata$seurat_clusters)
+metadata$labels <- factor(metadata$labels)
+
+# Create single cell experiment object
+sce <- SingleCellExperiment(assays = list(counts = data), 
+                           colData = metadata)
+
+# Identify groups for aggregation of counts
+groups <- colData(sce)[, c("labels", "seurat_clusters")]
+
+#pseudobulk
+pb <- aggregate.Matrix(t(counts(sce)), 
+                       groupings = groups, fun = "sum") 
+pb_matrix <- as.matrix(pb)
+SCT.integrated.pseudobulk <- CreateSeuratObject(t(pb_matrix))
+SCT.integrated.pseudobulk$cluster_ind <- colnames(SCT.integrated.pseudobulk@assays$RNA@counts)
+```
+
+## Apply functions to single cell data to label them with assigned cell type
+
+```{r assign metadata individual}
+#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT.integrated_individual) <- "SCT"
+cor.mat <- ComputeCorMat(SCT.integrated_individual,cell.line)
+head(cor.mat)
+
+#Add a metadata column "clusteredCellAtlas" to the object
+SCT.integrated_individual <- AssignClusteredLabel(SCT.integrated_individual,cor.mat, K=20, topCorrelation=5)
+
+#Table of assigned cell labels (and by cluster assignment)
+table(SCT.integrated_individual$clusteredCellAtlas)
+table(SCT.integrated_individual$clusteredCellAtlas, SCT.integrated_individual$seurat_clusters)
+```
+
+## Exploring different values of K (clusters of cellatlas populations)
+
+Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types
+
+```{r try K individual}
+for(kval in 17:57){
+     print(kval)
+     print(table(AssignClusteredLabel(SCT.integrated_individual,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas, SCT.integrated_individual$seurat_clusters))
+}
+```
+
+
+
+## Apply functions to single cell data to label them with assigned cell type (pseudobulked)
+
+```{r assign metadata individual pb}
+#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT.integrated.pseudobulk) <- "RNA"
+cor.mat <- ComputeCorMat(SCT.integrated.pseudobulk,cell.line)
+head(cor.mat)
+
+#Add a metadata column "clusteredCellAtlas" to the object
+SCT.integrated.pseudobulk <- AssignClusteredLabel(SCT.integrated.pseudobulk,cor.mat, K=20, topCorrelation=5)
+
+#Table of assigned cell labels (and by cluster assignment)
+table(SCT.integrated.pseudobulk$clusteredCellAtlas)
+table(SCT.integrated.pseudobulk$clusteredCellAtlas, SCT.integrated.pseudobulk$cluster_ind)
+```
+
+## Exploring different values of K (clusters of cellatlas populations)
+
+Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types
+
+```{r try K individual pb}
+for(kval in 17:57){
+     print(kval)
+     print(table(AssignClusteredLabel(SCT.integrated.pseudobulk,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas, SCT.integrated.pseudobulk$cluster_ind))
+}
+```

@@ -263,8 +263,9 @@ tests <- colnames(fit$coefficients)
 results <- vector(length = length(tests), mode = "list")
 names(results) <- tests
 
-for (test in tests) {
+for (test in tests[c(1:4, 6:8)]) {
   # Extract limma results
+     print(test)
   results[[test]] <- get_results(fit, coef = test)
   # Add mutliple testing correction with ASH
   output_ash <- run_ash(fit, coef = test)$result
@@ -441,6 +442,57 @@ go_table[,-1]
 write.csv(go_table, "output/GO_terms_enriched.csv")
 ```
 
+```{r ks test}
+# k-s test making use of ranked based on p-values
+genes <- results[["Unstrain"]]$qvalue
+names(genes) <- rownames(results[["Unstrain"]])
+
+selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="ensembl")
+GOdata <- new("topGOdata",
+  ontology="BP",
+  allGenes=genes,
+  annot=annFUN.GO2genes,
+  GO2genes=allGO2genes,
+  geneSel=selection,
+  nodeSize=10)
+
+results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+goEnrichment <- goEnrichment %>% 
+     mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+require(ggplot2)
+ggplot(goEnrichment, aes(x=Term, y=-log10(KS))) +
+    stat_summary(geom = "bar", fun = mean, position = "dodge") +
+    xlab("Biological process") +
+    ylab("Enrichment") +
+    ggtitle("Title") +
+    scale_y_continuous(breaks = round(seq(0, max(-log10(goEnrichment$KS)), by = 2), 1)) +
+    theme_bw(base_size=24) +
+    theme(
+        legend.position='none',
+        legend.background=element_rect(),
+        plot.title=element_text(angle=0, size=24, face="bold", vjust=1),
+        axis.text.x=element_text(angle=0, size=18, face="bold", hjust=1.10),
+        axis.text.y=element_text(angle=0, size=18, face="bold", vjust=0.5),
+        axis.title=element_text(size=24, face="bold"),
+        legend.key=element_blank(),     #removes the border
+        legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
+        legend.text=element_text(size=18),  #Text size
+        title=element_text(size=18)) +
+    guides(colour=guide_legend(override.aes=list(size=2.5))) +
+    coord_flip()
+
+```
 
 
 
@@ -464,7 +516,7 @@ head(gene_universe_up)
 ```
 
 Create the topGO data object.
-Only consider "Biological Process" categories and use the Mouse Ensembl database for annotation.
+Only consider "Biological Process" categories and use the human Ensembl database for annotation.
 
 ```{r go-data-up}
 go_data <- new("topGOdata",

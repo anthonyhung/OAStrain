@@ -13,10 +13,566 @@ I would like to analyze all the samples together in order to determine cell type
 Per tips from Kenneth Barr for integration, first detect variable features within each sample you are integrating separately, then integrate across the individuals using the union of both sets of variable features.
 
 ```{r split single cell data}
+library(Seurat)
+library(gridExtra)
 #split data into each individual/sample
 
 #load single-cell data from pilot
 #ANT1.2 <- readRDS("data/ANT1_2.rds")
 SCT_integrated <- readRDS("data/SCT_ANT12_integrated.rds")
+
+NA18855_Unstrain <- subset(SCT_integrated, labels == "NA18855_Unstrain")
+NA18855_Strain <- subset(SCT_integrated, labels == "NA18855_Strain")
+NA18856_Unstrain <- subset(SCT_integrated, labels == "NA18856_Unstrain")
+NA19160_Unstrain <- subset(SCT_integrated, labels == "NA19160_Unstrain")
+NA19160_Strain <- subset(SCT_integrated, labels == "NA19160_Strain")
+
+
+seurat.list <- list(NA18855_Unstrain, NA18856_Unstrain, NA19160_Unstrain)
+for (i in 1:length(seurat.list)) {
+    seurat.list[[i]] <- SCTransform(seurat.list[[i]], verbose = FALSE)
+}
+
+SCT.features <- SelectIntegrationFeatures(object.list = seurat.list, nfeatures = 5000)
+seurat.list <- PrepSCTIntegration(object.list = seurat.list, anchor.features = SCT.features, 
+    verbose = FALSE)
+
+#find anchors
+seurat.anchors <- FindIntegrationAnchors(object.list = seurat.list, normalization.method = "SCT", 
+    anchor.features = SCT.features, verbose = FALSE)
+SCT.integrated <- IntegrateData(anchorset = seurat.anchors, normalization.method = "SCT",
+    verbose = FALSE)
+
+#visualized integrated
+SCT.integrated <- RunPCA(SCT.integrated, verbose = FALSE, npcs = 100)
+DimPlot(SCT.integrated, reduction = "pca", group.by = c("labels"))
+ElbowPlot(SCT.integrated, ndims = 100) #38 PCs?
+SCT.integrated <- FindNeighbors(SCT.integrated, dims = 1:38)
+SCT.integrated <- FindClusters(SCT.integrated, resolution = 0.4)
+DimPlot(SCT.integrated, group.by = c("labels"), reduction = "pca")
+DimPlot(SCT.integrated, group.by = c("seurat_clusters"), reduction = "pca")
+
+SCT.integrated <- RunUMAP(SCT.integrated, dims = 1:38)
+
+for(neighbors in 2:200){
+     for(distance in seq(0,0.2, 0.01)){
+          print(paste0(neighbors, " ", distance))
+          SCT.integrated <- RunUMAP(SCT.integrated, dims = 1:38,
+                          n.neighbors = neighbors,
+                          min.dist = distance)
+          plot(DimPlot(SCT.integrated, group.by = c("seurat_clusters")))
+     }
+}
+
+p1_SCT <- DimPlot(SCT.integrated, group.by = c("orig.ident"))
+p2_SCT <- DimPlot(SCT.integrated, group.by = c("labels"))
+p3_SCT <- DimPlot(SCT.integrated, group.by = c("seurat_clusters"))
+grid.arrange(p1_SCT, p2_SCT, p3_SCT, nrow = 3)
+
+# The above seems to do a good job integrating across individuals
+
+SCT.integrated@active.ident <- SCT.integrated$integrated_snn_res.0.4
+```
+
+# 3d umap plot
+
+```{r 3dimensions}
+library(plotly)
+
+yourseuratobject <- SCT.integrated
+# Re-run UMAPs that you have accurate calculations for all UMAP(s)
+yourseuratobject <- RunUMAP(yourseuratobject,
+                            dims = 1:38,
+                            n.components = 3L)
+
+# Extract tSNE information from Seurat Object
+umap_1 <- yourseuratobject[["umap"]]@cell.embeddings[,1]
+umap_2 <- yourseuratobject[["umap"]]@cell.embeddings[,2]
+umap_3 <- yourseuratobject[["umap"]]@cell.embeddings[,3]
+
+# Visualize what headings are called so that you can extract them to form a dataframe
+Embeddings(object = yourseuratobject, reduction = "umap")
+
+# Prepare a dataframe for cell plotting
+plot.data <- FetchData(object = yourseuratobject, vars = c("UMAP_1", "UMAP_2", "UMAP_3", "seurat_clusters"))
+
+# Make a column of row name identities (these will be your cell/barcode names)
+plot.data$label <- paste(rownames(plot.data))
+
+# Plot your data
+plot_ly(data = plot.data, 
+        x = ~UMAP_1, y = ~UMAP_2, z = ~UMAP_3, 
+        color = ~seurat_clusters, 
+        colors = c("lightseagreen",
+                   "gray50",
+                   "darkgreen"),
+        type = "scatter3d", 
+        mode = "markers", 
+        marker = list(size = 5, width=2), # controls size of points
+        text=~label, #This is that extra column we made earlier for which we will use for cell ID
+        hoverinfo="text") #When you visualize your plotly object, hovering your mouse pointer over a point shows cell names
+
+```
+
+
+Examine clusters
+
+```{r examine clusters}
+cluster_memberships <- as.matrix(table(SCT.integrated@meta.data$integrated_snn_res.0.4, SCT.integrated@meta.data$labels))
+cluster_memberships
+
+cluster_memberships_proportions <- prop.table(cluster_memberships, margin = 2)
+cluster_memberships_proportions
+```
+
+DE between clusters
+
+```{r DE seurat}
+all.markers <- FindAllMarkers(SCT.integrated, min.pct = 0, return.thresh = 1)
+```
+
+Explore some cluster marker genes
+It looks like cluster 2 has higher expression of chond markers, while more or less all three clusters have similar expression of MSC markers (though it does seem like there's a bimodal distribution in cluster 2 with some cells having higher expression of these markers)
+
+```{r markers seurat DE}
+all.markers
+features.plot.chond <- c("TIMP3", "TIMP2", "COL11A1", 
+                   "SOX5", "SOX6",
+                   "TGFBI")
+features.plot.msc <- c("THY1",  "NT5E") #cd44 is a negative marker (looks like )
+
+RidgePlot(object = SCT.integrated, features = features.plot.chond, ncol = 3)
+FeaturePlot(object = SCT.integrated, features = features.plot.chond)
+
+RidgePlot(object = SCT.integrated, features = features.plot.msc, ncol = 3)
+FeaturePlot(object = SCT.integrated, features = features.plot.msc)
+```
+
+DE using limma pseudobulk (from raw counts)
+
+```{r pseudobulk}
+library(SingleCellExperiment)
+library(Matrix.utils)
+library(variancePartition)
+library(tidyr)
+library(ashr)
+
+#psuedobulk
+data <- SCT.integrated@assays$SCT@counts
+metadata <- SCT.integrated@meta.data
+
+# Set up metadata as desired for aggregation and DE analysis
+metadata$seurat_clusters <- factor(metadata$seurat_clusters)
+metadata$labels <- factor(metadata$labels)
+
+# Create single cell experiment object
+sce <- SingleCellExperiment(assays = list(counts = data), 
+                           colData = metadata)
+
+# Identify groups for aggregation of counts
+groups <- colData(sce)[, c("labels", "seurat_clusters")]
+
+#pseudobulk
+pb <- aggregate.Matrix(t(counts(sce)), 
+                       groupings = groups, fun = "sum") 
+pb_matrix <- as.matrix(pb)
+
+```
+
+Use modification of limma workflow implemented in variancePartition::dream
+
+```{r process pb}
+# process raw counts (pseudobulked)
+library(edgeR)
+
+# filter genes by number of counts
+isexpr <- rowSums(cpm(t(pb_matrix))>0.1) >= 5
+
+# Standard usage of limma/voom (normalize)
+geneExpr <- DGEList( t(pb_matrix)[isexpr,] )
+geneExpr <- calcNormFactors( geneExpr , method = "TMM")
+```
+
+
+```{r run lmm}
+form <- ~ 0 + seurat_clusters + (1|individual) + n_cells
+
+pb_data <- as.data.frame(rownames(pb_matrix))
+pb_data <- pb_data %>% 
+     tidyr::separate(`rownames(pb_matrix)`, c("individual", "condition", "seurat_clusters"), sep = "_") 
+rownames(pb_data) <- rownames(pb_matrix)
+pb_data$n_cells <- c(cluster_memberships[1,], cluster_memberships[2,], cluster_memberships[3,])
+pb_data$lib.size <- geneExpr$samples$lib.size
+pb_data$individual <- as.factor(pb_data$individual)
+pb_data$seurat_clusters <- as.factor(pb_data$seurat_clusters)
+
+# estimate weights using linear mixed model of dream
+vobjDream <- voomWithDreamWeights( geneExpr, form, pb_data )
+
+# variance partition plot to see contribution of each variable to overall variance
+form_vp <- ~ (1|individual) + (1|seurat_clusters)
+vp <- variancePartition::fitExtractVarPartModel(vobjDream, form_vp, pb_data)
+plotVarPart( sortCols(vp))
+
+# Fit the dream model on each gene
+# By default, uses the Satterthwaite approximation for the hypothesis test
+fitmm <- dream( vobjDream, form, pb_data )
+# Examine design matrix
+fitmm$design
+
+# Get results of hypothesis test on coefficients of interest
+topTable( fitmm, coef='seurat_clusters1', number=3 )
+
+#next, figure out what the genes that separate each cluster mean...
+```
+
+```{r extract_results}
+#functions
+get_results <- function(x, number = nrow(x$coefficients), sort.by = "none",
+                        ...) {
+  # x - object MArrayLM2 from dream output
+  # ... - additional arguments passed to topTable
+  stopifnot(class(x) == "MArrayLM2")
+  results <- topTable(x, number = number, sort.by = sort.by, ...)
+  return(results)
+}
+
+run_ash <- function(x, coef) {
+  # Perform multiple testing correction with adaptive shrinkage (ASH)
+  #
+  # x - object MArrayLM from eBayes output
+  # coef - coefficient tested by eBayes
+  stopifnot(class(x) == "MArrayLM2", coef %in% colnames(x$coefficients))
+  result <- ash(betahat = x$coefficients[, coef],
+                sebetahat = x$stdev.unscaled[, coef] * sqrt(x$sigma^2), #changed s2.post to sigma^2 since didn't run eBayes
+                df = x$df.total[1])
+  return(result)
+}
+
+plot_volcano <- function(x, threshold) {
+  # Create volcano plot.
+  #
+  # x - data frame with topTable and ASH output
+  #     (columns logFC, P.Value, and adj.pval)
+  # threshold - adj.pval cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("logFC", "P.Value", "adj.P.Val") %in% colnames(x),
+            is.numeric(threshold), threshold <= 1, threshold >= 0)
+  x$highlight <- ifelse(x$adj.P.Val < threshold, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = logFC, y = -log10(P.Value), color = highlight)) +
+    geom_point(shape = 1) +
+    labs(x = "Log fold change",
+         y = expression(-log[10] * " p-value")) +
+    scale_color_identity(drop = FALSE) +
+    theme(legend.position = "none")
+}
+
+plot_pval_hist <- function(x, threshold) {
+  # Create histogram of p-values.
+  #
+  # x - data frame with topTable and ash output (columns P.Value and adj.p.val)
+  # threshold -  cutoff for calling a gene DE
+  #
+  stopifnot(is.data.frame(x), c("P.Value", "adj.P.Val") %in% colnames(x))
+  x$highlight <- ifelse(x$adj.P.Val < threshold, "darkred", "gray75")
+  x$highlight <- factor(x$highlight, levels = c("darkred", "gray75"))
+  ggplot(x, aes(x = P.Value, fill = highlight)) +
+    geom_histogram(position = "stack", binwidth = 0.01) +
+    scale_fill_identity(drop = FALSE) +
+    labs(x = "p-value", y = "Number of genes")
+}
+
+#use functions to extract results
+tests <- colnames(fitmm$coefficients)
+results <- vector(length = length(tests), mode = "list")
+names(results) <- tests
+
+for (test in tests) {
+  # Extract dream results
+  results[[test]] <- get_results(fitmm, coef = test)
+  # Add mutliple testing correction with ASH
+  output_ash <- run_ash(fitmm, coef = test)$result
+  results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+                           lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+                           svalue = output_ash$svalue)
+}
+
+```
+
+
+GO enrichments in DE genes
+Background set is ~12k genes in pb_matrix after filtering out lowly expressed genes
+
+```{r GO}
+library("topGO")
+threshold <- 0.01 #adjusted p value threshold
+
+#cluster 0 vs rest
+gene_universe_0 <- as.numeric(results[["seurat_clusters0"]]$adj.P.Val < threshold)
+gene_universe_0 <- factor(gene_universe_0)
+names(gene_universe_0) <- rownames(results[["seurat_clusters0"]])
+head(gene_universe_0)
+plot_volcano(results[["seurat_clusters0"]], threshold)
+plot_pval_hist(results[["seurat_clusters0"]], threshold)
+
+
+
+go_data_0 <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe_0,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "symbol")
+go_test_0 <- runTest(go_data_0, algorithm = "weight01", statistic = "fisher")
+go_table_0 <- GenTable(go_data_0, weightFisher = go_test_0,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test_0) < .01))
+go_table_0
+
+
+
+
+
+
+# k-s test making use of ranked based on p-values
+genes_0 <- results[["seurat_clusters0"]]$adj.P.Val
+names(genes_0) <- rownames(results[["seurat_clusters0"]])
+
+selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="symbol")
+GOdata <- new("topGOdata",
+  ontology="BP",
+  allGenes=genes_0,
+  annot=annFUN.GO2genes,
+  GO2genes=allGO2genes,
+  geneSel=selection,
+  nodeSize=10)
+
+results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+goEnrichment <- goEnrichment %>% 
+     dplyr::mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+require(ggplot2)
+ggplot(goEnrichment, aes(x=Term, y=-log10(KS))) +
+    stat_summary(geom = "bar", fun = mean, position = "dodge") +
+    xlab("Biological process") +
+    ylab("Enrichment") +
+    ggtitle("Title") +
+    scale_y_continuous(breaks = round(seq(0, max(-log10(goEnrichment$KS)), by = 2), 1)) +
+    theme_bw(base_size=24) +
+    theme(
+        legend.position='none',
+        legend.background=element_rect(),
+        plot.title=element_text(angle=0, size=24, face="bold", vjust=1),
+        axis.text.x=element_text(angle=0, size=18, face="bold", hjust=1.10),
+        axis.text.y=element_text(angle=0, size=18, face="bold", vjust=0.5),
+        axis.title=element_text(size=24, face="bold"),
+        legend.key=element_blank(),     #removes the border
+        legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
+        legend.text=element_text(size=18),  #Text size
+        title=element_text(size=18)) +
+    guides(colour=guide_legend(override.aes=list(size=2.5))) +
+    coord_flip()
+
+
+
+
+
+
+
+
+
+#cluster 1 vs rest
+gene_universe_1 <- as.numeric(results[["seurat_clusters1"]]$adj.P.Val < threshold)
+gene_universe_1 <- factor(gene_universe_1)
+names(gene_universe_1) <- rownames(results[["seurat_clusters1"]])
+head(gene_universe_1)
+plot_volcano(results[["seurat_clusters1"]], threshold)
+plot_pval_hist(results[["seurat_clusters1"]], threshold)
+
+go_data_1 <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe_1,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "symbol")
+go_test_1 <- runTest(go_data_1, algorithm = "weight01", statistic = "fisher")
+go_table_1 <- GenTable(go_data_1, weightFisher = go_test_1,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test_1) < .01))
+go_table_1
+
+# k-s test making use of ranked based on p-values
+genes_1 <- results[["seurat_clusters1"]]$adj.P.Val
+names(genes_1) <- rownames(results[["seurat_clusters0"]])
+
+selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="symbol")
+GOdata <- new("topGOdata",
+  ontology="BP",
+  allGenes=genes_1,
+  annot=annFUN.GO2genes,
+  GO2genes=allGO2genes,
+  geneSel=selection,
+  nodeSize=10)
+
+results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+goEnrichment <- goEnrichment %>% 
+     dplyr::mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+require(ggplot2)
+ggplot(goEnrichment, aes(x=Term, y=-log10(KS))) +
+    stat_summary(geom = "bar", fun = mean, position = "dodge") +
+    xlab("Biological process") +
+    ylab("Enrichment") +
+    ggtitle("Title") +
+    scale_y_continuous(breaks = round(seq(0, max(-log10(goEnrichment$KS)), by = 2), 1)) +
+    theme_bw(base_size=24) +
+    theme(
+        legend.position='none',
+        legend.background=element_rect(),
+        plot.title=element_text(angle=0, size=24, face="bold", vjust=1),
+        axis.text.x=element_text(angle=0, size=18, face="bold", hjust=1.10),
+        axis.text.y=element_text(angle=0, size=18, face="bold", vjust=0.5),
+        axis.title=element_text(size=24, face="bold"),
+        legend.key=element_blank(),     #removes the border
+        legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
+        legend.text=element_text(size=18),  #Text size
+        title=element_text(size=18)) +
+    guides(colour=guide_legend(override.aes=list(size=2.5))) +
+    coord_flip()
+
+
+
+#cluster 2 vs rest
+gene_universe_2 <- as.numeric(results[["seurat_clusters2"]]$adj.P.Val < threshold)
+gene_universe_2 <- factor(gene_universe_2)
+names(gene_universe_2) <- rownames(results[["seurat_clusters2"]])
+head(gene_universe_2)
+plot_volcano(results[["seurat_clusters2"]], threshold)
+plot_pval_hist(results[["seurat_clusters2"]], threshold)
+
+go_data_2 <- new("topGOdata",
+               ontology = "BP",
+               allGenes = gene_universe_2,
+               nodeSize = 5,
+               annotationFun = annFUN.org,
+               mapping = "org.Hs.eg.db",
+               ID = "symbol")
+go_test_2 <- runTest(go_data_2, algorithm = "weight01", statistic = "fisher")
+go_table_2 <- GenTable(go_data_2, weightFisher = go_test_2,
+                     orderBy = "weightFisher", ranksOf = "weightFisher",
+                     topNodes = sum(score(go_test_2) < .01))
+go_table_2
+
+# k-s test making use of ranked based on p-values
+genes_2 <- results[["seurat_clusters0"]]$adj.P.Val
+names(genes_2) <- rownames(results[["seurat_clusters2"]])
+
+selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="symbol")
+GOdata <- new("topGOdata",
+  ontology="BP",
+  allGenes=genes_2,
+  annot=annFUN.GO2genes,
+  GO2genes=allGO2genes,
+  geneSel=selection,
+  nodeSize=10)
+
+results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+goEnrichment <- goEnrichment %>% 
+     dplyr::mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+require(ggplot2)
+ggplot(goEnrichment, aes(x=Term, y=-log10(KS))) +
+    stat_summary(geom = "bar", fun = mean, position = "dodge") +
+    xlab("Biological process") +
+    ylab("Enrichment") +
+    ggtitle("Title") +
+    scale_y_continuous(breaks = round(seq(0, max(-log10(goEnrichment$KS)), by = 2), 1)) +
+    theme_bw(base_size=24) +
+    theme(
+        legend.position='none',
+        legend.background=element_rect(),
+        plot.title=element_text(angle=0, size=24, face="bold", vjust=1),
+        axis.text.x=element_text(angle=0, size=18, face="bold", hjust=1.10),
+        axis.text.y=element_text(angle=0, size=18, face="bold", vjust=0.5),
+        axis.title=element_text(size=24, face="bold"),
+        legend.key=element_blank(),     #removes the border
+        legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
+        legend.text=element_text(size=18),  #Text size
+        title=element_text(size=18)) +
+    guides(colour=guide_legend(override.aes=list(size=2.5))) +
+    coord_flip()
+
+```
+
+I'm having an issue where the vast majority of genes come up as DE between clusters. This may be caused by different individuals contributing different numbers of cells to each cluster. A work-around from Joyce (via Abishek) is to:
+     1. sctransform all the cells
+     2. perform a two sample t-test for each gene comparing the sctransformed values between clusters (ignoring individual)
+
+```{r t-test}
+#stats from all genes
+SCT_t.test <- FindAllMarkers(SCT.integrated, assay = "integrated", test.use = "t",
+                             logfc.threshold = 0, slot = "data", min.pct = 0, return.thresh = 1)
+
+
+
+
+SCTransformed_data <- SCT.integrated@assays$SCT@data
+cluster_membership <- SCT.integrated@meta.data$integrated_snn_res.0.4
+
+clust0 <- SCTransformed_data[,cluster_membership == 0]
+clust1 <- SCTransformed_data[,cluster_membership == 1]
+clust2 <- SCTransformed_data[,cluster_membership == 2]
+
+t.test.results <- matrix(NA, nrow = nrow(SCTransformed_data), ncol = 6)
+colnames(t.test.results) <- c("0vs1 p", "0vs1 T.stat", "0vs2 p", "0vs2 T.stat", "1vs2 p", "1vs2 T.stat")
+rownames(t.test.results) <- rownames(SCTransformed_data)
+
+for(gene in 1:nrow(SCTransformed_data)){
+     t.test.results[gene,1] <- t.test(x = clust0[gene,], y = clust1[gene,], alternative = "two.sided", var.equal = FALSE)$p.value
+     t.test.results[gene,2] <- t.test(x = clust0[gene,], y = clust1[gene,], alternative = "two.sided", var.equal = FALSE)$statistic
+     t.test.results[gene,3] <- t.test(x = clust0[gene,], y = clust2[gene,], alternative = "two.sided", var.equal = FALSE)$p.value
+     t.test.results[gene,4] <- t.test(x = clust0[gene,], y = clust2[gene,], alternative = "two.sided", var.equal = FALSE)$statistic
+     t.test.results[gene,5] <- t.test(x = clust1[gene,], y = clust2[gene,], alternative = "two.sided", var.equal = FALSE)$p.value
+     t.test.results[gene,6] <- t.test(x = clust1[gene,], y = clust2[gene,], alternative = "two.sided", var.equal = FALSE)$statistic
+}
+```
+
+Save Seurat Object
+
+```{r save}
+saveRDS(SCT.integrated, "data/SCT_integrated_by_individual.rds")
 ```
 

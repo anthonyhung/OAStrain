@@ -834,71 +834,97 @@ fit19160.multinom_4 <- readRDS("output/fasttopics/fasttopics_NA19160_only_k=4.rd
 Now, use the models that have been fit to fit the remaining samples
 
 ```{r apply fit model to all samples}
-init.fit_18855_2 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18855_2$F,
-                 init.method = "random")
-refit_18855_2 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18855_2,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_18855_3 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18855_3$F,
-                 init.method = "random")
-refit_18855_3 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18855_3,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_18855_4 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18855_4$F,
-                 init.method = "random")
-refit_18855_4 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18855_4,
-                numiter = 200,
-                update.factors = NULL)
+# init.fit_18855_2 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18855_2$F,
+#                  init.method = "random")
+# refit_18855_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18855_2,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18855_2, "output/fasttopics/fasttopics_NA18855_refit_k=2_nmf.rds")
 
-init.fit_18856_2 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18856_2$F,
-                 init.method = "random")
-refit_18856_2 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18856_2,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_18856_3 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18856_3$F,
-                 init.method = "random")
-refit_18856_3 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18856_3,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_18856_4 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit18856_4$F,
-                 init.method = "random")
-refit_18856_4 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_18856_4,
-                numiter = 200,
-                update.factors = NULL)
+# init.fit_18855_3 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18855_3$F,
+#                  init.method = "random")
+# refit_18855_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18855_3,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18855_3, "output/fasttopics/fasttopics_NA18855_refit_k=3_nmf.rds")
 
-init.fit_19160_2 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit19160_2$F,
-                 init.method = "random")
-refit_19160_2 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_19160_2,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_19160_3 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit19160_3$F,
-                 init.method = "random")
-refit_19160_3 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_19160_3,
-                numiter = 200,
-                update.factors = NULL)
-init.fit_19160_4 <- init_poisson_nmf(X = counts_gene_overlap,
-                 F = fit19160_4$F,
-                 init.method = "random")
-refit_19160_4 <- fit_poisson_nmf(X = counts_gene_overlap,
-                fit0 = init.fit_19160_4,
-                numiter = 200,
-                update.factors = NULL)
+# init.fit_18855_4 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18855_4$F,
+#                  init.method = "random")
+# refit_18855_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18855_4,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18855_4, "output/fasttopics/fasttopics_NA18855_refit_k=4_nmf.rds")
+
+# init.fit_18856_2 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18856_2$F,
+#                  init.method = "random")
+# refit_18856_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18856_2,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18856_2, "output/fasttopics/fasttopics_NA18856_refit_k=2_nmf.rds")
+# 
+# init.fit_18856_3 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18856_3$F,
+#                  init.method = "random")
+# refit_18856_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18856_3,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18856_3, "output/fasttopics/fasttopics_NA18856_refit_k=3_nmf.rds")
+# 
+# init.fit_18856_4 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit18856_4$F,
+#                  init.method = "random")
+# refit_18856_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_18856_4,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_18856_4, "output/fasttopics/fasttopics_NA18856_refit_k=4_nmf.rds")
+# 
+# 
+# init.fit_19160_2 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit19160_2$F,
+#                  init.method = "random")
+# refit_19160_2 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_19160_2,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_19160_2, "output/fasttopics/fasttopics_NA19160_refit_k=2_nmf.rds")
+# 
+# init.fit_19160_3 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit19160_3$F,
+#                  init.method = "random")
+# refit_19160_3 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_19160_3,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_19160_3, "output/fasttopics/fasttopics_NA19160_refit_k=3_nmf.rds")
+# 
+# init.fit_19160_4 <- init_poisson_nmf(X = counts_gene_overlap,
+#                  F = fit19160_4$F,
+#                  init.method = "random")
+# refit_19160_4 <- fit_poisson_nmf(X = counts_gene_overlap,
+#                 fit0 = init.fit_19160_4,
+#                 numiter = 200,
+#                 update.factors = NULL)
+# saveRDS(refit_19160_4, "output/fasttopics/fasttopics_NA19160_refit_k=4_nmf.rds")
+
+refit_18855_2 <- readRDS("output/fasttopics/fasttopics_NA18855_refit_k=2_nmf.rds")
+refit_18855_3 <- readRDS("output/fasttopics/fasttopics_NA18855_refit_k=3_nmf.rds")
+refit_18855_4 <- readRDS("output/fasttopics/fasttopics_NA18855_refit_k=4_nmf.rds")
+refit_18856_2 <- readRDS("output/fasttopics/fasttopics_NA18856_refit_k=2_nmf.rds")
+refit_18856_3 <- readRDS("output/fasttopics/fasttopics_NA18856_refit_k=3_nmf.rds")
+refit_18856_4 <- readRDS("output/fasttopics/fasttopics_NA18856_refit_k=4_nmf.rds")
+refit_19160_2 <- readRDS("output/fasttopics/fasttopics_NA19160_refit_k=2_nmf.rds")
+refit_19160_3 <- readRDS("output/fasttopics/fasttopics_NA19160_refit_k=3_nmf.rds")
+refit_19160_4 <- readRDS("output/fasttopics/fasttopics_NA19160_refit_k=4_nmf.rds")
 ```
 
 Visualize
