@@ -13,3 +13,4 @@ analysis/site_libs
 *.rda
 *.csv
 *.gz
+data/*.txt
