@@ -78,7 +78,7 @@ plot(pca_genes, main = "Variance per PC")
 #Make PCA plots with the factors colored by Individual
 
 ### PCA norm+filt Data
-for (n in 1:3){
+for (n in 1:5){
   col.v <- pal[as.integer(sampleinfo$Individual)]
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
@@ -230,6 +230,15 @@ scores <- pca_genes$x
 variances <- pca_genes$sdev^2
 explained <- variances / sum(variances)
 plot(pca_genes, main = "Variance per PC")
+
+
+#Make PCA plots with the factors colored by Individual
+
+### PCA norm+filt Data
+for (n in 1:5){
+  col.v <- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}
 
 
 # Calculate the relationship between each recorded covariate and the top 5 PCs. 

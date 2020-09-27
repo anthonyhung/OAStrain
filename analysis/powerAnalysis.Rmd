@@ -371,7 +371,9 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
                       aes(colour = "58", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 58),
                       aes(colour = "58", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
-          stat_function(fun = FPR_function, args = list(n = 100),
+     stat_function(fun = power_function, args = list(n = 100),
+                      aes(colour = "100", linetype = "Power"), size = 1.5) +
+     stat_function(fun = FPR_function, args = list(n = 100),
                       aes(colour = "100", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
      # stat_function(fun = function(x) x^2/(1+x^2),
      #                  aes(colour = "heritability"), size = 1, alpha = 0.5) +
@@ -380,7 +382,7 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
      scale_y_continuous(name = "Power",
                            limits = c(0,1)) +
      ggtitle("eQTL Power Curves") +
-     scale_colour_manual("Sample Size", breaks = c("3", "10", "30", "58"), values = colors) +
+     scale_colour_manual("Sample Size", breaks = c("3", "10", "30", "58", "100"), values = colors) +
      scale_linetype_manual("Curve Type", breaks = c("Power", "csQTL FPR"), values = c("csQTL FPR" = "dotted", "Power" = "solid")) +
      theme_bw() +
      geom_hline(yintercept = .8, linetype = "dashed", color = "red")
@@ -713,10 +715,12 @@ n_egenes_alasoo
 
 ## Caliskan et al 2015 Rhinovirus reQTL study
 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4395341/
+
 Data output from MatrixeQTL kindly provided by Dr. Minal Caliskan
 
 ```{r rhinovirus}
-rhinovirus_data <- as.tibble(read.table("data/caliskan_etal/eQTL_results_cis_response.txt", 
+rhinovirus_data <- as.tibble(read.table("data/caliskan_etal/eQTL_results_cis_response.txt.gz", 
                               sep = "\t",
                               header = TRUE))
 
