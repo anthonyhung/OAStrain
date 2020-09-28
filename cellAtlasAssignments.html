@@ -1,0 +1,3693 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-01-24" />
+
+<title>cell Atlas or Human Cell Landscape Assignments</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">cell Atlas or Human Cell Landscape Assignments</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-01-24</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-09-22
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea9f89f712c943b594ae14c5ccccd692f4d10da1ctargetblanka9f89f7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/a9f89f712c943b594ae14c5ccccd692f4d10da1c" target="_blank">a9f89f7</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreea9f89f712c943b594ae14c5ccccd692f4d10da1ctargetblanka9f89f7a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/a9f89f712c943b594ae14c5ccccd692f4d10da1c" target="_blank">a9f89f7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
+    Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/alasoo_etal/
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
+    Ignored:    output/ANT1.2.rds
+    Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/SNPs.csv
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/fasttopics/
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash/
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
+
+Unstaged changes:
+    Modified:   analysis/cellAtlasAssignments.Rmd
+    Modified:   analysis/powerAnalysis.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/cellAtlasAssignments.Rmd</code>) and HTML (<code>docs/cellAtlasAssignments.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a9f89f712c943b594ae14c5ccccd692f4d10da1c/analysis/cellAtlasAssignments.Rmd" target="_blank">a9f89f7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+add additonal n=100 to pwr analysis; dream DE between clusters in sc; cross-analysis of seurat clusters with HCA correlations
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6d7177a8b5b1cc57e67a4b3ee5033a1e91bf1dab/analysis/cellAtlasAssignments.Rmd" target="_blank">6d7177a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-05
+</td>
+<td>
+add note about no chondrocytes in the hcl dataset
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2f8aa9dec7930561bce780677f4a1e8eb972d437/analysis/cellAtlasAssignments.Rmd" target="_blank">2f8aa9d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+<td>
+move the load data down to the hcl part of the code for convenience when running portions of the code
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/5189cd4c20cebd4952d7850c386d90356a280959/analysis/cellAtlasAssignments.Rmd" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+<td>
+add scHCL code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/5189cd4c20cebd4952d7850c386d90356a280959/docs/cellAtlasAssignments.html" target="_blank">5189cd4</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-03
+</td>
+<td>
+add scHCL code
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/26132157c6605eb09d8628dff14a004a6a374809/analysis/cellAtlasAssignments.Rmd" target="_blank">2613215</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-01
+</td>
+<td>
+outside bulk datasets comparison to my pilot bulk data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/26132157c6605eb09d8628dff14a004a6a374809/docs/cellAtlasAssignments.html" target="_blank">2613215</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-02-01
+</td>
+<td>
+outside bulk datasets comparison to my pilot bulk data
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/fe389f20fba1596c42e7a7c15b253b4e8090ecac/analysis/cellAtlasAssignments.Rmd" target="_blank">fe389f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+make png for corr heatmap
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/fe389f20fba1596c42e7a7c15b253b4e8090ecac/docs/cellAtlasAssignments.html" target="_blank">fe389f2</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+make png for corr heatmap
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/56119a80c2a1a204bfcc311a3c21b6f93bad488a/analysis/cellAtlasAssignments.Rmd" target="_blank">56119a8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add clustering for cellatlas sampls
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/56119a80c2a1a204bfcc311a3c21b6f93bad488a/docs/cellAtlasAssignments.html" target="_blank">56119a8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add clustering for cellatlas sampls
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/230347d31eea2744e2e4274fa8e31c0d1c1e991b/analysis/cellAtlasAssignments.Rmd" target="_blank">230347d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add crude analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/230347d31eea2744e2e4274fa8e31c0d1c1e991b/docs/cellAtlasAssignments.html" target="_blank">230347d</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Add crude analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/4b7b862fcc613e73a5ac464c4079a642dab2d37d/analysis/cellAtlasAssignments.Rmd" target="_blank">4b7b862</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell line analysis after removing some catgories
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/4b7b862fcc613e73a5ac464c4079a642dab2d37d/docs/cellAtlasAssignments.html" target="_blank">4b7b862</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell line analysis after removing some catgories
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/b967c3ceb4e6c6da17db3be8f12c4009730dde44/analysis/cellAtlasAssignments.Rmd" target="_blank">b967c3c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell atlas assignment
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/b967c3ceb4e6c6da17db3be8f12c4009730dde44/docs/cellAtlasAssignments.html" target="_blank">b967c3c</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-27
+</td>
+<td>
+Add cell atlas assignment
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+</div>
+<div id="cell-atlas-from-mengie-chens-lab-uchicago" class="section level1">
+<h1>Cell atlas from Mengie Chen’s lab (UChicago)</h1>
+<p>Compute correlation between reference set of samples and individual cells (input is seurat object.) Load correlation functions</p>
+<pre class="r"><code>library(Seurat)
+library(SingleCellExperiment)</code></pre>
+<pre><code>Loading required package: SummarizedExperiment</code></pre>
+<pre><code>Loading required package: GenomicRanges</code></pre>
+<pre><code>Loading required package: stats4</code></pre>
+<pre><code>Loading required package: BiocGenerics</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>
+Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:parallel&#39;:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    anyDuplicated, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter,
+    Find, get, grep, grepl, intersect, is.unsorted, lapply, Map,
+    mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, Position, rank, rbind, Reduce, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min</code></pre>
+<pre><code>Loading required package: S4Vectors</code></pre>
+<pre><code>
+Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    expand.grid</code></pre>
+<pre><code>Loading required package: IRanges</code></pre>
+<pre><code>Loading required package: GenomeInfoDb</code></pre>
+<pre><code>Loading required package: Biobase</code></pre>
+<pre><code>Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    &#39;browseVignettes()&#39;. To cite Bioconductor, see
+    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>Loading required package: DelayedArray</code></pre>
+<pre><code>Loading required package: matrixStats</code></pre>
+<pre><code>
+Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:Biobase&#39;:
+
+    anyMissing, rowMedians</code></pre>
+<pre><code>Loading required package: BiocParallel</code></pre>
+<pre><code>
+Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    aperm, apply, rowsum</code></pre>
+<pre><code>
+Attaching package: &#39;SummarizedExperiment&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:Seurat&#39;:
+
+    Assays</code></pre>
+<pre class="r"><code>library(Matrix.utils)</code></pre>
+<pre><code>Loading required package: Matrix</code></pre>
+<pre><code>
+Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:S4Vectors&#39;:
+
+    expand</code></pre>
+<pre class="r"><code>#load correlation functions
+source(&quot;code/cellAtlas_assignment.R&quot;)
+
+#load single-cell data from pilot
+#ANT1.2 &lt;- readRDS(&quot;data/ANT1_2.rds&quot;)
+SCT_integrated &lt;- readRDS(&quot;data/SCT_ANT12_integrated.rds&quot;)</code></pre>
+<div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type" class="section level2">
+<h2>Apply functions to single cell data to label them with assigned cell type</h2>
+<pre class="r"><code>#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT_integrated) &lt;- &quot;RNA&quot;
+cor.mat &lt;- ComputeCorMat(SCT_integrated,cell.line)</code></pre>
+<pre><code>[1] &quot;There are 4134genes in common between the two sets&quot;</code></pre>
+<pre class="r"><code>head(cor.mat)</code></pre>
+<pre><code>                    L1_ESC    L2_ESC    L3_ESC    L4_ESC    L5_ESC
+AAACCCAAGTAGGAAG 0.2127661 0.2280576 0.2576776 0.2665538 0.2852950
+AAACCCATCTCGGGAC 0.2325975 0.2522491 0.2847764 0.2895341 0.2969894
+AAACGAAGTAACTGCT 0.2709670 0.2806276 0.3119574 0.3056133 0.3225022
+AAAGAACTCGTGCAGC 0.2213311 0.2332478 0.2543673 0.2498685 0.2729095
+AAAGGATGTCTCAAGT 0.2161640 0.2314025 0.2501461 0.2512007 0.2635432
+AAAGGGCTCTTACGGA 0.2438220 0.2615535 0.2826236 0.2885744 0.3113105
+                    L6_ESC L7_Neuroepithelial L8_Astrocyte L9_Astrocyte
+AAACCCAAGTAGGAAG 0.3651657          0.3221773    0.2644856    0.2366720
+AAACCCATCTCGGGAC 0.3833672          0.3366648    0.3086319    0.2840851
+AAACGAAGTAACTGCT 0.3966474          0.3408116    0.2992926    0.2704224
+AAAGAACTCGTGCAGC 0.3557359          0.2994689    0.2493521    0.2303603
+AAAGGATGTCTCAAGT 0.3349858          0.2928124    0.2579703    0.2347415
+AAAGGGCTCTTACGGA 0.3906065          0.3448182    0.2922450    0.2787903
+                 L10_Neural_Precursor L11_Neural_Precursor  L12_iPSC
+AAACCCAAGTAGGAAG            0.3205696            0.3106295 0.4412213
+AAACCCATCTCGGGAC            0.3273081            0.3169374 0.4730965
+AAACGAAGTAACTGCT            0.3450115            0.3253898 0.4985778
+AAAGAACTCGTGCAGC            0.3033935            0.2949636 0.4431311
+AAAGGATGTCTCAAGT            0.2860495            0.2814570 0.4368565
+AAAGGGCTCTTACGGA            0.3341364            0.3190007 0.4895454
+                  L13_iPSC  L14_iPSC  L15_iPSC   L16_MSC   L17_MSC
+AAACCCAAGTAGGAAG 0.4737592 0.2642885 0.4579575 0.4450518 0.4089045
+AAACCCATCTCGGGAC 0.4902393 0.2971788 0.4871561 0.4796679 0.4370790
+AAACGAAGTAACTGCT 0.5268932 0.3121624 0.5209353 0.5080193 0.4723240
+AAAGAACTCGTGCAGC 0.4666426 0.2597496 0.4718939 0.4534033 0.4225432
+AAAGGATGTCTCAAGT 0.4700325 0.2556880 0.4615746 0.4403018 0.3929940
+AAAGGGCTCTTACGGA 0.5047001 0.2994724 0.4998121 0.4898813 0.4491311
+                   L18_MSC   L19_MSC   L20_MSC L21_Mesodermal_Stem.Cell
+AAACCCAAGTAGGAAG 0.3815813 0.4471752 0.4518252                0.3542508
+AAACCCATCTCGGGAC 0.4067208 0.4691416 0.4789260                0.3522645
+AAACGAAGTAACTGCT 0.4382410 0.5069705 0.5174162                0.3676749
+AAAGAACTCGTGCAGC 0.3891178 0.4598642 0.4638207                0.3463360
+AAAGGATGTCTCAAGT 0.3671689 0.4459976 0.4522972                0.3298743
+AAAGGGCTCTTACGGA 0.4128713 0.4875941 0.4988265                0.3754376
+                 L22_Epithelial_Bladder L23_Epithelial_Bladder
+AAACCCAAGTAGGAAG              0.2316352              0.2671622
+AAACCCATCTCGGGAC              0.2877353              0.3286498
+AAACGAAGTAACTGCT              0.3321162              0.3706654
+AAAGAACTCGTGCAGC              0.2577582              0.2948993
+AAAGGATGTCTCAAGT              0.2289472              0.2640708
+AAAGGGCTCTTACGGA              0.2983314              0.3367303
+                 L24_Epithelial_Bronchial L25_Epithelial_Bronchial
+AAACCCAAGTAGGAAG                0.1838736                0.1822692
+AAACCCATCTCGGGAC                0.2257487                0.2268387
+AAACGAAGTAACTGCT                0.2664858                0.2642978
+AAAGAACTCGTGCAGC                0.1983332                0.1966023
+AAAGGATGTCTCAAGT                0.1843270                0.1892689
+AAAGGGCTCTTACGGA                0.2417999                0.2411382
+                 L26_Fibroblast_Foreskin L27_Fibroblast_Breast.Tissue
+AAACCCAAGTAGGAAG               0.4329908                    0.4624092
+AAACCCATCTCGGGAC               0.4558441                    0.4903512
+AAACGAAGTAACTGCT               0.4969899                    0.5200754
+AAAGAACTCGTGCAGC               0.4373219                    0.4678355
+AAAGGATGTCTCAAGT               0.4314800                    0.4636499
+AAAGGGCTCTTACGGA               0.4751569                    0.5122947
+                 L28_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3100539
+AAACCCATCTCGGGAC                       0.3271866
+AAACGAAGTAACTGCT                       0.3552835
+AAAGAACTCGTGCAGC                       0.3174467
+AAAGGATGTCTCAAGT                       0.2728890
+AAAGGGCTCTTACGGA                       0.3599641
+                 L29_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3335253
+AAACCCATCTCGGGAC                       0.3454137
+AAACGAAGTAACTGCT                       0.3719869
+AAAGAACTCGTGCAGC                       0.3315706
+AAAGGATGTCTCAAGT                       0.2877973
+AAAGGGCTCTTACGGA                       0.3801740
+                 L30_Endothelial_Humbilical.Vein
+AAACCCAAGTAGGAAG                       0.3590146
+AAACCCATCTCGGGAC                       0.3700965
+AAACGAAGTAACTGCT                       0.3985975
+AAAGAACTCGTGCAGC                       0.3585557
+AAAGGATGTCTCAAGT                       0.3317444
+AAAGGGCTCTTACGGA                       0.4076300
+                 L31_Endothelial_Lymph.Vessel L32_Endothelial_Blood.Vessel
+AAACCCAAGTAGGAAG                    0.2891486                    0.3014286
+AAACCCATCTCGGGAC                    0.3072357                    0.3244661
+AAACGAAGTAACTGCT                    0.3366871                    0.3583441
+AAAGAACTCGTGCAGC                    0.3044000                    0.3177784
+AAAGGATGTCTCAAGT                    0.2612912                    0.2794534
+AAAGGGCTCTTACGGA                    0.3444807                    0.3602949
+                 L33_Endothelial_Humbilical.Vein L34_Endothelial_Lymphatic
+AAACCCAAGTAGGAAG                       0.3255503                 0.3063615
+AAACCCATCTCGGGAC                       0.3429656                 0.3336868
+AAACGAAGTAACTGCT                       0.3606642                 0.3535497
+AAAGAACTCGTGCAGC                       0.3299209                 0.3094668
+AAAGGATGTCTCAAGT                       0.2894251                 0.2863140
+AAAGGGCTCTTACGGA                       0.3736863                 0.3626130
+                 L35_Chondrocyte L36_Chondrocyte L37_Osteoblast
+AAACCCAAGTAGGAAG       0.4443542       0.4128319      0.4554819
+AAACCCATCTCGGGAC       0.4768039       0.4508199      0.4799630
+AAACGAAGTAACTGCT       0.4665734       0.4602453      0.4885063
+AAAGAACTCGTGCAGC       0.4454958       0.4078837      0.4461702
+AAAGGATGTCTCAAGT       0.4532327       0.4133727      0.4623004
+AAAGGGCTCTTACGGA       0.4673211       0.4490568      0.4743739
+                 L38_Osteoblast L39_Adipocyte L40_Hepatocyte
+AAACCCAAGTAGGAAG      0.4288885     0.3973992      0.1404015
+AAACCCATCTCGGGAC      0.4539705     0.4265490      0.1625652
+AAACGAAGTAACTGCT      0.4958842     0.4328301      0.1856851
+AAAGAACTCGTGCAGC      0.4394513     0.3863947      0.1492740
+AAAGGATGTCTCAAGT      0.4247691     0.4101849      0.1573037
+AAAGGGCTCTTACGGA      0.4682938     0.4195391      0.1552834
+                 L41_Epithelial_Keratinocyte L42_Schwann.cell
+AAACCCAAGTAGGAAG                   0.1317285        0.3399465
+AAACCCATCTCGGGAC                   0.1700799        0.3926095
+AAACGAAGTAACTGCT                   0.2037107        0.4079090
+AAAGAACTCGTGCAGC                   0.1499551        0.3589414
+AAAGGATGTCTCAAGT                   0.1470710        0.3493402
+AAAGGGCTCTTACGGA                   0.1794205        0.3866526
+                 L43_Smooth.muscle.cell_Bronchial L44_HSC_Bone.Marrow
+AAACCCAAGTAGGAAG                        0.4112326          0.09177966
+AAACCCATCTCGGGAC                        0.4450729          0.13141009
+AAACGAAGTAACTGCT                        0.4437330          0.13800687
+AAAGAACTCGTGCAGC                        0.4110590          0.09927104
+AAAGGATGTCTCAAGT                        0.4106680          0.09298633
+AAAGGGCTCTTACGGA                        0.4434619          0.10338167
+                 L45_CMP_Bone.Marrow L46_GMP_Bone.Marrow
+AAACCCAAGTAGGAAG           0.1020825          0.08289062
+AAACCCATCTCGGGAC           0.1269503          0.11389655
+AAACGAAGTAACTGCT           0.1485444          0.12938490
+AAAGAACTCGTGCAGC           0.1161569          0.09975551
+AAAGGATGTCTCAAGT           0.1090988          0.09403200
+AAAGGGCTCTTACGGA           0.1111755          0.09226560
+                 L47_MEP_Bone.Marrow L48_Myelocyte_Bone.Marrow
+AAACCCAAGTAGGAAG           0.1098459                0.02468094
+AAACCCATCTCGGGAC           0.1295484                0.05701652
+AAACGAAGTAACTGCT           0.1640709                0.07299742
+AAAGAACTCGTGCAGC           0.1148460                0.04778671
+AAAGGATGTCTCAAGT           0.1142347                0.03988963
+AAAGGGCTCTTACGGA           0.1219098                0.04417893
+                 L49_Myelocyte_Bone.Marrow L50_CFU_Bone.Marrow
+AAACCCAAGTAGGAAG                0.05765211           0.1090757
+AAACCCATCTCGGGAC                0.08256149           0.1234394
+AAACGAAGTAACTGCT                0.10396944           0.1554019
+AAAGAACTCGTGCAGC                0.06178092           0.1054661
+AAAGGATGTCTCAAGT                0.06919351           0.1113522
+AAAGGGCTCTTACGGA                0.06902595           0.1174252
+                 L51_B.Cell_Bone.Marrow L52_Platelet L53_Erythroblast_Late
+AAACCCAAGTAGGAAG             0.03920281   0.06453785            0.10064393
+AAACCCATCTCGGGAC             0.06544178   0.09299309            0.11959534
+AAACGAAGTAACTGCT             0.08329355   0.11096482            0.15198434
+AAAGAACTCGTGCAGC             0.05354244   0.08810920            0.10117482
+AAAGGATGTCTCAAGT             0.03904266   0.07599502            0.12153049
+AAAGGGCTCTTACGGA             0.04963729   0.08176423            0.09548154
+                 L54_Erythroblast_Pro L55_MSC_Fetal.Blood
+AAACCCAAGTAGGAAG            0.1053904           0.4619908
+AAACCCATCTCGGGAC            0.1212415           0.4939485
+AAACGAAGTAACTGCT            0.1548096           0.5266282
+AAAGAACTCGTGCAGC            0.1062466           0.4661060
+AAAGGATGTCTCAAGT            0.1151713           0.4476693
+AAAGGGCTCTTACGGA            0.1149825           0.5058889
+                 L56_MSC_Fetal.Bone.Marrow L57_MSC_Fetal.Liver
+AAACCCAAGTAGGAAG                 0.4605339           0.4497178
+AAACCCATCTCGGGAC                 0.4961010           0.4840106
+AAACGAAGTAACTGCT                 0.5186203           0.5203435
+AAAGAACTCGTGCAGC                 0.4564124           0.4617801
+AAAGGATGTCTCAAGT                 0.4434417           0.4402316
+AAAGGGCTCTTACGGA                 0.5090683           0.5010826
+                 L58_Monocyte L59_Monocyte_CD14 L60_Monocyte_CD16
+AAACCCAAGTAGGAAG   0.05173794        0.03593747        0.02697876
+AAACCCATCTCGGGAC   0.09946028        0.07746175        0.06824645
+AAACGAAGTAACTGCT   0.11546377        0.08737047        0.06796966
+AAAGAACTCGTGCAGC   0.09408212        0.06078943        0.05822294
+AAAGGATGTCTCAAGT   0.07123376        0.05466978        0.04865763
+AAAGGGCTCTTACGGA   0.08037198        0.05014720        0.04145187
+                 L61_Monocyte_CD16 L62_Monocyte
+AAACCCAAGTAGGAAG        0.04296360   0.05542529
+AAACCCATCTCGGGAC        0.08259408   0.08359650
+AAACGAAGTAACTGCT        0.09048492   0.10304389
+AAAGAACTCGTGCAGC        0.07334547   0.07906865
+AAAGGATGTCTCAAGT        0.05826452   0.07186702
+AAAGGGCTCTTACGGA        0.05875617   0.06609767
+                 L63_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                       0.0824440
+AAACCCATCTCGGGAC                       0.1234566
+AAACGAAGTAACTGCT                       0.1572033
+AAAGAACTCGTGCAGC                       0.1045270
+AAAGGATGTCTCAAGT                       0.1019106
+AAAGGGCTCTTACGGA                       0.1036298
+                 L64_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                      0.05901435
+AAACCCATCTCGGGAC                      0.11278058
+AAACGAAGTAACTGCT                      0.12115702
+AAAGAACTCGTGCAGC                      0.09090508
+AAAGGATGTCTCAAGT                      0.08200592
+AAAGGGCTCTTACGGA                      0.07713344
+                 L65_Macrophage_Monocyte.derived
+AAACCCAAGTAGGAAG                       0.0811060
+AAACCCATCTCGGGAC                       0.1148498
+AAACGAAGTAACTGCT                       0.1538604
+AAAGAACTCGTGCAGC                       0.1044641
+AAAGGATGTCTCAAGT                       0.1016540
+AAAGGGCTCTTACGGA                       0.1082500
+                 L66_Macrophage_Monocyte.derived L67_Macrophage_Alveolar
+AAACCCAAGTAGGAAG                      0.09301521              0.08299623
+AAACCCATCTCGGGAC                      0.12786528              0.12110815
+AAACGAAGTAACTGCT                      0.16068865              0.15484259
+AAAGAACTCGTGCAGC                      0.11696518              0.11135814
+AAAGGATGTCTCAAGT                      0.10897967              0.10349510
+AAAGGGCTCTTACGGA                      0.11753404              0.11445564
+                 L68_Dendritic.Cell_Monocyte.derived
+AAACCCAAGTAGGAAG                          0.05573460
+AAACCCATCTCGGGAC                          0.09897222
+AAACGAAGTAACTGCT                          0.12846718
+AAAGAACTCGTGCAGC                          0.07941838
+AAAGGATGTCTCAAGT                          0.07212239
+AAAGGGCTCTTACGGA                          0.08306194
+                 L69_Dendritic.Cell_Monocyte.derived
+AAACCCAAGTAGGAAG                          0.08524724
+AAACCCATCTCGGGAC                          0.13063159
+AAACGAAGTAACTGCT                          0.16164048
+AAAGAACTCGTGCAGC                          0.09841075
+AAAGGATGTCTCAAGT                          0.09033391
+AAAGGGCTCTTACGGA                          0.10643921
+                 L70_Dendritic.Cell_CD16 L71_Dendritic.Cell_Plasmacytoid
+AAACCCAAGTAGGAAG              0.04651195                      0.08093629
+AAACCCATCTCGGGAC              0.07966604                      0.10395546
+AAACGAAGTAACTGCT              0.08988058                      0.13094716
+AAAGAACTCGTGCAGC              0.07183364                      0.09787005
+AAAGGATGTCTCAAGT              0.06182741                      0.07553312
+AAAGGGCTCTTACGGA              0.05652148                      0.08458535
+                 L72_Dendritic.Cell_Plasmacytoid L73_T.Cell_CD4.Naive
+AAACCCAAGTAGGAAG                      0.07599686           0.06216039
+AAACCCATCTCGGGAC                      0.09844140           0.08698866
+AAACGAAGTAACTGCT                      0.13177897           0.09857947
+AAAGAACTCGTGCAGC                      0.10203538           0.06888272
+AAAGGATGTCTCAAGT                      0.07928447           0.06215743
+AAAGGGCTCTTACGGA                      0.08288808           0.06061962
+                 L74_T.Cell_CD4.Centr..Memory L75_T.Cell_CD4.Centr..Memory
+AAACCCAAGTAGGAAG                   0.04953319                   0.05494155
+AAACCCATCTCGGGAC                   0.07249161                   0.07883242
+AAACGAAGTAACTGCT                   0.08588006                   0.09324688
+AAAGAACTCGTGCAGC                   0.06405441                   0.06554876
+AAAGGATGTCTCAAGT                   0.04726033                   0.05453517
+AAAGGGCTCTTACGGA                   0.05015015                   0.05516487
+                 L76_T.Cell_CD4.Eff..Memory L77_T.Cell_CD8.Centr..Memory
+AAACCCAAGTAGGAAG                 0.05390077                   0.06432035
+AAACCCATCTCGGGAC                 0.07878613                   0.09232980
+AAACGAAGTAACTGCT                 0.09427484                   0.11002129
+AAAGAACTCGTGCAGC                 0.06983914                   0.09340385
+AAAGGATGTCTCAAGT                 0.05298160                   0.06210662
+AAAGGGCTCTTACGGA                 0.05456320                   0.08069680
+                 L78_T.Cell_CD8 L79_T.Cell_CD4 L80_T.Cell_CD8.Eff..Memory
+AAACCCAAGTAGGAAG     0.01880585     0.02762185                 0.06512476
+AAACCCATCTCGGGAC     0.03308793     0.04201755                 0.09030937
+AAACGAAGTAACTGCT     0.04606601     0.05656105                 0.10417355
+AAAGAACTCGTGCAGC     0.03554590     0.04852084                 0.08439920
+AAAGGATGTCTCAAGT     0.02201421     0.02836940                 0.06822748
+AAAGGGCTCTTACGGA     0.02050169     0.02546175                 0.07278221
+                 L81_T.Cell_CD8.Naive L82_T.Cell_CD8 L83_T.Cell_CD4
+AAACCCAAGTAGGAAG           0.05691919     0.04676661     0.06706488
+AAACCCATCTCGGGAC           0.08847197     0.06096056     0.09516055
+AAACGAAGTAACTGCT           0.10229245     0.08465174     0.10939437
+AAAGAACTCGTGCAGC           0.08549343     0.06475892     0.07809166
+AAAGGATGTCTCAAGT           0.06414804     0.03902209     0.05558493
+AAAGGGCTCTTACGGA           0.07319977     0.05327473     0.07406548
+                 L84_T.Cell_CD4.Naive L85_NK.Cell_CD56Hi
+AAACCCAAGTAGGAAG           0.08209967         0.08125768
+AAACCCATCTCGGGAC           0.11352514         0.10851064
+AAACGAAGTAACTGCT           0.12374505         0.13441205
+AAAGAACTCGTGCAGC           0.08855340         0.10816652
+AAAGGATGTCTCAAGT           0.07454126         0.08271360
+AAAGGGCTCTTACGGA           0.08607345         0.09443548
+                 L86_NK.Cell_CD56Lo L87_Neutrophil L88_Neutrophil
+AAACCCAAGTAGGAAG         0.07899103     0.01575484     0.02818251
+AAACCCATCTCGGGAC         0.10779893     0.05660629     0.07162125
+AAACGAAGTAACTGCT         0.13621195     0.05845380     0.07950457
+AAAGAACTCGTGCAGC         0.11036089     0.04358736     0.05844867
+AAAGGATGTCTCAAGT         0.08532550     0.03330101     0.04488609
+AAAGGGCTCTTACGGA         0.09151158     0.01757654     0.04095760
+                 L89_B.Cell L90_B.Cell_Naive L91_B.Cell L92_B.Cell_Memory
+AAACCCAAGTAGGAAG 0.01348786       0.05039954 0.04384330        0.04289718
+AAACCCATCTCGGGAC 0.03213743       0.07595001 0.06207980        0.06974403
+AAACGAAGTAACTGCT 0.04723777       0.09253198 0.08399226        0.08845356
+AAAGAACTCGTGCAGC 0.03218967       0.06448139 0.04903087        0.06132907
+AAAGGATGTCTCAAGT 0.01986525       0.04389510 0.03810033        0.04565663
+AAAGGGCTCTTACGGA 0.02222625       0.06396337 0.05294153        0.05423905
+                 L93_B.Cell_Plasma.Cell L94_Oocyte L95_Spermatocyte
+AAACCCAAGTAGGAAG             0.08167834 0.06857847     -0.004409334
+AAACCCATCTCGGGAC             0.08942042 0.08437433      0.019012178
+AAACGAAGTAACTGCT             0.12011594 0.11193538      0.052030198
+AAAGAACTCGTGCAGC             0.09265843 0.09064305      0.017412677
+AAAGGATGTCTCAAGT             0.08814670 0.07783627      0.020392316
+AAAGGGCTCTTACGGA             0.08164909 0.08967909      0.024580861</code></pre>
+<pre class="r"><code>#Add a metadata column &quot;clusteredCellAtlas&quot; to the object
+SCT_integrated &lt;- AssignClusteredLabel(SCT_integrated,cor.mat, K=20, topCorrelation=5)
+
+#Table of assigned cell labels
+table(SCT_integrated$clusteredCellAtlas)</code></pre>
+<pre><code>
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 </code></pre>
+</div>
+<div id="exploring-different-values-of-k-clusters-of-cellatlas-populations" class="section level2">
+<h2>Exploring different values of K (clusters of cellatlas populations)</h2>
+<p>Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types</p>
+<pre class="r"><code>for(kval in 17:57){
+     print(kval)
+     print(table(AssignClusteredLabel(SCT_integrated,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas))
+}</code></pre>
+<pre><code>[1] 17
+
+                       MSC_iPSC_Fibroblast 
+                                      1813 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         2 
+[1] 18
+
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
+[1] 19
+
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
+[1] 20
+
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
+[1] 21
+
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
+[1] 22
+
+                       iPSC_MSC_Fibroblast 
+                                      1543 
+                                       MSC 
+                                       263 
+Osteoblast_Chondrocyte_Fibroblast_iPSC_MSC 
+                                         9 
+[1] 23
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 24
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 25
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 26
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 27
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 28
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 29
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 30
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 31
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 32
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 33
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 34
+
+Chondrocyte_Osteoblast    iPSC_MSC_Fibroblast                    MSC 
+                     8                   1545                    262 
+[1] 35
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 36
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 37
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 38
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 39
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 40
+
+        Chondrocyte_Osteoblast Fibroblast_iPSC_MSC_Osteoblast 
+                            46                              1 
+               iPSC_Fibroblast                            MSC 
+                          1079                            689 
+[1] 41
+
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                    46                      1                   1079 
+                   MSC 
+                   689 
+[1] 42
+
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
+[1] 43
+
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
+[1] 44
+
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
+[1] 45
+
+Chondrocyte_Osteoblast        iPSC_Fibroblast                    MSC 
+                     4                   1503                    308 
+[1] 46
+
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
+[1] 47
+
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
+[1] 48
+
+Chondrocyte_Osteoblast    Fibroblast_iPSC_MSC        iPSC_Fibroblast 
+                     4                      4                   1501 
+                   MSC 
+                   306 
+[1] 49
+
+Fibroblast_iPSC_MSC     iPSC_Fibroblast                 MSC 
+                  5                1503                 307 
+[1] 50
+
+iPSC_Fibroblast             MSC 
+           1506             309 
+[1] 51
+
+iPSC_Fibroblast             MSC 
+           1506             309 
+[1] 52
+
+iPSC_Fibroblast             MSC 
+           1506             309 
+[1] 53
+
+iPSC_Fibroblast             MSC 
+           1506             309 
+[1] 54
+
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
+[1] 55
+
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
+[1] 56
+
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 
+[1] 57
+
+Fibroblast_iPSC            iPSC             MSC 
+           1110              64             641 </code></pre>
+</div>
+<div id="crude-analyses-of-correlation-matrix" class="section level2">
+<h2>Crude analyses of correlation matrix</h2>
+<pre class="r"><code># see which cell lines are highest correlated (sum over all cells) in the data with the summed values
+colSums(cor.mat)[colSums(cor.mat) &gt; 800]</code></pre>
+<pre><code>named numeric(0)</code></pre>
+</div>
+</div>
+<div id="human-cell-landscape-httpbis.zju.edu.cnhclblast.html" class="section level1">
+<h1>Human cell Landscape (<a href="http://bis.zju.edu.cn/HCL/blast.html" class="uri">http://bis.zju.edu.cn/HCL/blast.html</a>)</h1>
+<p>This is a similar method, but uses DGE objects and a different reference set (the reference set comes from single cell rather than bulk data). Computes correlations between cells in a test sample and the reference set samples and assigns best correlation identity.</p>
+<pre class="r"><code>#This require devtools  
+#install.packages(&#39;devtools&#39;)
+#library(devtools)
+# scHCL requires ggplot2/reshape2/plotly/shiny/shinythemes/shiny
+#install_github(&quot;ggjlab/scHCL&quot;)
+library(scHCL)</code></pre>
+<pre><code>Warning: replacing previous import &#39;shiny::dataTableOutput&#39; by
+&#39;DT::dataTableOutput&#39; when loading &#39;scHCL&#39;</code></pre>
+<pre><code>Warning: replacing previous import &#39;shiny::renderDataTable&#39; by
+&#39;DT::renderDataTable&#39; when loading &#39;scHCL&#39;</code></pre>
+<pre class="r"><code>library(Seurat)
+library(scran)</code></pre>
+<p>Convert to DGE (Keep all genes and use raw unnormalized counts).</p>
+<pre class="r"><code>SCT_integrated &lt;- readRDS(&quot;data/SCT_ANT12_integrated.rds&quot;)
+metadata &lt;- SCT_integrated@meta.data # keep metadata handy
+sce &lt;- as.SingleCellExperiment(SCT_integrated, assay=&quot;RNA&quot;)
+dge&lt;- convertTo(sce, type= &quot;edgeR&quot;)
+remove(sce)
+dge$samples&lt;- cbind(dge$samples, metadata)</code></pre>
+<p>Run scHCL and visualize No chondrocytes in the data, so maybe it could be added?</p>
+<pre class="r"><code># hcl_result &lt;- scHCL(scdata = dge$counts, numbers_plot = 3)
+# scHCL_vis(hcl_result)</code></pre>
+</div>
+<div id="run-hca-correlation-analysis-on-the-data-integrated-across-individual" class="section level1">
+<h1>Run HCA correlation analysis on the data integrated across individual</h1>
+<p>Goal is to see whether the cluster 2 coincides with the cells that are more highly correlated with chondrocytes/osteoblasts</p>
+<pre class="r"><code>SCT.integrated_individual &lt;- readRDS(&quot;data/SCT_integrated_by_individual.rds&quot;)
+
+#psuedobulk
+data &lt;- SCT.integrated_individual@assays$SCT@counts
+metadata &lt;- SCT.integrated_individual@meta.data
+
+# Set up metadata as desired for aggregation and DE analysis
+metadata$seurat_clusters &lt;- factor(metadata$seurat_clusters)
+metadata$labels &lt;- factor(metadata$labels)
+
+# Create single cell experiment object
+sce &lt;- SingleCellExperiment(assays = list(counts = data), 
+                           colData = metadata)
+
+# Identify groups for aggregation of counts
+groups &lt;- colData(sce)[, c(&quot;labels&quot;, &quot;seurat_clusters&quot;)]
+
+#pseudobulk
+pb &lt;- aggregate.Matrix(t(counts(sce)), 
+                       groupings = groups, fun = &quot;sum&quot;) 
+pb_matrix &lt;- as.matrix(pb)
+SCT.integrated.pseudobulk &lt;- CreateSeuratObject(t(pb_matrix))
+SCT.integrated.pseudobulk$cluster_ind &lt;- colnames(SCT.integrated.pseudobulk@assays$RNA@counts)</code></pre>
+<div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type-1" class="section level2">
+<h2>Apply functions to single cell data to label them with assigned cell type</h2>
+<pre class="r"><code>#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT.integrated_individual) &lt;- &quot;SCT&quot;
+cor.mat &lt;- ComputeCorMat(SCT.integrated_individual,cell.line)</code></pre>
+<pre><code>[1] &quot;There are 2252genes in common between the two sets&quot;</code></pre>
+<pre class="r"><code>head(cor.mat)</code></pre>
+<pre><code>                    L1_ESC    L2_ESC     L3_ESC     L4_ESC    L5_ESC
+AAACGAATCGTCAGAT 0.1203975 0.1535895 0.11685843 0.12037577 0.1261470
+AAAGTGAAGTCAATCC 0.1226224 0.1469515 0.11145595 0.11893812 0.1254614
+AAAGTGATCGGCATAT 0.1008009 0.1316291 0.09507346 0.09772405 0.1083667
+AAATGGAGTCCTTAAG 0.1072824 0.1304723 0.11840626 0.12352169 0.1423578
+AACAAAGGTGGGTATG 0.1370999 0.1731799 0.13018036 0.13021971 0.1477580
+AACAAAGTCTGGGCCA 0.1323639 0.1506971 0.12339633 0.12294624 0.1313488
+                    L6_ESC L7_Neuroepithelial L8_Astrocyte L9_Astrocyte
+AAACGAATCGTCAGAT 0.2235133          0.1820839    0.1623934   0.13940131
+AAAGTGAAGTCAATCC 0.2309052          0.1909616    0.1624689   0.12417082
+AAAGTGATCGGCATAT 0.2005114          0.1596900    0.1573878   0.11869284
+AAATGGAGTCCTTAAG 0.2400681          0.1784751    0.1351176   0.09225129
+AACAAAGGTGGGTATG 0.2518760          0.1926668    0.1549285   0.12963396
+AACAAAGTCTGGGCCA 0.2374721          0.1843746    0.1570169   0.12411005
+                 L10_Neural_Precursor L11_Neural_Precursor  L12_iPSC
+AAACGAATCGTCAGAT            0.1587359            0.1523462 0.3021592
+AAAGTGAAGTCAATCC            0.1686487            0.1615680 0.3175204
+AAAGTGATCGGCATAT            0.1465398            0.1374365 0.2988829
+AAATGGAGTCCTTAAG            0.1671789            0.1569417 0.3180293
+AACAAAGGTGGGTATG            0.1826100            0.1733215 0.3262081
+AACAAAGTCTGGGCCA            0.1796421            0.1717832 0.3082000
+                  L13_iPSC  L14_iPSC  L15_iPSC   L16_MSC   L17_MSC
+AAACGAATCGTCAGAT 0.3406227 0.1311607 0.3268178 0.3085363 0.2809925
+AAAGTGAAGTCAATCC 0.3407933 0.1312766 0.3275942 0.2995355 0.2651699
+AAAGTGATCGGCATAT 0.3368571 0.1137967 0.3259976 0.2975277 0.2472353
+AAATGGAGTCCTTAAG 0.3694622 0.1392843 0.3507378 0.3328213 0.2857620
+AACAAAGGTGGGTATG 0.3609285 0.1558339 0.3591682 0.3410975 0.2925136
+AACAAAGTCTGGGCCA 0.3495273 0.1371487 0.3414880 0.3202875 0.2787165
+                   L18_MSC   L19_MSC   L20_MSC L21_Mesodermal_Stem.Cell
+AAACGAATCGTCAGAT 0.2613324 0.3235688 0.3199178                0.1907512
+AAAGTGAAGTCAATCC 0.2490862 0.3244460 0.3211782                0.2116356
+AAAGTGATCGGCATAT 0.2282704 0.3213251 0.3196046                0.1978461
+AAATGGAGTCCTTAAG 0.2652068 0.3557382 0.3549046                0.1998506
+AACAAAGGTGGGTATG 0.2684115 0.3555784 0.3535849                0.2038265
+AACAAAGTCTGGGCCA 0.2587335 0.3488428 0.3419026                0.2078666
+                 L22_Epithelial_Bladder L23_Epithelial_Bladder
+AAACGAATCGTCAGAT             0.13845459              0.1534066
+AAAGTGAAGTCAATCC             0.09901652              0.1240904
+AAAGTGATCGGCATAT             0.10088047              0.1076667
+AAATGGAGTCCTTAAG             0.16995879              0.1825499
+AACAAAGGTGGGTATG             0.13585221              0.1507865
+AACAAAGTCTGGGCCA             0.11111899              0.1323165
+                 L24_Epithelial_Bronchial L25_Epithelial_Bronchial
+AAACGAATCGTCAGAT               0.10285790               0.11318618
+AAAGTGAAGTCAATCC               0.07807550               0.08535131
+AAAGTGATCGGCATAT               0.06969913               0.08364449
+AAATGGAGTCCTTAAG               0.13054556               0.14132033
+AACAAAGGTGGGTATG               0.09801787               0.10769494
+AACAAAGTCTGGGCCA               0.08912954               0.10166837
+                 L26_Fibroblast_Foreskin L27_Fibroblast_Breast.Tissue
+AAACGAATCGTCAGAT               0.3009521                    0.3181731
+AAAGTGAAGTCAATCC               0.3110414                    0.3163463
+AAAGTGATCGGCATAT               0.2912637                    0.3189531
+AAATGGAGTCCTTAAG               0.3386139                    0.3496865
+AACAAAGGTGGGTATG               0.3233560                    0.3440451
+AACAAAGTCTGGGCCA               0.3153125                    0.3257140
+                 L28_Endothelial_Humbilical.Vein
+AAACGAATCGTCAGAT                       0.1772381
+AAAGTGAAGTCAATCC                       0.1580323
+AAAGTGATCGGCATAT                       0.1365260
+AAATGGAGTCCTTAAG                       0.2050608
+AACAAAGGTGGGTATG                       0.1829871
+AACAAAGTCTGGGCCA                       0.1764406
+                 L29_Endothelial_Humbilical.Vein
+AAACGAATCGTCAGAT                       0.1864589
+AAAGTGAAGTCAATCC                       0.1782875
+AAAGTGATCGGCATAT                       0.1415258
+AAATGGAGTCCTTAAG                       0.2126017
+AACAAAGGTGGGTATG                       0.2002536
+AACAAAGTCTGGGCCA                       0.2042387
+                 L30_Endothelial_Humbilical.Vein
+AAACGAATCGTCAGAT                       0.2484585
+AAAGTGAAGTCAATCC                       0.2352311
+AAAGTGATCGGCATAT                       0.2133884
+AAATGGAGTCCTTAAG                       0.2734931
+AACAAAGGTGGGTATG                       0.2643694
+AACAAAGTCTGGGCCA                       0.2558191
+                 L31_Endothelial_Lymph.Vessel L32_Endothelial_Blood.Vessel
+AAACGAATCGTCAGAT                    0.1866130                    0.1987029
+AAAGTGAAGTCAATCC                    0.1735396                    0.1815083
+AAAGTGATCGGCATAT                    0.1547455                    0.1574104
+AAATGGAGTCCTTAAG                    0.2147940                    0.2199220
+AACAAAGGTGGGTATG                    0.1920823                    0.2142338
+AACAAAGTCTGGGCCA                    0.1936384                    0.2002162
+                 L33_Endothelial_Humbilical.Vein L34_Endothelial_Lymphatic
+AAACGAATCGTCAGAT                       0.1954175                 0.2058503
+AAAGTGAAGTCAATCC                       0.1886798                 0.1873858
+AAAGTGATCGGCATAT                       0.1564288                 0.1830998
+AAATGGAGTCCTTAAG                       0.2246840                 0.2356345
+AACAAAGGTGGGTATG                       0.2170518                 0.2051026
+AACAAAGTCTGGGCCA                       0.2127162                 0.2059924
+                 L35_Chondrocyte L36_Chondrocyte L37_Osteoblast
+AAACGAATCGTCAGAT       0.3365631       0.2821590      0.3192850
+AAAGTGAAGTCAATCC       0.3176515       0.2932540      0.3008238
+AAAGTGATCGGCATAT       0.3368565       0.2937487      0.3210691
+AAATGGAGTCCTTAAG       0.3488942       0.3049021      0.3346235
+AACAAAGGTGGGTATG       0.3446668       0.3185237      0.3346073
+AACAAAGTCTGGGCCA       0.3355325       0.3108225      0.3364533
+                 L38_Osteoblast L39_Adipocyte L40_Hepatocyte
+AAACGAATCGTCAGAT      0.2784191     0.3007574     0.13249663
+AAAGTGAAGTCAATCC      0.2733322     0.2644474     0.07478343
+AAAGTGATCGGCATAT      0.2821475     0.2891918     0.10763147
+AAATGGAGTCCTTAAG      0.3305013     0.2854645     0.10525404
+AACAAAGGTGGGTATG      0.3396336     0.2884006     0.08821408
+AACAAAGTCTGGGCCA      0.2996498     0.2874971     0.08478709
+                 L41_Epithelial_Keratinocyte L42_Schwann.cell
+AAACGAATCGTCAGAT                  0.11033423        0.2326878
+AAAGTGAAGTCAATCC                  0.05276329        0.2326266
+AAAGTGATCGGCATAT                  0.05621821        0.2072254
+AAATGGAGTCCTTAAG                  0.11695244        0.2389287
+AACAAAGGTGGGTATG                  0.08373981        0.2409731
+AACAAAGTCTGGGCCA                  0.07056192        0.2327489
+                 L43_Smooth.muscle.cell_Bronchial L44_HSC_Bone.Marrow
+AAACGAATCGTCAGAT                        0.2784214         0.036573103
+AAAGTGAAGTCAATCC                        0.2780824         0.021708783
+AAAGTGATCGGCATAT                        0.2910465         0.002977157
+AAATGGAGTCCTTAAG                        0.2987841         0.011975515
+AACAAAGGTGGGTATG                        0.2943968         0.027083957
+AACAAAGTCTGGGCCA                        0.2983496         0.032318860
+                 L45_CMP_Bone.Marrow L46_GMP_Bone.Marrow
+AAACGAATCGTCAGAT         0.055405969        0.0442469569
+AAAGTGAAGTCAATCC         0.026231793        0.0233129874
+AAAGTGATCGGCATAT         0.007078862        0.0002246773
+AAATGGAGTCCTTAAG         0.017370865        0.0011703606
+AACAAAGGTGGGTATG         0.024453321        0.0133991706
+AACAAAGTCTGGGCCA         0.021605677        0.0131820656
+                 L47_MEP_Bone.Marrow L48_Myelocyte_Bone.Marrow
+AAACGAATCGTCAGAT         0.045379081               0.043331140
+AAAGTGAAGTCAATCC         0.012697026              -0.014224786
+AAAGTGATCGGCATAT        -0.005587196              -0.015339801
+AAATGGAGTCCTTAAG         0.008214738              -0.021741613
+AACAAAGGTGGGTATG         0.017653115              -0.009227082
+AACAAAGTCTGGGCCA        -0.007824231              -0.011398998
+                 L49_Myelocyte_Bone.Marrow L50_CFU_Bone.Marrow
+AAACGAATCGTCAGAT               0.047487597         0.033144697
+AAAGTGAAGTCAATCC               0.002739295         0.019266384
+AAAGTGATCGGCATAT              -0.010924772        -0.012849448
+AAATGGAGTCCTTAAG              -0.008565466         0.006258782
+AACAAAGGTGGGTATG               0.007797011         0.017010515
+AACAAAGTCTGGGCCA               0.005940488        -0.013249287
+                 L51_B.Cell_Bone.Marrow L52_Platelet L53_Erythroblast_Late
+AAACGAATCGTCAGAT             0.04297049  0.059019253           0.058421456
+AAAGTGAAGTCAATCC            -0.00860209  0.029892539           0.041049506
+AAAGTGATCGGCATAT            -0.01499756  0.009383199           0.029749974
+AAATGGAGTCCTTAAG            -0.03254926  0.019434323           0.011335102
+AACAAAGGTGGGTATG            -0.01432427  0.031543635           0.055694225
+AACAAAGTCTGGGCCA            -0.01529532  0.035256608           0.004115955
+                 L54_Erythroblast_Pro L55_MSC_Fetal.Blood
+AAACGAATCGTCAGAT           0.03225490           0.3104621
+AAAGTGAAGTCAATCC           0.01702453           0.3212526
+AAAGTGATCGGCATAT          -0.01052913           0.2807780
+AAATGGAGTCCTTAAG           0.00922592           0.3380994
+AACAAAGGTGGGTATG           0.01870776           0.3403524
+AACAAAGTCTGGGCCA          -0.01204729           0.3218017
+                 L56_MSC_Fetal.Bone.Marrow L57_MSC_Fetal.Liver
+AAACGAATCGTCAGAT                 0.3018830           0.2948680
+AAAGTGAAGTCAATCC                 0.3131452           0.3100121
+AAAGTGATCGGCATAT                 0.2768303           0.2752270
+AAATGGAGTCCTTAAG                 0.3372199           0.3308705
+AACAAAGGTGGGTATG                 0.3331751           0.3284578
+AACAAAGTCTGGGCCA                 0.3220043           0.3141155
+                 L58_Monocyte L59_Monocyte_CD14 L60_Monocyte_CD16
+AAACGAATCGTCAGAT  0.054384160       0.053222832       0.062970167
+AAAGTGAAGTCAATCC  0.013523438       0.007990784       0.008262989
+AAAGTGATCGGCATAT  0.010193298       0.002255728       0.010761247
+AAATGGAGTCCTTAAG -0.005448651      -0.013949225      -0.019001728
+AACAAAGGTGGGTATG  0.023096336       0.010205914       0.008190254
+AACAAAGTCTGGGCCA  0.018828341       0.012846531       0.025701038
+                 L61_Monocyte_CD16 L62_Monocyte
+AAACGAATCGTCAGAT      0.0574057585   0.07079298
+AAAGTGAAGTCAATCC     -0.0007985418   0.01926554
+AAAGTGATCGGCATAT     -0.0050304684   0.02647684
+AAATGGAGTCCTTAAG     -0.0244684204   0.01671389
+AACAAAGGTGGGTATG      0.0020404754   0.03282505
+AACAAAGTCTGGGCCA      0.0132718782   0.04238003
+                 L63_Macrophage_Monocyte.derived
+AAACGAATCGTCAGAT                     0.076719646
+AAAGTGAAGTCAATCC                     0.036550588
+AAAGTGATCGGCATAT                     0.005628244
+AAATGGAGTCCTTAAG                     0.015470680
+AACAAAGGTGGGTATG                     0.042717551
+AACAAAGTCTGGGCCA                     0.030936009
+                 L64_Macrophage_Monocyte.derived
+AAACGAATCGTCAGAT                     0.061313264
+AAAGTGAAGTCAATCC                     0.011660856
+AAAGTGATCGGCATAT                     0.006584303
+AAATGGAGTCCTTAAG                    -0.001589813
+AACAAAGGTGGGTATG                     0.030195071
+AACAAAGTCTGGGCCA                     0.031821730
+                 L65_Macrophage_Monocyte.derived
+AAACGAATCGTCAGAT                     0.058408879
+AAAGTGAAGTCAATCC                     0.033227766
+AAAGTGATCGGCATAT                    -0.001033545
+AAATGGAGTCCTTAAG                     0.016754373
+AACAAAGGTGGGTATG                     0.024478224
+AACAAAGTCTGGGCCA                     0.022221123
+                 L66_Macrophage_Monocyte.derived L67_Macrophage_Alveolar
+AAACGAATCGTCAGAT                      0.06994022              0.05251353
+AAAGTGAAGTCAATCC                      0.04252309              0.02594163
+AAAGTGATCGGCATAT                      0.01694636              0.01519385
+AAATGGAGTCCTTAAG                      0.02127103              0.00697404
+AACAAAGGTGGGTATG                      0.04153155              0.04643347
+AACAAAGTCTGGGCCA                      0.02978612              0.02874030
+                 L68_Dendritic.Cell_Monocyte.derived
+AAACGAATCGTCAGAT                         0.060774099
+AAAGTGAAGTCAATCC                         0.026035049
+AAAGTGATCGGCATAT                         0.001453803
+AAATGGAGTCCTTAAG                         0.004302472
+AACAAAGGTGGGTATG                         0.022733815
+AACAAAGTCTGGGCCA                         0.015302434
+                 L69_Dendritic.Cell_Monocyte.derived
+AAACGAATCGTCAGAT                         0.066641009
+AAAGTGAAGTCAATCC                         0.015002257
+AAAGTGATCGGCATAT                        -0.003959864
+AAATGGAGTCCTTAAG                         0.011749519
+AACAAAGGTGGGTATG                         0.036117458
+AACAAAGTCTGGGCCA                         0.020540484
+                 L70_Dendritic.Cell_CD16 L71_Dendritic.Cell_Plasmacytoid
+AAACGAATCGTCAGAT            0.0625360885                     0.044681342
+AAAGTGAAGTCAATCC           -0.0058844835                     0.013916946
+AAAGTGATCGGCATAT            0.0004784478                     0.029727306
+AAATGGAGTCCTTAAG           -0.0280567967                     0.002375602
+AACAAAGGTGGGTATG           -0.0026818046                     0.004130129
+AACAAAGTCTGGGCCA            0.0134886377                     0.004488477
+                 L72_Dendritic.Cell_Plasmacytoid L73_T.Cell_CD4.Naive
+AAACGAATCGTCAGAT                     0.043929157          0.043997999
+AAAGTGAAGTCAATCC                     0.015417307          0.004899741
+AAAGTGATCGGCATAT                     0.028762482         -0.006664871
+AAATGGAGTCCTTAAG                     0.005172052         -0.006099079
+AACAAAGGTGGGTATG                     0.004042369         -0.006349813
+AACAAAGTCTGGGCCA                     0.011184181         -0.010511969
+                 L74_T.Cell_CD4.Centr..Memory L75_T.Cell_CD4.Centr..Memory
+AAACGAATCGTCAGAT                  0.041620817                 0.0413925546
+AAAGTGAAGTCAATCC                  0.002291240                 0.0006272444
+AAAGTGATCGGCATAT                 -0.009326992                -0.0079882673
+AAATGGAGTCCTTAAG                 -0.020389916                -0.0187369417
+AACAAAGGTGGGTATG                 -0.007771745                -0.0084955922
+AACAAAGTCTGGGCCA                 -0.008248538                -0.0120155457
+                 L76_T.Cell_CD4.Eff..Memory L77_T.Cell_CD8.Centr..Memory
+AAACGAATCGTCAGAT                0.041413636                 0.0496564582
+AAAGTGAAGTCAATCC                0.001515744                 0.0159833019
+AAAGTGATCGGCATAT               -0.006471834                 0.0095407831
+AAATGGAGTCCTTAAG               -0.021075765                 0.0054542245
+AACAAAGGTGGGTATG               -0.005715866                 0.0335868320
+AACAAAGTCTGGGCCA               -0.009475648                -0.0009059428
+                 L78_T.Cell_CD8 L79_T.Cell_CD4 L80_T.Cell_CD8.Eff..Memory
+AAACGAATCGTCAGAT    0.043747241   0.0428379486                0.056387424
+AAAGTGAAGTCAATCC    0.014500104   0.0145311977                0.017084516
+AAAGTGATCGGCATAT    0.003406343   0.0002202028                0.005379791
+AAATGGAGTCCTTAAG   -0.004127398  -0.0109227592                0.008601094
+AACAAAGGTGGGTATG    0.001134366  -0.0026699191                0.028553874
+AACAAAGTCTGGGCCA   -0.006415702  -0.0065050618               -0.005154720
+                 L81_T.Cell_CD8.Naive L82_T.Cell_CD8 L83_T.Cell_CD4
+AAACGAATCGTCAGAT          0.052151092    0.028938772     0.02619292
+AAAGTGAAGTCAATCC          0.019600351   -0.008420809    -0.01232378
+AAAGTGATCGGCATAT          0.012485618   -0.025789164    -0.01746129
+AAATGGAGTCCTTAAG          0.002884590   -0.035691208    -0.02699712
+AACAAAGGTGGGTATG          0.031156092   -0.001755262     0.00442190
+AACAAAGTCTGGGCCA         -0.005330367   -0.029267188    -0.01826263
+                 L84_T.Cell_CD4.Naive L85_NK.Cell_CD56Hi
+AAACGAATCGTCAGAT          0.041772146        0.069369461
+AAAGTGAAGTCAATCC         -0.001332787        0.004481235
+AAAGTGATCGGCATAT         -0.002120447        0.009103403
+AAATGGAGTCCTTAAG         -0.008454568        0.005635190
+AACAAAGGTGGGTATG          0.008695126        0.017696512
+AACAAAGTCTGGGCCA         -0.001986029        0.020439550
+                 L86_NK.Cell_CD56Lo L87_Neutrophil L88_Neutrophil
+AAACGAATCGTCAGAT        0.069235780    0.025861929    0.027766679
+AAAGTGAAGTCAATCC        0.015851000   -0.014456233   -0.007870555
+AAAGTGATCGGCATAT        0.009763937   -0.006792145   -0.002322126
+AAATGGAGTCCTTAAG        0.011342454   -0.021709307   -0.023964306
+AACAAAGGTGGGTATG        0.019425457   -0.008114213    0.003924595
+AACAAAGTCTGGGCCA        0.026905199   -0.008695175   -0.007742604
+                    L89_B.Cell L90_B.Cell_Naive   L91_B.Cell
+AAACGAATCGTCAGAT  0.0405171615      0.048752439  0.012786129
+AAAGTGAAGTCAATCC  0.0005957045     -0.013579854 -0.024763101
+AAAGTGATCGGCATAT  0.0059846071     -0.005360493 -0.031356753
+AAATGGAGTCCTTAAG -0.0244273201     -0.022349171 -0.033850029
+AACAAAGGTGGGTATG -0.0064265888     -0.003458529 -0.009421154
+AACAAAGTCTGGGCCA -0.0085415931     -0.007710979 -0.026733747
+                 L92_B.Cell_Memory L93_B.Cell_Plasma.Cell   L94_Oocyte
+AAACGAATCGTCAGAT        0.04189335            0.069191171  0.026079688
+AAAGTGAAGTCAATCC       -0.02477770            0.019686534  0.008294935
+AAAGTGATCGGCATAT       -0.01769532            0.011322505 -0.024713608
+AAATGGAGTCCTTAAG       -0.02238006            0.005154099  0.016466962
+AACAAAGGTGGGTATG       -0.00518803            0.019716037  0.026319808
+AACAAAGTCTGGGCCA       -0.01300612            0.009123254  0.003186172
+                 L95_Spermatocyte
+AAACGAATCGTCAGAT     -0.007517430
+AAAGTGAAGTCAATCC     -0.012090078
+AAAGTGATCGGCATAT     -0.022452416
+AAATGGAGTCCTTAAG     -0.021785639
+AACAAAGGTGGGTATG     -0.005893475
+AACAAAGTCTGGGCCA     -0.008250639</code></pre>
+<pre class="r"><code>#Add a metadata column &quot;clusteredCellAtlas&quot; to the object
+SCT.integrated_individual &lt;- AssignClusteredLabel(SCT.integrated_individual,cor.mat, K=20, topCorrelation=5)
+
+#Table of assigned cell labels (and by cluster assignment)
+table(SCT.integrated_individual$clusteredCellAtlas)</code></pre>
+<pre><code>
+    Chondrocyte_Osteoblast Fibroblast_iPSC_Osteoblast 
+                         5                          1 
+       iPSC_MSC_Fibroblast                        MSC 
+                      1131                         66 </code></pre>
+<pre class="r"><code>table(SCT.integrated_individual$clusteredCellAtlas, SCT.integrated_individual$seurat_clusters)</code></pre>
+<pre><code>                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1</code></pre>
+</div>
+<div id="exploring-different-values-of-k-clusters-of-cellatlas-populations-1" class="section level2">
+<h2>Exploring different values of K (clusters of cellatlas populations)</h2>
+<p>Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types</p>
+<pre class="r"><code>for(kval in 17:57){
+     print(kval)
+     print(table(AssignClusteredLabel(SCT.integrated_individual,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas, SCT.integrated_individual$seurat_clusters))
+}</code></pre>
+<pre><code>[1] 17
+                                            
+                                               0   1   2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast 803 258  74
+  MSC_Fibroblast_iPSC_Osteoblast              40  27   1
+[1] 18
+                                
+                                   0   1   2
+  Chondrocyte_Osteoblast           2   3   0
+  iPSC_MSC_Fibroblast            797 255  74
+  MSC_Fibroblast_iPSC_Osteoblast  44  27   1
+[1] 19
+                                
+                                   0   1   2
+  Chondrocyte_Osteoblast           2   3   0
+  iPSC_MSC_Fibroblast            797 255  74
+  MSC_Fibroblast_iPSC_Osteoblast  44  27   1
+[1] 20
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 21
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 22
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 23
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 24
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 25
+                            
+                               0   1   2
+  Chondrocyte_Osteoblast       2   3   0
+  Fibroblast_iPSC_Osteoblast   0   1   0
+  iPSC_MSC_Fibroblast        801 256  74
+  MSC                         40  25   1
+[1] 26
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 27
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 28
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 29
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 30
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 31
+                                              
+                                                 0   1   2
+  Adipocyte_Chondrocyte_MSC_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                         2   3   0
+  Fibroblast_iPSC_Osteoblast                     0   1   0
+  iPSC_MSC_Fibroblast                          801 255  74
+  MSC                                           40  25   1
+[1] 32
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  Fibroblast_iPSC_Osteoblast                 0   1   0
+  iPSC_MSC_Fibroblast                      801 255  74
+  MSC                                       40  25   1
+[1] 33
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  Fibroblast_iPSC_Osteoblast                 0   1   0
+  iPSC_MSC_Fibroblast                      801 255  74
+  MSC                                       40  25   1
+[1] 34
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  Fibroblast_iPSC_Osteoblast                 0   1   0
+  iPSC_MSC_Fibroblast                      801 255  74
+  MSC                                       40  25   1
+[1] 35
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  Fibroblast_iPSC_Osteoblast                 0   1   0
+  iPSC_MSC_Fibroblast                      801 255  74
+  MSC                                       40  25   1
+[1] 36
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  iPSC_MSC_Fibroblast                      797 254  74
+  MSC                                       44  27   1
+[1] 37
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  iPSC_MSC_Fibroblast                      797 254  74
+  MSC                                       44  27   1
+[1] 38
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  iPSC_MSC_Fibroblast                      797 254  74
+  MSC                                       44  27   1
+[1] 39
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  Chondrocyte_Osteoblast                     2   3   0
+  iPSC_MSC_Fibroblast                      797 254  74
+  MSC                                       44  27   1
+[1] 40
+                     
+                        0   1   2
+  iPSC_MSC_Fibroblast 803 259  74
+  MSC                  40  26   1
+[1] 41
+                     
+                        0   1   2
+  iPSC_MSC_Fibroblast 803 259  74
+  MSC                  40  26   1
+[1] 42
+                     
+                        0   1   2
+  iPSC_MSC_Fibroblast 803 259  74
+  MSC                  40  26   1
+[1] 43
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  iPSC_Fibroblast                          663 217  66
+  MSC                                      180  67   9
+[1] 44
+                                          
+                                             0   1   2
+  Adipocyte_Chondrocyte_Smooth.muscle.cell   0   1   0
+  iPSC_Fibroblast                          663 217  66
+  MSC                                      180  67   9
+[1] 45
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 46
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 47
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 48
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 49
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 50
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 51
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 52
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 53
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 54
+                 
+                    0   1   2
+  iPSC_Fibroblast 663 218  66
+  MSC             180  67   9
+[1] 55
+      
+         0   1   2
+  iPSC 567 197  57
+  MSC  276  88  18
+[1] 56
+      
+         0   1   2
+  iPSC 567 197  57
+  MSC  276  88  18
+[1] 57
+      
+         0   1   2
+  iPSC 567 197  57
+  MSC  276  88  18</code></pre>
+</div>
+<div id="apply-functions-to-single-cell-data-to-label-them-with-assigned-cell-type-pseudobulked" class="section level2">
+<h2>Apply functions to single cell data to label them with assigned cell type (pseudobulked)</h2>
+<pre class="r"><code>#Compute the correlation matrix use a seurat object (COUNTS) and cell line matrix as input
+DefaultAssay(SCT.integrated.pseudobulk) &lt;- &quot;RNA&quot;
+cor.mat &lt;- ComputeCorMat(SCT.integrated.pseudobulk,cell.line)</code></pre>
+<pre><code>[1] &quot;There are 2252genes in common between the two sets&quot;</code></pre>
+<pre class="r"><code>head(cor.mat)</code></pre>
+<pre><code>                      L1_ESC    L2_ESC    L3_ESC    L4_ESC    L5_ESC
+NA18855_Unstrain_0 0.2244565 0.2607054 0.2459958 0.2523963 0.2729872
+NA18856_Unstrain_0 0.2527654 0.2764637 0.2660571 0.2579080 0.2827852
+NA19160_Unstrain_0 0.1989904 0.2232403 0.2060846 0.2097546 0.2232551
+NA18855_Unstrain_1 0.2360212 0.2712222 0.2600333 0.2698026 0.2849643
+NA18856_Unstrain_1 0.2700835 0.2902753 0.2904292 0.2756934 0.2921973
+NA19160_Unstrain_1 0.2036942 0.2270519 0.2086083 0.2138153 0.2237197
+                      L6_ESC L7_Neuroepithelial L8_Astrocyte L9_Astrocyte
+NA18855_Unstrain_0 0.3997005          0.3321501    0.2822079    0.2396654
+NA18856_Unstrain_0 0.3927915          0.3194865    0.2704788    0.2286413
+NA19160_Unstrain_0 0.3554138          0.2800646    0.2565001    0.2009887
+NA18855_Unstrain_1 0.4058893          0.3408334    0.2906255    0.2556733
+NA18856_Unstrain_1 0.3927203          0.3193619    0.2829606    0.2398716
+NA19160_Unstrain_1 0.3468944          0.2735089    0.2670863    0.2119111
+                   L10_Neural_Precursor L11_Neural_Precursor  L12_iPSC
+NA18855_Unstrain_0            0.3133682            0.2985554 0.4943828
+NA18856_Unstrain_0            0.3144078            0.2911283 0.4938538
+NA19160_Unstrain_0            0.2683821            0.2572113 0.4611756
+NA18855_Unstrain_1            0.3212994            0.3119010 0.5023894
+NA18856_Unstrain_1            0.3168072            0.2917750 0.5191658
+NA19160_Unstrain_1            0.2620587            0.2542761 0.4540812
+                    L13_iPSC  L14_iPSC  L15_iPSC   L16_MSC   L17_MSC
+NA18855_Unstrain_0 0.5408384 0.2660472 0.5175213 0.5025741 0.4433661
+NA18856_Unstrain_0 0.5368347 0.2870067 0.5374302 0.5058356 0.4509283
+NA19160_Unstrain_0 0.5179290 0.2247514 0.5176912 0.4757729 0.4050020
+NA18855_Unstrain_1 0.5397767 0.2818614 0.5141123 0.5048986 0.4637687
+NA18856_Unstrain_1 0.5486694 0.3031415 0.5517460 0.5202405 0.4817798
+NA19160_Unstrain_1 0.4994226 0.2297817 0.5076196 0.4725590 0.4096603
+                     L18_MSC   L19_MSC   L20_MSC L21_Mesodermal_Stem.Cell
+NA18855_Unstrain_0 0.4095119 0.5151052 0.5186443                0.3587121
+NA18856_Unstrain_0 0.4127343 0.5327456 0.5361866                0.3532344
+NA19160_Unstrain_0 0.3735699 0.4932707 0.4997173                0.3061974
+NA18855_Unstrain_1 0.4388860 0.5080227 0.5125514                0.3722936
+NA18856_Unstrain_1 0.4532097 0.5266078 0.5336364                0.3582128
+NA19160_Unstrain_1 0.3806314 0.4793486 0.4876035                0.3092210
+                   L22_Epithelial_Bladder L23_Epithelial_Bladder
+NA18855_Unstrain_0              0.2698320              0.3014173
+NA18856_Unstrain_0              0.3241275              0.3571350
+NA19160_Unstrain_0              0.2447838              0.2661449
+NA18855_Unstrain_1              0.2683335              0.3034759
+NA18856_Unstrain_1              0.3415837              0.3691500
+NA19160_Unstrain_1              0.2576382              0.2711646
+                   L24_Epithelial_Bronchial L25_Epithelial_Bronchial
+NA18855_Unstrain_0                0.2193171                0.2328650
+NA18856_Unstrain_0                0.2626634                0.2800748
+NA19160_Unstrain_0                0.2028191                0.2233324
+NA18855_Unstrain_1                0.2257691                0.2359783
+NA18856_Unstrain_1                0.2903257                0.3058551
+NA19160_Unstrain_1                0.2212352                0.2409600
+                   L26_Fibroblast_Foreskin L27_Fibroblast_Breast.Tissue
+NA18855_Unstrain_0               0.4860587                    0.5239276
+NA18856_Unstrain_0               0.4872807                    0.5282183
+NA19160_Unstrain_0               0.4557679                    0.5272469
+NA18855_Unstrain_1               0.4917804                    0.5191138
+NA18856_Unstrain_1               0.5052164                    0.5416443
+NA19160_Unstrain_1               0.4419296                    0.5126125
+                   L28_Endothelial_Humbilical.Vein
+NA18855_Unstrain_0                       0.3146188
+NA18856_Unstrain_0                       0.3315578
+NA19160_Unstrain_0                       0.2967738
+NA18855_Unstrain_1                       0.3312653
+NA18856_Unstrain_1                       0.3602425
+NA19160_Unstrain_1                       0.3158009
+                   L29_Endothelial_Humbilical.Vein
+NA18855_Unstrain_0                       0.3379249
+NA18856_Unstrain_0                       0.3404427
+NA19160_Unstrain_0                       0.3058893
+NA18855_Unstrain_1                       0.3554365
+NA18856_Unstrain_1                       0.3665403
+NA19160_Unstrain_1                       0.3180065
+                   L30_Endothelial_Humbilical.Vein
+NA18855_Unstrain_0                       0.3885477
+NA18856_Unstrain_0                       0.4068906
+NA19160_Unstrain_0                       0.3748795
+NA18855_Unstrain_1                       0.4069509
+NA18856_Unstrain_1                       0.4238588
+NA19160_Unstrain_1                       0.3835525
+                   L31_Endothelial_Lymph.Vessel
+NA18855_Unstrain_0                    0.3193738
+NA18856_Unstrain_0                    0.3355337
+NA19160_Unstrain_0                    0.2867204
+NA18855_Unstrain_1                    0.3381298
+NA18856_Unstrain_1                    0.3500462
+NA19160_Unstrain_1                    0.2997495
+                   L32_Endothelial_Blood.Vessel
+NA18855_Unstrain_0                    0.3345240
+NA18856_Unstrain_0                    0.3667732
+NA19160_Unstrain_0                    0.3215618
+NA18855_Unstrain_1                    0.3397176
+NA18856_Unstrain_1                    0.3709636
+NA19160_Unstrain_1                    0.3275722
+                   L33_Endothelial_Humbilical.Vein
+NA18855_Unstrain_0                       0.3409535
+NA18856_Unstrain_0                       0.3477732
+NA19160_Unstrain_0                       0.3127682
+NA18855_Unstrain_1                       0.3582734
+NA18856_Unstrain_1                       0.3666852
+NA19160_Unstrain_1                       0.3251618
+                   L34_Endothelial_Lymphatic L35_Chondrocyte
+NA18855_Unstrain_0                 0.3245787       0.5218105
+NA18856_Unstrain_0                 0.3459369       0.5105174
+NA19160_Unstrain_0                 0.3324662       0.5196887
+NA18855_Unstrain_1                 0.3440869       0.5104558
+NA18856_Unstrain_1                 0.3805462       0.5017645
+NA19160_Unstrain_1                 0.3537644       0.5002700
+                   L36_Chondrocyte L37_Osteoblast L38_Osteoblast
+NA18855_Unstrain_0       0.4516712      0.5086852      0.4807485
+NA18856_Unstrain_0       0.4491403      0.4880215      0.5084086
+NA19160_Unstrain_0       0.4574949      0.5227177      0.4682386
+NA18855_Unstrain_1       0.4724364      0.5098275      0.4700091
+NA18856_Unstrain_1       0.4860358      0.5037458      0.5132458
+NA19160_Unstrain_1       0.4725899      0.5189794      0.4565527
+                   L39_Adipocyte L40_Hepatocyte
+NA18855_Unstrain_0     0.4390173      0.1597361
+NA18856_Unstrain_0     0.4258399      0.1767415
+NA19160_Unstrain_0     0.4883708      0.2330316
+NA18855_Unstrain_1     0.4632578      0.1759288
+NA18856_Unstrain_1     0.4577127      0.2275301
+NA19160_Unstrain_1     0.5106781      0.2646985
+                   L41_Epithelial_Keratinocyte L42_Schwann.cell
+NA18855_Unstrain_0                   0.1760527        0.3827700
+NA18856_Unstrain_0                   0.2146808        0.4078106
+NA19160_Unstrain_0                   0.1955830        0.3691896
+NA18855_Unstrain_1                   0.1826130        0.3943202
+NA18856_Unstrain_1                   0.2468567        0.4199185
+NA19160_Unstrain_1                   0.2152552        0.3687786
+                   L43_Smooth.muscle.cell_Bronchial L44_HSC_Bone.Marrow
+NA18855_Unstrain_0                        0.4486122          0.08851199
+NA18856_Unstrain_0                        0.4383087          0.09612463
+NA19160_Unstrain_0                        0.4545042          0.10249586
+NA18855_Unstrain_1                        0.4577967          0.11703099
+NA18856_Unstrain_1                        0.4676083          0.14085903
+NA19160_Unstrain_1                        0.4601563          0.13616865
+                   L45_CMP_Bone.Marrow L46_GMP_Bone.Marrow
+NA18855_Unstrain_0          0.09790845          0.08668484
+NA18856_Unstrain_0          0.10095322          0.09359319
+NA19160_Unstrain_0          0.10753285          0.09206641
+NA18855_Unstrain_1          0.12315271          0.11391225
+NA18856_Unstrain_1          0.14705180          0.14170898
+NA19160_Unstrain_1          0.13469162          0.12165170
+                   L47_MEP_Bone.Marrow L48_Myelocyte_Bone.Marrow
+NA18855_Unstrain_0          0.08156346                0.04390279
+NA18856_Unstrain_0          0.08106328                0.05354840
+NA19160_Unstrain_0          0.08533918                0.06525820
+NA18855_Unstrain_1          0.11941274                0.06740842
+NA18856_Unstrain_1          0.13696173                0.09031690
+NA19160_Unstrain_1          0.10964728                0.09912467
+                   L49_Myelocyte_Bone.Marrow L50_CFU_Bone.Marrow
+NA18855_Unstrain_0                0.06951033          0.08941074
+NA18856_Unstrain_0                0.08003078          0.08478269
+NA19160_Unstrain_0                0.08733591          0.07990019
+NA18855_Unstrain_1                0.09568375          0.13121843
+NA18856_Unstrain_1                0.12604939          0.13722798
+NA19160_Unstrain_1                0.11362088          0.09966838
+                   L51_B.Cell_Bone.Marrow L52_Platelet
+NA18855_Unstrain_0             0.04534085   0.08474456
+NA18856_Unstrain_0             0.06037634   0.10510881
+NA19160_Unstrain_0             0.04320641   0.10391806
+NA18855_Unstrain_1             0.06371680   0.08957871
+NA18856_Unstrain_1             0.10141303   0.13423400
+NA19160_Unstrain_1             0.07762897   0.12608063
+                   L53_Erythroblast_Late L54_Erythroblast_Pro
+NA18855_Unstrain_0             0.1021322           0.08415914
+NA18856_Unstrain_0             0.1069310           0.07970979
+NA19160_Unstrain_0             0.1153612           0.07495295
+NA18855_Unstrain_1             0.1384249           0.12757195
+NA18856_Unstrain_1             0.1458859           0.13079364
+NA19160_Unstrain_1             0.1520616           0.09645944
+                   L55_MSC_Fetal.Blood L56_MSC_Fetal.Bone.Marrow
+NA18855_Unstrain_0           0.5247124                 0.5209603
+NA18856_Unstrain_0           0.5302984                 0.5192471
+NA19160_Unstrain_0           0.4715367                 0.4678293
+NA18855_Unstrain_1           0.5329072                 0.5272503
+NA18856_Unstrain_1           0.5449790                 0.5323265
+NA19160_Unstrain_1           0.4550940                 0.4539480
+                   L57_MSC_Fetal.Liver L58_Monocyte L59_Monocyte_CD14
+NA18855_Unstrain_0           0.5109918   0.07035163        0.04933529
+NA18856_Unstrain_0           0.5179564   0.09189807        0.06592822
+NA19160_Unstrain_0           0.4606578   0.10782021        0.09134012
+NA18855_Unstrain_1           0.5169469   0.08473591        0.06424236
+NA18856_Unstrain_1           0.5281776   0.13073652        0.10646376
+NA19160_Unstrain_1           0.4470050   0.14572555        0.13050514
+                   L60_Monocyte_CD16 L61_Monocyte_CD16 L62_Monocyte
+NA18855_Unstrain_0        0.04715773        0.04596182   0.07421314
+NA18856_Unstrain_0        0.06206575        0.06596798   0.09216715
+NA19160_Unstrain_0        0.08221788        0.08335952   0.11976436
+NA18855_Unstrain_1        0.06191102        0.06355218   0.08870841
+NA18856_Unstrain_1        0.09805112        0.11000981   0.12900326
+NA19160_Unstrain_1        0.12003052        0.12502705   0.15420414
+                   L63_Macrophage_Monocyte.derived
+NA18855_Unstrain_0                      0.08916628
+NA18856_Unstrain_0                      0.12076179
+NA19160_Unstrain_0                      0.14402315
+NA18855_Unstrain_1                      0.10295737
+NA18856_Unstrain_1                      0.16008586
+NA19160_Unstrain_1                      0.18078123
+                   L64_Macrophage_Monocyte.derived
+NA18855_Unstrain_0                      0.07778298
+NA18856_Unstrain_0                      0.09713966
+NA19160_Unstrain_0                      0.11978987
+NA18855_Unstrain_1                      0.09415040
+NA18856_Unstrain_1                      0.14043403
+NA19160_Unstrain_1                      0.16078220
+                   L65_Macrophage_Monocyte.derived
+NA18855_Unstrain_0                      0.07856427
+NA18856_Unstrain_0                      0.10165601
+NA19160_Unstrain_0                      0.11273027
+NA18855_Unstrain_1                      0.09947949
+NA18856_Unstrain_1                      0.13577707
+NA19160_Unstrain_1                      0.14818769
+                   L66_Macrophage_Monocyte.derived L67_Macrophage_Alveolar
+NA18855_Unstrain_0                       0.1001998              0.09077518
+NA18856_Unstrain_0                       0.1264249              0.11894527
+NA19160_Unstrain_0                       0.1404638              0.13855532
+NA18855_Unstrain_1                       0.1136596              0.11381184
+NA18856_Unstrain_1                       0.1599533              0.16283103
+NA19160_Unstrain_1                       0.1743393              0.17246850
+                   L68_Dendritic.Cell_Monocyte.derived
+NA18855_Unstrain_0                          0.06893790
+NA18856_Unstrain_0                          0.10398552
+NA19160_Unstrain_0                          0.11298734
+NA18855_Unstrain_1                          0.08233154
+NA18856_Unstrain_1                          0.13891413
+NA19160_Unstrain_1                          0.15064353
+                   L69_Dendritic.Cell_Monocyte.derived
+NA18855_Unstrain_0                          0.08936762
+NA18856_Unstrain_0                          0.11532123
+NA19160_Unstrain_0                          0.12704377
+NA18855_Unstrain_1                          0.10161743
+NA18856_Unstrain_1                          0.16097293
+NA19160_Unstrain_1                          0.16395974
+                   L70_Dendritic.Cell_CD16 L71_Dendritic.Cell_Plasmacytoid
+NA18855_Unstrain_0              0.05348748                      0.07710431
+NA18856_Unstrain_0              0.06795807                      0.09252477
+NA19160_Unstrain_0              0.09066882                      0.10713714
+NA18855_Unstrain_1              0.06964997                      0.09065545
+NA18856_Unstrain_1              0.11311221                      0.13627486
+NA19160_Unstrain_1              0.12893126                      0.14198198
+                   L72_Dendritic.Cell_Plasmacytoid L73_T.Cell_CD4.Naive
+NA18855_Unstrain_0                      0.08173624           0.07794999
+NA18856_Unstrain_0                      0.10331400           0.08653220
+NA19160_Unstrain_0                      0.11645329           0.06954691
+NA18855_Unstrain_1                      0.09477697           0.08842476
+NA18856_Unstrain_1                      0.14486969           0.11055825
+NA19160_Unstrain_1                      0.14897184           0.10039858
+                   L74_T.Cell_CD4.Centr..Memory
+NA18855_Unstrain_0                   0.06744955
+NA18856_Unstrain_0                   0.07495715
+NA19160_Unstrain_0                   0.05953483
+NA18855_Unstrain_1                   0.08087280
+NA18856_Unstrain_1                   0.10532889
+NA19160_Unstrain_1                   0.09292886
+                   L75_T.Cell_CD4.Centr..Memory L76_T.Cell_CD4.Eff..Memory
+NA18855_Unstrain_0                   0.06786748                 0.06907584
+NA18856_Unstrain_0                   0.07726913                 0.07933833
+NA19160_Unstrain_0                   0.05675420                 0.06198190
+NA18855_Unstrain_1                   0.08174760                 0.08201412
+NA18856_Unstrain_1                   0.10716963                 0.11097690
+NA19160_Unstrain_1                   0.08931619                 0.09375791
+                   L77_T.Cell_CD8.Centr..Memory L78_T.Cell_CD8
+NA18855_Unstrain_0                   0.10116798     0.05552844
+NA18856_Unstrain_0                   0.11195330     0.06942887
+NA19160_Unstrain_0                   0.09503917     0.06267634
+NA18855_Unstrain_1                   0.11839304     0.06579920
+NA18856_Unstrain_1                   0.14184849     0.09495801
+NA19160_Unstrain_1                   0.12567365     0.08828536
+                   L79_T.Cell_CD4 L80_T.Cell_CD8.Eff..Memory
+NA18855_Unstrain_0     0.04701602                 0.10217214
+NA18856_Unstrain_0     0.06734174                 0.10502157
+NA19160_Unstrain_0     0.05998284                 0.09166855
+NA18855_Unstrain_1     0.05440286                 0.11425078
+NA18856_Unstrain_1     0.09356045                 0.13208732
+NA19160_Unstrain_1     0.08467994                 0.12295338
+                   L81_T.Cell_CD8.Naive L82_T.Cell_CD8 L83_T.Cell_CD4
+NA18855_Unstrain_0           0.09794242     0.05689271     0.06760203
+NA18856_Unstrain_0           0.10629218     0.05674913     0.08067517
+NA19160_Unstrain_0           0.09057920     0.02844967     0.04986372
+NA18855_Unstrain_1           0.11223162     0.09398140     0.09061982
+NA18856_Unstrain_1           0.13396603     0.10299167     0.11837026
+NA19160_Unstrain_1           0.12215421     0.05601304     0.08054592
+                   L84_T.Cell_CD4.Naive L85_NK.Cell_CD56Hi
+NA18855_Unstrain_0           0.08577501         0.09362816
+NA18856_Unstrain_0           0.10301888         0.11884080
+NA19160_Unstrain_0           0.07571672         0.11141261
+NA18855_Unstrain_1           0.09667369         0.11500512
+NA18856_Unstrain_1           0.13202930         0.17053808
+NA19160_Unstrain_1           0.10544826         0.15221048
+                   L86_NK.Cell_CD56Lo L87_Neutrophil L88_Neutrophil
+NA18855_Unstrain_0         0.09791878     0.03528788     0.04640780
+NA18856_Unstrain_0         0.12432650     0.05691343     0.07086687
+NA19160_Unstrain_0         0.11771494     0.06400053     0.07880258
+NA18855_Unstrain_1         0.11778586     0.04867306     0.06343120
+NA18856_Unstrain_1         0.17191834     0.08870805     0.11239384
+NA19160_Unstrain_1         0.15395246     0.09972731     0.11895404
+                   L89_B.Cell L90_B.Cell_Naive L91_B.Cell
+NA18855_Unstrain_0 0.04215245       0.06141895 0.04877947
+NA18856_Unstrain_0 0.06172284       0.06939307 0.03926742
+NA19160_Unstrain_0 0.05965414       0.05498810 0.01391979
+NA18855_Unstrain_1 0.04706676       0.07199320 0.07870102
+NA18856_Unstrain_1 0.08519048       0.09820809 0.07393880
+NA19160_Unstrain_1 0.08328295       0.08400691 0.04122558
+                   L92_B.Cell_Memory L93_B.Cell_Plasma.Cell L94_Oocyte
+NA18855_Unstrain_0        0.05117741             0.09814420 0.04451563
+NA18856_Unstrain_0        0.06188280             0.11673275 0.05030631
+NA19160_Unstrain_0        0.04117485             0.09202504 0.02138991
+NA18855_Unstrain_1        0.06615082             0.10751366 0.06906419
+NA18856_Unstrain_1        0.09488686             0.14070436 0.07609406
+NA19160_Unstrain_1        0.07220062             0.12174313 0.03868704
+                   L95_Spermatocyte
+NA18855_Unstrain_0     -0.017503308
+NA18856_Unstrain_0      0.029980728
+NA19160_Unstrain_0      0.009026681
+NA18855_Unstrain_1     -0.006591085
+NA18856_Unstrain_1      0.073711855
+NA19160_Unstrain_1      0.036808967</code></pre>
+<pre class="r"><code>#Add a metadata column &quot;clusteredCellAtlas&quot; to the object
+SCT.integrated.pseudobulk &lt;- AssignClusteredLabel(SCT.integrated.pseudobulk,cor.mat, K=20, topCorrelation=5)
+
+#Table of assigned cell labels (and by cluster assignment)
+table(SCT.integrated.pseudobulk$clusteredCellAtlas)</code></pre>
+<pre><code>
+iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast 
+                                         8 
+            MSC_Fibroblast_iPSC_Osteoblast 
+                                         1 </code></pre>
+<pre class="r"><code>table(SCT.integrated.pseudobulk$clusteredCellAtlas, SCT.integrated.pseudobulk$cluster_ind)</code></pre>
+<pre><code>                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0</code></pre>
+</div>
+<div id="exploring-different-values-of-k-clusters-of-cellatlas-populations-2" class="section level2">
+<h2>Exploring different values of K (clusters of cellatlas populations)</h2>
+<p>Out of interest, I look at how trying different resolutions of the cellatlas data affect assignments of cell types</p>
+<pre class="r"><code>for(kval in 17:57){
+     print(kval)
+     print(table(AssignClusteredLabel(SCT.integrated.pseudobulk,cor.mat, K=kval, topCorrelation=5)$clusteredCellAtlas, SCT.integrated.pseudobulk$cluster_ind))
+}</code></pre>
+<pre><code>[1] 17
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+[1] 18
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+[1] 19
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+[1] 20
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+[1] 21
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC_Fibroblast_iPSC_Osteoblast                              1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC_Fibroblast_iPSC_Osteoblast                              0
+[1] 22
+                                            
+                                             NA18855_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA18855_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  0
+  MSC                                                         1
+                                            
+                                             NA18855_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA18856_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA18856_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA18856_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA19160_Unstrain_0
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA19160_Unstrain_1
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+                                            
+                                             NA19160_Unstrain_2
+  iPSC_MSC_Chondrocyte_Fibroblast_Osteoblast                  1
+  MSC                                                         0
+[1] 23
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 24
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 25
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 26
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 27
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 28
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_MSC_Fibroblast                     1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_MSC_Fibroblast                     1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_MSC_Fibroblast                     1
+  MSC                                     0
+[1] 29
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 30
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 31
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 32
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 33
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 34
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 35
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 36
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 37
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 38
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 39
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 40
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 41
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 42
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 43
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 44
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 45
+                        
+                         NA18855_Unstrain_0 NA18855_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         0                  0
+  MSC                                     1                  1
+                        
+                         NA18855_Unstrain_2 NA18856_Unstrain_0
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  1
+                        
+                         NA18856_Unstrain_1 NA18856_Unstrain_2
+  Chondrocyte_Osteoblast                  0                  0
+  iPSC_Fibroblast                         1                  1
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_0 NA19160_Unstrain_1
+  Chondrocyte_Osteoblast                  0                  1
+  iPSC_Fibroblast                         1                  0
+  MSC                                     0                  0
+                        
+                         NA19160_Unstrain_2
+  Chondrocyte_Osteoblast                  0
+  iPSC_Fibroblast                         1
+  MSC                                     0
+[1] 46
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  iPSC_Fibroblast                  1                  0                  1
+  MSC                              0                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 47
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  iPSC_Fibroblast                  1                  0                  1
+  MSC                              0                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 48
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  iPSC_Fibroblast                  1                  0                  1
+  MSC                              0                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 49
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  iPSC_Fibroblast                  1                  0                  1
+  MSC                              0                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  iPSC_Fibroblast                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 50
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 51
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 52
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 53
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 54
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 55
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 56
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0
+[1] 57
+                 
+                  NA18855_Unstrain_0 NA18855_Unstrain_1 NA18855_Unstrain_2
+  Fibroblast_iPSC                  0                  0                  1
+  MSC                              1                  1                  0
+                 
+                  NA18856_Unstrain_0 NA18856_Unstrain_1 NA18856_Unstrain_2
+  Fibroblast_iPSC                  0                  1                  1
+  MSC                              1                  0                  0
+                 
+                  NA19160_Unstrain_0 NA19160_Unstrain_1 NA19160_Unstrain_2
+  Fibroblast_iPSC                  1                  1                  1
+  MSC                              0                  0                  0</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] scran_1.12.1                scHCL_0.1.1                
+ [3] Matrix.utils_0.9.7          Matrix_1.2-18              
+ [5] SingleCellExperiment_1.6.0  SummarizedExperiment_1.14.1
+ [7] DelayedArray_0.10.0         BiocParallel_1.18.1        
+ [9] matrixStats_0.56.0          Biobase_2.44.0             
+[11] GenomicRanges_1.36.0        GenomeInfoDb_1.20.0        
+[13] IRanges_2.18.3              S4Vectors_0.22.1           
+[15] BiocGenerics_0.30.0         Seurat_3.1.3               
+
+loaded via a namespace (and not attached):
+  [1] backports_1.1.9          workflowr_1.6.2         
+  [3] plyr_1.8.6               igraph_1.2.4.1          
+  [5] lazyeval_0.2.2           splines_3.6.1           
+  [7] listenv_0.8.0            scater_1.12.2           
+  [9] ggplot2_3.3.2            digest_0.6.25           
+ [11] htmltools_0.5.0          viridis_0.5.1           
+ [13] gdata_2.18.0             magrittr_1.5            
+ [15] cluster_2.1.0            ROCR_1.0-7              
+ [17] limma_3.40.6             globals_0.12.5          
+ [19] RcppParallel_5.0.2       colorspace_1.4-1        
+ [21] rappdirs_0.3.1           ggrepel_0.8.2           
+ [23] xfun_0.8                 dplyr_1.0.2             
+ [25] crayon_1.3.4             RCurl_1.98-1.1          
+ [27] jsonlite_1.7.0           survival_2.44-1.1       
+ [29] zoo_1.8-8                ape_5.3                 
+ [31] glue_1.4.2               gtable_0.3.0            
+ [33] zlibbioc_1.30.0          XVector_0.24.0          
+ [35] leiden_0.3.1             BiocSingular_1.0.0      
+ [37] future.apply_1.3.0       scales_1.1.1            
+ [39] pheatmap_1.0.12          edgeR_3.26.5            
+ [41] bibtex_0.4.2             Rcpp_1.0.5              
+ [43] metap_1.1                viridisLite_0.3.0       
+ [45] xtable_1.8-4             reticulate_1.16         
+ [47] dqrng_0.2.1              rsvd_1.0.1              
+ [49] tsne_0.1-3               DT_0.15                 
+ [51] htmlwidgets_1.5.1        httr_1.4.2              
+ [53] gplots_3.0.1.1           RColorBrewer_1.1-2      
+ [55] ellipsis_0.3.1           ica_1.0-2               
+ [57] pkgconfig_2.0.3          uwot_0.1.5              
+ [59] locfit_1.5-9.1           dynamicTreeCut_1.63-1   
+ [61] tidyselect_1.1.0         rlang_0.4.7             
+ [63] reshape2_1.4.3           later_1.1.0.1           
+ [65] munsell_0.5.0            tools_3.6.1             
+ [67] generics_0.0.2           ggridges_0.5.1          
+ [69] evaluate_0.14            stringr_1.4.0           
+ [71] yaml_2.2.1               npsurv_0.4-0            
+ [73] knitr_1.23               fs_1.3.1                
+ [75] fitdistrplus_1.0-14      caTools_1.17.1.2        
+ [77] purrr_0.3.4              RANN_2.6.1              
+ [79] pbapply_1.4-0            future_1.18.0           
+ [81] nlme_3.1-140             whisker_0.3-2           
+ [83] mime_0.9                 grr_0.9.5               
+ [85] compiler_3.6.1           shinythemes_1.1.2       
+ [87] beeswarm_0.2.3           plotly_4.9.2.1          
+ [89] png_0.1-7                lsei_1.2-0              
+ [91] statmod_1.4.32           tibble_3.0.3            
+ [93] stringi_1.4.6            lattice_0.20-41         
+ [95] vctrs_0.3.4              pillar_1.4.6            
+ [97] lifecycle_0.2.0          Rdpack_0.11-0           
+ [99] lmtest_0.9-37            RcppAnnoy_0.0.12        
+[101] BiocNeighbors_1.2.0      data.table_1.13.0       
+[103] cowplot_1.0.0            bitops_1.0-6            
+[105] irlba_2.3.3              gbRd_0.4-11             
+[107] httpuv_1.5.1             R6_2.4.1                
+[109] promises_1.1.1           KernSmooth_2.23-15      
+[111] gridExtra_2.3            vipor_0.4.5             
+[113] codetools_0.2-16         MASS_7.3-52             
+[115] gtools_3.8.1             rprojroot_1.3-2         
+[117] sctransform_0.2.0        GenomeInfoDbData_1.2.1  
+[119] grid_3.6.1               tidyr_1.1.2             
+[121] rmarkdown_1.13           DelayedMatrixStats_1.6.1
+[123] Rtsne_0.15               git2r_0.26.1            
+[125] shiny_1.3.2              ggbeeswarm_0.6.0        </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
