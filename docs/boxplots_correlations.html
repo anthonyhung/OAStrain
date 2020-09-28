@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-05-12" />
+
+<title>Pairwise correlations</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Pairwise correlations</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-05-12</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-05-20
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
+    Ignored:    output/ANT1.2.rds
+
+Untracked files:
+    Untracked:  .RDataTmp
+
+Unstaged changes:
+    Modified:   analysis/boxplots_correlations.Rmd
+    Modified:   analysis/enrichment_DE.Rmd
+    Modified:   data/Sample.info.RNAseq.reordered.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/boxplots_correlations.Rmd</code>) and HTML (<code>docs/boxplots_correlations.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/analysis/boxplots_correlations.Rmd" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+<td>
+box plot of pairwise correlations
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/boxplots_correlations.html" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+<td>
+box plot of pairwise correlations
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="plot-boxplots-of-pairwise-correlations-between-samples" class="section level1">
+<h1>plot boxplots of pairwise correlations between samples</h1>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(textshape)</code></pre>
+<pre><code>
+Attaching package: &#39;textshape&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    combine</code></pre>
+<pre class="r"><code>library(stringr)
+library(reshape2)
+library(ggplot2)
+library(RUVSeq)</code></pre>
+<pre><code>Loading required package: Biobase</code></pre>
+<pre><code>Loading required package: BiocGenerics</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>
+Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:parallel&#39;:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>The following object is masked from &#39;package:textshape&#39;:
+
+    combine</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    combine, intersect, setdiff, union</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    anyDuplicated, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter,
+    Find, get, grep, grepl, intersect, is.unsorted, lapply, Map,
+    mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, Position, rank, rbind, Reduce, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min</code></pre>
+<pre><code>Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    &#39;browseVignettes()&#39;. To cite Bioconductor, see
+    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>Loading required package: EDASeq</code></pre>
+<pre><code>Loading required package: ShortRead</code></pre>
+<pre><code>Loading required package: BiocParallel</code></pre>
+<pre><code>Loading required package: Biostrings</code></pre>
+<pre><code>Loading required package: S4Vectors</code></pre>
+<pre><code>Loading required package: stats4</code></pre>
+<pre><code>
+Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    first, rename</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    expand.grid</code></pre>
+<pre><code>Loading required package: IRanges</code></pre>
+<pre><code>
+Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    collapse, desc, slice</code></pre>
+<pre><code>Loading required package: XVector</code></pre>
+<pre><code>
+Attaching package: &#39;Biostrings&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    strsplit</code></pre>
+<pre><code>Loading required package: Rsamtools</code></pre>
+<pre><code>Loading required package: GenomeInfoDb</code></pre>
+<pre><code>Loading required package: GenomicRanges</code></pre>
+<pre><code>Loading required package: GenomicAlignments</code></pre>
+<pre><code>Loading required package: SummarizedExperiment</code></pre>
+<pre><code>Loading required package: DelayedArray</code></pre>
+<pre><code>Loading required package: matrixStats</code></pre>
+<pre><code>
+Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:Biobase&#39;:
+
+    anyMissing, rowMedians</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    count</code></pre>
+<pre><code>
+Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>The following object is masked from &#39;package:Biostrings&#39;:
+
+    type</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    aperm, apply, rowsum</code></pre>
+<pre><code>
+Attaching package: &#39;GenomicAlignments&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    last</code></pre>
+<pre><code>
+Attaching package: &#39;ShortRead&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    id</code></pre>
+<pre><code>Loading required package: edgeR</code></pre>
+<pre><code>Loading required package: limma</code></pre>
+<pre><code>
+Attaching package: &#39;limma&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:BiocGenerics&#39;:
+
+    plotMA</code></pre>
+<pre class="r"><code>#load data
+raw_counts &lt;- cpm(readRDS(&quot;data/raw_counts_relabeled.rds&quot;))
+
+uq &lt;- readRDS(&quot;data/norm_filtered_counts.rds&quot;)
+
+#RUVs output for what the var partition looks like after normalization
+set1 &lt;- readRDS(&quot;data/RUVsOut.rds&quot;)
+anno &lt;- pData(set1) #unwanted factors
+
+uq_ruv &lt;- t(lm(t(uq) ~ anno$W_1 + anno$W_2)$residuals)</code></pre>
+</div>
+<div id="calculate-cor-matrices" class="section level1">
+<h1>Calculate cor matrices</h1>
+<pre class="r"><code>#raw
+cors_raw_spear &lt;- cor(raw_counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+cors_raw_pearson &lt;- cor(raw_counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+#uq
+cors_uq_spear &lt;- cor(uq, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+cors_uq_pearson &lt;- cor(uq, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+#uq_ruv
+cors_uq_ruv_spear &lt;- cor(uq_ruv, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+cors_uq_ruv_pearson &lt;- cor(uq_ruv, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)</code></pre>
+</div>
+<div id="convert-cor-matrices-into-useful-format" class="section level1">
+<h1>Convert cor matrices into useful format</h1>
+<pre class="r"><code>#takes as input a correlation matrix and outputs a tidy version
+convert_cor &lt;- function(cor_matrix){
+     tidy &lt;- tidy_matrix(cor_matrix)
+     #remove identities
+     tidy &lt;- tidy %&gt;% filter(value &lt; 0.999)
+     tidy$ind1 &lt;- sapply(strsplit(tidy$row,&quot;_&quot;), `[`, 1)
+     tidy$ind2 &lt;- sapply(strsplit(tidy$col,&quot;_&quot;), `[`, 1)
+     tidy$rep1 &lt;- sapply(strsplit(tidy$row,&quot;_&quot;), `[`, 2)
+     tidy$rep2 &lt;- sapply(strsplit(tidy$col,&quot;_&quot;), `[`, 2)
+     tidy$treat1 &lt;- sapply(strsplit(tidy$row,&quot;_&quot;), `[`, 3)
+     tidy$treat2 &lt;- sapply(strsplit(tidy$col,&quot;_&quot;), `[`, 3)
+     return(as.data.frame(tidy))
+}
+
+#raw
+tidy_cors_raw_spear &lt;- convert_cor(cors_raw_spear)
+tidy_cors_raw_pearson &lt;- convert_cor(cors_raw_pearson)
+
+#uq
+tidy_cors_uq_spear &lt;- convert_cor(cors_uq_spear)
+tidy_cors_uq_pearson &lt;- convert_cor(cors_uq_pearson)
+
+#uq_ruv
+tidy_cors_uq_ruv_spear &lt;- convert_cor(cors_uq_ruv_spear)
+tidy_cors_uq_ruv_pearson &lt;- convert_cor(cors_uq_ruv_pearson)</code></pre>
+</div>
+<div id="make-plots" class="section level1">
+<h1>Make plots</h1>
+<pre class="r"><code>make_plot &lt;- function(tidy_cors){
+     all &lt;- tidy_cors$value
+     same_ind &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2]
+     same_rep &lt;- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2]
+     same_treat &lt;- tidy_cors$value[tidy_cors$treat1 == tidy_cors$treat2]
+     
+     same_ind_rest_diff &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 &amp; tidy_cors$rep1 != tidy_cors$rep2 &amp; tidy_cors$treat1 != tidy_cors$treat2]
+     same_rep_rest_diff &lt;- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 &amp; tidy_cors$ind1 != tidy_cors$ind2 &amp; tidy_cors$treat1 != tidy_cors$treat2]
+     same_treat_rest_diff &lt;- tidy_cors$value[tidy_cors$treat1 == tidy_cors$treat2 &amp; tidy_cors$ind1 != tidy_cors$ind2 &amp; tidy_cors$rep1 != tidy_cors$rep2]
+
+     same_ind_rep &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 &amp; tidy_cors$rep1 == tidy_cors$rep2]
+     same_rep_treat &lt;- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 &amp; tidy_cors$treat1 == tidy_cors$treat2]
+     same_ind_treat &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 &amp; tidy_cors$treat1 == tidy_cors$treat2]
+     
+     same_ind_rep_diff_treat &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 &amp; tidy_cors$rep1 == tidy_cors$rep2 &amp; tidy_cors$treat1 != tidy_cors$treat2]
+     same_rep_treat_diff_ind &lt;- tidy_cors$value[tidy_cors$rep1 == tidy_cors$rep2 &amp; tidy_cors$treat1 == tidy_cors$treat2 &amp; tidy_cors$ind1 != tidy_cors$ind2]
+     same_ind_treat_diff_rep &lt;- tidy_cors$value[tidy_cors$ind1 == tidy_cors$ind2 &amp; tidy_cors$treat1 == tidy_cors$treat2 &amp; tidy_cors$rep1 != tidy_cors$rep2]
+     
+     diff_all &lt;- tidy_cors$value[tidy_cors$ind1 != tidy_cors$ind2 &amp; tidy_cors$rep1 != tidy_cors$rep2 &amp; tidy_cors$treat1 != tidy_cors$treat2]
+     
+     n &lt;- length(all)
+     
+     length(same_ind) &lt;- n
+     length(same_rep) &lt;- n
+     length(same_treat) &lt;- n
+     length(same_ind_rest_diff) &lt;- n
+     length(same_rep_rest_diff) &lt;- n
+     length(same_treat_rest_diff) &lt;- n
+     length(same_ind_rep) &lt;- n
+     length(same_ind_treat) &lt;- n
+     length(same_rep_treat) &lt;- n
+     length(same_ind_rep_diff_treat) &lt;- n
+     length(same_rep_treat_diff_ind) &lt;- n
+     length(same_ind_treat_diff_rep) &lt;- n
+     length(diff_all) &lt;- n
+     
+     #combine all into a df
+     combined &lt;- as.data.frame(cbind(all, 
+                                     #same_ind, same_treat, same_rep, 
+                                     same_ind_rest_diff, same_treat_rest_diff, same_rep_rest_diff,
+                                     #same_ind_treat, same_ind_rep, same_rep_treat,
+                                     same_ind_treat_diff_rep, same_ind_rep_diff_treat, same_rep_treat_diff_ind,
+                                     diff_all))
+     #melt
+     combined_melt &lt;- melt(combined)
+     
+     #plot
+     return(ggplot(combined_melt, aes(x = variable, y = value)) +
+                 geom_boxplot() +
+                 geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.2) +
+                 labs(y = &quot;correlation&quot;, x = &quot;&quot;))
+}
+
+#raw
+make_plot(tidy_cors_raw_spear) + labs(title=&quot;Raw Data (cpm), Spearman&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1632 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>Warning: Removed 1632 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-1">
+Past versions of plots-1.png
+</button>
+</p>
+<div id="fig-plots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-1.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_plot(tidy_cors_raw_pearson) + labs(title=&quot;Raw Data (cpm), Pearson&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1620 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>Warning: Removed 1620 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-2">
+Past versions of plots-2.png
+</button>
+</p>
+<div id="fig-plots-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-2.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#uq
+make_plot(tidy_cors_uq_spear) + labs(title=&quot;UQ normalized Data, Spearman&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1632 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>Warning: Removed 1632 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-3">
+Past versions of plots-3.png
+</button>
+</p>
+<div id="fig-plots-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-3.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_plot(tidy_cors_uq_pearson) + labs(title=&quot;UQ normalized Data, Pearson&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1632 rows containing non-finite values (stat_boxplot).
+
+Warning: Removed 1632 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-4">
+Past versions of plots-4.png
+</button>
+</p>
+<div id="fig-plots-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-4.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#uq_ruv
+make_plot(tidy_cors_uq_ruv_spear) + labs(title=&quot;uq_ruv normalized Data, Spearman&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1632 rows containing non-finite values (stat_boxplot).
+
+Warning: Removed 1632 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-5">
+Past versions of plots-5.png
+</button>
+</p>
+<div id="fig-plots-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-5.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>make_plot(tidy_cors_uq_ruv_pearson) + labs(title=&quot;uq_ruv normalized Data, Pearson&quot;)</code></pre>
+<pre><code>No id variables; using all as measure variables</code></pre>
+<pre><code>Warning: Removed 1632 rows containing non-finite values (stat_boxplot).
+
+Warning: Removed 1632 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/boxplots_correlations.Rmd/plots-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plots-6">
+Past versions of plots-6.png
+</button>
+</p>
+<div id="fig-plots-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/51cceef198e21d0b03dbcb95ee86fd6a6d88b406/docs/figure/boxplots_correlations.Rmd/plots-6.png" target="_blank">51cceef</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] RUVSeq_1.18.0               edgeR_3.26.8               
+ [3] limma_3.40.6                EDASeq_2.18.0              
+ [5] ShortRead_1.42.0            GenomicAlignments_1.20.1   
+ [7] SummarizedExperiment_1.14.1 DelayedArray_0.10.0        
+ [9] matrixStats_0.55.0          Rsamtools_2.0.0            
+[11] GenomicRanges_1.36.1        GenomeInfoDb_1.20.0        
+[13] Biostrings_2.52.0           XVector_0.24.0             
+[15] IRanges_2.18.3              S4Vectors_0.22.1           
+[17] BiocParallel_1.18.1         Biobase_2.44.0             
+[19] BiocGenerics_0.30.0         ggplot2_3.3.0              
+[21] reshape2_1.4.3              stringr_1.4.0              
+[23] textshape_1.7.1             dplyr_0.8.5                
+
+loaded via a namespace (and not attached):
+ [1] bitops_1.0-6           fs_1.3.1               bit64_0.9-7           
+ [4] RColorBrewer_1.1-2     progress_1.2.2         httr_1.4.1            
+ [7] rprojroot_1.3-2        tools_3.6.1            backports_1.1.7       
+[10] R6_2.4.1               DBI_1.0.0              colorspace_1.4-1      
+[13] withr_2.2.0            tidyselect_1.1.0       prettyunits_1.1.1     
+[16] bit_1.1-14             compiler_3.6.1         git2r_0.26.1          
+[19] labeling_0.3           rtracklayer_1.44.0     scales_1.1.1          
+[22] genefilter_1.66.0      DESeq_1.36.0           digest_0.6.25         
+[25] rmarkdown_1.13         R.utils_2.9.2          pkgconfig_2.0.3       
+[28] htmltools_0.4.0        rlang_0.4.6            RSQLite_2.1.1         
+[31] farver_2.0.3           hwriter_1.3.2          R.oo_1.23.0           
+[34] RCurl_1.98-1.1         magrittr_1.5           GenomeInfoDbData_1.2.1
+[37] Matrix_1.2-18          Rcpp_1.0.4.6           munsell_0.5.0         
+[40] lifecycle_0.2.0        R.methodsS3_1.7.1      stringi_1.4.6         
+[43] whisker_0.3-2          yaml_2.2.1             MASS_7.3-51.6         
+[46] zlibbioc_1.30.0        plyr_1.8.6             grid_3.6.1            
+[49] blob_1.2.0             promises_1.1.0         crayon_1.3.4          
+[52] lattice_0.20-41        splines_3.6.1          GenomicFeatures_1.36.3
+[55] annotate_1.62.0        hms_0.5.3              locfit_1.5-9.1        
+[58] knitr_1.23             pillar_1.4.4           geneplotter_1.62.0    
+[61] biomaRt_2.40.1         XML_3.98-1.20          glue_1.4.1            
+[64] evaluate_0.14          latticeExtra_0.6-28    data.table_1.12.8     
+[67] vctrs_0.3.0            httpuv_1.5.1           gtable_0.3.0          
+[70] purrr_0.3.4            assertthat_0.2.1       xfun_0.8              
+[73] aroma.light_3.14.0     xtable_1.8-4           later_1.0.0           
+[76] survival_2.44-1.1      tibble_3.0.1           AnnotationDbi_1.46.0  
+[79] memoise_1.1.0          workflowr_1.6.2        ellipsis_0.3.1        </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

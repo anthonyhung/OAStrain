@@ -1,0 +1,4829 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2019-12-16" />
+
+<title>Normalization and filtering of bulkRNA Count data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Normalization and filtering of bulkRNA Count data</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2019-12-16</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-01-18
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/3c163de1c62d5f63d88254fa028dda84186718b7" target="_blank">3c163de</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree3c163de1c62d5f63d88254fa028dda84186718b7targetblank3c163dea" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/raw_counts_relabeled.rds
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/analysis/Norm_filter.Rmd" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+edgeR DE analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/Norm_filter.html" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+<td>
+edgeR DE analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/analysis/Norm_filter.Rmd" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Getting to the bottom of the mystery of the changing correlation heatmaps – conclusion: filtering out lowly expressed genes is responsible
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/629408f29313ac35a6601656ac80732937de98e1/docs/Norm_filter.html" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Getting to the bottom of the mystery of the changing correlation heatmaps – conclusion: filtering out lowly expressed genes is responsible
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/analysis/Norm_filter.Rmd" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Use quant_normalization
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/158fdf3e906a4a488e486cb96684b4e23b567895/docs/Norm_filter.html" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+<td>
+Use quant_normalization
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a/analysis/Norm_filter.Rmd" target="_blank">fd9ab65</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Remove MSC from sample info
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/fd9ab65abed3896df96a2bfcc38ddcfe09cb1d1a/docs/Norm_filter.html" target="_blank">fd9ab65</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Remove MSC from sample info
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/analysis/Norm_filter.Rmd" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add RIN Scores
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/Norm_filter.html" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add RIN Scores
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/414262e83ffc17132ef3688335857954f181c8be/docs/Norm_filter.html" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/analysis/Norm_filter.Rmd" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add lib size plot
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/Norm_filter.html" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Add lib size plot
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/analysis/Norm_filter.Rmd" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Alternative normalization methods
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/Norm_filter.html" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+<td>
+Alternative normalization methods
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/Norm_filter.html" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+run GO enrichment analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/03b499e0b710c5a48bba76aef6472cc713c58301/analysis/Norm_filter.Rmd" target="_blank">03b499e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Add counts of significant DE Genes
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/5eb29e88b6057837b2c5c0719c225364eb484690/docs/Norm_filter.html" target="_blank">5eb29e8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Knit analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/analysis/Norm_filter.Rmd" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Correct CPM Cutoff strategy
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/Norm_filter.html" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+<td>
+Correct CPM Cutoff strategy
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/analysis/Norm_filter.Rmd" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+<td>
+Re-run analyses with real data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/Norm_filter.html" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+<td>
+Re-run analyses with real data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/b7948f028fdd5633f9fb0645fee59f12457d68e0/docs/Norm_filter.html" target="_blank">b7948f0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-06
+</td>
+<td>
+DE analysis design matrix
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/11d20cf3138fe01e8eeb5b599396ce1a925881ab/docs/Norm_filter.html" target="_blank">11d20cf</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/analysis/Norm_filter.Rmd" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+run through with dummy data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/Norm_filter.html" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+run through with dummy data
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bb98d141e6a1ad34c642aa8583b371a0f3dc000e/analysis/Norm_filter.Rmd" target="_blank">bb98d14</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Add sampleinfo file
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/c1f7cf7e67e7a3372e359d52a2cfa24d1a2672a6/analysis/Norm_filter.Rmd" target="_blank">c1f7cf7</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Start up additional analysis files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a8cef1a7772685bd04a25c93dd5d7920caa1e492/analysis/Norm_filter.Rmd" target="_blank">a8cef1a</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+<td>
+Create analysis files for analysis of BulkRNA pilot data
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="perform-normalization-of-raw-count-data-using-different-normalization-methods-and-filter-out-lowly-expressed-genes" class="section level1">
+<h1>Perform normalization of raw count data using different normalization methods and filter out lowly expressed genes</h1>
+<pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    lowess</code></pre>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
+library(&quot;reshape&quot;)
+library(&quot;edgeR&quot;)</code></pre>
+<pre><code>Loading required package: limma</code></pre>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+library(&quot;cowplot&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    ggsave</code></pre>
+<pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
+
+    rename</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code># Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+
+# load in relabeled counts
+raw_counts &lt;- readRDS(&quot;data/raw_counts_relabeled.rds&quot;)
+# Create DGEList object to allow for easier application of different normalization methods
+raw_counts &lt;- DGEList(raw_counts, group = colnames(raw_counts))
+
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+</div>
+<div id="correlation-heatmap-of-raw-data" class="section level1">
+<h1>Correlation heatmap of Raw Data</h1>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(raw_counts$counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20raw-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-raw-1">
+Past versions of “corr heatmap raw-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-raw-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/corr heatmap raw-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/corr heatmap raw-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/corr heatmap raw-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/corr heatmap raw-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(raw_counts$counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-raw-2">
+Past versions of “corr heatmap raw-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-raw-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/corr heatmap raw-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/corr heatmap raw-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/corr heatmap raw-2.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/corr heatmap raw-2.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="perform-cpm-normalization-on-all-counts-and-plot-density-plots" class="section level1">
+<h1>Perform cpm normalization on all counts and plot density plots</h1>
+<pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
+head(cpm)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -1.869360 -2.775397 -3.006605 -3.880222 -3.856000 -1.427425
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -6.129431 -3.878455 -1.666196 -1.900087 -6.129431 -3.189505
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000227232 -4.009829 -1.679921 -2.828244 -2.235099 -6.129431
+ENSG00000278267 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000243485 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000284332 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431
+ENSG00000237613 -6.129431 -6.129431 -6.129431 -6.129431 -6.129431</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(cpm[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/cpm%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-1">
+Past versions of “cpm normalization-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(cpm[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/cpm%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-2">
+Past versions of “cpm normalization-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-2.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(cpm[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/cpm%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-3">
+Past versions of “cpm normalization-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-3.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(cpm[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/cpm%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-4">
+Past versions of “cpm normalization-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-4.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(cpm[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/cpm%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cpm-normalization-5">
+Past versions of “cpm normalization-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-cpm-normalization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/cpm normalization-5.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2cpm-normalized-and-unfiltered-samples" class="section level2">
+<h2>Correlation heatmap of log2CPM normalized and unfiltered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20CPM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-CPM-1">
+Past versions of “corr heatmap unfiltered CPM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-CPM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered CPM-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(cpm, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20CPM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-CPM-2">
+Past versions of “corr heatmap unfiltered CPM-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-CPM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered CPM-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="boxplots-of-cpm-across-samples" class="section level2">
+<h2>Boxplots of cpm across samples</h2>
+<pre class="r"><code>meltcpm &lt;- melt(cpm)
+names(meltcpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;cpm&quot;)
+p &lt;- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-cpm-1">
+Past versions of “boxplot cpm-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-cpm-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/boxplot cpm-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2cpm-2.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2CPM &gt; 2.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 2.5
+
+keep &lt;- rowSums(cpm &gt; cutoff ) &gt;=4
+
+counts_cpm &lt;- raw_counts[keep,]
+filtered_cpm &lt;- cpm[keep,]
+dim(filtered_cpm)</code></pre>
+<pre><code>[1] 10448    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_cpm &lt;- melt(filtered_cpm)
+names(melt_filt_cpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2cpm&quot;)
+p1 &lt;- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-cpm-1">
+Past versions of “boxplot filt cpm-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-cpm-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a7627071e7842bb3a7c00d8562e00fed6f46a6fa/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">a762707</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/00a66fbc7e4e6e654586196c8171bdd4bfbf7682/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">00a66fb</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">f1425df</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/bd0e9ca9fce8fcacec0258136d57c630ecf50508/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">bd0e9ca</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/a5c9482ccd1a7acb2e0ee078e460cb62420e1bed/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">a5c9482</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2019-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2cpm-normalized-and-filtered-samples" class="section level2">
+<h2>Correlation heatmap of log2CPM normalized and filtered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20CPM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-CPM-1">
+Past versions of “corr heatmap filtered CPM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-CPM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(filtered_cpm, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20CPM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-CPM-2">
+Past versions of “corr heatmap filtered CPM-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-CPM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="tmm-normalization" class="section level1">
+<h1>TMM Normalization</h1>
+<pre class="r"><code>TMM &lt;- calcNormFactors(raw_counts, method = &quot;TMM&quot;)
+TMM &lt;- cpm(TMM, log=TRUE, normalized.lib.sizes = T)
+head(TMM)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -1.811964 -2.766917 -3.030470 -3.925143 -3.827294 -1.543504
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -6.127606 -3.784853 -1.672915 -1.871293 -6.127606 -3.256899
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000227232 -3.899127 -1.634902 -2.920096 -2.198278 -6.127606
+ENSG00000278267 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000243485 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000284332 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606
+ENSG00000237613 -6.127606 -6.127606 -6.127606 -6.127606 -6.127606</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(TMM[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-TMM-normalization-1">
+Past versions of “TMM normalization-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-TMM-normalization-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/TMM normalization-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/TMM normalization-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/TMM normalization-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/TMM normalization-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(TMM[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-TMM-normalization-2">
+Past versions of “TMM normalization-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-TMM-normalization-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/TMM normalization-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/TMM normalization-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/TMM normalization-2.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/TMM normalization-2.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(TMM[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-TMM-normalization-3">
+Past versions of “TMM normalization-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-TMM-normalization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/TMM normalization-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/TMM normalization-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/TMM normalization-3.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/TMM normalization-3.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(TMM[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-TMM-normalization-4">
+Past versions of “TMM normalization-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-TMM-normalization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/TMM normalization-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/TMM normalization-4.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/TMM normalization-4.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/TMM normalization-4.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(TMM[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/TMM%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-TMM-normalization-5">
+Past versions of “TMM normalization-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-TMM-normalization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/TMM normalization-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/TMM normalization-5.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/TMM normalization-5.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/TMM normalization-5.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2tmm-normalized-and-unfiltered-samples" class="section level2">
+<h2>Correlation heatmap of log2TMM normalized and unfiltered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(TMM, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-TMM-1">
+Past versions of “corr heatmap unfiltered TMM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-TMM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered TMM-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(TMM, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20TMM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-TMM-2">
+Past versions of “corr heatmap unfiltered TMM-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-TMM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered TMM-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="boxplots-of-tmm-across-samples" class="section level2">
+<h2>Boxplots of TMM across samples</h2>
+<pre class="r"><code>meltTMM &lt;- melt(TMM)
+names(meltTMM) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;TMM&quot;)
+p &lt;- ggplot(meltTMM, aes(factor(sampleID), TMM)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-TMM-1">
+Past versions of “boxplot TMM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-TMM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot TMM-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot TMM-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot TMM-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot TMM-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2tmm-2.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2TMM &gt; 2.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 2.5
+
+keep &lt;- rowSums( TMM &gt; cutoff ) &gt;=4
+
+counts_TMM &lt;- raw_counts[keep,]
+filtered_TMM &lt;- TMM[keep,]
+dim(filtered_TMM)</code></pre>
+<pre><code>[1] 10442    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_TMM &lt;- melt(filtered_TMM)
+names(melt_filt_TMM) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2TMM&quot;)
+p1 &lt;- ggplot(melt_filt_TMM, aes(factor(sampleID), log2TMM)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-TMM-1">
+Past versions of “boxplot filt TMM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-TMM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2tmm-normalized-and-filtered-samples" class="section level2">
+<h2>Correlation heatmap of log2TMM normalized and filtered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_TMM, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20TMM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-TMM-1">
+Past versions of “corr heatmap filtered TMM-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-TMM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filtered_TMM, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20TMM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-TMM-2">
+Past versions of “corr heatmap filtered TMM-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-TMM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="rle-normalization" class="section level1">
+<h1>RLE Normalization</h1>
+<pre class="r"><code>RLE &lt;- calcNormFactors(raw_counts, method = &quot;RLE&quot;)
+RLE &lt;- cpm(RLE, log=TRUE, normalized.lib.sizes = T)
+head(RLE)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -1.810299 -2.775609 -3.039611 -3.932339 -3.833833 -1.526336
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -6.127817 -3.791464 -1.679208 -1.874733 -6.127817 -3.251118
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000227232 -3.898019 -1.635305 -2.914918 -2.192279 -6.127817
+ENSG00000278267 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000243485 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000284332 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817
+ENSG00000237613 -6.127817 -6.127817 -6.127817 -6.127817 -6.127817</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(RLE[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-RLE-normalization-1">
+Past versions of “RLE normalization-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-RLE-normalization-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/RLE normalization-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/RLE normalization-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/RLE normalization-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/RLE normalization-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(RLE[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-RLE-normalization-2">
+Past versions of “RLE normalization-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-RLE-normalization-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/RLE normalization-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/RLE normalization-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/RLE normalization-2.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/RLE normalization-2.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(RLE[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-RLE-normalization-3">
+Past versions of “RLE normalization-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-RLE-normalization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/RLE normalization-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/RLE normalization-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/RLE normalization-3.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/RLE normalization-3.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(RLE[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-RLE-normalization-4">
+Past versions of “RLE normalization-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-RLE-normalization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/RLE normalization-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/RLE normalization-4.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/RLE normalization-4.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/RLE normalization-4.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(RLE[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/RLE%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-RLE-normalization-5">
+Past versions of “RLE normalization-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-RLE-normalization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/RLE normalization-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/RLE normalization-5.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/RLE normalization-5.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/RLE normalization-5.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2rle-normalized-and-unfiltered-samples" class="section level2">
+<h2>Correlation heatmap of log2RLE normalized and unfiltered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(RLE, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-RLE-1">
+Past versions of “corr heatmap unfiltered RLE-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-RLE-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered RLE-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(RLE, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20RLE-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-RLE-2">
+Past versions of “corr heatmap unfiltered RLE-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-RLE-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered RLE-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="boxplots-of-rle-across-samples" class="section level2">
+<h2>Boxplots of RLE across samples</h2>
+<pre class="r"><code>meltRLE &lt;- melt(RLE)
+names(meltRLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;RLE&quot;)
+p &lt;- ggplot(meltRLE, aes(factor(sampleID), RLE)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-RLE-1">
+Past versions of “boxplot RLE-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-RLE-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot RLE-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot RLE-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot RLE-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot RLE-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2rle-2.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2RLE &gt; 2.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 2.5
+
+keep &lt;- rowSums( RLE &gt; cutoff ) &gt;=4
+
+counts_RLE &lt;- raw_counts[keep,]
+filtered_RLE &lt;- RLE[keep,]
+dim(filtered_RLE)</code></pre>
+<pre><code>[1] 10441    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples-2" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_RLE &lt;- melt(filtered_RLE)
+names(melt_filt_RLE) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2RLE&quot;)
+p1 &lt;- ggplot(melt_filt_RLE, aes(factor(sampleID), log2RLE)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-RLE-1">
+Past versions of “boxplot filt RLE-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-RLE-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">414262e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/71b21dc32a48e1198c8180d3608b050ed1a2e44a/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">71b21dc</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2rle-normalized-and-filtered-samples" class="section level2">
+<h2>Correlation heatmap of log2RLE normalized and filtered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_RLE, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20RLE-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-RLE-1">
+Past versions of “corr heatmap filtered RLE-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-RLE-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filtered_RLE, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20RLE-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-RLE-2">
+Past versions of “corr heatmap filtered RLE-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-RLE-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="upperquartile-normalization" class="section level1">
+<h1>upperquartile Normalization</h1>
+<pre class="r"><code>upperquartile &lt;- calcNormFactors(raw_counts, method = &quot;upperquartile&quot;)
+upperquartile &lt;- cpm(upperquartile, log=TRUE, normalized.lib.sizes = T)
+head(upperquartile)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 18856_2_S
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -1.810117 -2.815316 -3.004433 -3.907509 -3.809428 -1.534112
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+                19160_3_U 18855_2_U 19160_2_S 18855_1_S 18856_1_S 19160_1_S
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -6.129986 -3.766281 -1.730609 -1.863184 -6.129986 -3.303639
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+                19160_2_U 18855_1_U 18856_3_S 18856_2_U 18855_3_U
+ENSG00000223972 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000227232 -3.948573 -1.637885 -2.879515 -2.134998 -6.129986
+ENSG00000278267 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000243485 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000284332 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986
+ENSG00000237613 -6.129986 -6.129986 -6.129986 -6.129986 -6.129986</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(upperquartile[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/upperquartile%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-1">
+Past versions of “upperquartile normalization-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-upperquartile-normalization-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/upperquartile normalization-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/upperquartile normalization-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(upperquartile[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/upperquartile%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-2">
+Past versions of “upperquartile normalization-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-upperquartile-normalization-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/upperquartile normalization-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/upperquartile normalization-2.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(upperquartile[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/upperquartile%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-3">
+Past versions of “upperquartile normalization-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-upperquartile-normalization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/upperquartile normalization-3.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/upperquartile normalization-3.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(upperquartile[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/upperquartile%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-4">
+Past versions of “upperquartile normalization-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-upperquartile-normalization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/upperquartile normalization-4.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/upperquartile normalization-4.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(upperquartile[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/upperquartile%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-upperquartile-normalization-5">
+Past versions of “upperquartile normalization-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-upperquartile-normalization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/upperquartile normalization-5.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/upperquartile normalization-5.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2upperquartile-normalized-and-unfiltered-samples" class="section level2">
+<h2>Correlation heatmap of log2upperquartile normalized and unfiltered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(upperquartile, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-upperquartile-1">
+Past versions of “corr heatmap unfiltered upperquartile-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-upperquartile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered upperquartile-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(upperquartile, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20unfiltered%20upperquartile-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-unfiltered-upperquartile-2">
+Past versions of “corr heatmap unfiltered upperquartile-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-unfiltered-upperquartile-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap unfiltered upperquartile-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="boxplots-of-upperquartile-across-samples" class="section level2">
+<h2>Boxplots of upperquartile across samples</h2>
+<pre class="r"><code>meltupperquartile &lt;- melt(upperquartile)
+names(meltupperquartile) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;upperquartile&quot;)
+p &lt;- ggplot(meltupperquartile, aes(factor(sampleID), upperquartile)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-upperquartile-1">
+Past versions of “boxplot upperquartile-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-upperquartile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot upperquartile-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot upperquartile-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-log2upperquartile-2.5-in-at-least-4-samples" class="section level2">
+<h2>Filtering for lowly expressed genes (avg log2upperquartile &gt; 2.5 in at least 4 samples)</h2>
+<pre class="r"><code>cutoff &lt;- 2.5
+
+keep &lt;- rowSums( upperquartile &gt; cutoff ) &gt;=4
+
+counts_upperquartile &lt;- raw_counts[keep,]
+filtered_upperquartile &lt;- upperquartile[keep,]
+dim(filtered_upperquartile)</code></pre>
+<pre><code>[1] 10447    17</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples-3" class="section level2">
+<h2>Boxplots of normalized+filtered counts across samples</h2>
+<pre class="r"><code>melt_filt_upperquartile &lt;- melt(filtered_upperquartile)
+names(melt_filt_upperquartile) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2upperquartile&quot;)
+p1 &lt;- ggplot(melt_filt_upperquartile, aes(factor(sampleID), log2upperquartile)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-upperquartile-1">
+Past versions of “boxplot filt upperquartile-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-upperquartile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-1.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6c3b7d1459fe987e580b53ce89a1581434ee1041/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-1.png" target="_blank">6c3b7d1</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plotDensities(filtered_upperquartile, legend = F)</code></pre>
+<p><img src="figure/Norm_filter.Rmd/boxplot%20filt%20upperquartile-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-boxplot-filt-upperquartile-2">
+Past versions of “boxplot filt upperquartile-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-boxplot-filt-upperquartile-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/158fdf3e906a4a488e486cb96684b4e23b567895/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-2.png" target="_blank">158fdf3</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="correlation-heatmap-of-log2upperquartile-normalized-and-filtered-samples" class="section level2">
+<h2>Correlation heatmap of log2upperquartile normalized and filtered samples</h2>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(filtered_upperquartile, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20upperquartile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-upperquartile-1">
+Past versions of “corr heatmap filtered upperquartile-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-upperquartile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#pearson
+cors &lt;- cor(filtered_upperquartile, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20upperquartile-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-upperquartile-2">
+Past versions of “corr heatmap filtered upperquartile-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-upperquartile-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level2">
+<h2>Save normalized/filtered count matrix and filtered count matrix</h2>
+<pre class="r"><code>saveRDS(counts_upperquartile, &quot;data/filtered_counts.rds&quot;)
+saveRDS(filtered_upperquartile, &quot;data/norm_filtered_counts.rds&quot;)</code></pre>
+</div>
+</div>
+<div id="correlation-heatmap-of-filtered-raw-counts-data-unnormalized" class="section level1">
+<h1>Correlation heatmap of filtered Raw counts data (unnormalized)</h1>
+<pre class="r"><code>#Spearman
+cors &lt;- cor(counts_upperquartile$counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20raw-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-raw-1">
+Past versions of “corr heatmap filtered raw-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-raw-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-1.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-1.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#Pearson
+cors &lt;- cor(counts_upperquartile$counts, method=&quot;pearson&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/Norm_filter.Rmd/corr%20heatmap%20filtered%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-corr-heatmap-filtered-raw-2">
+Past versions of “corr heatmap filtered raw-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-corr-heatmap-filtered-raw-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/cb6a0a50529469a1c598d448a06e6ee146719d27/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-2.png" target="_blank">cb6a0a5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/629408f29313ac35a6601656ac80732937de98e1/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-2.png" target="_blank">629408f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-01-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Conclusions about normalizations: 1) There isn’t much of a difference between the outputs of each normalization method in terms of correlation heatmaps or number of genes kept after filtering for lowly expressed genes. 2) The driver for the differences between correlation heatmaps between the raw and filtered data comes down to the filtering of lowly expressed genes. In all cases, simply performing normalization and plotting the heatmap (without filtering out any genes) leads to a correlation heatmap that resembles the raw data’s heatmap quite closely (and in the case of pearson correlation, one that is even better matched up to desired structure between samples).</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] dplyr_0.8.3        cowplot_0.9.3      scales_1.1.0       RColorBrewer_1.1-2
+[5] edgeR_3.20.9       limma_3.34.9       reshape_0.8.8      ggplot2_3.2.1     
+[9] gplots_3.0.1.1    
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.3         plyr_1.8.4         compiler_3.4.3     pillar_1.4.2      
+ [5] later_1.0.0        git2r_0.26.1       workflowr_1.5.0    bitops_1.0-6      
+ [9] tools_3.4.3        digest_0.6.23      lattice_0.20-35    evaluate_0.14     
+[13] lifecycle_0.1.0    tibble_2.1.3       gtable_0.3.0       pkgconfig_2.0.3   
+[17] rlang_0.4.2        yaml_2.2.0         xfun_0.11          withr_2.1.2       
+[21] stringr_1.4.0      knitr_1.26         fs_1.3.1           gtools_3.8.1      
+[25] caTools_1.17.1.3   locfit_1.5-9.1     tidyselect_0.2.5   rprojroot_1.3-2   
+[29] grid_3.4.3         glue_1.3.1         R6_2.4.1           rmarkdown_1.18    
+[33] gdata_2.18.0       farver_2.0.1       purrr_0.3.3        magrittr_1.5      
+[37] whisker_0.4        backports_1.1.5    promises_1.1.0     htmltools_0.4.0   
+[41] assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.2       labeling_0.3      
+[45] KernSmooth_2.23-15 stringi_1.4.3      lazyeval_0.2.2     munsell_0.5.0     
+[49] crayon_1.3.4      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

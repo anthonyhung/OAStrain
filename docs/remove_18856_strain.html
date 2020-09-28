@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-01-13" />
+
+<title>remove_18856_strain</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.10/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">remove_18856_strain</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-01-13</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-01-13
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.5.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree00a66fbc7e4e6e654586196c8171bdd4bfbf7682targetblank00a66fba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/00a66fbc7e4e6e654586196c8171bdd4bfbf7682" target="_blank">00a66fb</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree00a66fbc7e4e6e654586196c8171bdd4bfbf7682targetblank00a66fba" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/prime_RUVsCPM.rds
+    Ignored:    data/prime_filtered_counts.rds
+    Ignored:    data/prime_norm_filtered_counts.rds
+    Ignored:    data/prime_raw_counts_relabeled.rds
+    Ignored:    data/raw_counts_relabeled.rds
+
+Untracked files:
+    Untracked:  analysis/remove_18856_strain.Rmd
+    Untracked:  data/prime_Sample.info.RNAseq.reordered.csv
+
+Unstaged changes:
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   fig-limma-treatment-hit-1.eps
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="re-do-all-analyses-but-remove-18856-strain" class="section level2">
+<h2>Re-do all analyses but remove 18856 Strain</h2>
+<pre class="r"><code>#configuration
+proj_dir &lt;- &quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/&quot;
+
+#order of samples to relabel count matrix (sample ID in format 18855_1_S)
+#NOTE: NEED TO CHANGE THIS TO MATCH ACTUAL SAMPLE ORDERS
+samplenames &lt;- c(&quot;18855_3_S&quot;,&quot;19160_3_S&quot;, &quot;18856_3_U&quot;,
+                 &quot;18856_1_U&quot;,&quot;18855_2_S&quot;, &quot;18856_2_S&quot;,
+                 &quot;19160_3_U&quot;,&quot;18855_2_U&quot;, &quot;19160_2_S&quot;,
+                 &quot;18855_1_S&quot;,&quot;18856_1_S&quot;, &quot;19160_1_S&quot;,
+                 &quot;19160_2_U&quot;,&quot;19160_1_U&quot;, &quot;18855_1_U&quot;,
+                 &quot;18856_3_S&quot;,&quot;18856_2_U&quot;, &quot;18855_3_U&quot;
+                 )</code></pre>
+</div>
+<div id="overview" class="section level1">
+<h1>Overview:</h1>
+<p>Here, I load in the raw count matrix that is the output of the Snakemake pipeline and perform PCA and hierarchical clustering to see what patterns can be observed. I then visualize the pairwise correlations between replicates of the same sample, between samples in the same treatment, and samples from the same individual. Based on QC metrics (only 38.4% aligned reads for sample 02), I removed this sample from further analyses.</p>
+</div>
+<div id="load-in-bulk-rna-sequencing-data-from-pilot-experiment-and-visualize-correlations-between-samples" class="section level1">
+<h1>Load in bulk RNA sequencing data from pilot experiment and visualize correlations between samples</h1>
+<pre class="r"><code>library(&quot;gplots&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    lowess</code></pre>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
+library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+
+# Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+# load in counts
+raw_counts &lt;- read.table(paste0(proj_dir, &quot;out/counts/counts.txt&quot;), header = T)
+
+# assign row.names
+row.names(raw_counts) &lt;- raw_counts$Geneid
+
+# exclude extra data columns
+raw_counts &lt;- raw_counts[, -c(1:6)] 
+
+# assign col.names
+names(raw_counts) &lt;- samplenames
+
+# remove 02 sample that does not pass QC. Also remove all 18856 Strain
+raw_counts &lt;- raw_counts[, -c(6, 11, 14, 16)] 
+
+# save relabeled raw count data matrix
+saveRDS(raw_counts, &quot;data/prime_raw_counts_relabeled.rds&quot;)
+
+# Check that there&#39;s no &quot;NAs&quot; in the data
+summary(apply(raw_counts, 1, var) == 0) </code></pre>
+<pre><code>   Mode   FALSE    TRUE 
+logical   31826   26569 </code></pre>
+<pre class="r"><code>#Sample information
+sample_info &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
+head(sample_info)</code></pre>
+<pre><code>  Sample_ID Individual Sex Replicate Passage_MSC treatment RIN LibraryPrepBatch
+1 18855_1_S   NA18855    F         1          10    Strain   1                1
+2 18856_1_S   NA18856    M         1           8    Strain   1                1
+3 19160_1_S   NA19160    M         1           8    Strain   1                1
+4 18855_2_S   NA18855    F         2          10    Strain   1                1
+5 18856_2_S   NA18856    M         2           8    Strain   1                1
+6 19160_2_S   NA19160    M         2           8    Strain   1                1</code></pre>
+<pre class="r"><code>#Re-order sample information to match the columns of count matrix
+sample_info &lt;- sample_info[match(samplenames, sample_info$Sample_ID),]
+#remove 02 sample that does not pass QC
+sample_info &lt;- sample_info[-c(6, 11, 14, 16),]
+# save reorganized sample information
+saveRDS(sample_info, &quot;data/prime_Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+</div>
+<div id="perform-pca-and-hierarchical-clustering-on-raw-data" class="section level1">
+<h1>Perform PCA and hierarchical clustering on raw data</h1>
+<pre class="r"><code>labels &lt;- paste(sample_info$Individual, sample_info$treatment, sep=&quot; &quot;)
+
+#load PCA function
+source(&quot;code/PCA_fn.R&quot;)
+
+# Clustering (original code from Julien Roux)
+cors &lt;- cor(raw_counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+
+heatmap.2(cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sample_info$Individual))], RowSideColors=pal[as.integer(as.factor(sample_info$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/corr%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations" class="section level1">
+<h1>Perform PCA and color by factors to look for any potential correlations</h1>
+<pre class="r"><code># Perform PCA
+pca_genes &lt;- prcomp(t(raw_counts), scale = F)
+scores &lt;- pca_genes$x
+
+
+#Make PCA plots with the factors colored by individual
+
+### PCs 1 and 2 Raw Data
+for (n in 1:1){
+  col.v &lt;- pal[as.integer(sample_info$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA%20raw-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>### PCs 3 and 4 Raw Data
+
+for (n in 3:3){
+  col.v &lt;- pal[as.integer(sample_info$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA%20raw-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Make PCA plots with the factors colored by treatment
+
+### PCs 1 and 2 Raw Data
+for (n in 1:1){
+  col.v &lt;- pal[as.integer(sample_info$treatment)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA%20raw-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>### PCs 3 and 4 Raw Data
+
+for (n in 3:3){
+  col.v &lt;- pal[as.integer(sample_info$treatment)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA%20raw-4.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="perform-cpm-normalization-of-raw-count-data-and-filtering-of-lowly-expressed-genes" class="section level1">
+<h1>Perform cpm normalization of raw count data and filtering of lowly expressed genes</h1>
+<pre class="r"><code>library(&quot;gplots&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;reshape&quot;)
+library(&quot;edgeR&quot;)</code></pre>
+<pre><code>Loading required package: limma</code></pre>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+library(&quot;cowplot&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    ggsave</code></pre>
+<pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:reshape&#39;:
+
+    rename</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code># Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+
+# load in relabeled counts
+raw_counts &lt;- readRDS(&quot;data/prime_raw_counts_relabeled.rds&quot;)
+
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/prime_Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+</div>
+<div id="perform-cpm-normalization-on-all-counts-and-plot-density-plots" class="section level1">
+<h1>Perform cpm normalization on all counts and plot density plots</h1>
+<pre class="r"><code>cpm &lt;- cpm(raw_counts, log=TRUE)
+head(cpm)</code></pre>
+<pre><code>                18855_3_S 19160_3_S 18856_3_U 18856_1_U 18855_2_S 19160_3_U
+ENSG00000223972 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000227232 -1.871261 -2.778962 -3.010790 -3.887901 -3.863550 -6.166304
+ENSG00000278267 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000243485 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000284332 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000237613 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+                18855_2_U 19160_2_S 18855_1_S 19160_1_S 19160_2_U 18855_1_U
+ENSG00000223972 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000227232 -3.886123 -1.667847 -1.902029 -3.194257 -4.018231 -1.681588
+ENSG00000278267 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000243485 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000284332 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+ENSG00000237613 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304 -6.166304
+                18856_2_U 18855_3_U
+ENSG00000223972 -6.166304 -6.166304
+ENSG00000227232 -2.237549 -6.166304
+ENSG00000278267 -6.166304 -6.166304
+ENSG00000243485 -6.166304 -6.166304
+ENSG00000284332 -6.166304 -6.166304
+ENSG00000237613 -6.166304 -6.166304</code></pre>
+<pre class="r"><code>strained &lt;- sampleinfo$treatment == &quot;Strain&quot;
+unstrained &lt;- sampleinfo$treatment == &quot;Unstrain&quot;
+ind_1 &lt;- sampleinfo$Individual == &quot;NA18855 &quot;
+ind_2 &lt;- sampleinfo$Individual == &quot;NA18856 &quot;
+ind_3 &lt;- sampleinfo$Individual == &quot;NA19160 &quot;
+
+
+# Look at density plots for all individuals broken down by each treatment type
+col = as.data.frame(pal[as.numeric(sampleinfo$Individual)])
+
+plotDensities(cpm[,strained], col=col[strained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/cpm%20normalization-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(cpm[,unstrained], col=col[unstrained, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/cpm%20normalization-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Look at density plots broken down by individual
+col = as.data.frame(pal[as.numeric(sampleinfo$treatment)])
+
+plotDensities(cpm[,ind_1], col=col[ind_1, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/cpm%20normalization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(cpm[,ind_2], col=col[ind_2, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/cpm%20normalization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotDensities(cpm[,ind_3], col=col[ind_3, ], legend=&quot;topright&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/cpm%20normalization-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplots-of-cpm-across-samples" class="section level1">
+<h1>Boxplots of cpm across samples</h1>
+<pre class="r"><code>meltcpm &lt;- melt(cpm)
+names(meltcpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;cpm&quot;)
+p &lt;- ggplot(meltcpm, aes(factor(sampleID), cpm)) 
+p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/boxplot%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="filtering-for-lowly-expressed-genes-avg-cpm-0.5-in-at-least-2-samples" class="section level1">
+<h1>Filtering for lowly expressed genes (avg CPM &gt; 0.5 in at least 2 samples)</h1>
+<pre class="r"><code>cutoff &lt;- 0.5
+
+keep &lt;- rowSums( cpm(raw_counts, log=FALSE) &gt; 0.5 ) &gt;=2
+
+counts &lt;- raw_counts[keep,]
+filtered_cpm &lt;- cpm(counts, log = T)</code></pre>
+</div>
+<div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level1">
+<h1>Boxplots of normalized+filtered counts across samples</h1>
+<pre class="r"><code>melt_filt_cpm &lt;- melt(filtered_cpm)
+names(melt_filt_cpm) &lt;- c(&quot;gene&quot;, &quot;sampleID&quot;, &quot;log2cpm&quot;)
+p1 &lt;- ggplot(melt_filt_cpm, aes(factor(sampleID), log2cpm)) 
+p1 + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/boxplot%20filt%20cpm-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="save-normalizedfiltered-count-matrix-and-filtered-count-matrix" class="section level1">
+<h1>Save normalized/filtered count matrix and filtered count matrix</h1>
+<pre class="r"><code>saveRDS(counts, &quot;data/prime_filtered_counts.rds&quot;)
+saveRDS(filtered_cpm, &quot;data/prime_norm_filtered_counts.rds&quot;)</code></pre>
+</div>
+<div id="examine-normalizedfiltered-data-and-see-if-any-pcs-correlate-with-technical-factors" class="section level1">
+<h1>Examine normalized/filtered data and see if any PCs correlate with technical factors</h1>
+<pre class="r"><code>library(&quot;gplots&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;reshape&quot;)
+library(&quot;edgeR&quot;)
+library(&quot;RColorBrewer&quot;)
+library(&quot;scales&quot;)
+library(&quot;cowplot&quot;)
+library(&quot;DT&quot;)
+library(&quot;tidyr&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;tidyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:reshape&#39;:
+
+    expand, smiths</code></pre>
+<pre class="r"><code>library(&quot;RUVSeq&quot;)</code></pre>
+<pre><code>Loading required package: Biobase</code></pre>
+<pre><code>Loading required package: BiocGenerics</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>
+Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:parallel&#39;:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    combine, intersect, setdiff, union</code></pre>
+<pre><code>The following object is masked from &#39;package:limma&#39;:
+
+    plotMA</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
+    colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
+    mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    &#39;browseVignettes()&#39;. To cite Bioconductor, see
+    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>Loading required package: EDASeq</code></pre>
+<pre><code>Loading required package: ShortRead</code></pre>
+<pre><code>Loading required package: BiocParallel</code></pre>
+<pre><code>Loading required package: Biostrings</code></pre>
+<pre><code>Loading required package: S4Vectors</code></pre>
+<pre><code>Loading required package: stats4</code></pre>
+<pre><code>
+Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    expand</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    first, rename</code></pre>
+<pre><code>The following objects are masked from &#39;package:reshape&#39;:
+
+    expand, rename</code></pre>
+<pre><code>The following object is masked from &#39;package:gplots&#39;:
+
+    space</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    expand.grid</code></pre>
+<pre><code>Loading required package: IRanges</code></pre>
+<pre><code>
+Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    collapse, desc, slice</code></pre>
+<pre><code>Loading required package: XVector</code></pre>
+<pre><code>
+Attaching package: &#39;Biostrings&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    strsplit</code></pre>
+<pre><code>Loading required package: Rsamtools</code></pre>
+<pre><code>Loading required package: GenomeInfoDb</code></pre>
+<pre><code>Loading required package: GenomicRanges</code></pre>
+<pre><code>Loading required package: GenomicAlignments</code></pre>
+<pre><code>Loading required package: SummarizedExperiment</code></pre>
+<pre><code>Loading required package: DelayedArray</code></pre>
+<pre><code>Loading required package: matrixStats</code></pre>
+<pre><code>
+Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:Biobase&#39;:
+
+    anyMissing, rowMedians</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    count</code></pre>
+<pre><code>
+Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>The following object is masked from &#39;package:Biostrings&#39;:
+
+    type</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    apply</code></pre>
+<pre><code>
+Attaching package: &#39;GenomicAlignments&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    last</code></pre>
+<pre><code>
+Attaching package: &#39;ShortRead&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    id</code></pre>
+<pre class="r"><code>library(&quot;dplyr&quot;)
+
+# Load colors 
+colors &lt;- colorRampPalette(c(brewer.pal(9, &quot;Blues&quot;)[1],brewer.pal(9, &quot;Blues&quot;)[9]))(100)
+pal &lt;- c(brewer.pal(9, &quot;Set1&quot;), brewer.pal(8, &quot;Set2&quot;), brewer.pal(12, &quot;Set3&quot;))
+
+#load in normalized/filtered data
+filt_cpm &lt;- readRDS(&quot;data/prime_norm_filtered_counts.rds&quot;)
+#load in filtered counts
+filt_counts &lt;- readRDS(&quot;data/prime_filtered_counts.rds&quot;)
+
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/prime_Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+</div>
+<div id="pca-and-hierarchical-clustering-of-normalized-and-filtered-data" class="section level1">
+<h1>PCA and hierarchical clustering of normalized and filtered data</h1>
+<pre class="r"><code>#Load PCA plotting Function
+source(&quot;code/PCA_fn.R&quot;)
+
+
+# Clustering (original code from Julien Roux)
+cors &lt;- cor(filt_cpm, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="perform-pca-and-color-by-factors-to-look-for-any-potential-correlations-1" class="section level1">
+<h1>Perform PCA and color by factors to look for any potential correlations</h1>
+<pre class="r"><code># Perform PCA
+pca_genes &lt;- prcomp(t(filt_cpm), scale = T)
+scores &lt;- pca_genes$x
+
+variances &lt;- pca_genes$sdev^2
+explained &lt;- variances / sum(variances)
+plot(pca_genes, main = &quot;Variance per PC&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Make PCA plots with the factors colored by Individual
+
+### PCs 1 and 2 norm+filt Data
+for (n in 1:1){
+  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>### PCs 3 and 4 norm+filt Data
+
+for (n in 3:3){
+  col.v &lt;- pal[as.integer(sampleinfo$Individual)]
+  plot_scores(pca_genes, scores, n, n+1, col.v)
+}</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/PCA-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-that-technical-factors-do-not-correlate-with-pcs" class="section level1">
+<h1>Check that technical factors do not correlate with PCs</h1>
+<pre class="r"><code># Calculate the relationship between each recorded covariate and the top 6 PCs. 
+p_comps &lt;- 1:6
+info &lt;- sampleinfo %&gt;% 
+     dplyr::select(c(Individual, Sex, Replicate, Passage_MSC, treatment, RIN, LibraryPrepBatch)) #subset sample info for technical/biological variables
+
+#Calculate correlations
+pc_cov_cor &lt;- matrix(nrow = ncol(info), ncol = length(p_comps), 
+                      dimnames = list(colnames(info), colnames(pca_genes$x)[p_comps])) 
+for (pc in p_comps) { 
+  for (covariate in 1:ncol(info)) { 
+        lm_result &lt;- lm(pca_genes$x[, pc] ~ info[, covariate]) 
+    r2 &lt;- summary(lm_result)$r.squared 
+    pc_cov_cor[covariate, pc] &lt;- r2 
+  } 
+} 
+datatable(pc_cov_cor) </code></pre>
+<div id="htmlwidget-87098e04a2cc41d4cd6e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87098e04a2cc41d4cd6e">{"x":{"filter":"none","data":[["Individual","Sex","Replicate","Passage_MSC","treatment","RIN","LibraryPrepBatch"],[0.992189182105226,0.323267272880097,0.0145754942098439,0.17401892897812,0.0716347437776913,0,0.00489332329487311],[0.924337626823517,0.633586844866166,0.0311407832438687,0.713000994589061,0.044101455586809,0,0.0128065646952379],[0.0214056187015177,0.00825123185628522,0.0244109700047805,0.0231455620298031,0.436767924173768,0,0.080328534719573],[0.0417141488026259,0.028001312910616,0.490474966399329,0.00381132295612803,0.0182245436244892,0,0.117665386583804],[0.00244794400224297,0.00179728265316732,0.0659826221590886,0.000680957721987948,0.410534063626907,0,0.0985699808842703],[0.00730699558695143,0.00170914014134345,0.0156198281386818,0.016415796661695,0.00690335647009771,0,0.111003848759378]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PC1<\/th>\n      <th>PC2<\/th>\n      <th>PC3<\/th>\n      <th>PC4<\/th>\n      <th>PC5<\/th>\n      <th>PC6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#Convert to long format to plot in ggplot2
+pc_cov_cor_2 &lt;- as.data.frame(pc_cov_cor) 
+pc_cov_cor_2$variable &lt;- rownames(pc_cov_cor) 
+pc_cov_cor_2 &lt;- gather(pc_cov_cor_2, key = &quot;pc&quot;, value = &quot;cor&quot;, -variable) 
+head(pc_cov_cor_2) </code></pre>
+<pre><code>     variable  pc        cor
+1  Individual PC1 0.99218918
+2         Sex PC1 0.32326727
+3   Replicate PC1 0.01457549
+4 Passage_MSC PC1 0.17401893
+5   treatment PC1 0.07163474
+6         RIN PC1 0.00000000</code></pre>
+<pre class="r"><code>#Plot heatmap
+d_heatmap &lt;- pc_cov_cor_2 
+d_heatmap$variable &lt;- factor(d_heatmap$variable, 
+                              levels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
+                                         &quot;Passage_MSC&quot;, &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;), 
+                              labels = c(&quot;Individual&quot;, &quot;Sex&quot;, &quot;Replicate&quot;, 
+                                         &quot;Passage_MSC&quot;, &quot;treatment&quot;, &quot;RIN&quot;, &quot;LibraryPrepBatch&quot;)) 
+pca_heat &lt;- ggplot(d_heatmap, aes(x = pc, y = variable)) + 
+  geom_tile(aes(fill = cor), colour = &quot;white&quot;) + 
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;red&quot;, limits = c(0, 1)) + 
+  labs(x = &quot;Principal Component&quot;, y = &quot;&quot;, 
+       title = &quot;Correlation between principal components and experimental variables&quot;) 
+pca_heat</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/corr%20PC-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="remove-unwanted-variation-using-ruvseq" class="section level1">
+<h1>Remove unwanted variation using RUVSeq</h1>
+<pre class="r"><code>#The RUVSeq vignette loads raw counts and uses the RUVSeq package to filter and normalize data (upper quantile normalization) before performing RUVs. 
+
+#Use RUVs (replicates) and adjust k until corr heatmap looks right
+replicates &lt;- makeGroups(paste0(sampleinfo$Individual, sampleinfo$treatment))
+x &lt;- paste0(sampleinfo$Individual, sampleinfo$treatment)
+
+#load data into expressionset
+set &lt;- newSeqExpressionSet(as.matrix(filt_counts),
+                           phenoData = data.frame(sampleinfo, row.names=colnames(filt_cpm)))
+set</code></pre>
+<pre><code>SeqExpressionSet (storageMode: lockedEnvironment)
+assayData: 15663 features, 14 samples 
+  element names: counts, normalizedCounts, offset 
+protocolData: none
+phenoData
+  sampleNames: 18855_3_S 19160_3_S ... 18855_3_U (14 total)
+  varLabels: Sample_ID Individual ... LibraryPrepBatch (8 total)
+  varMetadata: labelDescription
+featureData: none
+experimentData: use &#39;experimentData(object)&#39;
+Annotation:  </code></pre>
+<pre class="r"><code>#normalization
+set &lt;- betweenLaneNormalization(set, which=&quot;upper&quot;)
+
+set1 &lt;- RUVs(set, rownames(filt_counts), k=1, replicates)
+pData(set1)</code></pre>
+<pre><code>          Sample_ID Individual Sex Replicate Passage_MSC treatment RIN
+18855_3_S 18855_3_S   NA18855    F         3          11    Strain   1
+19160_3_S 19160_3_S   NA19160    M         3           9    Strain   1
+18856_3_U 18856_3_U   NA18856    M         3           8  Unstrain   1
+18856_1_U 18856_1_U   NA18856    M         1           8  Unstrain   1
+18855_2_S 18855_2_S   NA18855    F         2          10    Strain   1
+19160_3_U 19160_3_U   NA19160    M         3           9  Unstrain   1
+18855_2_U 18855_2_U   NA18855    F         2          10  Unstrain   1
+19160_2_S 19160_2_S   NA19160    M         2           8    Strain   1
+18855_1_S 18855_1_S   NA18855    F         1          10    Strain   1
+19160_1_S 19160_1_S   NA19160    M         1           8    Strain   1
+19160_2_U 19160_2_U   NA19160    M         2           8  Unstrain   1
+18855_1_U 18855_1_U   NA18855    F         1          10  Unstrain   1
+18856_2_U 18856_2_U   NA18856    M         2           8  Unstrain   1
+18855_3_U 18855_3_U   NA18855    F         3          11  Unstrain   1
+          LibraryPrepBatch          W_1
+18855_3_S                2  0.003377339
+19160_3_S                2  0.068815124
+18856_3_U                2  0.266999003
+18856_1_U                1 -0.346905251
+18855_2_S                1  0.393594510
+19160_3_U                2 -0.165982945
+18855_2_U                1  0.256925938
+19160_2_S                1 -0.192461353
+18855_1_S                1 -0.390089354
+19160_1_S                1 -0.648901220
+19160_2_U                1 -0.525727306
+18855_1_U                1 -0.285159570
+18856_2_U                1  0.109416232
+18855_3_U                2 -0.159350266</code></pre>
+<pre class="r"><code>#Plots after correcting RUV
+plotRLE(set1, outline=FALSE, ylim=c(-4, 4), col=colors[x])</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/RUV-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotPCA(set1, col=colors[x], cex=1.2)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/RUV-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># # Clustering (original code from Julien Roux)
+cors &lt;- cor(set1@assayData$normalizedCounts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
+
+labels &lt;- paste(sampleinfo$Individual, sampleinfo$treatment, sep=&quot; &quot;)
+heatmap.2( cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/RUV-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>“The RUVg function returns two pieces of information: the estimated factors of unwanted variation (added as columns to the phenoData slot of set) and the normalized counts obtained by regressing the original counts on the unwanted factors. The normalized values are stored in the normalizedCounts slot of set and can be accessed with the normCounts method. These counts should be used only for exploration. It is important that subsequent DE analysis be done on the original counts (accessible through the counts method), as removing the unwanted factors from the counts can also remove part of a factor of interest [6].”</p>
+</div>
+<div id="save-data-and-ruvs-output-for-unwanted-variation-contains-the-same-cpm-data-as-before-as-well-as-pheno-data-w_1-values-from-ruvs" class="section level1">
+<h1>Save data and RUVs output for unwanted variation (contains the same cpm data as before as well as pheno data, W_1 values from RUVs)</h1>
+<pre class="r"><code>saveRDS(set1, &quot;data/prime_RUVsCPM.rds&quot;)</code></pre>
+</div>
+<div id="build-boxplots-comparing-expression-cpm-of-different-genes-between-strain-and-unstrain-samples" class="section level1">
+<h1>Build boxplots comparing expression (CPM) of different genes between strain and unstrain samples</h1>
+<p>Check chondro/msc markers for absolute expression strain markers boxplot comparisons</p>
+<pre class="r"><code>library(ggplot2)
+#load in normalized/filtered data
+filt_cpm &lt;- readRDS(&quot;data/prime_norm_filtered_counts.rds&quot;)
+
+# load in reordered sample information
+sampleinfo &lt;- readRDS(&quot;data/prime_Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
+</div>
+<div id="define-functions-to-plot-boxplot-of-results" class="section level1">
+<h1>Define functions to plot boxplot of results</h1>
+<pre class="r"><code>#Inputs: count matrix, sample information data frame, and gene of interest in the ENSG format
+get_gene_long &lt;- function(counts, info, gene){
+     gene_counts &lt;- as.data.frame(counts[gene,])
+     names(gene_counts) &lt;- &quot;CPM&quot;
+     gene_counts_info &lt;- cbind(gene_counts, info)
+     return(gene_counts_info)
+}
+
+boxplot_gene_treatment &lt;- function(counts_, info_, gene_, name){
+     df &lt;- get_gene_long(counts = counts_, info = info_, gene = gene_)
+     
+     ggplot(df, aes(x = treatment, y = CPM, color = info_$Individual)) +
+          geom_boxplot() +
+          labs(title=paste0(&quot;Expression of &quot;, as.character(name), &quot; by treatment&quot;), x= &quot;Treatment&quot;, y = &quot;log2 Counts per million reads&quot;)
+}</code></pre>
+</div>
+<div id="compare-expression-of-strain-markers-between-samples" class="section level1">
+<h1>Compare expression of strain markers between samples</h1>
+<pre class="r"><code>#MMP1, MMP3, MMP13, IL1B, TNF, IBSP, MMP9 were filtered out
+
+#MMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000087245&quot;, &quot;MMP2&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TIMP2
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000035862&quot;, &quot;TIMP2&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#COMP
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000105664&quot;, &quot;COMP&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TIMP1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000102265&quot;, &quot;TIMP1&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ADAMTS4
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000158859&quot;, &quot;ADAMTS4&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ADAMTS5e
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154736&quot;, &quot;ADAMTS5&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Chond Markers
+
+#ACAN was filtered out
+
+#COL2A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000139219&quot;, &quot;COL2A1&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#COL10A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000123500&quot;, &quot;COL10A1&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#SOX9
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000125398&quot;, &quot;SOX9&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#COL11A1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000060718&quot;, &quot;COL11A1&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#SOX5
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000134532&quot;, &quot;SOX5&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#SOX6
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000110693&quot;, &quot;SOX6&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#TGFB3
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000119699&quot;, &quot;TGFB3&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#MSC Markers
+
+#CD34, ITGAM, CD79A, CD19, CD14 filtered out
+
+#ENG
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000106991&quot;, &quot;ENG (CD105)&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#THY1
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000154096&quot;, &quot;THY1 (CD90)&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#NT5E
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000135318&quot;, &quot;NT5E (CD73)&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-16.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#PTPRC
+boxplot_gene_treatment(filt_cpm, sampleinfo, &quot;ENSG00000081237&quot;, &quot;PTPRC&quot;)</code></pre>
+<p><img src="figure/remove_18856_strain.Rmd/strain%20compare-17.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.3 (2017-11-30)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] RUVSeq_1.12.0              EDASeq_2.12.0             
+ [3] ShortRead_1.36.1           GenomicAlignments_1.14.2  
+ [5] SummarizedExperiment_1.8.1 DelayedArray_0.4.1        
+ [7] matrixStats_0.55.0         Rsamtools_1.30.0          
+ [9] GenomicRanges_1.30.3       GenomeInfoDb_1.14.0       
+[11] Biostrings_2.46.0          XVector_0.18.0            
+[13] IRanges_2.12.0             S4Vectors_0.16.0          
+[15] BiocParallel_1.12.0        Biobase_2.38.0            
+[17] BiocGenerics_0.24.0        tidyr_1.0.0               
+[19] DT_0.10                    dplyr_0.8.3               
+[21] cowplot_0.9.3              edgeR_3.20.9              
+[23] limma_3.34.9               reshape_0.8.8             
+[25] scales_1.1.0               RColorBrewer_1.1-2        
+[27] ggplot2_3.2.1              gplots_3.0.1.1            
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.4-1       hwriter_1.3.2          ellipsis_0.3.0        
+ [4] rprojroot_1.3-2        fs_1.3.1               farver_2.0.1          
+ [7] bit64_0.9-7            AnnotationDbi_1.40.0   splines_3.4.3         
+[10] R.methodsS3_1.7.1      DESeq_1.30.0           geneplotter_1.56.0    
+[13] knitr_1.26             zeallot_0.1.0          jsonlite_1.6          
+[16] workflowr_1.5.0        annotate_1.56.2        R.oo_1.23.0           
+[19] shiny_1.4.0            compiler_3.4.3         httr_1.4.1            
+[22] backports_1.1.5        fastmap_1.0.1          assertthat_0.2.1      
+[25] Matrix_1.2-18          lazyeval_0.2.2         later_1.0.0           
+[28] htmltools_0.4.0        prettyunits_1.0.2      tools_3.4.3           
+[31] gtable_0.3.0           glue_1.3.1             GenomeInfoDbData_1.0.0
+[34] Rcpp_1.0.3             vctrs_0.2.0            gdata_2.18.0          
+[37] rtracklayer_1.38.3     crosstalk_1.0.0        xfun_0.11             
+[40] stringr_1.4.0          mime_0.7               lifecycle_0.1.0       
+[43] gtools_3.8.1           XML_3.98-1.20          zlibbioc_1.24.0       
+[46] MASS_7.3-51.4          aroma.light_3.8.0      hms_0.5.2             
+[49] promises_1.1.0         yaml_2.2.0             memoise_1.1.0         
+[52] biomaRt_2.34.2         latticeExtra_0.6-28    stringi_1.4.3         
+[55] RSQLite_2.1.4          genefilter_1.60.0      RMySQL_0.10.17        
+[58] GenomicFeatures_1.30.3 caTools_1.17.1.3       rlang_0.4.2           
+[61] pkgconfig_2.0.3        bitops_1.0-6           evaluate_0.14         
+[64] lattice_0.20-35        purrr_0.3.3            htmlwidgets_1.5.1     
+[67] labeling_0.3           bit_1.1-14             tidyselect_0.2.5      
+[70] plyr_1.8.4             magrittr_1.5           R6_2.4.1              
+[73] DBI_1.0.0              pillar_1.4.2           withr_2.1.2           
+[76] survival_2.41-3        RCurl_1.95-4.12        tibble_2.1.3          
+[79] crayon_1.3.4           KernSmooth_2.23-15     rmarkdown_1.18        
+[82] progress_1.2.2         locfit_1.5-9.1         grid_3.4.3            
+[85] blob_1.2.0             git2r_0.26.1           digest_0.6.23         
+[88] xtable_1.8-4           httpuv_1.5.2           R.utils_2.9.2         
+[91] munsell_0.5.0         </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
