@@ -1,0 +1,146 @@
+---
+title: "fasttopics_on_unintegrated_data"
+author: "Anthony Hung"
+date: "2020-09-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+#load data (merged but unintegrated data from single cell pilot experiment)
+
+```{r load}
+library(Seurat)
+library(dplyr)
+ANT1.2 <- readRDS("data/ANT1_2.rds")
+```
+
+
+# Fasttopics on unintegrated data
+
+```{r fasttopics}
+library(fastTopics)
+#need to fit the model to the count data (unintegrated)
+raw_counts <- ANT1.2@assays$RNA@counts
+raw_counts <- as.matrix(raw_counts)
+#remove genes without any counts in droplets
+raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts <- t(as.matrix(raw_counts))
+
+#fit model
+# fit <- fit_poisson_nmf(raw_counts,k = 11,numiter = 200)
+# saveRDS(fit, "output/fasttopics/unintegrated_k=11.rds")
+fit <- readRDS("output/fasttopics/unintegrated_k=11.rds")
+
+
+#compute weights and topics (need to add up to 1)
+l <- fit$L
+f <- fit$F
+weights <- sweep(l, MARGIN = 2, colSums(f), `*`)
+scale <- rowSums(weights)
+weights <- weights / scale
+topics <- f / colSums(f) # add up to 1
+```
+
+```{r markers}
+markers <- c("THY1", "NT5E", "ENG", "CD44",
+             "COL2A1", "SOX9", "COL10A1",
+             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3"
+             )
+
+markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 8)))
+rownames(markers_description) <- markers
+```
+
+```{r plot correlations}
+library(pheatmap)
+library(RColorBrewer)
+library(dummies)
+library(tidyr)
+
+#plot heatmap of topic weights for samples
+#get labels of cells and reorder to group them
+sample <- as.data.frame(ANT1.2@meta.data$labels)
+rownames(sample) <- rownames(ANT1.2@meta.data)
+sample_labels <- sample %>% 
+     arrange(`ANT1.2@meta.data$labels`) 
+sample <- sample_labels %>% 
+     separate(`ANT1.2@meta.data$labels`, c("Individual", "condition"))
+#reorder weights df to match sample order
+weights <- weights[match(rownames(sample), rownames(weights)),]
+#make the plot (color strip on the left is by indivdual)
+pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
+         show_rownames = FALSE, main = "Heatmap of topic weights grouped by cell labels")
+#same heatmap but group all the cells that are of the same label together (more interpretable??)
+sample_dummy <- as.data.frame(ANT1.2@meta.data$labels)
+rownames(sample_dummy) <- rownames(ANT1.2@meta.data)
+sample_dummies <- dummy.data.frame(sample_dummy)
+cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
+#same heatmap but group all the cells that are of the same individual or treatment together
+sample_ind_treat_dummies <- dummy.data.frame(sample)
+cor_by_ind <- cor(sample_ind_treat_dummies %>% dplyr::select(contains("Individual")), weights, method = "pearson")
+pheatmap(cor_by_ind, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by Individual")
+cor_by_treat <- cor(sample_ind_treat_dummies %>% dplyr::select(contains("condition")), weights, method = "pearson")
+pheatmap(cor_by_treat, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by Treatment")
+#same heatmap but group all the cells that are of the same 10x lane together 
+collection_dummy <- as.data.frame(ANT1.2@meta.data$orig.ident)
+rownames(collection_dummy) <- rownames(ANT1.2@meta.data)
+collection_dummies <- dummy.data.frame(collection_dummy)
+cor_by_collection <- cor(collection_dummies, weights, method = "pearson")
+pheatmap(cor_by_collection, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by collection")
+
+#plot heatmap of relative expression of marker genes in each topic
+topics_markers <- topics[markers,]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+topics_markers <- topics[markers[-12],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+```
+
+# Look at expression of specific markers between samples
+
+```{r plot markers}
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+
+
+#by individual
+for (marker in markers){
+     query <- weights %*% topics[marker, ] #represents latent gene expression; has same dim as num of barcodes (can subset by the labels or whatever category of interest and use to compute the gaussian curves to plot)
+     query_plot <- cbind(query, sample)
+     plot <- ggplot(query_plot, aes(x=query, color = as.factor(Individual), group=as.factor(Individual))) +
+             stat_density(geom='line',kernel='gaussian',bw='nrd0' 
+                                                            #nrd0='Silverman'
+                                                            ,size=1,position='identity') +
+                          labs(title = paste0(marker), x = "Latent gene expression", color = "Individual")
+     print(plot)
+}
+
+#by condition
+for (marker in markers){
+     query <- weights %*% topics[marker, ] #represents latent gene expression; has same dim as num of barcodes (can subset by the labels or whatever category of interest and use to compute the gaussian curves to plot)
+     query_plot <- cbind(query, sample)
+     plot <- ggplot(query_plot, aes(x=query, color = as.factor(condition), group=as.factor(condition))) +
+             stat_density(geom='line',kernel='gaussian',bw='nrd0' 
+                                                            #nrd0='Silverman'
+                                                            ,size=1,position='identity') +
+                          labs(title = paste0(marker), x = "Latent gene expression", color = "Condition")
+     print(plot)
+}
+
+# by sample
+for (marker in markers){
+     query <- weights %*% topics[marker, ] #represents latent gene expression; has same dim as num of barcodes (can subset by the labels or whatever category of interest and use to compute the gaussian curves to plot)
+     query_plot <- cbind(query, sample_labels)
+     plot <- ggplot(query_plot, aes(x=query, color = as.factor(ANT1.2@meta.data$labels), group=as.factor(ANT1.2@meta.data$labels))) +
+             stat_density(geom='line',kernel='gaussian',bw='nrd0' 
+                                                            #nrd0='Silverman'
+                                                            ,size=1,position='identity') +
+                          labs(title = paste0(marker), x = "Latent gene expression", color = "Label")
+     print(plot)
+}
+```
+
+

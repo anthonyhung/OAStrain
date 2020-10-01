@@ -148,6 +148,15 @@ RidgePlot(object = SCT.integrated, features = features.plot.msc, ncol = 3)
 FeaturePlot(object = SCT.integrated, features = features.plot.msc)
 ```
 
+Make sure that clusters are not driven by technical factors (Umi counts, library size per cell)
+
+```{r technical}
+technical.factors <- c("percent.mt", "nCount_RNA", "nFeature_RNA", "nCount_SCT", "nFeature_SCT")
+FeaturePlot(object = SCT.integrated, features = technical.factors, ncol = 3)
+RidgePlot(object = SCT.integrated, features = technical.factors, ncol = 3)
+```
+
+
 DE using limma pseudobulk (from raw counts)
 
 ```{r pseudobulk}

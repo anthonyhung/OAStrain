@@ -17,7 +17,7 @@ library(MatrixEQTL)
 library(ggplot2)
 library(mashr)
 library(tidyverse)
-
+library(ashr)
 library(RNOmni)
 ```
 
@@ -388,6 +388,8 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
      geom_hline(yintercept = .8, linetype = "dashed", color = "red")
 p
 
+
+alpha <- 5e-6 #for FWER of 0.05 (assuming 10,000 genes)
 #for Power = 0.8, what is the SES?
 #n = 100
 n100_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(100)
@@ -593,7 +595,7 @@ hypoxia <- hypoxia %>%
 #      return(sign(v$ALPHA - v$BETA) * sqrt(qchisq(p = v$p_adjusted + 1e-30, df = 1))) # add the pseudocount to account for 0 values
 # }
 
-## find SNP-gene pairs that were tested in all conditions and compute z score
+## find SNP-gene pairs that were tested in all conditions and compute allelic effect sizes
 common <- sort(Reduce(intersect, list(paste0(conditionA$TEST.SNP.CHROM, conditionA$TEST.SNP.POS, " ", conditionA$PHENO),
                            paste0(conditionB$TEST.SNP.CHROM, conditionB$TEST.SNP.POS, " ", conditionB$PHENO),
                            paste0(conditionC$TEST.SNP.CHROM, conditionC$TEST.SNP.POS, " ", conditionC$PHENO),
@@ -604,33 +606,30 @@ length(common)
 conditionA <- conditionA %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
-     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
+     dplyr::mutate(slope = log(ALPHA/BETA))%>% 
      dplyr::select(-temp)
 conditionB <- conditionB %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
-     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
+     dplyr::mutate(slope = log(ALPHA/BETA))%>% 
      dplyr::select(-temp)
 conditionC <- conditionC %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
-     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
+     dplyr::mutate(slope = log(ALPHA/BETA))%>% 
      dplyr::select(-temp)
 conditionD <- conditionD %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
-     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
+     dplyr::mutate(slope = log(ALPHA/BETA))%>% 
      dplyr::select(-temp)
 dim(conditionA)
 dim(conditionB)
 dim(conditionC)
 dim(conditionD)
 
-# Plot Z scores
-hist(conditionA$zscore)
-hist(conditionB$zscore)
-hist(conditionC$zscore)
-hist(conditionD$zscore)
+# obtain SE for effect sizes using bootstrapping
+
 
 # Plot standardized effect sizes (adjust for the sqrt(n) term in the SE equation)
 hist(conditionA$zscore/sqrt(15))
@@ -686,16 +685,57 @@ salIFN_sorted <- as_tibble(read.table("data/alasoo_etal/RNA_FastQTL_IFNg_SL1344_
 #v7 = slope of regression
 head(n_sorted)
 
-#We can use the p-value to obtain the SES (pvalue -> Zscore -> SES)
+#We can use the p-value to obtain the zscore (pvalue -> Zscore)
+#then use slopes and zscores to obtain SE (slope/zscore = SE)
 n_sorted <- n_sorted %>% 
-     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
+     filter(V6 != 1) %>% 
+     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     mutate(SE = V7/zscore)
 sal_sorted <- sal_sorted %>% 
-     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
+     filter(V6 != 1) %>% 
+     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     mutate(SE = V7/zscore)
 IFN_sorted <- IFN_sorted %>% 
-     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
+     filter(V6 != 1) %>% 
+     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     mutate(SE = V7/zscore)
 salIFN_sorted <- salIFN_sorted %>% 
-     mutate(SES = if_else(V7 < 0, true = qnorm(V6/2)/sqrt(86), false = qnorm(1-V6/2)/sqrt(86-2)))
+     filter(V6 != 1) %>% 
+     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     mutate(SE = V7/zscore)
 
+
+# use ashr to estimate true effect sizes from the data in order to compute SES
+#n_sorted_ash_out <- ash(betahat = n_sorted$V7, sebetahat = n_sorted$SE)
+#sal_sorted_ash_out <- ash(betahat = sal_sorted$V7, sebetahat = sal_sorted$SE)
+#IFN_sorted_ash_out <- ash(betahat = IFN_sorted$V7, sebetahat = IFN_sorted$SE)
+#salIFN_sorted_ash_out <- ash(betahat = salIFN_sorted$V7, sebetahat = salIFN_sorted$SE)
+#saveRDS(n_sorted_ash_out, "output/ash_power_analysis/alasoo_naive_ash_out.rds")
+#saveRDS(sal_sorted_ash_out, "output/ash_power_analysis/alasoo_sal_ash_out.rds")
+#saveRDS(IFN_sorted_ash_out, "output/ash_power_analysis/alasoo_IFN_ash_out.rds")
+#saveRDS(salIFN_sorted_ash_out, "output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
+n_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_naive_ash_out.rds")
+sal_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_sal_ash_out.rds")
+IFN_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_IFN_ash_out.rds")
+salIFN_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
+
+#add columns to datasets corresponding to the SES computed from ash betas and sds
+n_sorted$SES <- n_sorted_ash_out$result$PosteriorMean/n_sorted_ash_out$result$PosteriorSD
+sal_sorted$SES <- sal_sorted_ash_out$result$PosteriorMean/sal_sorted_ash_out$result$PosteriorSD
+IFN_sorted$SES <- IFN_sorted_ash_out$result$PosteriorMean/IFN_sorted_ash_out$result$PosteriorSD
+salIFN_sorted$SES <- salIFN_sorted_ash_out$result$PosteriorMean/salIFN_sorted_ash_out$result$PosteriorSD
+
+
+alpha <- 0.05/15786 #for FWER of 0.05 (assuming 15786 genes)
+#for Power = 0.8, what is the SES?
+#n = 100
+n100_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(100)
+#n = 58
+n58_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(58)
+#n = 30
+n30_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(30)
+#n = 10
+n10_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(10)
 
 # See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
 n_egenes_alasoo <- matrix(NA, nrow = 4, ncol = 4)
@@ -724,11 +764,11 @@ rhinovirus_data <- as.tibble(read.table("data/caliskan_etal/eQTL_results_cis_res
                               sep = "\t",
                               header = TRUE))
 
-#convert t.stat into the SES by adjusting for the sample size (sqrt(98-2))
+#obtain standard errors by using beta and t.stat
 rhinovirus_data <- rhinovirus_data %>% 
-     mutate(SES = t.stat/sqrt(98-2))
+     dplyr::mutate(se = beta/t.stat)
 
-#add column to denote which condition the association comes from
+#add column to denote which condition the association comes from; separate into two datasets
 rhinovirus_data <- rhinovirus_data %>% 
      mutate(condition = ifelse(grepl("_f", SNP), "f", "r"))
 
@@ -738,8 +778,34 @@ rhinovirus_data_f <- rhinovirus_data %>%
 rhinovirus_data_r <- rhinovirus_data %>% 
      dplyr::filter(condition == "r")
 
-rhinovirus_data_r_prelim <- rhinovirus_data_r %>% 
-     mutate(SES_prelim = if_else(beta < 0, true = qnorm(p.value/2)/sqrt(98), false = qnorm(1-p.value/2)/sqrt(86)))
+# use ashr to estimate true effect sizes from the data in order to compute SES (separately for each half of the data)
+# rhinovirus_f_ashr_out <- ash(betahat = rhinovirus_data_f$beta, sebetahat = rhinovirus_data_f$se)
+# saveRDS(rhinovirus_f_ashr_out, "output/ash_power_analysis/rhinovirus_f_ash_out.rds")
+rhinovirus_f_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_f_ash_out.rds")
+# rhinovirus_r_ashr_out <- ash(betahat = rhinovirus_data_r$beta, sebetahat = rhinovirus_data_r$se)
+# saveRDS(rhinovirus_r_ashr_out, "output/ash_power_analysis/rhinovirus_r_ash_out.rds")
+rhinovirus_r_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_r_ash_out.rds")
+
+# After (2), I suggest an alternative that does not depend on the number of genes or tests per gene, and more directly answers the question "what power would be achieved to detect a effect size that is plausible to see in real data, given the sample size?": recover the 50th, 90th, 95th, 99th, (etc.) percentiles of the fitted_g (this can be approximately done by evaluating ash_cdf on a dense grid), and report the power for those true effect sizes.
+grid_of_effects <- seq(-1.5, 1.5, length.out = 1e3)
+vector_of_percentiles <- cdf.ash(rhinovirus_f_ashr_out, grid_of_effects)
+#look for the effect sizes that correspond to percentiles of interest
+
+#add column for SES (based on ash output)
+rhinovirus_data$SES <- rhinovirus_ashr_out$result$PosteriorMean/rhinovirus_ashr_out$result$PosteriorSD
+
+
+
+alpha <- 0.05/length(unique(rhinovirus_data_f$gene)) #for FWER of 0.05 (assuming 10893 genes)
+#for Power = 0.8, what is the SES?
+#n = 100
+n100_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(100)
+#n = 58
+n58_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(58)
+#n = 30
+n30_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(30)
+#n = 10
+n10_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(10)
 
 # See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
 n_egenes_caliskan <- matrix(NA, nrow = 2, ncol = 4)

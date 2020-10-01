@@ -763,11 +763,11 @@ for(time in 1:6){
      }
      
      #store results
-     permuted_results[[time]] <- results[["Unstrain"]]
+     permuted_results[[6+time]] <- results[["Unstrain"]]
 }
 saveRDS(permuted_results, "output/permuted_results_DE.rds")
-
-
+# permuted_results <- readRDS("output/permuted_results_DE.rds")
+permuted_results
 ```
 
 
