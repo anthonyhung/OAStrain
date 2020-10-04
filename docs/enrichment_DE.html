@@ -438,7 +438,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-27
+<strong>Last updated:</strong> 2020-10-04
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -529,23 +529,22 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1a4fcd8cf5b623bd412ab06158827f8ecafbd391targetblank1a4fcd8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/1a4fcd8cf5b623bd412ab06158827f8ecafbd391" target="_blank">1a4fcd8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef67c530e28c716d21836cc7ec59639bf42505212targetblankf67c530a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1a4fcd8cf5b623bd412ab06158827f8ecafbd391targetblank1a4fcd8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/f67c530e28c716d21836cc7ec59639bf42505212" target="_blank">f67c530</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/1a4fcd8cf5b623bd412ab06158827f8ecafbd391" target="_blank">1a4fcd8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
@@ -567,11 +566,16 @@ Ignored files:
     Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
+    Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/alasoo_etal/
+    Ignored:    data/caliskan_etal/
     Ignored:    data/filtered_counts.rds
     Ignored:    data/gom_sup3.rds
     Ignored:    data/gom_sup_3.rda
     Ignored:    data/gom_sup_noiPSCChond_3.rda
     Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
@@ -585,13 +589,30 @@ Ignored files:
     Ignored:    data/raw_counts_relabeled.rds
     Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
-
-Untracked files:
-    Untracked:  .RDataTmp
+    Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/SNPs.csv
+    Ignored:    output/ash_power_analysis/
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/fasttopics/
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash/
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/pairwise_ttest_results_SCTdata.rds
+    Ignored:    output/pairwise_ttest_results_integrateddata.rds
+    Ignored:    output/permuted_results_DE.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
 
 Unstaged changes:
     Modified:   analysis/enrichment_DE.Rmd
-    Modified:   analysis/partition_variance.Rmd
 
 </code></pre>
 <p>
@@ -630,6 +651,142 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/analysis/enrichment_DE.Rmd" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+<td>
+knit permutation analyses of strain labels
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/09ab774d153d2b21b6cc4c63627ed0b448acda1f/docs/enrichment_DE.html" target="_blank">09ab774</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+add html files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e855314ea98fd1fef1af178e7dc9ca1541f8deec/docs/enrichment_DE.html" target="_blank">e855314</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+delete html files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/e47502762d7d1672f4ecdfb0ec1c7b9a2a39e7b0/analysis/enrichment_DE.Rmd" target="_blank">e475027</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+<td>
+add interaction plots
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/2cb3b3fb0a677b2709df71fa7da9d0e7969409fb/analysis/enrichment_DE.Rmd" target="_blank">2cb3b3f</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-06-01
+</td>
+<td>
+add interaction term genes and plotting
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/78b9cc0d4cf785e7da03f2db950df97b103f8104/analysis/enrichment_DE.Rmd" target="_blank">78b9cc0</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-31
+</td>
+<td>
+add dotplots of 50 overlap genes
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/dd6a48bfb866db0663b341f0c7a8c300ec83780f/analysis/enrichment_DE.Rmd" target="_blank">dd6a48b</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-28
+</td>
+<td>
+subset GWAS descriptions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/dd6a48bfb866db0663b341f0c7a8c300ec83780f/docs/enrichment_DE.html" target="_blank">dd6a48b</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-28
+</td>
+<td>
+subset GWAS descriptions
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -707,6 +864,15 @@ Add enrichment analysis file
 </div>
 <div id="load-packagesdata" class="section level1">
 <h1>Load packages/data</h1>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code># load gene annotations
 gene_anno &lt;- read.delim(&quot;data/gene-annotation.txt&quot;,
                         sep = &quot;\t&quot;)
@@ -718,7 +884,7 @@ DE_genes &lt;- gene_anno$external_gene_name[match(DE_genes_ensg, gene_anno$ensem
 other_genes_ensg &lt;- rownames(DE_results[[&quot;Unstrain&quot;]])[DE_results[[&quot;Unstrain&quot;]]$qvalue &gt;= threshold]
 other_genes &lt;- gene_anno$external_gene_name[match(other_genes_ensg, gene_anno$ensembl_gene_id)]
 
-
+interaction_genes &lt;- readRDS(&quot;output/interaction_genes.rds&quot;)
 
 
 
@@ -811,8 +977,217 @@ odds ratio
 <div id="store-the-overlapping-genes-for-futher-analysis" class="section level1">
 <h1>Store the overlapping genes for futher analysis</h1>
 <pre class="r"><code>overlap_fungenomic &lt;- intersect(fungenomic, DE_genes_ensg)
+GWAS_descriptions &lt;- read.csv(&quot;data/GWAS_genes_within_500kb.csv&quot;, stringsAsFactors = FALSE)
+GWAS_descriptions &lt;- GWAS_descriptions[match(overlap_fungenomic, GWAS_descriptions$Ensembl.ID), ] %&gt;% 
+     dplyr::select(-c(Biotype, MostSevereConsequencef, PPC_Gene_MODERATEandHIGHg, Prot_logFCn, Prot_FDRo, RNASeq_logFCp, RNASeq_FDRq))
+write.csv(GWAS_descriptions, &quot;output/GWAS_descriptions.csv&quot;)
+saveRDS(overlap_fungenomic, &quot;output/overlap_fungenomic.rds&quot;)
 
-overlap_crossomic &lt;- intersect(cross_omic, DE_genes_ensg)</code></pre>
+
+overlap_crossomic &lt;- intersect(cross_omic, DE_genes_ensg)
+saveRDS(overlap_crossomic, &quot;output/overlap_crossomic.rds&quot;)</code></pre>
+</div>
+<div id="look-at-enrichments-from-permuted-de-analysis-scrambled-strain-labels-to-make-sure-the-fet-results-arent-just-because-some-genes-are-more-likely-to-be-detected-as-de-in-these-cells" class="section level1">
+<h1>Look at enrichments from permuted DE analysis (scrambled strain labels to make sure the FET results aren’t just because some genes are more likely to be detected as DE in these cells)</h1>
+<pre class="r"><code>permuted_results &lt;- readRDS(&quot;output/permuted_results_DE.rds&quot;)
+
+threshold &lt;- 0.05
+for(permutation in 7:12){
+     print(permutation)
+     DE_results &lt;- permuted_results[[permutation]]
+     DE_genes_ensg &lt;- rownames(DE_results)[DE_results$qvalue &lt; threshold]
+     DE_genes &lt;- gene_anno$external_gene_name[match(DE_genes_ensg, gene_anno$ensembl_gene_id)]
+     other_genes_ensg &lt;- rownames(DE_results)[DE_results$qvalue &gt;= threshold]
+     other_genes &lt;- gene_anno$external_gene_name[match(other_genes_ensg, gene_anno$ensembl_gene_id)]
+
+     print(enrich(fungenomic, DE_genes_ensg, other_genes_ensg))
+     print(enrich(cross_omic, DE_genes_ensg, other_genes_ensg))
+}</code></pre>
+<pre><code>[1] 7
+     [,1]  [,2]
+[1,]    0   340
+[2,]    8 10099
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+     [,1]  [,2]
+[1,]    0   337
+[2,]    8 10102
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+[1] 8
+     [,1]  [,2]
+[1,]    0   340
+[2,]    0 10107
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+     [,1]  [,2]
+[1,]    0   337
+[2,]    0 10110
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+[1] 9
+     [,1]  [,2]
+[1,]    0   340
+[2,]    0 10107
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+     [,1]  [,2]
+[1,]    0   337
+[2,]    0 10110
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+[1] 10
+     [,1]  [,2]
+[1,]    0   340
+[2,]    0 10107
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+     [,1]  [,2]
+[1,]    0   337
+[2,]    0 10110
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+[1] 11
+     [,1]  [,2]
+[1,]    0   340
+[2,]    0 10107
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+     [,1]  [,2]
+[1,]    0   337
+[2,]    0 10110
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+odds ratio 
+         0 
+
+[1] 12
+     [,1]  [,2]
+[1,]    2   338
+[2,]   77 10030
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.7332
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 0.1341083       Inf
+sample estimates:
+odds ratio 
+  0.770783 
+
+     [,1]  [,2]
+[1,]    5   332
+[2,]   74 10036
+
+    Fisher&#39;s Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.1113
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 0.7787804       Inf
+sample estimates:
+odds ratio 
+  2.042324 </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -839,14 +1214,19 @@ locale:
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+[1] dplyr_1.0.2
+
 loaded via a namespace (and not attached):
- [1] workflowr_1.6.2 Rcpp_1.0.4.6    rprojroot_1.3-2 digest_0.6.25  
- [5] later_1.0.0     R6_2.4.1        backports_1.1.7 git2r_0.26.1   
- [9] magrittr_1.5    evaluate_0.14   stringi_1.4.6   rlang_0.4.6    
-[13] fs_1.3.1        promises_1.1.0  whisker_0.3-2   rmarkdown_1.13 
-[17] tools_3.6.1     stringr_1.4.0   glue_1.4.1      httpuv_1.5.1   
-[21] xfun_0.8        yaml_2.2.1      compiler_3.6.1  htmltools_0.4.0
-[25] knitr_1.23     </code></pre>
+ [1] Rcpp_1.0.5       knitr_1.23       whisker_0.3-2    magrittr_1.5    
+ [5] workflowr_1.6.2  tidyselect_1.1.0 R6_2.4.1         rlang_0.4.7     
+ [9] stringr_1.4.0    tools_3.6.1      xfun_0.8         git2r_0.26.1    
+[13] ellipsis_0.3.1   htmltools_0.5.0  yaml_2.2.1       digest_0.6.25   
+[17] rprojroot_1.3-2  tibble_3.0.3     lifecycle_0.2.0  crayon_1.3.4    
+[21] purrr_0.3.4      later_1.1.0.1    vctrs_0.3.4      promises_1.1.1  
+[25] fs_1.3.1         glue_1.4.2       evaluate_0.14    rmarkdown_1.13  
+[29] stringi_1.4.6    pillar_1.4.6     compiler_3.6.1   generics_0.0.2  
+[33] backports_1.1.9  httpuv_1.5.1     pkgconfig_2.0.3 </code></pre>
 </div>
 </div>
 
