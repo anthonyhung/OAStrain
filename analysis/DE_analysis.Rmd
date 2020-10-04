@@ -708,7 +708,30 @@ table(results[["Unstrain"]]$logFC > 0.25)
 table(results[["Unstrain"]]$logFC < -0.25)
 ```
 
-# Additional analysis:
+
+# Pathway enrichment
+
+Use pathfindR to perform enrichment analysis of pathways enriched amongst DE genes
+
+```{r pathfindR}
+library(pathfindR)
+#Get data in corrrect format: DF with "gene symbols", "change values" (optional), "associated p values"
+results_df <- results[["Unstrain"]] %>% 
+     dplyr::select(logFC, qvalue) %>% 
+     tibble::rownames_to_column()
+
+results_df$rowname <- gene_anno$external_gene_name[match(results_df$rowname, gene_anno$ensembl_gene_id)]
+results_df <- results_df %>% 
+     dplyr::mutate(Gene.symbol = rowname) %>% 
+     dplyr::select(Gene.symbol, logFC, qvalue)
+
+output_df <- run_pathfindR(results_df, output_dir = "output/pathfindR/results")
+
+```
+
+
+
+# Additional analysis permuting samples:
 
 From Ben Fair: "i have a suggestion for an analysis as a check that all your DE results (like the GO analysis, the enrichment for DE genes from published datasets) are robust… i’m not sure this is statistically perfect but its something that I think makes sense to try, for my own sanity: if you randomly reassign control and treatment labels and re-attampt DE testing, do all of those interesting results go away? the worry i am trying to address, is that you have some enrichment of DE genes in interesting GO categories for example, but is that just because you have more DE power for detecting highly expressed genes in this cell type (even if they are only modestly or not truly DE), and that is what drives the GO enrichment."
 
