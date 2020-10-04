@@ -714,60 +714,120 @@ From Ben Fair: "i have a suggestion for an analysis as a check that all your DE 
 
 ```{r permute samples}
 #scramble treatment labels (x3) and store the DE genes (each time, randomly assign 9 samples to be strain)
-permuted_results <- list()
-for(time in 1:6){
-     #set up DE and scramble labels
-     anno <- pData(RUVsOut)
-     x <- paste0(anno$Individual, anno$treatment)
-
-     anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
-     anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
-
-     design <- model.matrix(~treatment + Sex + Individual + W_1 + W_2 + RIN,
-                       data = anno)
-     
-     strain_indices <- sample(nrow(anno), 9)
-     anno$treatment <- "Unstrain"
-     anno$treatment[strain_indices] <- "Strain"
-     colnames(design) <- gsub("treatment", "", colnames(design))
-     
-     permuted_results[[paste0("sample_info", time)]]
-
-     #perform DE
-     #TMM Normalization
-     y <- DGEList(single_filt_counts)
-     y <- calcNormFactors(y, method = "TMM")
-     #Voom for differential expression
-     v1 <- voom(y, design)
-     corfit1 <- duplicateCorrelation(v1, design, block = x)
-     corfit1$consensus.correlation
-     v2 <- voom(y, design, block = x, correlation = corfit1$consensus.correlation)
-     corfit2 <- duplicateCorrelation(v2, design, block = x)
-     corfit2$consensus.correlation
-     fit <- lmFit(v2, design, block = x,
-             correlation = corfit2$consensus.correlation)
-     fit <- eBayes(fit)
-     
-     tests <- colnames(fit$coefficients)
-     results <- vector(length = length(tests), mode = "list")
-     names(results) <- tests
-
-     for (test in tests[c(1:4, 6:8)]) {
-     # Extract limma results
-      results[[test]] <- get_results(fit, coef = test)
-     # Add mutliple testing correction with ASH
-     output_ash <- run_ash(fit, coef = test)$result
-     results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
-                              lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
-                              svalue = output_ash$svalue)
-     }
-     
-     #store results
-     permuted_results[[6+time]] <- results[["Unstrain"]]
-}
-saveRDS(permuted_results, "output/permuted_results_DE.rds")
-# permuted_results <- readRDS("output/permuted_results_DE.rds")
+# permuted_results <- vector("list", 12)
+# for(time in 1:6){
+#      #set up DE and scramble labels
+#      anno <- pData(RUVsOut)
+#      x <- paste0(anno$Individual, anno$treatment)
+# 
+#      anno$LibraryPrepBatch <- factor(anno$LibraryPrepBatch, levels = c("1", "2"))
+#      anno$Replicate <- factor(anno$Replicate, levels = c("1", "2", "3"))
+# 
+#      strain_indices <- sample(nrow(anno), 9)
+#      anno$treatment <- "Unstrain"
+#      anno$treatment[strain_indices] <- "Strain"
+#      design <- model.matrix(~treatment + Sex + Individual + W_1 + W_2 + RIN,
+#                        data = anno)
+#      colnames(design) <- gsub("treatment", "", colnames(design))
+# 
+#      permuted_results[[time]] <- anno
+# 
+#      #perform DE
+#      #TMM Normalization
+#      y <- DGEList(single_filt_counts)
+#      y <- calcNormFactors(y, method = "TMM")
+#      #Voom for differential expression
+#      v1 <- voom(y, design)
+#      corfit1 <- duplicateCorrelation(v1, design, block = x)
+#      corfit1$consensus.correlation
+#      v2 <- voom(y, design, block = x, correlation = corfit1$consensus.correlation)
+#      corfit2 <- duplicateCorrelation(v2, design, block = x)
+#      corfit2$consensus.correlation
+#      fit <- lmFit(v2, design, block = x,
+#              correlation = corfit2$consensus.correlation)
+#      fit <- eBayes(fit)
+# 
+#      tests <- colnames(fit$coefficients)
+#      results <- vector(length = length(tests), mode = "list")
+#      names(results) <- tests
+# 
+#      for (test in tests[c(1:4, 6:8)]) {
+#      # Extract limma results
+#       results[[test]] <- get_results(fit, coef = test)
+#      # Add mutliple testing correction with ASH
+#      output_ash <- run_ash(fit, coef = test)$result
+#      results[[test]] <- cbind(results[[test]], lfsr = output_ash$lfsr,
+#                               lfdr = output_ash$lfdr, qvalue = output_ash$qvalue,
+#                               svalue = output_ash$svalue)
+#      }
+# 
+#      #store results
+#      permuted_results[[6+time]] <- results[["Unstrain"]]
+# }
+# saveRDS(permuted_results, "output/permuted_results_DE.rds")
+permuted_results <- readRDS("output/permuted_results_DE.rds")
 permuted_results
+
+#visualize what the permutations look like (what the scrambled labels look like)
+for(time in 1:6){
+     print(permuted_results[[time]])
+}
+```
+
+```{r ks test permuted}
+for (permutation in 7:12){
+     results <- permuted_results[[permutation]]
+     
+     # k-s test making use of ranked based on p-values
+     genes <- results$qvalue
+     names(genes) <- rownames(results)
+
+     selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+     allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="ensembl")
+     GOdata <- new("topGOdata",
+       ontology="BP",
+       allGenes=genes,
+       annot=annFUN.GO2genes,
+       GO2genes=allGO2genes,
+       geneSel=selection,
+       nodeSize=10)
+
+     results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+     goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+     goEnrichment <- goEnrichment %>% 
+          mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+     goEnrichment$KS <- as.numeric(goEnrichment$KS)
+     goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+     goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+     goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+     goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+     goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+     goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+     goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+     plot <- ggplot(goEnrichment, aes(x=Term, y=-log10(KS))) +
+         stat_summary(geom = "bar", fun = mean, position = "dodge") +
+         xlab("Biological process") +
+         ylab("Enrichment") +
+         ggtitle("Title") +
+         scale_y_continuous(breaks = round(seq(0, max(-log10(goEnrichment$KS)), by = 2), 1)) +
+         theme_bw(base_size=24) +
+         theme(
+             legend.position='none',
+             legend.background=element_rect(),
+             plot.title=element_text(angle=0, size=24, face="bold", vjust=1),
+             axis.text.x=element_text(angle=0, size=18, face="bold", hjust=1.10),
+             axis.text.y=element_text(angle=0, size=18, face="bold", vjust=0.5),
+             axis.title=element_text(size=24, face="bold"),
+          legend.key=element_blank(),     #removes the border
+          legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
+          legend.text=element_text(size=18),  #Text size
+          title=element_text(size=18)) +
+          guides(colour=guide_legend(override.aes=list(size=2.5))) +
+          coord_flip()
+
+     print(plot)
+}
 ```
 
 

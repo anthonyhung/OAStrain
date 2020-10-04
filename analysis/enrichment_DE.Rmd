@@ -94,12 +94,31 @@ enrich(cross_omic, DE_genes_ensg, other_genes_ensg)
 overlap_fungenomic <- intersect(fungenomic, DE_genes_ensg)
 GWAS_descriptions <- read.csv("data/GWAS_genes_within_500kb.csv", stringsAsFactors = FALSE)
 GWAS_descriptions <- GWAS_descriptions[match(overlap_fungenomic, GWAS_descriptions$Ensembl.ID), ] %>% 
-     select(-c(Biotype, MostSevereConsequencef, PPC_Gene_MODERATEandHIGHg, Prot_logFCn, Prot_FDRo, RNASeq_logFCp, RNASeq_FDRq))
+     dplyr::select(-c(Biotype, MostSevereConsequencef, PPC_Gene_MODERATEandHIGHg, Prot_logFCn, Prot_FDRo, RNASeq_logFCp, RNASeq_FDRq))
 write.csv(GWAS_descriptions, "output/GWAS_descriptions.csv")
 saveRDS(overlap_fungenomic, "output/overlap_fungenomic.rds")
 
 
 overlap_crossomic <- intersect(cross_omic, DE_genes_ensg)
 saveRDS(overlap_crossomic, "output/overlap_crossomic.rds")
+```
+
+# Look at enrichments from permuted DE analysis (scrambled strain labels to make sure the FET results aren't just because some genes are more likely to be detected as DE in these cells)
+
+```{r permuted}
+permuted_results <- readRDS("output/permuted_results_DE.rds")
+
+threshold <- 0.05
+for(permutation in 7:12){
+     print(permutation)
+     DE_results <- permuted_results[[permutation]]
+     DE_genes_ensg <- rownames(DE_results)[DE_results$qvalue < threshold]
+     DE_genes <- gene_anno$external_gene_name[match(DE_genes_ensg, gene_anno$ensembl_gene_id)]
+     other_genes_ensg <- rownames(DE_results)[DE_results$qvalue >= threshold]
+     other_genes <- gene_anno$external_gene_name[match(other_genes_ensg, gene_anno$ensembl_gene_id)]
+
+     print(enrich(fungenomic, DE_genes_ensg, other_genes_ensg))
+     print(enrich(cross_omic, DE_genes_ensg, other_genes_ensg))
+}
 ```
 

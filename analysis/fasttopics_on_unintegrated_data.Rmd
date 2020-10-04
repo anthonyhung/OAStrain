@@ -18,8 +18,146 @@ ANT1.2 <- readRDS("data/ANT1_2.rds")
 
 # Fasttopics on unintegrated data
 
-```{r fasttopics}
+##separately on each 10x lane
+
+### ANT1
+
+```{r fasttopics ANT1}
 library(fastTopics)
+#need to fit the model to the count data (unintegrated)
+raw_counts <- ANT1.2@assays$RNA@counts[ANT1.2$orig.ident == "ANT1",]
+raw_counts <- as.matrix(raw_counts)
+#remove genes without any counts in droplets
+raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts <- t(as.matrix(raw_counts))
+
+#fit model
+# fit <- fit_poisson_nmf(raw_counts,k = 7,numiter = 200)
+# saveRDS(fit, "output/fasttopics/ANT1_k=7.rds")
+fit <- readRDS("output/fasttopics/ANT1_k=7.rds")
+
+#compute weights and topics (need to add up to 1)
+l <- fit$L
+f <- fit$F
+weights <- sweep(l, MARGIN = 2, colSums(f), `*`)
+scale <- rowSums(weights)
+weights <- weights / scale
+topics <- f / colSums(f) # add up to 1
+```
+
+```{r markers}
+markers <- c("THY1", "NT5E", "ENG", "CD44",
+             "COL2A1", "SOX9", "COL10A1",
+             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3"
+             )
+
+markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 8)))
+rownames(markers_description) <- markers
+```
+
+```{r plot correlations ANT1}
+library(pheatmap)
+library(RColorBrewer)
+library(dummies)
+library(tidyr)
+
+#plot heatmap of topic weights for samples
+#get labels of cells and reorder to group them
+sample <- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT1"])
+rownames(sample) <- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == "ANT1",])
+sample_labels <- sample %>% 
+     arrange(`ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT1"]`) 
+sample <- sample_labels %>% 
+     separate(`ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT1"]`, c("Individual", "condition"))
+#reorder weights df to match sample order
+weights <- weights[match(rownames(sample), rownames(weights)),]
+#make the plot (color strip on the left is by indivdual)
+pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
+         show_rownames = FALSE, main = "Heatmap of topic weights grouped by cell labels")
+#same heatmap but group all the cells that are of the same label together (more interpretable??)
+sample_dummy <- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT1"])
+rownames(sample_dummy) <- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == "ANT1",])
+sample_dummies <- dummy.data.frame(sample_dummy)
+names(sample_dummies) <- c("NA18855_Strain", "NA18856_Unstrain", "NA19160_Unstrain")
+cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
+#same heatmap but group all the cells that are of the same treatment together
+sample_ind_treat_dummies <- dummy.data.frame(sample)
+cor_by_treat <- cor(sample_ind_treat_dummies %>% dplyr::select(contains("condition")), weights, method = "pearson")
+pheatmap(cor_by_treat, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by Treatment")
+
+#plot heatmap of relative expression of marker genes in each topic
+topics_markers <- topics[markers[-c(4,8,10:12)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+topics_markers <- topics[markers[-c(1,2,4,8,10:12)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+```
+
+### ANT2
+
+```{r fasttopics ANT2}
+#need to fit the model to the count data (unintegrated)
+raw_counts <- ANT1.2@assays$RNA@counts[ANT1.2$orig.ident == "ANT2",]
+raw_counts <- as.matrix(raw_counts)
+#remove genes without any counts in droplets
+raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts <- t(as.matrix(raw_counts))
+
+#fit model
+# fit <- fit_poisson_nmf(raw_counts,k = 7,numiter = 200)
+# saveRDS(fit, "output/fasttopics/ANT2_k=7.rds")
+fit <- readRDS("output/fasttopics/ANT2_k=7.rds")
+
+#compute weights and topics (need to add up to 1)
+l <- fit$L
+f <- fit$F
+weights <- sweep(l, MARGIN = 2, colSums(f), `*`)
+scale <- rowSums(weights)
+weights <- weights / scale
+topics <- f / colSums(f) # add up to 1
+```
+
+```{r plot correlations ANT2}
+library(pheatmap)
+library(RColorBrewer)
+library(dummies)
+library(tidyr)
+
+#plot heatmap of topic weights for samples
+#get labels of cells and reorder to group them
+sample <- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT2"])
+rownames(sample) <- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == "ANT2",])
+sample_labels <- sample %>% 
+     arrange(`ANT1.2@meta.data$labels[ANT1.2$orig.ident == \"ANT2\"]`)
+sample <- sample_labels %>% 
+     separate(`ANT1.2@meta.data$labels[ANT1.2$orig.ident == \"ANT2\"]`, c("Individual", "condition"))
+#reorder weights df to match sample order
+weights <- weights[match(rownames(sample), rownames(weights)),]
+#make the plot (color strip on the left is by indivdual)
+pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
+         show_rownames = FALSE, main = "Heatmap of topic weights grouped by cell labels")
+#same heatmap but group all the cells that are of the same label together (more interpretable??)
+sample_dummy <- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == "ANT2"])
+rownames(sample_dummy) <- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == "ANT2",])
+sample_dummies <- dummy.data.frame(sample_dummy)
+names(sample_dummies) <- c("NA18855_Untrain", "NA19160_Strain")
+cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
+
+#plot heatmap of relative expression of marker genes in each topic
+topics_markers <- topics[markers[c(4,8,10,11,12)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+topics_markers <- topics[markers[c(4,8,10,11)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+```
+
+
+
+##jointly on both 10x lanes
+
+```{r fasttopics joint}
 #need to fit the model to the count data (unintegrated)
 raw_counts <- ANT1.2@assays$RNA@counts
 raw_counts <- as.matrix(raw_counts)
@@ -43,22 +181,7 @@ weights <- weights / scale
 topics <- f / colSums(f) # add up to 1
 ```
 
-```{r markers}
-markers <- c("THY1", "NT5E", "ENG", "CD44",
-             "COL2A1", "SOX9", "COL10A1",
-             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3"
-             )
-
-markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 8)))
-rownames(markers_description) <- markers
-```
-
-```{r plot correlations}
-library(pheatmap)
-library(RColorBrewer)
-library(dummies)
-library(tidyr)
-
+```{r plot correlations joint}
 #plot heatmap of topic weights for samples
 #get labels of cells and reorder to group them
 sample <- as.data.frame(ANT1.2@meta.data$labels)

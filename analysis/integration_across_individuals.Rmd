@@ -134,12 +134,55 @@ all.markers <- FindAllMarkers(SCT.integrated, min.pct = 0, return.thresh = 1)
 Explore some cluster marker genes
 It looks like cluster 2 has higher expression of chond markers, while more or less all three clusters have similar expression of MSC markers (though it does seem like there's a bimodal distribution in cluster 2 with some cells having higher expression of these markers)
 
-```{r markers seurat DE}
-all.markers
+```{r poisson ash}
+# per suggestion from Abhishek, run poisson ash to data per cluster and per indivdiual, then show the estimated prior
+library(ashr)
+library(Matrix)
+#plot curves for genes separated by indivdual (information for indivdual contained in labels)
+plot_by_labels <- function(gene, counts, labels){
+     #create dataframe to store the cdf axes and the groups
+     dataframe_cdf <- data.frame(x = c(), y = c(), label = c())
+     for(individual in unique(labels)){ #in the case that the labels supplied contain cluster, it will do this by cluster instead
+          x <- counts[gene, labels == individual]
+          s <- colSums(counts[,labels == individual]) #sum of molecule counts per sample
+          lam <- x/s
+          fit <- ashr::ash_pois(x, s, mixcompdist = "halfuniform")
+          cdf <- ashr::cdf.ash(fit, seq(from = 0, to = max(lam), length.out = 1000))
+          temp_df <- cbind(cdf$x, t(cdf$y), individual)
+          names(temp_df) <- c("x", "y", "label")
+          dataframe_cdf <- rbind(dataframe_cdf, temp_df)
+     }
+     names(dataframe_cdf) <- c("x", "y", "label")
+     dataframe_cdf$x <- as.character(dataframe_cdf$x)
+     dataframe_cdf$y <- as.character(dataframe_cdf$y)
+     dataframe_cdf$x <- as.numeric(dataframe_cdf$x)
+     dataframe_cdf$y <- as.numeric(dataframe_cdf$y)
+     #use df to make our plot
+     plot <- ggplot(dataframe_cdf, aes(x = x, y = y, color = as.factor(label), group=as.factor(label))) +
+          geom_point() + 
+          labs(title = paste0(gene), x = "Latent gene expression", y = "CDF", color = "Label")
+     return(plot)
+}
+
 features.plot.chond <- c("TIMP3", "TIMP2", "COL11A1", 
                    "SOX5", "SOX6",
                    "TGFBI")
 features.plot.msc <- c("THY1",  "NT5E", "CD44") #cd44 is a negative marker (looks like )
+
+#by cluster
+for (marker in c(features.plot.msc, features.plot.chond)){
+     print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$integrated_snn_res.0.4) + labs(color = "Cluster"))
+}
+
+#by individual
+for (marker in c(features.plot.msc, features.plot.chond)){
+     print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$labels) + labs(color = "Individual"))
+}
+```
+
+
+```{r markers seurat}
+all.markers
 
 RidgePlot(object = SCT.integrated, features = features.plot.chond, ncol = 3)
 FeaturePlot(object = SCT.integrated, features = features.plot.chond)
