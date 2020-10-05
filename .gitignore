@@ -14,3 +14,4 @@ analysis/site_libs
 *.csv
 *.gz
 data/*.txt
+output/OA_summary_stats_for_munging.txt
