@@ -1,0 +1,56 @@
+---
+title: "download_OA_GWAS_summ_stats"
+author: "Anthony Hung"
+date: "2020-10-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Download the OA GWAS summary statistics and get into format that is accepted by LDSC
+
+Summary statistics from OA GWAS meta-analysis are found here:
+wget ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/TachmazidouI_30664745_GCST007093/Tachmazidou_30664745_ALLOA.txt.gz, and unzip.
+
+Annoyingly, the snps are given ids that contain the chromosome:position_allele1_allele2 rather than the rsid. I will convert this column to rsid, then subset to the columns that are required by LDSC, and write it to a file.
+
+```{r load summary stats}
+library(readr)
+library(dplyr)
+library(tidyr)
+# OA_GWAS_raw <- read_delim("data/Tachmazidou_30664745_ALLOA.txt.gz", delim = "\t")
+# OA_GWAS <- OA_GWAS_raw %>% 
+#      dplyr::select(MarkerName, A1 = Allele1, A2 = Allele2, FRQ = Freq1, P = `P-value`, BETA = Effect) %>% 
+#      tidyr::separate(MarkerName, into = 'SNPloc', extra = 'drop', remove = TRUE, sep = "_") %>% 
+#      tidyr::separate(SNPloc, into = c('Chromosome', 'position'), sep = ":") %>% 
+#      dplyr::mutate(Gpos = paste0(Chromosome, ":", position, "-", position))
+# 
+# saveRDS(OA_GWAS, "output/OA_GWAS.rds")
+OA_GWAS <- readRDS("output/OA_GWAS.rds")
+```
+
+query genome to determine the rsids that match the SNP locations in the summary stats above
+
+```{r BSgenome}
+library(BSgenome)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(GenomicRanges)
+library(stringr)
+
+# Gpos_data <- OA_GWAS$Gpos
+# ranges_snps <- GPos(Gpos_data)
+# SNP_rsids <- snpsByOverlaps(SNPlocs.Hsapiens.dbSNP151.GRCh38, ranges_snps)
+# saveRDS(SNP_rsids, "output/snps_by_overlap_OAGWAS.rds")
+SNP_rsids <- readRDS("output/snps_by_overlap_OAGWAS.rds")
+SNP_rsids <- data.frame(SNP_rsids)
+SNP_rsids <- SNP_rsids %>% 
+     dplyr::mutate(Gpos = paste0(seqnames, ":", pos, "-", pos))
+OA_GWAS$SNPid <- NA
+OA_GWAS$SNPid <- SNP_rsids$RefSNP_id[match(OA_GWAS$Gpos, SNP_rsids$Gpos)]
+saveRDS(OA_GWAS, "output/OA_GWAS_w_id.rds")
+OA_GWAS <- readRDS("output/OA_GWAS_w_id.rds")
+summary_stats_for_munging <- OA_GWAS %>%
+     select(MarkerName = SNPid, A1, A2, FRQ, P, BETA)
+write.table(summary_stats_for_munging, "output/OA_summary_stats_for_munging.txt", sep = "\t")
+```
+

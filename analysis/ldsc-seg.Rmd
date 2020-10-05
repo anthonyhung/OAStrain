@@ -1,0 +1,97 @@
+---
+title: "ldsc-seg"
+author: "Anthony Hung"
+date: "2020-10-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# LDSR-seg analysis
+
+Use DE genes from DE analysis and use LDSC-SEG to analyze OA heritability partitioned into DE genes.
+https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.html
+
+# Download LDSC data
+
+```{bash}
+<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
+
+<!-- ## baselineLD_v1.1 -->
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v1.1_ldscores.tgz -->
+<!-- mkdir 1000G_Phase3_baselineLD_v1.1_ldscores -->
+<!-- tar -xvzf 1000G_Phase3_baselineLD_v1.1_ldscores.tgz -C 1000G_Phase3_baselineLD_v1.1_ldscores -->
+
+<!-- ## baselineLD_v2.2 -->
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz -->
+<!-- mkdir 1000G_Phase3_baselineLD_v2.2_ldscores -->
+<!-- tar -xvzf 1000G_Phase3_baselineLD_v2.2_ldscores.tgz -C 1000G_Phase3_baselineLD_v2.2_ldscores -->
+```
+
+# Download Weights
+
+```{bash}
+<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
+
+wget https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
+tar -xvzf weights_hm3_no_hla.tgz
+```
+
+# Download allele frequencies
+
+```{bash}
+<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
+
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_frq.tgz -->
+<!-- tar -xvzf 1000G_Phase3_frq.tgz -->
+```
+
+# Download 1000 genomes reference genotypes at hapmap 3 loci
+
+```{bash}
+<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
+
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_plinkfiles.tgz -->
+<!-- tar -xvzf 1000G_Phase3_plinkfiles.tgz -->
+
+```
+
+# Download HapMap3 SNPs
+
+```{bash}
+<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
+
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/hapmap3_snps.tgz -->
+<!-- tar -xvzf hapmap3_snps.tgz -->
+```
+
+
+# Download a concatenated list of HapMap3 SNPs
+
+```{bash}
+<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/w_hm3.snplist.bz2 -->
+<!-- bzip2 -d w_hm3.snplist.bz2 -->
+```
+
+# List of HapMap 3 SNPs rsIDs
+
+```{bash}
+<!-- awk '{if ($1!="SNP") {print $1} }' w_hm3.snplist > listHM3.txt -->
+```
+
+# Download 1000G_Phase3_cell_type_groups
+
+```{bash}
+<!-- wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_cell_type_groups.tgz -->
+<!-- tar -xvzf 1000G_Phase3_cell_type_groups.tgz -->
+```
+
+
+# Create annotation files and compute LD scores
+
+Run the bash script: OAStrain/code/compute_ldscore_generic_annot.sbatch
+
+which calls upon the R script: OAStrain/code/extract_baselineLD_generic_annot.R
+
+
+
