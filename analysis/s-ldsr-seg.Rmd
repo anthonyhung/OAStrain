@@ -12,6 +12,8 @@ editor_options:
 Use DE genes from DE analysis and use LDSC-SEG to analyze OA heritability partitioned into DE genes.
 https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.html
 
+# Download LDSC data
+
 ```{r}
 
 ```
