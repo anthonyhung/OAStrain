@@ -1,5 +1,5 @@
 ---
-title: "s-ldsc-seg"
+title: "s-ldsr-seg"
 author: "Anthony Hung"
 date: "2020-10-04"
 output: workflowr::wflow_html
@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# LDSC-seg analysis
+# LDSR-seg analysis
 
 Use DE genes from DE analysis and use LDSC-SEG to analyze OA heritability partitioned into DE genes.
 https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.html
