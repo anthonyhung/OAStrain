@@ -575,7 +575,7 @@ visualize_terms(result_df = final_res,
                 hsa_KEGG = FALSE, # boolean to indicate whether human KEGG gene sets were used for enrichment analysis or not
                 pin_name_path = "Biogrid")
 
-enrichment_chart(final_res[1:10, ])
+enrichment_chart(final_res, top_terms = 10)
 
 ```
 
