@@ -1,0 +1,25 @@
+*********************************************************************
+* LD Score Regression (LDSC)
+* Version 1.0.1
+* (C) 2014-2019 Brendan Bulik-Sullivan and Hilary Finucane
+* Broad Institute of MIT and Harvard / MIT Department of Mathematics
+* GNU General Public License v3
+*********************************************************************
+Call: 
+./munge_sumstats.py \
+--out /project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/OA_summary_stats/ \
+--merge-alleles /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/w_hm3.snplist \
+--a1-inc  \
+--sumstats /project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/data/Tachmazidou_30664745_ALLOA.txt 
+
+
+ERROR converting summary statistics:
+
+Traceback (most recent call last):
+  File "/project2/gilad/anthonyhung/Projects/ldsc/munge_sumstats.py", line 643, in munge_sumstats
+    raise ValueError('Could not determine N.')
+ValueError: Could not determine N.
+
+
+Conversion finished at Sun Oct  4 20:49:41 2020
+Total time elapsed: 0.05s
