@@ -94,4 +94,90 @@ Run the bash script: OAStrain/code/compute_ldscore_generic_annot.sbatch
 which calls upon the R script: OAStrain/code/extract_baselineLD_generic_annot.R
 
 
+# Download the OA GWAS summary statistics and get into format that is accepted by LDSC
+
+Summary statistics from OA GWAS meta-analysis are found here:
+wget ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/TachmazidouI_30664745_GCST007093/Tachmazidou_30664745_ALLOA.txt.gz, and unzip.
+
+Annoyingly, the snps are given ids that contain the chromosome:position_allele1_allele2 rather than the rsid. I will convert this column to rsid, then subset to the columns that are required by LDSC, and write it to a file.
+
+```{r load summary stats}
+library(readr)
+library(dplyr)
+library(tidyr)
+# OA_GWAS_raw <- read_delim("data/Tachmazidou_30664745_ALLOA.txt.gz", delim = "\t")
+# OA_GWAS <- OA_GWAS_raw %>%
+#      dplyr::select(MarkerName, A1 = Allele1, A2 = Allele2, FRQ = Freq1, P = `P-value`, BETA = Effect) %>%
+#      dplyr::mutate(A1 = toupper(A1), A2 = toupper(A2)) %>%
+#      tidyr::separate(MarkerName, into = 'SNPloc', extra = 'drop', remove = TRUE, sep = "_") %>%
+#      tidyr::separate(SNPloc, into = c('Chromosome', 'position'), sep = ":") %>%
+#      dplyr::mutate(Gpos = paste0(Chromosome, ":", position, "-", position))
+# 
+# saveRDS(OA_GWAS, "output/OA_GWAS.rds")
+OA_GWAS <- readRDS("output/OA_GWAS.rds")
+```
+
+query genome to determine the rsids that match the SNP locations in the summary stats above
+
+```{r BSgenome}
+library(BSgenome)
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(SNPlocs.Hsapiens.dbSNP144.GRCh37)
+library(GenomicRanges)
+library(stringr)
+
+# Gpos_data <- OA_GWAS$Gpos
+# ranges_snps <- GPos(Gpos_data)
+# SNP_rsids <- snpsByOverlaps(SNPlocs.Hsapiens.dbSNP144.GRCh37, ranges_snps)
+# saveRDS(SNP_rsids, "output/snps_by_overlap_OAGWAS.rds")
+SNP_rsids <- readRDS("output/snps_by_overlap_OAGWAS.rds")
+# SNP_rsids <- data.frame(SNP_rsids)
+# SNP_rsids <- SNP_rsids %>% 
+#      dplyr::mutate(Gpos = paste0(seqnames, ":", pos, "-", pos))
+# OA_GWAS$SNPid <- NA
+# OA_GWAS$SNPid <- SNP_rsids$RefSNP_id[match(OA_GWAS$Gpos, SNP_rsids$Gpos)]
+# saveRDS(OA_GWAS, "output/OA_GWAS_w_id.rds")
+OA_GWAS <- readRDS("output/OA_GWAS_w_id.rds")
+# summary_stats_for_munging <- OA_GWAS %>%
+#      select(MarkerName = SNPid, A1, A2, FRQ, P, BETA) %>% 
+#      filter(!is.na(MarkerName))
+# dim(summary_stats_for_munging)
+# options(scipen=999)
+# write.table(summary_stats_for_munging, "output/OA_summary_stats_for_munging.txt", sep = "\t", quote = FALSE)
+munged_summary_stats <- read.table("output/OA_summary_stats.sumstats.gz", sep = "\t")
+```
+
+Using the above table, run the munge_sumstats.py from ldsc ("code/munge_summ_stat_OA_GWAS_for_ldsc.sh") to generate the summary statistics
+
+# Generate Annotations (SNPs within 100kb of DE genes vs SNPs within 100kb of all tested genes)
+
+```{r annotations}
+gene_anno <- read.delim("data/gene-annotation_hg37.txt", #specifically hg37
+                        sep = "\t")
+DE_results <- readRDS("data/DE_results.rds")
+threshold <- 0.05
+DE_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue < threshold]
+other_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue >= threshold]
+all_genes_ensg <- c(DE_genes_ensg, other_genes_ensg)
+
+gene_anno <- gene_anno %>% 
+     dplyr::filter(ensembl_gene_id %in% all_genes_ensg, chromosome_name %in% 1:22) %>% 
+     dplyr::select(ensembl_gene_id, chromosome_name, start_position, end_position)
+
+gene_anno_DE <- gene_anno %>%
+     dplyr::filter(ensembl_gene_id %in% DE_genes_ensg, chromosome_name %in% 1:22)
+
+#generate gene coordinate file for all genes
+gene_coord_file <- gene_anno %>% 
+     select(GENE = ensembl_gene_id, CHR = chromosome_name, START = start_position, END = end_position)
+write.table(gene_coord_file, "output/gene_coord_file.txt", sep = "\t", quote = FALSE)
+
+#generate gene set files for all genes and DE genes
+write.table(gene_anno$ensembl_gene_id, "output/all_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(gene_anno_DE$ensembl_gene_id, "output/DE_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+```
+
+# generate annotation files (one for each chromosome/gene set)
+
+Use "code/make_annotations.py" (need to activate ldsc conda env).
 

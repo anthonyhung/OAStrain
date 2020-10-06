@@ -1,0 +1,46 @@
+*********************************************************************
+* LD Score Regression (LDSC)
+* Version 1.0.1
+* (C) 2014-2019 Brendan Bulik-Sullivan and Hilary Finucane
+* Broad Institute of MIT and Harvard / MIT Department of Mathematics
+* GNU General Public License v3
+*********************************************************************
+Call: 
+./munge_sumstats.py \
+--out /Users/anthonyhung/Desktop/OA_summary_stats \
+--merge-alleles /Users/anthonyhung/Desktop/w_hm3.snplist \
+--a1-inc  \
+--N 455221.0 \
+--sumstats /Users/anthonyhung/Desktop/OA_summary_stats_for_munging.txt 
+
+Interpreting column names as follows:
+A1:	Allele 1, interpreted as ref allele for signed sumstat.
+MarkerName:	Variant ID (e.g., rs number)
+FRQ:	Allele frequency
+A2:	Allele 2, interpreted as non-ref allele for signed sumstat.
+P:	p-Value
+
+Reading list of SNPs for allele merge from /Users/anthonyhung/Desktop/w_hm3.snplist
+Read 1217311 SNPs for allele merge.
+Reading sumstats from /Users/anthonyhung/Desktop/OA_summary_stats_for_munging.txt into memory 5000000 SNPs at a time.
+Read 29492383 SNPs from --sumstats file.
+Removed 28273008 SNPs not in --merge-alleles.
+Removed 0 SNPs with missing values.
+Removed 0 SNPs with INFO <= 0.9.
+Removed 36450 SNPs with MAF <= 0.01.
+Removed 0 SNPs with out-of-bounds p-values.
+Removed 566 variants that were not SNPs or were strand-ambiguous.
+1182359 SNPs remain.
+Removed 521 SNPs with duplicated rs numbers (1181838 SNPs remain).
+Using N = 455221.0
+Removed 265 SNPs whose alleles did not match --merge-alleles (1181573 SNPs remain).
+Writing summary statistics for 1217311 SNPs (1181573 with nonmissing beta) to /Users/anthonyhung/Desktop/OA_summary_stats.sumstats.gz.
+
+Metadata:
+Mean chi^2 = 1.455
+Lambda GC = 1.362
+Max chi^2 = 78.429
+413 Genome-wide significant SNPs (some may have been removed by filtering).
+
+Conversion finished at Mon Oct  5 20:25:41 2020
+Total time elapsed: 2.0m:29.01s
