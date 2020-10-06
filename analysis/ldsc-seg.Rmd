@@ -15,75 +15,76 @@ https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.
 # Download LDSC data
 
 ```{bash}
-<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
-
-<!-- ## baselineLD_v1.1 -->
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v1.1_ldscores.tgz -->
-<!-- mkdir 1000G_Phase3_baselineLD_v1.1_ldscores -->
-<!-- tar -xvzf 1000G_Phase3_baselineLD_v1.1_ldscores.tgz -C 1000G_Phase3_baselineLD_v1.1_ldscores -->
-
-<!-- ## baselineLD_v2.2 -->
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz -->
-<!-- mkdir 1000G_Phase3_baselineLD_v2.2_ldscores -->
-<!-- tar -xvzf 1000G_Phase3_baselineLD_v2.2_ldscores.tgz -C 1000G_Phase3_baselineLD_v2.2_ldscores -->
+# cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# ## baselineLD_v1.1
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v1.1_ldscores.tgz
+# mkdir 1000G_Phase3_baselineLD_v1.1_ldscores
+# tar -xvzf 1000G_Phase3_baselineLD_v1.1_ldscores.tgz -C 1000G_Phase3_baselineLD_v1.1_ldscores
+# 
+# ## baselineLD_v2.2
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
+# mkdir 1000G_Phase3_baselineLD_v2.2_ldscores
+# tar -xvzf 1000G_Phase3_baselineLD_v2.2_ldscores.tgz -C 1000G_Phase3_baselineLD_v2.2_ldscores
+#moved these to annot
 ```
 
 # Download Weights
 
 ```{bash}
-<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
-
-wget https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
-tar -xvzf weights_hm3_no_hla.tgz
+# cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
+# tar -xvzf weights_hm3_no_hla.tgz
 ```
 
 # Download allele frequencies
 
 ```{bash}
-<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
-
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_frq.tgz -->
-<!-- tar -xvzf 1000G_Phase3_frq.tgz -->
+# cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_frq.tgz
+# tar -xvzf 1000G_Phase3_frq.tgz
 ```
 
 # Download 1000 genomes reference genotypes at hapmap 3 loci
 
 ```{bash}
-<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
-
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_plinkfiles.tgz -->
-<!-- tar -xvzf 1000G_Phase3_plinkfiles.tgz -->
+# cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_plinkfiles.tgz
+# tar -xvzf 1000G_Phase3_plinkfiles.tgz
 
 ```
 
 # Download HapMap3 SNPs
 
 ```{bash}
-<!-- cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG -->
-
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/hapmap3_snps.tgz -->
-<!-- tar -xvzf hapmap3_snps.tgz -->
+# cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/hapmap3_snps.tgz
+# tar -xvzf hapmap3_snps.tgz
 ```
 
 
 # Download a concatenated list of HapMap3 SNPs
 
 ```{bash}
-<!-- wget https://data.broadinstitute.org/alkesgroup/LDSCORE/w_hm3.snplist.bz2 -->
-<!-- bzip2 -d w_hm3.snplist.bz2 -->
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/w_hm3.snplist.bz2
+# bzip2 -d w_hm3.snplist.bz2
 ```
 
 # List of HapMap 3 SNPs rsIDs
 
 ```{bash}
-<!-- awk '{if ($1!="SNP") {print $1} }' w_hm3.snplist > listHM3.txt -->
+# awk '{if ($1!="SNP") {print $1} }' w_hm3.snplist > listHM3.txt
 ```
 
 # Download 1000G_Phase3_cell_type_groups
 
 ```{bash}
-<!-- wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_cell_type_groups.tgz -->
-<!-- tar -xvzf 1000G_Phase3_cell_type_groups.tgz -->
+#wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_cell_type_groups.tgz
+#tar -xvzf 1000G_Phase3_cell_type_groups.tgz
 ```
 
 
@@ -113,8 +114,8 @@ library(tidyr)
 #      tidyr::separate(SNPloc, into = c('Chromosome', 'position'), sep = ":") %>%
 #      dplyr::mutate(Gpos = paste0(Chromosome, ":", position, "-", position))
 # 
-# saveRDS(OA_GWAS, "output/OA_GWAS.rds")
-OA_GWAS <- readRDS("output/OA_GWAS.rds")
+# saveRDS(OA_GWAS, "output/LDSC-SEG/OA_GWAS.rds")
+# OA_GWAS <- readRDS("output/LDSC-SEG/OA_GWAS.rds")
 ```
 
 query genome to determine the rsids that match the SNP locations in the summary stats above
@@ -129,22 +130,22 @@ library(stringr)
 # Gpos_data <- OA_GWAS$Gpos
 # ranges_snps <- GPos(Gpos_data)
 # SNP_rsids <- snpsByOverlaps(SNPlocs.Hsapiens.dbSNP144.GRCh37, ranges_snps)
-# saveRDS(SNP_rsids, "output/snps_by_overlap_OAGWAS.rds")
-SNP_rsids <- readRDS("output/snps_by_overlap_OAGWAS.rds")
+# saveRDS(SNP_rsids, "output/LDSC-SEG/snps_by_overlap_OAGWAS.rds")
+# SNP_rsids <- readRDS("output/LDSC-SEG/snps_by_overlap_OAGWAS.rds")
 # SNP_rsids <- data.frame(SNP_rsids)
 # SNP_rsids <- SNP_rsids %>% 
 #      dplyr::mutate(Gpos = paste0(seqnames, ":", pos, "-", pos))
 # OA_GWAS$SNPid <- NA
 # OA_GWAS$SNPid <- SNP_rsids$RefSNP_id[match(OA_GWAS$Gpos, SNP_rsids$Gpos)]
-# saveRDS(OA_GWAS, "output/OA_GWAS_w_id.rds")
-OA_GWAS <- readRDS("output/OA_GWAS_w_id.rds")
+# saveRDS(OA_GWAS, "output/LDSC-SEG/OA_GWAS_w_id.rds")
+# OA_GWAS <- readRDS("output/LDSC-SEG/OA_GWAS_w_id.rds")
 # summary_stats_for_munging <- OA_GWAS %>%
 #      select(MarkerName = SNPid, A1, A2, FRQ, P, BETA) %>% 
 #      filter(!is.na(MarkerName))
 # dim(summary_stats_for_munging)
 # options(scipen=999)
-# write.table(summary_stats_for_munging, "output/OA_summary_stats_for_munging.txt", sep = "\t", quote = FALSE)
-munged_summary_stats <- read.table("output/OA_summary_stats.sumstats.gz", sep = "\t")
+# write.table(summary_stats_for_munging, "output/LDSC-SEG/OA_summary_stats_for_munging.txt", sep = "\t", quote = FALSE)
+# munged_summary_stats <- read.table("output/LDSC-SEG/OA_summary_stats.sumstats.gz", sep = "\t")
 ```
 
 Using the above table, run the munge_sumstats.py from ldsc ("code/munge_summ_stat_OA_GWAS_for_ldsc.sh") to generate the summary statistics
@@ -152,32 +153,116 @@ Using the above table, run the munge_sumstats.py from ldsc ("code/munge_summ_sta
 # Generate Annotations (SNPs within 100kb of DE genes vs SNPs within 100kb of all tested genes)
 
 ```{r annotations}
-gene_anno <- read.delim("data/gene-annotation_hg37.txt", #specifically hg37
-                        sep = "\t")
-DE_results <- readRDS("data/DE_results.rds")
-threshold <- 0.05
-DE_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue < threshold]
-other_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue >= threshold]
-all_genes_ensg <- c(DE_genes_ensg, other_genes_ensg)
-
-gene_anno <- gene_anno %>% 
-     dplyr::filter(ensembl_gene_id %in% all_genes_ensg, chromosome_name %in% 1:22) %>% 
-     dplyr::select(ensembl_gene_id, chromosome_name, start_position, end_position)
-
-gene_anno_DE <- gene_anno %>%
-     dplyr::filter(ensembl_gene_id %in% DE_genes_ensg, chromosome_name %in% 1:22)
-
-#generate gene coordinate file for all genes
-gene_coord_file <- gene_anno %>% 
-     select(GENE = ensembl_gene_id, CHR = chromosome_name, START = start_position, END = end_position)
-write.table(gene_coord_file, "output/gene_coord_file.txt", sep = "\t", quote = FALSE)
-
-#generate gene set files for all genes and DE genes
-write.table(gene_anno$ensembl_gene_id, "output/all_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-write.table(gene_anno_DE$ensembl_gene_id, "output/DE_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+# gene_anno <- read.delim("data/gene-annotation_hg37.txt", #specifically hg37
+#                         sep = "\t")
+# DE_results <- readRDS("data/DE_results.rds")
+# threshold <- 0.05
+# DE_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue < threshold]
+# other_genes_ensg <- rownames(DE_results[["Unstrain"]])[DE_results[["Unstrain"]]$qvalue >= threshold]
+# all_genes_ensg <- c(DE_genes_ensg, other_genes_ensg)
+# 
+# gene_anno <- gene_anno %>% 
+#      dplyr::filter(ensembl_gene_id %in% all_genes_ensg, chromosome_name %in% 1:22) %>% 
+#      dplyr::select(ensembl_gene_id, chromosome_name, start_position, end_position)
+# 
+# gene_anno_DE <- gene_anno %>%
+#      dplyr::filter(ensembl_gene_id %in% DE_genes_ensg, chromosome_name %in% 1:22)
+# 
+# #generate gene coordinate file for all genes
+# gene_coord_file <- gene_anno %>% 
+#      select(GENE = ensembl_gene_id, CHR = chromosome_name, START = start_position, END = end_position)
+# write.table(gene_coord_file, "output/LDSC-SEG/gene_coord_file.txt", sep = "\t", quote = FALSE)
+# 
+# #generate gene set files for all genes and DE genes
+# write.table(gene_anno$ensembl_gene_id, "output/LDSC-SEG/all_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+# write.table(gene_anno_DE$ensembl_gene_id, "output/LDSC-SEG/DE_genes.GeneSet", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 ```
 
-# generate annotation files (one for each chromosome/gene set)
+# generate annotation files (one for each chromosome/gene set, and also for baseline)
 
-Use "code/make_annotations.py" (need to activate ldsc conda env).
+Use "code/make_annotations.sh" to generate the annotation files for chr/geneset combos. The file will then generate LDscores for those annotations.
+
+```{r baseline anno}
+# name_annot <- "baseline_gene_MAF_LD"
+# dir_annot <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/annot"
+# 
+# library(data.table)
+# 
+# dir_baselineLD <- "/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/1000G_Phase3_baselineLD_v1.1_ldscores/baselineLD_v1.1"
+# 
+# for(chrom in 1:22){
+#      annot <- read.table(paste0(dir_baselineLD, "/baselineLD.", chrom, ".annot.gz"), header = T, stringsAsFactors = F)
+# 
+#      annot_list <- c("CHR", "BP", "SNP", "CM", "base",
+#                      "Coding_UCSC", "Coding_UCSC.extend.500",
+#                      "UTR_5_UCSC", "UTR_5_UCSC.extend.500",
+#                      "UTR_3_UCSC", "UTR_3_UCSC.extend.500",
+#                      "Intron_UCSC", "Intron_UCSC.extend.500",
+#                      "Promoter_UCSC", "Promoter_UCSC.extend.500",
+#                      paste0("MAFbin", 1:10),
+#                      "MAF_Adj_Predicted_Allele_Age","MAF_Adj_LLD_AFR", "Recomb_Rate_10kb", "Nucleotide_Diversity_10kb", "Backgrd_Selection_Stat", "CpG_Content_50kb")
+#      annot_included <- annot[, annot_list]
+#      cat("Annotations included: \n")
+#      print(annot_list)
+# 
+#      dir.create(paste0(dir_annot, "/", name_annot), showWarnings = F, recursive = T)
+#      write.table(annot_included, gzfile(paste0(dir_annot, "/", name_annot, "/", name_annot, ".", chrom, ".annot.gz")), sep = "\t", quote = F, col.names = T, row.names = F)
+# }
+```
+
+Get LDScores for the baseline annotations created above.
+
+```{bash}
+# #!/bin/bash
+# 
+# source activate ldsc
+# 
+# name_annot=baseline_gene_MAF_LD
+# 
+# dir_ldscore=/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/annot
+# 
+# cd ${dir_ldscore}/${name_annot}
+# 
+# echo "annot: ${dir_ldscore}/${name_annot}"
+# 
+# for chrom in {1..22}
+# do
+# echo ${chrom}
+# 
+# echo "Computing LD scores with the annot file ${name_annot}.${chrom}.annot.gz"
+# python /project2/gilad/anthonyhung/Projects/ldsc/ldsc.py \
+# --l2 \
+# --bfile /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/1000G_EUR_Phase3_plink/1000G.EUR.QC.${chrom} \
+# --print-snps /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/listHM3.txt \
+# --ld-wind-cm 1 \
+# --annot ${dir_ldscore}/${name_annot}/${name_annot}.${chrom}.annot.gz \
+# --out ${dir_ldscore}/${name_annot}/${name_annot}.${chrom}
+# 
+# done
+```
+
+
+# partition heritability (for each chromosome/gene set)
+
+Use "code/partition_heritability.sh" to do this. Will fit jointly for All genes, DE genes, and baseline LD (from above's annotation file).
+
+```{r load partition heritability results}
+partition_heritability_results <- read.table("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/LDSC-SEG/Partitioned_heritability/DE_all_baseline_partition.results", header = TRUE) #L2_1 represents the DE Genes, L2_2 represents all the genes that were tested
+partition_heritability_results
+
+partition_heritability_results_no_neg <- partition_heritability_results %>% 
+     filter(Enrichment > 0)
+
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+
+plot_enrichment <- ggplot(partition_heritability_results_no_neg, aes(Enrichment, -log10(Enrichment_p))) +
+     geom_point() +
+     geom_text(data=subset(partition_heritability_results_no_neg, -log10(Enrichment_p) > 2.5 & Enrichment >1),
+               aes(Enrichment, -log10(Enrichment_p), label = Category), alpha = 0.8) + 
+     geom_errorbarh(data=subset(partition_heritability_results_no_neg, Category %in% c("L2_2", "L2_1")),
+               aes(xmin = Enrichment-Enrichment_std_error, xmax = Enrichment+Enrichment_std_error), height = 1, alpha = 0.5)
+plot_enrichment
+```
 

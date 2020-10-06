@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Anthony Hung" />
+
+<meta name="date" content="2020-10-04" />
+
+<title>ldsc-seg</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">OAStrain</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">ldsc-seg</h1>
+<h4 class="author">Anthony Hung</h4>
+<h4 class="date">2020-10-04</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-10-06
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
+</p>
+<p>
+<strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20191127code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20191127)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20191127code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20191127)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it difficult for you and others to run your code on a different machine. Change the absolute path(s) below to the suggested relative path(s) to make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/LDSC-SEG/Partitioned_heritability/DE_all_baseline_partition.results
+</td>
+<td style="text-align:left;">
+output/LDSC-SEG/Partitioned_heritability/DE_all_baseline_partition.results
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef9b688637aa0cc1d0fd1f7e0f1cd0d001ae16cb8targetblankf9b6886a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/f9b688637aa0cc1d0fd1f7e0f1cd0d001ae16cb8" target="_blank">f9b6886</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreef9b688637aa0cc1d0fd1f7e0f1cd0d001ae16cb8targetblankf9b6886a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/f9b688637aa0cc1d0fd1f7e0f1cd0d001ae16cb8" target="_blank">f9b6886</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    data/ANT1_2.rds
+    Ignored:    data/Combined.common.allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data.rds
+    Ignored:    data/Combined_singlecell_data_allGenes.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
+    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
+    Ignored:    data/Combined_singlecell_data_first.rds
+    Ignored:    data/Combined_singlecell_data_noliver.rds
+    Ignored:    data/DE_results.rds
+    Ignored:    data/GoMresults.rds
+    Ignored:    data/GoMresultsk3.rds
+    Ignored:    data/GoMresultsk4.rds
+    Ignored:    data/GoMresultsk5.rds
+    Ignored:    data/GoMresultsk6.rds
+    Ignored:    data/GoMresultsk7.rds
+    Ignored:    data/GoMresultsk8.rds
+    Ignored:    data/HumanLiverSeurat.rds
+    Ignored:    data/RUVsCPM.rds
+    Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
+    Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/Tachmazidou_30664745_ALLOA.txt.gz
+    Ignored:    data/alasoo_etal/
+    Ignored:    data/caliskan_etal/
+    Ignored:    data/filtered_counts.rds
+    Ignored:    data/gene-annotation_hg37.txt
+    Ignored:    data/gom_sup3.rds
+    Ignored:    data/gom_sup_3.rda
+    Ignored:    data/gom_sup_noiPSCChond_3.rda
+    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_adMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_allMSC_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
+    Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
+    Ignored:    data/norm_filtered_counts.rds
+    Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/raw_counts_relabeled.rds
+    Ignored:    data/sclabels_noliver.rda
+    Ignored:    output/ANT1.2.rds
+    Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/LDSC-SEG/
+    Ignored:    output/SNPs.csv
+    Ignored:    output/ash_power_analysis/
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/fasttopics/
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash/
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/pairwise_ttest_results_SCTdata.rds
+    Ignored:    output/pairwise_ttest_results_integrateddata.rds
+    Ignored:    output/permuted_results_DE.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
+
+Untracked files:
+    Untracked:  code/make_annotations.sh
+    Untracked:  code/partition_heritability.sh
+
+Unstaged changes:
+    Modified:   analysis/ldsc-seg.Rmd
+    Modified:   code/munge_summ_stat_OA_GWAS_for_ldsc.sh
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ldsc-seg.Rmd</code>) and HTML (<code>docs/ldsc-seg.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/da4eb3ee283b4c01d393ddc650429efa5b7e0a50/analysis/ldsc-seg.Rmd" target="_blank">da4eb3e</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-05
+</td>
+<td>
+add code for generating annotation files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/7163f40febcc7f7ae594f1483733c6136126441b/analysis/ldsc-seg.Rmd" target="_blank">7163f40</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-05
+</td>
+<td>
+gitignore
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="ldsr-seg-analysis" class="section level1">
+<h1>LDSR-seg analysis</h1>
+<p>Use DE genes from DE analysis and use LDSC-SEG to analyze OA heritability partitioned into DE genes. <a href="https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.html" class="uri">https://scottzijiezhang.github.io/m6AQTL_reproducibleDocument/sLDSC_GWAS_m6AQTL.html</a></p>
+</div>
+<div id="download-ldsc-data" class="section level1">
+<h1>Download LDSC data</h1>
+<pre class="bash"><code># cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# ## baselineLD_v1.1
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v1.1_ldscores.tgz
+# mkdir 1000G_Phase3_baselineLD_v1.1_ldscores
+# tar -xvzf 1000G_Phase3_baselineLD_v1.1_ldscores.tgz -C 1000G_Phase3_baselineLD_v1.1_ldscores
+# 
+# ## baselineLD_v2.2
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
+# mkdir 1000G_Phase3_baselineLD_v2.2_ldscores
+# tar -xvzf 1000G_Phase3_baselineLD_v2.2_ldscores.tgz -C 1000G_Phase3_baselineLD_v2.2_ldscores
+#moved these to annot</code></pre>
+</div>
+<div id="download-weights" class="section level1">
+<h1>Download Weights</h1>
+<pre class="bash"><code># cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
+# tar -xvzf weights_hm3_no_hla.tgz</code></pre>
+</div>
+<div id="download-allele-frequencies" class="section level1">
+<h1>Download allele frequencies</h1>
+<pre class="bash"><code># cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_frq.tgz
+# tar -xvzf 1000G_Phase3_frq.tgz</code></pre>
+</div>
+<div id="download-1000-genomes-reference-genotypes-at-hapmap-3-loci" class="section level1">
+<h1>Download 1000 genomes reference genotypes at hapmap 3 loci</h1>
+<pre class="bash"><code># cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_plinkfiles.tgz
+# tar -xvzf 1000G_Phase3_plinkfiles.tgz
+</code></pre>
+</div>
+<div id="download-hapmap3-snps" class="section level1">
+<h1>Download HapMap3 SNPs</h1>
+<pre class="bash"><code># cd /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG
+# 
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/hapmap3_snps.tgz
+# tar -xvzf hapmap3_snps.tgz</code></pre>
+</div>
+<div id="download-a-concatenated-list-of-hapmap3-snps" class="section level1">
+<h1>Download a concatenated list of HapMap3 SNPs</h1>
+<pre class="bash"><code># wget https://data.broadinstitute.org/alkesgroup/LDSCORE/w_hm3.snplist.bz2
+# bzip2 -d w_hm3.snplist.bz2</code></pre>
+</div>
+<div id="list-of-hapmap-3-snps-rsids" class="section level1">
+<h1>List of HapMap 3 SNPs rsIDs</h1>
+<pre class="bash"><code># awk &#39;{if ($1!=&quot;SNP&quot;) {print $1} }&#39; w_hm3.snplist &gt; listHM3.txt</code></pre>
+</div>
+<div id="download-1000g_phase3_cell_type_groups" class="section level1">
+<h1>Download 1000G_Phase3_cell_type_groups</h1>
+<pre class="bash"><code>#wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_cell_type_groups.tgz
+#tar -xvzf 1000G_Phase3_cell_type_groups.tgz</code></pre>
+</div>
+<div id="create-annotation-files-and-compute-ld-scores" class="section level1">
+<h1>Create annotation files and compute LD scores</h1>
+<p>Run the bash script: OAStrain/code/compute_ldscore_generic_annot.sbatch</p>
+<p>which calls upon the R script: OAStrain/code/extract_baselineLD_generic_annot.R</p>
+</div>
+<div id="download-the-oa-gwas-summary-statistics-and-get-into-format-that-is-accepted-by-ldsc" class="section level1">
+<h1>Download the OA GWAS summary statistics and get into format that is accepted by LDSC</h1>
+<p>Summary statistics from OA GWAS meta-analysis are found here: wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/TachmazidouI_30664745_GCST007093/Tachmazidou_30664745_ALLOA.txt.gz" class="uri">ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/TachmazidouI_30664745_GCST007093/Tachmazidou_30664745_ALLOA.txt.gz</a>, and unzip.</p>
+<p>Annoyingly, the snps are given ids that contain the chromosome:position_allele1_allele2 rather than the rsid. I will convert this column to rsid, then subset to the columns that are required by LDSC, and write it to a file.</p>
+<pre class="r"><code>library(readr)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyr)
+# OA_GWAS_raw &lt;- read_delim(&quot;data/Tachmazidou_30664745_ALLOA.txt.gz&quot;, delim = &quot;\t&quot;)
+# OA_GWAS &lt;- OA_GWAS_raw %&gt;%
+#      dplyr::select(MarkerName, A1 = Allele1, A2 = Allele2, FRQ = Freq1, P = `P-value`, BETA = Effect) %&gt;%
+#      dplyr::mutate(A1 = toupper(A1), A2 = toupper(A2)) %&gt;%
+#      tidyr::separate(MarkerName, into = &#39;SNPloc&#39;, extra = &#39;drop&#39;, remove = TRUE, sep = &quot;_&quot;) %&gt;%
+#      tidyr::separate(SNPloc, into = c(&#39;Chromosome&#39;, &#39;position&#39;), sep = &quot;:&quot;) %&gt;%
+#      dplyr::mutate(Gpos = paste0(Chromosome, &quot;:&quot;, position, &quot;-&quot;, position))
+# 
+# saveRDS(OA_GWAS, &quot;output/LDSC-SEG/OA_GWAS.rds&quot;)
+# OA_GWAS &lt;- readRDS(&quot;output/LDSC-SEG/OA_GWAS.rds&quot;)</code></pre>
+<p>query genome to determine the rsids that match the SNP locations in the summary stats above</p>
+<pre class="r"><code>library(BSgenome)</code></pre>
+<pre><code>Loading required package: BiocGenerics</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>
+Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:parallel&#39;:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    combine, intersect, setdiff, union</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    anyDuplicated, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter,
+    Find, get, grep, grepl, intersect, is.unsorted, lapply, Map,
+    mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, Position, rank, rbind, Reduce, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min</code></pre>
+<pre><code>Loading required package: S4Vectors</code></pre>
+<pre><code>Loading required package: stats4</code></pre>
+<pre><code>
+Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    expand</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    first, rename</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    expand.grid</code></pre>
+<pre><code>Loading required package: IRanges</code></pre>
+<pre><code>
+Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    collapse, desc, slice</code></pre>
+<pre><code>Loading required package: GenomeInfoDb</code></pre>
+<pre><code>Loading required package: GenomicRanges</code></pre>
+<pre><code>Loading required package: Biostrings</code></pre>
+<pre><code>Loading required package: XVector</code></pre>
+<pre><code>
+Attaching package: &#39;Biostrings&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    strsplit</code></pre>
+<pre><code>Loading required package: rtracklayer</code></pre>
+<pre class="r"><code>library(BSgenome.Hsapiens.UCSC.hg19)
+library(SNPlocs.Hsapiens.dbSNP144.GRCh37)
+library(GenomicRanges)
+library(stringr)
+
+# Gpos_data &lt;- OA_GWAS$Gpos
+# ranges_snps &lt;- GPos(Gpos_data)
+# SNP_rsids &lt;- snpsByOverlaps(SNPlocs.Hsapiens.dbSNP144.GRCh37, ranges_snps)
+# saveRDS(SNP_rsids, &quot;output/LDSC-SEG/snps_by_overlap_OAGWAS.rds&quot;)
+# SNP_rsids &lt;- readRDS(&quot;output/LDSC-SEG/snps_by_overlap_OAGWAS.rds&quot;)
+# SNP_rsids &lt;- data.frame(SNP_rsids)
+# SNP_rsids &lt;- SNP_rsids %&gt;% 
+#      dplyr::mutate(Gpos = paste0(seqnames, &quot;:&quot;, pos, &quot;-&quot;, pos))
+# OA_GWAS$SNPid &lt;- NA
+# OA_GWAS$SNPid &lt;- SNP_rsids$RefSNP_id[match(OA_GWAS$Gpos, SNP_rsids$Gpos)]
+# saveRDS(OA_GWAS, &quot;output/LDSC-SEG/OA_GWAS_w_id.rds&quot;)
+# OA_GWAS &lt;- readRDS(&quot;output/LDSC-SEG/OA_GWAS_w_id.rds&quot;)
+# summary_stats_for_munging &lt;- OA_GWAS %&gt;%
+#      select(MarkerName = SNPid, A1, A2, FRQ, P, BETA) %&gt;% 
+#      filter(!is.na(MarkerName))
+# dim(summary_stats_for_munging)
+# options(scipen=999)
+# write.table(summary_stats_for_munging, &quot;output/LDSC-SEG/OA_summary_stats_for_munging.txt&quot;, sep = &quot;\t&quot;, quote = FALSE)
+# munged_summary_stats &lt;- read.table(&quot;output/LDSC-SEG/OA_summary_stats.sumstats.gz&quot;, sep = &quot;\t&quot;)</code></pre>
+<p>Using the above table, run the munge_sumstats.py from ldsc (“code/munge_summ_stat_OA_GWAS_for_ldsc.sh”) to generate the summary statistics</p>
+</div>
+<div id="generate-annotations-snps-within-100kb-of-de-genes-vs-snps-within-100kb-of-all-tested-genes" class="section level1">
+<h1>Generate Annotations (SNPs within 100kb of DE genes vs SNPs within 100kb of all tested genes)</h1>
+<pre class="r"><code># gene_anno &lt;- read.delim(&quot;data/gene-annotation_hg37.txt&quot;, #specifically hg37
+#                         sep = &quot;\t&quot;)
+# DE_results &lt;- readRDS(&quot;data/DE_results.rds&quot;)
+# threshold &lt;- 0.05
+# DE_genes_ensg &lt;- rownames(DE_results[[&quot;Unstrain&quot;]])[DE_results[[&quot;Unstrain&quot;]]$qvalue &lt; threshold]
+# other_genes_ensg &lt;- rownames(DE_results[[&quot;Unstrain&quot;]])[DE_results[[&quot;Unstrain&quot;]]$qvalue &gt;= threshold]
+# all_genes_ensg &lt;- c(DE_genes_ensg, other_genes_ensg)
+# 
+# gene_anno &lt;- gene_anno %&gt;% 
+#      dplyr::filter(ensembl_gene_id %in% all_genes_ensg, chromosome_name %in% 1:22) %&gt;% 
+#      dplyr::select(ensembl_gene_id, chromosome_name, start_position, end_position)
+# 
+# gene_anno_DE &lt;- gene_anno %&gt;%
+#      dplyr::filter(ensembl_gene_id %in% DE_genes_ensg, chromosome_name %in% 1:22)
+# 
+# #generate gene coordinate file for all genes
+# gene_coord_file &lt;- gene_anno %&gt;% 
+#      select(GENE = ensembl_gene_id, CHR = chromosome_name, START = start_position, END = end_position)
+# write.table(gene_coord_file, &quot;output/LDSC-SEG/gene_coord_file.txt&quot;, sep = &quot;\t&quot;, quote = FALSE)
+# 
+# #generate gene set files for all genes and DE genes
+# write.table(gene_anno$ensembl_gene_id, &quot;output/LDSC-SEG/all_genes.GeneSet&quot;, sep = &quot;\t&quot;, quote = FALSE, row.names = FALSE, col.names = FALSE)
+# write.table(gene_anno_DE$ensembl_gene_id, &quot;output/LDSC-SEG/DE_genes.GeneSet&quot;, sep = &quot;\t&quot;, quote = FALSE, row.names = FALSE, col.names = FALSE)</code></pre>
+</div>
+<div id="generate-annotation-files-one-for-each-chromosomegene-set-and-also-for-baseline" class="section level1">
+<h1>generate annotation files (one for each chromosome/gene set, and also for baseline)</h1>
+<p>Use “code/make_annotations.sh” to generate the annotation files for chr/geneset combos. The file will then generate LDscores for those annotations.</p>
+<pre class="r"><code># name_annot &lt;- &quot;baseline_gene_MAF_LD&quot;
+# dir_annot &lt;- &quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/annot&quot;
+# 
+# library(data.table)
+# 
+# dir_baselineLD &lt;- &quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/1000G_Phase3_baselineLD_v1.1_ldscores/baselineLD_v1.1&quot;
+# 
+# for(chrom in 1:22){
+#      annot &lt;- read.table(paste0(dir_baselineLD, &quot;/baselineLD.&quot;, chrom, &quot;.annot.gz&quot;), header = T, stringsAsFactors = F)
+# 
+#      annot_list &lt;- c(&quot;CHR&quot;, &quot;BP&quot;, &quot;SNP&quot;, &quot;CM&quot;, &quot;base&quot;,
+#                      &quot;Coding_UCSC&quot;, &quot;Coding_UCSC.extend.500&quot;,
+#                      &quot;UTR_5_UCSC&quot;, &quot;UTR_5_UCSC.extend.500&quot;,
+#                      &quot;UTR_3_UCSC&quot;, &quot;UTR_3_UCSC.extend.500&quot;,
+#                      &quot;Intron_UCSC&quot;, &quot;Intron_UCSC.extend.500&quot;,
+#                      &quot;Promoter_UCSC&quot;, &quot;Promoter_UCSC.extend.500&quot;,
+#                      paste0(&quot;MAFbin&quot;, 1:10),
+#                      &quot;MAF_Adj_Predicted_Allele_Age&quot;,&quot;MAF_Adj_LLD_AFR&quot;, &quot;Recomb_Rate_10kb&quot;, &quot;Nucleotide_Diversity_10kb&quot;, &quot;Backgrd_Selection_Stat&quot;, &quot;CpG_Content_50kb&quot;)
+#      annot_included &lt;- annot[, annot_list]
+#      cat(&quot;Annotations included: \n&quot;)
+#      print(annot_list)
+# 
+#      dir.create(paste0(dir_annot, &quot;/&quot;, name_annot), showWarnings = F, recursive = T)
+#      write.table(annot_included, gzfile(paste0(dir_annot, &quot;/&quot;, name_annot, &quot;/&quot;, name_annot, &quot;.&quot;, chrom, &quot;.annot.gz&quot;)), sep = &quot;\t&quot;, quote = F, col.names = T, row.names = F)
+# }</code></pre>
+<p>Get LDScores for the baseline annotations created above.</p>
+<pre class="bash"><code># #!/bin/bash
+# 
+# source activate ldsc
+# 
+# name_annot=baseline_gene_MAF_LD
+# 
+# dir_ldscore=/project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/annot
+# 
+# cd ${dir_ldscore}/${name_annot}
+# 
+# echo &quot;annot: ${dir_ldscore}/${name_annot}&quot;
+# 
+# for chrom in {1..22}
+# do
+# echo ${chrom}
+# 
+# echo &quot;Computing LD scores with the annot file ${name_annot}.${chrom}.annot.gz&quot;
+# python /project2/gilad/anthonyhung/Projects/ldsc/ldsc.py \
+# --l2 \
+# --bfile /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/1000G_EUR_Phase3_plink/1000G.EUR.QC.${chrom} \
+# --print-snps /project2/gilad/anthonyhung/Projects/OAStrain_project/SLDSR-SEG/listHM3.txt \
+# --ld-wind-cm 1 \
+# --annot ${dir_ldscore}/${name_annot}/${name_annot}.${chrom}.annot.gz \
+# --out ${dir_ldscore}/${name_annot}/${name_annot}.${chrom}
+# 
+# done</code></pre>
+</div>
+<div id="partition-heritability-for-each-chromosomegene-set" class="section level1">
+<h1>partition heritability (for each chromosome/gene set)</h1>
+<p>Use “code/partition_heritability.sh” to do this. Will fit jointly for All genes, DE genes, and baseline LD (from above’s annotation file).</p>
+<pre class="r"><code>partition_heritability_results &lt;- read.table(&quot;/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/LDSC-SEG/Partitioned_heritability/DE_all_baseline_partition.results&quot;, header = TRUE) #L2_1 represents the DE Genes, L2_2 represents all the genes that were tested
+partition_heritability_results</code></pre>
+<pre><code>                           Category   Prop._SNPs      Prop._h2
+1                          baseL2_0 1.000000e+00  1.0000000000
+2                   Coding_UCSCL2_0 1.427491e-02  0.0353112344
+3        Coding_UCSC.extend.500L2_0 6.366178e-02  0.0102156339
+4                    UTR_5_UCSCL2_0 5.484168e-03 -0.0003936789
+5         UTR_5_UCSC.extend.500L2_0 2.686508e-02 -0.0321157353
+6                    UTR_3_UCSCL2_0 1.118591e-02  0.0316023781
+7         UTR_3_UCSC.extend.500L2_0 2.645526e-02  0.0217695488
+8                   Intron_UCSCL2_0 3.874730e-01  0.4287812052
+9        Intron_UCSC.extend.500L2_0 3.967965e-01  0.4339438961
+10                Promoter_UCSCL2_0 4.634552e-02  0.0788234204
+11     Promoter_UCSC.extend.500L2_0 5.693457e-02  0.0754633880
+12                      MAFbin1L2_0 1.023573e-01  0.0640551014
+13                      MAFbin2L2_0 9.985541e-02  0.0781606511
+14                      MAFbin3L2_0 9.960664e-02  0.0673890135
+15                      MAFbin4L2_0 1.006957e-01  0.0980879202
+16                      MAFbin5L2_0 9.831712e-02  0.1002220278
+17                      MAFbin6L2_0 9.964220e-02  0.1338545179
+18                      MAFbin7L2_0 9.973379e-02  0.1194421662
+19                      MAFbin8L2_0 1.002293e-01  0.1009360961
+20                      MAFbin9L2_0 1.011000e-01  0.1269579289
+21                     MAFbin10L2_0 9.846256e-02  0.1108945768
+22 MAF_Adj_Predicted_Allele_AgeL2_0 3.392437e-06 -0.4266307908
+23              MAF_Adj_LLD_AFRL2_0 2.796474e-03 -0.4513922822
+24             Recomb_Rate_10kbL2_0 1.552424e+00  1.1881808929
+25    Nucleotide_Diversity_10kbL2_0 4.608695e+00  3.6929679932
+26       Backgrd_Selection_StatL2_0 1.777198e-01  0.2148326867
+27             CpG_Content_50kbL2_0 1.005187e-02  0.0117545446
+28                             L2_1 8.795186e-02  0.1224983597
+29                             L2_2 4.886506e-01  0.6205154638
+   Prop._h2_std_error    Enrichment Enrichment_std_error Enrichment_p
+1        0.0000000000  1.000000e+00         0.000000e+00           NA
+2        0.0240513261  2.473657e+00         1.684867e+00 3.809821e-01
+3        0.0259074982  1.604673e-01         4.069553e-01 4.316426e-02
+4        0.0124918985 -7.178461e-02         2.277811e+00 6.367861e-01
+5        0.0215411218 -1.195445e+00         8.018261e-01 6.638322e-03
+6        0.0162788620  2.825195e+00         1.455300e+00 2.083806e-01
+7        0.0207891588  8.228817e-01         7.858233e-01 8.219840e-01
+8        0.0236818602  1.106609e+00         6.111874e-02 8.265237e-02
+9        0.0199377914  1.093618e+00         5.024689e-02 6.156082e-02
+10       0.0322757459  1.700778e+00         6.964157e-01 3.204230e-01
+11       0.0243396942  1.325441e+00         4.275029e-01 4.494208e-01
+12       0.0157603072  6.257992e-01         1.539735e-01 1.058177e-02
+13       0.0180093289  7.827382e-01         1.803541e-01 2.269585e-01
+14       0.0152633247  6.765514e-01         1.532360e-01 3.429402e-02
+15       0.0161291144  9.741025e-01         1.601768e-01 8.716930e-01
+16       0.0191219132  1.019375e+00         1.944922e-01 9.207402e-01
+17       0.0207198260  1.343352e+00         2.079423e-01 9.782208e-02
+18       0.0217947859  1.197610e+00         2.185296e-01 3.631239e-01
+19       0.0171443230  1.007051e+00         1.710510e-01 9.671256e-01
+20       0.0224448174  1.255766e+00         2.220062e-01 2.458152e-01
+21       0.0183210050  1.126261e+00         1.860708e-01 4.983697e-01
+22       0.0785077214 -1.257594e+05         2.314198e+04 7.121031e-06
+23       0.0440968582 -1.614148e+02         1.576873e+01 4.874409e-13
+24       0.1858689372  7.653712e-01         1.197282e-01 3.570745e-02
+25       0.1584031394  8.013044e-01         3.437049e-02 1.743179e-10
+26       0.0081883978  1.208828e+00         4.607476e-02 6.713046e-07
+27       0.0002051833  1.169388e+00         2.041244e-02 3.484113e-12
+28       0.0109401578  1.392789e+00         1.243880e-01 1.874011e-03
+29       0.0167384703  1.269855e+00         3.425448e-02 1.550082e-13
+     Coefficient Coefficient_std_error Coefficient_z.score
+1  -8.783540e-10          1.329869e-09         -0.66048158
+2   2.280145e-08          1.943933e-08          1.17295437
+3  -1.086775e-08          5.599092e-09         -1.94098479
+4   1.007304e-09          2.288952e-08          0.04400723
+5  -2.231718e-08          1.027380e-08         -2.17224165
+6   1.535058e-08          2.019922e-08          0.75995893
+7  -9.821822e-09          1.015071e-08         -0.96759992
+8   1.004387e-08          2.086159e-08          0.48145262
+9  -9.676147e-09          2.083459e-08         -0.46442707
+10  2.431052e-08          2.750151e-08          0.88397017
+11 -1.224705e-08          2.347801e-08         -0.52163909
+12  5.136095e-09          1.363541e-09          3.76673285
+13  6.366373e-09          1.596315e-09          3.98816857
+14  5.546216e-09          1.358130e-09          4.08371448
+15  8.076616e-09          1.462228e-09          5.52350183
+16  8.457232e-09          1.658699e-09          5.09871274
+17  1.109066e-08          1.747402e-09          6.34694008
+18  9.886897e-09          1.893132e-09          5.22250759
+19  8.312728e-09          1.495222e-09          5.55952742
+20  1.035599e-08          1.860531e-09          5.56614432
+21  9.280889e-09          1.618739e-09          5.73340740
+22 -2.312648e-09          9.007517e-10         -2.56746464
+23 -3.586063e-09          5.270623e-10         -6.80386917
+24 -1.070043e-09          2.625949e-10         -4.07488149
+25 -7.262865e-10          2.391672e-10         -3.03673131
+26  8.280315e-09          2.067966e-09          4.00408620
+27  4.325468e-07          7.347563e-08          5.88694185
+28  4.688853e-10          1.155832e-09          0.40566907
+29  1.034392e-09          7.667404e-10          1.34907770</code></pre>
+<pre class="r"><code>partition_heritability_results_no_neg &lt;- partition_heritability_results %&gt;% 
+     filter(Enrichment &gt; 0)
+
+library(ggplot2)
+library(cowplot)</code></pre>
+<pre><code>
+********************************************************</code></pre>
+<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
+<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
+<pre><code>  behavior, execute:
+  theme_set(theme_cowplot())</code></pre>
+<pre><code>********************************************************</code></pre>
+<pre class="r"><code>theme_set(theme_cowplot())
+
+plot_enrichment &lt;- ggplot(partition_heritability_results_no_neg, aes(Enrichment, -log10(Enrichment_p))) +
+     geom_point() +
+     geom_text(data=subset(partition_heritability_results_no_neg, -log10(Enrichment_p) &gt; 2.5 &amp; Enrichment &gt;1),
+               aes(Enrichment, -log10(Enrichment_p), label = Category), alpha = 0.8) + 
+     geom_errorbarh(data=subset(partition_heritability_results_no_neg, Category %in% c(&quot;L2_2&quot;, &quot;L2_1&quot;)),
+               aes(xmin = Enrichment-Enrichment_std_error, xmax = Enrichment+Enrichment_std_error), height = 1, alpha = 0.5)
+plot_enrichment</code></pre>
+<pre><code>Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="figure/ldsc-seg.Rmd/load%20partition%20heritability%20results-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] cowplot_1.0.0                           
+ [2] ggplot2_3.3.2                           
+ [3] stringr_1.4.0                           
+ [4] SNPlocs.Hsapiens.dbSNP144.GRCh37_0.99.20
+ [5] BSgenome.Hsapiens.UCSC.hg19_1.4.0       
+ [6] BSgenome_1.52.0                         
+ [7] rtracklayer_1.44.0                      
+ [8] Biostrings_2.52.0                       
+ [9] XVector_0.24.0                          
+[10] GenomicRanges_1.36.1                    
+[11] GenomeInfoDb_1.20.0                     
+[12] IRanges_2.18.3                          
+[13] S4Vectors_0.22.1                        
+[14] BiocGenerics_0.30.0                     
+[15] tidyr_1.1.2                             
+[16] dplyr_1.0.2                             
+[17] readr_1.3.1                             
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5                  lattice_0.20-41            
+ [3] Rsamtools_2.0.0             rprojroot_1.3-2            
+ [5] digest_0.6.25               R6_2.4.1                   
+ [7] backports_1.1.9             evaluate_0.14              
+ [9] highr_0.8                   pillar_1.4.6               
+[11] zlibbioc_1.30.0             rlang_0.4.7                
+[13] whisker_0.3-2               Matrix_1.2-18              
+[15] rmarkdown_1.13              labeling_0.3               
+[17] BiocParallel_1.18.1         RCurl_1.98-1.1             
+[19] munsell_0.5.0               DelayedArray_0.10.0        
+[21] compiler_3.6.1              httpuv_1.5.1               
+[23] xfun_0.8                    pkgconfig_2.0.3            
+[25] htmltools_0.5.0             tidyselect_1.1.0           
+[27] SummarizedExperiment_1.14.1 tibble_3.0.3               
+[29] GenomeInfoDbData_1.2.1      workflowr_1.6.2            
+[31] matrixStats_0.56.0          XML_3.98-1.20              
+[33] withr_2.2.0                 crayon_1.3.4               
+[35] later_1.1.0.1               GenomicAlignments_1.20.1   
+[37] bitops_1.0-6                grid_3.6.1                 
+[39] gtable_0.3.0                lifecycle_0.2.0            
+[41] git2r_0.26.1                magrittr_1.5               
+[43] scales_1.1.1                stringi_1.4.6              
+[45] farver_2.0.3                fs_1.3.1                   
+[47] promises_1.1.1              ellipsis_0.3.1             
+[49] generics_0.0.2              vctrs_0.3.4                
+[51] tools_3.6.1                 Biobase_2.44.0             
+[53] glue_1.4.2                  purrr_0.3.4                
+[55] hms_0.5.3                   yaml_2.2.1                 
+[57] colorspace_1.4-1            knitr_1.23                 </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
