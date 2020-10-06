@@ -15,3 +15,4 @@ analysis/site_libs
 *.gz
 data/*.txt
 output/*.txt
+output/LDSC-SEG/*
