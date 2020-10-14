@@ -266,3 +266,42 @@ plot_enrichment <- ggplot(partition_heritability_results_no_neg, aes(Enrichment,
 plot_enrichment
 ```
 
+# Partition heritability (including other tissus)
+
+TS expression from LDSC-SEG paper
+
+```{bash}
+# cts_name=Multi_tissue_gene_expr 
+# 
+# #Download the LD scores
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/LDSC_SEG_ldscores/${cts_name}_1000Gv3_ldscores.tgz
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/1000G_Phase3_baseline_ldscores.tgz
+# wget https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
+# tar -xvzf ${cts_name}_1000Gv3_ldscores.tgz
+# tar -xvzf 1000G_Phase3_baseline_ldscores.tgz
+# tar -xvzf weights_hm3_no_hla.tgz
+# 
+# ADD PATHS TO PREVIOUSLY GENERATED DE ANNOTATIONS AND LDSCORES TO THE END OF Multi_tissue_gene_expr.ldcts
+
+# #Run the regression
+# /project2/gilad/anthonyhung/Projects/ldsc/ldsc.py \
+#     --h2-cts OA_summary_stats.sumstats.gz \
+#     --ref-ld-chr 1000G_EUR_Phase3_baseline/baseline. \
+#     --out /project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/output/LDSC-SEG/OA_${cts_name} \
+#     --ref-ld-chr-cts ${cts_name}.ldcts \
+#     --w-ld-chr weights_hm3_no_hla/weights.
+```
+
+Plot multitissue results (doesn't seem workable, perhaps not the right way to go about this)
+
+```{r multitissue results}
+multitissue_results <- read.table("output/LDSC-SEG/OA_Multi_tissue_gene_expr.cell_type_results.txt", header = TRUE)
+
+plot_enrichment_multitissue <- ggplot(multitissue_results, aes(x = Name, -log10(Coefficient_P_value))) +
+     geom_point() +
+     geom_text(data=subset(multitissue_results, grepl("strain", Name) | grepl("Cartilage", Name)),
+               aes(Name, -log10(Coefficient_P_value), label = Name), alpha = 0.8)
+plot_enrichment_multitissue
+```
+
+

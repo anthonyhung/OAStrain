@@ -178,6 +178,18 @@ for (marker in c(features.plot.msc, features.plot.chond)){
 for (marker in c(features.plot.msc, features.plot.chond)){
      print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$labels) + labs(color = "Individual"))
 }
+
+
+a<- c("MMP2", "MMP14")
+
+for (marker in a){
+     print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$integrated_snn_res.0.4) + labs(color = "Cluster"))
+}
+
+#by individual
+for (marker in a){
+     print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$labels) + labs(color = "Individual"))
+}
 ```
 
 

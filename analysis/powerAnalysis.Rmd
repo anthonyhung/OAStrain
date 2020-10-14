@@ -787,8 +787,16 @@ rhinovirus_f_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_f_ash_out
 rhinovirus_r_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_r_ash_out.rds")
 
 # After (2), I suggest an alternative that does not depend on the number of genes or tests per gene, and more directly answers the question "what power would be achieved to detect a effect size that is plausible to see in real data, given the sample size?": recover the 50th, 90th, 95th, 99th, (etc.) percentiles of the fitted_g (this can be approximately done by evaluating ash_cdf on a dense grid), and report the power for those true effect sizes.
-grid_of_effects <- seq(-1.5, 1.5, length.out = 1e3)
-vector_of_percentiles <- cdf.ash(rhinovirus_f_ashr_out, grid_of_effects)
+
+plot_cdf <- function(ash_obj){
+     grid_of_effects <- seq(-1, 1, length.out = 1e5)
+     vector_of_percentiles <- cdf.ash(ash_obj, grid_of_effects)
+     percentiles_df <- tibble(latent = vector_of_percentiles$x, percentile = as.vector(vector_of_percentiles$y))
+     plot <- ggplot(percentiles_df, aes(x = latent, y = percentile)) +
+               geom_point()
+     print(plot)
+}
+
 #look for the effect sizes that correspond to percentiles of interest
 
 #add column for SES (based on ash output)

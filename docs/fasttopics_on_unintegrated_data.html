@@ -438,7 +438,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-01
+<strong>Last updated:</strong> 2020-10-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree757b4e7c8a57cc73b5beafaf340c8e28823ec8c8targetblank757b4e7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/757b4e7c8a57cc73b5beafaf340c8e28823ec8c8" target="_blank">757b4e7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree8f8cfade1c569bae355844039a12d85c31998cd4targetblank8f8cfada"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/8f8cfade1c569bae355844039a12d85c31998cd4" target="_blank">8f8cfad</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree757b4e7c8a57cc73b5beafaf340c8e28823ec8c8targetblank757b4e7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree8f8cfade1c569bae355844039a12d85c31998cd4targetblank8f8cfada" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/757b4e7c8a57cc73b5beafaf340c8e28823ec8c8" target="_blank">757b4e7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/8f8cfade1c569bae355844039a12d85c31998cd4" target="_blank">8f8cfad</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -547,6 +547,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/Combined.common.allGenes_noliver.rds
     Ignored:    data/Combined_singlecell_data.rds
@@ -568,9 +569,11 @@ Ignored files:
     Ignored:    data/RUVsOut.rds
     Ignored:    data/SCT_ANT12_integrated.rds
     Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/Tachmazidou_30664745_ALLOA.txt.gz
     Ignored:    data/alasoo_etal/
     Ignored:    data/caliskan_etal/
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/gene-annotation_hg37.txt
     Ignored:    data/gom_sup3.rds
     Ignored:    data/gom_sup_3.rda
     Ignored:    data/gom_sup_noiPSCChond_3.rda
@@ -590,6 +593,7 @@ Ignored files:
     Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
     Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/LDSC-SEG/
     Ignored:    output/SNPs.csv
     Ignored:    output/ash_power_analysis/
     Ignored:    output/eQTL_output_strain.csv
@@ -613,6 +617,11 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/fasttopics_on_unintegrated_data.Rmd
+    Modified:   analysis/integration_across_individuals.Rmd
+    Modified:   analysis/ldsc-seg.Rmd
+    Modified:   analysis/powerAnalysis.Rmd
+    Modified:   data/DEgenes_FDR05.rda
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -651,6 +660,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/analysis/fasttopics_on_unintegrated_data.Rmd" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+<td>
+knit permutation analyses of strain labels
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/fasttopics_on_unintegrated_data.html" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+<td>
+knit permutation analyses of strain labels
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -745,6 +788,9 @@ library(RColorBrewer)
 library(dummies)</code></pre>
 <pre><code>dummies-1.5.6 provided by Decision Patterns</code></pre>
 <pre class="r"><code>library(tidyr)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
 
 #plot heatmap of topic weights for samples
 #get labels of cells and reorder to group them
@@ -760,6 +806,43 @@ weights &lt;- weights[match(rownames(sample), rownames(weights)),]
 pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
          show_rownames = FALSE, main = &quot;Heatmap of topic weights grouped by cell labels&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT1-1">
+Past versions of “plot correlations ANT1-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT1-1.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same label together (more interpretable??)
 sample_dummy &lt;- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == &quot;ANT1&quot;])
 rownames(sample_dummy) &lt;- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == &quot;ANT1&quot;,])
@@ -770,6 +853,43 @@ FALSE): non-list contrasts argument ignored</code></pre>
 cor_by_sample &lt;- cor(sample_dummies, weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by sample label&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT1-2">
+Past versions of “plot correlations ANT1-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT1-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT1-2.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same treatment together
 sample_ind_treat_dummies &lt;- dummy.data.frame(sample)</code></pre>
 <pre><code>Warning in model.matrix.default(~x - 1, model.frame(~x - 1), contrasts =
@@ -780,13 +900,124 @@ FALSE): non-list contrasts argument ignored</code></pre>
 <pre class="r"><code>cor_by_treat &lt;- cor(sample_ind_treat_dummies %&gt;% dplyr::select(contains(&quot;condition&quot;)), weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_treat, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by Treatment&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT1-3">
+Past versions of “plot correlations ANT1-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT1-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT1-3.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#plot heatmap of relative expression of marker genes in each topic
 topics_markers &lt;- topics[markers[-c(4,8,10:12)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT1-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT1-4">
+Past versions of “plot correlations ANT1-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT1-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT1-4.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>topics_markers &lt;- topics[markers[-c(1,2,4,8,10:12)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT1-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT1-5">
+Past versions of “plot correlations ANT1-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT1-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT1-5.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="ant2" class="section level3">
 <h3>ANT2</h3>
@@ -829,6 +1060,43 @@ weights &lt;- weights[match(rownames(sample), rownames(weights)),]
 pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
          show_rownames = FALSE, main = &quot;Heatmap of topic weights grouped by cell labels&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT2-1">
+Past versions of “plot correlations ANT2-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT2-1.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same label together (more interpretable??)
 sample_dummy &lt;- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$orig.ident == &quot;ANT2&quot;])
 rownames(sample_dummy) &lt;- rownames(ANT1.2@meta.data[ANT1.2$orig.ident == &quot;ANT2&quot;,])
@@ -839,13 +1107,124 @@ FALSE): non-list contrasts argument ignored</code></pre>
 cor_by_sample &lt;- cor(sample_dummies, weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by sample label&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT2-2">
+Past versions of “plot correlations ANT2-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT2-2.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#plot heatmap of relative expression of marker genes in each topic
 topics_markers &lt;- topics[markers[c(4,8,10,11,12)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT2-3">
+Past versions of “plot correlations ANT2-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT2-3.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>topics_markers &lt;- topics[markers[c(4,8,10,11)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20ANT2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-ANT2-4">
+Past versions of “plot correlations ANT2-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-ANT2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations ANT2-4.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="jointly-on-both-10x-lanes" class="section level2">
@@ -869,8 +1248,8 @@ l &lt;- fit$L
 f &lt;- fit$F
 weights &lt;- sweep(l, MARGIN = 2, colSums(f), `*`)
 scale &lt;- rowSums(weights)
-weights &lt;- weights / scale
-topics &lt;- f / colSums(f) # add up to 1</code></pre>
+weights &lt;- weights / scale #rescaled l
+topics &lt;- f / colSums(f) # add up to 1; rescaled f</code></pre>
 <pre class="r"><code>#plot heatmap of topic weights for samples
 #get labels of cells and reorder to group them
 sample &lt;- as.data.frame(ANT1.2@meta.data$labels)
@@ -885,6 +1264,43 @@ weights &lt;- weights[match(rownames(sample), rownames(weights)),]
 pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
          show_rownames = FALSE, main = &quot;Heatmap of topic weights grouped by cell labels&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-1">
+Past versions of “plot correlations joint-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-1.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same label together (more interpretable??)
 sample_dummy &lt;- as.data.frame(ANT1.2@meta.data$labels)
 rownames(sample_dummy) &lt;- rownames(ANT1.2@meta.data)
@@ -894,6 +1310,43 @@ FALSE): non-list contrasts argument ignored</code></pre>
 <pre class="r"><code>cor_by_sample &lt;- cor(sample_dummies, weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by sample label&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-2">
+Past versions of “plot correlations joint-2.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-2.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same individual or treatment together
 sample_ind_treat_dummies &lt;- dummy.data.frame(sample)</code></pre>
 <pre><code>Warning in model.matrix.default(~x - 1, model.frame(~x - 1), contrasts =
@@ -904,9 +1357,83 @@ FALSE): non-list contrasts argument ignored</code></pre>
 <pre class="r"><code>cor_by_ind &lt;- cor(sample_ind_treat_dummies %&gt;% dplyr::select(contains(&quot;Individual&quot;)), weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_ind, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by Individual&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-3">
+Past versions of “plot correlations joint-3.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-3.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>cor_by_treat &lt;- cor(sample_ind_treat_dummies %&gt;% dplyr::select(contains(&quot;condition&quot;)), weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_treat, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by Treatment&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-4">
+Past versions of “plot correlations joint-4.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-4.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#same heatmap but group all the cells that are of the same 10x lane together 
 collection_dummy &lt;- as.data.frame(ANT1.2@meta.data$orig.ident)
 rownames(collection_dummy) &lt;- rownames(ANT1.2@meta.data)
@@ -916,30 +1443,155 @@ FALSE): non-list contrasts argument ignored</code></pre>
 <pre class="r"><code>cor_by_collection &lt;- cor(collection_dummies, weights, method = &quot;pearson&quot;)
 pheatmap(cor_by_collection, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by collection&quot;)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-5">
+Past versions of “plot correlations joint-5.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-5.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#plot heatmap of relative expression of marker genes in each topic
 topics_markers &lt;- topics[markers,]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-6">
+Past versions of “plot correlations joint-6.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-6.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>topics_markers &lt;- topics[markers[-12],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
 <p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-correlations-joint-7">
+Past versions of “plot correlations joint-7.png”
+</button>
+</p>
+<div id="fig-no-spaces-plot-correlations-joint-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/1a4fcd8cf5b623bd412ab06158827f8ecafbd391/docs/figure/fasttopics_on_unintegrated_data.Rmd/plot correlations joint-7.png" target="_blank">1a4fcd8</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="identify-clusters-from-pca-of-topic-proportions" class="section level2">
+<h2>Identify clusters from PCA of topic proportions</h2>
+<pre class="r"><code>#k=11, 10 pcs
+p1 &lt;- pca_plot(poisson2multinom(fit),pcs = 1:2,fill = &quot;none&quot;)
+p2 &lt;- pca_plot(poisson2multinom(fit),pcs = 3:4,fill = &quot;none&quot;)
+p3 &lt;- pca_plot(poisson2multinom(fit),pcs = 5:6,fill = &quot;none&quot;)
+p4 &lt;- pca_plot(poisson2multinom(fit),pcs = 7:8,fill = &quot;none&quot;)
+p5 &lt;- pca_plot(poisson2multinom(fit),pcs = 9:10,fill = &quot;none&quot;)
+plot_grid(p1,p2,p3,p4,p5,nrow = 2,ncol = 3)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/PCA%20topics-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#k=11, 10 pcs
+p1 &lt;- pca_plot(poisson2multinom(fit),pcs = 1:2,fill = &quot;none&quot;) + geom_point(aes(color = as.factor(ANT1.2@meta.data$labels)))
+p2 &lt;- pca_plot(poisson2multinom(fit),pcs = 3:4,fill = &quot;none&quot;) + geom_point(aes(color = as.factor(ANT1.2@meta.data$labels)))
+p3 &lt;- pca_plot(poisson2multinom(fit),pcs = 5:6,fill = &quot;none&quot;) + geom_point(aes(color = as.factor(ANT1.2@meta.data$labels))) 
+p4 &lt;- pca_plot(poisson2multinom(fit),pcs = 7:8,fill = &quot;none&quot;) + geom_point(aes(color = as.factor(ANT1.2@meta.data$labels)))
+p5 &lt;- pca_plot(poisson2multinom(fit),pcs = 9:10,fill = &quot;none&quot;) + geom_point(aes(color = as.factor(ANT1.2@meta.data$labels)))
+plot_grid(p1,p2,p3,p4,p5,nrow = 2,ncol = 3)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/PCA%20topics-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p6  &lt;- pca_hexbin_plot(poisson2multinom(fit),pcs = 1:2) + guides(fill = &quot;none&quot;)
+p7  &lt;- pca_hexbin_plot(poisson2multinom(fit),pcs = 3:4) + guides(fill = &quot;none&quot;)
+p8  &lt;- pca_hexbin_plot(poisson2multinom(fit),pcs = 5:6) + guides(fill = &quot;none&quot;)
+p9  &lt;- pca_hexbin_plot(poisson2multinom(fit),pcs = 7:8) + guides(fill = &quot;none&quot;)
+p10 &lt;- pca_hexbin_plot(poisson2multinom(fit),pcs = 9:10)+ guides(fill = &quot;none&quot;)
+plot_grid(p6,p7,p8,p9,p10,nrow = 2,ncol = 3)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/PCA%20topics-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="look-at-expression-of-specific-markers-between-samples" class="section level1">
 <h1>Look at expression of specific markers between samples</h1>
-<pre class="r"><code>library(ggplot2)
-library(cowplot)</code></pre>
-<pre><code>
-********************************************************</code></pre>
-<pre><code>Note: As of version 1.0.0, cowplot does not change the</code></pre>
-<pre><code>  default ggplot2 theme anymore. To recover the previous</code></pre>
-<pre><code>  behavior, execute:
-  theme_set(theme_cowplot())</code></pre>
-<pre><code>********************************************************</code></pre>
-<pre class="r"><code>theme_set(theme_cowplot())
-
-
-#by individual
+<pre class="r"><code>#by individual
 for (marker in markers){
      query &lt;- weights %*% topics[marker, ] #represents latent gene expression; has same dim as num of barcodes (can subset by the labels or whatever category of interest and use to compute the gaussian curves to plot)
      query_plot &lt;- cbind(query, sample)
@@ -2340,6 +2992,77 @@ Anthony Hung
 </table>
 </div>
 </div>
+<div id="jointly-on-both-10x-lanes-only-unstrain-samples" class="section level2">
+<h2>jointly on both 10x lanes (only unstrain samples)</h2>
+<pre class="r"><code>#need to fit the model to the count data (unintegrated)
+raw_counts &lt;- ANT1.2@assays$RNA@counts
+raw_counts &lt;- as.matrix(raw_counts)
+raw_counts &lt;- raw_counts[,ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;)]
+#remove genes without any counts in droplets
+raw_counts &lt;- raw_counts[rowSums(raw_counts &gt; 0) &gt; 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts &lt;- t(as.matrix(raw_counts))
+
+#fit model
+# fit &lt;- fit_poisson_nmf(raw_counts,k = 11,numiter = 200)
+# saveRDS(fit, &quot;output/fasttopics/unintegrated_unstrain_k=11.rds&quot;)
+fit &lt;- readRDS(&quot;output/fasttopics/unintegrated_unstrain_k=11.rds&quot;)
+
+
+#compute weights and topics (need to add up to 1)
+l &lt;- fit$L
+f &lt;- fit$F
+weights &lt;- sweep(l, MARGIN = 2, colSums(f), `*`)
+scale &lt;- rowSums(weights)
+weights &lt;- weights / scale
+topics &lt;- f / colSums(f) # add up to 1</code></pre>
+<pre class="r"><code>#plot heatmap of topic weights for samples
+#get labels of cells and reorder to group them
+sample &lt;- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;)])
+rownames(sample) &lt;- rownames(ANT1.2@meta.data)[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;)]
+sample_labels &lt;- sample %&gt;% 
+     arrange(`ANT1.2@meta.data$labels[ANT1.2$labels %in% c(\&quot;NA19160_Unstrain\&quot;, \&quot;NA18855_Unstrain\&quot;, \&quot;NA18856_Unstrain\&quot;)]`) 
+sample &lt;- sample_labels %&gt;% 
+     separate(`ANT1.2@meta.data$labels[ANT1.2$labels %in% c(\&quot;NA19160_Unstrain\&quot;, \&quot;NA18855_Unstrain\&quot;, \&quot;NA18856_Unstrain\&quot;)]`, c(&quot;Individual&quot;, &quot;condition&quot;))
+#reorder weights df to match sample order
+weights &lt;- weights[match(rownames(sample), rownames(weights)),]
+#make the plot (color strip on the left is by indivdual)
+pheatmap(weights, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
+         show_rownames = FALSE, main = &quot;Heatmap of topic weights grouped by cell labels&quot;)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#same heatmap but group all the cells that are of the same label together (more interpretable??)
+sample_dummy &lt;- as.data.frame(ANT1.2@meta.data$labels[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;)])
+rownames(sample_dummy) &lt;- rownames(ANT1.2@meta.data[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;),])
+sample_dummies &lt;- dummy.data.frame(sample_dummy)</code></pre>
+<pre><code>Warning in model.matrix.default(~x - 1, model.frame(~x - 1), contrasts =
+FALSE): non-list contrasts argument ignored</code></pre>
+<pre class="r"><code>cor_by_sample &lt;- cor(sample_dummies, weights, method = &quot;pearson&quot;)
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by sample label&quot;)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#same heatmap but group all the cells that are of the same individual or treatment together
+sample_ind_treat_dummies &lt;- dummy.data.frame(sample)</code></pre>
+<pre><code>Warning in model.matrix.default(~x - 1, model.frame(~x - 1), contrasts =
+FALSE): non-list contrasts argument ignored</code></pre>
+<pre class="r"><code>cor_by_ind &lt;- cor(sample_ind_treat_dummies %&gt;% dplyr::select(contains(&quot;Individual&quot;)), weights, method = &quot;pearson&quot;)
+pheatmap(cor_by_ind, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by Individual&quot;)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cor_by_treat &lt;- cor(sample_ind_treat_dummies %&gt;% dplyr::select(contains(&quot;condition&quot;)), weights, method = &quot;pearson&quot;)
+#same heatmap but group all the cells that are of the same 10x lane together 
+collection_dummy &lt;- as.data.frame(ANT1.2@meta.data$orig.ident[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;)])
+rownames(collection_dummy) &lt;- rownames(ANT1.2@meta.data[ANT1.2$labels %in% c(&quot;NA19160_Unstrain&quot;, &quot;NA18855_Unstrain&quot;, &quot;NA18856_Unstrain&quot;),])
+collection_dummies &lt;- dummy.data.frame(collection_dummy)</code></pre>
+<pre><code>Warning in model.matrix.default(~x - 1, model.frame(~x - 1), contrasts =
+FALSE): non-list contrasts argument ignored</code></pre>
+<pre class="r"><code>cor_by_collection &lt;- cor(collection_dummies, weights, method = &quot;pearson&quot;)
+pheatmap(cor_by_collection, cluster_cols = TRUE, cluster_rows = TRUE, main = &quot;Correlation by collection&quot;)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#plot heatmap of relative expression of marker genes in each topic
+topics_markers &lt;- topics[markers,]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>topics_markers &lt;- topics[markers[-12],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)</code></pre>
+<p><img src="figure/fasttopics_on_unintegrated_data.Rmd/plot%20correlations%20joint%20only%20unstrain-6.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2367,49 +3090,50 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cowplot_1.0.0      ggplot2_3.3.2      tidyr_1.1.2       
+[1] cowplot_1.1.0      ggplot2_3.3.2      tidyr_1.1.2       
 [4] dummies_1.5.6      RColorBrewer_1.1-2 pheatmap_1.0.12   
-[7] fastTopics_0.3-174 dplyr_1.0.2        Seurat_3.1.3      
+[7] fastTopics_0.3-181 dplyr_1.0.2        Seurat_3.1.3      
 
 loaded via a namespace (and not attached):
   [1] Rtsne_0.15          colorspace_1.4-1    ellipsis_0.3.1     
   [4] ggridges_0.5.1      rprojroot_1.3-2     fs_1.3.1           
-  [7] farver_2.0.3        leiden_0.3.1        listenv_0.8.0      
- [10] npsurv_0.4-0        MatrixModels_0.4-1  ggrepel_0.8.2      
- [13] codetools_0.2-16    splines_3.6.1       lsei_1.2-0         
- [16] knitr_1.23          jsonlite_1.7.0      workflowr_1.6.2    
- [19] mcmc_0.9-7          ica_1.0-2           cluster_2.1.0      
- [22] png_0.1-7           uwot_0.1.5          sctransform_0.2.0  
- [25] compiler_3.6.1      httr_1.4.2          backports_1.1.9    
- [28] Matrix_1.2-18       lazyeval_0.2.2      later_1.1.0.1      
- [31] prettyunits_1.1.1   htmltools_0.5.0     quantreg_5.61      
- [34] tools_3.6.1         rsvd_1.0.1          igraph_1.2.4.1     
- [37] coda_0.19-3         gtable_0.3.0        glue_1.4.2         
- [40] RANN_2.6.1          reshape2_1.4.3      rappdirs_0.3.1     
- [43] Rcpp_1.0.5          vctrs_0.3.4         gdata_2.18.0       
- [46] ape_5.3             nlme_3.1-140        conquer_1.0.2      
- [49] gbRd_0.4-11         lmtest_0.9-37       xfun_0.8           
- [52] stringr_1.4.0       globals_0.12.5      lifecycle_0.2.0    
- [55] irlba_2.3.3         gtools_3.8.1        future_1.18.0      
- [58] MASS_7.3-52         zoo_1.8-8           scales_1.1.1       
- [61] hms_0.5.3           promises_1.1.1      parallel_3.6.1     
- [64] SparseM_1.78        yaml_2.2.1          reticulate_1.16    
- [67] pbapply_1.4-0       gridExtra_2.3       stringi_1.4.6      
- [70] caTools_1.17.1.2    bibtex_0.4.2        Rdpack_0.11-0      
- [73] rlang_0.4.7         pkgconfig_2.0.3     bitops_1.0-6       
- [76] matrixStats_0.56.0  evaluate_0.14       lattice_0.20-41    
- [79] ROCR_1.0-7          purrr_0.3.4         labeling_0.3       
- [82] htmlwidgets_1.5.1   tidyselect_1.1.0    RcppAnnoy_0.0.12   
- [85] plyr_1.8.6          magrittr_1.5        R6_2.4.1           
- [88] gplots_3.0.1.1      generics_0.0.2      withr_2.2.0        
- [91] pillar_1.4.6        whisker_0.3-2       fitdistrplus_1.0-14
- [94] survival_2.44-1.1   tibble_3.0.3        future.apply_1.3.0 
- [97] tsne_0.1-3          crayon_1.3.4        KernSmooth_2.23-15 
-[100] plotly_4.9.2.1      rmarkdown_1.13      progress_1.2.2     
-[103] grid_3.6.1          data.table_1.13.0   git2r_0.26.1       
-[106] metap_1.1           digest_0.6.25       httpuv_1.5.1       
-[109] MCMCpack_1.4-9      RcppParallel_5.0.2  munsell_0.5.0      
-[112] viridisLite_0.3.0   quadprog_1.5-8     </code></pre>
+  [7] hexbin_1.28.1       farver_2.0.3        leiden_0.3.1       
+ [10] listenv_0.8.0       npsurv_0.4-0        MatrixModels_0.4-1 
+ [13] ggrepel_0.8.2       codetools_0.2-16    splines_3.6.1      
+ [16] lsei_1.2-0          knitr_1.23          jsonlite_1.7.1     
+ [19] workflowr_1.6.2     mcmc_0.9-7          ica_1.0-2          
+ [22] cluster_2.1.0       png_0.1-7           uwot_0.1.5         
+ [25] sctransform_0.2.0   compiler_3.6.1      httr_1.4.2         
+ [28] backports_1.1.10    Matrix_1.2-18       lazyeval_0.2.2     
+ [31] later_1.1.0.1       prettyunits_1.1.1   htmltools_0.5.0    
+ [34] quantreg_5.73       tools_3.6.1         rsvd_1.0.1         
+ [37] igraph_1.2.4.1      coda_0.19-4         gtable_0.3.0       
+ [40] glue_1.4.2          RANN_2.6.1          reshape2_1.4.3     
+ [43] rappdirs_0.3.1      Rcpp_1.0.5          vctrs_0.3.4        
+ [46] gdata_2.18.0        ape_5.3             nlme_3.1-140       
+ [49] conquer_1.0.2       gbRd_0.4-11         lmtest_0.9-37      
+ [52] xfun_0.8            stringr_1.4.0       globals_0.12.5     
+ [55] lifecycle_0.2.0     irlba_2.3.3         gtools_3.8.1       
+ [58] future_1.18.0       MASS_7.3-52         zoo_1.8-8          
+ [61] scales_1.1.1        hms_0.5.3           promises_1.1.1     
+ [64] parallel_3.6.1      SparseM_1.78        yaml_2.2.1         
+ [67] reticulate_1.16     pbapply_1.4-0       gridExtra_2.3      
+ [70] stringi_1.4.6       caTools_1.17.1.2    bibtex_0.4.2       
+ [73] Rdpack_0.11-0       rlang_0.4.8         pkgconfig_2.0.3    
+ [76] bitops_1.0-6        matrixStats_0.57.0  evaluate_0.14      
+ [79] lattice_0.20-41     ROCR_1.0-7          purrr_0.3.4        
+ [82] labeling_0.3        htmlwidgets_1.5.2   tidyselect_1.1.0   
+ [85] RcppAnnoy_0.0.12    plyr_1.8.6          magrittr_1.5       
+ [88] R6_2.4.1            gplots_3.0.1.1      generics_0.0.2     
+ [91] withr_2.3.0         pillar_1.4.6        whisker_0.3-2      
+ [94] fitdistrplus_1.0-14 survival_2.44-1.1   tibble_3.0.4       
+ [97] future.apply_1.3.0  tsne_0.1-3          crayon_1.3.4       
+[100] KernSmooth_2.23-15  plotly_4.9.2.1      rmarkdown_1.13     
+[103] progress_1.2.2      grid_3.6.1          data.table_1.13.0  
+[106] git2r_0.26.1        metap_1.1           digest_0.6.25      
+[109] httpuv_1.5.1        MCMCpack_1.4-9      RcppParallel_5.0.2 
+[112] munsell_0.5.0       viridisLite_0.3.0   quadprog_1.5-8     </code></pre>
+</div>
 </div>
 </div>
 
