@@ -16,3 +16,4 @@ analysis/site_libs
 data/*.txt
 output/*.txt
 output/LDSC-SEG/*
+*.fastq
