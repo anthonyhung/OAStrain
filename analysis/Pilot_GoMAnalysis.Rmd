@@ -39,9 +39,9 @@ Load in datasets and create Seurat objects for each of them. Add metadata about 
 
 ```{r Loading in data matrices}
 
-if (file.exists("data/Combined_singlecell_data_first.rds") & file.exists("data/Combined_singlecell_data_allGenes.rds")){
-Combined.common <- readRDS("data/Combined_singlecell_data_first.rds")
-Combined.common.allGenes <- readRDS("data/Combined_singlecell_data_allGenes.rds")
+if (file.exists("data/external_scRNA/Combined_singlecell_data_first.rds") & file.exists("data/external_scRNA/Combined_singlecell_data_allGenes.rds")){
+Combined.common <- readRDS("data/external_scRNA/Combined_singlecell_data_first.rds")
+Combined.common.allGenes <- readRDS("data/external_scRNA/Combined_singlecell_data_allGenes.rds")
 } else {
 
 #Pilot data
@@ -50,13 +50,13 @@ ANT1.2 <- Seurat::AddMetaData(ANT1.2, "iPSC-Chondrocyte", col.name = "Cell.Type"
 dim(ANT1.2)
 
 #Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
-chondro <- read.table("/project2/gilad/anthonyhung/Projects/OAStrain_project/outside_scData/GSE104782_allcells_UMI_count.txt.gz", header = T)
+chondro <- read.table("data/external_scRNA/GSE104782_allcells_UMI_count.txt.gz", header = T)
 chondro_genes <- chondro[,1]
 chondro_data <- chondro[,-1]
 chondro <- chondro_data
 rownames(chondro) <- chondro_genes
 #load chondro cluster data from paper
-chondro_metadata <- read_csv("data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv")
+chondro_metadata <- read_csv("data/external_scRNA/GSE104782_Table_Cell_quality_information_and_clustering_information.csv")
 #subset data to include only those that were assigned to a chondrocyte cluster in the paper
 chondro.filtered <- chondro[,!is.na(chondro_metadata$Cluster)]
 cluster.ident <- paste0("Chondro ", chondro_metadata$Cluster[!is.na(chondro_metadata$Cluster)])
@@ -80,7 +80,7 @@ gh_big_humans <- Seurat::AddMetaData(gh_big_humans, "Ghousman", col.name = "orig
 dim(gh_big_humans)
 
 #Human Liver samples run through 10x (https://doi.org/10.1038/s41467-018-06318-7). This is a subset of the entire dataset, which is from whole liver homogenate. I used scViz to subset the data for clusters that were called hepatocytes in the original study (3490 cells)
-liver <- readRDS("data/humanLiverSubset_hepatocytes.rds")
+liver <- readRDS("data/external_scRNA/humanLiverSubset_hepatocytes.rds")
 liver <- Seurat::AddMetaData(liver, "Hepatocyte", col.name = "Cell.Type")
 dim(liver)
 
@@ -100,44 +100,13 @@ Combined.common.allGenes <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans, l
 Combined.common.allGenes_noliver <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans), project = "Combined.common.noliver")
 
 
-saveRDS(Combined.common, "data/Combined_singlecell_data_first.rds")
-saveRDS(Combined.common.allGenes, "data/Combined_singlecell_data_allGenes.rds")
-saveRDS(Combined.common.allGenes_noliver, "data/Combined_singlecell_data_allGenes_noliver.rds")
+saveRDS(Combined.common, "data/external_scRNA/Combined_singlecell_data_first.rds")
+saveRDS(Combined.common.allGenes, "data/external_scRNA/Combined_singlecell_data_allGenes.rds")
+saveRDS(Combined.common.allGenes_noliver, "data/external_scRNA/Combined_singlecell_data_allGenes_noliver.rds")
 
 }
 ```
 
-## Check Expression of chondrocyte markers in chondrocyte data and pilot data
-
-```{r}
-#Chondrocytes from OA patients (https://www.ncbi.nlm.nih.gov/pubmed/30026257) run through STRT protocol
-chondro <- read.table("/project2/gilad/anthonyhung/Projects/OAStrain_project/outside_scData/GSE104782_allcells_UMI_count.txt.gz", header = T)
-chondro_genes <- chondro[,1]
-chondro_data <- chondro[,-1]
-chondro <- chondro_data
-rownames(chondro) <- chondro_genes
-#load chondro cluster data from paper
-chondro_metadata <- read_csv("data/GSE104782_Table_Cell_quality_information_and_clustering_information.csv")
-#subset data to include only those that were assigned to a chondrocyte cluster in the paper
-chondro.filtered <- chondro[,!is.na(chondro_metadata$Cluster)]
-cluster.ident <- paste0("Chondro ", chondro_metadata$Cluster[!is.na(chondro_metadata$Cluster)])
-#Create seurat object from chondrocytes
-chondro.seurat <- CreateSeuratObject(chondro.filtered, project="Chondrocytes")
-chondro.seurat <- Seurat::AddMetaData(chondro.seurat, cluster.ident, col.name = "Cell.Type")
-dim(chondro.seurat)
-
-VlnPlot(object=chondro.seurat, features = c("SOX9", "ACAN", "COL2A1", "COL11A1", "SOX5", "SOX6"))
-VlnPlot(object=chondro.seurat, features = c("TGFB3"))
-
-
-#Pilot data
-ANT1.2 <- readRDS("data/ANT1_2.rds")
-ANT1.2 <- Seurat::AddMetaData(ANT1.2, "iPSC-Chondrocyte", col.name = "Cell.Type")
-dim(ANT1.2)
-VlnPlot(object=ANT1.2, features = c("SOX9", "ACAN", "COL2A1", "COL11A1", "SOX5", "SOX6"))
-VlnPlot(object=ANT1.2, features = c("TGFB3"))
-
-```
 
 
 ![Cell Type Clusters from original paper](../analysis/figures/scviz1.png)
