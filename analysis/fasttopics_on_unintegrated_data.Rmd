@@ -15,7 +15,6 @@ library(dplyr)
 ANT1.2 <- readRDS("data/ANT1_2.rds")
 ```
 
-
 # Fasttopics on unintegrated data
 
 ##separately on each 10x lane
@@ -354,5 +353,77 @@ pheatmap(cor_by_collection, cluster_cols = TRUE, cluster_rows = TRUE, main = "Co
 topics_markers <- topics[markers,]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
 topics_markers <- topics[markers[-12],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+```
+
+
+# fasttopics with external single cell datasets as well
+
+```{r load external data}
+Combined.common <- readRDS("data/Combined_singlecell_data_first.rds")
+#Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
+
+#need to fit the model to the count data (unintegrated)
+raw_counts <- Combined.common@assays$RNA@counts
+raw_counts <- as.matrix(raw_counts)
+#remove genes without any counts in droplets
+raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts <- t(as.matrix(raw_counts))
+
+#fit model
+# fit <- fit_poisson_nmf(raw_counts,k = 11,numiter = 100)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=11.rds")
+fit <- readRDS("output/fasttopics/Combined_external_data_k=11.rds") #100 iterations
+
+#compute weights and topics (need to add up to 1)
+l <- fit$L
+f <- fit$F
+weights <- sweep(l, MARGIN = 2, colSums(f), `*`)
+scale <- rowSums(weights)
+weights <- weights / scale
+topics <- f / colSums(f) # add up to 1
+```
+
+
+```{r plot correlations external}
+library(stringr)
+library(pheatmap)
+library(dummies)
+#plot heatmap of topic weights for samples
+#get labels of cells and reorder to group them
+sample <- as.data.frame(Combined.common@meta.data$Cell.Type)
+sample_labels <- sample %>% 
+     transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
+rownames(sample_labels) <- rownames(Combined.common@meta.data)
+sample <- sample_labels %>% 
+     arrange(Cell.Type)
+#reorder weights df to match sample order
+weights_reordered <- weights[match(rownames(sample), rownames(weights)),]
+#make the plot (color strip on the left is by indivdual)
+pheatmap(weights_reordered, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = sample,
+         show_rownames = FALSE, main = "Heatmap of topic weights grouped by cell labels")
+#same heatmap but group all the cells that are of the same label together (more interpretable??)
+sample_dummy <- as.data.frame(Combined.common@meta.data$Cell.Type)
+sample_dummy <- sample_dummy %>% 
+     transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
+rownames(sample_dummy) <- rownames(Combined.common@meta.data)
+sample_dummies <- dummy.data.frame(sample_dummy)
+cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
+
+
+markers <- c("THY1", "NT5E", "ENG", "CD44",
+             "COL2A1", "SOX9", "COL10A1", "ACAN",
+             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3"
+             )
+
+markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 9)))
+rownames(markers_description) <- markers
+
+#plot heatmap of relative expression of marker genes in each topic
+topics_markers <- topics[markers[-c(5,7,8,9)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+topics_markers <- topics[markers[-c(4,5,7,8,9,13)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
 ```

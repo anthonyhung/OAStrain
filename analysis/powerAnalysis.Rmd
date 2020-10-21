@@ -567,6 +567,27 @@ setwd("/project2/gilad/anthonyhung/Projects/OAStrain_project/OAStrain/")
 
 # Import outside data on eQTLs to see distributions of standardized effect sizes
 
+```{r ecdf and cdf functions}
+# After (2), I suggest an alternative that does not depend on the number of genes or tests per gene, and more directly answers the question "what power would be achieved to detect a effect size that is plausible to see in real data, given the sample size?": recover the 50th, 90th, 95th, 99th, (etc.) percentiles of the fitted_g (this can be approximately done by evaluating ash_cdf on a dense grid), and report the power for those true effect sizes.
+
+plot_cdf <- function(ash_obj){
+     grid_of_effects <- seq(-1, 1, length.out = 1e5)
+     vector_of_percentiles <- cdf.ash(ash_obj, grid_of_effects)
+     percentiles_df <- tibble(latent = vector_of_percentiles$x, percentile = as.vector(vector_of_percentiles$y))
+     plot <- ggplot(percentiles_df, aes(x = latent, y = percentile)) +
+               geom_point()
+     print(plot)
+}
+
+get_ecdf <- function(vector_of_SES){
+     SES_ecdf <- ecdf(vector_of_SES)
+     print(quantile(SES_ecdf, c(.75, .95, .99)))
+     print(plot(SES_ecdf, ylim = c(-2,2)))
+}
+```
+
+
+
 ## Michelle Ward's Hypoxia study 
 https://users.rcc.uchicago.edu/~aksarkar/hypoxia/mash.html#org4e6ffa3 for code to get effect sizes from Abishek Sarkar
 ```{r hypoxia}
@@ -637,6 +658,15 @@ hist(conditionB$zscore/sqrt(15))
 hist(conditionC$zscore/sqrt(15))
 hist(conditionD$zscore/sqrt(15))
 
+#conditionA
+get_ecdf(conditionA$zscore/sqrt(15))
+#conditionB
+get_ecdf(conditionB$zscore/sqrt(15))
+#conditionC
+get_ecdf(conditionC$zscore/sqrt(15))
+#conditionD
+get_ecdf(conditionD$zscore/sqrt(15))
+
 # See how many genes have at least one test that meets each of the 3 SES thresholds determined above in each condition
 n_egenes_ward <- matrix(NA, nrow = 4, ncol = 4)
 colnames(n_egenes_ward) <- c("n=100", "n=58", "n=30", "n=10")
@@ -688,32 +718,32 @@ head(n_sorted)
 #We can use the p-value to obtain the zscore (pvalue -> Zscore)
 #then use slopes and zscores to obtain SE (slope/zscore = SE)
 n_sorted <- n_sorted %>% 
-     filter(V6 != 1) %>% 
-     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
-     mutate(SE = V7/zscore)
+     dplyr::filter(V6 != 1) %>% 
+     dplyr::mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     dplyr::mutate(SE = V7/zscore)
 sal_sorted <- sal_sorted %>% 
-     filter(V6 != 1) %>% 
-     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
-     mutate(SE = V7/zscore)
+     dplyr::filter(V6 != 1) %>% 
+     dplyr::mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     dplyr::mutate(SE = V7/zscore)
 IFN_sorted <- IFN_sorted %>% 
-     filter(V6 != 1) %>% 
-     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
-     mutate(SE = V7/zscore)
+     dplyr::filter(V6 != 1) %>% 
+     dplyr::mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     dplyr::mutate(SE = V7/zscore)
 salIFN_sorted <- salIFN_sorted %>% 
-     filter(V6 != 1) %>% 
-     mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
-     mutate(SE = V7/zscore)
+     dplyr::filter(V6 != 1) %>% 
+     dplyr::mutate(zscore = if_else(V7 < 0, true = qnorm(V6/2), false = qnorm(1-V6/2))) %>% 
+     dplyr::mutate(SE = V7/zscore)
 
 
 # use ashr to estimate true effect sizes from the data in order to compute SES
-#n_sorted_ash_out <- ash(betahat = n_sorted$V7, sebetahat = n_sorted$SE)
-#sal_sorted_ash_out <- ash(betahat = sal_sorted$V7, sebetahat = sal_sorted$SE)
-#IFN_sorted_ash_out <- ash(betahat = IFN_sorted$V7, sebetahat = IFN_sorted$SE)
-#salIFN_sorted_ash_out <- ash(betahat = salIFN_sorted$V7, sebetahat = salIFN_sorted$SE)
-#saveRDS(n_sorted_ash_out, "output/ash_power_analysis/alasoo_naive_ash_out.rds")
-#saveRDS(sal_sorted_ash_out, "output/ash_power_analysis/alasoo_sal_ash_out.rds")
-#saveRDS(IFN_sorted_ash_out, "output/ash_power_analysis/alasoo_IFN_ash_out.rds")
-#saveRDS(salIFN_sorted_ash_out, "output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
+n_sorted_ash_out <- ash(betahat = n_sorted$V7, sebetahat = n_sorted$SE, df = 84)
+saveRDS(n_sorted_ash_out, "output/ash_power_analysis/alasoo_naive_ash_out.rds")
+sal_sorted_ash_out <- ash(betahat = sal_sorted$V7, sebetahat = sal_sorted$SE, df = 84)
+saveRDS(sal_sorted_ash_out, "output/ash_power_analysis/alasoo_sal_ash_out.rds")
+IFN_sorted_ash_out <- ash(betahat = IFN_sorted$V7, sebetahat = IFN_sorted$SE, df = 84)
+saveRDS(IFN_sorted_ash_out, "output/ash_power_analysis/alasoo_IFN_ash_out.rds")
+salIFN_sorted_ash_out <- ash(betahat = salIFN_sorted$V7, sebetahat = salIFN_sorted$SE, df = 84)
+saveRDS(salIFN_sorted_ash_out, "output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
 n_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_naive_ash_out.rds")
 sal_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_sal_ash_out.rds")
 IFN_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_IFN_ash_out.rds")
@@ -725,6 +755,14 @@ sal_sorted$SES <- sal_sorted_ash_out$result$PosteriorMean/sal_sorted_ash_out$res
 IFN_sorted$SES <- IFN_sorted_ash_out$result$PosteriorMean/IFN_sorted_ash_out$result$PosteriorSD
 salIFN_sorted$SES <- salIFN_sorted_ash_out$result$PosteriorMean/salIFN_sorted_ash_out$result$PosteriorSD
 
+#naive
+get_ecdf(n_sorted$SES)
+#sal
+get_ecdf(sal_sorted$SES)
+#IFN
+get_ecdf(IFN_sorted$SES)
+#sal_IFN
+get_ecdf(salIFN_sorted$SES)
 
 alpha <- 0.05/15786 #for FWER of 0.05 (assuming 15786 genes)
 #for Power = 0.8, what is the SES?
@@ -779,29 +817,23 @@ rhinovirus_data_r <- rhinovirus_data %>%
      dplyr::filter(condition == "r")
 
 # use ashr to estimate true effect sizes from the data in order to compute SES (separately for each half of the data)
-# rhinovirus_f_ashr_out <- ash(betahat = rhinovirus_data_f$beta, sebetahat = rhinovirus_data_f$se)
+# rhinovirus_f_ashr_out <- ash(betahat = rhinovirus_data_f$beta, sebetahat = rhinovirus_data_f$se, df = 96)
 # saveRDS(rhinovirus_f_ashr_out, "output/ash_power_analysis/rhinovirus_f_ash_out.rds")
 rhinovirus_f_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_f_ash_out.rds")
-# rhinovirus_r_ashr_out <- ash(betahat = rhinovirus_data_r$beta, sebetahat = rhinovirus_data_r$se)
+# rhinovirus_r_ashr_out <- ash(betahat = rhinovirus_data_r$beta, sebetahat = rhinovirus_data_r$se, df = 96)
 # saveRDS(rhinovirus_r_ashr_out, "output/ash_power_analysis/rhinovirus_r_ash_out.rds")
 rhinovirus_r_ashr_out <- readRDS("output/ash_power_analysis/rhinovirus_r_ash_out.rds")
-
-# After (2), I suggest an alternative that does not depend on the number of genes or tests per gene, and more directly answers the question "what power would be achieved to detect a effect size that is plausible to see in real data, given the sample size?": recover the 50th, 90th, 95th, 99th, (etc.) percentiles of the fitted_g (this can be approximately done by evaluating ash_cdf on a dense grid), and report the power for those true effect sizes.
-
-plot_cdf <- function(ash_obj){
-     grid_of_effects <- seq(-1, 1, length.out = 1e5)
-     vector_of_percentiles <- cdf.ash(ash_obj, grid_of_effects)
-     percentiles_df <- tibble(latent = vector_of_percentiles$x, percentile = as.vector(vector_of_percentiles$y))
-     plot <- ggplot(percentiles_df, aes(x = latent, y = percentile)) +
-               geom_point()
-     print(plot)
-}
 
 #look for the effect sizes that correspond to percentiles of interest
 
 #add column for SES (based on ash output)
-rhinovirus_data$SES <- rhinovirus_ashr_out$result$PosteriorMean/rhinovirus_ashr_out$result$PosteriorSD
+rhinovirus_data_f$SES <- rhinovirus_f_ashr_out$result$PosteriorMean/rhinovirus_f_ashr_out$result$PosteriorSD
+rhinovirus_data_r$SES <- rhinovirus_r_ashr_out$result$PosteriorMean/rhinovirus_r_ashr_out$result$PosteriorSD
 
+#uninfected
+get_ecdf(rhinovirus_data_f$SES)
+#rhinovirus
+get_ecdf(rhinovirus_data_r$SES)
 
 
 alpha <- 0.05/length(unique(rhinovirus_data_f$gene)) #for FWER of 0.05 (assuming 10893 genes)
