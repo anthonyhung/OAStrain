@@ -65,6 +65,22 @@ chondro.seurat <- CreateSeuratObject(chondro.filtered, project="Chondrocytes")
 chondro.seurat <- Seurat::AddMetaData(chondro.seurat, cluster.ident, col.name = "Cell.Type")
 dim(chondro.seurat)
 
+#Chondrocytes from healthy oLT of a male human with OA (outer lateral tibia) https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM4626766
+## link to directories containing data files (count matrices)
+chond_dir <- "data/external_scRNA/Chou_et_al/"
+library(Matrix)
+#read in data
+chond_counts <- readMM(paste0(chond_dir, "GSM4626766_OA_oLT_113.matrix.mtx.gz"))
+chond_genes <- read_tsv(paste0(chond_dir, "GSM4626766_OA_oLT_113.genes.tsv.gz"), col_names = F)
+chond_barcodes <- as.data.frame(read_tsv(paste0(chond_dir, "GSM4626766_OA_oLT_113.barcodes.tsv.gz"), col_names = F))
+#make Seurat object
+rownames(chond_counts) <- chond_genes$X2
+colnames(chond_counts) <- chond_barcodes$X1
+
+Chond_seurat <- CreateSeuratObject(counts = chond_counts, project = "Chondrocytes") %>% 
+  AddMetaData("Chondrocyte_", col.name = "Cell.Type")
+
+
 #iPSCs/MSCs/osteoblasts from Human/chimp panel. Combine all the datasets and subset for humans
 ghousman_data_dir <- ("/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/cellranger-data-full/")
 gh_ipsc_1.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-1.rds"))
@@ -91,13 +107,13 @@ dim(liver)
 # Merge the seurat objects into one large one, keeping metadata about which study they originated in as well as their assigned cell type.
 
 # merge based on common genes between ALL datasets
-common.features <- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(gh_big_humans), rownames(liver)))
+common.features <- Reduce(intersect, list(rownames(ANT1.2), rownames(chondro.seurat), rownames(Chond_seurat), rownames(gh_big_humans), rownames(liver)))
 length(x = common.features)
-Combined.common <- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = "Combined.common")
+Combined.common <- merge(ANT1.2[common.features, ], y = c(chondro.seurat[common.features, ], Chond_seurat[common.features, ], gh_big_humans[common.features, ], liver[common.features, ]), project = "Combined.common")
 
 #merge keeping all genes
-Combined.common.allGenes <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans, liver), project = "Combined.common")
-Combined.common.allGenes_noliver <- merge(ANT1.2, y = c(chondro.seurat, gh_big_humans), project = "Combined.common.noliver")
+Combined.common.allGenes <- merge(ANT1.2, y = c(chondro.seurat, Chond_seurat, gh_big_humans, liver), project = "Combined.common")
+Combined.common.allGenes_noliver <- merge(ANT1.2, y = c(chondro.seurat, Chond_seurat, gh_big_humans), project = "Combined.common.noliver")
 
 
 saveRDS(Combined.common, "data/external_scRNA/Combined_singlecell_data_first.rds")

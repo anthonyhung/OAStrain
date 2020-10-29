@@ -69,6 +69,14 @@ p2_SCT <- DimPlot(SCT.integrated, group.by = c("labels"))
 p3_SCT <- DimPlot(SCT.integrated, group.by = c("seurat_clusters"))
 grid.arrange(p1_SCT, p2_SCT, p3_SCT, nrow = 2)
 
+#for figures: remove legend and add in later
+p1_figure <- p2_SCT + theme(legend.position = "none")
+p2_figure <- p3_SCT + theme(legend.position = "none") + scale_color_manual(values=c("plum3", "#E69F00", "#654321"))
+grid.arrange(p1_figure, p2_figure)
+
+p2_SCT 
+p3_SCT + scale_color_manual(values=c("plum3", "#E69F00", "#654321"))
+
 # The above seems to do a good job integrating across individuals
 
 SCT.integrated@active.ident <- SCT.integrated$integrated_snn_res.0.4
@@ -123,6 +131,16 @@ cluster_memberships
 
 cluster_memberships_proportions <- prop.table(cluster_memberships, margin = 2)
 cluster_memberships_proportions
+
+#make a nice proportions bar plot for a figure
+library(cowplot)
+long_cluster_memberships_proportions <- as_tibble(as.data.frame(cluster_memberships_proportions))
+ggplot(long_cluster_memberships_proportions, aes(x = Var2, y = Freq, fill = Var1)) +
+     geom_bar(position = "dodge", stat = "identity") + 
+     scale_fill_manual(values=c("plum3", "#E69F00", "#654321")) + 
+     theme_cowplot() +
+     labs(title = "Proportion of cells from each individual \n assigned to each unsupervised cluster", x = "", y = "Proportion", fill = "Cluster")
+     
 ```
 
 DE between clusters
@@ -160,7 +178,8 @@ plot_by_labels <- function(gene, counts, labels){
      #use df to make our plot
      plot <- ggplot(dataframe_cdf, aes(x = x, y = y, color = as.factor(label), group=as.factor(label))) +
           geom_point() + 
-          labs(title = paste0(gene), x = "Latent gene expression", y = "CDF", color = "Label")
+          labs(title = paste0(gene), x = "Latent gene expression", y = "CDF", color = "Label") +
+          theme_cowplot()
      return(plot)
 }
 
@@ -179,6 +198,13 @@ for (marker in c(features.plot.msc, features.plot.chond)){
      print(plot_by_labels(marker, SCT.integrated@assays$RNA@counts, SCT.integrated$labels) + labs(color = "Individual"))
 }
 
+#plots for figure
+a <- plot_by_labels("COL11A1", SCT.integrated@assays$RNA@counts, SCT.integrated$integrated_snn_res.0.4) + 
+     theme(legend.position = "none") + 
+     scale_color_manual(values=c("plum3", "#E69F00", "#654321"))
+b <- plot_by_labels("COL11A1", SCT.integrated@assays$RNA@counts, SCT.integrated$labels) + 
+     theme(legend.position = "none") 
+grid.arrange(a, b, nrow = 1)
 
 a<- c("MMP2", "MMP14")
 

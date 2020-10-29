@@ -916,6 +916,40 @@ for (permutation in 7:12){
 ```
 
 
+```{r}
+for (permutation in 7:12){
+     results <- permuted_results[[permutation]]
+     
+     # k-s test making use of ranked based on p-values
+     genes <- results$qvalue
+     names(genes) <- rownames(results)
+
+     selection <- function(allScore){ return(allScore < 0.05)} # function that returns TRUE/FALSE for p-values<0.05
+     allGO2genes <- annFUN.org(whichOnto="BP", feasibleGenes=NULL, mapping="org.Hs.eg.db", ID="ensembl")
+     GOdata <- new("topGOdata",
+       ontology="BP",
+       allGenes=genes,
+       annot=annFUN.GO2genes,
+       GO2genes=allGO2genes,
+       geneSel=selection,
+       nodeSize=10)
+
+     results.ks <- runTest(GOdata, algorithm="classic", statistic="ks")
+     goEnrichment <- GenTable(GOdata, KS=results.ks, orderBy="KS", topNodes=20)
+     goEnrichment <- goEnrichment %>% 
+          mutate(KS = ifelse(grepl("<", KS), 1e-30, KS))
+     goEnrichment$KS <- as.numeric(goEnrichment$KS)
+     goEnrichment <- goEnrichment[goEnrichment$KS<0.05,]
+     goEnrichment <- goEnrichment[,c("GO.ID","Term","KS")]
+     goEnrichment$Term <- gsub(" [a-z]*\\.\\.\\.$", "", goEnrichment$Term)
+     goEnrichment$Term <- gsub("\\.\\.\\.$", "", goEnrichment$Term)
+     goEnrichment$Term <- paste(goEnrichment$GO.ID, goEnrichment$Term, sep=", ")
+     goEnrichment$Term <- factor(goEnrichment$Term, levels=rev(goEnrichment$Term))
+     goEnrichment$KS <- as.numeric(goEnrichment$KS)
+
+     print(goEnrichment$Term)
+}
+```
 
 
 

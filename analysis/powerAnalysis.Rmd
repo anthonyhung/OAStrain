@@ -358,23 +358,30 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
      stat_function(fun = power_function, args = list(n = 3),
                       aes(colour = "3", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 3),
-                      aes(colour = "3", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+                      aes(colour = "3", linetype = "dynamic QTL FPR"), size = 1, alpha = 0.7) +
      stat_function(fun = power_function, args = list(n = 10),
                       aes(colour = "10", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 10),
-                      aes(colour = "10", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+                      aes(colour = "10", linetype = "dynamic QTL FPR"), size = 1, alpha = 0.7) +
      stat_function(fun = power_function, args = list(n = 30),
                       aes(colour = "30", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 30),
-                      aes(colour = "30", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+                      aes(colour = "30", linetype = "dynamic QTL FPR"), size = 1, alpha = 0.7) +
      stat_function(fun = power_function, args = list(n = 58),
                       aes(colour = "58", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 58),
-                      aes(colour = "58", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+                      aes(colour = "58", linetype = "dynamic QTL FPR"), size = 1, alpha = 0.7) +
      stat_function(fun = power_function, args = list(n = 100),
                       aes(colour = "100", linetype = "Power"), size = 1.5) +
      stat_function(fun = FPR_function, args = list(n = 100),
-                      aes(colour = "100", linetype = "csQTL FPR"), size = 1, alpha = 0.9) +
+                      aes(colour = "100", linetype = "dynamic QTL FPR"), size = 1, alpha = 0.7) +
+     
+     # annotate("rect", xmin = 0.25340626, xmax = 0.2652244, ymin = -Inf, ymax = Inf, alpha = .2, fill = "blue") +
+     annotate("segment", x = 0.2593153, xend = 0.2593153, y = -Inf, yend = Inf, alpha = 0.3, color = "blue", size = 1) + 
+     # annotate("rect", xmin = 0.7232331, xmax = 0.8596644, ymin = -Inf, ymax = Inf, alpha = .2, fill = "purple") +
+     annotate("segment", x = 0.793114125, xend = 0.793114125, y = -Inf, yend = Inf, alpha = 0.3, color = "purple", size = 1) + 
+     #annotate("rect", xmin = 0.6035850, xmax = 0.6097121, ymin = -Inf, ymax = Inf, alpha = .2, fill = "brown") +
+     annotate("segment", x = 0.605953025, xend = 0.605953025, y = -Inf, yend = Inf, alpha = 0.3, color = "brown", size = 1) + 
      # stat_function(fun = function(x) x^2/(1+x^2),
      #                  aes(colour = "heritability"), size = 1, alpha = 0.5) +
      scale_x_continuous(name = "Standardized Effect Size",
@@ -383,7 +390,7 @@ p <- ggplot(data.frame(x = c(0, 2)), aes(x = x)) +
                            limits = c(0,1)) +
      ggtitle("eQTL Power Curves") +
      scale_colour_manual("Sample Size", breaks = c("3", "10", "30", "58", "100"), values = colors) +
-     scale_linetype_manual("Curve Type", breaks = c("Power", "csQTL FPR"), values = c("csQTL FPR" = "dotted", "Power" = "solid")) +
+     scale_linetype_manual("Curve Type", breaks = c("Power", "dynamic QTL FPR"), values = c("dynamic QTL FPR" = "dotted", "Power" = "solid")) +
      theme_bw() +
      geom_hline(yintercept = .8, linetype = "dashed", color = "red")
 p
@@ -399,6 +406,33 @@ n58_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(58)
 n30_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(30)
 #n = 10
 n10_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(10)
+```
+
+# For Natalia (for R01 Grant)
+
+```{r power curve for R01}
+p <- ggplot(data.frame(x = c(0, 2.5)), aes(x = x)) +
+     stat_function(fun = power_function, args = list(n = 6),
+                      aes(colour = "6"), size = 1.5) +
+     stat_function(fun = power_function, args = list(n = 10),
+                      aes(colour = "10"), size = 1.5) +
+     stat_function(fun = power_function, args = list(n = 30),
+                      aes(colour = "30"), size = 1.5) +
+     stat_function(fun = power_function, args = list(n = 70),
+                      aes(colour = "70"), size = 1.5) +
+     scale_x_continuous(name = "Standardized Effect Size",
+                              limits=c(0, 2.5)) +
+     scale_y_continuous(name = "Power",
+                           limits = c(0,1)) +
+     ggtitle("eQTL Power Curves") +
+     scale_colour_manual("Sample Size", breaks = c("6", "10", "30", "70"), values = colors) +
+     theme_bw() +
+     geom_hline(yintercept = .8, linetype = "dashed", color = "red")
+p
+
+#figure out where 70 crosses dotted line
+n70_ses_threshold <- (qnorm(.8) - qnorm(alpha/2))/sqrt(100)
+n70_ses_threshold
 ```
 
 
@@ -628,21 +662,25 @@ conditionA <- conditionA %>%
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
      dplyr::mutate(slope = log(ALPHA/BETA))%>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionB <- conditionB %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
      dplyr::mutate(slope = log(ALPHA/BETA))%>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionC <- conditionC %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
      dplyr::mutate(slope = log(ALPHA/BETA))%>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 conditionD <- conditionD %>% 
      dplyr::mutate(temp = paste0(TEST.SNP.CHROM, TEST.SNP.POS, " ", PHENO)) %>% 
      dplyr::filter(temp %in% common) %>% 
      dplyr::mutate(slope = log(ALPHA/BETA))%>% 
+     dplyr::mutate(zscore = sign(ALPHA - BETA) * sqrt(qchisq(p = p_adjusted + 1e-30, df = 1))) %>% 
      dplyr::select(-temp)
 dim(conditionA)
 dim(conditionB)
@@ -736,14 +774,14 @@ salIFN_sorted <- salIFN_sorted %>%
 
 
 # use ashr to estimate true effect sizes from the data in order to compute SES
-n_sorted_ash_out <- ash(betahat = n_sorted$V7, sebetahat = n_sorted$SE, df = 84)
-saveRDS(n_sorted_ash_out, "output/ash_power_analysis/alasoo_naive_ash_out.rds")
-sal_sorted_ash_out <- ash(betahat = sal_sorted$V7, sebetahat = sal_sorted$SE, df = 84)
-saveRDS(sal_sorted_ash_out, "output/ash_power_analysis/alasoo_sal_ash_out.rds")
-IFN_sorted_ash_out <- ash(betahat = IFN_sorted$V7, sebetahat = IFN_sorted$SE, df = 84)
-saveRDS(IFN_sorted_ash_out, "output/ash_power_analysis/alasoo_IFN_ash_out.rds")
-salIFN_sorted_ash_out <- ash(betahat = salIFN_sorted$V7, sebetahat = salIFN_sorted$SE, df = 84)
-saveRDS(salIFN_sorted_ash_out, "output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
+# n_sorted_ash_out <- ash(betahat = n_sorted$V7, sebetahat = n_sorted$SE, df = 84)
+# saveRDS(n_sorted_ash_out, "output/ash_power_analysis/alasoo_naive_ash_out.rds")
+# sal_sorted_ash_out <- ash(betahat = sal_sorted$V7, sebetahat = sal_sorted$SE, df = 84)
+# saveRDS(sal_sorted_ash_out, "output/ash_power_analysis/alasoo_sal_ash_out.rds")
+# IFN_sorted_ash_out <- ash(betahat = IFN_sorted$V7, sebetahat = IFN_sorted$SE, df = 84)
+# saveRDS(IFN_sorted_ash_out, "output/ash_power_analysis/alasoo_IFN_ash_out.rds")
+# salIFN_sorted_ash_out <- ash(betahat = salIFN_sorted$V7, sebetahat = salIFN_sorted$SE, df = 84)
+# saveRDS(salIFN_sorted_ash_out, "output/ash_power_analysis/alasoo_salIFN_ash_out.rds")
 n_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_naive_ash_out.rds")
 sal_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_sal_ash_out.rds")
 IFN_sorted_ash_out <- readRDS("output/ash_power_analysis/alasoo_IFN_ash_out.rds")
@@ -757,6 +795,8 @@ salIFN_sorted$SES <- salIFN_sorted_ash_out$result$PosteriorMean/salIFN_sorted_as
 
 #naive
 get_ecdf(n_sorted$SES)
+get_ecdf(n_sorted_ash_out$result$PosteriorMean)
+
 #sal
 get_ecdf(sal_sorted$SES)
 #IFN
@@ -832,8 +872,11 @@ rhinovirus_data_r$SES <- rhinovirus_r_ashr_out$result$PosteriorMean/rhinovirus_r
 
 #uninfected
 get_ecdf(rhinovirus_data_f$SES)
+get_ecdf(rhinovirus_f_ashr_out$result$PosteriorMean)
+
 #rhinovirus
 get_ecdf(rhinovirus_data_r$SES)
+get_ecdf(rhinovirus_r_ashr_out$result$PosteriorMean)
 
 
 alpha <- 0.05/length(unique(rhinovirus_data_f$gene)) #for FWER of 0.05 (assuming 10893 genes)
@@ -862,4 +905,13 @@ for(condition in list(rhinovirus_data_f, rhinovirus_data_r)){
 }
 n_egenes_caliskan
 ```
+
+#Figure
+
+```{r}
+n_egenes_ward
+n_egenes_alasoo
+n_egenes_caliskan
+```
+
 

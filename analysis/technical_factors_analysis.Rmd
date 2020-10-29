@@ -113,6 +113,20 @@ for (pc in p_comps) {
 } 
 datatable(pc_cov_cor) 
 
+#make PCA plots with symbols as treatment status and colors as individuals for figure
+library(ggfortify)
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment") + 
+     theme_cowplot()
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3, x = 3, y = 4) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3, x = 5, y = 6) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
+
 #BH adjust for multiple testing for the p-values for correlation
 #Distribution of p-values adjusted by FDR
 fdr_val <- p.adjust(PC_pvalues, method = "fdr", n = length(PC_pvalues))
@@ -240,6 +254,19 @@ for (n in 1:5){
   plot_scores(pca_genes, scores, n, n+1, col.v)
 }
 
+#make PCA plots with symbols as treatment status and colors as individuals for figure
+library(ggfortify)
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment") + 
+     theme_cowplot()
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3, x = 3, y = 4) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
+autoplot(pca_genes, data = sampleinfo, colour = "Individual", shape = "treatment", size = 3, x = 5, y = 6) + 
+     theme_cowplot() +
+     theme(legend.position = "none")
 
 # Calculate the relationship between each recorded covariate and the top 5 PCs. 
 p_comps <- 1:5

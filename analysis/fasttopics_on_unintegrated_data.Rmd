@@ -360,7 +360,7 @@ pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_
 # fasttopics with external single cell datasets as well
 
 ```{r load external data}
-Combined.common <- readRDS("data/Combined_singlecell_data_first.rds")
+Combined.common <- readRDS("data//external_scRNA/Combined_singlecell_data_first.rds")
 #Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
 
 #need to fit the model to the count data (unintegrated)
@@ -372,9 +372,19 @@ raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,]
 raw_counts <- t(as.matrix(raw_counts))
 
 #fit model
-# fit <- fit_poisson_nmf(raw_counts,k = 11,numiter = 100)
+# fit <- fit_poisson_nmf(raw_counts,k = 4,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=4.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 5,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=5.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 6,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=6.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 7,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=7.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 8,numiter = 150)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=8.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 11,numiter = 200)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=11.rds")
-fit <- readRDS("output/fasttopics/Combined_external_data_k=11.rds") #100 iterations
+fit <- readRDS("output/fasttopics/Combined_external_data_k=5.rds") #200 iterations
 
 #compute weights and topics (need to add up to 1)
 l <- fit$L
@@ -394,10 +404,10 @@ library(dummies)
 #get labels of cells and reorder to group them
 sample <- as.data.frame(Combined.common@meta.data$Cell.Type)
 sample_labels <- sample %>% 
-     transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
+     dplyr::transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
 rownames(sample_labels) <- rownames(Combined.common@meta.data)
 sample <- sample_labels %>% 
-     arrange(Cell.Type)
+     dplyr::arrange(Cell.Type)
 #reorder weights df to match sample order
 weights_reordered <- weights[match(rownames(sample), rownames(weights)),]
 #make the plot (color strip on the left is by indivdual)
@@ -406,7 +416,7 @@ pheatmap(weights_reordered, cluster_cols = FALSE, cluster_rows = FALSE, annotati
 #same heatmap but group all the cells that are of the same label together (more interpretable??)
 sample_dummy <- as.data.frame(Combined.common@meta.data$Cell.Type)
 sample_dummy <- sample_dummy %>% 
-     transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
+     dplyr::transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
 rownames(sample_dummy) <- rownames(Combined.common@meta.data)
 sample_dummies <- dummy.data.frame(sample_dummy)
 cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
@@ -427,3 +437,72 @@ pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_
 topics_markers <- topics[markers[-c(4,5,7,8,9,13)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
 ```
+
+# Semisupervised fasttopics
+
+Constrain it so that k = 4, and chondrocyte, iPSC, iPSC-MSC, and hepatocytes are the four existing topics/clusters. Then find out where iPSC-Chondrocytes fall in terms of membership in these four clusters.
+
+```{r semisupervised}
+library(fastTopics)
+library(Seurat)
+library(Matrix)
+Combined.common <- readRDS("data//external_scRNA/Combined_singlecell_data_first.rds")
+#Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
+
+#randomly subset 1/4 of the cells to hopefully avoid segfault
+# Get the number of cells from the original Seurat object
+n.cells <- length(rownames(Combined.common@meta.data))
+
+# Define number of cells for the first object (subset 1)
+# 'ceiling' is used to get integer values if n.cells is odd  
+n.cells.subset.1 <- ceiling(n.cells/10)
+
+# Set a seed for reproducible subsampling of cells
+set.seed(seed = 1)
+
+# Sample randomly half (or half + 1 if n.cells is odd) of the cells 
+# for the first object (subset 1)
+cells.subset.1 <- base::sample(x = rownames(Combined.common@meta.data), size = n.cells.subset.1, replace = F)
+
+
+# Create 2 subsetted objects, each formed by the corresponding cells
+# Set 'do.clean = T' if you want to keep only the 'data' and 'raw.data' slots
+object.subset.1 <- subset(x = Combined.common, cells = cells.subset.1)
+
+
+
+#need to fit the model to the count data (unintegrated)
+raw_counts <- object.subset.1@assays$RNA@counts
+raw_counts <- as.matrix(raw_counts)
+#remove genes without any counts in droplets
+raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+#get into correct orientation (barcodes x features)
+raw_counts <- t(as.matrix(raw_counts))
+
+n_topics <- 4
+loadings <- matrix(0.01, ncol = n_topics, nrow = nrow(raw_counts))
+rownames(loadings) <- rownames(raw_counts)
+colnames(loadings) <- c("k1", "k2", "k3", "k4")
+celltypes <- object.subset.1@meta.data$Cell.Type
+#chondrocyte: k1
+loadings[celltypes == "Chondrocyte_", ] <- c(1, 0, 0, 0)
+#iPSC: k2
+loadings[celltypes == "iPSC", ] <- c(0, 1, 0, 0)
+#hepatocyte: k3
+loadings[celltypes == "Hepatocyte", ] <- c(0, 0, 1, 0)
+#iPSC-MSC: k4
+loadings[celltypes == "iPSC-MSC", ] <- c(0, 0, 0, 1)
+update_loadings <- 1 - rowSums(loadings)
+
+initial_fit <- init_poisson_nmf(X = raw_counts,
+                 F = matrix(0.1, ncol = n_topics, nrow = ncol(raw_counts)),
+                 L = loadings)
+
+refit_semisupervised_k4 <- fit_poisson_nmf(X = raw_counts,
+                                           fit0 = initial_fit,
+                                           update.loadings = update_loadings,
+                                           method = "scd",
+                                           numiter = 200)
+saveRDS(refit_semisupervised_k4, "output/fasttopics/Combined_external_data_semisupervised_k=4.rds")
+```
+
