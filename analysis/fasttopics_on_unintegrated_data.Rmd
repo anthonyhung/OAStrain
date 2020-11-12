@@ -360,6 +360,9 @@ pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_
 # fasttopics with external single cell datasets as well
 
 ```{r load external data}
+library(fastTopics)
+library(Seurat)
+library(Matrix)
 Combined.common <- readRDS("data//external_scRNA/Combined_singlecell_data_first.rds")
 #Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
 
@@ -372,19 +375,21 @@ raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,]
 raw_counts <- t(as.matrix(raw_counts))
 
 #fit model
-# fit <- fit_poisson_nmf(raw_counts,k = 4,numiter = 200)
+# fit <- fit_poisson_nmf(raw_counts,k = 4,numiter = 70)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=4.rds")
-# fit <- fit_poisson_nmf(raw_counts,k = 5,numiter = 200)
+# fit <- fit_poisson_nmf(raw_counts,k = 5,numiter = 150)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=5.rds")
 # fit <- fit_poisson_nmf(raw_counts,k = 6,numiter = 200)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=6.rds")
-# fit <- fit_poisson_nmf(raw_counts,k = 7,numiter = 200)
+# fit <- fit_poisson_nmf(raw_counts,k = 7,numiter = 100)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=7.rds")
 # fit <- fit_poisson_nmf(raw_counts,k = 8,numiter = 150)
 # saveRDS(fit, "output/fasttopics/Combined_external_data_k=8.rds")
-# fit <- fit_poisson_nmf(raw_counts,k = 11,numiter = 200)
-# saveRDS(fit, "output/fasttopics/Combined_external_data_k=11.rds")
-fit <- readRDS("output/fasttopics/Combined_external_data_k=5.rds") #200 iterations
+# fit <- fit_poisson_nmf(raw_counts,k = 9,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=9.rds")
+# fit <- fit_poisson_nmf(raw_counts,k = 10,numiter = 200)
+# saveRDS(fit, "output/fasttopics/Combined_external_data_k=10.rds")
+fit <- readRDS("output/fasttopics/Combined_external_data_k=7.rds") #6 to 8 are pretty good
 
 #compute weights and topics (need to add up to 1)
 l <- fit$L
@@ -400,6 +405,7 @@ topics <- f / colSums(f) # add up to 1
 library(stringr)
 library(pheatmap)
 library(dummies)
+library(tidyverse)
 #plot heatmap of topic weights for samples
 #get labels of cells and reorder to group them
 sample <- as.data.frame(Combined.common@meta.data$Cell.Type)
@@ -422,87 +428,537 @@ sample_dummies <- dummy.data.frame(sample_dummy)
 cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
 pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
 
+#same heatmap but group all the cells that are of the same label and strain condition together
+sample_dummy <- as.data.frame(Combined.common@meta.data$Cell.Type)
+sample_dummy$`Combined.common@meta.data$Cell.Type` <- as.character(sample_dummy$`Combined.common@meta.data$Cell.Type`)
+rownames(sample_dummy) <- rownames(Combined.common@meta.data)
+metadata <- as.data.frame(Combined.common@meta.data)
+metadata <- metadata %>% filter(orig.ident == "ANT1" | orig.ident == "ANT2")
+sample_dummy$`Combined.common@meta.data$Cell.Type`[match(rownames(metadata), rownames(sample_dummy))] <- metadata$labels
+sample_dummy$`Combined.common@meta.data$Cell.Type` <- gsub("NA18855_Strain|NA19160_Strain", "iPSC-Chondrocyte_Strain", sample_dummy$`Combined.common@meta.data$Cell.Type`)
+sample_dummy$`Combined.common@meta.data$Cell.Type` <- gsub("NA18855_Unstrain|NA19160_Unstrain|NA18856_Unstrain", "iPSC-Chondrocyte_Control", sample_dummy$`Combined.common@meta.data$Cell.Type`)
+sample_dummy <- sample_dummy %>% 
+     dplyr::transmute(Cell.Type = stringr::word(`Combined.common@meta.data$Cell.Type`, start = 1))
+rownames(sample_dummy) <- rownames(Combined.common@meta.data)
+sample_dummies <- dummy.data.frame(sample_dummy)
+cor_by_sample <- cor(sample_dummies, weights, method = "pearson")
+cor_by_sample
+pheatmap(cor_by_sample, cluster_cols = TRUE, cluster_rows = TRUE, main = "Correlation by sample label")
+
 
 markers <- c("THY1", "NT5E", "ENG", "CD44",
              "COL2A1", "SOX9", "COL10A1", "ACAN",
-             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3"
+             "COL11A1", "SOX5", "SOX6", "TIMP2", "TIMP3",
+             "ALB", "POU5F1"
              )
 
-markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 9)))
+markers_description <- data.frame(marker_type = c(rep("MSC", 4), rep("Chondrocyte", 9), "Hepatocyte", "iPSC"))
 rownames(markers_description) <- markers
 
 #plot heatmap of relative expression of marker genes in each topic
 topics_markers <- topics[markers[-c(5,7,8,9)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
+topics_markers <- topics[markers[-c(5,7,8,9,14)],]
+pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
 topics_markers <- topics[markers[-c(4,5,7,8,9,13)],]
 pheatmap(topics_markers, cluster_cols = FALSE, cluster_rows = FALSE, annotation_row = markers_description)
 ```
+
+Look at structure plot
+
+```{r structure plot external}
+# library(tidyverse)
+# library(dplyr)
+# library(ggplot2)
+# weights_for_structure_plot <- as.data.frame(weights)
+# weights_for_structure_plot$Cell.Type <- sample_labels$Cell.Type
+# weights_for_structure_plot <- weights_for_structure_plot %>% 
+#      tibble::rownames_to_column(var = "Barcode") %>% 
+#      dplyr::mutate(Cell.Type = stringr::word(Cell.Type, start = 1))
+# weights_for_structure_plot <- weights_for_structure_plot %>% 
+#      group_by(Cell.Type) %>% 
+#      sample_n(800) %>% 
+#      ungroup() 
+# #this is messy, but makes the plot look more clean by allowing each facet to be sorted by a different k
+# weights_for_structure_plot <- weights_for_structure_plot %>% 
+#      arrange(desc(k1)) %>% 
+#      mutate(num_1 = rank(k1, ties.method = "first")) %>% 
+#      arrange(k2) %>% 
+#      mutate(num_2 = rank(k2, ties.method = "first")) %>% 
+#      arrange(k3) %>% 
+#      mutate(num_3 = rank(k3, ties.method = "first")) %>% 
+#      arrange(k4) %>% 
+#      mutate(num_4 = rank(k4, ties.method = "first")) %>% 
+#      arrange(k5) %>% 
+#      mutate(num_5 = rank(k5, ties.method = "first")) %>% 
+#      arrange(k6) %>% 
+#      mutate(num_6 = rank(k6, ties.method = "first")) %>% 
+#      arrange(k7) %>% 
+#      mutate(num_7 = rank(k7, ties.method = "first"))
+# weights_for_structure_plot$num_in_facet <- 0
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "Hepatocyte"] <- paste0(weights_for_structure_plot$num_1[weights_for_structure_plot$Cell.Type == "Hepatocyte"], "Hepatocyte") #rank hepatocytes by k1
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "iPSC"] <- paste0(weights_for_structure_plot$num_4[weights_for_structure_plot$Cell.Type == "iPSC"], "iPSC") #rank iPSC by k4
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "iPSC-Chondrocyte" | weights_for_structure_plot$Cell.Type == "iPSC-Chondro_GAH" ] <- paste0(weights_for_structure_plot$num_2[weights_for_structure_plot$Cell.Type == "iPSC-Chondrocyte" | weights_for_structure_plot$Cell.Type == "iPSC-Chondro_GAH"], "iPSC-Chondrocyte") #rank iPSC-chondrocyte by k2
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "iPSC-MSC" | weights_for_structure_plot$Cell.Type == "iPSC-Osteo" ] <- paste0(weights_for_structure_plot$num_7[weights_for_structure_plot$Cell.Type == "iPSC-MSC" | weights_for_structure_plot$Cell.Type == "iPSC-Osteo"], "iPSC-MSC-Osteo") #rank iPSC-MSCs/osteo by k7
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "Chondrocyte_"] <- paste0(weights_for_structure_plot$num_6[weights_for_structure_plot$Cell.Type == "Chondrocyte_"], "Chondrocyte") #rank Chondrocyte_ by k6
+# weights_for_structure_plot$num_in_facet[weights_for_structure_plot$Cell.Type == "Chondro"] <- paste0(weights_for_structure_plot$num_3[weights_for_structure_plot$Cell.Type == "Chondro"], "Chondro") #rank Chondro by k3
+# 
+#      
+# topic_memberships <- pivot_longer(weights_for_structure_plot,
+#                                   cols = contains("k"),
+#                                   values_to = "Proportion of Membership",
+#                                   names_to = "Topic")
+# topic_memberships$Cell.Type_f <- factor(topic_memberships$Cell.Type, levels = c("Hepatocyte", "iPSC", "iPSC-MSC", "iPSC-Osteo", "iPSC-Chondro_GAH", "iPSC-Chondrocyte",  "Chondrocyte_", "Chondro"))
+# topic_colors <- c("gold","royalblue","salmon","turquoise","purple",
+#                   "firebrick","olivedrab",
+#                   "red", "black", "grey", "purple", "green", "pink", "orange", "yellow")
+# 
+# 
+# ggplot(topic_memberships, aes(fill = Topic, y = `Proportion of Membership`, x = num_in_facet)) + 
+#      geom_bar(position = "fill", stat = "identity", width = 1) + 
+#      scale_fill_manual(values = topic_colors) + 
+#      facet_grid(. ~ Cell.Type_f, scales = "free_x", space = "free_x") +
+#      theme(axis.title.x=element_blank(),
+#         axis.text.x=element_blank(),
+#         axis.ticks.x=element_blank())
+
+
+
+
+set.seed(1)
+topic_colors <- c("gold","royalblue","salmon","turquoise","olivedrab",
+                  "firebrick","forestgreen")
+topics <- c(1, 4, 7, 2, 6, 5, 3)
+rows <- sort(c(sample(which(sample_labels$Cell.Type == "Hepatocyte"), 800),
+               sample(which(sample_labels$Cell.Type == "iPSC"), 800),
+               sample(which(sample_labels$Cell.Type == "iPSC-MSC"), 800),
+               sample(which(sample_labels$Cell.Type == "iPSC-Chondrocyte"), 1815),
+               sample(which(sample_labels$Cell.Type == "iPSC-Chondro_GAH"), 800),
+               sample(which(sample_labels$Cell.Type == "iPSC-Osteo"), 800),
+               sample(which(sample_labels$Cell.Type == "Chondrocyte_"), 800),
+               sample(which(sample_labels$Cell.Type == "Chondro"), 800)))
+structure_plot <- structure_plot(select(poisson2multinom(fit),loadings = rows),
+                      grouping = factor(sample_labels[rows,"Cell.Type"], 
+                                        c("Hepatocyte", "iPSC", "iPSC-MSC", "iPSC-Osteo", "iPSC-Chondro_GAH", "iPSC-Chondrocyte", "Chondrocyte_", "Chondro")),
+                      topics = topics,
+                      colors = topic_colors[topics],
+                      perplexity = c(70,70,30,30,50,30,15,13),
+                      n = Inf,gap = 50,num_threads = 4,verbose = FALSE)
+print(structure_plot)
+
+#separate by strain vs nonstrain
+metadata <- Combined.common@meta.data
+metadata <- metadata %>% filter(orig.ident == "ANT1" | orig.ident == "ANT2")
+sample_labels$Cell.Type[match(rownames(metadata), rownames(sample_labels))] <- metadata$labels
+sample_labels$Cell.Type <- gsub("NA18855_Strain|NA19160_Strain", "iPSC-Chondrocyte_Strain", sample_labels$Cell.Type)
+sample_labels$Cell.Type <- gsub("NA18855_Unstrain|NA19160_Unstrain|NA18856_Unstrain", "iPSC-Chondrocyte_Control", sample_labels$Cell.Type)
+
+structure_plot_split <- structure_plot(select(poisson2multinom(fit),loadings = rows),
+                                       grouping = factor(sample_labels[rows,"Cell.Type"], 
+                                                         c("Hepatocyte", "iPSC", "iPSC-MSC", "iPSC-Osteo", "iPSC-Chondro_GAH", "iPSC-Chondrocyte_Control", "iPSC-Chondrocyte_Strain", "Chondrocyte_", "Chondro")),
+                                       topics = topics,
+                                       colors = topic_colors[topics],
+                                       perplexity = 60,
+                                       n = Inf,gap = 50,num_threads = 4,verbose = FALSE)
+print(structure_plot_split)
+```
+
+# Differential Expression analysis
+
+```{r DE}
+diff_count_topics <- diff_count_analysis(fit, raw_counts)
+
+#3,5,6 all seem to be chondro
+fit_chondro <- merge_topics(poisson2multinom(fit), c("k3", "k5", "k6"))
+diff_count_chondro <- diff_count_analysis(fit_chondro, raw_counts)
+```
+
+```{r volcanoplot function}
+library(ggrepel)
+library(cowplot)
+volcano_plot_with_highlighted_genes <- function (diff_count_res, k, 
+                                                 genes, ...) {
+  dat <- data.frame(beta  = diff_count_res$beta[genes,k],
+                    y     = abs(diff_count_res$Z[genes,k]),
+                    label = genes) 
+  rows <- match(genes,rownames(diff_count_res$beta))
+  rownames(diff_count_res$beta)[rows] <- ""
+  rownames(diff_count_res$Z)[rows] <- ""
+  return(volcano_plot(diff_count_res,k = k,
+                      ggplot_call = ggplot_call_for_volcano_plot,...) +
+         geom_text_repel(data = dat,
+                         mapping = aes(x = beta,y = y,label = label),
+                         inherit.aes = FALSE,color = "black",size = 5,
+                         fontface = "italic",segment.color = "black",
+                         segment.size = 0.25,
+                         na.rm = TRUE))
+}
+
+
+# This is used by volcano_plot_with_highlighted_genes to create the
+# volcano plot.
+ggplot_call_for_volcano_plot <- function (dat, y.label, topic.label) {
+  ggplot(dat,aes_string(x = "beta",y = "y",fill = "mean",label = "label")) +
+    geom_point(color = "white",stroke = 0.3,shape = 21,na.rm = TRUE) +
+    scale_y_continuous(trans = "sqrt",
+      breaks = c(0,1,2,5,10,20,50,100,200,500,1e3,2e3,5e3,1e4,2e4,5e4)) +
+    scale_fill_gradient2(low = "deepskyblue",mid = "gold",high = "orangered",
+                         midpoint = mean(range(dat$mean))) +
+    geom_text_repel(color = "gray",size = 5,fontface = "italic",
+                    segment.color = "gray",segment.size = 0.25,na.rm = TRUE) +
+    labs(x = "log-fold change (\u03b2)",y = y.label,fill = "log10 mean") +
+    theme_cowplot(font_size = 18) +
+    theme(plot.title = element_text(size = 18,face = "plain"))}
+```
+
+```{r DE plots}
+MSC_markers <- c("THY1", "NT5E", "ENG", "CD44")
+Chondrocyte_markers <- c("SOX9", "SOX5", "SOX6", "TIMP2", "TIMP3")
+Hepatocyte_markers <- c("AFP", "ALB")
+iPSC_markers <- c("POU5F1", "SOX2", "NANOG")
+
+#plots
+p1 <- volcano_plot_with_highlighted_genes(diff_count_topics,
+                                          "k1",
+                                          genes = Hepatocyte_markers,
+                                          label_above_quantile = 0.999) +
+     ylim(c(0,225)) +
+     guides(fill = "none") +
+     ggtitle("topic 1 (Hepatocytes)")
+p2 <- volcano_plot_with_highlighted_genes(diff_count_topics,
+                                          "k2",
+                                          Chondrocyte_markers,
+                                          label_above_quantile = 0.999) +
+     ylim(c(0,225)) +
+     guides(fill = "none") +
+     ggtitle("topic 2 (iPSC-Chondrocytes)")
+p3 <- volcano_plot_with_highlighted_genes(diff_count_chondro,
+                                          "k3+k5+k6",
+                                          Chondrocyte_markers,
+                                          label_above_quantile = 0.999) +
+     ylim(c(0,225)) +
+     guides(fill = "none") +
+     ggtitle("topic 3,5,6 (Chondrocyte)")
+p4 <- volcano_plot_with_highlighted_genes(diff_count_topics,
+                                          "k4",
+                                          iPSC_markers,
+                                          label_above_quantile = 0.999) +
+     ylim(c(0,225)) +
+     guides(fill = "none") +
+     ggtitle("topic 4 (iPSC)")
+p7 <- volcano_plot_with_highlighted_genes(diff_count_topics,
+                                          "k7",
+                                          MSC_markers,
+                                          label_above_quantile = 0.999) +
+     ylim(c(0,225)) +
+     guides(fill = "none") +
+     ggtitle("topic 7 (MSC)")
+plot_grid(p1,p4,p7,p2,p3,nrow = 2,ncol = 3)
+
+```
+
+
 
 # Semisupervised fasttopics
 
 Constrain it so that k = 4, and chondrocyte, iPSC, iPSC-MSC, and hepatocytes are the four existing topics/clusters. Then find out where iPSC-Chondrocytes fall in terms of membership in these four clusters.
 
 ```{r semisupervised}
-library(fastTopics)
+# library(fastTopics)
+# library(Seurat)
+# library(Matrix)
+# Combined.common <- readRDS("data//external_scRNA/Combined_singlecell_data_first.rds")
+# #Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
+# 
+# #randomly subset 1/4 of the cells to hopefully avoid segfault
+# # Get the number of cells from the original Seurat object
+# n.cells <- length(rownames(Combined.common@meta.data))
+# 
+# # Define number of cells for the first object (subset 1)
+# # 'ceiling' is used to get integer values if n.cells is odd  
+# n.cells.subset.1 <- ceiling(n.cells/10)
+# 
+# # Set a seed for reproducible subsampling of cells
+# set.seed(seed = 1)
+# 
+# # Sample randomly half (or half + 1 if n.cells is odd) of the cells 
+# # for the first object (subset 1)
+# cells.subset.1 <- base::sample(x = rownames(Combined.common@meta.data), size = n.cells.subset.1, replace = F)
+# 
+# 
+# # Create 2 subsetted objects, each formed by the corresponding cells
+# # Set 'do.clean = T' if you want to keep only the 'data' and 'raw.data' slots
+# object.subset.1 <- subset(x = Combined.common, cells = cells.subset.1)
+# object.subset.1 <- Combined.common
+# 
+# 
+# #need to fit the model to the count data (unintegrated)
+# raw_counts <- object.subset.1@assays$RNA@counts
+# raw_counts <- as.matrix(raw_counts)
+# #remove genes without any counts in droplets
+# raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
+# #get into correct orientation (barcodes x features)
+# raw_counts <- t(as.matrix(raw_counts))
+# 
+# n_topics <- 4
+# loadings <- matrix(0, ncol = n_topics, nrow = nrow(raw_counts))
+# rownames(loadings) <- rownames(raw_counts)
+# colnames(loadings) <- c("k1", "k2", "k3", "k4")
+# celltypes <- object.subset.1@meta.data$Cell.Type
+# #chondrocyte: k1
+# loadings[celltypes == "Chondrocyte_", ] <- c(1, 0, 0, 0)
+# #iPSC: k2
+# loadings[celltypes == "iPSC", ] <- c(0, 1, 0, 0)
+# #hepatocyte: k3
+# loadings[celltypes == "Hepatocyte", ] <- c(0, 0, 1, 0)
+# #iPSC-MSC: k4
+# loadings[celltypes == "iPSC-MSC", ] <- c(0, 0, 0, 1)
+# update_loadings <- 1 - rowSums(loadings)
+# 
+# initial_fit <- init_poisson_nmf(X = raw_counts,
+#                  F = matrix(0.1, ncol = n_topics, nrow = ncol(raw_counts)),
+#                  L = loadings)
+# 
+# refit_semisupervised_k4 <- fit_poisson_nmf(X = raw_counts,
+#                                            fit0 = initial_fit,
+#                                            update.loadings = update_loadings,
+#                                            method = "scd",
+#                                            numiter = 200)
+# saveRDS(refit_semisupervised_k4, "output/fasttopics/Combined_external_data_semisupervised_k=4.rds")
+```
+
+```{r classtpx semisupervised}
 library(Seurat)
 library(Matrix)
+library(classtpx)
+library(stringr)
 Combined.common <- readRDS("data//external_scRNA/Combined_singlecell_data_first.rds")
-#Combine.common.noliver <- readRDS("data/Combined_singlecell_data_allGenes_noliver.rds")
-
-#randomly subset 1/4 of the cells to hopefully avoid segfault
-# Get the number of cells from the original Seurat object
-n.cells <- length(rownames(Combined.common@meta.data))
-
-# Define number of cells for the first object (subset 1)
-# 'ceiling' is used to get integer values if n.cells is odd  
-n.cells.subset.1 <- ceiling(n.cells/10)
-
-# Set a seed for reproducible subsampling of cells
-set.seed(seed = 1)
-
-# Sample randomly half (or half + 1 if n.cells is odd) of the cells 
-# for the first object (subset 1)
-cells.subset.1 <- base::sample(x = rownames(Combined.common@meta.data), size = n.cells.subset.1, replace = F)
-
-
-# Create 2 subsetted objects, each formed by the corresponding cells
-# Set 'do.clean = T' if you want to keep only the 'data' and 'raw.data' slots
-object.subset.1 <- subset(x = Combined.common, cells = cells.subset.1)
-
-
-
 #need to fit the model to the count data (unintegrated)
-raw_counts <- object.subset.1@assays$RNA@counts
+raw_counts <- Combined.common@assays$RNA@counts
 raw_counts <- as.matrix(raw_counts)
 #remove genes without any counts in droplets
 raw_counts <- raw_counts[rowSums(raw_counts > 0) > 0,] 
 #get into correct orientation (barcodes x features)
 raw_counts <- t(as.matrix(raw_counts))
 
-n_topics <- 4
-loadings <- matrix(0.01, ncol = n_topics, nrow = nrow(raw_counts))
-rownames(loadings) <- rownames(raw_counts)
-colnames(loadings) <- c("k1", "k2", "k3", "k4")
-celltypes <- object.subset.1@meta.data$Cell.Type
-#chondrocyte: k1
-loadings[celltypes == "Chondrocyte_", ] <- c(1, 0, 0, 0)
-#iPSC: k2
-loadings[celltypes == "iPSC", ] <- c(0, 1, 0, 0)
-#hepatocyte: k3
-loadings[celltypes == "Hepatocyte", ] <- c(0, 0, 1, 0)
-#iPSC-MSC: k4
-loadings[celltypes == "iPSC-MSC", ] <- c(0, 0, 0, 1)
-update_loadings <- 1 - rowSums(loadings)
+#Semi-supervised topic modeling (define some known clusters prior to fitting topic model)
+labels <- Combined.common@meta.data$Cell.Type
+#labels for "known" clusters
+idx.ips <- which(labels=="iPSC")
+idx.msc <- which(labels=="iPSC-MSC")
+idx.chondro <- which(labels=="Chondrocyte_")
+idx.hepato <- which(labels=="Hepatocyte")
+kwn.smp <- c(idx.ips,idx.msc,idx.chondro,idx.hepato)
 
-initial_fit <- init_poisson_nmf(X = raw_counts,
-                 F = matrix(0.1, ncol = n_topics, nrow = ncol(raw_counts)),
-                 L = loadings)
+class.labs <- c(rep("iPSC", length(idx.ips)),
+                rep("MSC", length(idx.msc)),
+                rep("Chondrocyte", length(idx.chondro)),
+                rep("Hepatocyte", length(idx.hepato))
+                )
 
-refit_semisupervised_k4 <- fit_poisson_nmf(X = raw_counts,
-                                           fit0 = initial_fit,
-                                           update.loadings = update_loadings,
-                                           method = "scd",
-                                           numiter = 200)
-saveRDS(refit_semisupervised_k4, "output/fasttopics/Combined_external_data_semisupervised_k=4.rds")
+#Save GoM data
+# for(k in c(4:6)) {
+#   print(k)
+#   tpx.clust <- classtpx::class_topics(
+#     raw_counts,
+#     K=k,
+#     known_samples=kwn.smp,
+#     class_labs=class.labs,
+#     method="omega.fix",
+#     tol=0.1)
+#   save(tpx.clust, file=paste0("output/classtpx/gom.sup.",k,".rds"))
+#   print(paste0("Finished k = ",k))
+# }
+
+
+
+
+#remove MSC as a defined group
+kwn.smp <- c(idx.ips,idx.chondro,idx.hepato)
+
+class.labs <- c(rep("iPSC", length(idx.ips)),
+                rep("Chondrocyte", length(idx.chondro)),
+                rep("Hepatocyte", length(idx.hepato))
+                )
+
+#Save GoM data
+# for(k in c(3)) {
+#   print(k)
+#   tpx.clust <- classtpx::class_topics(
+#     raw_counts,
+#     K=k,
+#     known_samples=kwn.smp,
+#     class_labs=class.labs,
+#     method="omega.fix",
+#     tol=0.1)
+#   save(tpx.clust, file=paste0("output/classtpx/gom.sup.noMSC.",k,".rds"))
+#   print(paste0("Finished k = ",k))
+# }
+
+
+
+
 ```
+
+<!-- #look at results from all cells -->
+
+<!-- ```{r analyses on all cells} -->
+<!-- #Read GoM file -->
+<!-- tpx.clust <- get(load(file="output/classtpx/gom.sup.4.rds")) -->
+
+<!-- make_topic_plots <- function(omega, labels) { -->
+<!--   omega <- as.data.frame(omega) -->
+<!--   omega <- cbind(omega,labels) -->
+<!--   col <- c("pink","mediumorchid","dodgerblue") -->
+<!--   for (k in 1:(ncol(omega)-1)) { -->
+<!--     p <- ggplot(data=omega, mapping=aes(x=labels, y=omega[,k])) + -->
+<!--             labs(y=paste0("Topic ",k," Value"), x=paste0("Cell Type")) + -->
+<!--             theme(axis.text.x=element_text(angle=-90, hjust=0, vjust=0)) -->
+<!--     plot(p + geom_boxplot(width=0.5, outlier.shape=NA, outlier.colour=NA, fill=col[k])) -->
+<!--   } -->
+<!-- } -->
+<!-- annotate_clusters <- function(theta_mat, top_features, countmatrix){ -->
+<!--   top_features <- ExtractTopFeatures(theta_mat, top_features=top_features, method="poisson", options="min", shared=FALSE) -->
+<!--   gene_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) rownames(countmatrix)[top_features[[1]][x,]])) -->
+<!--   scores_vector <- do.call(rbind, lapply(1:dim(top_features[[1]])[1], function(x) top_features[[2]][x,])) -->
+<!--   return(list(gene_vector, scores_vector)) -->
+<!-- } -->
+
+<!-- omega <- tpx.clust$omega -->
+
+<!-- annotation <- data.frame(sample_id=paste0("X", c(1:NROW(omega))), tissue_label=as.factor(labels)) -->
+<!-- rownames(omega) <- annotation$sample_id -->
+
+<!-- CountClust::StructureGGplot(omega=omega, -->
+<!--                 annotation=annotation, -->
+<!--                 palette=c("pink","mediumorchid","blue", "yellow", "red", "brown"), -->
+<!--                 yaxis_label="Tissue/Cell Type", -->
+<!--                 order_sample=TRUE, -->
+<!--                 axis_tick=list(axis_ticks_length=0.1, -->
+<!--                                axis_ticks_lwd_y=0.1, -->
+<!--                                axis_ticks_lwd_x=0.1, -->
+<!--                                axis_label_size=7, -->
+<!--                                axis_label_face="bold")) -->
+
+<!-- #remove OA Chondrocytes -->
+<!-- CountClust::StructureGGplot(omega=omega[-which(grepl("Chondro ", labels)),], -->
+<!--                 annotation=annotation[-which(grepl("Chondro ", labels)),], -->
+<!--                 palette=c("pink","mediumorchid","blue", "yellow", "red", "brown"), -->
+<!--                 yaxis_label="Tissue/Cell Type", -->
+<!--                 order_sample=TRUE, -->
+<!--                 axis_tick=list(axis_ticks_length=0.1, -->
+<!--                                axis_ticks_lwd_y=0.1, -->
+<!--                                axis_ticks_lwd_x=0.1, -->
+<!--                                axis_label_size=7, -->
+<!--                                axis_label_face="bold")) -->
+
+<!-- make_topic_plots(omega=omega[-which(grepl("Chondro ", labels)),], labels=labels[-which(grepl("Chondro ", labels))]) -->
+
+<!-- genes <- annotate_clusters(theta_mat=tpx.clust$theta, top_features=10, countmatrix=raw_counts) -->
+
+<!-- genes[[1]] -->
+
+
+
+<!-- #assign cell type labels based on grade of membership cutoffs -->
+<!-- gom.assign <- as.data.frame(omega) -->
+<!-- gom.assign[,1] <- ifelse(gom.assign[,1] > 0.75, 1, 0) -->
+<!-- gom.assign[,2] <- ifelse(gom.assign[,2] > 0.75, 1, 0) -->
+<!-- gom.assign[,3] <- ifelse(gom.assign[,3] > 0.75, 1, 0) -->
+<!-- gom.assign[,4] <- ifelse(gom.assign[,4] > 0.75, 1, 0) -->
+<!-- upset(gom.assign, nintersects=NA, empty.intersections="on") -->
+
+<!-- gom.assign$assign <- "other" -->
+<!-- i=1 -->
+<!-- while(i <= length(rownames(gom.assign))) { -->
+<!--   if(gom.assign[i,1] == 1) {gom.assign$assign[i] <- "iPSC-MSC"} -->
+<!--   if(gom.assign[i,2] == 1) {gom.assign$assign[i] <- "iPSC"} -->
+<!--   if(gom.assign[i,3] == 1) {gom.assign$assign[i] <- "Chondrocyte"} -->
+<!--   if(gom.assign[i,4] == 1) {gom.assign$assign[i] <- "Hepatocyte"} -->
+<!--   i=i+1 -->
+<!-- } -->
+
+<!-- Combined.common@meta.data$GoM.Assign <- gom.assign$assign -->
+<!-- Combined.common <- NormalizeData(Combined.common, normalization.method = "LogNormalize", scale.factor = 10000) -->
+<!-- Combined.common <- FindVariableFeatures(Combined.common, selection.method = "vst", nfeatures = 2000) -->
+<!-- all.genes <- rownames(Combined.common) -->
+<!-- Combined.common <- ScaleData(Combined.common, features = all.genes) -->
+<!-- Combined.common <- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common)) -->
+<!-- ElbowPlot(Combined.common, ndims = 100) -->
+<!-- Combined.common <- RunUMAP(Combined.common, dims = 1:30) -->
+<!-- DimPlot(Combined.common, group.by = c("GoM.Assign"), reduction = "umap") -->
+<!-- DimPlot(Combined.common, group.by = c("Cell.Type"), reduction = "umap") -->
+<!-- ``` -->
+
+<!-- #look at results without iPSC-MSCs -->
+
+<!-- ```{r no iPSC-MSCs} -->
+<!-- #Read GoM file -->
+<!-- tpx.clust <- get(load(file="output/classtpx/gom.sup.noMSC.3.rds")) -->
+
+<!-- omega <- tpx.clust$omega -->
+
+<!-- annotation <- data.frame(sample_id=paste0("X", c(1:NROW(omega))), tissue_label=as.factor(labels)) -->
+<!-- rownames(omega) <- annotation$sample_id -->
+
+<!-- CountClust::StructureGGplot(omega=omega, -->
+<!--                 annotation=annotation, -->
+<!--                 palette=c("pink","mediumorchid","blue", "yellow", "red", "brown"), -->
+<!--                 yaxis_label="Tissue/Cell Type", -->
+<!--                 order_sample=TRUE, -->
+<!--                 axis_tick=list(axis_ticks_length=0.1, -->
+<!--                                axis_ticks_lwd_y=0.1, -->
+<!--                                axis_ticks_lwd_x=0.1, -->
+<!--                                axis_label_size=12, -->
+<!--                                axis_label_face="bold")) -->
+
+<!-- #remove OA Chondrocytes -->
+<!-- CountClust::StructureGGplot(omega=omega[-which(grepl("Chondro ", labels)),], -->
+<!--                 annotation=annotation[-which(grepl("Chondro ", labels)),], -->
+<!--                 palette=c("pink","mediumorchid","blue", "yellow", "red", "brown"), -->
+<!--                 yaxis_label="Tissue/Cell Type", -->
+<!--                 order_sample=TRUE, -->
+<!--                 axis_tick=list(axis_ticks_length=0.1, -->
+<!--                                axis_ticks_lwd_y=0.1, -->
+<!--                                axis_ticks_lwd_x=0.1, -->
+<!--                                axis_label_size=12, -->
+<!--                                axis_label_face="bold")) -->
+
+<!-- make_topic_plots(omega=omega[-which(grepl("Chondro ", labels)),], labels=labels[-which(grepl("Chondro ", labels))]) -->
+
+<!-- genes <- annotate_clusters(theta_mat=tpx.clust$theta, top_features=10, countmatrix=raw_counts) -->
+
+<!-- genes[[1]] -->
+
+
+
+<!-- #assign cell type labels based on grade of membership cutoffs -->
+<!-- gom.assign <- as.data.frame(omega) -->
+<!-- gom.assign[,1] <- ifelse(gom.assign[,1] > 0.75, 1, 0) -->
+<!-- gom.assign[,2] <- ifelse(gom.assign[,2] > 0.75, 1, 0) -->
+<!-- gom.assign[,3] <- ifelse(gom.assign[,3] > 0.75, 1, 0) -->
+<!-- gom.assign[,4] <- ifelse(gom.assign[,4] > 0.75, 1, 0) -->
+<!-- upset(gom.assign, nintersects=NA, empty.intersections="on") -->
+
+<!-- gom.assign$assign <- "other" -->
+<!-- i=1 -->
+<!-- while(i <= length(rownames(gom.assign))) { -->
+<!--   if(gom.assign[i,1] == 1) {gom.assign$assign[i] <- "iPSC-MSC"} -->
+<!--   if(gom.assign[i,2] == 1) {gom.assign$assign[i] <- "iPSC"} -->
+<!--   if(gom.assign[i,3] == 1) {gom.assign$assign[i] <- "Chondrocyte"} -->
+<!--   if(gom.assign[i,4] == 1) {gom.assign$assign[i] <- "Hepatocyte"} -->
+<!--   i=i+1 -->
+<!-- } -->
+
+<!-- Combined.common@meta.data$GoM.Assign_noMSCs <- gom.assign$assign -->
+<!-- Combined.common <- NormalizeData(Combined.common, normalization.method = "LogNormalize", scale.factor = 10000) -->
+<!-- Combined.common <- FindVariableFeatures(Combined.common, selection.method = "vst", nfeatures = 2000) -->
+<!-- all.genes <- rownames(Combined.common) -->
+<!-- Combined.common <- ScaleData(Combined.common, features = all.genes) -->
+<!-- Combined.common <- RunPCA(Combined.common, features = VariableFeatures(object = Combined.common)) -->
+<!-- ElbowPlot(Combined.common, ndims = 100) -->
+<!-- Combined.common <- RunUMAP(Combined.common, dims = 1:30) -->
+<!-- DimPlot(Combined.common, group.by = c("GoM.Assign_noMSCs"), reduction = "umap") -->
+<!-- DimPlot(Combined.common, group.by = c("Cell.Type"), reduction = "umap") -->
+<!-- ``` -->
 

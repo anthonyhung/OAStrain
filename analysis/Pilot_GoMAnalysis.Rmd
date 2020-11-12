@@ -85,13 +85,20 @@ Chond_seurat <- CreateSeuratObject(counts = chond_counts, project = "Chondrocyte
 ghousman_data_dir <- ("/project2/gilad/ghousman/skeletal-human-chimp/human-chimp-skeletal-scRNA/data/cellranger-data-full/")
 gh_ipsc_1.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-1.rds"))
 gh_ipsc_1.1 <- Seurat::AddMetaData(gh_ipsc_1.1, "iPSC", col.name = "Cell.Type")
+gh_ipsc_1.1[["percent.mt"]] <- PercentageFeatureSet(gh_ipsc_1.1, pattern = "^MT-")
 gh_msc_1.1 <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-2.rds"))
 gh_msc_1.1 <- Seurat::AddMetaData(gh_msc_1.1, "iPSC-MSC", col.name = "Cell.Type")
-gh_chondro <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-4.rds")) #need to verify the sample name for the chondro/if these were processed yet
-gh_chondro <- Seurat::AddMetaData(gh_chondro, "iPSC-Chond-GAH", col.name = "Cell.Type")
-gh_big <- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_chondro), 
-                add.cell.ids = c("ipsc1.1", "msc1.1", "chondro_gh"), project = "ghousman")
+gh_msc_1.1[["percent.mt"]] <- PercentageFeatureSet(gh_msc_1.1, pattern = "^MT-")
+gh_chondro <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-3.rds")) 
+gh_chondro <- Seurat::AddMetaData(gh_chondro, "iPSC-Chondro_GAH", col.name = "Cell.Type")
+gh_chondro[["percent.mt"]] <- PercentageFeatureSet(gh_chondro, pattern = "^MT-")
+gh_osteo <- readRDS(paste0(ghousman_data_dir, "h.c.dat.spp.GHO-4.rds")) 
+gh_osteo <- Seurat::AddMetaData(gh_osteo, "iPSC-Osteo", col.name = "Cell.Type")
+gh_osteo[["percent.mt"]] <- PercentageFeatureSet(gh_osteo, pattern = "^MT-")
+gh_big <- merge(gh_ipsc_1.1, y = c(gh_msc_1.1, gh_chondro, gh_osteo), 
+                add.cell.ids = c("ipsc1.1", "msc1.1", "chondrogh", "osteo"), project = "ghousman")
 gh_big_humans <- subset(gh_big, Species == "Human")
+gh_big_humans <- subset(gh_big_humans, subset = percent.mt < 25)
 gh_big_humans <- Seurat::AddMetaData(gh_big_humans, "Ghousman", col.name = "orig.ident")
 dim(gh_big_humans)
 
