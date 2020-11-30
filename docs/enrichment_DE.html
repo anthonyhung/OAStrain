@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec2ccaf4d1c46d07c64bf037235cef6718583f2aatargetblankc2ccaf4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/c2ccaf4d1c46d07c64bf037235cef6718583f2aa" target="_blank">c2ccaf4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree824d084c4f556deb6825f402e7dc008a2d8c0b7etargetblank824d084a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/824d084c4f556deb6825f402e7dc008a2d8c0b7e" target="_blank">824d084</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec2ccaf4d1c46d07c64bf037235cef6718583f2aatargetblankc2ccaf4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree824d084c4f556deb6825f402e7dc008a2d8c0b7etargetblank824d084a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/c2ccaf4d1c46d07c64bf037235cef6718583f2aa" target="_blank">c2ccaf4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/824d084c4f556deb6825f402e7dc008a2d8c0b7e" target="_blank">824d084</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -548,7 +548,6 @@ Ignored files:
     Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
     Ignored:    data/DE_results.rds
     Ignored:    data/GoMresults.rds
@@ -616,7 +615,6 @@ Unstaged changes:
     Modified:   analysis/Norm_filter.Rmd
     Modified:   data/DEgenes_FDR05.rda
     Modified:   fig-limma-treatment-hit-1.eps
-    Modified:   output/GWAS_descriptions.csv
 
 </code></pre>
 <p>
@@ -655,6 +653,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/enrichment_DE.html" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+<td>
+rerun with all samples included
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -998,34 +1013,34 @@ cross_omic &lt;- c(s2, s2.1, s2.2)</code></pre>
 
 enrich(fungenomic, DE_genes_ensg, other_genes_ensg)</code></pre>
 <pre><code>     [,1] [,2]
-[1,]   49  289
-[2,] 1058 8747</code></pre>
+[1,]   56  301
+[2,] 1183 9625</code></pre>
 <pre><code>
     Fisher&#39;s Exact Test for Count Data
 
 data:  contingency_table
-p-value = 0.02278
+p-value = 0.004556
 alternative hypothesis: true odds ratio is greater than 1
 95 percent confidence interval:
- 1.061807      Inf
+ 1.166495      Inf
 sample estimates:
 odds ratio 
-  1.401696 </code></pre>
+   1.51362 </code></pre>
 <pre class="r"><code>enrich(cross_omic, DE_genes_ensg, other_genes_ensg)</code></pre>
 <pre><code>     [,1] [,2]
-[1,]   44  291
-[2,] 1063 8745</code></pre>
+[1,]   49  302
+[2,] 1190 9624</code></pre>
 <pre><code>
     Fisher&#39;s Exact Test for Count Data
 
 data:  contingency_table
-p-value = 0.11
+p-value = 0.05292
 alternative hypothesis: true odds ratio is greater than 1
 95 percent confidence interval:
- 0.9294225       Inf
+ 0.9953578       Inf
 sample estimates:
 odds ratio 
-  1.243872 </code></pre>
+  1.312156 </code></pre>
 <pre class="r"><code>#enrich(genes_GWAS_share_eQTL, DE_genes, other_genes)
 #enrich(OA_GWAS_genes, DE_genes, other_genes)</code></pre>
 </div>

@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec2ccaf4d1c46d07c64bf037235cef6718583f2aatargetblankc2ccaf4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/c2ccaf4d1c46d07c64bf037235cef6718583f2aa" target="_blank">c2ccaf4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree824d084c4f556deb6825f402e7dc008a2d8c0b7etargetblank824d084a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/824d084c4f556deb6825f402e7dc008a2d8c0b7e" target="_blank">824d084</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreec2ccaf4d1c46d07c64bf037235cef6718583f2aatargetblankc2ccaf4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree824d084c4f556deb6825f402e7dc008a2d8c0b7etargetblank824d084a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/c2ccaf4d1c46d07c64bf037235cef6718583f2aa" target="_blank">c2ccaf4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/824d084c4f556deb6825f402e7dc008a2d8c0b7e" target="_blank">824d084</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -651,6 +651,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/analysis/Norm_filter.Rmd" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+<td>
+rerun with all samples included
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/Norm_filter.html" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+<td>
+rerun with all samples included
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2424,14 +2458,14 @@ Anthony Hung
 <div id="filtering-for-lowly-expressed-genes-avg-log2cpm-2.5-in-at-least-4-samples" class="section level2">
 <h2>Filtering for lowly expressed genes (avg log2CPM &gt; 2.5 in at least 4 samples)</h2>
 <pre class="r"><code># cutoff &lt;- 2.5
-cutoff &lt;- 2.75
+cutoff &lt;- 2
 
 keep &lt;- rowSums(cpm &gt; cutoff ) &gt;= 4
 
 counts_cpm &lt;- raw_counts[keep,]
 filtered_cpm &lt;- cpm[keep,]
 dim(filtered_cpm)</code></pre>
-<pre><code>[1] 10152    18</code></pre>
+<pre><code>[1] 11165    18</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -2462,6 +2496,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/boxplot filt cpm-1.png" target="_blank">c2ccaf4</a>
@@ -2620,6 +2665,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-1.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -2683,6 +2739,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered CPM-2.png" target="_blank">c2ccaf4</a>
@@ -3386,7 +3453,7 @@ Anthony Hung
 <div id="filtering-for-lowly-expressed-genes-avg-log2tmm-2.5-in-at-least-4-samples" class="section level2">
 <h2>Filtering for lowly expressed genes (avg log2TMM &gt; 2.5 in at least 4 samples)</h2>
 <pre class="r"><code>#cutoff &lt;- 2.5
-cutoff &lt;- 2.75
+cutoff &lt;- 2
 
 
 keep &lt;- rowSums( TMM &gt; cutoff ) &gt;=4
@@ -3394,7 +3461,7 @@ keep &lt;- rowSums( TMM &gt; cutoff ) &gt;=4
 counts_TMM &lt;- raw_counts[keep,]
 filtered_TMM &lt;- TMM[keep,]
 dim(filtered_TMM)</code></pre>
-<pre><code>[1] 10147    18</code></pre>
+<pre><code>[1] 11169    18</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-1" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -3425,6 +3492,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/boxplot filt TMM-1.png" target="_blank">c2ccaf4</a>
@@ -3528,6 +3606,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-1.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -3591,6 +3680,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered TMM-2.png" target="_blank">c2ccaf4</a>
@@ -4294,7 +4394,7 @@ Anthony Hung
 <div id="filtering-for-lowly-expressed-genes-avg-log2rle-2.5-in-at-least-4-samples" class="section level2">
 <h2>Filtering for lowly expressed genes (avg log2RLE &gt; 2.5 in at least 4 samples)</h2>
 <pre class="r"><code># cutoff &lt;- 2.5
-cutoff &lt;- 2.75
+cutoff &lt;- 2
 
 
 keep &lt;- rowSums( RLE &gt; cutoff ) &gt;=4
@@ -4302,7 +4402,7 @@ keep &lt;- rowSums( RLE &gt; cutoff ) &gt;=4
 counts_RLE &lt;- raw_counts[keep,]
 filtered_RLE &lt;- RLE[keep,]
 dim(filtered_RLE)</code></pre>
-<pre><code>[1] 10154    18</code></pre>
+<pre><code>[1] 11174    18</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-2" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -4333,6 +4433,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/boxplot filt RLE-1.png" target="_blank">c2ccaf4</a>
@@ -4436,6 +4547,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-1.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -4499,6 +4621,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered RLE-2.png" target="_blank">c2ccaf4</a>
@@ -5070,14 +5203,14 @@ Anthony Hung
 <div id="filtering-for-lowly-expressed-genes-avg-log2upperquartile-2.5-in-at-least-4-samples" class="section level2">
 <h2>Filtering for lowly expressed genes (avg log2upperquartile &gt; 2.5 in at least 4 samples)</h2>
 <pre class="r"><code># cutoff &lt;- 2.5
-cutoff &lt;- 2.75
+cutoff &lt;- 2
 
 keep &lt;- rowSums( upperquartile &gt; cutoff ) &gt;=4
 
 counts_upperquartile &lt;- raw_counts[keep,]
 filtered_upperquartile &lt;- upperquartile[keep,]
 dim(filtered_upperquartile)</code></pre>
-<pre><code>[1] 10143    18</code></pre>
+<pre><code>[1] 11165    18</code></pre>
 </div>
 <div id="boxplots-of-normalizedfiltered-counts-across-samples-3" class="section level2">
 <h2>Boxplots of normalized+filtered counts across samples</h2>
@@ -5108,6 +5241,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-1.png" target="_blank">c2ccaf4</a>
@@ -5182,6 +5326,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/boxplot filt upperquartile-2.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -5250,6 +5405,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-1.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -5313,6 +5479,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered upperquartile-2.png" target="_blank">c2ccaf4</a>
@@ -5391,6 +5568,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-1.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-1.png" target="_blank">c2ccaf4</a>
 </td>
 <td>
@@ -5454,6 +5642,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/824d084c4f556deb6825f402e7dc008a2d8c0b7e/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-2.png" target="_blank">824d084</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-11-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/c2ccaf4d1c46d07c64bf037235cef6718583f2aa/docs/figure/Norm_filter.Rmd/corr heatmap filtered raw-2.png" target="_blank">c2ccaf4</a>

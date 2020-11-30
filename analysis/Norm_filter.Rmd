@@ -110,7 +110,7 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 
 ```{r filter CPM}
 # cutoff <- 2.5
-cutoff <- 2.75
+cutoff <- 2
 
 keep <- rowSums(cpm > cutoff ) >= 4
 
@@ -203,7 +203,7 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 
 ```{r filter TMM}
 #cutoff <- 2.5
-cutoff <- 2.75
+cutoff <- 2
 
 
 keep <- rowSums( TMM > cutoff ) >=4
@@ -300,7 +300,7 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 
 ```{r filter RLE}
 # cutoff <- 2.5
-cutoff <- 2.75
+cutoff <- 2
 
 
 keep <- rowSums( RLE > cutoff ) >=4
@@ -400,7 +400,7 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 
 ```{r filter upperquartile}
 # cutoff <- 2.5
-cutoff <- 2.75
+cutoff <- 2
 
 keep <- rowSums( upperquartile > cutoff ) >=4
 
