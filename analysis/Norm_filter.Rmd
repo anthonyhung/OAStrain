@@ -109,9 +109,10 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Filtering for lowly expressed genes (avg log2CPM > 2.5 in at least 4 samples)
 
 ```{r filter CPM}
-cutoff <- 2.5
+# cutoff <- 2.5
+cutoff <- 2.75
 
-keep <- rowSums(cpm > cutoff ) >=4
+keep <- rowSums(cpm > cutoff ) >= 4
 
 counts_cpm <- raw_counts[keep,]
 filtered_cpm <- cpm[keep,]
@@ -201,7 +202,9 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Filtering for lowly expressed genes (avg log2TMM > 2.5 in at least 4 samples)
 
 ```{r filter TMM}
-cutoff <- 2.5
+#cutoff <- 2.5
+cutoff <- 2.75
+
 
 keep <- rowSums( TMM > cutoff ) >=4
 
@@ -296,7 +299,9 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Filtering for lowly expressed genes (avg log2RLE > 2.5 in at least 4 samples)
 
 ```{r filter RLE}
-cutoff <- 2.5
+# cutoff <- 2.5
+cutoff <- 2.75
+
 
 keep <- rowSums( RLE > cutoff ) >=4
 
@@ -394,7 +399,8 @@ p + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
 ## Filtering for lowly expressed genes (avg log2upperquartile > 2.5 in at least 4 samples)
 
 ```{r filter upperquartile}
-cutoff <- 2.5
+# cutoff <- 2.5
+cutoff <- 2.75
 
 keep <- rowSums( upperquartile > cutoff ) >=4
 
@@ -462,44 +468,4 @@ heatmap.2( cors, scale="none", col = colors, margins = c(12, 12), trace='none', 
 Conclusions about normalizations:
      1) There isn't much of a difference between the outputs of each normalization method in terms of correlation heatmaps or number of genes kept after filtering for lowly expressed genes.
      2) The driver for the differences between correlation heatmaps between the raw and filtered data comes down to the filtering of lowly expressed genes. In all cases, simply performing normalization and plotting the heatmap (without filtering out any genes) leads to a correlation heatmap that resembles the raw data's heatmap quite closely (and in the case of pearson correlation, one that is even better matched up to desired structure between samples).
-
-# UQ normalization for full dataset including sample 2
-
-```{r}
-upperquartile_full <- calcNormFactors(raw_counts_full, method = "upperquartile")
-upperquartile_full <- cpm(upperquartile_full, log=TRUE, normalized.lib.sizes = T)
-
-cutoff <- 2.5
-
-keep <- rowSums( upperquartile_full > cutoff ) >=4
-
-counts_upperquartile_full <- raw_counts[keep,]
-filtered_upperquartile_full <- upperquartile_full[keep,]
-dim(filtered_upperquartile_full)
-
-saveRDS(counts_upperquartile_full, "data/filtered_counts_full.rds")
-saveRDS(filtered_upperquartile_full, "data/norm_filtered_counts_full.rds")
-
-
-#Load PCA plotting Function
-source("code/PCA_fn.R")
-
-
-# Perform PCA
-pca_genes <- prcomp(t(filtered_upperquartile_full), scale = T)
-scores <- pca_genes$x
-
-variances <- pca_genes$sdev^2
-explained <- variances / sum(variances)
-plot(pca_genes, main = "Variance per PC")
-
-
-#Make PCA plots with the factors colored by Individual
-
-### PCA norm+filt Data
-for (n in 1:5){
-  col.v <- pal[as.integer(sampleinfo_full$Individual)]
-  plot_scores(pca_genes, scores, n, n+1, col.v)
-}
-```
 

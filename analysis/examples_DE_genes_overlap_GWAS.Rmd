@@ -20,9 +20,9 @@ least_var_ctl_most_var_treat <- readRDS("output/least_var_ctl_most_var_treat.rds
 #load in V2
 v2 <- readRDS("output/voom_results.rds")
 
-interaction_genes <- readRDS("output/interaction_genes.rds")
-overlap_fungenomic_interaction <- intersect(interaction_genes, overlap_fungenomic)
-overlap_crossomic_interaction <- intersect(interaction_genes, overlap_crossomic)
+# interaction_genes <- readRDS("output/interaction_genes.rds")
+# overlap_fungenomic_interaction <- intersect(interaction_genes, overlap_fungenomic)
+# overlap_crossomic_interaction <- intersect(interaction_genes, overlap_crossomic)
 
 ```
 
@@ -67,26 +67,26 @@ for (gene in 1:length(overlap_fungenomic)) {
 #all interaction genes
 
 ```{r}
-for (gene in 1:length(interaction_genes)) {
-     print(plot_gene(v2, as.character(interaction_genes[gene])))
-}
+# for (gene in 1:length(interaction_genes)) {
+#      print(plot_gene(v2, as.character(interaction_genes[gene])))
+# }
 ```
 
 #overlap interaction genes w/fungenomic
 
 ```{r}
-for (gene in 1:length(overlap_fungenomic_interaction)) {
-     print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
-}
+# for (gene in 1:length(overlap_fungenomic_interaction)) {
+#      print(plot_gene(v2, as.character(overlap_fungenomic_interaction[gene])))
+# }
 ```
 
 
 #overlap interaction genes w/cross omic
 
 ```{r}
-for (gene in 1:length(overlap_crossomic_interaction)) {
-     print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
-}
+# for (gene in 1:length(overlap_crossomic_interaction)) {
+#      print(plot_gene(v2, as.character(overlap_crossomic_interaction[gene])))
+# }
 ```
 
 #candidates (based on variation between ctls and treated samples)
