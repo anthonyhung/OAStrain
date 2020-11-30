@@ -52,10 +52,11 @@ raw_counts <- raw_counts[, -c(1:6)]
 names(raw_counts) <- samplenames
 
 # remove 02 sample that does not pass QC
-raw_counts <- raw_counts[, -14] 
+#raw_counts <- raw_counts[, -14] 
 
 # save relabeled raw count data matrix
 saveRDS(raw_counts, "data/raw_counts_relabeled.rds")
+
 
 # Check that there's no "NAs" in the data
 summary(apply(raw_counts, 1, var) == 0) 
@@ -68,7 +69,7 @@ head(sampleinfo)
 #Re-order sample information to match the columns of count matrix
 sampleinfo <- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
 #remove 02 sample that does not pass QC
-sampleinfo <- sampleinfo[-14,]
+#sampleinfo <- sampleinfo[-14,]
 # save reorganized sample information
 saveRDS(sampleinfo, "data/Sample.info.RNAseq.reordered.csv")
 ```
@@ -83,7 +84,6 @@ source("code/PCA_fn.R")
 
 #spearman
 cors <- cor(raw_counts, method="spearman", use="pairwise.complete.obs")
-
 
 heatmap.2(cors, scale="none", col = colors, margins = c(12, 12), trace='none', denscol="white", labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))
 

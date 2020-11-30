@@ -420,7 +420,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -429,7 +429,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -438,10 +438,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-19
+<strong>Last updated:</strong> 2020-11-29
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -457,12 +457,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -529,32 +529,27 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875targetblankccaa3e4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/ccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875" target="_blank">ccaa3e4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree6cfbae9c91c4f6cb94fb8432695184bb3cfb502etargetblank6cfbae9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875targetblankccaa3e4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/6cfbae9c91c4f6cb94fb8432695184bb3cfb502e" target="_blank">6cfbae9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/ccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875" target="_blank">ccaa3e4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/ANT1_2.rds
-    Ignored:    data/Combined.common.allGenes_noliver.rds
-    Ignored:    data/Combined_singlecell_data.rds
-    Ignored:    data/Combined_singlecell_data_allGenes.rds
-    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
-    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
-    Ignored:    data/Combined_singlecell_data_first.rds
-    Ignored:    data/Combined_singlecell_data_noliver.rds
     Ignored:    data/DE_results.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
@@ -563,14 +558,22 @@ Ignored files:
     Ignored:    data/GoMresultsk6.rds
     Ignored:    data/GoMresultsk7.rds
     Ignored:    data/GoMresultsk8.rds
-    Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
+    Ignored:    data/SCT_ANT12_integrated.rds
+    Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/Sample.info.full.RNAseq.reordered.csv
+    Ignored:    data/Tachmazidou_30664745_ALLOA.txt.gz
+    Ignored:    data/alasoo_etal/
+    Ignored:    data/caliskan_etal/
+    Ignored:    data/external_scRNA/
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/filtered_counts_full.rds
+    Ignored:    data/gene-annotation_hg37.txt
     Ignored:    data/gom_sup3.rds
     Ignored:    data/gom_sup_3.rda
     Ignored:    data/gom_sup_noiPSCChond_3.rda
-    Ignored:    data/humanLiverSubset_hepatocytes.rds
+    Ignored:    data/log_normalized_ANT12_integrated.rds
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_bmMSC1_ENCODEChond.rda
@@ -581,16 +584,42 @@ Ignored files:
     Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/norm_filtered_counts_full.rds
+    Ignored:    data/raw_counts_full_relabeled.rds
     Ignored:    data/raw_counts_relabeled.rds
-    Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
-
-Untracked files:
-    Untracked:  .RDataTmp
+    Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/LDSC-SEG/
+    Ignored:    output/SNPs.csv
+    Ignored:    output/ash_power_analysis/
+    Ignored:    output/classtpx/
+    Ignored:    output/eQTL_output_strain.csv
+    Ignored:    output/eQTL_output_strain_INT.csv
+    Ignored:    output/eQTL_output_unstrain.csv
+    Ignored:    output/eQTL_output_unstrain_INT.csv
+    Ignored:    output/fasttopics/
+    Ignored:    output/interaction_genes.rds
+    Ignored:    output/least_var_ctl_most_var_treat.rds
+    Ignored:    output/mash/
+    Ignored:    output/overlap_crossomic.rds
+    Ignored:    output/overlap_fungenomic.rds
+    Ignored:    output/pairwise_ttest_results_SCTdata.rds
+    Ignored:    output/pairwise_ttest_results_integrateddata.rds
+    Ignored:    output/permuted_results_DE.rds
+    Ignored:    output/strain_top.rds
+    Ignored:    output/strong_subset.rds
+    Ignored:    output/strong_subset_INT.rds
+    Ignored:    output/unstrain_top.rds
+    Ignored:    output/voom_results.rds
 
 Unstaged changes:
-    Modified:   analysis/boxplots_correlations.Rmd
-    Modified:   analysis/enrichment_DE.Rmd
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/fasttopics_on_unintegrated_data.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
+    Modified:   data/DEgenes_FDR05.rda
+    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -629,6 +658,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/09ab774d153d2b21b6cc4c63627ed0b448acda1f/docs/raw_counts_analysis.html" target="_blank">09ab774</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+add html files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/e855314ea98fd1fef1af178e7dc9ca1541f8deec/docs/raw_counts_analysis.html" target="_blank">e855314</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+delete html files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/022f905186e6ab8f784b7266671f2729d9200c6c/docs/raw_counts_analysis.html" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+<td>
+change RUVg to use least variable genes found through raw unnormalized data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1090,15 +1170,16 @@ raw_counts &lt;- raw_counts[, -c(1:6)]
 names(raw_counts) &lt;- samplenames
 
 # remove 02 sample that does not pass QC
-raw_counts &lt;- raw_counts[, -14] 
+#raw_counts &lt;- raw_counts[, -14] 
 
 # save relabeled raw count data matrix
 saveRDS(raw_counts, &quot;data/raw_counts_relabeled.rds&quot;)
 
+
 # Check that there&#39;s no &quot;NAs&quot; in the data
 summary(apply(raw_counts, 1, var) == 0) </code></pre>
 <pre><code>   Mode   FALSE    TRUE 
-logical   32936   25459 </code></pre>
+logical   33237   25158 </code></pre>
 <pre class="r"><code>#Sample information
 sampleinfo &lt;- read.csv(&quot;data/Sample.info.RNAseq.csv&quot;)
 head(sampleinfo)</code></pre>
@@ -1119,7 +1200,7 @@ head(sampleinfo)</code></pre>
 <pre class="r"><code>#Re-order sample information to match the columns of count matrix
 sampleinfo &lt;- sampleinfo[match(samplenames, sampleinfo$Sample_ID),]
 #remove 02 sample that does not pass QC
-sampleinfo &lt;- sampleinfo[-14,]
+#sampleinfo &lt;- sampleinfo[-14,]
 # save reorganized sample information
 saveRDS(sampleinfo, &quot;data/Sample.info.RNAseq.reordered.csv&quot;)</code></pre>
 </div>
@@ -1132,7 +1213,6 @@ source(&quot;code/PCA_fn.R&quot;)
 
 #spearman
 cors &lt;- cor(raw_counts, method=&quot;spearman&quot;, use=&quot;pairwise.complete.obs&quot;)
-
 
 heatmap.2(cors, scale=&quot;none&quot;, col = colors, margins = c(12, 12), trace=&#39;none&#39;, denscol=&quot;white&quot;, labCol=labels, ColSideColors=pal[as.integer(as.factor(sampleinfo$Individual))], RowSideColors=pal[as.integer(as.factor(sampleinfo$treatment))+3], cexCol = 0.2 + 1/log10(15), cexRow = 0.2 + 1/log10(15))</code></pre>
 <p><img src="figure/raw_counts_analysis.Rmd/corr%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1158,6 +1238,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/raw_counts_analysis.Rmd/corr heatmap-1.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/f1425df1cce9caed0803bd9f25483dc1795ec89e/docs/figure/raw_counts_analysis.Rmd/corr heatmap-1.png" target="_blank">f1425df</a>
@@ -1223,6 +1314,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/raw_counts_analysis.Rmd/corr heatmap-2.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/414262e83ffc17132ef3688335857954f181c8be/docs/figure/raw_counts_analysis.Rmd/corr heatmap-2.png" target="_blank">414262e</a>
@@ -1642,6 +1744,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/022f905186e6ab8f784b7266671f2729d9200c6c/docs/figure/raw_counts_analysis.Rmd/lib size-1.png" target="_blank">022f905</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-05-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/anthonyhung/OAStrain/blob/2ebb87bdc9f4434543540478cb23f0d4ec466b2a/docs/figure/raw_counts_analysis.Rmd/lib size-1.png" target="_blank">2ebb87b</a>
 </td>
 <td>
@@ -1682,25 +1795,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] edgeR_3.26.8       limma_3.40.6       scales_1.1.1      
-[4] RColorBrewer_1.1-2 ggplot2_3.3.0      gplots_3.0.1.1    
+[1] edgeR_3.26.5       limma_3.40.6       scales_1.1.1      
+[4] RColorBrewer_1.1-2 ggplot2_3.3.2      gplots_3.0.1.1    
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.4.6       compiler_3.6.1     pillar_1.4.4      
- [4] later_1.0.0        git2r_0.26.1       workflowr_1.6.2   
+ [1] Rcpp_1.0.5         compiler_3.6.1     pillar_1.4.6      
+ [4] later_1.1.0.1      git2r_0.26.1       workflowr_1.6.2   
  [7] bitops_1.0-6       tools_3.6.1        digest_0.6.25     
 [10] lattice_0.20-41    evaluate_0.14      lifecycle_0.2.0   
-[13] tibble_3.0.1       gtable_0.3.0       pkgconfig_2.0.3   
-[16] rlang_0.4.6        yaml_2.2.1         xfun_0.8          
-[19] withr_2.2.0        stringr_1.4.0      dplyr_0.8.5       
-[22] knitr_1.23         fs_1.3.1           vctrs_0.3.0       
-[25] gtools_3.8.1       caTools_1.17.1.2   locfit_1.5-9.1    
-[28] tidyselect_1.1.0   rprojroot_1.3-2    grid_3.6.1        
-[31] glue_1.4.1         R6_2.4.1           rmarkdown_1.13    
-[34] gdata_2.18.0       farver_2.0.3       purrr_0.3.4       
-[37] magrittr_1.5       whisker_0.3-2      backports_1.1.7   
-[40] promises_1.1.0     htmltools_0.4.0    ellipsis_0.3.1    
-[43] assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.1      
+[13] tibble_3.0.4       gtable_0.3.0       pkgconfig_2.0.3   
+[16] rlang_0.4.8        yaml_2.2.1         xfun_0.8          
+[19] withr_2.3.0        stringr_1.4.0      dplyr_1.0.2       
+[22] knitr_1.23         generics_0.0.2     fs_1.3.1          
+[25] vctrs_0.3.4        gtools_3.8.1       caTools_1.17.1.2  
+[28] locfit_1.5-9.1     tidyselect_1.1.0   rprojroot_1.3-2   
+[31] grid_3.6.1         glue_1.4.2         R6_2.4.1          
+[34] rmarkdown_1.13     gdata_2.18.0       farver_2.0.3      
+[37] purrr_0.3.4        magrittr_1.5       whisker_0.3-2     
+[40] backports_1.1.10   promises_1.1.1     htmltools_0.5.0   
+[43] ellipsis_0.3.1     colorspace_1.4-1   httpuv_1.5.1      
 [46] labeling_0.3       KernSmooth_2.23-15 stringi_1.4.6     
 [49] munsell_0.5.0      crayon_1.3.4      </code></pre>
 </div>

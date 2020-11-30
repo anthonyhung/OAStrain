@@ -526,13 +526,13 @@ Look at structure plot
 
 
 set.seed(1)
-topic_colors <- c("gold","royalblue","salmon","turquoise","olivedrab",
+topic_colors <- c("gold","royalblue","salmon","turquoise","orangered",
                   "firebrick","forestgreen")
 topics <- c(1, 4, 7, 2, 6, 5, 3)
 rows <- sort(c(sample(which(sample_labels$Cell.Type == "Hepatocyte"), 800),
                sample(which(sample_labels$Cell.Type == "iPSC"), 800),
                sample(which(sample_labels$Cell.Type == "iPSC-MSC"), 800),
-               sample(which(sample_labels$Cell.Type == "iPSC-Chondrocyte"), 1815),
+               which(sample_labels$Cell.Type == "iPSC-Chondrocyte"),
                sample(which(sample_labels$Cell.Type == "iPSC-Chondro_GAH"), 800),
                sample(which(sample_labels$Cell.Type == "iPSC-Osteo"), 800),
                sample(which(sample_labels$Cell.Type == "Chondrocyte_"), 800),

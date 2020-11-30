@@ -420,7 +420,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -429,7 +429,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -438,10 +438,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-04
+<strong>Last updated:</strong> 2020-11-29
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>OAStrain/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -457,12 +457,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -529,32 +529,26 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1a4fcd8cf5b623bd412ab06158827f8ecafbd391targetblank1a4fcd8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/1a4fcd8cf5b623bd412ab06158827f8ecafbd391" target="_blank">1a4fcd8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875targetblankccaa3e4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/anthonyhung/OAStrain/tree/ccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875" target="_blank">ccaa3e4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintree1a4fcd8cf5b623bd412ab06158827f8ecafbd391targetblank1a4fcd8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomanthonyhungOAStraintreeccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875targetblankccaa3e4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/1a4fcd8cf5b623bd412ab06158827f8ecafbd391" target="_blank">1a4fcd8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/anthonyhung/OAStrain/tree/ccaa3e4b0f52e1d768a74045f9cb0efdb6dd0875" target="_blank">ccaa3e4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/ANT1_2.rds
-    Ignored:    data/Combined.common.allGenes_noliver.rds
-    Ignored:    data/Combined_singlecell_data.rds
-    Ignored:    data/Combined_singlecell_data_allGenes.rds
-    Ignored:    data/Combined_singlecell_data_allGenes_noliver.rds
-    Ignored:    data/Combined_singlecell_data_allGenes_normalized.rds
-    Ignored:    data/Combined_singlecell_data_first.rds
-    Ignored:    data/Combined_singlecell_data_noliver.rds
     Ignored:    data/DE_results.rds
     Ignored:    data/GoMresults.rds
     Ignored:    data/GoMresultsk3.rds
@@ -563,18 +557,21 @@ Ignored files:
     Ignored:    data/GoMresultsk6.rds
     Ignored:    data/GoMresultsk7.rds
     Ignored:    data/GoMresultsk8.rds
-    Ignored:    data/HumanLiverSeurat.rds
     Ignored:    data/RUVsCPM.rds
     Ignored:    data/RUVsOut.rds
     Ignored:    data/SCT_ANT12_integrated.rds
     Ignored:    data/SCT_integrated_by_individual.rds
+    Ignored:    data/Sample.info.full.RNAseq.reordered.csv
+    Ignored:    data/Tachmazidou_30664745_ALLOA.txt.gz
     Ignored:    data/alasoo_etal/
     Ignored:    data/caliskan_etal/
+    Ignored:    data/external_scRNA/
     Ignored:    data/filtered_counts.rds
+    Ignored:    data/filtered_counts_full.rds
+    Ignored:    data/gene-annotation_hg37.txt
     Ignored:    data/gom_sup3.rds
     Ignored:    data/gom_sup_3.rda
     Ignored:    data/gom_sup_noiPSCChond_3.rda
-    Ignored:    data/humanLiverSubset_hepatocytes.rds
     Ignored:    data/log_normalized_ANT12_integrated.rds
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_adMSC_ENCODEChond.rda
     Ignored:    data/merged_topic_fit_7_classtpx_omega_fix_allMSC_ENCODEChond.rda
@@ -586,12 +583,15 @@ Ignored files:
     Ignored:    data/merged_topic_fit_8_classtpx_omega_fix_bmMSC2_ENCODEChond.rda
     Ignored:    data/norm_filtered_counts.rds
     Ignored:    data/norm_filtered_counts_RLE.rds
+    Ignored:    data/norm_filtered_counts_full.rds
+    Ignored:    data/raw_counts_full_relabeled.rds
     Ignored:    data/raw_counts_relabeled.rds
-    Ignored:    data/sclabels_noliver.rda
     Ignored:    output/ANT1.2.rds
     Ignored:    output/GO_terms_enriched.csv
+    Ignored:    output/LDSC-SEG/
     Ignored:    output/SNPs.csv
     Ignored:    output/ash_power_analysis/
+    Ignored:    output/classtpx/
     Ignored:    output/eQTL_output_strain.csv
     Ignored:    output/eQTL_output_strain_INT.csv
     Ignored:    output/eQTL_output_unstrain.csv
@@ -612,7 +612,13 @@ Ignored files:
     Ignored:    output/voom_results.rds
 
 Unstaged changes:
-    Modified:   analysis/enrichment_DE.Rmd
+    Modified:   analysis/DE_analysis.Rmd
+    Modified:   analysis/Norm_filter.Rmd
+    Modified:   analysis/fasttopics_on_unintegrated_data.Rmd
+    Modified:   analysis/raw_counts_analysis.Rmd
+    Modified:   data/DEgenes_FDR05.rda
+    Modified:   data/Sample.info.RNAseq.reordered.csv
+    Modified:   fig-limma-treatment-hit-1.eps
 
 </code></pre>
 <p>
@@ -651,6 +657,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/anthonyhung/OAStrain/blob/6d6d1b59562440476e915e9c670365f12f31b7ba/analysis/enrichment_DE.Rmd" target="_blank">6d6d1b5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+<td>
+knit permutation analyses of strain labels
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/anthonyhung/OAStrain/6d6d1b59562440476e915e9c670365f12f31b7ba/docs/enrichment_DE.html" target="_blank">6d6d1b5</a>
+</td>
+<td>
+Anthony Hung
+</td>
+<td>
+2020-10-04
+</td>
+<td>
+knit permutation analyses of strain labels
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -943,34 +983,34 @@ cross_omic &lt;- c(s2, s2.1, s2.2)</code></pre>
 
 enrich(fungenomic, DE_genes_ensg, other_genes_ensg)</code></pre>
 <pre><code>     [,1] [,2]
-[1,]   50  290
-[2,]  959 9148</code></pre>
+[1,]   52  291
+[2,] 1102 9072</code></pre>
 <pre><code>
     Fisher&#39;s Exact Test for Count Data
 
 data:  contingency_table
-p-value = 0.001621
+p-value = 0.009505
 alternative hypothesis: true odds ratio is greater than 1
 95 percent confidence interval:
- 1.248312      Inf
+ 1.122756      Inf
 sample estimates:
 odds ratio 
-  1.644572 </code></pre>
+  1.470997 </code></pre>
 <pre class="r"><code>enrich(cross_omic, DE_genes_ensg, other_genes_ensg)</code></pre>
 <pre><code>     [,1] [,2]
-[1,]   44  293
-[2,]  965 9145</code></pre>
+[1,]   47  291
+[2,] 1107 9072</code></pre>
 <pre><code>
     Fisher&#39;s Exact Test for Count Data
 
 data:  contingency_table
-p-value = 0.0234
+p-value = 0.05138
 alternative hypothesis: true odds ratio is greater than 1
 95 percent confidence interval:
- 1.062976      Inf
+ 0.9977331       Inf
 sample estimates:
 odds ratio 
-  1.423059 </code></pre>
+  1.323569 </code></pre>
 <pre class="r"><code>#enrich(genes_GWAS_share_eQTL, DE_genes, other_genes)
 #enrich(OA_GWAS_genes, DE_genes, other_genes)</code></pre>
 </div>
@@ -1219,14 +1259,14 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.5       knitr_1.23       whisker_0.3-2    magrittr_1.5    
- [5] workflowr_1.6.2  tidyselect_1.1.0 R6_2.4.1         rlang_0.4.7     
+ [5] workflowr_1.6.2  tidyselect_1.1.0 R6_2.4.1         rlang_0.4.8     
  [9] stringr_1.4.0    tools_3.6.1      xfun_0.8         git2r_0.26.1    
 [13] ellipsis_0.3.1   htmltools_0.5.0  yaml_2.2.1       digest_0.6.25   
-[17] rprojroot_1.3-2  tibble_3.0.3     lifecycle_0.2.0  crayon_1.3.4    
+[17] rprojroot_1.3-2  tibble_3.0.4     lifecycle_0.2.0  crayon_1.3.4    
 [21] purrr_0.3.4      later_1.1.0.1    vctrs_0.3.4      promises_1.1.1  
 [25] fs_1.3.1         glue_1.4.2       evaluate_0.14    rmarkdown_1.13  
 [29] stringi_1.4.6    pillar_1.4.6     compiler_3.6.1   generics_0.0.2  
-[33] backports_1.1.9  httpuv_1.5.1     pkgconfig_2.0.3 </code></pre>
+[33] backports_1.1.10 httpuv_1.5.1     pkgconfig_2.0.3 </code></pre>
 </div>
 </div>
 
